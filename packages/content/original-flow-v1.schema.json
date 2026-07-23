@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.evil-hunter.invalid/schemas/original-flow-v1.schema.json",
+  "title": "Original boot-to-field content release",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "releaseId",
+    "legacy",
+    "evidencePolicy",
+    "evidenceSources",
+    "flows",
+    "assets",
+    "releaseGate"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "releaseId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+    "legacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["game", "version", "package"],
+      "properties": {
+        "game": { "const": "Evil Hunter Tycoon" },
+        "version": { "const": "1.411" },
+        "package": { "const": "com.superplanet.evilhunter" }
+      }
+    },
+    "evidencePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowedConfidence", "numericRulePolicy", "runtimeBindingPolicy"],
+      "properties": {
+        "allowedConfidence": {
+          "type": "array",
+          "const": ["confirmed", "strongly-inferred", "tentative", "unknown"]
+        },
+        "numericRulePolicy": { "const": "legacy-verified-or-observed-only" },
+        "runtimeBindingPolicy": { "const": "unresolved-bindings-block-release" }
+      }
+    },
+    "evidenceSources": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/evidenceSource" }
+    },
+    "flows": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "$ref": "#/$defs/flow" }
+    },
+    "assets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "releaseGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runnable", "blockingBindingIds", "reason"],
+      "properties": {
+        "runnable": { "type": "boolean" },
+        "blockingBindingIds": { "type": "array", "items": { "type": "string" } },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "confidence": {
+      "enum": ["confirmed", "strongly-inferred", "tentative", "unknown"]
+    },
+    "evidenceSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "order", "status", "confidence", "sceneObjects", "assetIds", "bindings"],
+      "properties": {
+        "id": { "enum": ["boot", "village", "hunter-roster", "field"] },
+        "order": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["evidence-ready", "binding-blocked", "runtime-ready"] },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "sceneObjects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["pathId", "name", "confidence"],
+            "properties": {
+              "pathId": { "type": "integer", "minimum": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "confidence": { "$ref": "#/$defs/confidence" }
+            }
+          }
+        },
+        "assetIds": { "type": "array", "items": { "type": "string" } },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "state", "confidence", "value", "requiredEvidence"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "state": { "enum": ["resolved", "unresolved"] },
+              "confidence": { "$ref": "#/$defs/confidence" },
+              "value": { "type": ["string", "null"] },
+              "requiredEvidence": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourcePath", "bytes", "sha256", "unity", "role", "bindingState", "confidence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+        "sourcePath": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "unity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "pathId", "type", "name"],
+          "properties": {
+            "source": { "type": "string" },
+            "pathId": { "type": "integer", "minimum": 1 },
+            "type": { "type": "string" },
+            "name": { "type": "string" }
+          }
+        },
+        "role": { "type": "string", "minLength": 1 },
+        "bindingState": { "enum": ["source-confirmed", "screen-candidate", "runtime-verified"] },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    }
+  }
+}

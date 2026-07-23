@@ -1,0 +1,7 @@
+name: Singular-v12.11.0-03ae108.master
+env: release
+git_commit: 03ae108
+git_branch: master
+version_name: 12.11.0
+version_code:1
+build_date: Mon, 26 Jan 2026 14:28:26 +0000

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "slice": "slice-1-village-combat-loop",
+  "generatedFrom": [
+    "game-assets/asset-index.json",
+    "game-assets/extracted/exported/metadata/inventory.json",
+    "reverse-engineering/evidence/monoscripts.csv",
+    "reverse-engineering/evidence/assembly_csharp_classes.txt"
+  ],
+  "confidenceScale": {
+    "high": "Identity and runtime role are explicit in extracted Unity/Spine metadata.",
+    "medium": "Identity is explicit, but the exact gameplay binding is not recovered.",
+    "low": "Only a naming or visual clue exists; do not ship without runtime corroboration."
+  },
+  "candidates": [
+    {
+      "id": "slice1.hunter.spine",
+      "role": "hunter_actor",
+      "confidence": "high",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 166, "type": "Texture2D", "name": "hunter" },
+        { "source": "sharedassets1.assets", "pathId": 245, "type": "TextAsset", "name": "hunter.json" },
+        { "source": "sharedassets1.assets", "pathId": 258, "type": "TextAsset", "name": "hunter.atlas" },
+        { "source": "sharedassets1.assets", "pathId": 1581, "type": "GameObject", "name": "Hunter" }
+      ],
+      "files": [
+        { "path": "textures/hunter__166.png", "bytes": 4203445, "sha256": "e4894324b686a69b8f57f304ab6c426e846c0d12733bf3fa1cd91ba79414e432" },
+        { "path": "text/hunter.json__245.bin", "bytes": 4591829, "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689" },
+        { "path": "text/hunter.atlas__258.bin", "bytes": 675809, "sha256": "112b655cfefe6465c2f296f2e9043212a9e91d7f50be9a9327dae377aa57d9d8" }
+      ],
+      "spineVersion": "4.2.43",
+      "verifiedAnimations": [
+        "hunter_stay",
+        "hunter_stay_back",
+        "hunter_walk",
+        "hunter_walk_back",
+        "h1_hit",
+        "h1_hit_back",
+        "hunter_damage",
+        "hunter_damage_back",
+        "hunter_dying",
+        "hunter_die"
+      ],
+      "notes": "Use the three files as one atomic Spine bundle. The JSON contains 70 animations and 1,937 modular skin entries. The exact starter appearance is not identified."
+    },
+    {
+      "id": "slice1.monster.goldblin.spine",
+      "role": "primary_slice_monster_actor",
+      "confidence": "high",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 115, "type": "Texture2D", "name": "mon_goldblin" },
+        { "source": "sharedassets1.assets", "pathId": 332, "type": "TextAsset", "name": "mon_goldblin.json" },
+        { "source": "sharedassets1.assets", "pathId": 338, "type": "TextAsset", "name": "mon_goldblin.atlas" }
+      ],
+      "files": [
+        { "path": "textures/mon_goldblin__115.png", "bytes": 4577, "sha256": "13f39082bfcc14061236fb565aabfd93bc763af3831eadba92d56aee5e1a4d5c" },
+        { "path": "text/mon_goldblin.json__332.bin", "bytes": 41237, "sha256": "8f678862d096b296d19a7de0bc45d249833d1e142683049bbdb4bbce8c8213ba" },
+        { "path": "text/mon_goldblin.atlas__338.bin", "bytes": 387, "sha256": "ddbf4b8a622de11159e79f1a8e120072aa9bb6300fcbb907ea616e42efd9b680" }
+      ],
+      "spineVersion": "4.2.43",
+      "verifiedAnimations": ["stay", "stay_b", "walk", "walk_b", "die", "die2"],
+      "verifiedSkins": ["default", "lv1"],
+      "notes": "This is the preferred Slice 1 monster identity. The skeleton has no named attack or hit animation; do not synthesize one or substitute an unrelated clip without observation."
+    },
+    {
+      "id": "slice1.monster.mon_a_01_1.spine",
+      "role": "technical_fallback_monster_actor",
+      "confidence": "high",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 171, "type": "Texture2D", "name": "mon_a_01_1" },
+        { "source": "sharedassets1.assets", "pathId": 289, "type": "TextAsset", "name": "mon_a_01_1.json" },
+        { "source": "sharedassets1.assets", "pathId": 333, "type": "TextAsset", "name": "mon_a_01_1.atlas" }
+      ],
+      "files": [
+        { "path": "textures/mon_a_01_1__171.png", "bytes": 9443, "sha256": "320a7ac8aae96b26e2048d5c9c310c53e46bf186e44dbc3b822443b5c357a1f2" },
+        { "path": "text/mon_a_01_1.json__289.bin", "bytes": 50821, "sha256": "9821db8a8dff12694b43c74c88502a752246cbe27bef795ce5f76dc63ad00f7a" },
+        { "path": "text/mon_a_01_1.atlas__333.bin", "bytes": 2104, "sha256": "455b264baca7dee293d147510ac6d5e3a8ec3a37429d78be1aec16d74f01fe09" }
+      ],
+      "spineVersion": "4.2.43",
+      "verifiedAnimations": ["stay", "stay_b", "walk", "walk_b", "atk", "atk_b", "dying", "die"],
+      "verifiedSkins": ["default", "lv1", "lv2", "lv3", "lv4", "lv5"],
+      "notes": "Fallback for exercising attack/dying states because both facing variants and complete combat states are explicit. Do not replace Goldblin silently; using this actor changes the compatibility target. Its canonical gameplay name, stats, zone, and drop table remain unknown."
+    },
+    {
+      "id": "slice1.equipment.h1_a_01",
+      "role": "equipped_weapon_visual",
+      "confidence": "medium",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 166, "type": "Texture2D", "name": "hunter" },
+        { "source": "sharedassets1.assets", "pathId": 245, "type": "TextAsset", "name": "hunter.json" },
+        { "source": "sharedassets1.assets", "pathId": 258, "type": "TextAsset", "name": "hunter.atlas" }
+      ],
+      "atlasRegion": "weapon/h1_a_01",
+      "spineSlot": "weapon_01",
+      "spineAttachment": "sword",
+      "skinEntry": "weapon_h1a_a_01",
+      "notes": "The visual binding is explicit inside the hunter Spine files. No recovered evidence binds this visual to an AdminGearData row, item ID, rarity, stats, or drop probability."
+    },
+    {
+      "id": "slice1.drop.unique.placeholder",
+      "role": "drop_presentation_candidates",
+      "confidence": "low",
+      "unityObjects": [
+        { "source": "sharedassets0.assets", "pathId": 1457, "type": "Sprite", "name": "item_unique_01" },
+        { "source": "sharedassets0.assets", "pathId": 691, "type": "Sprite", "name": "ic_hunter_gear_0" },
+        { "source": "sharedassets0.assets", "pathId": 5965, "type": "Sprite", "name": "coin 1" },
+        { "source": "sharedassets1.assets", "pathId": 1712, "type": "GameObject", "name": "DropGearTouch" }
+      ],
+      "files": [
+        { "path": "sprites/item_unique_01__1457.png", "bytes": 2739, "sha256": "9070238ab72cb9eafe0ff7695bc6abb9d653fc2e1a0cbd4a8f5b8ae23c9e47b3" },
+        { "path": "sprites/ic_hunter_gear_0__691.png", "bytes": 224, "sha256": "027c28099e66a88c0ae81e2d9098bc8e1000ef2c4117d4cccaeaea91d246d95e" },
+        { "path": "sprites/coin 1__5965.png", "bytes": 201, "sha256": "a6d55f350f46c8db69bf7f907188f5c36b6e1feb2c2f455a95ee60cc560bb78e" }
+      ],
+      "notes": "These prove that gear/unique/coin presentation assets exist, not that they belong to Goldblin, mon_a_01_1, or the h1_a_01 weapon. Do not use them as an authoritative item mapping."
+    },
+    {
+      "id": "slice1.audio.combat",
+      "role": "combat_audio_candidates",
+      "confidence": "medium",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 965, "type": "AudioClip", "name": "spearAttack" },
+        { "source": "sharedassets1.assets", "pathId": 932, "type": "AudioClip", "name": "true_death" },
+        { "source": "sharedassets1.assets", "pathId": 956, "type": "AudioClip", "name": "uniquedrop" }
+      ],
+      "files": [
+        { "path": "audio/spearAttack__965.wav", "bytes": 101420, "sha256": "9205b336b08f089471a7123e512427ce741b3f1e1f44494666aea72551522959" },
+        { "path": "audio/true_death__932.wav", "bytes": 33452, "sha256": "f92e7ef0dbb94d24556df6412da04b2ad4b13e4d476c603300e0e672cd144587" },
+        { "path": "audio/uniquedrop__956.wav", "bytes": 163628, "sha256": "26af66823183332acfb1dc34d28577109a9b81c352c1f32626800305528423df" }
+      ],
+      "notes": "Names establish broad intent. spearAttack must not be assigned to Goldblin or the hunter's basic h1_hit without observed runtime evidence. true_death and uniquedrop also lack actor/item-specific bindings."
+    },
+    {
+      "id": "slice1.effect.round_slash",
+      "role": "combat_effect_candidate",
+      "confidence": "medium",
+      "unityObjects": [
+        { "source": "sharedassets1.assets", "pathId": 643, "type": "AnimationClip", "name": "RoundSlashEffect_Anim" },
+        { "source": "sharedassets1.assets", "pathId": 1255, "type": "AnimatorController", "name": "RoundSlashEffect" }
+      ],
+      "notes": "A named Unity clip/controller pair exists, but its serialized frame references were not exported. It belongs to the hunter h5 round-slash animation family, not the proposed h1 basic attack."
+    }
+  ],
+  "codeEvidence": [
+    { "monoScriptIndex": 207, "class": "HunterCtrl", "assembly": "Assembly-CSharp", "relevance": "hunter runtime controller" },
+    { "monoScriptIndex": 711, "class": "HunterData", "assembly": "Assembly-CSharp", "relevance": "hunter data model" },
+    { "monoScriptIndex": 1607, "class": "AdminHunterData", "assembly": "Assembly-CSharp", "relevance": "hunter content table" },
+    { "monoScriptIndex": 2270, "class": "DamageManager", "assembly": "Assembly-CSharp", "relevance": "damage orchestration" },
+    { "monoScriptIndex": 4043, "class": "DamageCtrl", "assembly": "Assembly-CSharp", "relevance": "damage presentation/control" },
+    { "monoScriptIndex": 3397, "class": "AdminGearData", "assembly": "Assembly-CSharp", "relevance": "gear content table" },
+    { "monoScriptIndex": 2334, "class": "AdminItemData", "assembly": "Assembly-CSharp", "relevance": "item content table" },
+    { "monoScriptIndex": 206, "class": "AdminDropUniqueGearData", "assembly": "Assembly-CSharp", "relevance": "unique gear drop table" },
+    { "monoScriptIndex": 2632, "class": "DropGearData", "assembly": "Assembly-CSharp", "relevance": "runtime drop model" },
+    { "monoScriptIndex": 2671, "class": "DropGearTouchCtrl", "assembly": "Assembly-CSharp", "relevance": "dropped gear interaction" }
+  ],
+  "blockedMappings": [
+    "starter hunter skin composition and canonical job ID",
+    "Goldblin canonical content ID/zone/stats and its attack/hit presentation",
+    "mon_a_01_1 canonical monster ID/name/zone/stats if the fallback is used",
+    "h1_a_01 weapon visual to AdminGearData row and item ID",
+    "monster-to-drop-table relationship and all drop rates",
+    "damage, defense, cadence, critical-hit, revival, and progression formulas",
+    "basic melee hit audio/effect binding",
+    "village scene geometry, collision, spawn points, and sorting layers",
+    "Unity Animator clip-to-frame serialization for non-Spine effects"
+  ]
+}

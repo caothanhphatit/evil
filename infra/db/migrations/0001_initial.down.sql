@@ -1,0 +1,6 @@
+BEGIN;
+DROP TABLE IF EXISTS game_events;
+DROP TABLE IF EXISTS game_sessions;
+DROP TABLE IF EXISTS player_profiles;
+DROP TABLE IF EXISTS accounts;
+COMMIT;

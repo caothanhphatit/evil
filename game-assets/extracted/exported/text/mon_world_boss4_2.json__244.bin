@@ -1,0 +1,851 @@
+{
+"skeleton": {
+	"hash": "MiQuUwgCnVU",
+	"spine": "4.2.43",
+	"x": -33.87,
+	"y": -11.35,
+	"width": 66,
+	"height": 26,
+	"images": "./boss_d_magicstone/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "hip", "parent": "root", "x": 0.88, "y": 66.88 },
+	{
+		"name": "main_rock",
+		"parent": "hip",
+		"length": 125.28,
+		"rotation": 90.13,
+		"x": -0.86,
+		"y": -52.42,
+		"color": "483a6aff"
+	},
+	{
+		"name": "chain_1",
+		"parent": "main_rock",
+		"length": 17.38,
+		"rotation": 179.87,
+		"x": 98.45,
+		"y": -1.72,
+		"color": "97a7a7ff"
+	},
+	{
+		"name": "chain_2",
+		"parent": "chain_1",
+		"length": 42.19,
+		"rotation": -1.42,
+		"x": 5.98,
+		"y": -20.52,
+		"color": "97a7a7ff"
+	},
+	{
+		"name": "chain_3",
+		"parent": "chain_1",
+		"length": 53.3,
+		"rotation": 0.71,
+		"x": 13.39,
+		"y": 10.16,
+		"color": "97a7a7ff"
+	},
+	{
+		"name": "effect_1",
+		"parent": "hip",
+		"rotation": -89.56,
+		"x": -67.1,
+		"y": 8.84,
+		"scaleX": 1.0229,
+		"scaleY": 1.0229,
+		"color": "ffc300ff",
+		"icon": "star"
+	},
+	{
+		"name": "effect_2",
+		"parent": "hip",
+		"rotation": -89.36,
+		"x": -64.98,
+		"y": 4.37,
+		"color": "ffc300ff",
+		"icon": "star"
+	},
+	{
+		"name": "jewel",
+		"parent": "main_rock",
+		"rotation": 179.44,
+		"x": 76.6,
+		"y": 8.4,
+		"color": "49bbffff",
+		"icon": "diamondB"
+	},
+	{
+		"name": "rock_1",
+		"parent": "main_rock",
+		"length": 26.98,
+		"rotation": 179.67,
+		"x": 105.19,
+		"y": 36.27,
+		"color": "483a6aff"
+	},
+	{
+		"name": "rock_2",
+		"parent": "main_rock",
+		"length": 27.26,
+		"rotation": -179.93,
+		"x": 79.66,
+		"y": -33.69,
+		"color": "483a6aff"
+	},
+	{ "name": "shadow", "parent": "root", "rotation": -88.32, "x": -0.25, "y": -7.41, "icon": "circle" }
+],
+"slots": [
+	{ "name": "lv1-basic-worldbossmap_LavaDragon", "bone": "root" },
+	{ "name": "shadow_1", "bone": "shadow", "attachment": "lv1/basic/shadow_1" },
+	{ "name": "main_rock", "bone": "main_rock", "attachment": "main_rock" },
+	{ "name": "rock_1", "bone": "rock_1", "attachment": "rock_1" },
+	{ "name": "rock_2", "bone": "rock_2", "attachment": "rock_2" },
+	{ "name": "jewel", "bone": "jewel", "attachment": "jewel_1" },
+	{ "name": "chain_1", "bone": "chain_1", "attachment": "chain_1" },
+	{ "name": "chain_2", "bone": "chain_2", "attachment": "chain_2_1" },
+	{ "name": "chain_3", "bone": "chain_3", "attachment": "chain_3_1" },
+	{ "name": "skill_1_1", "bone": "effect_1" },
+	{ "name": "skill_1_2", "bone": "effect_1" },
+	{ "name": "light", "bone": "effect_2" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"shadow_1": {
+				"lv1/basic/shadow_1": { "x": -9.08, "y": -0.35, "rotation": 88.32, "width": 66, "height": 26 }
+			}
+		}
+	},
+	{
+		"name": "magic stone_1",
+		"attachments": {
+			"chain_1": {
+				"chain_1": { "name": "lv1/basic/chain/chain_1", "x": 8.96, "y": -1.5, "rotation": 90, "width": 86, "height": 68 }
+			},
+			"chain_2": {
+				"chain_2_1": { "name": "lv1/basic/chain/chain_2_1", "x": 28.28, "y": -9.26, "rotation": 91.42, "width": 88, "height": 88 },
+				"chain_2_2": { "name": "lv1/basic/chain/chain_2_2", "x": 28.28, "y": -9.26, "rotation": 91.42, "width": 88, "height": 88 },
+				"chain_2_3": { "name": "lv1/basic/chain/chain_2_3", "x": 28.28, "y": -9.26, "rotation": 91.42, "width": 88, "height": 88 }
+			},
+			"chain_3": {
+				"chain_3_1": { "name": "lv1/basic/chain/chain_3_1", "x": 31.64, "y": 6.94, "rotation": 89.29, "width": 88, "height": 88 },
+				"chain_3_2": { "name": "lv1/basic/chain/chain_3_2", "x": 31.64, "y": 6.94, "rotation": 89.29, "width": 88, "height": 88 },
+				"chain_3_3": { "name": "lv1/basic/chain/chain_3_3", "x": 31.64, "y": 6.94, "rotation": 89.29, "width": 88, "height": 88 }
+			},
+			"jewel": {
+				"jewel_1": { "name": "lv1/basic/jewel/jewel_1", "x": 22.11, "y": -0.26, "rotation": 90.43, "width": 36, "height": 62 },
+				"jewel_2": { "name": "lv1/basic/jewel/jewel_2", "x": 22.11, "y": -0.26, "rotation": 90.43, "width": 36, "height": 62 },
+				"jewel_3": { "name": "lv1/basic/jewel/jewel_3", "x": 22.11, "y": -0.26, "rotation": 90.43, "width": 36, "height": 62 },
+				"jewel_4": { "name": "lv1/basic/jewel/jewel_4", "x": 22.11, "y": -0.26, "rotation": 90.43, "width": 36, "height": 62 }
+			},
+			"light": {
+				"light": { "name": "lv1/effect/light_1", "x": 1.96, "y": 56.1, "rotation": 89.36, "width": 150, "height": 150 }
+			},
+			"main_rock": {
+				"main_rock": { "name": "lv1/basic/main_rock_1", "x": 58.5, "y": 2.87, "rotation": -90.13, "width": 118, "height": 176 },
+				"main_rock_2": { "name": "lv1/basic/main_rock_2", "x": 58.5, "y": 2.87, "rotation": -90.13, "width": 118, "height": 176 },
+				"main_rock_3": { "name": "lv1/basic/main_rock_3", "x": 58.5, "y": 2.87, "rotation": -90.13, "width": 118, "height": 176 }
+			},
+			"rock_1": {
+				"rock_1": { "name": "lv1/basic/rock_1", "x": 11.68, "y": 0.54, "rotation": 90.2, "width": 62, "height": 68 }
+			},
+			"rock_2": {
+				"rock_2": { "name": "lv1/basic/rock_2", "x": 11.32, "y": -0.04, "rotation": 89.8, "width": 62, "height": 68 }
+			},
+			"skill_1_1": {
+				"skill_1_1": { "name": "lv1/effect/skill_1_1", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_2": { "name": "lv1/effect/skill_1_2", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_3": { "name": "lv1/effect/skill_1_3", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_4": { "name": "lv1/effect/skill_1_4", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_5": { "name": "lv1/effect/skill_1_5", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_6": { "name": "lv1/effect/skill_1_6", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 },
+				"skill_1_7": { "name": "lv1/effect/skill_1_7", "x": 15.66, "y": 54.35, "rotation": 89.56, "width": 128, "height": 128 }
+			},
+			"skill_1_2": {
+				"skill_2_1": { "name": "lv1/effect/skill_2_1", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_2": { "name": "lv1/effect/skill_2_2", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_3": { "name": "lv1/effect/skill_2_3", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_4": { "name": "lv1/effect/skill_2_4", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_5": { "name": "lv1/effect/skill_2_5", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_6": { "name": "lv1/effect/skill_2_6", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_7": { "name": "lv1/effect/skill_2_7", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 },
+				"skill_2_8": { "name": "lv1/effect/skill_2_8", "x": 86.78, "y": 33.78, "rotation": 89.56, "width": 330, "height": 182 }
+			}
+		}
+	}
+],
+"animations": {
+	"skill_3": {
+		"slots": {
+			"chain_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_1" },
+					{ "time": 2, "name": "chain_1" }
+				]
+			},
+			"chain_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_2_1" },
+					{ "time": 2, "name": "chain_2_1" }
+				]
+			},
+			"chain_3": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_3_1" },
+					{ "time": 2, "name": "chain_3_1" }
+				]
+			},
+			"jewel": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "jewel_1" },
+					{ "time": 0.2667, "name": "jewel_2" },
+					{ "time": 0.3667, "name": "jewel_3" },
+					{ "time": 0.4667, "name": "jewel_4" },
+					{ "time": 1.1667, "name": "jewel_4" },
+					{ "time": 1.5, "name": "jewel_2" },
+					{ "time": 1.6667, "name": "jewel_3" },
+					{ "time": 2, "name": "jewel_1" }
+				]
+			},
+			"light": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0667, "color": "ecf9ff55" },
+					{ "time": 0.8333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 2, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "light" },
+					{ "time": 2, "name": "light" }
+				]
+			},
+			"lv1-basic-worldbossmap_LavaDragon": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2 }
+				]
+			},
+			"main_rock": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "main_rock" },
+					{ "time": 0.1, "name": "main_rock_2" },
+					{ "time": 0.2, "name": "main_rock_3" },
+					{ "time": 0.8333, "name": "main_rock_2" },
+					{ "time": 0.9333, "name": "main_rock" },
+					{ "time": 2, "name": "main_rock" }
+				]
+			},
+			"rock_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "rock_1" },
+					{ "time": 2, "name": "rock_1" }
+				]
+			},
+			"rock_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "rock_2" },
+					{ "time": 2, "name": "rock_2" }
+				]
+			},
+			"shadow_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "lv1/basic/shadow_1" },
+					{ "time": 2, "name": "lv1/basic/shadow_1" }
+				]
+			},
+			"skill_1_1": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.8333, "color": "fffffff5" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 0.1333, "name": "skill_1_1" },
+					{ "time": 0.2667, "name": "skill_1_2" },
+					{ "time": 0.4, "name": "skill_1_3" },
+					{ "time": 0.5333, "name": "skill_1_4" },
+					{ "time": 0.6667, "name": "skill_1_5" },
+					{ "time": 0.8, "name": "skill_1_6" },
+					{ "time": 0.9333, "name": "skill_1_7" },
+					{ "time": 1.0667 },
+					{ "time": 2 }
+				]
+			},
+			"skill_1_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 0.8333, "name": "skill_2_1" },
+					{ "time": 0.8667, "name": "skill_2_2" },
+					{ "time": 0.9, "name": "skill_2_3" },
+					{ "time": 0.9667, "name": "skill_2_4" },
+					{ "time": 1.0333, "name": "skill_2_5" },
+					{ "time": 1.1, "name": "skill_2_6" },
+					{ "time": 1.1667, "name": "skill_2_7" },
+					{ "time": 1.2333, "name": "skill_2_8" },
+					{ "time": 1.3 },
+					{ "time": 2 }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"rock_2": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.6667, "x": 5.35, "y": -0.01 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"rock_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.6667, "x": -4.87, "y": 0.01 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"jewel": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_3": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": 10.66 },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_2": {
+				"rotate": [
+					{},
+					{ "time": 1, "value": -13.05 },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"main_rock": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"hip": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 1, "y": 0.27 },
+					{ "time": 1.0333, "y": 0.51 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"effect_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "x": -5.25, "y": -0.04, "curve": "stepped" },
+					{ "time": 2, "x": -5.25, "y": -0.04 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"effect_2": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"shadow": {
+				"rotate": [
+					{}
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "skill_1_1", "offset": 2 },
+					{ "slot": "skill_1_2", "offset": -8 }
+				]
+			},
+			{
+				"time": 1.1667,
+				"offsets": [
+					{ "slot": "skill_1_2", "offset": -10 }
+				]
+			},
+			{
+				"time": 2,
+				"offsets": [
+					{ "slot": "skill_1_1", "offset": 2 },
+					{ "slot": "skill_1_2", "offset": -8 }
+				]
+			}
+		]
+	},
+	"stay": {
+		"slots": {
+			"chain_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_1" },
+					{ "time": 2, "name": "chain_1" }
+				]
+			},
+			"chain_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_2_1" },
+					{ "time": 0.5, "name": "chain_2_2" },
+					{ "time": 1, "name": "chain_2_3" },
+					{ "time": 1.5, "name": "chain_2_2" },
+					{ "time": 2, "name": "chain_2_1" }
+				]
+			},
+			"chain_3": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "chain_3_1" },
+					{ "time": 0.5, "name": "chain_3_2" },
+					{ "time": 1, "name": "chain_3_3" },
+					{ "time": 1.5, "name": "chain_3_2" },
+					{ "time": 2, "name": "chain_3_1" }
+				]
+			},
+			"jewel": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.5, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "jewel_1" },
+					{ "time": 0.0333, "name": "jewel_2" },
+					{ "time": 0.2333, "name": "jewel_3" },
+					{ "time": 0.4333, "name": "jewel_1" },
+					{ "time": 1.5, "name": "jewel_1" },
+					{ "time": 2, "name": "jewel_1" }
+				]
+			},
+			"light": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2 }
+				]
+			},
+			"lv1-basic-worldbossmap_LavaDragon": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2 }
+				]
+			},
+			"main_rock": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "main_rock" },
+					{ "time": 2, "name": "main_rock" }
+				]
+			},
+			"rock_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "rock_1" },
+					{ "time": 2, "name": "rock_1" }
+				]
+			},
+			"rock_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "rock_2" },
+					{ "time": 2, "name": "rock_2" }
+				]
+			},
+			"shadow_1": {
+				"rgba": [
+					{ "color": "ffffffc8" },
+					{ "time": 1, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffffd2" }
+				],
+				"attachment": [
+					{ "name": "lv1/basic/shadow_1" },
+					{ "time": 2, "name": "lv1/basic/shadow_1" }
+				]
+			},
+			"skill_1_1": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2 }
+				]
+			},
+			"skill_1_2": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2, "color": "ffffffff" }
+				],
+				"attachment": [
+					{},
+					{ "time": 2 }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"jewel": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 1.5, "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.5, "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 1.5, "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"rock_2": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 1, "x": 6.52, "y": -0.01 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"rock_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 1, "x": 6.38, "y": -0.01 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_2": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_3": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"chain_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"main_rock": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 1, "y": -3.26 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"hip": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.5, "y": -1.19 },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"effect_2": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"effect_1": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				]
+			},
+			"shadow": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 2 }
+				],
+				"scale": [
+					{},
+					{ "time": 1, "x": 1.135, "y": 1.135 },
+					{ "time": 2 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 2 }
+		]
+	}
+}
+}

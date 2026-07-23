@@ -1,0 +1,26 @@
+[
+  [
+    "sharedassets0.assets",
+    18,
+    "Texture2D",
+    "IsADirectoryError(21, 'Is a directory')"
+  ],
+  [
+    "sharedassets0.assets",
+    23,
+    "Texture2D",
+    "IsADirectoryError(21, 'Is a directory')"
+  ],
+  [
+    "sharedassets0.assets",
+    197,
+    "Font",
+    "TypeError(\"memoryview: a bytes-like object is required, not 'list'\")"
+  ],
+  [
+    "sharedassets0.assets",
+    198,
+    "Font",
+    "TypeError(\"memoryview: a bytes-like object is required, not 'list'\")"
+  ]
+]

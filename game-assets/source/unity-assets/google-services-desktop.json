@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1096265248869",
+    "firebase_url": "https://spp-evilhunter.firebaseio.com",
+    "project_id": "spp-evilhunter",
+    "storage_bucket": "spp-evilhunter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096265248869:android:f908a70b6f92041b86568c",
+        "android_client_info": {
+          "package_name": "com.superplanet.evilhunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096265248869-rk82dbh7rcijhh219akbt7glm6m3ldpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxOxD3aaRh8QF4PzxXNwiWDCogU9KIOcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096265248869-rk82dbh7rcijhh219akbt7glm6m3ldpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1096265248869-38737qbtqta5sugu1ep2u0368b0otiik.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.superplanet.evilhunter",
+                "app_store_id": "1493512288"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8270124078322153~1165595404"
+    }
+  ],
+  "configuration_version": "1"
+}

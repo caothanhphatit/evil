@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.evil-hunter.invalid/schemas/progression-economy-v1.schema.json",
+  "title": "Evidence-aware progression and economy content",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "releaseId", "domains", "releaseGate"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "releaseId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+    "domains": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hunters", "items", "quests", "missions", "shops", "mailTemplates", "adPlacements", "products"],
+      "properties": {
+        "hunters": { "$ref": "#/$defs/catalog" },
+        "items": { "$ref": "#/$defs/catalog" },
+        "quests": { "$ref": "#/$defs/catalog" },
+        "missions": { "$ref": "#/$defs/catalog" },
+        "shops": { "$ref": "#/$defs/catalog" },
+        "mailTemplates": { "$ref": "#/$defs/catalog" },
+        "adPlacements": { "$ref": "#/$defs/catalog" },
+        "products": { "$ref": "#/$defs/catalog" }
+      }
+    },
+    "releaseGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runnable", "blockingBindingIds"],
+      "properties": {
+        "runnable": { "type": "boolean" },
+        "blockingBindingIds": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  },
+  "$defs": {
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "records", "bindings"],
+      "properties": {
+        "state": { "enum": ["unresolved", "evidence-ready", "runtime-ready"] },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "source", "fields"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "source": { "$ref": "#/$defs/evidence" },
+              "fields": {
+                "type": "object",
+                "additionalProperties": { "$ref": "#/$defs/boundValue" }
+              }
+            }
+          }
+        },
+        "bindings": { "type": "array", "items": { "$ref": "#/$defs/binding" } }
+      }
+    },
+    "boundValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "confidence", "value", "evidence"],
+      "properties": {
+        "state": { "enum": ["resolved", "unresolved"] },
+        "confidence": { "enum": ["confirmed", "strongly-inferred", "tentative", "unknown"] },
+        "value": { "type": ["string", "number", "integer", "boolean", "array", "object", "null"] },
+        "evidence": { "anyOf": [{ "$ref": "#/$defs/evidence" }, { "type": "null" }] }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "requiredEvidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "state": { "enum": ["resolved", "unresolved"] },
+        "requiredEvidence": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "locator"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "locator": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

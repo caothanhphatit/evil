@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 5,
+  "wire": {
+    "encoding": "json-debug",
+    "maxMessageBytes": 16384,
+    "envelopeFields": ["version", "sequence", "session_id", "correlation_id", "payload"]
+  },
+  "clientCommands": [
+    { "wireName": "complete_boot", "rustName": "CompleteBoot", "fields": [] },
+    { "wireName": "select_bottom_menu", "rustName": "SelectBottomMenu", "fields": [{ "wireName": "menu", "rustType": "BottomMenuIntent", "tsType": "BottomMenuIntent" }] },
+    { "wireName": "navigate_back", "rustName": "NavigateBack", "fields": [] },
+    { "wireName": "enter_field", "rustName": "EnterField", "fields": [] },
+    { "wireName": "select_entity", "rustName": "SelectEntity", "fields": [{ "wireName": "entity_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "open_hunter_progression", "rustName": "OpenHunterProgression", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "equip_hunter_item", "rustName": "EquipHunterItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "item_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "claim_quest_reward", "rustName": "ClaimQuestReward", "fields": [{ "wireName": "quest_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "open_shop", "rustName": "OpenShop", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "purchase_shop_item", "rustName": "PurchaseShopItem", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "claim_mail", "rustName": "ClaimMail", "fields": [{ "wireName": "mail_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "claim_rewarded_ad", "rustName": "ClaimRewardedAd", "fields": [{ "wireName": "placement", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "start_topup_purchase", "rustName": "StartTopupPurchase", "fields": [{ "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "request_resync", "rustName": "RequestResync", "fields": [] }
+  ],
+  "serverMessages": [
+    { "wireName": "welcome", "rustName": "Welcome", "fields": ["player_token", "session_id", "snapshot"] },
+    { "wireName": "resync", "rustName": "Resync", "fields": ["snapshot"] },
+    { "wireName": "world_update", "rustName": "WorldUpdate", "fields": ["snapshot"] },
+    { "wireName": "intent_result", "rustName": "IntentResult", "fields": ["intent", "accepted", "reason", "snapshot"] },
+    { "wireName": "binding_blocked", "rustName": "BindingBlocked", "fields": ["intent", "blockers", "snapshot"] }
+  ]
+}

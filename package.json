@@ -1,0 +1,29 @@
+{
+  "name": "evil-hunter-web-rebuild",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "dev:web": "pnpm --dir apps/web dev",
+    "build:web": "pnpm --dir apps/web build",
+    "test:web": "pnpm --dir apps/web test",
+    "assets:index": "node tools/generate-asset-index.mjs",
+    "assets:catalog:full": "node tools/generate-full-asset-catalog.mjs",
+    "assets:generate:full-catalog": "node tools/generate-full-asset-catalog.mjs",
+    "assets:validate:full": "node tools/validate-full-asset-catalog.mjs",
+    "assets:validate:full-catalog": "node tools/validate-full-asset-catalog.mjs",
+    "assets:verify": "bash tools/verify-asset-copy.sh",
+    "assets:package:slice1": "node tools/package-slice1-content.mjs",
+    "assets:validate:slice1": "node tools/validate-slice1-content.mjs",
+    "assets:generate:original-flow": "node tools/generate-original-flow-content.mjs",
+    "assets:package:original-flow": "node tools/package-original-flow-content.mjs",
+    "assets:extract:village": "python3 tools/extract-village-content.py",
+    "assets:package:visible-world": "pnpm assets:extract:village && node tools/package-visible-world-content.mjs",
+    "assets:validate:original-flow": "node tools/validate-original-flow-content.mjs",
+    "scene:extract:level1": "python3 tools/extract-level1-scene.py",
+    "assets:extract:fonts": "python3 tools/extract-unity-fonts.py",
+    "test:assets": "node --test tools/tests/*.test.mjs",
+    "protocol:generate": "node tools/generate-protocol.mjs",
+    "smoke:fixture": "node tools/smoke-world.mjs"
+  }
+}

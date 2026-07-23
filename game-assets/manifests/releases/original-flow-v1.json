@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "original-flow-v1",
+  "legacy": {
+    "game": "Evil Hunter Tycoon",
+    "version": "1.411",
+    "package": "com.superplanet.evilhunter"
+  },
+  "evidencePolicy": {
+    "allowedConfidence": [
+      "confirmed",
+      "strongly-inferred",
+      "tentative",
+      "unknown"
+    ],
+    "numericRulePolicy": "legacy-verified-or-observed-only",
+    "runtimeBindingPolicy": "unresolved-bindings-block-release"
+  },
+  "evidenceSources": [
+    {
+      "path": "game-assets/manifests/original-flow-v1.selection.json",
+      "bytes": 9502,
+      "sha256": "a60914bf6afcf2658a9d46361a777a05d22c40d941ca77a66978824c05110242"
+    },
+    {
+      "path": "game-assets/asset-index.json",
+      "bytes": 1560431,
+      "sha256": "9b2d1f96605e14e04fd04720926f2846b6b21bef95f9caa2df35dba46e49d67e"
+    },
+    {
+      "path": "game-assets/extracted/exported/metadata/inventory.json",
+      "bytes": 11308781,
+      "sha256": "f0dfe98c3c89810e47dd861b97cf853fe6cbaa48b05a4a1e6dc2a4db4cc66c7c"
+    },
+    {
+      "path": "reverse-engineering/evidence/level1-scene-hierarchy.json",
+      "bytes": 25546425,
+      "sha256": "4dfaf4b66c879556ac6c4e4767347f9e4b022e78e2c6b2a2ba8d02c553d27622"
+    }
+  ],
+  "flows": [
+    {
+      "id": "boot",
+      "order": 1,
+      "confidence": "strongly-inferred",
+      "sceneObjects": [],
+      "assetIds": [
+        "boot.background",
+        "boot.logo",
+        "boot.touch-to-start",
+        "boot.loading"
+      ],
+      "bindings": [
+        {
+          "id": "boot.state-order",
+          "requiredEvidence": "Authorized clean-account boot trace with timestamps and locale state.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "boot.localized-copy",
+          "requiredEvidence": "Extracted locale keys and font metrics.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        }
+      ],
+      "status": "binding-blocked"
+    },
+    {
+      "id": "village",
+      "order": 2,
+      "confidence": "confirmed",
+      "sceneObjects": [
+        {
+          "pathId": 83,
+          "name": "UICanvas",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 119,
+          "name": "MainCanvas",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 212,
+          "name": "WorldCanvas",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 110,
+          "name": "MapManager",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 186,
+          "name": "BuildGroup",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 221,
+          "name": "BottomView",
+          "confidence": "confirmed"
+        }
+      ],
+      "assetIds": [
+        "village.map.candidate",
+        "village.background.candidate-01",
+        "village.menu.background",
+        "village.menu.icon-01",
+        "village.menu.icon-02",
+        "village.menu.icon-03",
+        "village.menu.icon-04",
+        "village.menu.icon-05",
+        "village.resource.gold",
+        "village.resource.gem"
+      ],
+      "bindings": [
+        {
+          "id": "village.background",
+          "requiredEvidence": "Resolved Image/Sprite reference or matching runtime capture.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "village.camera-bounds",
+          "requiredEvidence": "Decoded camera limits and map bounds.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "village.building-layout",
+          "requiredEvidence": "Decoded building anchors, sorting, colliders, and interactions.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        }
+      ],
+      "status": "binding-blocked"
+    },
+    {
+      "id": "hunter-roster",
+      "order": 3,
+      "confidence": "confirmed",
+      "sceneObjects": [
+        {
+          "pathId": 160,
+          "name": "HunterManager",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 183,
+          "name": "HunterGroup",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 42,
+          "name": "HunterBorder",
+          "confidence": "confirmed"
+        }
+      ],
+      "assetIds": [
+        "hunter.skeleton",
+        "hunter.atlas",
+        "hunter.texture",
+        "hunter.roster.background",
+        "hunter.roster.info"
+      ],
+      "bindings": [
+        {
+          "id": "hunter.starter-composition",
+          "requiredEvidence": "Serialized content row plus authorized starter-hunter observation.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "hunter.starter-stats",
+          "requiredEvidence": "Legacy-verified or observed authoritative values; filenames are insufficient.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "hunter.roster-layout",
+          "requiredEvidence": "Resolved UI sprite/text/layout component references.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        }
+      ],
+      "status": "binding-blocked"
+    },
+    {
+      "id": "field",
+      "order": 4,
+      "confidence": "strongly-inferred",
+      "sceneObjects": [
+        {
+          "pathId": 38,
+          "name": "EvilGroup",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 239,
+          "name": "HunterGroup",
+          "confidence": "confirmed"
+        },
+        {
+          "pathId": 212,
+          "name": "WorldCanvas",
+          "confidence": "confirmed"
+        }
+      ],
+      "assetIds": [
+        "field.hp-frame"
+      ],
+      "bindings": [
+        {
+          "id": "field.first-map",
+          "requiredEvidence": "Serialized map binding plus authorized first-field observation.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "field.first-monster",
+          "requiredEvidence": "Two-signal actor/content-ID correlation; mon_a_01_1 is not accepted as proof.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "field.combat-rules",
+          "requiredEvidence": "Recovered serialized values or authoritative runtime trace for cadence, damage, drops, and revival.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        },
+        {
+          "id": "field.presentation-events",
+          "requiredEvidence": "Observed animation, audio, effect, damage, death, and revival sequence.",
+          "state": "unresolved",
+          "confidence": "unknown",
+          "value": null
+        }
+      ],
+      "status": "binding-blocked"
+    }
+  ],
+  "assets": [
+    {
+      "id": "boot.background",
+      "sourcePath": "sprites/intro_bg_new__1695.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1695,
+        "type": "Sprite",
+        "name": "intro_bg_new"
+      },
+      "role": "boot-background",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 217813,
+      "sha256": "a4d49ec78c297799b387a1cb6e7ab5af7754d2c1527b4315db5b4233968df6ad"
+    },
+    {
+      "id": "boot.logo",
+      "sourcePath": "sprites/intro_img_glo_new__2141.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2141,
+        "type": "Sprite",
+        "name": "intro_img_glo_new"
+      },
+      "role": "boot-logo",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 311828,
+      "sha256": "baee6b446309089780585714fb03eea3b2164940cbcb21d67696f535a7f23846"
+    },
+    {
+      "id": "boot.touch-to-start",
+      "sourcePath": "sprites/intro_glo_touchtostart__7172.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7172,
+        "type": "Sprite",
+        "name": "intro_glo_touchtostart"
+      },
+      "role": "boot-action",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 646,
+      "sha256": "1ec6752d5e100da16dbae659cc3f7b952e360997781dc33806a7665adc72e50d"
+    },
+    {
+      "id": "boot.loading",
+      "sourcePath": "sprites/cloud_loading_btn__4266.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4266,
+        "type": "Sprite",
+        "name": "cloud_loading_btn"
+      },
+      "role": "loading-indicator",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 171,
+      "sha256": "fcea7627fc79729fb793854da0997ffc592c2876c54e97a77e9d5954e7ef5cf8"
+    },
+    {
+      "id": "village.map.candidate",
+      "sourcePath": "textures/map_new01__185.png",
+      "unity": {
+        "source": "sharedassets1.assets",
+        "pathId": 185,
+        "type": "Texture2D",
+        "name": "map_new01"
+      },
+      "role": "village-map-candidate",
+      "bindingState": "screen-candidate",
+      "confidence": "tentative",
+      "bytes": 1029228,
+      "sha256": "009f9c67b67d294c91992e4ad7fb5fcea71a32bef9b621a098cc200e80432f3f"
+    },
+    {
+      "id": "village.background.candidate-01",
+      "sourcePath": "sprites/background_01__1548.png",
+      "unity": {
+        "source": "sharedassets1.assets",
+        "pathId": 1548,
+        "type": "Sprite",
+        "name": "background_01"
+      },
+      "role": "village-background-candidate",
+      "bindingState": "screen-candidate",
+      "confidence": "tentative",
+      "bytes": 32025,
+      "sha256": "37518040b90ecce470606f868cbb5a0b4051b45597a4d22b703a93d07a61b9f5"
+    },
+    {
+      "id": "village.menu.background",
+      "sourcePath": "sprites/menu_bg_9__5116.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5116,
+        "type": "Sprite",
+        "name": "menu_bg_9"
+      },
+      "role": "bottom-menu-background",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 629,
+      "sha256": "21a2ccc9d6c13dc875e9a0258f2f2cb8ff5e6c6003383382e50ea158b9ba7c63"
+    },
+    {
+      "id": "village.menu.icon-01",
+      "sourcePath": "sprites/menu_ic_01__6756.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6756,
+        "type": "Sprite",
+        "name": "menu_ic_01"
+      },
+      "role": "bottom-menu-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 2212,
+      "sha256": "356f7e58e11c86449de045a0cb69c31ec60d32e8d1156a3bbf57b78a32698d99"
+    },
+    {
+      "id": "village.menu.icon-02",
+      "sourcePath": "sprites/menu_ic_02__2060.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2060,
+        "type": "Sprite",
+        "name": "menu_ic_02"
+      },
+      "role": "bottom-menu-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 2148,
+      "sha256": "e4fba56c8d0970227914ff77f544ffaf528167b6206286b54fbb950f05c09d3b"
+    },
+    {
+      "id": "village.menu.icon-03",
+      "sourcePath": "sprites/menu_ic_03__6410.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6410,
+        "type": "Sprite",
+        "name": "menu_ic_03"
+      },
+      "role": "bottom-menu-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1999,
+      "sha256": "8873bf8386c53a96e2ad3819beb4834f129061846fd3f599d91c353a41410ad2"
+    },
+    {
+      "id": "village.menu.icon-04",
+      "sourcePath": "sprites/menu_ic_04__5070.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5070,
+        "type": "Sprite",
+        "name": "menu_ic_04"
+      },
+      "role": "bottom-menu-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1179,
+      "sha256": "f4bd9d692fabaff914c50adae7a1943a8247dcc91fab76e6ac3489058508d924"
+    },
+    {
+      "id": "village.menu.icon-05",
+      "sourcePath": "sprites/menu_ic_05__6398.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6398,
+        "type": "Sprite",
+        "name": "menu_ic_05"
+      },
+      "role": "bottom-menu-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1219,
+      "sha256": "df8d43d2b733770110e2ac3439ecd064c0d2eb0f87db5342e8001c17dff5a9d5"
+    },
+    {
+      "id": "village.resource.gold",
+      "sourcePath": "sprites/top_ic_01_gold_24__4677.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4677,
+        "type": "Sprite",
+        "name": "top_ic_01_gold_24"
+      },
+      "role": "top-resource-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 604,
+      "sha256": "c670257b8f68cac20a9111accfffbbeba0552e1842965ba6a6331c06566dc5da"
+    },
+    {
+      "id": "village.resource.gem",
+      "sourcePath": "sprites/top_ic_02_gem_24__4214.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4214,
+        "type": "Sprite",
+        "name": "top_ic_02_gem_24"
+      },
+      "role": "top-resource-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 652,
+      "sha256": "23f8d5924a225aba7c4673c4b937c56e63b8e12d38dae477927d1fd84cfd237c"
+    },
+    {
+      "id": "hunter.skeleton",
+      "sourcePath": "text/hunter.json__245.bin",
+      "unity": {
+        "source": "sharedassets1.assets",
+        "pathId": 245,
+        "type": "TextAsset",
+        "name": "hunter.json"
+      },
+      "role": "hunter-spine-skeleton",
+      "bindingState": "source-confirmed",
+      "confidence": "confirmed",
+      "bytes": 4591829,
+      "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689"
+    },
+    {
+      "id": "hunter.atlas",
+      "sourcePath": "text/hunter.atlas__258.bin",
+      "unity": {
+        "source": "sharedassets1.assets",
+        "pathId": 258,
+        "type": "TextAsset",
+        "name": "hunter.atlas"
+      },
+      "role": "hunter-spine-atlas",
+      "bindingState": "source-confirmed",
+      "confidence": "confirmed",
+      "bytes": 675809,
+      "sha256": "112b655cfefe6465c2f296f2e9043212a9e91d7f50be9a9327dae377aa57d9d8"
+    },
+    {
+      "id": "hunter.texture",
+      "sourcePath": "textures/hunter__166.png",
+      "unity": {
+        "source": "sharedassets1.assets",
+        "pathId": 166,
+        "type": "Texture2D",
+        "name": "hunter"
+      },
+      "role": "hunter-spine-texture",
+      "bindingState": "source-confirmed",
+      "confidence": "confirmed",
+      "bytes": 4203445,
+      "sha256": "e4894324b686a69b8f57f304ab6c426e846c0d12733bf3fa1cd91ba79414e432"
+    },
+    {
+      "id": "hunter.roster.background",
+      "sourcePath": "sprites/hunter_area_bg__6171.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6171,
+        "type": "Sprite",
+        "name": "hunter_area_bg"
+      },
+      "role": "hunter-roster-background",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 97,
+      "sha256": "a959e9d2ab1fef10e8409d6ec91c8dad0e9d758299830d311adb9947f57b902a"
+    },
+    {
+      "id": "hunter.roster.info",
+      "sourcePath": "sprites/character_info__7588.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7588,
+        "type": "Sprite",
+        "name": "character_info"
+      },
+      "role": "hunter-detail-control",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 124,
+      "sha256": "3d06112c831cae47e4383ba4f9aadfdce47243ebbade2960667b713c00e926ce"
+    },
+    {
+      "id": "field.hp-frame",
+      "sourcePath": "sprites/hp_lv_bg_9__3211.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3211,
+        "type": "Sprite",
+        "name": "hp_lv_bg_9"
+      },
+      "role": "field-hp-frame",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 107,
+      "sha256": "94296c83ec5038fa29d7324201dab2d1819a797b2129f84b418338834910dfd6"
+    }
+  ],
+  "releaseGate": {
+    "runnable": false,
+    "blockingBindingIds": [
+      "boot.state-order",
+      "boot.localized-copy",
+      "village.background",
+      "village.camera-bounds",
+      "village.building-layout",
+      "hunter.starter-composition",
+      "hunter.starter-stats",
+      "hunter.roster-layout",
+      "field.first-map",
+      "field.first-monster",
+      "field.combat-rules",
+      "field.presentation-events"
+    ],
+    "reason": "Static evidence identifies the original flow surfaces, but runtime bindings and numeric rules remain unverified."
+  }
+}

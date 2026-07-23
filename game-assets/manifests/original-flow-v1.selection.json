@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "original-flow-v1",
+  "legacy": {
+    "game": "Evil Hunter Tycoon",
+    "version": "1.411",
+    "package": "com.superplanet.evilhunter"
+  },
+  "sources": {
+    "assetIndex": "game-assets/asset-index.json",
+    "inventory": "game-assets/extracted/exported/metadata/inventory.json",
+    "sceneHierarchy": "reverse-engineering/evidence/level1-scene-hierarchy.json"
+  },
+  "flows": [
+    {
+      "id": "boot",
+      "order": 1,
+      "confidence": "strongly-inferred",
+      "sceneObjects": [],
+      "assetIds": ["boot.background", "boot.logo", "boot.touch-to-start", "boot.loading"],
+      "bindings": [
+        { "id": "boot.state-order", "requiredEvidence": "Authorized clean-account boot trace with timestamps and locale state." },
+        { "id": "boot.localized-copy", "requiredEvidence": "Extracted locale keys and font metrics." }
+      ]
+    },
+    {
+      "id": "village",
+      "order": 2,
+      "confidence": "confirmed",
+      "sceneObjects": [
+        { "pathId": 83, "name": "UICanvas" },
+        { "pathId": 119, "name": "MainCanvas" },
+        { "pathId": 212, "name": "WorldCanvas" },
+        { "pathId": 110, "name": "MapManager" },
+        { "pathId": 186, "name": "BuildGroup" },
+        { "pathId": 221, "name": "BottomView" }
+      ],
+      "assetIds": ["village.map.candidate", "village.background.candidate-01", "village.menu.background", "village.menu.icon-01", "village.menu.icon-02", "village.menu.icon-03", "village.menu.icon-04", "village.menu.icon-05", "village.resource.gold", "village.resource.gem"],
+      "bindings": [
+        { "id": "village.background", "requiredEvidence": "Resolved Image/Sprite reference or matching runtime capture." },
+        { "id": "village.camera-bounds", "requiredEvidence": "Decoded camera limits and map bounds." },
+        { "id": "village.building-layout", "requiredEvidence": "Decoded building anchors, sorting, colliders, and interactions." }
+      ]
+    },
+    {
+      "id": "hunter-roster",
+      "order": 3,
+      "confidence": "confirmed",
+      "sceneObjects": [
+        { "pathId": 160, "name": "HunterManager" },
+        { "pathId": 183, "name": "HunterGroup" },
+        { "pathId": 42, "name": "HunterBorder" }
+      ],
+      "assetIds": ["hunter.skeleton", "hunter.atlas", "hunter.texture", "hunter.roster.background", "hunter.roster.info"],
+      "bindings": [
+        { "id": "hunter.starter-composition", "requiredEvidence": "Serialized content row plus authorized starter-hunter observation." },
+        { "id": "hunter.starter-stats", "requiredEvidence": "Legacy-verified or observed authoritative values; filenames are insufficient." },
+        { "id": "hunter.roster-layout", "requiredEvidence": "Resolved UI sprite/text/layout component references." }
+      ]
+    },
+    {
+      "id": "field",
+      "order": 4,
+      "confidence": "strongly-inferred",
+      "sceneObjects": [
+        { "pathId": 38, "name": "EvilGroup" },
+        { "pathId": 239, "name": "HunterGroup" },
+        { "pathId": 212, "name": "WorldCanvas" }
+      ],
+      "assetIds": ["field.hp-frame"],
+      "bindings": [
+        { "id": "field.first-map", "requiredEvidence": "Serialized map binding plus authorized first-field observation." },
+        { "id": "field.first-monster", "requiredEvidence": "Two-signal actor/content-ID correlation; mon_a_01_1 is not accepted as proof." },
+        { "id": "field.combat-rules", "requiredEvidence": "Recovered serialized values or authoritative runtime trace for cadence, damage, drops, and revival." },
+        { "id": "field.presentation-events", "requiredEvidence": "Observed animation, audio, effect, damage, death, and revival sequence." }
+      ]
+    }
+  ],
+  "assets": [
+    { "id": "boot.background", "sourcePath": "sprites/intro_bg_new__1695.png", "unity": { "source": "sharedassets0.assets", "pathId": 1695, "type": "Sprite", "name": "intro_bg_new" }, "role": "boot-background", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "boot.logo", "sourcePath": "sprites/intro_img_glo_new__2141.png", "unity": { "source": "sharedassets0.assets", "pathId": 2141, "type": "Sprite", "name": "intro_img_glo_new" }, "role": "boot-logo", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "boot.touch-to-start", "sourcePath": "sprites/intro_glo_touchtostart__7172.png", "unity": { "source": "sharedassets0.assets", "pathId": 7172, "type": "Sprite", "name": "intro_glo_touchtostart" }, "role": "boot-action", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "boot.loading", "sourcePath": "sprites/cloud_loading_btn__4266.png", "unity": { "source": "sharedassets0.assets", "pathId": 4266, "type": "Sprite", "name": "cloud_loading_btn" }, "role": "loading-indicator", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.map.candidate", "sourcePath": "textures/map_new01__185.png", "unity": { "source": "sharedassets1.assets", "pathId": 185, "type": "Texture2D", "name": "map_new01" }, "role": "village-map-candidate", "bindingState": "screen-candidate", "confidence": "tentative" },
+    { "id": "village.background.candidate-01", "sourcePath": "sprites/background_01__1548.png", "unity": { "source": "sharedassets1.assets", "pathId": 1548, "type": "Sprite", "name": "background_01" }, "role": "village-background-candidate", "bindingState": "screen-candidate", "confidence": "tentative" },
+    { "id": "village.menu.background", "sourcePath": "sprites/menu_bg_9__5116.png", "unity": { "source": "sharedassets0.assets", "pathId": 5116, "type": "Sprite", "name": "menu_bg_9" }, "role": "bottom-menu-background", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.menu.icon-01", "sourcePath": "sprites/menu_ic_01__6756.png", "unity": { "source": "sharedassets0.assets", "pathId": 6756, "type": "Sprite", "name": "menu_ic_01" }, "role": "bottom-menu-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.menu.icon-02", "sourcePath": "sprites/menu_ic_02__2060.png", "unity": { "source": "sharedassets0.assets", "pathId": 2060, "type": "Sprite", "name": "menu_ic_02" }, "role": "bottom-menu-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.menu.icon-03", "sourcePath": "sprites/menu_ic_03__6410.png", "unity": { "source": "sharedassets0.assets", "pathId": 6410, "type": "Sprite", "name": "menu_ic_03" }, "role": "bottom-menu-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.menu.icon-04", "sourcePath": "sprites/menu_ic_04__5070.png", "unity": { "source": "sharedassets0.assets", "pathId": 5070, "type": "Sprite", "name": "menu_ic_04" }, "role": "bottom-menu-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.menu.icon-05", "sourcePath": "sprites/menu_ic_05__6398.png", "unity": { "source": "sharedassets0.assets", "pathId": 6398, "type": "Sprite", "name": "menu_ic_05" }, "role": "bottom-menu-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.resource.gold", "sourcePath": "sprites/top_ic_01_gold_24__4677.png", "unity": { "source": "sharedassets0.assets", "pathId": 4677, "type": "Sprite", "name": "top_ic_01_gold_24" }, "role": "top-resource-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "village.resource.gem", "sourcePath": "sprites/top_ic_02_gem_24__4214.png", "unity": { "source": "sharedassets0.assets", "pathId": 4214, "type": "Sprite", "name": "top_ic_02_gem_24" }, "role": "top-resource-icon", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "hunter.skeleton", "sourcePath": "text/hunter.json__245.bin", "unity": { "source": "sharedassets1.assets", "pathId": 245, "type": "TextAsset", "name": "hunter.json" }, "role": "hunter-spine-skeleton", "bindingState": "source-confirmed", "confidence": "confirmed" },
+    { "id": "hunter.atlas", "sourcePath": "text/hunter.atlas__258.bin", "unity": { "source": "sharedassets1.assets", "pathId": 258, "type": "TextAsset", "name": "hunter.atlas" }, "role": "hunter-spine-atlas", "bindingState": "source-confirmed", "confidence": "confirmed" },
+    { "id": "hunter.texture", "sourcePath": "textures/hunter__166.png", "unity": { "source": "sharedassets1.assets", "pathId": 166, "type": "Texture2D", "name": "hunter" }, "role": "hunter-spine-texture", "bindingState": "source-confirmed", "confidence": "confirmed" },
+    { "id": "hunter.roster.background", "sourcePath": "sprites/hunter_area_bg__6171.png", "unity": { "source": "sharedassets0.assets", "pathId": 6171, "type": "Sprite", "name": "hunter_area_bg" }, "role": "hunter-roster-background", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "hunter.roster.info", "sourcePath": "sprites/character_info__7588.png", "unity": { "source": "sharedassets0.assets", "pathId": 7588, "type": "Sprite", "name": "character_info" }, "role": "hunter-detail-control", "bindingState": "screen-candidate", "confidence": "strongly-inferred" },
+    { "id": "field.hp-frame", "sourcePath": "sprites/hp_lv_bg_9__3211.png", "unity": { "source": "sharedassets0.assets", "pathId": 3211, "type": "Sprite", "name": "hp_lv_bg_9" }, "role": "field-hp-frame", "bindingState": "screen-candidate", "confidence": "strongly-inferred" }
+  ]
+}

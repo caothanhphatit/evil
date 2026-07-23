@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "manifestType": "approved-source-inventory",
+  "game": "Evil Hunter Tycoon",
+  "version": "1.411",
+  "sourceOfTruth": {
+    "assetIndex": "game-assets/asset-index.json",
+    "unityInventory": "game-assets/extracted/exported/metadata/inventory.json",
+    "typeCounts": "game-assets/extracted/exported/metadata/type_counts.json",
+    "joinedUnityRoot": "game-assets/extracted/joined_unity_files"
+  },
+  "exportedTotals": {
+    "files": 9359,
+    "bytes": 190429626,
+    "byPath": {
+      "audio": { "files": 116, "bytes": 78647326 },
+      "fonts": { "files": 2, "bytes": 16659944 },
+      "metadata": { "files": 3, "bytes": 11310158 },
+      "sprites": { "files": 8980, "bytes": 31295890 },
+      "text": { "files": 106, "bytes": 11002132 },
+      "textures": { "files": 152, "bytes": 41514176 }
+    }
+  },
+  "serializedObjectCounts": {
+    "GameObject": 26853,
+    "RectTransform": 19411,
+    "CanvasRenderer": 16814,
+    "Sprite": 8980,
+    "Transform": 7442,
+    "SpriteRenderer": 6015,
+    "Animator": 5967,
+    "MonoScript": 4438,
+    "MonoBehaviour": 1613,
+    "AnimationClip": 650,
+    "AnimatorController": 526,
+    "ParticleSystem": 486,
+    "ParticleSystemRenderer": 486,
+    "AudioClip": 116,
+    "TextAsset": 106,
+    "Material": 73,
+    "SortingGroup": 103,
+    "Mesh": 30,
+    "MeshRenderer": 121,
+    "CircleCollider2D": 105,
+    "BoxCollider2D": 32,
+    "CapsuleCollider2D": 1,
+    "NavMeshSettings": 1,
+    "Font": 2
+  },
+  "sourceClasses": [
+    { "id": "world.scene", "evidence": ["game-assets/extracted/joined_unity_files/level1"], "state": "extracted-needs-scene-schema" },
+    { "id": "actors.spine", "evidence": ["game-assets/extracted/exported/text/*.json__*.bin", "game-assets/extracted/exported/text/*.atlas__*.bin", "game-assets/extracted/exported/textures/*.png"], "state": "extracted-needs-bundle-validation" },
+    { "id": "ui.sprites", "evidence": ["game-assets/extracted/exported/sprites/*.png", "game-assets/extracted/exported/textures/*"], "state": "extracted-needs-layout-schema" },
+    { "id": "animation.effects", "evidence": ["game-assets/extracted/exported/metadata/inventory.json"], "state": "serialized-only-needs-controller-export" },
+    { "id": "audio", "evidence": ["game-assets/extracted/exported/audio/*.wav"], "state": "decoded-needs-cue-bindings" },
+    { "id": "fonts", "evidence": ["game-assets/extracted/exported/fonts/*.ttf", "tools/extract-unity-fonts.py"], "state": "decoded-needs-glyph-and-layout-validation" },
+    { "id": "localization", "evidence": ["game-assets/extracted/addressables_bundles/localization-*"], "state": "bundle-present-needs-table-extraction" },
+    { "id": "content-data", "evidence": ["reverse-engineering/evidence/monoscripts.csv", "game-assets/extracted/joined_unity_files/*"], "state": "schema-reconstruction-required" }
+  ],
+  "extractionFailures": [],
+  "extractionOutcomes": [
+    { "source": "sharedassets0.assets", "pathId": 18, "type": "Texture2D", "originalError": "IsADirectoryError", "state": "excluded-with-reason", "reason": "Verified 0x0 Font Texture placeholder with no image payload." },
+    { "source": "sharedassets0.assets", "pathId": 23, "type": "Texture2D", "originalError": "IsADirectoryError", "state": "excluded-with-reason", "reason": "Verified 0x0 Font Texture placeholder with no image payload." },
+    { "source": "sharedassets0.assets", "pathId": 197, "type": "Font", "originalError": "unsupported-list-payload", "state": "recovered", "output": "fonts/DefaultFont2__197.ttf" },
+    { "source": "sharedassets0.assets", "pathId": 198, "type": "Font", "originalError": "unsupported-list-payload", "state": "recovered", "output": "fonts/NotoSansThai-Bold__198.ttf" }
+  ],
+  "spineSkeletonNames": [
+    "Chief", "Npc", "Phoenix", "chaos_abyss_road", "chaos_crimson_naga", "chaos_ent", "chaos_field_boss", "chaos_golem", "chaos_void_wisp", "darkness_prince", "devilcastle_pet", "gold_pet", "hunter", "mon_a_01_1", "mon_a_01_2", "mon_a_02_1", "mon_a_02_2", "mon_a_03_1", "mon_a_03_2", "mon_a_04", "mon_abyss_01", "mon_adoblin", "mon_b_01", "mon_b_02", "mon_b_03", "mon_c_01", "mon_c_02", "mon_c_03", "mon_c_04", "mon_c_05", "mon_c_06", "mon_c_07", "mon_dg_01", "mon_dg_02", "mon_go_01", "mon_go_02", "mon_go_03", "mon_go_04", "mon_go_05", "mon_goldblin", "mon_new_01", "mon_new_02", "mon_new_03", "mon_new_04", "mon_new_boss", "mon_new_boss_1", "mon_world_boss", "mon_world_boss2", "mon_world_boss3", "mon_world_boss4", "mon_world_boss4_2", "npc_animal", "pet"
+  ],
+  "localizationBundles": [
+    "localization-assets-shared_assets_all.bundle",
+    "localization-locales_assets_all.bundle",
+    "localization-string-tables-english(en)_assets_all.bundle",
+    "localization-string-tables-japanese(ja)_assets_all.bundle",
+    "localization-string-tables-chinese(simplified)(zh)_assets_all.bundle",
+    "localization-string-tables-chinese(traditional)(zh-tw)_assets_all.bundle"
+  ],
+  "releasePolicy": {
+    "sourceFilesImmutable": true,
+    "pathIdIsNotContentId": true,
+    "requiredStates": ["legacy-verified", "observed", "migration-fixture", "approved-equivalent", "excluded-with-reason"],
+    "fullGameRunnable": false,
+    "currentRunnableRelease": "slice-001-combat-v1"
+  }
+}

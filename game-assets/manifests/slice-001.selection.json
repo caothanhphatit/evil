@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "slice-001-combat-v1",
+  "source": {
+    "game": "Evil Hunter Tycoon",
+    "version": "1.411",
+    "assetIndex": "game-assets/asset-index.json",
+    "inventory": "game-assets/extracted/exported/metadata/inventory.json"
+  },
+  "contentUnits": [
+    {
+      "id": "actor.hunter.primary",
+      "kind": "spine-skeleton",
+      "requiredAnimations": ["hunter_stay", "hunter_walk", "h1_hit", "hunter_damage", "hunter_dying", "hunter_die"],
+      "assets": [
+        { "id": "actor.hunter.primary.atlas", "sourcePath": "text/hunter.atlas__258.bin", "outputPath": "actors/hunter/hunter.atlas", "bytes": 675809, "sha256": "112b655cfefe6465c2f296f2e9043212a9e91d7f50be9a9327dae377aa57d9d8", "unity": { "source": "sharedassets1.assets", "pathId": 258, "type": "TextAsset", "name": "hunter.atlas" } },
+        { "id": "actor.hunter.primary.skeleton", "sourcePath": "text/hunter.json__245.bin", "outputPath": "actors/hunter/hunter.json", "bytes": 4591829, "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689", "unity": { "source": "sharedassets1.assets", "pathId": 245, "type": "TextAsset", "name": "hunter.json" } },
+        { "id": "actor.hunter.primary.texture", "sourcePath": "textures/hunter__166.png", "outputPath": "actors/hunter/hunter.png", "bytes": 4203445, "sha256": "e4894324b686a69b8f57f304ab6c426e846c0d12733bf3fa1cd91ba79414e432", "unity": { "source": "sharedassets1.assets", "pathId": 166, "type": "Texture2D", "name": "hunter" } }
+      ]
+    },
+    {
+      "id": "actor.monster.a01.level1",
+      "kind": "spine-skeleton",
+      "requiredAnimations": ["stay", "stay_b", "walk", "walk_b", "atk", "atk_b", "dying", "die"],
+      "requiredSkins": ["lv1"],
+      "assets": [
+        { "id": "actor.monster.a01.level1.atlas", "sourcePath": "text/mon_a_01_1.atlas__333.bin", "outputPath": "actors/monster-a01/mon_a_01_1.atlas", "bytes": 2104, "sha256": "455b264baca7dee293d147510ac6d5e3a8ec3a37429d78be1aec16d74f01fe09", "unity": { "source": "sharedassets1.assets", "pathId": 333, "type": "TextAsset", "name": "mon_a_01_1.atlas" } },
+        { "id": "actor.monster.a01.level1.skeleton", "sourcePath": "text/mon_a_01_1.json__289.bin", "outputPath": "actors/monster-a01/mon_a_01_1.json", "bytes": 50821, "sha256": "9821db8a8dff12694b43c74c88502a752246cbe27bef795ce5f76dc63ad00f7a", "unity": { "source": "sharedassets1.assets", "pathId": 289, "type": "TextAsset", "name": "mon_a_01_1.json" } },
+        { "id": "actor.monster.a01.level1.texture", "sourcePath": "textures/mon_a_01_1__171.png", "outputPath": "actors/monster-a01/mon_a_01_1.png", "bytes": 9443, "sha256": "320a7ac8aae96b26e2048d5c9c310c53e46bf186e44dbc3b822443b5c357a1f2", "unity": { "source": "sharedassets1.assets", "pathId": 171, "type": "Texture2D", "name": "mon_a_01_1" } }
+      ]
+    },
+    {
+      "id": "animation.death.grave",
+      "kind": "frame-animation",
+      "frameRate": 8,
+      "loop": false,
+      "assets": [
+        { "id": "animation.death.grave.frame.0", "sourcePath": "sprites/Adventure_box_07_grave_0__465.png", "outputPath": "animations/grave/frame-0.png", "bytes": 1965, "sha256": "a7c6c2ade5e984cbbb23cc82a373e9e8eb4b81cf63ecf468c9a802b4843ec119", "unity": { "source": "sharedassets0.assets", "pathId": 465, "type": "Sprite", "name": "Adventure_box_07_grave_0" } },
+        { "id": "animation.death.grave.frame.1", "sourcePath": "sprites/Adventure_box_07_grave_1__873.png", "outputPath": "animations/grave/frame-1.png", "bytes": 2088, "sha256": "4e0390e4997d6e57a35b470dc2f76b0ac4badde15f2eb0e490ab10c404d50fef", "unity": { "source": "sharedassets0.assets", "pathId": 873, "type": "Sprite", "name": "Adventure_box_07_grave_1" } },
+        { "id": "animation.death.grave.frame.2", "sourcePath": "sprites/Adventure_box_07_grave_2__685.png", "outputPath": "animations/grave/frame-2.png", "bytes": 2033, "sha256": "34e36d611f2791662b83fdd4e150364a209333e73e909347119b2bb4d542fd24", "unity": { "source": "sharedassets0.assets", "pathId": 685, "type": "Sprite", "name": "Adventure_box_07_grave_2" } },
+        { "id": "animation.death.grave.frame.3", "sourcePath": "sprites/Adventure_box_07_grave_3__8767.png", "outputPath": "animations/grave/frame-3.png", "bytes": 2230, "sha256": "8aeaad5da721b550011a3a852dae54df36eb4b3c29b81ba35ca4e2a266dad2cb", "unity": { "source": "sharedassets0.assets", "pathId": 8767, "type": "Sprite", "name": "Adventure_box_07_grave_3" } }
+      ]
+    },
+    {
+      "id": "effect.candidate.blade-dance-hit",
+      "kind": "frame-animation",
+      "frameRate": 12,
+      "loop": false,
+      "status": "unbound-candidate",
+      "presentationOnly": true,
+      "evidence": { "source": "sharedassets1.assets", "pathId": 665, "type": "AnimationClip", "name": "BladeDanceHitEffect" },
+      "assets": [
+        { "id": "effect.candidate.blade-dance-hit.frame.0", "sourcePath": "sprites/h1_hero_bladedance_0__972.png", "outputPath": "effects/blade-dance-hit/frame-0.png", "bytes": 2039, "sha256": "6946983a5ee20b3da2757aeec05ee763d2ef70e502b2ae124cf64c7da4b15ef7", "unity": { "source": "sharedassets0.assets", "pathId": 972, "type": "Sprite", "name": "h1_hero_bladedance_0" } },
+        { "id": "effect.candidate.blade-dance-hit.frame.1", "sourcePath": "sprites/h1_hero_bladedance_1__1094.png", "outputPath": "effects/blade-dance-hit/frame-1.png", "bytes": 1924, "sha256": "5e4f427b4f54f19f20e287fbe370f07b5afe63d70504fed2ae8b2882447632ea", "unity": { "source": "sharedassets0.assets", "pathId": 1094, "type": "Sprite", "name": "h1_hero_bladedance_1" } },
+        { "id": "effect.candidate.blade-dance-hit.frame.2", "sourcePath": "sprites/h1_hero_bladedance_2__948.png", "outputPath": "effects/blade-dance-hit/frame-2.png", "bytes": 1778, "sha256": "9be8afdbe186b3c8726f575f3a89c32b9487293ab6a3df2ba7da954441b9caf7", "unity": { "source": "sharedassets0.assets", "pathId": 948, "type": "Sprite", "name": "h1_hero_bladedance_2" } },
+        { "id": "effect.candidate.blade-dance-hit.frame.3", "sourcePath": "sprites/h1_hero_bladedance_3__8140.png", "outputPath": "effects/blade-dance-hit/frame-3.png", "bytes": 1570, "sha256": "589f09e8a464d68466ae1873c67a41a92c43cced8c9d85ae6bb490155e9b5956", "unity": { "source": "sharedassets0.assets", "pathId": 8140, "type": "Sprite", "name": "h1_hero_bladedance_3" } }
+      ]
+    },
+    {
+      "id": "icon.equipment.unique",
+      "kind": "image",
+      "assets": [
+        { "id": "icon.equipment.unique.image", "sourcePath": "sprites/item_unique_01__1457.png", "outputPath": "icons/item-unique-01.png", "bytes": 2739, "sha256": "9070238ab72cb9eafe0ff7695bc6abb9d653fc2e1a0cbd4a8f5b8ae23c9e47b3", "unity": { "source": "sharedassets0.assets", "pathId": 1457, "type": "Sprite", "name": "item_unique_01" } }
+      ]
+    },
+    {
+      "id": "audio.candidates.slice-001",
+      "kind": "audio-bank",
+      "status": "unbound-candidate",
+      "usage": "manual-verification-required",
+      "assets": [
+        { "id": "audio.candidate.shade-javelin-hit", "sourcePath": "audio/shadeJavelinHit__920.wav", "outputPath": "audio/shade-javelin-hit.wav", "bytes": 110636, "sha256": "b1eaeff2fb0cbcf9ec964842581714b35b96f2987cb0fb74eb5943d0b182227c", "unity": { "source": "sharedassets1.assets", "pathId": 920, "type": "AudioClip", "name": "shadeJavelinHit" } },
+        { "id": "audio.candidate.true-death", "sourcePath": "audio/true_death__932.wav", "outputPath": "audio/true-death.wav", "bytes": 33452, "sha256": "f92e7ef0dbb94d24556df6412da04b2ad4b13e4d476c603300e0e672cd144587", "unity": { "source": "sharedassets1.assets", "pathId": 932, "type": "AudioClip", "name": "true_death" } },
+        { "id": "audio.candidate.unique-drop", "sourcePath": "audio/uniquedrop__956.wav", "outputPath": "audio/unique-drop.wav", "bytes": 163628, "sha256": "26af66823183332acfb1dc34d28577109a9b81c352c1f32626800305528423df", "unity": { "source": "sharedassets1.assets", "pathId": 956, "type": "AudioClip", "name": "uniquedrop" } },
+        { "id": "audio.candidate.spear-attack", "sourcePath": "audio/spearAttack__965.wav", "outputPath": "audio/spear-attack.wav", "bytes": 101420, "sha256": "9205b336b08f089471a7123e512427ce741b3f1e1f44494666aea72551522959", "unity": { "source": "sharedassets1.assets", "pathId": 965, "type": "AudioClip", "name": "spearAttack" } }
+      ]
+    }
+  ]
+}

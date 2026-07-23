@@ -1,0 +1,98 @@
+name: evil-hunter-web-rebuild
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: evil_hunter
+      POSTGRES_USER: evil_hunter
+      POSTGRES_PASSWORD: evil_hunter
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U evil_hunter -d evil_hunter"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "16379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    image: postgres:17-alpine
+    environment:
+      DATABASE_URL: postgres://evil_hunter:evil_hunter@postgres:5432/evil_hunter
+    command: ["/bin/sh", "/migrations/run-migrations.sh"]
+    volumes:
+      - ./infra/db:/migrations:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8080
+      RUST_LOG: evil_hunter_server=info,tower_http=info
+      LOG_FORMAT: pretty
+      DATABASE_URL: postgres://evil_hunter:evil_hunter@postgres:5432/evil_hunter
+      REDIS_URL: redis://redis:6379/0
+      WEB_ORIGIN: http://localhost:5173
+      SIMULATION_TICK_RATE: 10
+      SIMULATION_SEED: 6840227782638526189
+      SESSION_COOKIE_SECURE: "false"
+      SESSION_TTL_SECONDS: 604800
+      PLAYER_LEASE_TTL_MS: 15000
+      COMMAND_RATE_LIMIT: 30
+      COMMAND_RATE_WINDOW_MS: 1000
+    ports:
+      - "8080:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  web:
+    image: node:22-bookworm-slim
+    working_dir: /workspace/apps/web
+    environment:
+      VITE_WORLD_WS_URL: ws://localhost:8080/ws
+      VITE_WORLD_API_URL: http://localhost:8080
+    command: ["sh", "-lc", "npm ci && npm run dev"]
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/web:/workspace/apps/web
+      - ./game-assets/extracted/exported:/workspace/apps/web/public/game-assets:ro
+      - web_node_modules:/workspace/apps/web/node_modules
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  web_node_modules:

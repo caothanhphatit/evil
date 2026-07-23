@@ -1,0 +1,1062 @@
+{
+"skeleton": {
+	"hash": "u2LDy2je7Nk",
+	"spine": "4.2.43",
+	"x": -21.05,
+	"y": -16.05,
+	"width": 42.09,
+	"height": 42.09,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root", "rotation": -0.12, "y": 5 },
+	{ "name": "devilcastle_pet", "parent": "root", "x": -0.02, "y": 9, "color": "ff8200ff", "icon": "asterisk" }
+],
+"slots": [
+	{ "name": "devilcastle_01", "bone": "devilcastle_pet", "color": "ffffff00", "attachment": "devilcastle_01/devilcastle_01_01" },
+	{ "name": "devilcastle_02", "bone": "devilcastle_pet", "color": "ffffff00", "attachment": "devilcastle_02/devilcastle_01_01" },
+	{ "name": "devilcastle_03", "bone": "devilcastle_pet", "color": "ffffff00", "attachment": "devilcastle_03/devilcastle_01_01" },
+	{ "name": "devilcastle_04", "bone": "devilcastle_pet", "color": "ffffff00", "attachment": "devilcastle_04/devilcastle_01_01" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"devilcastle_01": {
+				"devilcastle_01/devilcastle_01_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_01_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_01_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_01_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_02_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_02_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_02_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_02_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_03_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_03_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_03_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_01/devilcastle_03_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 }
+			},
+			"devilcastle_02": {
+				"devilcastle_02/devilcastle_01_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_01_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_01_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_01_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_02_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_02_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_02_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_02_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_03_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_03_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_03_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_02/devilcastle_03_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 }
+			},
+			"devilcastle_03": {
+				"devilcastle_03/devilcastle_01_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_01_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_01_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_01_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_02_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_02_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_02_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_02_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_03_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_03_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_03_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_03/devilcastle_03_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 }
+			},
+			"devilcastle_04": {
+				"devilcastle_04/devilcastle_01_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_01_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_01_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_01_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_02_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_02_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_02_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_02_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_03_01": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_03_02": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_03_03": { "x": 0.02, "y": -9, "width": 42, "height": 42 },
+				"devilcastle_04/devilcastle_03_04": { "x": 0.02, "y": -9, "width": 42, "height": 42 }
+			}
+		}
+	}
+],
+"animations": {
+	"devilcastle01_eat": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_03_01" },
+					{ "time": 0.1667, "name": "devilcastle_01/devilcastle_03_02" },
+					{ "time": 0.3333, "name": "devilcastle_01/devilcastle_03_03" },
+					{ "time": 0.5, "name": "devilcastle_01/devilcastle_03_04" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_03_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle01_walk": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.1667, "name": "devilcastle_01/devilcastle_01_02" },
+					{ "time": 0.3333, "name": "devilcastle_01/devilcastle_01_03" },
+					{ "time": 0.5, "name": "devilcastle_01/devilcastle_01_04" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle01_walk_b": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_02_01" },
+					{ "time": 0.1667, "name": "devilcastle_01/devilcastle_02_02" },
+					{ "time": 0.3333, "name": "devilcastle_01/devilcastle_02_03" },
+					{ "time": 0.5, "name": "devilcastle_01/devilcastle_02_04" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_02_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle02_eat": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_03_01" },
+					{ "time": 0.1667, "name": "devilcastle_02/devilcastle_03_02" },
+					{ "time": 0.3333, "name": "devilcastle_02/devilcastle_03_03" },
+					{ "time": 0.5, "name": "devilcastle_02/devilcastle_03_04" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_03_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle02_walk": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.1667, "name": "devilcastle_02/devilcastle_01_02" },
+					{ "time": 0.3333, "name": "devilcastle_02/devilcastle_01_03" },
+					{ "time": 0.5, "name": "devilcastle_02/devilcastle_01_04" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle02_walk_b": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_02_01" },
+					{ "time": 0.1667, "name": "devilcastle_02/devilcastle_02_02" },
+					{ "time": 0.3333, "name": "devilcastle_02/devilcastle_02_03" },
+					{ "time": 0.5, "name": "devilcastle_02/devilcastle_02_04" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_02_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle03_eat": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_03_01" },
+					{ "time": 0.1667, "name": "devilcastle_03/devilcastle_03_02" },
+					{ "time": 0.3333, "name": "devilcastle_03/devilcastle_03_03" },
+					{ "time": 0.5, "name": "devilcastle_03/devilcastle_03_04" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_03_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle03_walk": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.1667, "name": "devilcastle_03/devilcastle_01_02" },
+					{ "time": 0.3333, "name": "devilcastle_03/devilcastle_01_03" },
+					{ "time": 0.5, "name": "devilcastle_03/devilcastle_01_04" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle03_walk_b": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_02_01" },
+					{ "time": 0.1667, "name": "devilcastle_03/devilcastle_02_02" },
+					{ "time": 0.3333, "name": "devilcastle_03/devilcastle_02_03" },
+					{ "time": 0.5, "name": "devilcastle_03/devilcastle_02_04" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_02_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle04_eat": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_03_01" },
+					{ "time": 0.1667, "name": "devilcastle_03/devilcastle_03_02" },
+					{ "time": 0.3333, "name": "devilcastle_03/devilcastle_03_03" },
+					{ "time": 0.5, "name": "devilcastle_03/devilcastle_03_04" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_03_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_03_01" },
+					{ "time": 0.1667, "name": "devilcastle_04/devilcastle_03_02" },
+					{ "time": 0.3333, "name": "devilcastle_04/devilcastle_03_03" },
+					{ "time": 0.5, "name": "devilcastle_04/devilcastle_03_04" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_03_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle04_walk": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_01_01" },
+					{ "time": 0.1667, "name": "devilcastle_04/devilcastle_01_02" },
+					{ "time": 0.3333, "name": "devilcastle_04/devilcastle_01_03" },
+					{ "time": 0.5, "name": "devilcastle_04/devilcastle_01_04" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_01_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	},
+	"devilcastle04_walk_b": {
+		"slots": {
+			"devilcastle_01": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_01/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_01/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_02": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_02/devilcastle_01_01" },
+					{ "time": 0.6667, "name": "devilcastle_02/devilcastle_01_01" }
+				]
+			},
+			"devilcastle_03": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_03/devilcastle_02_01" },
+					{ "time": 0.6667, "name": "devilcastle_03/devilcastle_02_01" }
+				]
+			},
+			"devilcastle_04": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "devilcastle_04/devilcastle_02_01" },
+					{ "time": 0.1667, "name": "devilcastle_04/devilcastle_02_02" },
+					{ "time": 0.3333, "name": "devilcastle_04/devilcastle_02_03" },
+					{ "time": 0.5, "name": "devilcastle_04/devilcastle_02_04" },
+					{ "time": 0.6667, "name": "devilcastle_04/devilcastle_02_01" }
+				]
+			}
+		},
+		"bones": {
+			"devilcastle_pet": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			},
+			"root": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				],
+				"scale": [
+					{ "curve": "stepped" },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"drawOrder": [
+			{},
+			{ "time": 0.6667 }
+		]
+	}
+}
+}
