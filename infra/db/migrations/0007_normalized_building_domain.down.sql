@@ -1,0 +1,23 @@
+DROP TABLE IF EXISTS building_normalization_issue;
+DROP TABLE IF EXISTS building_upgrade_job;
+DROP TABLE IF EXISTS building_production_job;
+DROP TABLE IF EXISTS building_material_order;
+DROP TABLE IF EXISTS town_inventory_ledger;
+DROP TABLE IF EXISTS town_inventory_stack;
+DROP TABLE IF EXISTS hunter_trade_settlement;
+DROP TABLE IF EXISTS hunter_material_stack;
+DROP TABLE IF EXISTS town_trade_state;
+DROP TABLE IF EXISTS town_economy_summary;
+DROP TABLE IF EXISTS player_building;
+DROP TABLE IF EXISTS town;
+DROP TABLE IF EXISTS town_template_building;
+DROP TABLE IF EXISTS town_template;
+DROP TABLE IF EXISTS building_skin_definition;
+DROP TABLE IF EXISTS building_level_prerequisite;
+DROP TABLE IF EXISTS building_level_cost;
+DROP TABLE IF EXISTS building_level_definition;
+DROP TABLE IF EXISTS building_definition;
+DROP TABLE IF EXISTS content_release;
+
+COMMENT ON TABLE building_base_catalog IS NULL;
+COMMENT ON TABLE building_skin_catalog IS NULL;

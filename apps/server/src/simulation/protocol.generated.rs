@@ -5,22 +5,34 @@ use uuid::Uuid;
 
 use super::{BottomMenuIntent, OriginalFlowSnapshot};
 
-pub const PROTOCOL_VERSION: u16 = 5;
-pub const MAX_MESSAGE_BYTES: usize = 16384;
+pub const PROTOCOL_VERSION: u16 = 15;
+pub const MAX_MESSAGE_BYTES: usize = 1048576;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]
 pub enum ClientCommand {
+    StartBuildingService { instance_id: String, hunter_id: u32, product_id: String },
+    StartInfirmaryTreatment { instance_id: String, hunter_id: u32, product_id: String },
     CompleteBoot,
     SelectBottomMenu { menu: BottomMenuIntent },
     NavigateBack,
     EnterField,
     SelectEntity { entity_id: String },
+    ConstructBuilding { building_id: String },
+    ConstructBuildingAt { building_id: String, grid_x: i32, grid_y: i32 },
+    UpgradeBuilding { instance_id: String },
+    MoveBuilding { instance_id: String, grid_x: i32, grid_y: i32 },
+    UseBuilding { instance_id: String },
+    SetMaterialRequest { instance_id: String, material_id: String, quantity: u32 },
+    CancelMaterialRequest { instance_id: String, material_id: String },
+    CraftShopItem { instance_id: String, recipe_id: String, material_id: Option<String>, quantity: u32 },
     OpenHunterProgression { hunter_id: u32 },
+    BanishHunter { hunter_id: u32 },
     EquipHunterItem { hunter_id: u32, item_id: u32 },
     ClaimQuestReward { quest_id: String },
     OpenShop { shop_id: String },
     PurchaseShopItem { shop_id: String, product_id: String },
+    SellShopItem { shop_id: String, product_id: String },
     ClaimMail { mail_id: String },
     ClaimRewardedAd { placement: String },
     StartTopupPurchase { product_id: String },

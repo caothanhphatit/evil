@@ -63,12 +63,11 @@ mod tests {
     };
     use tower::ServiceExt;
 
-    use crate::{app, config::AppConfig};
+    use crate::{app_for_test, config::AppConfig};
 
     #[tokio::test]
     async fn health_returns_server_status() {
-        let response = app(AppConfig::for_test())
-            .unwrap()
+        let response = app_for_test(AppConfig::for_test())
             .oneshot(Request::get("/health").body(Body::empty()).unwrap())
             .await
             .unwrap();

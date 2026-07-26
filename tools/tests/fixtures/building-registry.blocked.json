@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "contractType": "building-registry",
+  "registryId": "evil-hunter-1.411-building-registry-blocked-fixture",
+  "legacy": {
+    "game": "Evil Hunter Tycoon",
+    "version": "1.411",
+    "package": "com.superplanet.evilhunter"
+  },
+  "runtimeState": "blocked",
+  "evidencePolicy": {
+    "semanticFields": "evidence-required-per-field",
+    "unresolvedValues": "fail-closed-null-or-empty",
+    "visualBinding": "separate-from-gameplay-semantics"
+  },
+  "evidenceSources": [],
+  "catalogs": {
+    "items": {
+      "binding": {
+        "state": "unresolved",
+        "confidence": "unknown",
+        "evidence": [],
+        "requiredEvidence": "Decode and correlate the complete AdminItemData rows."
+      },
+      "rows": []
+    },
+    "products": {
+      "binding": {
+        "state": "unresolved",
+        "confidence": "unknown",
+        "evidence": [],
+        "requiredEvidence": "Decode product and recipe rows with exact input, output, price, and timing fields."
+      },
+      "rows": []
+    },
+    "capabilities": {
+      "binding": {
+        "state": "unresolved",
+        "confidence": "unknown",
+        "evidence": [],
+        "requiredEvidence": "Recover each building capability and its authoritative parameters."
+      },
+      "rows": []
+    },
+    "skins": {
+      "binding": {
+        "state": "unresolved",
+        "confidence": "unknown",
+        "evidence": [],
+        "requiredEvidence": "Decode building skin rows and exact visual bindings."
+      },
+      "rows": []
+    }
+  },
+  "buildings": {
+    "binding": {
+      "state": "unresolved",
+      "confidence": "unknown",
+      "evidence": [],
+      "requiredEvidence": "Correlate exact build IDs, rows, levels, semantics, and visual bindings."
+    },
+    "rows": []
+  },
+  "releaseGate": {
+    "runnable": false,
+    "blockingPaths": [
+      "buildings.binding",
+      "catalogs.capabilities.binding",
+      "catalogs.items.binding",
+      "catalogs.products.binding",
+      "catalogs.skins.binding"
+    ],
+    "reason": "Fixture demonstrates the fail-closed contract only; it contains no recovered gameplay rows."
+  }
+}

@@ -4,6 +4,9 @@
 **/node_modules
 **/dist
 **/target
-game-assets
+game-assets/*
+!game-assets/extracted/
+game-assets/extracted/*
+!game-assets/extracted/exported/
+!game-assets/extracted/exported/**
 reverse-engineering
-

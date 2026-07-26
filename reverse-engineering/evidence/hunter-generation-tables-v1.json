@@ -1,0 +1,5509 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-generation-table-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "source": {
+    "asset": "game-assets/extracted/joined_unity_files/sharedassets1.assets",
+    "assetSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab",
+    "unityVersion": "6000.3.9f1"
+  },
+  "policy": "Public QuickSheet headers identify serialized field order/types only; all emitted row values are decoded from the packaged Unity asset and each decoder consumes its object exactly.",
+  "catalog": [
+    {
+      "key": "maleNames",
+      "pathId": 12596,
+      "byteSize": 13704,
+      "rawSha256": "f1abff21cbdfbd55bf9752ba4ffa753a5e12767f5d2acefb1050a389861ae8ff",
+      "decodedSha256": "6b0d061dba14eeeca7a09bd9cb69fc687143bf3bdb77810fc9cd02a241cd4318",
+      "decodeStatus": "decoded-exact",
+      "name": "hunterNameM_global",
+      "monoScriptPathId": 1704,
+      "spreadsheetId": "1_i2_M1-enmBOAqqqRKPCBMGnQid6uxlkGvxd-5YsA6U",
+      "spreadsheetName": "evilhunterdata_global",
+      "worksheetName": "hunterNameM",
+      "rowCount": 70
+    },
+    {
+      "key": "femaleNames",
+      "pathId": 12597,
+      "byteSize": 13940,
+      "rawSha256": "0647834edcf39c75a506012e54b425970434718bbc63161bba0eb7ef31de5869",
+      "decodedSha256": "274043f7b94bf9558c6ab3e3a05df1645baaa05bae11f726fa7598ab02cc6b0d",
+      "decodeStatus": "decoded-exact",
+      "name": "hunterNameW_global",
+      "monoScriptPathId": 3442,
+      "spreadsheetId": "1_i2_M1-enmBOAqqqRKPCBMGnQid6uxlkGvxd-5YsA6U",
+      "spreadsheetName": "evilhunterdata_global",
+      "worksheetName": "hunterNameW",
+      "rowCount": 70
+    },
+    {
+      "key": "hunterDefinitions",
+      "pathId": 12599,
+      "byteSize": 13752,
+      "rawSha256": "49ff9af03e9073c985d8d7f3f15553b023e8cfbb196e3592a090906b7f42dab8",
+      "decodedSha256": "569e00075b89f5ee4b2e3b46294e886b5ba8e4ea604795cf553b1d960f90d738",
+      "decodeStatus": "decoded-exact",
+      "name": "hunter_global",
+      "monoScriptPathId": 1131,
+      "spreadsheetId": "1_i2_M1-enmBOAqqqRKPCBMGnQid6uxlkGvxd-5YsA6U",
+      "spreadsheetName": "evilhunterdata_global",
+      "worksheetName": "hunter",
+      "rowCount": 5
+    },
+    {
+      "key": "characteristics",
+      "pathId": 12613,
+      "byteSize": 10136,
+      "rawSha256": "82959325def0a28cedf6e07460d9a530ac8695644156138352d98245ff69f8e7",
+      "decodedSha256": "2a3f0a445be8b9667b9b044057537c540399d6b769552d3fab1b01e987fa9d47",
+      "decodeStatus": "decoded-exact",
+      "name": "personality_global",
+      "monoScriptPathId": 4386,
+      "spreadsheetId": "1_i2_M1-enmBOAqqqRKPCBMGnQid6uxlkGvxd-5YsA6U",
+      "spreadsheetName": "evilhunterdata_global",
+      "worksheetName": "personality",
+      "rowCount": 33
+    }
+  ],
+  "maleNames": [
+    {
+      "index": 0,
+      "localizedNames": {
+        "en": "Alf",
+        "ko": "알프",
+        "ja": "アルフ",
+        "zh-TW": "阿爾普",
+        "zh-CN": "阿尔普",
+        "ru": "Фож",
+        "fr": "Alf",
+        "es": "Alf",
+        "pt": "Alf",
+        "it": "Alf",
+        "de": "Alf",
+        "th": "อัลพ์",
+        "vi": "Alf",
+        "id": "Alf"
+      }
+    },
+    {
+      "index": 1,
+      "localizedNames": {
+        "en": "Artha",
+        "ko": "아르타",
+        "ja": "アルタ",
+        "zh-TW": "阿爾塔",
+        "zh-CN": "阿尔塔",
+        "ru": "Артха",
+        "fr": "Artha",
+        "es": "Artha",
+        "pt": "Artha",
+        "it": "Artha",
+        "de": "Artha",
+        "th": "อาร์ต้า",
+        "vi": "Artha",
+        "id": "Artha"
+      }
+    },
+    {
+      "index": 2,
+      "localizedNames": {
+        "en": "Amur",
+        "ko": "아무르",
+        "ja": "アムール",
+        "zh-TW": "阿姆魯",
+        "zh-CN": "阿姆鲁",
+        "ru": "Амур",
+        "fr": "Amur",
+        "es": "Amur",
+        "pt": "Amur",
+        "it": "Amur",
+        "de": "Amur",
+        "th": "อาร์มู",
+        "vi": "Amur",
+        "id": "Amur"
+      }
+    },
+    {
+      "index": 3,
+      "localizedNames": {
+        "en": "Athrun",
+        "ko": "아스란",
+        "ja": "アスラン",
+        "zh-TW": "阿什蘭",
+        "zh-CN": "阿什兰",
+        "ru": "Артур",
+        "fr": "Athrun",
+        "es": "Athrun",
+        "pt": "Athrun",
+        "it": "Athrun",
+        "de": "Athrun",
+        "th": "อาสราน",
+        "vi": "Athrun",
+        "id": "Athrun"
+      }
+    },
+    {
+      "index": 4,
+      "localizedNames": {
+        "en": "Belah",
+        "ko": "벨라흐",
+        "ja": "ベラフ",
+        "zh-TW": "貝拉赫",
+        "zh-CN": "贝拉赫",
+        "ru": "Белах",
+        "fr": "Belah",
+        "es": "Belah",
+        "pt": "Belah",
+        "it": "Belah",
+        "de": "Belah",
+        "th": "เบลลาห์",
+        "vi": "Belah",
+        "id": "Belah"
+      }
+    },
+    {
+      "index": 5,
+      "localizedNames": {
+        "en": "Thamus",
+        "ko": "타무스",
+        "ja": "タムス",
+        "zh-TW": "塔慕斯",
+        "zh-CN": "塔慕斯",
+        "ru": "Тамус",
+        "fr": "Thamus",
+        "es": "Thamus",
+        "pt": "Thamus",
+        "it": "Thamus",
+        "de": "Thamus",
+        "th": "ทามุส",
+        "vi": "Thamus",
+        "id": "Thamus"
+      }
+    },
+    {
+      "index": 6,
+      "localizedNames": {
+        "en": "Karlyn",
+        "ko": "칼린",
+        "ja": "カーリン",
+        "zh-TW": "科林",
+        "zh-CN": "科林",
+        "ru": "Карли",
+        "fr": "Karlyn",
+        "es": "Karlyn",
+        "pt": "Karlyn",
+        "it": "Karlyn",
+        "de": "Karlyn",
+        "th": "คัลลีน",
+        "vi": "Karlyn",
+        "id": "Karlyn"
+      }
+    },
+    {
+      "index": 7,
+      "localizedNames": {
+        "en": "Jaqen",
+        "ko": "자켄",
+        "ja": "ジャクェン",
+        "zh-TW": "賈坤",
+        "zh-CN": "贾坤",
+        "ru": "Якен",
+        "fr": "Jaqen",
+        "es": "Jaqen",
+        "pt": "Jaqen",
+        "it": "Jaqen",
+        "de": "Jaqen",
+        "th": "จาเคน",
+        "vi": "Jaqen",
+        "id": "Jaqen"
+      }
+    },
+    {
+      "index": 8,
+      "localizedNames": {
+        "en": "Tristan",
+        "ko": "트리스탄",
+        "ja": "トリスタン",
+        "zh-TW": "特里斯坦",
+        "zh-CN": "特里斯坦",
+        "ru": "Тристан",
+        "fr": "Tristan",
+        "es": "Tristan",
+        "pt": "Tristan",
+        "it": "Tristan",
+        "de": "Tristan",
+        "th": "ทริสเทน",
+        "vi": "Tristan",
+        "id": "Tristan"
+      }
+    },
+    {
+      "index": 9,
+      "localizedNames": {
+        "en": "Holmes",
+        "ko": "홈스",
+        "ja": "ホムス",
+        "zh-TW": "霍爾摩斯",
+        "zh-CN": "霍尔摩斯",
+        "ru": "Холмс",
+        "fr": "Holmes",
+        "es": "Holmes",
+        "pt": "Holmes",
+        "it": "Holmes",
+        "de": "Holmes",
+        "th": "โฮล์มส",
+        "vi": "Holmes",
+        "id": "Holmes"
+      }
+    },
+    {
+      "index": 10,
+      "localizedNames": {
+        "en": "Brin",
+        "ko": "브린",
+        "ja": "ブリン",
+        "zh-TW": "布林",
+        "zh-CN": "布林",
+        "ru": "Брин",
+        "fr": "Brin",
+        "es": "Brin",
+        "pt": "Brin",
+        "it": "Brin",
+        "de": "Brin",
+        "th": "บรีน",
+        "vi": "Brin",
+        "id": "Brin"
+      }
+    },
+    {
+      "index": 11,
+      "localizedNames": {
+        "en": "Dwyn",
+        "ko": "드윈",
+        "ja": "ドウィーン",
+        "zh-TW": "德文",
+        "zh-CN": "德文",
+        "ru": "Двен",
+        "fr": "Dwyn",
+        "es": "Dwyn",
+        "pt": "Dwyn",
+        "it": "Dwyn",
+        "de": "Dwyn",
+        "th": "ดอว์น",
+        "vi": "Dwyn",
+        "id": "Dwyn"
+      }
+    },
+    {
+      "index": 12,
+      "localizedNames": {
+        "en": "Pallas",
+        "ko": "팔라스",
+        "ja": "パラス",
+        "zh-TW": "帕萊斯",
+        "zh-CN": "帕莱斯",
+        "ru": "Паллас",
+        "fr": "Pallas",
+        "es": "Pallas",
+        "pt": "Pallas",
+        "it": "Pallas",
+        "de": "Pallas",
+        "th": "พัลลัส",
+        "vi": "Pallas",
+        "id": "Pallas"
+      }
+    },
+    {
+      "index": 13,
+      "localizedNames": {
+        "en": "Ligolas",
+        "ko": "리글라스",
+        "ja": "リゴラス",
+        "zh-TW": "裏戈拉斯",
+        "zh-CN": "里戈拉斯",
+        "ru": "Лиголас",
+        "fr": "Ligolas",
+        "es": "Ligolas",
+        "pt": "Ligolas",
+        "it": "Ligolas",
+        "de": "Ligolas",
+        "th": "ลิโกลัส",
+        "vi": "Ligolas",
+        "id": "Ligolas"
+      }
+    },
+    {
+      "index": 14,
+      "localizedNames": {
+        "en": "Rond",
+        "ko": "론드",
+        "ja": "ロンド",
+        "zh-TW": "倫德",
+        "zh-CN": "伦德",
+        "ru": "Ронд",
+        "fr": "Rond",
+        "es": "Rond",
+        "pt": "Rond",
+        "it": "Rond",
+        "de": "Rond",
+        "th": "รอนด์",
+        "vi": "Rond",
+        "id": "Rond"
+      }
+    },
+    {
+      "index": 15,
+      "localizedNames": {
+        "en": "Kialad",
+        "ko": "키알라드",
+        "ja": "キアラッド",
+        "zh-TW": "奇爾拉德",
+        "zh-CN": "奇尔拉德",
+        "ru": "Киалад",
+        "fr": "Kialad",
+        "es": "Kialad",
+        "pt": "Kialad",
+        "it": "Kialad",
+        "de": "Kialad",
+        "th": "เคียลาท",
+        "vi": "Kialad",
+        "id": "Kialad"
+      }
+    },
+    {
+      "index": 16,
+      "localizedNames": {
+        "en": "Uragon",
+        "ko": "우라곤",
+        "ja": "ウラゴン",
+        "zh-TW": "烏拉坤",
+        "zh-CN": "乌拉坤",
+        "ru": "Урагон",
+        "fr": "Uragon",
+        "es": "Uragon",
+        "pt": "Uragon",
+        "it": "Uragon",
+        "de": "Uragon",
+        "th": "อูรากอน",
+        "vi": "Uragon",
+        "id": "Uragon"
+      }
+    },
+    {
+      "index": 17,
+      "localizedNames": {
+        "en": "Wayne",
+        "ko": "웨인",
+        "ja": "ウェイン",
+        "zh-TW": "維音",
+        "zh-CN": "维音",
+        "ru": "Уэйн",
+        "fr": "Wayne",
+        "es": "Wayne",
+        "pt": "Wayne",
+        "it": "Wayne",
+        "de": "Wayne",
+        "th": "เวยน์",
+        "vi": "Wayne",
+        "id": "Wayne"
+      }
+    },
+    {
+      "index": 18,
+      "localizedNames": {
+        "en": "Barane",
+        "ko": "바레인",
+        "ja": "バラン",
+        "zh-TW": "巴萊因",
+        "zh-CN": "巴莱因",
+        "ru": "Берен",
+        "fr": "Barane",
+        "es": "Barane",
+        "pt": "Barane",
+        "it": "Barane",
+        "de": "Barane",
+        "th": "บาเรน",
+        "vi": "Barane",
+        "id": "Barane"
+      }
+    },
+    {
+      "index": 19,
+      "localizedNames": {
+        "en": "Morris",
+        "ko": "모릭스",
+        "ja": "モーリス",
+        "zh-TW": "莫里斯",
+        "zh-CN": "莫里斯",
+        "ru": "Моррис",
+        "fr": "Morris",
+        "es": "Morris",
+        "pt": "Morris",
+        "it": "Morris",
+        "de": "Morris",
+        "th": "มอร์ริส",
+        "vi": "Morris",
+        "id": "Morris"
+      }
+    },
+    {
+      "index": 20,
+      "localizedNames": {
+        "en": "Haslo",
+        "ko": "하슬로",
+        "ja": "ハスロ",
+        "zh-TW": "哈索羅",
+        "zh-CN": "哈索罗",
+        "ru": "Хасло",
+        "fr": "Haslo",
+        "es": "Haslo",
+        "pt": "Haslo",
+        "it": "Haslo",
+        "de": "Haslo",
+        "th": "ฮาสโล",
+        "vi": "Haslo",
+        "id": "Haslo"
+      }
+    },
+    {
+      "index": 21,
+      "localizedNames": {
+        "en": "Niko",
+        "ko": "니코",
+        "ja": "ニコ",
+        "zh-TW": "尼克",
+        "zh-CN": "尼克",
+        "ru": "Нико",
+        "fr": "Niko",
+        "es": "Niko",
+        "pt": "Niko",
+        "it": "Niko",
+        "de": "Niko",
+        "th": "นิโค",
+        "vi": "Niko",
+        "id": "Niko"
+      }
+    },
+    {
+      "index": 22,
+      "localizedNames": {
+        "en": "Duatrin",
+        "ko": "두아트린",
+        "ja": "デュアトリン",
+        "zh-TW": "杜亞特林",
+        "zh-CN": "杜亚特林",
+        "ru": "Дуатрин",
+        "fr": "Duatrin",
+        "es": "Duatrin",
+        "pt": "Duatrin",
+        "it": "Duatrin",
+        "de": "Duatrin",
+        "th": "ดูอาทริน",
+        "vi": "Duatrin",
+        "id": "Duatrin"
+      }
+    },
+    {
+      "index": 23,
+      "localizedNames": {
+        "en": "Bericus",
+        "ko": "베리쿠스",
+        "ja": "ベリクス",
+        "zh-TW": "貝裡克斯",
+        "zh-CN": "贝裡克斯",
+        "ru": "Берикус",
+        "fr": "Bericus",
+        "es": "Bericus",
+        "pt": "Bericus",
+        "it": "Bericus",
+        "de": "Bericus",
+        "th": "เบริคัส",
+        "vi": "Bericus",
+        "id": "Bericus"
+      }
+    },
+    {
+      "index": 24,
+      "localizedNames": {
+        "en": "Kaize",
+        "ko": "카이즈",
+        "ja": "カイズ",
+        "zh-TW": "凱利斯",
+        "zh-CN": "凯利斯",
+        "ru": "Кайзер",
+        "fr": "Kaize",
+        "es": "Kaize",
+        "pt": "Kaize",
+        "it": "Kaize",
+        "de": "Kaize",
+        "th": "ไคซ์",
+        "vi": "Kaize",
+        "id": "Kaize"
+      }
+    },
+    {
+      "index": 25,
+      "localizedNames": {
+        "en": "Eluin",
+        "ko": "엘루인",
+        "ja": "エルイン",
+        "zh-TW": "耶洛因",
+        "zh-CN": "耶洛因",
+        "ru": "Элуин",
+        "fr": "Eluin",
+        "es": "Eluin",
+        "pt": "Eluin",
+        "it": "Eluin",
+        "de": "Eluin",
+        "th": "เอลวิน",
+        "vi": "Eluin",
+        "id": "Eluin"
+      }
+    },
+    {
+      "index": 26,
+      "localizedNames": {
+        "en": "Soriks",
+        "ko": "소릭스",
+        "ja": "ソリックス",
+        "zh-TW": "索利斯",
+        "zh-CN": "索利斯",
+        "ru": "Сорики",
+        "fr": "Soriks",
+        "es": "Soriks",
+        "pt": "Soriks",
+        "it": "Soriks",
+        "de": "Soriks",
+        "th": "ซอริกส์",
+        "vi": "Soriks",
+        "id": "Soriks"
+      }
+    },
+    {
+      "index": 27,
+      "localizedNames": {
+        "en": "Stan",
+        "ko": "스탄",
+        "ja": "スタン",
+        "zh-TW": "斯坦",
+        "zh-CN": "斯坦",
+        "ru": "Стэн",
+        "fr": "Stan",
+        "es": "Stan",
+        "pt": "Stan",
+        "it": "Stan",
+        "de": "Stan",
+        "th": "สแตน",
+        "vi": "Stan",
+        "id": "Stan"
+      }
+    },
+    {
+      "index": 28,
+      "localizedNames": {
+        "en": "Phelan",
+        "ko": "펠런",
+        "ja": "フェラン",
+        "zh-TW": "派倫",
+        "zh-CN": "派伦",
+        "ru": "Фелан",
+        "fr": "Phelan",
+        "es": "Phelan",
+        "pt": "Phelan",
+        "it": "Phelan",
+        "de": "Phelan",
+        "th": "แพลลัน",
+        "vi": "Phelan",
+        "id": "Phelan"
+      }
+    },
+    {
+      "index": 29,
+      "localizedNames": {
+        "en": "Reil",
+        "ko": "릴",
+        "ja": "リール",
+        "zh-TW": "利爾",
+        "zh-CN": "利尔",
+        "ru": "Марат",
+        "fr": "Reil",
+        "es": "Reil",
+        "pt": "Reil",
+        "it": "Reil",
+        "de": "Reil",
+        "th": "ลิล",
+        "vi": "Reil",
+        "id": "Reil"
+      }
+    },
+    {
+      "index": 30,
+      "localizedNames": {
+        "en": "Gamon",
+        "ko": "게이먼",
+        "ja": "ギャモン",
+        "zh-TW": "凱利蒙",
+        "zh-CN": "凯利蒙",
+        "ru": "Гамон",
+        "fr": "Gamon",
+        "es": "Gamon",
+        "pt": "Gamon",
+        "it": "Gamon",
+        "de": "Gamon",
+        "th": "กาม่อน",
+        "vi": "Gamon",
+        "id": "Gamon"
+      }
+    },
+    {
+      "index": 31,
+      "localizedNames": {
+        "en": "Eastern",
+        "ko": "이스턴",
+        "ja": "イースタン",
+        "zh-TW": "伊斯坦",
+        "zh-CN": "伊斯坦",
+        "ru": "Истен",
+        "fr": "Eastern",
+        "es": "Eastern",
+        "pt": "Eastern",
+        "it": "Eastern",
+        "de": "Eastern",
+        "th": "อิสเทิร์น",
+        "vi": "Eastern",
+        "id": "Eastern"
+      }
+    },
+    {
+      "index": 32,
+      "localizedNames": {
+        "en": "Typion",
+        "ko": "티피온",
+        "ja": "ティピオン",
+        "zh-TW": "緹皮溫",
+        "zh-CN": "緹皮温",
+        "ru": "Типион",
+        "fr": "Typion",
+        "es": "Typion",
+        "pt": "Typion",
+        "it": "Typion",
+        "de": "Typion",
+        "th": "ไทเพียน",
+        "vi": "Typion",
+        "id": "Typion"
+      }
+    },
+    {
+      "index": 33,
+      "localizedNames": {
+        "en": "Toms",
+        "ko": "톰스",
+        "ja": "トムズ",
+        "zh-TW": "塔姆斯",
+        "zh-CN": "塔姆斯",
+        "ru": "Томас",
+        "fr": "Toms",
+        "es": "Toms",
+        "pt": "Toms",
+        "it": "Toms",
+        "de": "Toms",
+        "th": "ทอมส์",
+        "vi": "Toms",
+        "id": "Toms"
+      }
+    },
+    {
+      "index": 34,
+      "localizedNames": {
+        "en": "Brandier",
+        "ko": "브랜디어",
+        "ja": "ブランディア",
+        "zh-TW": "佈萊迪爾",
+        "zh-CN": "佈莱迪尔",
+        "ru": "Бранде",
+        "fr": "Brandier",
+        "es": "Brandier",
+        "pt": "Brandier",
+        "it": "Brandier",
+        "de": "Brandier",
+        "th": "เบรนเดียร์",
+        "vi": "Brandier",
+        "id": "Brandier"
+      }
+    },
+    {
+      "index": 35,
+      "localizedNames": {
+        "en": "Gisli",
+        "ko": "기슬리",
+        "ja": "ギズリ",
+        "zh-TW": "齊思李",
+        "zh-CN": "齐思李",
+        "ru": "Гисли",
+        "fr": "Gisli",
+        "es": "Gisli",
+        "pt": "Gisli",
+        "it": "Gisli",
+        "de": "Gisli",
+        "th": "กิสลีย์",
+        "vi": "Gisli",
+        "id": "Gisli"
+      }
+    },
+    {
+      "index": 36,
+      "localizedNames": {
+        "en": "Karl",
+        "ko": "칼",
+        "ja": "カール",
+        "zh-TW": "卡爾",
+        "zh-CN": "卡尔",
+        "ru": "Карл",
+        "fr": "Karl",
+        "es": "Karl",
+        "pt": "Karl",
+        "it": "Karl",
+        "de": "Karl",
+        "th": "คาร์ล",
+        "vi": "Karl",
+        "id": "Karl"
+      }
+    },
+    {
+      "index": 37,
+      "localizedNames": {
+        "en": "Steen",
+        "ko": "스틴",
+        "ja": "スティーン",
+        "zh-TW": "斯汀",
+        "zh-CN": "斯汀",
+        "ru": "Стин",
+        "fr": "Steen",
+        "es": "Steen",
+        "pt": "Steen",
+        "it": "Steen",
+        "de": "Steen",
+        "th": "สทีน",
+        "vi": "Steen",
+        "id": "Steen"
+      }
+    },
+    {
+      "index": 38,
+      "localizedNames": {
+        "en": "Alan",
+        "ko": "엘런",
+        "ja": "アラン",
+        "zh-TW": "葉爾倫",
+        "zh-CN": "叶尔伦",
+        "ru": "Алан",
+        "fr": "Alan",
+        "es": "Alan",
+        "pt": "Alan",
+        "it": "Alan",
+        "de": "Alan",
+        "th": "อลัน",
+        "vi": "Alan",
+        "id": "Alan"
+      }
+    },
+    {
+      "index": 39,
+      "localizedNames": {
+        "en": "Varad",
+        "ko": "바라드",
+        "ja": "ヴァラッド",
+        "zh-TW": "巴拉德",
+        "zh-CN": "巴拉德",
+        "ru": "Варад",
+        "fr": "Varad",
+        "es": "Varad",
+        "pt": "Varad",
+        "it": "Varad",
+        "de": "Varad",
+        "th": "วาลาด",
+        "vi": "Varad",
+        "id": "Varad"
+      }
+    },
+    {
+      "index": 40,
+      "localizedNames": {
+        "en": "Wood",
+        "ko": "우드",
+        "ja": "ウッド",
+        "zh-TW": "伍德",
+        "zh-CN": "伍德",
+        "ru": "Вуд",
+        "fr": "Wood",
+        "es": "Wood",
+        "pt": "Wood",
+        "it": "Wood",
+        "de": "Wood",
+        "th": "วู้ด",
+        "vi": "Wood",
+        "id": "Wood"
+      }
+    },
+    {
+      "index": 41,
+      "localizedNames": {
+        "en": "Serid",
+        "ko": "세리드",
+        "ja": "セリード",
+        "zh-TW": "賽麗得",
+        "zh-CN": "赛丽得",
+        "ru": "Серид",
+        "fr": "Serid",
+        "es": "Serid",
+        "pt": "Serid",
+        "it": "Serid",
+        "de": "Serid",
+        "th": "เซริด",
+        "vi": "Serid",
+        "id": "Serid"
+      }
+    },
+    {
+      "index": 42,
+      "localizedNames": {
+        "en": "Galmoth",
+        "ko": "갈모스",
+        "ja": "ギャルモス",
+        "zh-TW": "卡爾莫斯",
+        "zh-CN": "卡尔莫斯",
+        "ru": "Галмот",
+        "fr": "Galmoth",
+        "es": "Galmoth",
+        "pt": "Galmoth",
+        "it": "Galmoth",
+        "de": "Galmoth",
+        "th": "กัลมอท",
+        "vi": "Galmoth",
+        "id": "Galmoth"
+      }
+    },
+    {
+      "index": 43,
+      "localizedNames": {
+        "en": "Brídido",
+        "ko": "브리디도",
+        "ja": "ブリディッド",
+        "zh-TW": "布裡蒂德",
+        "zh-CN": "布裡蒂德",
+        "ru": "Бридиго",
+        "fr": "Brídido",
+        "es": "Brídido",
+        "pt": "Brídido",
+        "it": "Brídido",
+        "de": "Brídido",
+        "th": "บรีดีโด",
+        "vi": "Brídido",
+        "id": "Brídido"
+      }
+    },
+    {
+      "index": 44,
+      "localizedNames": {
+        "en": "Bright",
+        "ko": "브라이트",
+        "ja": "ブライト",
+        "zh-TW": "布拉依特",
+        "zh-CN": "布拉依特",
+        "ru": "Бридж",
+        "fr": "Bright",
+        "es": "Bright",
+        "pt": "Bright",
+        "it": "Bright",
+        "de": "Bright",
+        "th": "ไบร์ท",
+        "vi": "Bright",
+        "id": "Bright"
+      }
+    },
+    {
+      "index": 45,
+      "localizedNames": {
+        "en": "Rak",
+        "ko": "라크",
+        "ja": "ラーク",
+        "zh-TW": "拉克",
+        "zh-CN": "拉克",
+        "ru": "Рак",
+        "fr": "Rak",
+        "es": "Rak",
+        "pt": "Rak",
+        "it": "Rak",
+        "de": "Rak",
+        "th": "ราค",
+        "vi": "Rak",
+        "id": "Rak"
+      }
+    },
+    {
+      "index": 46,
+      "localizedNames": {
+        "en": "Eizer",
+        "ko": "아이저",
+        "ja": "アイゼル",
+        "zh-TW": "安藝傑",
+        "zh-CN": "安艺杰",
+        "ru": "Эйзер",
+        "fr": "Eizer",
+        "es": "Eizer",
+        "pt": "Eizer",
+        "it": "Eizer",
+        "de": "Eizer",
+        "th": "ไอเซอร์",
+        "vi": "Eizer",
+        "id": "Eizer"
+      }
+    },
+    {
+      "index": 47,
+      "localizedNames": {
+        "en": "Attius",
+        "ko": "아티우스",
+        "ja": "アッティウス",
+        "zh-TW": "阿提烏斯",
+        "zh-CN": "阿提乌斯",
+        "ru": "Аттий",
+        "fr": "Attius",
+        "es": "Attius",
+        "pt": "Attius",
+        "it": "Attius",
+        "de": "Attius",
+        "th": "อาทิอุส",
+        "vi": "Attius",
+        "id": "Attius"
+      }
+    },
+    {
+      "index": 48,
+      "localizedNames": {
+        "en": "Belaid",
+        "ko": "발라이드",
+        "ja": "ベライド",
+        "zh-TW": "巴拉易得",
+        "zh-CN": "巴拉易得",
+        "ru": "Белайд",
+        "fr": "Belaid",
+        "es": "Belaid",
+        "pt": "Belaid",
+        "it": "Belaid",
+        "de": "Belaid",
+        "th": "บีแลด",
+        "vi": "Belaid",
+        "id": "Belaid"
+      }
+    },
+    {
+      "index": 49,
+      "localizedNames": {
+        "en": "Danny",
+        "ko": "대니",
+        "ja": "デニー",
+        "zh-TW": "戴尼",
+        "zh-CN": "戴尼",
+        "ru": "Дэнни",
+        "fr": "Danny",
+        "es": "Danny",
+        "pt": "Danny",
+        "it": "Danny",
+        "de": "Danny",
+        "th": "แดนนี่",
+        "vi": "Danny",
+        "id": "Danny"
+      }
+    },
+    {
+      "index": 50,
+      "localizedNames": {
+        "en": "John",
+        "ko": "존",
+        "ja": "ジョン",
+        "zh-TW": "喬恩",
+        "zh-CN": "乔恩",
+        "ru": "Джон",
+        "fr": "John",
+        "es": "John",
+        "pt": "John",
+        "it": "John",
+        "de": "John",
+        "th": "จอห์น",
+        "vi": "John",
+        "id": "John"
+      }
+    },
+    {
+      "index": 51,
+      "localizedNames": {
+        "en": "Kassis",
+        "ko": "카시스",
+        "ja": "カッシス",
+        "zh-TW": "卡西斯",
+        "zh-CN": "卡西斯",
+        "ru": "Кассис",
+        "fr": "Kassis",
+        "es": "Kassis",
+        "pt": "Kassis",
+        "it": "Kassis",
+        "de": "Kassis",
+        "th": "คาสซิส",
+        "vi": "Kassis",
+        "id": "Kassis"
+      }
+    },
+    {
+      "index": 52,
+      "localizedNames": {
+        "en": "Canus",
+        "ko": "카누스",
+        "ja": "カヌース",
+        "zh-TW": "卡努斯",
+        "zh-CN": "卡努斯",
+        "ru": "Канус",
+        "fr": "Canus",
+        "es": "Canus",
+        "pt": "Canus",
+        "it": "Canus",
+        "de": "Canus",
+        "th": "แคนนัส",
+        "vi": "Canus",
+        "id": "Canus"
+      }
+    },
+    {
+      "index": 53,
+      "localizedNames": {
+        "en": "Tyrell",
+        "ko": "티렐",
+        "ja": "タイレル",
+        "zh-TW": "提萊爾",
+        "zh-CN": "提莱尔",
+        "ru": "Тирелл",
+        "fr": "Tyrell",
+        "es": "Tyrell",
+        "pt": "Tyrell",
+        "it": "Tyrell",
+        "de": "Tyrell",
+        "th": "ไทเรล",
+        "vi": "Tyrell",
+        "id": "Tyrell"
+      }
+    },
+    {
+      "index": 54,
+      "localizedNames": {
+        "en": "Esmond",
+        "ko": "에스먼드",
+        "ja": "エスモンド",
+        "zh-TW": "愛斯姆德",
+        "zh-CN": "爱斯姆德",
+        "ru": "Эсмонд",
+        "fr": "Esmond",
+        "es": "Esmond",
+        "pt": "Esmond",
+        "it": "Esmond",
+        "de": "Esmond",
+        "th": "แอสมอนด์",
+        "vi": "Esmond",
+        "id": "Esmond"
+      }
+    },
+    {
+      "index": 55,
+      "localizedNames": {
+        "en": "Greygon",
+        "ko": "그레이건",
+        "ja": "グレイゴン",
+        "zh-TW": "克萊伊坎",
+        "zh-CN": "克莱伊坎",
+        "ru": "Грейгон",
+        "fr": "Greygon",
+        "es": "Greygon",
+        "pt": "Greygon",
+        "it": "Greygon",
+        "de": "Greygon",
+        "th": "เกรย์กอน",
+        "vi": "Greygon",
+        "id": "Greygon"
+      }
+    },
+    {
+      "index": 56,
+      "localizedNames": {
+        "en": "Rios",
+        "ko": "리오스",
+        "ja": "リオース",
+        "zh-TW": "里奧斯",
+        "zh-CN": "里奥斯",
+        "ru": "Риос",
+        "fr": "Rios",
+        "es": "Rios",
+        "pt": "Rios",
+        "it": "Rios",
+        "de": "Rios",
+        "th": "รีโอส",
+        "vi": "Rios",
+        "id": "Rios"
+      }
+    },
+    {
+      "index": 57,
+      "localizedNames": {
+        "en": "Ester",
+        "ko": "에스터",
+        "ja": "エスター",
+        "zh-TW": "艾斯特",
+        "zh-CN": "艾斯特",
+        "ru": "Эстер",
+        "fr": "Ester",
+        "es": "Ester",
+        "pt": "Ester",
+        "it": "Ester",
+        "de": "Ester",
+        "th": "อีสเตอร์",
+        "vi": "Ester",
+        "id": "Ester"
+      }
+    },
+    {
+      "index": 58,
+      "localizedNames": {
+        "en": "Marcus",
+        "ko": "마커스",
+        "ja": "マーカス",
+        "zh-TW": "馬克思",
+        "zh-CN": "马克思",
+        "ru": "Маркус",
+        "fr": "Marcus",
+        "es": "Marcus",
+        "pt": "Marcus",
+        "it": "Marcus",
+        "de": "Marcus",
+        "th": "มาร์คัส",
+        "vi": "Marcus",
+        "id": "Marcus"
+      }
+    },
+    {
+      "index": 59,
+      "localizedNames": {
+        "en": "Ethan",
+        "ko": "에단",
+        "ja": "イーサン",
+        "zh-TW": "艾丹",
+        "zh-CN": "艾丹",
+        "ru": "Итан",
+        "fr": "Ethan",
+        "es": "Ethan",
+        "pt": "Ethan",
+        "it": "Ethan",
+        "de": "Ethan",
+        "th": "อีธาน",
+        "vi": "Ethan",
+        "id": "Ethan"
+      }
+    },
+    {
+      "index": 60,
+      "localizedNames": {
+        "en": "Merik",
+        "ko": "메릭",
+        "ja": "メリック",
+        "zh-TW": "梅里克",
+        "zh-CN": "梅里克",
+        "ru": "Мерик",
+        "fr": "Merik",
+        "es": "Merik",
+        "pt": "Merik",
+        "it": "Merik",
+        "de": "Merik",
+        "th": "เมริก",
+        "vi": "Merik",
+        "id": "Merik"
+      }
+    },
+    {
+      "index": 61,
+      "localizedNames": {
+        "en": "Eason",
+        "ko": "이슨",
+        "ja": "イーソン",
+        "zh-TW": "伊森",
+        "zh-CN": "伊森",
+        "ru": "Изон",
+        "fr": "Eason",
+        "es": "Eason",
+        "pt": "Eason",
+        "it": "Eason",
+        "de": "Eason",
+        "th": "เอสัน",
+        "vi": "Eason",
+        "id": "Eason"
+      }
+    },
+    {
+      "index": 62,
+      "localizedNames": {
+        "en": "Milate",
+        "ko": "밀레이트",
+        "ja": "ミレート",
+        "zh-TW": "米萊伊特",
+        "zh-CN": "米莱伊特",
+        "ru": "Милате",
+        "fr": "Milate",
+        "es": "Milate",
+        "pt": "Milate",
+        "it": "Milate",
+        "de": "Milate",
+        "th": "มิลเลท",
+        "vi": "Milate",
+        "id": "Milate"
+      }
+    },
+    {
+      "index": 63,
+      "localizedNames": {
+        "en": "Arthor",
+        "ko": "아르토르",
+        "ja": "アルトール",
+        "zh-TW": "奧倫特魯",
+        "zh-CN": "奥伦特鲁",
+        "ru": "Артур",
+        "fr": "Arthor",
+        "es": "Arthor",
+        "pt": "Arthor",
+        "it": "Arthor",
+        "de": "Arthor",
+        "th": "อาเธอร์",
+        "vi": "Arthor",
+        "id": "Arthor"
+      }
+    },
+    {
+      "index": 64,
+      "localizedNames": {
+        "en": "Gillian",
+        "ko": "질리언",
+        "ja": "ジリアン",
+        "zh-TW": "吉爾利恩",
+        "zh-CN": "吉尔利恩",
+        "ru": "Джиллиан",
+        "fr": "Gillian",
+        "es": "Gillian",
+        "pt": "Gillian",
+        "it": "Gillian",
+        "de": "Gillian",
+        "th": "กิลเลียน",
+        "vi": "Gillian",
+        "id": "Gillian"
+      }
+    },
+    {
+      "index": 65,
+      "localizedNames": {
+        "en": "Lucas",
+        "ko": "루커스",
+        "ja": "ルーカス",
+        "zh-TW": "盧克斯",
+        "zh-CN": "卢克斯",
+        "ru": "Лукас",
+        "fr": "Lucas",
+        "es": "Lucas",
+        "pt": "Lucas",
+        "it": "Lucas",
+        "de": "Lucas",
+        "th": "ลูคัส",
+        "vi": "Lucas",
+        "id": "Lucas"
+      }
+    },
+    {
+      "index": 66,
+      "localizedNames": {
+        "en": "Wigmond",
+        "ko": "위그먼드",
+        "ja": "ウィグモンド",
+        "zh-TW": "維格蒙德",
+        "zh-CN": "维格蒙德",
+        "ru": "Вигмонд",
+        "fr": "Wigmond",
+        "es": "Wigmond",
+        "pt": "Wigmond",
+        "it": "Wigmond",
+        "de": "Wigmond",
+        "th": "วิกมอนด์",
+        "vi": "Wigmond",
+        "id": "Wigmond"
+      }
+    },
+    {
+      "index": 67,
+      "localizedNames": {
+        "en": "Felder",
+        "ko": "펠더",
+        "ja": "フェルダー",
+        "zh-TW": "派爾德",
+        "zh-CN": "派尔德",
+        "ru": "Фелдер",
+        "fr": "Felder",
+        "es": "Felder",
+        "pt": "Felder",
+        "it": "Felder",
+        "de": "Felder",
+        "th": "เฟลเดอร์",
+        "vi": "Felder",
+        "id": "Felder"
+      }
+    },
+    {
+      "index": 68,
+      "localizedNames": {
+        "en": "Morras",
+        "ko": "모라스",
+        "ja": "モーラス",
+        "zh-TW": "莫拉斯",
+        "zh-CN": "莫拉斯",
+        "ru": "Моррас",
+        "fr": "Morras",
+        "es": "Morras",
+        "pt": "Morras",
+        "it": "Morras",
+        "de": "Morras",
+        "th": "มอร์รัส",
+        "vi": "Morras",
+        "id": "Morras"
+      }
+    },
+    {
+      "index": 69,
+      "localizedNames": {
+        "en": "Cliff",
+        "ko": "크리프",
+        "ja": "クリフ",
+        "zh-TW": "克里佛",
+        "zh-CN": "克里佛",
+        "ru": "Клифф",
+        "fr": "Cliff",
+        "es": "Cliff",
+        "pt": "Cliff",
+        "it": "Cliff",
+        "de": "Cliff",
+        "th": "คลิฟท์",
+        "vi": "Cliff",
+        "id": "Cliff"
+      }
+    }
+  ],
+  "femaleNames": [
+    {
+      "index": 0,
+      "localizedNames": {
+        "en": "Egley",
+        "ko": "에이글리",
+        "ja": "エグリー",
+        "zh-TW": "埃爾格利",
+        "zh-CN": "埃尔格利",
+        "ru": "Эгли",
+        "fr": "Egley",
+        "es": "Egley",
+        "pt": "Egley",
+        "it": "Egley",
+        "de": "Egley",
+        "th": "อิกลี่",
+        "vi": "Egley",
+        "id": "Egley"
+      }
+    },
+    {
+      "index": 1,
+      "localizedNames": {
+        "en": "Ailyth",
+        "ko": "에일리스",
+        "ja": "エ―リス",
+        "zh-TW": "愛爾麗絲",
+        "zh-CN": "爱尔丽丝",
+        "ru": "Эйлит",
+        "fr": "Ailyth",
+        "es": "Ailyth",
+        "pt": "Ailyth",
+        "it": "Ailyth",
+        "de": "Ailyth",
+        "th": "เอลิธ",
+        "vi": "Ailyth",
+        "id": "Ailyth"
+      }
+    },
+    {
+      "index": 2,
+      "localizedNames": {
+        "en": "Sereni",
+        "ko": "세르니",
+        "ja": "セレーニ",
+        "zh-TW": "塞爾尼",
+        "zh-CN": "塞尔尼",
+        "ru": "Серена",
+        "fr": "Sereni",
+        "es": "Sereni",
+        "pt": "Sereni",
+        "it": "Sereni",
+        "de": "Sereni",
+        "th": "เซเรนี",
+        "vi": "Sereni",
+        "id": "Sereni"
+      }
+    },
+    {
+      "index": 3,
+      "localizedNames": {
+        "en": "Azele",
+        "ko": "아젤",
+        "ja": "アゼル",
+        "zh-TW": "安傑爾",
+        "zh-CN": "安杰尔",
+        "ru": "Азеле",
+        "fr": "Azele",
+        "es": "Azele",
+        "pt": "Azele",
+        "it": "Azele",
+        "de": "Azele",
+        "th": "อาเซล",
+        "vi": "Azele",
+        "id": "Azele"
+      }
+    },
+    {
+      "index": 4,
+      "localizedNames": {
+        "en": "Elysee",
+        "ko": "엘리시",
+        "ja": "エリーゼ",
+        "zh-TW": "艾莉詩",
+        "zh-CN": "艾莉诗",
+        "ru": "Елисей",
+        "fr": "Elysee",
+        "es": "Elysee",
+        "pt": "Elysee",
+        "it": "Elysee",
+        "de": "Elysee",
+        "th": "เอลิซี",
+        "vi": "Elysee",
+        "id": "Elysee"
+      }
+    },
+    {
+      "index": 5,
+      "localizedNames": {
+        "en": "Betis",
+        "ko": "베티스",
+        "ja": "ベティス",
+        "zh-TW": "貝蒂斯",
+        "zh-CN": "贝蒂斯",
+        "ru": "Бетис",
+        "fr": "Betis",
+        "es": "Betis",
+        "pt": "Betis",
+        "it": "Betis",
+        "de": "Betis",
+        "th": "เบียทิส",
+        "vi": "Betis",
+        "id": "Betis"
+      }
+    },
+    {
+      "index": 6,
+      "localizedNames": {
+        "en": "Audrey",
+        "ko": "오드리",
+        "ja": "オードリー",
+        "zh-TW": "奧黛麗",
+        "zh-CN": "奥黛丽",
+        "ru": "Одри",
+        "fr": "Audrey",
+        "es": "Audrey",
+        "pt": "Audrey",
+        "it": "Audrey",
+        "de": "Audrey",
+        "th": "อังเดร",
+        "vi": "Audrey",
+        "id": "Audrey"
+      }
+    },
+    {
+      "index": 7,
+      "localizedNames": {
+        "en": "Triana",
+        "ko": "트리아나",
+        "ja": "トリアナ",
+        "zh-TW": "特里亞納",
+        "zh-CN": "特里亚纳",
+        "ru": "Триана",
+        "fr": "Triana",
+        "es": "Triana",
+        "pt": "Triana",
+        "it": "Triana",
+        "de": "Triana",
+        "th": "เทรียน่า",
+        "vi": "Triana",
+        "id": "Triana"
+      }
+    },
+    {
+      "index": 8,
+      "localizedNames": {
+        "en": "Kylena",
+        "ko": "카일레나",
+        "ja": "カイレーナ",
+        "zh-TW": "凱爾雷納",
+        "zh-CN": "凯尔雷纳",
+        "ru": "Кайлена",
+        "fr": "Kylena",
+        "es": "Kylena",
+        "pt": "Kylena",
+        "it": "Kylena",
+        "de": "Kylena",
+        "th": "เคลเลน่า",
+        "vi": "Kylena",
+        "id": "Kylena"
+      }
+    },
+    {
+      "index": 9,
+      "localizedNames": {
+        "en": "Belina",
+        "ko": "벨리나",
+        "ja": "ベリーナ",
+        "zh-TW": "貝爾麗娜",
+        "zh-CN": "贝尔丽娜",
+        "ru": "Белина",
+        "fr": "Belina",
+        "es": "Belina",
+        "pt": "Belina",
+        "it": "Belina",
+        "de": "Belina",
+        "th": "เบริน่า",
+        "vi": "Belina",
+        "id": "Belina"
+      }
+    },
+    {
+      "index": 10,
+      "localizedNames": {
+        "en": "Madila",
+        "ko": "마딜라",
+        "ja": "マディラー",
+        "zh-TW": "瑪蒂拉",
+        "zh-CN": "玛蒂拉",
+        "ru": "Мадила",
+        "fr": "Madila",
+        "es": "Madila",
+        "pt": "Madila",
+        "it": "Madila",
+        "de": "Madila",
+        "th": "มาดิล",
+        "vi": "Madila",
+        "id": "Madila"
+      }
+    },
+    {
+      "index": 11,
+      "localizedNames": {
+        "en": "Ayla",
+        "ko": "아일라",
+        "ja": "アイラ―",
+        "zh-TW": "阿伊拉",
+        "zh-CN": "阿伊拉",
+        "ru": "Эйла",
+        "fr": "Ayla",
+        "es": "Ayla",
+        "pt": "Ayla",
+        "it": "Ayla",
+        "de": "Ayla",
+        "th": "ไอรา",
+        "vi": "Ayla",
+        "id": "Ayla"
+      }
+    },
+    {
+      "index": 12,
+      "localizedNames": {
+        "en": "Fiona",
+        "ko": "피오나",
+        "ja": "フィオーナ",
+        "zh-TW": "皮奧娜",
+        "zh-CN": "皮奥娜",
+        "ru": "Фиона",
+        "fr": "Fiona",
+        "es": "Fiona",
+        "pt": "Fiona",
+        "it": "Fiona",
+        "de": "Fiona",
+        "th": "ฟิโอน่า",
+        "vi": "Fiona",
+        "id": "Fiona"
+      }
+    },
+    {
+      "index": 13,
+      "localizedNames": {
+        "en": "Ocós",
+        "ko": "오코스",
+        "ja": "オーコス",
+        "zh-TW": "奧克斯",
+        "zh-CN": "奥克斯",
+        "ru": "Окос",
+        "fr": "Ocós",
+        "es": "Ocós",
+        "pt": "Ocós",
+        "it": "Ocós",
+        "de": "Ocós",
+        "th": "โอคอส",
+        "vi": "Ocós",
+        "id": "Ocós"
+      }
+    },
+    {
+      "index": 14,
+      "localizedNames": {
+        "en": "Sharon",
+        "ko": "샤른",
+        "ja": "シャロン",
+        "zh-TW": "莎倫",
+        "zh-CN": "莎伦",
+        "ru": "Шарон",
+        "fr": "Sharon",
+        "es": "Sharon",
+        "pt": "Sharon",
+        "it": "Sharon",
+        "de": "Sharon",
+        "th": "ชารอน",
+        "vi": "Sharon",
+        "id": "Sharon"
+      }
+    },
+    {
+      "index": 15,
+      "localizedNames": {
+        "en": "Marie",
+        "ko": "마리",
+        "ja": "マリー",
+        "zh-TW": "瑪麗",
+        "zh-CN": "玛丽",
+        "ru": "Мэри",
+        "fr": "Marie",
+        "es": "Marie",
+        "pt": "Marie",
+        "it": "Marie",
+        "de": "Marie",
+        "th": "มารี",
+        "vi": "Marie",
+        "id": "Marie"
+      }
+    },
+    {
+      "index": 16,
+      "localizedNames": {
+        "en": "Dina",
+        "ko": "디나",
+        "ja": "ディーナ",
+        "zh-TW": "蒂娜",
+        "zh-CN": "蒂娜",
+        "ru": "Дина",
+        "fr": "Dina",
+        "es": "Dina",
+        "pt": "Dina",
+        "it": "Dina",
+        "de": "Dina",
+        "th": "ดีน่า",
+        "vi": "Dina",
+        "id": "Dina"
+      }
+    },
+    {
+      "index": 17,
+      "localizedNames": {
+        "en": "Lena",
+        "ko": "레나",
+        "ja": "レナ",
+        "zh-TW": "蕾娜",
+        "zh-CN": "蕾娜",
+        "ru": "Лена",
+        "fr": "Lena",
+        "es": "Lena",
+        "pt": "Lena",
+        "it": "Lena",
+        "de": "Lena",
+        "th": "เลน่า",
+        "vi": "Lena",
+        "id": "Lena"
+      }
+    },
+    {
+      "index": 18,
+      "localizedNames": {
+        "en": "Ihanna",
+        "ko": "이안나",
+        "ja": "イハンナ",
+        "zh-TW": "麗安娜",
+        "zh-CN": "丽安娜",
+        "ru": "Иханна",
+        "fr": "Ihanna",
+        "es": "Ihanna",
+        "pt": "Ihanna",
+        "it": "Ihanna",
+        "de": "Ihanna",
+        "th": "ลีอานน่า",
+        "vi": "Ihanna",
+        "id": "Ihanna"
+      }
+    },
+    {
+      "index": 19,
+      "localizedNames": {
+        "en": "Isena",
+        "ko": "이세나",
+        "ja": "イセナ",
+        "zh-TW": "麗塞納",
+        "zh-CN": "丽塞纳",
+        "ru": "Исена",
+        "fr": "Isena",
+        "es": "Isena",
+        "pt": "Isena",
+        "it": "Isena",
+        "de": "Isena",
+        "th": "ลีเซน่า",
+        "vi": "Isena",
+        "id": "Isena"
+      }
+    },
+    {
+      "index": 20,
+      "localizedNames": {
+        "en": "Sidney",
+        "ko": "시드니",
+        "ja": "シドニー",
+        "zh-TW": "希德尼",
+        "zh-CN": "希德尼",
+        "ru": "Сидна",
+        "fr": "Sidney",
+        "es": "Sidney",
+        "pt": "Sidney",
+        "it": "Sidney",
+        "de": "Sidney",
+        "th": "ซิดนีย์",
+        "vi": "Sidney",
+        "id": "Sidney"
+      }
+    },
+    {
+      "index": 21,
+      "localizedNames": {
+        "en": "Selene",
+        "ko": "셀렌",
+        "ja": "セレーネ",
+        "zh-TW": "塞爾倫",
+        "zh-CN": "塞尔伦",
+        "ru": "Селин",
+        "fr": "Selene",
+        "es": "Selene",
+        "pt": "Selene",
+        "it": "Selene",
+        "de": "Selene",
+        "th": "เซลีน",
+        "vi": "Selene",
+        "id": "Selene"
+      }
+    },
+    {
+      "index": 22,
+      "localizedNames": {
+        "en": "Klinas",
+        "ko": "클리나스",
+        "ja": "クリナス",
+        "zh-TW": "克利納斯",
+        "zh-CN": "克利纳斯",
+        "ru": "Клинас",
+        "fr": "Klinas",
+        "es": "Klinas",
+        "pt": "Klinas",
+        "it": "Klinas",
+        "de": "Klinas",
+        "th": "คลีนัส",
+        "vi": "Klinas",
+        "id": "Klinas"
+      }
+    },
+    {
+      "index": 23,
+      "localizedNames": {
+        "en": "Claire",
+        "ko": "클레인",
+        "ja": "クレール",
+        "zh-TW": "克萊因",
+        "zh-CN": "克莱因",
+        "ru": "Клэр",
+        "fr": "Claire",
+        "es": "Claire",
+        "pt": "Claire",
+        "it": "Claire",
+        "de": "Claire",
+        "th": "แคลร์",
+        "vi": "Claire",
+        "id": "Claire"
+      }
+    },
+    {
+      "index": 24,
+      "localizedNames": {
+        "en": "Carol",
+        "ko": "캐로",
+        "ja": "キャロル",
+        "zh-TW": "凱路",
+        "zh-CN": "凯路",
+        "ru": "Карол",
+        "fr": "Carol",
+        "es": "Carol",
+        "pt": "Carol",
+        "it": "Carol",
+        "de": "Carol",
+        "th": "แครอล",
+        "vi": "Carol",
+        "id": "Carol"
+      }
+    },
+    {
+      "index": 25,
+      "localizedNames": {
+        "en": "Lisa",
+        "ko": "리사",
+        "ja": "リサ",
+        "zh-TW": "麗莎",
+        "zh-CN": "丽莎",
+        "ru": "Лиза",
+        "fr": "Lisa",
+        "es": "Lisa",
+        "pt": "Lisa",
+        "it": "Lisa",
+        "de": "Lisa",
+        "th": "ลิซ่า",
+        "vi": "Lisa",
+        "id": "Lisa"
+      }
+    },
+    {
+      "index": 26,
+      "localizedNames": {
+        "en": "Ola",
+        "ko": "올라",
+        "ja": "オラ",
+        "zh-TW": "歐羅拉",
+        "zh-CN": "欧罗拉",
+        "ru": "Ола",
+        "fr": "Ola",
+        "es": "Ola",
+        "pt": "Ola",
+        "it": "Ola",
+        "de": "Ola",
+        "th": "โอล่า",
+        "vi": "Ola",
+        "id": "Ola"
+      }
+    },
+    {
+      "index": 27,
+      "localizedNames": {
+        "en": "Krissa",
+        "ko": "크리사",
+        "ja": "クリッサ",
+        "zh-TW": "可麗沙",
+        "zh-CN": "可丽沙",
+        "ru": "Крисса",
+        "fr": "Krissa",
+        "es": "Krissa",
+        "pt": "Krissa",
+        "it": "Krissa",
+        "de": "Krissa",
+        "th": "คริสซ่า",
+        "vi": "Krissa",
+        "id": "Krissa"
+      }
+    },
+    {
+      "index": 28,
+      "localizedNames": {
+        "en": "Elindi",
+        "ko": "엘린디",
+        "ja": "エリンディ",
+        "zh-TW": "葉琳迪",
+        "zh-CN": "叶琳迪",
+        "ru": "Элинди",
+        "fr": "Elindi",
+        "es": "Elindi",
+        "pt": "Elindi",
+        "it": "Elindi",
+        "de": "Elindi",
+        "th": "เอลลิน",
+        "vi": "Elindi",
+        "id": "Elindi"
+      }
+    },
+    {
+      "index": 29,
+      "localizedNames": {
+        "en": "Sirah",
+        "ko": "시라",
+        "ja": "シラー",
+        "zh-TW": "希拉",
+        "zh-CN": "希拉",
+        "ru": "Сира",
+        "fr": "Sirah",
+        "es": "Sirah",
+        "pt": "Sirah",
+        "it": "Sirah",
+        "de": "Sirah",
+        "th": "ซาร่า",
+        "vi": "Sirah",
+        "id": "Sirah"
+      }
+    },
+    {
+      "index": 30,
+      "localizedNames": {
+        "en": "Melvina",
+        "ko": "멜비나",
+        "ja": "メルヴィナ",
+        "zh-TW": "梅爾碧娜",
+        "zh-CN": "梅尔碧娜",
+        "ru": "Мальвина",
+        "fr": "Melvina",
+        "es": "Melvina",
+        "pt": "Melvina",
+        "it": "Melvina",
+        "de": "Melvina",
+        "th": "เมลวิน่า",
+        "vi": "Melvina",
+        "id": "Melvina"
+      }
+    },
+    {
+      "index": 31,
+      "localizedNames": {
+        "en": "Meoka",
+        "ko": "메오카",
+        "ja": "メオカ",
+        "zh-TW": "梅歐卡",
+        "zh-CN": "梅欧卡",
+        "ru": "Меока",
+        "fr": "Meoka",
+        "es": "Meoka",
+        "pt": "Meoka",
+        "it": "Meoka",
+        "de": "Meoka",
+        "th": "เมโอก้า",
+        "vi": "Meoka",
+        "id": "Meoka"
+      }
+    },
+    {
+      "index": 32,
+      "localizedNames": {
+        "en": "Anatu",
+        "ko": "아나트",
+        "ja": "アナトゥ",
+        "zh-TW": "阿納特",
+        "zh-CN": "阿纳特",
+        "ru": "Анату",
+        "fr": "Anatu",
+        "es": "Anatu",
+        "pt": "Anatu",
+        "it": "Anatu",
+        "de": "Anatu",
+        "th": "อานาท",
+        "vi": "Anatu",
+        "id": "Anatu"
+      }
+    },
+    {
+      "index": 33,
+      "localizedNames": {
+        "en": "Hillah",
+        "ko": "힐라",
+        "ja": "ヒッラ",
+        "zh-TW": "希爾拉",
+        "zh-CN": "希尔拉",
+        "ru": "Хиллах",
+        "fr": "Hillah",
+        "es": "Hillah",
+        "pt": "Hillah",
+        "it": "Hillah",
+        "de": "Hillah",
+        "th": "ฮิลล่า",
+        "vi": "Hillah",
+        "id": "Hillah"
+      }
+    },
+    {
+      "index": 34,
+      "localizedNames": {
+        "en": "Eris",
+        "ko": "에리스",
+        "ja": "エリス",
+        "zh-TW": "愛麗絲",
+        "zh-CN": "爱丽丝",
+        "ru": "Эрис",
+        "fr": "Eris",
+        "es": "Eris",
+        "pt": "Eris",
+        "it": "Eris",
+        "de": "Eris",
+        "th": "เอริส",
+        "vi": "Eris",
+        "id": "Eris"
+      }
+    },
+    {
+      "index": 35,
+      "localizedNames": {
+        "en": "Mana",
+        "ko": "마나",
+        "ja": "マナ",
+        "zh-TW": "瑪娜",
+        "zh-CN": "玛娜",
+        "ru": "Мана",
+        "fr": "Mana",
+        "es": "Mana",
+        "pt": "Mana",
+        "it": "Mana",
+        "de": "Mana",
+        "th": "มาน่า",
+        "vi": "Mana",
+        "id": "Mana"
+      }
+    },
+    {
+      "index": 36,
+      "localizedNames": {
+        "en": "Athla",
+        "ko": "아슬라",
+        "ja": "アスラ",
+        "zh-TW": "艾絲拉",
+        "zh-CN": "艾丝拉",
+        "ru": "Атла",
+        "fr": "Athla",
+        "es": "Athla",
+        "pt": "Athla",
+        "it": "Athla",
+        "de": "Athla",
+        "th": "เอธล่า",
+        "vi": "Athla",
+        "id": "Athla"
+      }
+    },
+    {
+      "index": 37,
+      "localizedNames": {
+        "en": "Prise",
+        "ko": "프리스",
+        "ja": "プリス",
+        "zh-TW": "普利斯",
+        "zh-CN": "普利斯",
+        "ru": "Прайз",
+        "fr": "Prise",
+        "es": "Prise",
+        "pt": "Prise",
+        "it": "Prise",
+        "de": "Prise",
+        "th": "ไพร์ส",
+        "vi": "Prise",
+        "id": "Prise"
+      }
+    },
+    {
+      "index": 38,
+      "localizedNames": {
+        "en": "Iava",
+        "ko": "이아바",
+        "ja": "イアヴァ",
+        "zh-TW": "麗安芭",
+        "zh-CN": "丽安芭",
+        "ru": "Иава",
+        "fr": "Iava",
+        "es": "Iava",
+        "pt": "Iava",
+        "it": "Iava",
+        "de": "Iava",
+        "th": "ลาวา",
+        "vi": "Iava",
+        "id": "Iava"
+      }
+    },
+    {
+      "index": 39,
+      "localizedNames": {
+        "en": "Sally",
+        "ko": "셀리",
+        "ja": "セリー",
+        "zh-TW": "賽爾麗",
+        "zh-CN": "赛尔丽",
+        "ru": "Салли",
+        "fr": "Sally",
+        "es": "Sally",
+        "pt": "Sally",
+        "it": "Sally",
+        "de": "Sally",
+        "th": "เซลลี่",
+        "vi": "Sally",
+        "id": "Sally"
+      }
+    },
+    {
+      "index": 40,
+      "localizedNames": {
+        "en": "Ensia",
+        "ko": "엔시아",
+        "ja": "エンシア",
+        "zh-TW": "恩西亞",
+        "zh-CN": "恩西亚",
+        "ru": "Энсия",
+        "fr": "Ensia",
+        "es": "Ensia",
+        "pt": "Ensia",
+        "it": "Ensia",
+        "de": "Ensia",
+        "th": "เอนเซีย",
+        "vi": "Ensia",
+        "id": "Ensia"
+      }
+    },
+    {
+      "index": 41,
+      "localizedNames": {
+        "en": "Kailyn",
+        "ko": "켈린",
+        "ja": "カイリン",
+        "zh-TW": "科爾林",
+        "zh-CN": "科尔林",
+        "ru": "Кейлин",
+        "fr": "Kailyn",
+        "es": "Kailyn",
+        "pt": "Kailyn",
+        "it": "Kailyn",
+        "de": "Kailyn",
+        "th": "เคลลีน",
+        "vi": "Kailyn",
+        "id": "Kailyn"
+      }
+    },
+    {
+      "index": 42,
+      "localizedNames": {
+        "en": "Alisa",
+        "ko": "알리사",
+        "ja": "アリサ",
+        "zh-TW": "阿爾麗莎",
+        "zh-CN": "阿尔丽莎",
+        "ru": "Алиса",
+        "fr": "Alisa",
+        "es": "Alisa",
+        "pt": "Alisa",
+        "it": "Alisa",
+        "de": "Alisa",
+        "th": "เอลิซ่า",
+        "vi": "Alisa",
+        "id": "Alisa"
+      }
+    },
+    {
+      "index": 43,
+      "localizedNames": {
+        "en": "Iora",
+        "ko": "아이오라",
+        "ja": "アイオラ",
+        "zh-TW": "艾利歐拉",
+        "zh-CN": "艾利欧拉",
+        "ru": "Иора",
+        "fr": "Iora",
+        "es": "Iora",
+        "pt": "Iora",
+        "it": "Iora",
+        "de": "Iora",
+        "th": "ไอโอร่า",
+        "vi": "Iora",
+        "id": "Iora"
+      }
+    },
+    {
+      "index": 44,
+      "localizedNames": {
+        "en": "Yozet",
+        "ko": "요제트",
+        "ja": "ヨゼット",
+        "zh-TW": "姚潔特",
+        "zh-CN": "姚洁特",
+        "ru": "Йозет",
+        "fr": "Yozet",
+        "es": "Yozet",
+        "pt": "Yozet",
+        "it": "Yozet",
+        "de": "Yozet",
+        "th": "โยเซท",
+        "vi": "Yozet",
+        "id": "Yozet"
+      }
+    },
+    {
+      "index": 45,
+      "localizedNames": {
+        "en": "Mayba",
+        "ko": "메이바",
+        "ja": "メイバ",
+        "zh-TW": "美麗芭",
+        "zh-CN": "美丽芭",
+        "ru": "Майба",
+        "fr": "Mayba",
+        "es": "Mayba",
+        "pt": "Mayba",
+        "it": "Mayba",
+        "de": "Mayba",
+        "th": "เมย์บา",
+        "vi": "Mayba",
+        "id": "Mayba"
+      }
+    },
+    {
+      "index": 46,
+      "localizedNames": {
+        "en": "Solei",
+        "ko": "솔레이",
+        "ja": "ソレイ",
+        "zh-TW": "索爾雷伊",
+        "zh-CN": "索尔雷伊",
+        "ru": "Солей",
+        "fr": "Solei",
+        "es": "Solei",
+        "pt": "Solei",
+        "it": "Solei",
+        "de": "Solei",
+        "th": "โซเลย์",
+        "vi": "Solei",
+        "id": "Solei"
+      }
+    },
+    {
+      "index": 47,
+      "localizedNames": {
+        "en": "Krisha",
+        "ko": "크리샤",
+        "ja": "クリーシャ",
+        "zh-TW": "可麗沙",
+        "zh-CN": "可丽沙",
+        "ru": "Кри",
+        "fr": "Krisha",
+        "es": "Krisha",
+        "pt": "Krisha",
+        "it": "Krisha",
+        "de": "Krisha",
+        "th": "คริช่า",
+        "vi": "Krisha",
+        "id": "Krisha"
+      }
+    },
+    {
+      "index": 48,
+      "localizedNames": {
+        "en": "Moyna",
+        "ko": "모이나",
+        "ja": "モイーナ",
+        "zh-TW": "莫麗娜",
+        "zh-CN": "莫丽娜",
+        "ru": "Мойна",
+        "fr": "Moyna",
+        "es": "Moyna",
+        "pt": "Moyna",
+        "it": "Moyna",
+        "de": "Moyna",
+        "th": "โมอีน่า",
+        "vi": "Moyna",
+        "id": "Moyna"
+      }
+    },
+    {
+      "index": 49,
+      "localizedNames": {
+        "en": "D'amor",
+        "ko": "다모르",
+        "ja": "ダモール",
+        "zh-TW": "多摩羅",
+        "zh-CN": "多摩罗",
+        "ru": "Д'Амор",
+        "fr": "D'amor",
+        "es": "D'amor",
+        "pt": "D'amor",
+        "it": "D'amor",
+        "de": "D'amor",
+        "th": "ดามอร์",
+        "vi": "D'amor",
+        "id": "D'amor"
+      }
+    },
+    {
+      "index": 50,
+      "localizedNames": {
+        "en": "Petrich",
+        "ko": "페트리치",
+        "ja": "ペトリッチ",
+        "zh-TW": "派特里奇",
+        "zh-CN": "派特里奇",
+        "ru": "Петрич",
+        "fr": "Petrich",
+        "es": "Petrich",
+        "pt": "Petrich",
+        "it": "Petrich",
+        "de": "Petrich",
+        "th": "แพททริช",
+        "vi": "Petrich",
+        "id": "Petrich"
+      }
+    },
+    {
+      "index": 51,
+      "localizedNames": {
+        "en": "Lynette",
+        "ko": "리넷",
+        "ja": "リネット",
+        "zh-TW": "里維斯",
+        "zh-CN": "里维斯",
+        "ru": "Линетт",
+        "fr": "Lynette",
+        "es": "Lynette",
+        "pt": "Lynette",
+        "it": "Lynette",
+        "de": "Lynette",
+        "th": "ลีเนท",
+        "vi": "Lynette",
+        "id": "Lynette"
+      }
+    },
+    {
+      "index": 52,
+      "localizedNames": {
+        "en": "Ginata",
+        "ko": "지나타",
+        "ja": "ジナータ",
+        "zh-TW": "齊納他",
+        "zh-CN": "齐纳他",
+        "ru": "Гината",
+        "fr": "Ginata",
+        "es": "Ginata",
+        "pt": "Ginata",
+        "it": "Ginata",
+        "de": "Ginata",
+        "th": "จีนาต้า",
+        "vi": "Ginata",
+        "id": "Ginata"
+      }
+    },
+    {
+      "index": 53,
+      "localizedNames": {
+        "en": "Heldia",
+        "ko": "헬디아",
+        "ja": "へルディア",
+        "zh-TW": "赫爾迪亞",
+        "zh-CN": "赫尔迪亚",
+        "ru": "Хелдия",
+        "fr": "Heldia",
+        "es": "Heldia",
+        "pt": "Heldia",
+        "it": "Heldia",
+        "de": "Heldia",
+        "th": "เฮลเดีย",
+        "vi": "Heldia",
+        "id": "Heldia"
+      }
+    },
+    {
+      "index": 54,
+      "localizedNames": {
+        "en": "Norris",
+        "ko": "노리스",
+        "ja": "ノーリス",
+        "zh-TW": "羅麗絲",
+        "zh-CN": "罗丽丝",
+        "ru": "Норриса",
+        "fr": "Norris",
+        "es": "Norris",
+        "pt": "Norris",
+        "it": "Norris",
+        "de": "Norris",
+        "th": "นอร์ริส",
+        "vi": "Norris",
+        "id": "Norris"
+      }
+    },
+    {
+      "index": 55,
+      "localizedNames": {
+        "en": "Lekwen",
+        "ko": "레크웬",
+        "ja": "レクウェン",
+        "zh-TW": "萊克微",
+        "zh-CN": "莱克微",
+        "ru": "Леквен",
+        "fr": "Lekwen",
+        "es": "Lekwen",
+        "pt": "Lekwen",
+        "it": "Lekwen",
+        "de": "Lekwen",
+        "th": "เลคเวน",
+        "vi": "Lekwen",
+        "id": "Lekwen"
+      }
+    },
+    {
+      "index": 56,
+      "localizedNames": {
+        "en": "Jennifer",
+        "ko": "제니퍼",
+        "ja": "ジェニファー",
+        "zh-TW": "傑尼佛",
+        "zh-CN": "杰尼佛",
+        "ru": "Дженнифер",
+        "fr": "Jennifer",
+        "es": "Jennifer",
+        "pt": "Jennifer",
+        "it": "Jennifer",
+        "de": "Jennifer",
+        "th": "เจนนิเฟอร์",
+        "vi": "Jennifer",
+        "id": "Jennifer"
+      }
+    },
+    {
+      "index": 57,
+      "localizedNames": {
+        "en": "Derris",
+        "ko": "데리스",
+        "ja": "デーリス",
+        "zh-TW": "黛麗絲",
+        "zh-CN": "黛丽丝",
+        "ru": "Деррис",
+        "fr": "Derris",
+        "es": "Derris",
+        "pt": "Derris",
+        "it": "Derris",
+        "de": "Derris",
+        "th": "แดร์ริส",
+        "vi": "Derris",
+        "id": "Derris"
+      }
+    },
+    {
+      "index": 58,
+      "localizedNames": {
+        "en": "Keaton",
+        "ko": "키튼",
+        "ja": "キートン",
+        "zh-TW": "克頓",
+        "zh-CN": "克顿",
+        "ru": "Китона",
+        "fr": "Keaton",
+        "es": "Keaton",
+        "pt": "Keaton",
+        "it": "Keaton",
+        "de": "Keaton",
+        "th": "เคียตัน",
+        "vi": "Keaton",
+        "id": "Keaton"
+      }
+    },
+    {
+      "index": 59,
+      "localizedNames": {
+        "en": "Eileen",
+        "ko": "에일린",
+        "ja": "エイリン",
+        "zh-TW": "愛麗爾琳",
+        "zh-CN": "爱丽尔琳",
+        "ru": "Элин",
+        "fr": "Eileen",
+        "es": "Eileen",
+        "pt": "Eileen",
+        "it": "Eileen",
+        "de": "Eileen",
+        "th": "เอลลีน",
+        "vi": "Eileen",
+        "id": "Eileen"
+      }
+    },
+    {
+      "index": 60,
+      "localizedNames": {
+        "en": "Brena",
+        "ko": "브레나",
+        "ja": "ブレーナ",
+        "zh-TW": "佈萊娜",
+        "zh-CN": "佈莱娜",
+        "ru": "Бренна",
+        "fr": "Brena",
+        "es": "Brena",
+        "pt": "Brena",
+        "it": "Brena",
+        "de": "Brena",
+        "th": "บรีน่า",
+        "vi": "Brena",
+        "id": "Brena"
+      }
+    },
+    {
+      "index": 61,
+      "localizedNames": {
+        "en": "Dohring",
+        "ko": "도링",
+        "ja": "ドーリング",
+        "zh-TW": "道琳",
+        "zh-CN": "道琳",
+        "ru": "Доринг",
+        "fr": "Dohring",
+        "es": "Dohring",
+        "pt": "Dohring",
+        "it": "Dohring",
+        "de": "Dohring",
+        "th": "โดริง",
+        "vi": "Dohring",
+        "id": "Dohring"
+      }
+    },
+    {
+      "index": 62,
+      "localizedNames": {
+        "en": "Ranta",
+        "ko": "란타",
+        "ja": "ランタ",
+        "zh-TW": "蘭塔",
+        "zh-CN": "兰塔",
+        "ru": "Ранта",
+        "fr": "Ranta",
+        "es": "Ranta",
+        "pt": "Ranta",
+        "it": "Ranta",
+        "de": "Ranta",
+        "th": "รันตะ",
+        "vi": "Ranta",
+        "id": "Ranta"
+      }
+    },
+    {
+      "index": 63,
+      "localizedNames": {
+        "en": "Oklyne",
+        "ko": "오클라인",
+        "ja": "オークリン",
+        "zh-TW": "奧科拉音",
+        "zh-CN": "奥科拉音",
+        "ru": "Оклайн",
+        "fr": "Oklyne",
+        "es": "Oklyne",
+        "pt": "Oklyne",
+        "it": "Oklyne",
+        "de": "Oklyne",
+        "th": "โอไคลน์",
+        "vi": "Oklyne",
+        "id": "Oklyne"
+      }
+    },
+    {
+      "index": 64,
+      "localizedNames": {
+        "en": "Vrysis",
+        "ko": "브리시스",
+        "ja": "ブリシス",
+        "zh-TW": "佈麗西斯",
+        "zh-CN": "佈丽西斯",
+        "ru": "Врисис",
+        "fr": "Vrysis",
+        "es": "Vrysis",
+        "pt": "Vrysis",
+        "it": "Vrysis",
+        "de": "Vrysis",
+        "th": "เวริซิส",
+        "vi": "Vrysis",
+        "id": "Vrysis"
+      }
+    },
+    {
+      "index": 65,
+      "localizedNames": {
+        "en": "Brisena",
+        "ko": "브리세나",
+        "ja": "ブリッセナ",
+        "zh-TW": "佈麗塞納",
+        "zh-CN": "佈丽塞纳",
+        "ru": "Брисена",
+        "fr": "Brisena",
+        "es": "Brisena",
+        "pt": "Brisena",
+        "it": "Brisena",
+        "de": "Brisena",
+        "th": "บริเซน่า",
+        "vi": "Brisena",
+        "id": "Brisena"
+      }
+    },
+    {
+      "index": 66,
+      "localizedNames": {
+        "en": "Reika",
+        "ko": "레이카",
+        "ja": "レイカ",
+        "zh-TW": "萊依卡",
+        "zh-CN": "莱依卡",
+        "ru": "Рэйка",
+        "fr": "Reika",
+        "es": "Reika",
+        "pt": "Reika",
+        "it": "Reika",
+        "de": "Reika",
+        "th": "เรย์กะ",
+        "vi": "Reika",
+        "id": "Reika"
+      }
+    },
+    {
+      "index": 67,
+      "localizedNames": {
+        "en": "Weberry",
+        "ko": "위베리",
+        "ja": "ウィベリー",
+        "zh-TW": "維貝裡",
+        "zh-CN": "维贝裡",
+        "ru": "Уберри",
+        "fr": "Weberry",
+        "es": "Weberry",
+        "pt": "Weberry",
+        "it": "Weberry",
+        "de": "Weberry",
+        "th": "วีเบอร์รี่",
+        "vi": "Weberry",
+        "id": "Weberry"
+      }
+    },
+    {
+      "index": 68,
+      "localizedNames": {
+        "en": "Irid",
+        "ko": "이리드",
+        "ja": "イリッド",
+        "zh-TW": "易麗德",
+        "zh-CN": "易丽德",
+        "ru": "Ирида",
+        "fr": "Irid",
+        "es": "Irid",
+        "pt": "Irid",
+        "it": "Irid",
+        "de": "Irid",
+        "th": "อีริด",
+        "vi": "Irid",
+        "id": "Irid"
+      }
+    },
+    {
+      "index": 69,
+      "localizedNames": {
+        "en": "Yonnant",
+        "ko": "요낭",
+        "ja": "ヨナン",
+        "zh-TW": "姚娜",
+        "zh-CN": "姚娜",
+        "ru": "Йоннан",
+        "fr": "Yonnant",
+        "es": "Yonnant",
+        "pt": "Yonnant",
+        "it": "Yonnant",
+        "de": "Yonnant",
+        "th": "โยนัน",
+        "vi": "Yonnant",
+        "id": "Yonnant"
+      }
+    }
+  ],
+  "hunterDefinitions": [
+    {
+      "index": 0,
+      "localizedJobNames": {
+        "ko": [
+          "버서커",
+          "듀얼리스트",
+          "슬레이어",
+          "워리어",
+          "바바리안",
+          "소드세인트",
+          "디스트로이어",
+          "소드엠페러",
+          "배틀커맨더"
+        ],
+        "ja": [
+          "バーサーカー",
+          "デュアリスト",
+          "スレイヤー",
+          "ウォリアー",
+          "バーバリアン",
+          "ソードセイント",
+          "破壊者",
+          "ソードエンペラー",
+          "バトルコマンダー"
+        ],
+        "en": [
+          "Berserker",
+          "Duelist",
+          "Slayer",
+          "Warrior",
+          "Barbarian",
+          "SwordSaint",
+          "Destroyer",
+          "SwordEmperor",
+          "BattleCommander"
+        ],
+        "zh-TW": [
+          "狂戰士",
+          "決鬥者",
+          "滅殺者",
+          "戰士",
+          "毀滅者",
+          "劍聖",
+          "破壞者",
+          "劍皇",
+          "戰鬥指揮官"
+        ],
+        "zh-CN": [
+          "狂战士",
+          "决斗者",
+          "灭杀者",
+          "战士",
+          "毁灭者",
+          "剑圣",
+          "破坏者",
+          "剑皇",
+          "战斗指挥官"
+        ],
+        "ru": [
+          "Берсерк",
+          "Дуэлянт",
+          "Убийца",
+          "Воин",
+          "Варвар",
+          "СвятойМеч",
+          "Разрушитель",
+          "ИмператорМечей",
+          "БоевойКомандир"
+        ],
+        "fr": [
+          "Berserker",
+          "Duelliste",
+          "Bretteur",
+          "Guerrier",
+          "Barbare",
+          "Saintdel'Epée",
+          "Destructeur",
+          "Empereurdel'épée",
+          "Commandantdebataille"
+        ],
+        "es": [
+          "Berserker",
+          "Duelista",
+          "Asesino",
+          "Guerrero",
+          "Bárbaro",
+          "SantodelaEspada",
+          "Destructor",
+          "EmperadordelaEspada",
+          "ComandantedeBatalla"
+        ],
+        "pt": [
+          "Furioso",
+          "Duelista",
+          "Matador",
+          "Guerreiro",
+          "Bárbaro",
+          "SantodaEspada",
+          "Destruidor",
+          "Imperadordaespada",
+          "Comandantedebatalha"
+        ],
+        "it": [
+          "Berserker",
+          "Duellante",
+          "Assassino",
+          "Guerriero",
+          "Barbaro",
+          "SantodellaSpada",
+          "Distruttore",
+          "ImperatoredellaSpada",
+          "Comandantedibattaglia"
+        ],
+        "de": [
+          "Berserker",
+          "Duellant",
+          "Schlächter",
+          "Krieger",
+          "Barbar",
+          "Schwertheiliger",
+          "Zerstörer",
+          "Schwertkaiser",
+          "Kampfkommandant"
+        ],
+        "th": [
+          "เบอร์เซอร์เกอร์",
+          "ดูออลลิส",
+          "สเลเยอร์",
+          "วอร์ริเออร์",
+          "บาร์บาเรียน",
+          "ซอร์ดเซนต์",
+          "เดสทรอยเออร์",
+          "ซอร์ดเอมเพอเรอร์",
+          "แบทเทิลคอมแมนเดอร์"
+        ],
+        "vi": [
+          "Berserker",
+          "KiếmSĩ",
+          "SátThủ",
+          "Warrior",
+          "Barbarian",
+          "SwordSaint",
+          "Destroyer",
+          "KiếmVương",
+          "ChỉHuyTrậnChiến"
+        ],
+        "id": [
+          "Berserker",
+          "Duelist",
+          "Pembunuh",
+          "Pejuang",
+          "Kejam",
+          "SantoPedang",
+          "Penghancur",
+          "KaisarPedang",
+          "KomandanTempur"
+        ]
+      },
+      "hp": [
+        6000,
+        6200
+      ],
+      "hpSecond": [
+        6200,
+        6400
+      ],
+      "hpThird": [
+        6400,
+        6600
+      ],
+      "damage": [
+        80,
+        90
+      ],
+      "damageSecond": [
+        90,
+        100
+      ],
+      "damageThird": [
+        100,
+        110
+      ],
+      "armor": [
+        90,
+        100
+      ],
+      "armorSecond": [
+        100,
+        110
+      ],
+      "armorThird": [
+        110,
+        120
+      ],
+      "dodge": [
+        1,
+        2
+      ],
+      "dodgeSecond": [
+        3,
+        4
+      ],
+      "dodgeThird": [
+        5,
+        6
+      ],
+      "critical": [
+        1,
+        2
+      ],
+      "criticalSecond": [
+        3,
+        4
+      ],
+      "criticalThird": [
+        5,
+        6
+      ],
+      "attackSpeed": 1.0,
+      "revivePercent": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "hpPercent": 3,
+      "armorPercent": 3,
+      "damagePercent": 3
+    },
+    {
+      "index": 1,
+      "localizedJobNames": {
+        "ko": [
+          "팔라딘",
+          "크루세이더",
+          "템플러",
+          "다크팔라딘",
+          "가디언",
+          "인퀴지터",
+          "익스큐터",
+          "홀리나이트",
+          "하이프리스트"
+        ],
+        "ja": [
+          "パラディン",
+          "クルセイダー",
+          "テンプラー",
+          "ダークパラディン",
+          "ガーディアン",
+          "異端審問官",
+          "エクセキューター",
+          "ホーリーナイト",
+          "大祭司"
+        ],
+        "en": [
+          "Paladin",
+          "Crusader",
+          "Templar",
+          "DarkPaladin",
+          "Guardian",
+          "Inquisitor",
+          "Executor",
+          "HolyKnight",
+          "HighPriest"
+        ],
+        "zh-TW": [
+          "聖騎士",
+          "聖戰士",
+          "聖堂守衛者",
+          "黑暗聖騎士",
+          "守護者",
+          "審判官",
+          "施刑者",
+          "神聖騎士",
+          "大祭司"
+        ],
+        "zh-CN": [
+          "圣骑士",
+          "圣战士",
+          "圣堂守卫者",
+          "黑暗圣骑士",
+          "守护者",
+          "审判官",
+          "施刑者",
+          "神圣骑士",
+          "大祭司"
+        ],
+        "ru": [
+          "Паладин",
+          "Рыцарь",
+          "Храмовник",
+          "ТемныйПаладин",
+          "Страж",
+          "Инквизитор",
+          "Вершитель",
+          "СвятойРыцарь",
+          "ВерховныйЖрец"
+        ],
+        "fr": [
+          "Paladin",
+          "Croisé",
+          "Templier",
+          "Paladinobscure",
+          "Gardien",
+          "Inquisiteur",
+          "Exécuteur",
+          "Chevaliersacré",
+          "Grandprêtre"
+        ],
+        "es": [
+          "Paladín",
+          "Cruzado",
+          "Templario",
+          "Paladínoscuro",
+          "Guardián",
+          "Inquisidor",
+          "Ejecutor",
+          "CaballeroSagrado",
+          "SumoSacerdote"
+        ],
+        "pt": [
+          "Paladino",
+          "Cruzado",
+          "Templário",
+          "Paladinosombrio",
+          "Guardião",
+          "Inquisidor",
+          "Executor",
+          "Cavaleirosagrado",
+          "Grandesacerdote"
+        ],
+        "it": [
+          "Paladino",
+          "MembroCrociata",
+          "Templario",
+          "Paladinooscuro",
+          "Guardiano",
+          "Inquisitore",
+          "Esecutore",
+          "SantoCavaliere",
+          "SommoSacerdote"
+        ],
+        "de": [
+          "Paladin",
+          "Kreuzritter",
+          "Templer",
+          "DunklerPaladin",
+          "Wächter",
+          "Inquisitor",
+          "Vollstrecker",
+          "Heiligritter",
+          "Hohepriester"
+        ],
+        "th": [
+          "พาลาดิน",
+          "นักรบสงคราม",
+          "อัศวินผู้ต่อต้าน",
+          "ดาร์กพาลาดิน",
+          "การ์เดียน",
+          "นักไต่สวน",
+          "อิกเซ็กคิวเตอร์",
+          "โฮลี่ไนต์",
+          "ไฮพรีสต์"
+        ],
+        "vi": [
+          "Paladin",
+          "Crusader",
+          "Templar",
+          "DarkPaladin",
+          "Guardian",
+          "Inquisitor",
+          "Executor",
+          "HiệpSĩThánh",
+          "Linhmụccaocấp"
+        ],
+        "id": [
+          "Paladin",
+          "TentaraSalib",
+          "Templar",
+          "PaladinKegelapan",
+          "Penjaga",
+          "Pemeriksa",
+          "Eksekutor",
+          "KsatriaSuci",
+          "PendetaAgung"
+        ]
+      },
+      "hp": [
+        6000,
+        6200
+      ],
+      "hpSecond": [
+        6200,
+        6400
+      ],
+      "hpThird": [
+        6400,
+        6600
+      ],
+      "damage": [
+        80,
+        90
+      ],
+      "damageSecond": [
+        90,
+        100
+      ],
+      "damageThird": [
+        100,
+        110
+      ],
+      "armor": [
+        90,
+        100
+      ],
+      "armorSecond": [
+        100,
+        110
+      ],
+      "armorThird": [
+        110,
+        120
+      ],
+      "dodge": [
+        1,
+        2
+      ],
+      "dodgeSecond": [
+        3,
+        4
+      ],
+      "dodgeThird": [
+        5,
+        6
+      ],
+      "critical": [
+        1,
+        2
+      ],
+      "criticalSecond": [
+        3,
+        4
+      ],
+      "criticalThird": [
+        5,
+        6
+      ],
+      "attackSpeed": 1.0,
+      "revivePercent": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "hpPercent": 3,
+      "armorPercent": 3,
+      "damagePercent": 3
+    },
+    {
+      "index": 2,
+      "localizedJobNames": {
+        "ko": [
+          "레인져",
+          "호크아이",
+          "스나이퍼",
+          "서모닉아처",
+          "민스트럴",
+          "스카우트",
+          "아케인아처",
+          "데드아이",
+          "스타슈터"
+        ],
+        "ja": [
+          "レンジャー",
+          "ホークアイ",
+          "スナイパー",
+          "サモン・アーチャー",
+          "ミンストレル",
+          "スカウト",
+          "アーケイン・アーチャー",
+          "デッドアイ",
+          "スターシューター"
+        ],
+        "en": [
+          "Ranger",
+          "HawkEye",
+          "Sniper",
+          "Summonarcher",
+          "Minstrel",
+          "Scout",
+          "Arcanearcher",
+          "Deadeye",
+          "StarShooter"
+        ],
+        "zh-TW": [
+          "游俠",
+          "鷹眼",
+          "狙擊手",
+          "召喚弓手",
+          "吟遊詩人",
+          "偵察兵",
+          "特級弓手",
+          "神射手",
+          "星射手"
+        ],
+        "zh-CN": [
+          "游侠",
+          "鹰眼",
+          "狙击手",
+          "召唤弓手",
+          "吟游诗人",
+          "侦察兵",
+          "特级弓手",
+          "神射手",
+          "星射手"
+        ],
+        "ru": [
+          "Рейнджер",
+          "ГлазЯстреба",
+          "Снайпер",
+          "ПризывЛучника",
+          "Менестраль",
+          "Разведчик",
+          "ТаинственныйЛучник",
+          "МертвыйГлаз",
+          "ЗвездныйСтрелок"
+        ],
+        "fr": [
+          "Archer",
+          "OeildeFaucon",
+          "Rôdeur",
+          "Archerd'invocation",
+          "Troubadour",
+          "Scout",
+          "Archerarcanique",
+          "Oeildemort",
+          "Tireurd'étoiles"
+        ],
+        "es": [
+          "Explorador",
+          "OjodeHalcón",
+          "Francotirador",
+          "Arquerodeinvocación",
+          "Trovador",
+          "Scout",
+          "ArqueroArcano",
+          "Ojomuerto",
+          "LanzadordeEstrellas"
+        ],
+        "pt": [
+          "Ranger",
+          "OlhodeFalcão",
+          "Sniper",
+          "Arqueirodeinvocação",
+          "Trovador",
+          "Escoteiro",
+          "ArqueiroArcano",
+          "Olhodamorte",
+          "Atiradordeestrelas"
+        ],
+        "it": [
+          "Ranger",
+          "OcchiodiFalco",
+          "Cecchino",
+          "Evocaarciere",
+          "Menestrello",
+          "Scout",
+          "Arcierearcano",
+          "Occhiomorto",
+          "Tiratoredistelle"
+        ],
+        "de": [
+          "Waldläufer",
+          "Adlerauge",
+          "Scharfschütze",
+          "Beschwörung-Bogenschütze",
+          "Barde",
+          "Späher",
+          "Spezial-Bogenschütze",
+          "Scharfschütze",
+          "Sternenschütze"
+        ],
+        "th": [
+          "เรนเจอร์",
+          "ฮอว์คอาย",
+          "สไนเปอร์",
+          "ซัมมอนอาเชอร์",
+          "นักกวี",
+          "ทหารพราน",
+          "อาร์เคนอาเชอร์",
+          "เดดอาย",
+          "สตาร์ชูตเตอร์"
+        ],
+        "vi": [
+          "XạThủ",
+          "HawkEye",
+          "BắnTỉa",
+          "SummonArcher",
+          "Minstrel",
+          "Scout",
+          "ArcaneArcher",
+          "Mắtthầnchết",
+          "XạThủSao"
+        ],
+        "id": [
+          "Ranger",
+          "MataElang",
+          "PenembakJitu",
+          "PemanahPemanggil",
+          "Penyair",
+          "Pengintai",
+          "PemanahArcane",
+          "PenembakJitu",
+          "PenembakBintang"
+        ]
+      },
+      "hp": [
+        5600,
+        5800
+      ],
+      "hpSecond": [
+        5800,
+        6000
+      ],
+      "hpThird": [
+        6000,
+        6200
+      ],
+      "damage": [
+        90,
+        100
+      ],
+      "damageSecond": [
+        100,
+        110
+      ],
+      "damageThird": [
+        110,
+        120
+      ],
+      "armor": [
+        80,
+        90
+      ],
+      "armorSecond": [
+        90,
+        100
+      ],
+      "armorThird": [
+        100,
+        110
+      ],
+      "dodge": [
+        4,
+        5
+      ],
+      "dodgeSecond": [
+        6,
+        7
+      ],
+      "dodgeThird": [
+        8,
+        9
+      ],
+      "critical": [
+        4,
+        5
+      ],
+      "criticalSecond": [
+        6,
+        7
+      ],
+      "criticalThird": [
+        8,
+        9
+      ],
+      "attackSpeed": 1.0,
+      "revivePercent": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "hpPercent": 3,
+      "armorPercent": 3,
+      "damagePercent": 3
+    },
+    {
+      "index": 3,
+      "localizedJobNames": {
+        "ko": [
+          "소서러",
+          "아크메이지",
+          "다크메이지",
+          "이그니스",
+          "컨저러",
+          "다크로드",
+          "일루셔니스트",
+          "마나로드",
+          "오포지터"
+        ],
+        "ja": [
+          "ソーサラー",
+          "アークメイジ",
+          "ダークメイジ",
+          "火炎術師",
+          "魔術師",
+          "ダークロード",
+          "イリュージョニスト",
+          "マナロード",
+          "オポジッター"
+        ],
+        "en": [
+          "Sorcerer",
+          "ArchMage",
+          "DarkMage",
+          "Ignis",
+          "Conjuror",
+          "DarkLord",
+          "Illusionist",
+          "ManaLord",
+          "Oppositer"
+        ],
+        "zh-TW": [
+          "魔術師",
+          "大魔法師",
+          "黑暗法師",
+          "火焰術士",
+          "魔咒師",
+          "黑暗領主",
+          "夢想家",
+          "魔力領主",
+          "對立師"
+        ],
+        "zh-CN": [
+          "魔术师",
+          "大魔法师",
+          "黑暗法师",
+          "火焰术士",
+          "魔咒师",
+          "黑暗领主",
+          "梦想家",
+          "魔力领主",
+          "对立师"
+        ],
+        "ru": [
+          "Колдун",
+          "Архимаг",
+          "ТемныйМаг",
+          "Игнис",
+          "Фокусник",
+          "ТемныйЛорд",
+          "Иллюзионист",
+          "ПовелительМаны",
+          "Претендент"
+        ],
+        "fr": [
+          "Sorcier",
+          "Archimage",
+          "MageNoir",
+          "Ignis",
+          "Invocateur",
+          "SeigneurTénèbreux",
+          "Illusioniste",
+          "Seigneurdumana",
+          "Opposant"
+        ],
+        "es": [
+          "Hechicero",
+          "Archimago",
+          "MagoOscuro",
+          "Ignis",
+          "Invocador",
+          "SeñorOscuro",
+          "Ilusionista",
+          "SeñordelManá",
+          "Opositor"
+        ],
+        "pt": [
+          "Feiticeiro",
+          "Arquimago",
+          "MagoSombrio",
+          "Ignis",
+          "Invocador",
+          "LordeSombrio",
+          "Ilusionista",
+          "Senhordemana",
+          "Oponente"
+        ],
+        "it": [
+          "Stregone",
+          "Magodell'Arco",
+          "MagoOscuro",
+          "Ignis",
+          "Coniugatore",
+          "SignoreOscuro",
+          "Illusionista",
+          "SignoredelMana",
+          "Avversario"
+        ],
+        "de": [
+          "Zauberer",
+          "Erzmagier",
+          "Dunkelmagier",
+          "Ignis",
+          "Beschwörer",
+          "DunklerLord",
+          "Illusionist",
+          "Manafürst",
+          "Gegner"
+        ],
+        "th": [
+          "ซอเซอเรอร์",
+          "อาร์ชเมจ",
+          "ดาร์กเมจ",
+          "อิกนิส",
+          "นักร่ายมนต์",
+          "ดาร์กลอร์ด",
+          "อิลลูชันนิสต์",
+          "มานาลอร์ด",
+          "ออพโพซิเตอร์"
+        ],
+        "vi": [
+          "PhápSư",
+          "ĐạoTrưởng",
+          "TàThuậtSư",
+          "Ignis",
+          "Conjuror",
+          "DarkLord",
+          "Illusionist",
+          "ChúaTểMana",
+          "Ngườiđốilập"
+        ],
+        "id": [
+          "Sorcerer",
+          "Archmage",
+          "DarkMage",
+          "Ignis",
+          "AhliSulap",
+          "DarkLord",
+          "Ilusionis",
+          "PenguasaMana",
+          "Oppositer"
+        ]
+      },
+      "hp": [
+        5600,
+        5800
+      ],
+      "hpSecond": [
+        5800,
+        6000
+      ],
+      "hpThird": [
+        6000,
+        6200
+      ],
+      "damage": [
+        90,
+        100
+      ],
+      "damageSecond": [
+        100,
+        110
+      ],
+      "damageThird": [
+        110,
+        120
+      ],
+      "armor": [
+        80,
+        90
+      ],
+      "armorSecond": [
+        90,
+        100
+      ],
+      "armorThird": [
+        100,
+        110
+      ],
+      "dodge": [
+        4,
+        5
+      ],
+      "dodgeSecond": [
+        6,
+        7
+      ],
+      "dodgeThird": [
+        8,
+        9
+      ],
+      "critical": [
+        4,
+        5
+      ],
+      "criticalSecond": [
+        6,
+        7
+      ],
+      "criticalThird": [
+        8,
+        9
+      ],
+      "attackSpeed": 1.0,
+      "revivePercent": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "hpPercent": 3,
+      "armorPercent": 3,
+      "damagePercent": 3
+    },
+    {
+      "index": 4,
+      "localizedJobNames": {
+        "ko": [
+          "다크나이트",
+          "둠라이더",
+          "쉐도우랜서",
+          "랜스마스터",
+          "어비스디펜더",
+          "이블나이트",
+          "드래곤나이트",
+          "오버로드",
+          "데스브링어"
+        ],
+        "ja": [
+          "ダークナイト",
+          "ドゥームライダー",
+          "シャドーランサー",
+          "ランスマスター",
+          "アビスディフェンダー",
+          "イービルナイト",
+          "ドラゴンナイト",
+          "オーバーロード",
+          "デスブリンガー"
+        ],
+        "en": [
+          "DarkKnight",
+          "Doomrider",
+          "ShadowLancer",
+          "LanceMaster",
+          "AbyssDefender",
+          "EvilKnight",
+          "DragonKnight",
+          "Overlord",
+          "Deathbringer"
+        ],
+        "zh-TW": [
+          "暗黑騎士",
+          "毀滅騎士",
+          "暗影騎兵",
+          "長矛大師",
+          "深淵衛者",
+          "邪惡騎士",
+          "龍騎士",
+          "至尊領主",
+          "死亡使者"
+        ],
+        "zh-CN": [
+          "暗黑骑士",
+          "毁灭骑士",
+          "暗影骑兵",
+          "长矛大师",
+          "深渊卫者",
+          "邪恶骑士",
+          "龙骑士",
+          "至尊领主",
+          "死亡使者"
+        ],
+        "ru": [
+          "ТемныйРыцарь",
+          "ВсадникРока",
+          "Теневойкопьеносец",
+          "МастерКопья",
+          "ЗащитникБездна",
+          "ЗлойРыцарь",
+          "ДраконьяРыцарь",
+          "Повелитель",
+          "Смертельныйноситель"
+        ],
+        "fr": [
+          "ChevalierSombre",
+          "Cavalierdudestin",
+          "Lancierdel'ombre",
+          "Maîtredeslances",
+          "Défenseurdesabysses",
+          "Chevaliermaléfique",
+          "Chevalier-dragon",
+          "Seigneursuprême",
+          "Porteurdemort"
+        ],
+        "es": [
+          "CaballeroOscuro",
+          "JinetedelaPerdición",
+          "LanzadordeSombras",
+          "MaestrodeLanza",
+          "DefensordelAbismo",
+          "CaballeroMalvado",
+          "CaballeroDragón",
+          "SeñorSupremo",
+          "Portadordelamuerte"
+        ],
+        "pt": [
+          "CavaleirodasTrevas",
+          "CavaleirodaPerdição",
+          "LanceirodasSombras",
+          "MestredasLanças",
+          "DefensordoAbismo",
+          "CavaleiroMalvado",
+          "Cavaleiro-Dragão",
+          "SenhorSupremo",
+          "PortadordaMorte"
+        ],
+        "it": [
+          "CavaliereOscuro",
+          "CavalieredellaRovina",
+          "Lanciered'Ombra",
+          "MaestrodiLancia",
+          "Difensoredell'Abisso",
+          "CavaliereMalvagio",
+          "CavaliereDrago",
+          "SignoreSupremo",
+          "Portatoredimorte"
+        ],
+        "de": [
+          "DunklerRitter",
+          "Verdammungsreiter",
+          "Schattenlanze",
+          "Lanzenmeister",
+          "AbyssVerteidiger",
+          "BöserRitter",
+          "Drachenritter",
+          "Überlord",
+          "Todesbringer"
+        ],
+        "th": [
+          "ดาร์คไนท์",
+          "ทูมไรเดอร์",
+          "ชาโดว์แลนเซอร์",
+          "แลนซ์มาสเตอร์",
+          "อะบิสดีเฟนเดอร์",
+          "อีวิลไนท์",
+          "ดรากอนไนท์",
+          "โอเวอร์ลอร์ด",
+          "เดธบริงเงอร์"
+        ],
+        "vi": [
+          "HiệpsĩBóngđêm",
+          "KỵsĩDiệtvong",
+          "ThươngthủBóngtối",
+          "BậcthầyThương",
+          "HộvệVựcthẳm",
+          "HiệpsĩTàác",
+          "KỵsĩRồng",
+          "Chúatể",
+          "SứgiảTửthần"
+        ],
+        "id": [
+          "KesatriaKegelapan",
+          "PenunggangKehancuran",
+          "LancerBayangan",
+          "MasterLances",
+          "PembelaJurang",
+          "KesatriaJahat",
+          "KesatriaNaga",
+          "Penguasa",
+          "PembawaKematian"
+        ]
+      },
+      "hp": [
+        6000,
+        6200
+      ],
+      "hpSecond": [
+        6200,
+        6400
+      ],
+      "hpThird": [
+        6400,
+        6600
+      ],
+      "damage": [
+        80,
+        90
+      ],
+      "damageSecond": [
+        90,
+        100
+      ],
+      "damageThird": [
+        100,
+        110
+      ],
+      "armor": [
+        90,
+        100
+      ],
+      "armorSecond": [
+        100,
+        110
+      ],
+      "armorThird": [
+        110,
+        120
+      ],
+      "dodge": [
+        1,
+        2
+      ],
+      "dodgeSecond": [
+        3,
+        4
+      ],
+      "dodgeThird": [
+        5,
+        6
+      ],
+      "critical": [
+        1,
+        2
+      ],
+      "criticalSecond": [
+        3,
+        4
+      ],
+      "criticalThird": [
+        5,
+        6
+      ],
+      "attackSpeed": 1.0,
+      "revivePercent": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "hpPercent": 3,
+      "armorPercent": 3,
+      "damagePercent": 3
+    }
+  ],
+  "characteristics": [
+    {
+      "index": 0,
+      "localized": {
+        "ko": {
+          "name": "힘이 쎈",
+          "description": "일반 케릭들에 비해 공격력이 keepValue% 쌔다."
+        },
+        "ja": {
+          "name": "力持ちの"
+        },
+        "en": {
+          "name": "Strong"
+        },
+        "zh-TW": {
+          "name": "大力"
+        },
+        "zh-CN": {
+          "name": "大力"
+        },
+        "ru": {
+          "name": "Сильный"
+        },
+        "fr": {
+          "name": "Fort"
+        },
+        "es": {
+          "name": "Fuerte"
+        },
+        "pt": {
+          "name": "Forte"
+        },
+        "it": {
+          "name": "Forte"
+        },
+        "de": {
+          "name": "Stark"
+        },
+        "th": {
+          "name": "แข็งแรง"
+        },
+        "vi": {
+          "name": "Mạnh Mẽ"
+        },
+        "id": {
+          "name": "Kuat"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 1,
+      "localized": {
+        "ko": {
+          "name": "달리기가 빠른",
+          "description": "일반 케릭들에 비해 이동속도가 keepValue% 빠르다."
+        },
+        "ja": {
+          "name": "走りの早い"
+        },
+        "en": {
+          "name": "Fast Runner"
+        },
+        "zh-TW": {
+          "name": "快步"
+        },
+        "zh-CN": {
+          "name": "快步"
+        },
+        "ru": {
+          "name": "Скороход"
+        },
+        "fr": {
+          "name": "Coureur Rapide"
+        },
+        "es": {
+          "name": "Corredor"
+        },
+        "pt": {
+          "name": "Corredor Rápido"
+        },
+        "it": {
+          "name": "Podista Veloce"
+        },
+        "de": {
+          "name": "Sprinter"
+        },
+        "th": {
+          "name": "วิ่งเร็ว"
+        },
+        "vi": {
+          "name": "Chạy Nhanh"
+        },
+        "id": {
+          "name": "Pelari Cepat"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 2,
+      "localized": {
+        "ko": {
+          "name": "날쌘돌이",
+          "description": "일반 케릭들에 비해 공격속도가 keepValue% 빠르다."
+        },
+        "ja": {
+          "name": "すばしっこい"
+        },
+        "en": {
+          "name": "Swift"
+        },
+        "zh-TW": {
+          "name": "快手"
+        },
+        "zh-CN": {
+          "name": "快手"
+        },
+        "ru": {
+          "name": "Быстрый"
+        },
+        "fr": {
+          "name": "Rapide"
+        },
+        "es": {
+          "name": "Veloz"
+        },
+        "pt": {
+          "name": "Veloz"
+        },
+        "it": {
+          "name": "Veloce"
+        },
+        "de": {
+          "name": "Geschwind"
+        },
+        "th": {
+          "name": "ว่องไว"
+        },
+        "vi": {
+          "name": "Nhanh Nhẹn"
+        },
+        "id": {
+          "name": "Cepat"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 3,
+      "localized": {
+        "ko": {
+          "name": "허약한",
+          "description": "일반 케릭들에 비해 공격력이 keepValue% 약하다."
+        },
+        "ja": {
+          "name": "虚弱な"
+        },
+        "en": {
+          "name": "Fragile"
+        },
+        "zh-TW": {
+          "name": "虛弱"
+        },
+        "zh-CN": {
+          "name": "虚弱"
+        },
+        "ru": {
+          "name": "Хрупкий"
+        },
+        "fr": {
+          "name": "Fragile"
+        },
+        "es": {
+          "name": "Frágil"
+        },
+        "pt": {
+          "name": "Frágil"
+        },
+        "it": {
+          "name": "Fragile"
+        },
+        "de": {
+          "name": "Gebrechlich"
+        },
+        "th": {
+          "name": "อ่อนแอ"
+        },
+        "vi": {
+          "name": "Yếu ớt"
+        },
+        "id": {
+          "name": "Rapuh"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 4,
+      "localized": {
+        "ko": {
+          "name": "느림보",
+          "description": "일반 케릭들에 비해 이독속도가 keepValue% 느리다."
+        },
+        "ja": {
+          "name": "のろま"
+        },
+        "en": {
+          "name": "Sluggish"
+        },
+        "zh-TW": {
+          "name": "慢半拍"
+        },
+        "zh-CN": {
+          "name": "慢半拍"
+        },
+        "ru": {
+          "name": "Вялый"
+        },
+        "fr": {
+          "name": "Paresseux"
+        },
+        "es": {
+          "name": "Lento"
+        },
+        "pt": {
+          "name": "Lerdo"
+        },
+        "it": {
+          "name": "Lento"
+        },
+        "de": {
+          "name": "Langsam"
+        },
+        "th": {
+          "name": "จอมขี้เกียจ"
+        },
+        "vi": {
+          "name": "Chậm Chạp"
+        },
+        "id": {
+          "name": "Lambat"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 5,
+      "localized": {
+        "ko": {
+          "name": "둔한",
+          "description": "일반 케릭들에 비해 공격속도가 keepValue% 느리다."
+        },
+        "ja": {
+          "name": "鈍感な"
+        },
+        "en": {
+          "name": "Thickheaded"
+        },
+        "zh-TW": {
+          "name": "遲鈍"
+        },
+        "zh-CN": {
+          "name": "迟钝"
+        },
+        "ru": {
+          "name": "Тупой"
+        },
+        "fr": {
+          "name": "Borné"
+        },
+        "es": {
+          "name": "Testarudo"
+        },
+        "pt": {
+          "name": "Tonto"
+        },
+        "it": {
+          "name": "Ottuso"
+        },
+        "de": {
+          "name": "Dickköpfig"
+        },
+        "th": {
+          "name": "ทึ่ม"
+        },
+        "vi": {
+          "name": "Kém nhạy bén"
+        },
+        "id": {
+          "name": "Bodoh"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 6,
+      "localized": {
+        "ko": {
+          "name": "허술한",
+          "description": "재료를 마을에 팔때 keepValue% 싸게 판다."
+        },
+        "ja": {
+          "name": "間抜けな"
+        },
+        "en": {
+          "name": "Careless"
+        },
+        "zh-TW": {
+          "name": "不中用"
+        },
+        "zh-CN": {
+          "name": "不中用"
+        },
+        "ru": {
+          "name": "Неосторожный"
+        },
+        "fr": {
+          "name": "Insouciant"
+        },
+        "es": {
+          "name": "Negligente"
+        },
+        "pt": {
+          "name": "Descuidado"
+        },
+        "it": {
+          "name": "Negligente"
+        },
+        "de": {
+          "name": "Achtlos"
+        },
+        "th": {
+          "name": "สะเพร่า"
+        },
+        "vi": {
+          "name": "Vụng Về"
+        },
+        "id": {
+          "name": "Sembrono"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 7,
+      "localized": {
+        "ko": {
+          "name": "깐깐한",
+          "description": "재료를 마을에 팔때 keepValue% 비싸게 판다."
+        },
+        "ja": {
+          "name": "気難しい"
+        },
+        "en": {
+          "name": "Stingy"
+        },
+        "zh-TW": {
+          "name": "龜毛"
+        },
+        "zh-CN": {
+          "name": "龟毛"
+        },
+        "ru": {
+          "name": "Жадный"
+        },
+        "fr": {
+          "name": "Avare"
+        },
+        "es": {
+          "name": "Avaro"
+        },
+        "pt": {
+          "name": "Mesquinho"
+        },
+        "it": {
+          "name": "Avaro"
+        },
+        "de": {
+          "name": "Geizig"
+        },
+        "th": {
+          "name": "ขี้เหนียว"
+        },
+        "vi": {
+          "name": "Keo kiệt"
+        },
+        "id": {
+          "name": "Pelit"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 8,
+      "localized": {
+        "ko": {
+          "name": "리더쉽이 강한",
+          "description": "지하던전에서 파티원들의 기분을 keepValue단계 상승 시킨다. (지하던전 시작시 기분이 올라가는 모션을 취하면 좋겠다. 중복x)"
+        },
+        "ja": {
+          "name": "リーダーシップのある"
+        },
+        "en": {
+          "name": "Charismatic"
+        },
+        "zh-TW": {
+          "name": "領導力強"
+        },
+        "zh-CN": {
+          "name": "领导力强"
+        },
+        "ru": {
+          "name": "Харизматичный"
+        },
+        "fr": {
+          "name": "Charismatique"
+        },
+        "es": {
+          "name": "Carismático"
+        },
+        "pt": {
+          "name": "Carismático"
+        },
+        "it": {
+          "name": "Carismatico"
+        },
+        "de": {
+          "name": "Charismatisch"
+        },
+        "th": {
+          "name": "มีความเป็นผู้นำ"
+        },
+        "vi": {
+          "name": "Nhà lãnh đạo"
+        },
+        "id": {
+          "name": "Berkharisma"
+        }
+      },
+      "keepValue": 5
+    },
+    {
+      "index": 9,
+      "localized": {
+        "ko": {
+          "name": "고문관",
+          "description": "지하던전에서 파티원들의 기분을 keepValue단계 하강 시킨다. (지하던전 시작시 기분이 내려가는 모션을 취하면 좋겠다. 중복x)"
+        },
+        "ja": {
+          "name": "困ったちゃん"
+        },
+        "en": {
+          "name": "Dead Weight"
+        },
+        "zh-TW": {
+          "name": "顧問官"
+        },
+        "zh-CN": {
+          "name": "顾问官"
+        },
+        "ru": {
+          "name": "Мертвый Груз"
+        },
+        "fr": {
+          "name": "Poids Mort"
+        },
+        "es": {
+          "name": "Peso Muerto"
+        },
+        "pt": {
+          "name": "Peso Morto"
+        },
+        "it": {
+          "name": "Peso morto"
+        },
+        "de": {
+          "name": "Ballast"
+        },
+        "th": {
+          "name": "จอมซื่อบื้อ"
+        },
+        "vi": {
+          "name": "Gánh Nặng"
+        },
+        "id": {
+          "name": "Beban Mati"
+        }
+      },
+      "keepValue": 5
+    },
+    {
+      "index": 10,
+      "localized": {
+        "ko": {
+          "name": "다크써클",
+          "description": "기력 게이지가 keepValue% 빠르게 소모된다."
+        },
+        "ja": {
+          "name": "クマ"
+        },
+        "en": {
+          "name": "Baggy Eyes"
+        },
+        "zh-TW": {
+          "name": "黑眼圈"
+        },
+        "zh-CN": {
+          "name": "黑眼圈"
+        },
+        "ru": {
+          "name": "Мешковатые Глаза"
+        },
+        "fr": {
+          "name": "Yeux Gonflés"
+        },
+        "es": {
+          "name": "Ojeras"
+        },
+        "pt": {
+          "name": "Folgado"
+        },
+        "it": {
+          "name": "Affaticato"
+        },
+        "de": {
+          "name": "Müde"
+        },
+        "th": {
+          "name": "ใต้ตาดำ"
+        },
+        "vi": {
+          "name": "Mắt thâm"
+        },
+        "id": {
+          "name": "Kantong Mata"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 11,
+      "localized": {
+        "ko": {
+          "name": "활력이 넘친",
+          "description": "기력 게이지가 keepValue% 느리게 소모된다."
+        },
+        "ja": {
+          "name": "元気溢れる"
+        },
+        "en": {
+          "name": "Energetic"
+        },
+        "zh-TW": {
+          "name": "活力四射"
+        },
+        "zh-CN": {
+          "name": "活力四射"
+        },
+        "ru": {
+          "name": "Энергичный"
+        },
+        "fr": {
+          "name": "Énergique"
+        },
+        "es": {
+          "name": "Enérgico"
+        },
+        "pt": {
+          "name": "Enérgico"
+        },
+        "it": {
+          "name": "Energico"
+        },
+        "de": {
+          "name": "Energetisch"
+        },
+        "th": {
+          "name": "แรงเยอะ"
+        },
+        "vi": {
+          "name": "Năng Động"
+        },
+        "id": {
+          "name": "Bertenaga"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 12,
+      "localized": {
+        "ko": {
+          "name": "뚱뚱한",
+          "description": "허기 게이지가 keepValue% 빠르게 소모된다."
+        },
+        "ja": {
+          "name": "デブ"
+        },
+        "en": {
+          "name": "Overweight"
+        },
+        "zh-TW": {
+          "name": "胖胖的"
+        },
+        "zh-CN": {
+          "name": "胖胖的"
+        },
+        "ru": {
+          "name": "Толстый"
+        },
+        "fr": {
+          "name": "Surpoids"
+        },
+        "es": {
+          "name": "Obeso"
+        },
+        "pt": {
+          "name": "Gordo"
+        },
+        "it": {
+          "name": "Sovrappeso"
+        },
+        "de": {
+          "name": "Übergewichtig"
+        },
+        "th": {
+          "name": "อวบอ้วน"
+        },
+        "vi": {
+          "name": "Thừa Cân"
+        },
+        "id": {
+          "name": "Gendut"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 13,
+      "localized": {
+        "ko": {
+          "name": "빼빼 마른",
+          "description": "허기 게이지가 keepValue% 느리게 소모된다."
+        },
+        "ja": {
+          "name": "ガリガリ"
+        },
+        "en": {
+          "name": "Skinny"
+        },
+        "zh-TW": {
+          "name": "瘦精"
+        },
+        "zh-CN": {
+          "name": "瘦精"
+        },
+        "ru": {
+          "name": "Тощий"
+        },
+        "fr": {
+          "name": "Maigre"
+        },
+        "es": {
+          "name": "Flaco"
+        },
+        "pt": {
+          "name": "Magrelo"
+        },
+        "it": {
+          "name": "Magro"
+        },
+        "de": {
+          "name": "Untergewichtig"
+        },
+        "th": {
+          "name": "ผอมแห้ง"
+        },
+        "vi": {
+          "name": "Gầy Còm"
+        },
+        "id": {
+          "name": "Kurus"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 14,
+      "localized": {
+        "ko": {
+          "name": "스마일",
+          "description": "기분 게이지가 keppValue% 느리게 줄어든다."
+        },
+        "ja": {
+          "name": "スマイル"
+        },
+        "en": {
+          "name": "Optimistic"
+        },
+        "zh-TW": {
+          "name": "微笑"
+        },
+        "zh-CN": {
+          "name": "微笑"
+        },
+        "ru": {
+          "name": "Оптимист"
+        },
+        "fr": {
+          "name": "Optimiste"
+        },
+        "es": {
+          "name": "Optimista"
+        },
+        "pt": {
+          "name": "Otimista"
+        },
+        "it": {
+          "name": "Ottimista"
+        },
+        "de": {
+          "name": "Optimistisch"
+        },
+        "th": {
+          "name": "ยิ้มแย้ม"
+        },
+        "vi": {
+          "name": "Lạc Quan"
+        },
+        "id": {
+          "name": "Optimis"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 15,
+      "localized": {
+        "ko": {
+          "name": "우울한",
+          "description": "기분 게이지가 keepValue% 빠르게 줄어든다."
+        },
+        "ja": {
+          "name": "憂鬱な"
+        },
+        "en": {
+          "name": "Pessimistic"
+        },
+        "zh-TW": {
+          "name": "憂鬱"
+        },
+        "zh-CN": {
+          "name": "忧鬱"
+        },
+        "ru": {
+          "name": "Пессимист"
+        },
+        "fr": {
+          "name": "Pessimiste"
+        },
+        "es": {
+          "name": "Pesimista"
+        },
+        "pt": {
+          "name": "Pessimista"
+        },
+        "it": {
+          "name": "Pessimista"
+        },
+        "de": {
+          "name": "Pessimistisch"
+        },
+        "th": {
+          "name": "ซึมเศร้า"
+        },
+        "vi": {
+          "name": "Bi Quan"
+        },
+        "id": {
+          "name": "Pesimis"
+        }
+      },
+      "keepValue": 20
+    },
+    {
+      "index": 16,
+      "localized": {
+        "ko": {
+          "name": "겁쟁이",
+          "description": "조금만 맞아도 무서워서 도망가버린다."
+        },
+        "ja": {
+          "name": "怖がり"
+        },
+        "en": {
+          "name": "Coward"
+        },
+        "zh-TW": {
+          "name": "膽小"
+        },
+        "zh-CN": {
+          "name": "胆小"
+        },
+        "ru": {
+          "name": "Трус"
+        },
+        "fr": {
+          "name": "Lâche"
+        },
+        "es": {
+          "name": "Cobarde"
+        },
+        "pt": {
+          "name": "Covarde"
+        },
+        "it": {
+          "name": "Codardo"
+        },
+        "de": {
+          "name": "Feigling"
+        },
+        "th": {
+          "name": "ขี้ขลาด"
+        },
+        "vi": {
+          "name": "Nhút Nhát"
+        },
+        "id": {
+          "name": "Pengecut"
+        }
+      },
+      "keepValue": 60
+    },
+    {
+      "index": 17,
+      "localized": {
+        "ko": {
+          "name": "깡다구",
+          "description": "절대 도망가지 않는다."
+        },
+        "ja": {
+          "name": "ド根性"
+        },
+        "en": {
+          "name": "Fearless"
+        },
+        "zh-TW": {
+          "name": "倔強"
+        },
+        "zh-CN": {
+          "name": "倔强"
+        },
+        "ru": {
+          "name": "Бесстрашный"
+        },
+        "fr": {
+          "name": "Intrépide"
+        },
+        "es": {
+          "name": "Valiente"
+        },
+        "pt": {
+          "name": "Destemido"
+        },
+        "it": {
+          "name": "Impavido"
+        },
+        "de": {
+          "name": "Furchtlos"
+        },
+        "th": {
+          "name": "ดื้อดึง"
+        },
+        "vi": {
+          "name": "Gan Dạ"
+        },
+        "id": {
+          "name": "Pemberani"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 18,
+      "localized": {
+        "ko": {
+          "name": "약물중독",
+          "description": "포션을 먹을 때마다 이상한 소리를 한다."
+        },
+        "ja": {
+          "name": "薬物中毒"
+        },
+        "en": {
+          "name": "Addict"
+        },
+        "zh-TW": {
+          "name": "毒癮"
+        },
+        "zh-CN": {
+          "name": "毒癮"
+        },
+        "ru": {
+          "name": "Любитель"
+        },
+        "fr": {
+          "name": "Accro"
+        },
+        "es": {
+          "name": "Adicto"
+        },
+        "pt": {
+          "name": "Viciado"
+        },
+        "it": {
+          "name": "Dipendente"
+        },
+        "de": {
+          "name": "Süchtig"
+        },
+        "th": {
+          "name": "เสพติดยาน้ำ"
+        },
+        "vi": {
+          "name": "Nghiện thuốc"
+        },
+        "id": {
+          "name": "Pecandu"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 19,
+      "localized": {
+        "ko": {
+          "name": "병원이 무서운",
+          "description": "치료소에 갈때 벌벌 떤다."
+        },
+        "ja": {
+          "name": "病院が怖い"
+        },
+        "en": {
+          "name": "Scared of Hospital"
+        },
+        "zh-TW": {
+          "name": "害怕醫院"
+        },
+        "zh-CN": {
+          "name": "害怕医院"
+        },
+        "ru": {
+          "name": "Боится Больниц"
+        },
+        "fr": {
+          "name": "Peur de l'Hôpital"
+        },
+        "es": {
+          "name": "Con Miedo al Hospital"
+        },
+        "pt": {
+          "name": "Medroso de Hospital"
+        },
+        "it": {
+          "name": "Pauroso degli Ospedali"
+        },
+        "de": {
+          "name": "Angst vor Krankenhaus"
+        },
+        "th": {
+          "name": "กลัวโรงพยาบาล"
+        },
+        "vi": {
+          "name": "Sợ Bệnh Viện"
+        },
+        "id": {
+          "name": "Takut dengan Rumah Sakit"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 20,
+      "localized": {
+        "ko": {
+          "name": "영웅심리",
+          "description": "공격력, 공속, 이속이 keepValue%씩 높다."
+        },
+        "ja": {
+          "name": "英雄気取り"
+        },
+        "en": {
+          "name": "Heroic"
+        },
+        "zh-TW": {
+          "name": "英雄心態"
+        },
+        "zh-CN": {
+          "name": "英雄心态"
+        },
+        "ru": {
+          "name": "Героический"
+        },
+        "fr": {
+          "name": "Héroïque"
+        },
+        "es": {
+          "name": "Heroico"
+        },
+        "pt": {
+          "name": "Heroico"
+        },
+        "it": {
+          "name": "Eroico"
+        },
+        "de": {
+          "name": "Heroisch"
+        },
+        "th": {
+          "name": "กล้าหาญ"
+        },
+        "vi": {
+          "name": "Anh Dũng"
+        },
+        "id": {
+          "name": "Heroik"
+        }
+      },
+      "keepValue": 7
+    },
+    {
+      "index": 21,
+      "localized": {
+        "ko": {
+          "name": "부유한",
+          "description": "몬스터 사냥시 얻는 골드가 keepValue% 높다."
+        },
+        "ja": {
+          "name": "富裕な"
+        },
+        "en": {
+          "name": "Rich"
+        },
+        "zh-TW": {
+          "name": "富有"
+        },
+        "zh-CN": {
+          "name": "富有"
+        },
+        "ru": {
+          "name": "Богатый"
+        },
+        "fr": {
+          "name": "Riche"
+        },
+        "es": {
+          "name": "Rico"
+        },
+        "pt": {
+          "name": "Rico"
+        },
+        "it": {
+          "name": "Ricco"
+        },
+        "de": {
+          "name": "Reich"
+        },
+        "th": {
+          "name": "ร่ำรวย"
+        },
+        "vi": {
+          "name": "Giàu Có"
+        },
+        "id": {
+          "name": "Kaya"
+        }
+      },
+      "keepValue": 120
+    },
+    {
+      "index": 22,
+      "localized": {
+        "ko": {
+          "name": "타짜",
+          "description": "강화 성공률이 keepValue% 높다."
+        },
+        "ja": {
+          "name": "ギャンブラー"
+        },
+        "en": {
+          "name": "Gambler"
+        },
+        "zh-TW": {
+          "name": "老千"
+        },
+        "zh-CN": {
+          "name": "老千"
+        },
+        "ru": {
+          "name": "Игрок"
+        },
+        "fr": {
+          "name": "Parieur"
+        },
+        "es": {
+          "name": "Jugador"
+        },
+        "pt": {
+          "name": "Apostador"
+        },
+        "it": {
+          "name": "Giocatore"
+        },
+        "de": {
+          "name": "Glücksspieler"
+        },
+        "th": {
+          "name": "มีเล่ห์เหลี่ยม"
+        },
+        "vi": {
+          "name": "Cờ Bạc"
+        },
+        "id": {
+          "name": "Penjudi"
+        }
+      },
+      "keepValue": 5
+    },
+    {
+      "index": 23,
+      "localized": {
+        "ko": {
+          "name": "금강불괴",
+          "description": "받는 대미지의 keepValue%를 감소시킨다."
+        },
+        "ja": {
+          "name": "鉄の男"
+        },
+        "en": {
+          "name": "Man of Steel"
+        },
+        "zh-TW": {
+          "name": "金剛不壞"
+        },
+        "zh-CN": {
+          "name": "金刚不坏"
+        },
+        "ru": {
+          "name": "Стальной"
+        },
+        "fr": {
+          "name": "Homme d'Acier"
+        },
+        "es": {
+          "name": "Hombre de Acero"
+        },
+        "pt": {
+          "name": "Homem de Aço"
+        },
+        "it": {
+          "name": "Uomo d'Acciaio"
+        },
+        "de": {
+          "name": "Mann aus Stahl"
+        },
+        "th": {
+          "name": "แข็งแกร่งดุจหินผา"
+        },
+        "vi": {
+          "name": "Anh Hùng Thép"
+        },
+        "id": {
+          "name": "Manusia Baja"
+        }
+      },
+      "keepValue": 10
+    },
+    {
+      "index": 24,
+      "localized": {
+        "ko": {
+          "name": "쏜살같은",
+          "description": "일반 케릭들에 비해 회피력이 keepValue% 빠르다."
+        },
+        "ja": {
+          "name": "光陰矢のごとし"
+        },
+        "en": {
+          "name": "Nimble"
+        },
+        "zh-TW": {
+          "name": "火箭"
+        },
+        "zh-CN": {
+          "name": "火箭"
+        },
+        "ru": {
+          "name": "Проворный"
+        },
+        "fr": {
+          "name": "Agile"
+        },
+        "es": {
+          "name": "Ágil\n"
+        },
+        "pt": {
+          "name": "Ágil"
+        },
+        "it": {
+          "name": "Agile"
+        },
+        "de": {
+          "name": "Wendig"
+        },
+        "th": {
+          "name": "ปราดเปรียว"
+        },
+        "vi": {
+          "name": "Thông Thái"
+        },
+        "id": {
+          "name": "Gesit"
+        }
+      },
+      "keepValue": 3
+    },
+    {
+      "index": 25,
+      "localized": {
+        "ko": {
+          "name": "굼뜬",
+          "description": "일반 케릭들에 비해 회피력이 keepValue% 느리다."
+        },
+        "ja": {
+          "name": "鈍臭い"
+        },
+        "en": {
+          "name": "Laggard"
+        },
+        "zh-TW": {
+          "name": "遲緩"
+        },
+        "zh-CN": {
+          "name": "迟缓"
+        },
+        "ru": {
+          "name": "Увалень"
+        },
+        "fr": {
+          "name": "Traînard"
+        },
+        "es": {
+          "name": "Rezagado"
+        },
+        "pt": {
+          "name": "Preguiçoso"
+        },
+        "it": {
+          "name": "Ritardatario"
+        },
+        "de": {
+          "name": "Nachzügler"
+        },
+        "th": {
+          "name": "เชื่องช้า"
+        },
+        "vi": {
+          "name": "Lề mề"
+        },
+        "id": {
+          "name": "Ketinggalan"
+        }
+      },
+      "keepValue": 3
+    },
+    {
+      "index": 26,
+      "localized": {
+        "ko": {
+          "name": "샤프한",
+          "description": "일반 케릭들에 비해 치명타 확률이 keepValue% 높다."
+        },
+        "ja": {
+          "name": "シャープな"
+        },
+        "en": {
+          "name": "Sharp"
+        },
+        "zh-TW": {
+          "name": "睿智"
+        },
+        "zh-CN": {
+          "name": "睿智"
+        },
+        "ru": {
+          "name": "Колючий"
+        },
+        "fr": {
+          "name": "Vif"
+        },
+        "es": {
+          "name": "Afilado"
+        },
+        "pt": {
+          "name": "Afiado"
+        },
+        "it": {
+          "name": "Acuto"
+        },
+        "de": {
+          "name": "Klever"
+        },
+        "th": {
+          "name": "เฉียบคม"
+        },
+        "vi": {
+          "name": "Nhạy Bén"
+        },
+        "id": {
+          "name": "Pintar"
+        }
+      },
+      "keepValue": 3
+    },
+    {
+      "index": 27,
+      "localized": {
+        "ko": {
+          "name": "둔탁한",
+          "description": "일반 케릭들에 비해 치명타 확률이 keepValue% 낮다."
+        },
+        "ja": {
+          "name": "鈍い"
+        },
+        "en": {
+          "name": "Dull"
+        },
+        "zh-TW": {
+          "name": "遲鈍"
+        },
+        "zh-CN": {
+          "name": "迟钝"
+        },
+        "ru": {
+          "name": "Скучный"
+        },
+        "fr": {
+          "name": "Terne"
+        },
+        "es": {
+          "name": "Torpe"
+        },
+        "pt": {
+          "name": "Chato"
+        },
+        "it": {
+          "name": "Noioso"
+        },
+        "de": {
+          "name": "Dämlich"
+        },
+        "th": {
+          "name": "ทื่อ"
+        },
+        "vi": {
+          "name": "Ngốc Nghếch"
+        },
+        "id": {
+          "name": "Bego"
+        }
+      },
+      "keepValue": 3
+    },
+    {
+      "index": 28,
+      "localized": {
+        "ko": {
+          "name": "평범한",
+          "description": "그냥 평범하다."
+        },
+        "ja": {
+          "name": "平凡な"
+        },
+        "en": {
+          "name": "Ordinary"
+        },
+        "zh-TW": {
+          "name": "路人甲"
+        },
+        "zh-CN": {
+          "name": "路人甲"
+        },
+        "ru": {
+          "name": "Обычный"
+        },
+        "fr": {
+          "name": "Ordinaire"
+        },
+        "es": {
+          "name": "Ordinario"
+        },
+        "pt": {
+          "name": "Ordinário"
+        },
+        "it": {
+          "name": "Ordinario"
+        },
+        "de": {
+          "name": "Gewöhnlich"
+        },
+        "th": {
+          "name": "ธรรมดา"
+        },
+        "vi": {
+          "name": "Bình Thường"
+        },
+        "id": {
+          "name": "Biasa"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 29,
+      "localized": {
+        "ko": {
+          "name": "막장",
+          "description": "그냥 막나간다."
+        },
+        "ja": {
+          "name": "破天荒な"
+        },
+        "en": {
+          "name": "YOLO"
+        },
+        "zh-TW": {
+          "name": "狗血"
+        },
+        "zh-CN": {
+          "name": "狗血"
+        },
+        "ru": {
+          "name": "Йоло"
+        },
+        "fr": {
+          "name": "YOLO"
+        },
+        "es": {
+          "name": "YOLO"
+        },
+        "pt": {
+          "name": "YOLO"
+        },
+        "it": {
+          "name": "YOLO"
+        },
+        "de": {
+          "name": "Durchgeknallt"
+        },
+        "th": {
+          "name": "มุทะลุ"
+        },
+        "vi": {
+          "name": "YOLO"
+        },
+        "id": {
+          "name": "Tidak Pedulian"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 30,
+      "localized": {
+        "ko": {
+          "name": "키보드 워리어",
+          "description": "무적에 가깝다."
+        },
+        "ja": {
+          "name": "キーボード戦士"
+        },
+        "en": {
+          "name": "Internet Troll"
+        },
+        "zh-TW": {
+          "name": "鍵盤俠"
+        },
+        "zh-CN": {
+          "name": "键盘侠"
+        },
+        "ru": {
+          "name": "Интернет Тролль"
+        },
+        "fr": {
+          "name": "Troll d’Internet"
+        },
+        "es": {
+          "name": "Trol de Internet"
+        },
+        "pt": {
+          "name": "Troll de Internet"
+        },
+        "it": {
+          "name": "Troll di Internet"
+        },
+        "de": {
+          "name": "Internettroll"
+        },
+        "th": {
+          "name": "นักเลงคีย์บอร์ด"
+        },
+        "vi": {
+          "name": "Anh hùng bàn phím"
+        },
+        "id": {
+          "name": "Troll Internet"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 31,
+      "localized": {
+        "ko": {
+          "name": "응큼한",
+          "description": "야한것을 좋아한다."
+        },
+        "ja": {
+          "name": "いたずらっ子"
+        },
+        "en": {
+          "name": "Naughty"
+        },
+        "zh-TW": {
+          "name": "陰險"
+        },
+        "zh-CN": {
+          "name": "阴险"
+        },
+        "ru": {
+          "name": "Непослушный"
+        },
+        "fr": {
+          "name": "Vilain"
+        },
+        "es": {
+          "name": "Travieso"
+        },
+        "pt": {
+          "name": "Levado"
+        },
+        "it": {
+          "name": "Cattivo"
+        },
+        "de": {
+          "name": "Ungezogen"
+        },
+        "th": {
+          "name": "ซุกซน"
+        },
+        "vi": {
+          "name": "Dục vọng"
+        },
+        "id": {
+          "name": "Nakal"
+        }
+      },
+      "keepValue": 0
+    },
+    {
+      "index": 32,
+      "localized": {
+        "ko": {
+          "name": "예의없는",
+          "description": "말을 막함"
+        },
+        "ja": {
+          "name": "無礼な"
+        },
+        "en": {
+          "name": "Rude"
+        },
+        "zh-TW": {
+          "name": "沒禮貌"
+        },
+        "zh-CN": {
+          "name": "没礼貌"
+        },
+        "ru": {
+          "name": "Грубый"
+        },
+        "fr": {
+          "name": "Grossier"
+        },
+        "es": {
+          "name": "Grosero\n"
+        },
+        "pt": {
+          "name": "Grosso"
+        },
+        "it": {
+          "name": "Maleducato"
+        },
+        "de": {
+          "name": "Unhöflich"
+        },
+        "th": {
+          "name": "ไม่มีมารยาท"
+        },
+        "vi": {
+          "name": "Thô Lỗ"
+        },
+        "id": {
+          "name": "Kasar"
+        }
+      },
+      "keepValue": 0
+    }
+  ],
+  "limitations": [
+    "The tables define pools and stat ranges; they do not reveal the RNG distribution or creation call order.",
+    "The Characteristic table is named personality in the package; the exact assignment method remains in protected native code.",
+    "No table here binds body, costume, hat, weapon, rarity, or generated name into one Hunter instance."
+  ]
+}

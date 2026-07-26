@@ -31,8 +31,13 @@ quality:
 	pnpm assets:verify
 	pnpm assets:validate:slice1
 	pnpm assets:validate:original-flow
+	pnpm assets:validate:visible-world
+	pnpm assets:validate:localization
 	pnpm assets:validate:full
+	pnpm building:validate
 	pnpm test:assets
+	pnpm scene:test
+	pnpm scene:validate
 
 verify-assets:
 	pnpm assets:verify

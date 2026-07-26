@@ -1,21 +1,57 @@
 {
-  "schemaVersion": 5,
+  "schemaVersion": 15,
+  "fixtureContracts": [
+    {
+      "id": "migration-fixture.slice1-combat-v1",
+      "status": "migration_fixture",
+      "authority": "server",
+      "legacyBalanceClaim": false
+    }
+  ],
   "wire": {
     "encoding": "json-debug",
-    "maxMessageBytes": 16384,
+    "maxMessageBytes": 1048576,
     "envelopeFields": ["version", "sequence", "session_id", "correlation_id", "payload"]
   },
   "clientCommands": [
+    {
+      "wireName": "start_building_service",
+      "rustName": "StartBuildingService",
+      "fields": [
+        { "wireName": "instance_id", "rustType": "String", "tsType": "string" },
+        { "wireName": "hunter_id", "rustType": "u32", "tsType": "number" },
+        { "wireName": "product_id", "rustType": "String", "tsType": "string" }
+      ]
+    },
+    {
+      "wireName": "start_infirmary_treatment",
+      "rustName": "StartInfirmaryTreatment",
+      "fields": [
+        { "wireName": "instance_id", "rustType": "String", "tsType": "string" },
+        { "wireName": "hunter_id", "rustType": "u32", "tsType": "number" },
+        { "wireName": "product_id", "rustType": "String", "tsType": "string" }
+      ]
+    },
     { "wireName": "complete_boot", "rustName": "CompleteBoot", "fields": [] },
     { "wireName": "select_bottom_menu", "rustName": "SelectBottomMenu", "fields": [{ "wireName": "menu", "rustType": "BottomMenuIntent", "tsType": "BottomMenuIntent" }] },
     { "wireName": "navigate_back", "rustName": "NavigateBack", "fields": [] },
     { "wireName": "enter_field", "rustName": "EnterField", "fields": [] },
     { "wireName": "select_entity", "rustName": "SelectEntity", "fields": [{ "wireName": "entity_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "construct_building", "rustName": "ConstructBuilding", "fields": [{ "wireName": "building_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "construct_building_at", "rustName": "ConstructBuildingAt", "fields": [{ "wireName": "building_id", "rustType": "String", "tsType": "string" }, { "wireName": "grid_x", "rustType": "i32", "tsType": "number" }, { "wireName": "grid_y", "rustType": "i32", "tsType": "number" }] },
+    { "wireName": "upgrade_building", "rustName": "UpgradeBuilding", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "move_building", "rustName": "MoveBuilding", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "grid_x", "rustType": "i32", "tsType": "number" }, { "wireName": "grid_y", "rustType": "i32", "tsType": "number" }] },
+    { "wireName": "use_building", "rustName": "UseBuilding", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "set_material_request", "rustName": "SetMaterialRequest", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "material_id", "rustType": "String", "tsType": "string" }, { "wireName": "quantity", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "cancel_material_request", "rustName": "CancelMaterialRequest", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "material_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "craft_shop_item", "rustName": "CraftShopItem", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "recipe_id", "rustType": "String", "tsType": "string" }, { "wireName": "material_id", "rustType": "Option<String>", "tsType": "string | null" }, { "wireName": "quantity", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "open_hunter_progression", "rustName": "OpenHunterProgression", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "banish_hunter", "rustName": "BanishHunter", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "equip_hunter_item", "rustName": "EquipHunterItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "item_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "claim_quest_reward", "rustName": "ClaimQuestReward", "fields": [{ "wireName": "quest_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "open_shop", "rustName": "OpenShop", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "purchase_shop_item", "rustName": "PurchaseShopItem", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "sell_shop_item", "rustName": "SellShopItem", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "claim_mail", "rustName": "ClaimMail", "fields": [{ "wireName": "mail_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "claim_rewarded_ad", "rustName": "ClaimRewardedAd", "fields": [{ "wireName": "placement", "rustType": "String", "tsType": "string" }] },
     { "wireName": "start_topup_purchase", "rustName": "StartTopupPurchase", "fields": [{ "wireName": "product_id", "rustType": "String", "tsType": "string" }] },

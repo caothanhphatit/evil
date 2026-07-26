@@ -1,0 +1,1893 @@
+{
+  "schemaVersion": 1,
+  "contractType": "building-capability-evidence",
+  "runtimeCompatibility": "not-claimed",
+  "policy": "No missing value or native call-site binding is inferred.",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/serialized-building-tables-v1.json",
+      "bytes": 756045,
+      "sha256": "9c76fe2cd354970e6e6955b9a4baa445e1eb4e05495623df602c317959c54b57"
+    },
+    {
+      "path": "reverse-engineering/evidence/il2cpp-building-metadata-v1.json",
+      "bytes": 326575,
+      "sha256": "d351db8fccb8c772a1755bb90a0cc1b77679c48f71ad8e2c4e34026117618f34"
+    },
+    {
+      "path": "reverse-engineering/evidence/building-ui-contract-v1.json",
+      "bytes": 2395084,
+      "sha256": "dcf0d7ddc34c82ea3855da82a6cf72b6e495a92b9b09af66ac3f93dc4b74045a"
+    },
+    {
+      "path": "reverse-engineering/evidence/core-economy-tables-v1.json",
+      "bytes": 4112123,
+      "sha256": "443461ba74c26d1a735c549cc062b436b03ea5c818cb8b63de99f52910766163"
+    },
+    {
+      "path": "reverse-engineering/evidence/level1-scene-hierarchy.json",
+      "bytes": 25546425,
+      "sha256": "4dfaf4b66c879556ac6c4e4767347f9e4b022e78e2c6b2a2ba8d02c553d27622"
+    },
+    {
+      "path": "reverse-engineering/evidence/monoscripts.csv",
+      "bytes": 386746,
+      "sha256": "e49fc36f5d1020c090252e652b03b0cbd4241316dabd23caa4fd7093f7918089"
+    },
+    {
+      "path": "game-assets/extracted/joined_unity_files/level1",
+      "bytes": 16845572,
+      "sha256": "450848793be37124e178cc072adec3255af8b2bc7d0c1e4986e473ba7c1014d8"
+    }
+  ],
+  "buildingPopControllerEvidence": {
+    "typeIndex": 388,
+    "token": 33554816,
+    "fieldReferences": [
+      {
+        "index": 5627,
+        "name": {
+          "index": 184040,
+          "value": "\ufffd]",
+          "status": "obfuscated"
+        },
+        "il2cppTypeIndex": 29943,
+        "token": 67114492
+      },
+      {
+        "index": 5628,
+        "name": {
+          "index": 184057,
+          "value": "6",
+          "status": "clean"
+        },
+        "il2cppTypeIndex": 29941,
+        "token": 67114493
+      },
+      {
+        "index": 5629,
+        "name": {
+          "index": 184078,
+          "value": "mEhS",
+          "status": "clean"
+        },
+        "il2cppTypeIndex": 21564,
+        "token": 67114494
+      },
+      {
+        "index": 5631,
+        "name": {
+          "index": 184121,
+          "value": "\\",
+          "status": "clean"
+        },
+        "il2cppTypeIndex": 22510,
+        "token": 67114496
+      },
+      {
+        "index": 5632,
+        "name": {
+          "index": 184145,
+          "value": "mGearCr}\u0017",
+          "status": "obfuscated"
+        },
+        "il2cppTypeIndex": 22496,
+        "token": 67114497
+      },
+      {
+        "index": 5634,
+        "name": {
+          "index": 184196,
+          "value": "mCon\ufffd#",
+          "status": "obfuscated"
+        },
+        "il2cppTypeIndex": 19463,
+        "token": 67114499
+      },
+      {
+        "index": 5636,
+        "name": {
+          "index": 184241,
+          "value": "mPotion!`",
+          "status": "clean"
+        },
+        "il2cppTypeIndex": 28891,
+        "token": 67114501
+      },
+      {
+        "index": 5638,
+        "name": {
+          "index": 184283,
+          "value": "",
+          "status": "clean"
+        },
+        "il2cppTypeIndex": 30076,
+        "token": 67114503
+      },
+      {
+        "index": 5640,
+        "name": {
+          "index": 184335,
+          "value": "mTrad\ufffd@",
+          "status": "obfuscated"
+        },
+        "il2cppTypeIndex": 33292,
+        "token": 67114505
+      }
+    ],
+    "interpretationConfidence": "field-name-and-type-fragments-only"
+  },
+  "popupLayouts": {
+    "BuildingPop": {
+      "rootGameObjectPathId": 932,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 76602,
+        "scriptPathId": 4368,
+        "class": "BuildingPop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 1531,
+        "name": "Background",
+        "width": 560.0,
+        "height": 900.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "BuildingReviveCheckPop": {
+      "rootGameObjectPathId": 755,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 76299,
+        "scriptPathId": 254,
+        "class": "BuildingReviveCheckPop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 2340,
+        "name": "Background",
+        "width": 450.0,
+        "height": 380.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "ConsumCreatePop": {
+      "rootGameObjectPathId": 1264,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 76652,
+        "scriptPathId": 958,
+        "class": "ConsumCreatePop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 2132,
+        "name": "Background",
+        "width": 450.0,
+        "height": 830.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "GearCreatePop": {
+      "rootGameObjectPathId": 1272,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 74257,
+        "scriptPathId": 708,
+        "class": "GearCreatePop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 429,
+        "name": "Background",
+        "width": 450.0,
+        "height": 950.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "QuestPop": {
+      "rootGameObjectPathId": 1919,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 82921,
+        "scriptPathId": 2891,
+        "class": "QuestPop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 1076,
+        "name": "Background",
+        "width": 560.0,
+        "height": 1100.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "RequestPop": {
+      "rootGameObjectPathId": 2504,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 76429,
+        "scriptPathId": 1879,
+        "class": "RequestPop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 815,
+        "name": "Background",
+        "width": 480.0,
+        "height": 820.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    },
+    "TradeWagonExchangePop": {
+      "rootGameObjectPathId": 1896,
+      "rootActiveInScene": false,
+      "controller": {
+        "componentPathId": 78523,
+        "scriptPathId": 927,
+        "class": "TradeWagonExchangePop",
+        "assembly": "Assembly-CSharp"
+      },
+      "panel": {
+        "gameObjectPathId": 5179,
+        "name": "Border",
+        "width": 450.0,
+        "height": 710.0
+      },
+      "bindingConfidence": "confirmed-serialized-component"
+    }
+  },
+  "buildings": [
+    {
+      "buildingId": 2,
+      "identity": {
+        "en": "Sanctuary of Resurrection",
+        "vi": "Th\u00e1nh \u0110\u1ecba H\u1ed3i Sinh",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "automatic-revival",
+        "descriptionEn": "Revives dead hunters",
+        "descriptionVi": "H\u1ed3i sinh th\u1ee3 s\u0103n \u0111\u00e3 ch\u1ebft",
+        "upgradeEffectEn": "\nHunters revive at descTextSecond% HP after descText sec(s)",
+        "levelLabelsEn": [
+          "30",
+          "27",
+          "24",
+          "21",
+          "18",
+          "15"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 6,
+        "requiredTownHallLevels": [
+          1,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        "requiredGold": [
+          240,
+          8640,
+          25920,
+          77760,
+          90720,
+          272160
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              -1,
+              140,
+              141,
+              142,
+              143,
+              184
+            ],
+            "quantities": [
+              30,
+              30,
+              30,
+              30,
+              30,
+              90
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          30,
+          27,
+          24,
+          21,
+          18,
+          15
+        ],
+        "secondValues": [
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [],
+        "bindingConfidence": "not-applicable"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "BuildingReviveCheckPop",
+        "layoutRef": "BuildingReviveCheckPop",
+        "bindingConfidence": "correlated-original-controller",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 3,
+      "identity": {
+        "en": "Trading Post",
+        "vi": "Ch\u1ee3",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "loot-purchase-reservations",
+        "descriptionEn": "Helps the town purchase loot from hunters",
+        "descriptionVi": "Gi\u00fap th\u1ecb tr\u1ea5n mua chi\u1ebfn l\u1ee3i ph\u1ea9m t\u1eeb th\u1ee3 s\u0103n sau m\u1ed7i l\u1ea7n \u0111i s\u0103n",
+        "upgradeEffectEn": "Adds purchase reservation list of [descText] difficulty",
+        "levelLabelsEn": [
+          "Easy",
+          "Normal",
+          "Hard",
+          "Expert",
+          "Nightmare",
+          "Torment"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 6,
+        "requiredTownHallLevels": [
+          1,
+          5,
+          7,
+          9,
+          11,
+          13
+        ],
+        "requiredGold": [
+          300,
+          4800,
+          16200,
+          48600,
+          145800,
+          437400
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "materials",
+            "rowCount": 369
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "RequestPop",
+        "layoutRef": "RequestPop",
+        "bindingConfidence": "correlated-original-controller",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 4,
+      "identity": {
+        "en": "Bounty Hut",
+        "vi": "Tr\u1ea1m Treo Th\u01b0\u1edfng",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "bounty-quest-list",
+        "descriptionEn": "Provides bounty quests to help hunters level up fast",
+        "descriptionVi": "Cung c\u1ea5p nhi\u1ec7m v\u1ee5 treo th\u01b0\u1edfng gi\u00fap th\u1ee3 s\u0103n th\u0103ng c\u1ea5p nhanh",
+        "upgradeEffectEn": "Adds bounty quest list of [descText] difficulty",
+        "levelLabelsEn": [
+          "Easy",
+          "Normal",
+          "Hard",
+          "Expert",
+          "Nightmare",
+          "Torment"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 6,
+        "requiredTownHallLevels": [
+          2,
+          5,
+          7,
+          9,
+          11,
+          13
+        ],
+        "requiredGold": [
+          780,
+          6240,
+          21060,
+          63180,
+          189540,
+          568620
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [],
+        "bindingConfidence": "not-applicable"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "QuestPop",
+        "layoutRef": "QuestPop",
+        "bindingConfidence": "correlated-original-controller",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 7,
+      "identity": {
+        "en": "Weapon Shop",
+        "vi": "Shop V\u0169 Kh\u00ed",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "weapon-display-and-sale",
+        "descriptionEn": "Displays and sells weapons crafted at the Blacksmith",
+        "descriptionVi": "Tr\u01b0ng b\u00e0y v\u00e0 b\u00e1n v\u0169 kh\u00ed \u0111\u00e3 ch\u1ebf t\u1ea1o t\u1ea1i L\u00f2 R\u00e8n",
+        "upgradeEffectEn": "Able to display descText weapons",
+        "levelLabelsEn": [
+          "Regular",
+          "Sturdy",
+          "Refined",
+          "Powerful",
+          "Supreme"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 5,
+        "requiredTownHallLevels": [
+          2,
+          5,
+          7,
+          9,
+          11
+        ],
+        "requiredGold": [
+          660,
+          5280,
+          17820,
+          53460,
+          160380
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "quantities": [
+              10,
+              10,
+              10,
+              10,
+              10
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "gearWeapons",
+            "rowCount": 315
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "BuildingPop",
+        "layoutRef": "BuildingPop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 8,
+      "identity": {
+        "en": "Armor Shop",
+        "vi": "Shop Gi\u00e1p",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "armor-display-and-sale",
+        "descriptionEn": "Displays and sells armor crafted at the Blacksmith",
+        "descriptionVi": "Tr\u01b0ng b\u00e0y v\u00e0 b\u00e1n gi\u00e1p \u0111\u00e3 ch\u1ebf t\u1ea1o t\u1ea1i L\u00f2 R\u00e8n",
+        "upgradeEffectEn": "Able to display descText armor",
+        "levelLabelsEn": [
+          "Regular",
+          "Sturdy",
+          "Refined",
+          "Powerful",
+          "Supreme"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 5,
+        "requiredTownHallLevels": [
+          3,
+          6,
+          8,
+          10,
+          12
+        ],
+        "requiredGold": [
+          960,
+          8640,
+          25920,
+          77760,
+          233280
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "quantities": [
+              15,
+              15,
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "gearArmor",
+            "rowCount": 43
+          },
+          {
+            "name": "gearHelmet",
+            "rowCount": 107
+          },
+          {
+            "name": "gearBoots",
+            "rowCount": 43
+          },
+          {
+            "name": "gearGloves",
+            "rowCount": 43
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "BuildingPop",
+        "layoutRef": "BuildingPop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 10,
+      "identity": {
+        "en": "Blacksmith",
+        "vi": "L\u00f2 R\u00e8n",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "weapon-and-armor-crafting",
+        "descriptionEn": "Crafts weapons and armor using materials purchased from hunters",
+        "descriptionVi": "Ch\u1ebf t\u1ea1o v\u0169 kh\u00ed v\u00e0 gi\u00e1p t\u1eeb nguy\u00ean li\u1ec7u \u0111\u00e3 mua t\u1eeb th\u1ee3 s\u0103n",
+        "upgradeEffectEn": "Able to craft descText weapons and armor",
+        "levelLabelsEn": [
+          "Regular",
+          "Sturdy",
+          "Refined",
+          "Powerful",
+          "Supreme"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 5,
+        "requiredTownHallLevels": [
+          2,
+          5,
+          7,
+          9,
+          11
+        ],
+        "requiredGold": [
+          660,
+          5280,
+          17820,
+          53460,
+          160380
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "quantities": [
+              10,
+              10,
+              10,
+              10,
+              10
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "gearWeapons",
+            "rowCount": 315
+          },
+          {
+            "name": "gearArmor",
+            "rowCount": 43
+          },
+          {
+            "name": "gearHelmet",
+            "rowCount": 107
+          },
+          {
+            "name": "gearBoots",
+            "rowCount": 43
+          },
+          {
+            "name": "gearGloves",
+            "rowCount": 43
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "GearCreatePop",
+        "layoutRef": "GearCreatePop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 11,
+      "identity": {
+        "en": "Potion Shop",
+        "vi": "Shop D\u01b0\u1ee3c Li\u1ec7u",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "potion-display-and-sale",
+        "descriptionEn": "Displays and sells potions crafted at Alchemist's Home",
+        "descriptionVi": "Tr\u01b0ng b\u00e0y v\u00e0 b\u00e1n d\u01b0\u1ee3c li\u1ec7u \u0111\u00e3 \u0111i\u1ec1u ch\u1ebf t\u1ea1i Nh\u00e0 Gi\u1ea3 Kim",
+        "upgradeEffectEn": "Able to display descText level potions",
+        "levelLabelsEn": [
+          "Uncommon",
+          "Rare",
+          "Epic",
+          "Mythic",
+          "Arcane",
+          "Shiny",
+          "Glittering",
+          "Special"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 8,
+        "requiredTownHallLevels": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          17
+        ],
+        "requiredGold": [
+          2400,
+          10800,
+          32400,
+          97200,
+          291600,
+          874800,
+          2624400,
+          23619600
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15,
+              179,
+              311,
+              343
+            ],
+            "quantities": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "consumables",
+            "rowCount": 5
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "BuildingPop",
+        "layoutRef": "BuildingPop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 14,
+      "identity": {
+        "en": "Alchemist's Home",
+        "vi": "Nh\u00e0 Gi\u1ea3 Kim",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "potion-crafting",
+        "descriptionEn": "Crafts potions with material purchased from hunters",
+        "descriptionVi": "\u0110i\u1ec1u ch\u1ebf d\u01b0\u1ee3c li\u1ec7u b\u1eb1ng nguy\u00ean li\u1ec7u \u0111\u00e3 mua t\u1eeb th\u1ee3 s\u0103n",
+        "upgradeEffectEn": "Able to craft descText potions",
+        "levelLabelsEn": [
+          "Uncommon",
+          "Rare",
+          "Epic",
+          "Mythic",
+          "Arcane",
+          "Shiny",
+          "Glittering",
+          "Special"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 8,
+        "requiredTownHallLevels": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          17
+        ],
+        "requiredGold": [
+          2400,
+          10800,
+          32400,
+          97200,
+          291600,
+          874800,
+          2624400,
+          23619600
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15,
+              179,
+              311,
+              343
+            ],
+            "quantities": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "consumables",
+            "rowCount": 5
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "ConsumCreatePop",
+        "layoutRef": "ConsumCreatePop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 20,
+      "identity": {
+        "en": "Accessory Shop",
+        "vi": "Shop Ph\u1ee5 ki\u1ec7n",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "accessory-display-and-sale",
+        "descriptionEn": "Displays and sells accessories crafted at the Jeweler",
+        "descriptionVi": "Tr\u01b0ng b\u00e0y v\u00e0 b\u00e1n trang s\u1ee9c \u0111\u00e3 ch\u1ebf t\u1ea1o t\u1ea1i Th\u1ee3 Kim Ho\u00e0n",
+        "upgradeEffectEn": "Able to display descText accessories",
+        "levelLabelsEn": [
+          "Regular",
+          "Sturdy",
+          "Refined",
+          "Powerful",
+          "Supreme"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 5,
+        "requiredTownHallLevels": [
+          4,
+          6,
+          8,
+          10,
+          12
+        ],
+        "requiredGold": [
+          2400,
+          10800,
+          32400,
+          97200,
+          291600
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "quantities": [
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "gearBelt",
+            "rowCount": 34
+          },
+          {
+            "name": "gearNecklace",
+            "rowCount": 43
+          },
+          {
+            "name": "gearRing",
+            "rowCount": 43
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "BuildingPop",
+        "layoutRef": "BuildingPop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    },
+    {
+      "buildingId": 21,
+      "identity": {
+        "en": "Jeweler",
+        "vi": "Th\u1ee3 Kim Ho\u00e0n",
+        "confidence": "confirmed-serialized-row"
+      },
+      "capability": {
+        "id": "accessory-crafting",
+        "descriptionEn": "Crafts accessories with material purchased from hunters",
+        "descriptionVi": "Ch\u1ebf t\u1ea1o ph\u1ee5 ki\u1ec7n b\u1eb1ng nguy\u00ean li\u1ec7u \u0111\u00e3 mua t\u1eeb th\u1ee3 s\u0103n",
+        "upgradeEffectEn": "Able to craft descText accessories",
+        "levelLabelsEn": [
+          "Regular",
+          "Sturdy",
+          "Refined",
+          "Powerful",
+          "Supreme"
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "progression": {
+        "maxBuild": 1,
+        "maxLevel": 5,
+        "requiredTownHallLevels": [
+          4,
+          6,
+          8,
+          10,
+          12
+        ],
+        "requiredGold": [
+          2400,
+          10800,
+          32400,
+          97200,
+          291600
+        ],
+        "requiredMaterials": [
+          {
+            "ids": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "quantities": [
+              20,
+              20,
+              20,
+              20,
+              20
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "ids": [
+              -1,
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "quantities": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "firstValues": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "secondValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "thirdValues": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "confidence": "confirmed-serialized-row"
+      },
+      "economyTables": {
+        "tables": [
+          {
+            "name": "gearBelt",
+            "rowCount": 34
+          },
+          {
+            "name": "gearNecklace",
+            "rowCount": 43
+          },
+          {
+            "name": "gearRing",
+            "rowCount": 43
+          }
+        ],
+        "bindingConfidence": "correlated-table-family"
+      },
+      "ui": {
+        "managementPopup": "BuildingPop",
+        "capabilityPopup": "GearCreatePop",
+        "layoutRef": "GearCreatePop",
+        "bindingConfidence": "correlated-buildingpop-field-family",
+        "nativeCallSiteStatus": "unresolved"
+      }
+    }
+  ],
+  "unboundRelatedUi": [
+    {
+      "popup": "TradeWagonExchangePop",
+      "reason": "Original controller and layout are confirmed, but no target building ID call-site is proven."
+    }
+  ],
+  "unresolved": [
+    "Native click-handler call sites that bind each building ID to a capability popup.",
+    "TraderInfomation_global payload schema and exact request pricing rules.",
+    "Hunter autonomous shop purchase/equip decision method bodies.",
+    "Recipe-to-building filtering beyond the exact serialized buildingId columns already decoded elsewhere."
+  ],
+  "sentinels": {
+    "targetBuildingIds": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      10,
+      11,
+      14,
+      20,
+      21
+    ],
+    "buildingPopTypeIndex": 388,
+    "buildingPopToken": 33554816,
+    "serializedBuildingCount": 79,
+    "uiControllerCount": 92
+  }
+}

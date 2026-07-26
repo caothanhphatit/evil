@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -71,7 +71,7 @@ pub struct GroundDrop {
     pub y: i32,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct DurablePlayerState {
     pub tick: u64,
@@ -93,6 +93,7 @@ pub struct DurablePlayerState {
     pub equipped_item_id: Option<u32>,
     pub ground_drops: Vec<GroundDrop>,
     pub rng_state: u64,
+    pub command_results: BTreeMap<Uuid, CommandOutcome>,
 }
 
 impl Default for DurablePlayerState {
@@ -117,6 +118,7 @@ impl Default for DurablePlayerState {
             equipped_item_id: None,
             ground_drops: Vec::new(),
             rng_state: 0,
+            command_results: BTreeMap::new(),
         }
     }
 }
@@ -135,7 +137,7 @@ pub enum PendingOperation {
     },
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CommandOutcome {
     pub command_id: Uuid,
     pub accepted: bool,
@@ -157,7 +159,7 @@ pub struct Simulation {
     rng: DeterministicRng,
     events: Vec<CombatEvent>,
     operations: Vec<PendingOperation>,
-    command_results: HashMap<Uuid, CommandOutcome>,
+    command_results: BTreeMap<Uuid, CommandOutcome>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -262,7 +264,7 @@ impl Simulation {
             rng: DeterministicRng::new(rng_seed),
             events: Vec::new(),
             operations: Vec::new(),
-            command_results: HashMap::new(),
+            command_results: state.command_results,
         }
     }
 
@@ -356,6 +358,7 @@ impl Simulation {
             equipped_item_id: self.equipped_item_id,
             ground_drops: self.ground_drops.clone(),
             rng_state: self.rng.state(),
+            command_results: self.command_results.clone(),
         }
     }
 

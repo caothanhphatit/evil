@@ -1,0 +1,610 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.evil-hunter.invalid/schemas/building-registry-v1.schema.json",
+  "title": "Evidence-bound legacy building registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "contractType",
+    "registryId",
+    "legacy",
+    "runtimeState",
+    "evidencePolicy",
+    "evidenceSources",
+    "catalogs",
+    "buildings",
+    "releaseGate"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "contractType": { "const": "building-registry" },
+    "registryId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+    "legacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["game", "version", "package"],
+      "properties": {
+        "game": { "const": "Evil Hunter Tycoon" },
+        "version": { "const": "1.411" },
+        "package": { "const": "com.superplanet.evilhunter" }
+      }
+    },
+    "runtimeState": { "enum": ["blocked", "runtime-ready"] },
+    "evidencePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semanticFields", "unresolvedValues", "visualBinding"],
+      "properties": {
+        "semanticFields": { "const": "evidence-required-per-field" },
+        "unresolvedValues": { "const": "fail-closed-null-or-empty" },
+        "visualBinding": { "const": "separate-from-gameplay-semantics" }
+      }
+    },
+    "evidenceSources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceSource" }
+    },
+    "catalogs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items", "products", "capabilities", "skins"],
+      "properties": {
+        "items": { "$ref": "#/$defs/itemCatalog" },
+        "products": { "$ref": "#/$defs/productCatalog" },
+        "capabilities": { "$ref": "#/$defs/capabilityCatalog" },
+        "skins": { "$ref": "#/$defs/skinCatalog" }
+      }
+    },
+    "buildings": { "$ref": "#/$defs/buildingCatalog" },
+    "releaseGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runnable", "blockingPaths", "reason"],
+      "properties": {
+        "runnable": { "type": "boolean" },
+        "blockingPaths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "confidence": {
+      "enum": ["confirmed", "strongly-inferred", "tentative", "unknown"]
+    },
+    "evidenceSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "bytes", "sha256"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+        "path": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "locator", "method"],
+      "properties": {
+        "sourceId": { "type": "string", "minLength": 1 },
+        "locator": { "type": "string", "minLength": 1 },
+        "method": {
+          "enum": [
+            "serialized-row",
+            "metadata-field",
+            "native-code",
+            "localization-entry",
+            "scene-object",
+            "ui-hierarchy",
+            "asset-object",
+            "runtime-trace"
+          ]
+        },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "confidence", "evidence", "requiredEvidence"],
+      "properties": {
+        "state": { "enum": ["resolved", "unresolved"] },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidenceRef" } },
+        "requiredEvidence": { "type": ["string", "null"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "state": { "const": "resolved" } }, "required": ["state"] },
+          "then": {
+            "properties": {
+              "confidence": { "enum": ["confirmed", "strongly-inferred", "tentative"] },
+              "evidence": { "minItems": 1 },
+              "requiredEvidence": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "state": { "const": "unresolved" } }, "required": ["state"] },
+          "then": {
+            "properties": {
+              "confidence": { "const": "unknown" },
+              "requiredEvidence": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "confidence", "value", "evidence", "requiredEvidence"],
+      "properties": {
+        "state": { "enum": ["resolved", "unresolved"] },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "value": { "type": ["string", "number", "integer", "boolean", "array", "object", "null"] },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidenceRef" } },
+        "requiredEvidence": { "type": ["string", "null"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "state": { "const": "resolved" } }, "required": ["state"] },
+          "then": {
+            "properties": {
+              "confidence": { "enum": ["confirmed", "strongly-inferred", "tentative"] },
+              "value": { "not": { "type": "null" } },
+              "evidence": { "minItems": 1 },
+              "requiredEvidence": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "state": { "const": "unresolved" } }, "required": ["state"] },
+          "then": {
+            "properties": {
+              "confidence": { "const": "unknown" },
+              "value": { "type": "null" },
+              "requiredEvidence": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "kind", "subjectId", "operator", "operand"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/field" },
+        "subjectId": { "$ref": "#/$defs/field" },
+        "operator": { "$ref": "#/$defs/field" },
+        "operand": { "$ref": "#/$defs/field" }
+      }
+    },
+    "amount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "itemId", "quantity"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "itemId": { "$ref": "#/$defs/field" },
+        "quantity": { "$ref": "#/$defs/field" }
+      }
+    },
+    "conditionCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/condition" } }
+      }
+    },
+    "amountCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/amount" } }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "id"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "id": { "$ref": "#/$defs/field" }
+      }
+    },
+    "referenceCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/reference" } }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "itemId", "internalName", "displayName", "itemType", "stackLimit", "buyPrice", "sellPrice", "directionalEconomy"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "itemId": { "$ref": "#/$defs/field" },
+        "internalName": { "$ref": "#/$defs/field" },
+        "displayName": { "$ref": "#/$defs/field" },
+        "itemType": { "$ref": "#/$defs/field" },
+        "stackLimit": { "$ref": "#/$defs/field" },
+        "buyPrice": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/amountCollection" }] },
+        "sellPrice": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/amountCollection" }] },
+        "directionalEconomy": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/itemDirectionalEconomy" }] }
+      }
+    },
+    "itemDirectionalEconomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "townPaysHunterGoldPerUnit", "hunterPaysTownGoldByTier"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "townPaysHunterGoldPerUnit": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/field" }] },
+        "hunterPaysTownGoldByTier": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/field" }] }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "productId", "buildingId", "inputs", "outputs", "durationMs", "salePrice", "conditions", "serviceData", "conversionOptions", "randomOutput"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "productId": { "$ref": "#/$defs/field" },
+        "buildingId": { "$ref": "#/$defs/field" },
+        "inputs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/amountCollection" }] },
+        "outputs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/amountCollection" }] },
+        "durationMs": { "$ref": "#/$defs/field" },
+        "salePrice": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/amountCollection" }] },
+        "conditions": { "$ref": "#/$defs/conditionCollection" },
+        "serviceData": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/productServiceData" }] },
+        "conversionOptions": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/conversionOptionCollection" }] },
+        "randomOutput": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/randomOutputData" }] }
+      }
+    },
+    "conversionOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "inputKind", "inputId", "inputQuantity", "outputStockQuantity"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "inputKind": { "$ref": "#/$defs/field" },
+        "inputId": { "$ref": "#/$defs/field" },
+        "inputQuantity": { "$ref": "#/$defs/field" },
+        "outputStockQuantity": { "$ref": "#/$defs/field" }
+      }
+    },
+    "conversionOptionCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/conversionOption" } }
+      }
+    },
+    "randomOutputData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "itemType", "grade", "quantity", "rngBinding"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "itemType": { "$ref": "#/$defs/field" },
+        "grade": { "$ref": "#/$defs/field" },
+        "quantity": { "$ref": "#/$defs/field" },
+        "rngBinding": { "$ref": "#/$defs/binding" }
+      }
+    },
+    "productServiceData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "sourceType",
+        "requiredLevel",
+        "serviceTimeMs",
+        "effectValue",
+        "useMoney",
+        "completionCounts",
+        "requiredCashCount",
+        "cashCompletionCount",
+        "requiredElementalCount",
+        "elementalCompletionCount"
+      ],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "sourceType": { "$ref": "#/$defs/field" },
+        "requiredLevel": { "$ref": "#/$defs/field" },
+        "serviceTimeMs": { "$ref": "#/$defs/field" },
+        "effectValue": { "$ref": "#/$defs/field" },
+        "useMoney": { "$ref": "#/$defs/field" },
+        "completionCounts": { "$ref": "#/$defs/field" },
+        "requiredCashCount": { "$ref": "#/$defs/field" },
+        "cashCompletionCount": { "$ref": "#/$defs/field" },
+        "requiredElementalCount": { "$ref": "#/$defs/field" },
+        "elementalCompletionCount": { "$ref": "#/$defs/field" }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "capabilityId",
+        "buildingId",
+        "kind",
+        "parameters",
+        "popupTemplateId",
+        "popupBinding",
+        "runtimeBinding",
+        "conditions",
+        "readiness"
+      ],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "capabilityId": { "$ref": "#/$defs/field" },
+        "buildingId": { "$ref": "#/$defs/field" },
+        "kind": { "$ref": "#/$defs/field" },
+        "parameters": { "$ref": "#/$defs/field" },
+        "popupTemplateId": { "$ref": "#/$defs/field" },
+        "popupBinding": { "$ref": "#/$defs/binding" },
+        "runtimeBinding": { "$ref": "#/$defs/binding" },
+        "conditions": { "$ref": "#/$defs/conditionCollection" },
+        "readiness": { "$ref": "#/$defs/capabilityReadiness" }
+      }
+    },
+    "capabilityReadiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["staticDataReady", "runnable", "blockingPaths", "reason"],
+      "properties": {
+        "staticDataReady": { "type": "boolean" },
+        "runnable": { "type": "boolean" },
+        "blockingPaths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "buildRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "sourceRowId", "buildId", "level", "conditions", "costs", "durationMs"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "sourceRowId": { "$ref": "#/$defs/field" },
+        "buildId": { "$ref": "#/$defs/field" },
+        "level": { "$ref": "#/$defs/field" },
+        "conditions": { "$ref": "#/$defs/conditionCollection" },
+        "costs": { "$ref": "#/$defs/amountCollection" },
+        "durationMs": { "$ref": "#/$defs/field" }
+      }
+    },
+    "level": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "level",
+        "conditions",
+        "upgradeCosts",
+        "upgradeDurationMs",
+        "inventoryCapacity",
+        "productionSlots",
+        "capabilityIds",
+        "productIds"
+      ],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "level": { "$ref": "#/$defs/field" },
+        "conditions": { "$ref": "#/$defs/conditionCollection" },
+        "upgradeCosts": { "$ref": "#/$defs/amountCollection" },
+        "upgradeDurationMs": { "$ref": "#/$defs/field" },
+        "inventoryCapacity": { "$ref": "#/$defs/field" },
+        "productionSlots": { "$ref": "#/$defs/field" },
+        "capabilityIds": { "$ref": "#/$defs/referenceCollection" },
+        "productIds": { "$ref": "#/$defs/referenceCollection" }
+      }
+    },
+    "tradeRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "itemId", "direction", "unitPrice", "quantityLimit", "conditions"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "itemId": { "$ref": "#/$defs/field" },
+        "direction": { "$ref": "#/$defs/field" },
+        "unitPrice": { "$ref": "#/$defs/amountCollection" },
+        "quantityLimit": { "$ref": "#/$defs/field" },
+        "conditions": { "$ref": "#/$defs/conditionCollection" }
+      }
+    },
+    "visualBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "spriteAssetId", "controllerClass", "popupClass", "townPosition", "sorting", "collider"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "spriteAssetId": { "$ref": "#/$defs/field" },
+        "controllerClass": { "$ref": "#/$defs/field" },
+        "popupClass": { "$ref": "#/$defs/field" },
+        "townPosition": { "$ref": "#/$defs/field" },
+        "sorting": { "$ref": "#/$defs/field" },
+        "collider": { "$ref": "#/$defs/field" }
+      }
+    },
+    "buildingSourceData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding", "sourceType", "maxBuild", "gridSize", "movable", "visibility",
+        "compatibleSkin", "inBuildingFlag", "possibleRemove", "createBuild",
+        "entryCounts", "firstValues", "secondValues", "thirdValues"
+      ],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "sourceType": { "$ref": "#/$defs/field" },
+        "maxBuild": { "$ref": "#/$defs/field" },
+        "gridSize": { "$ref": "#/$defs/field" },
+        "movable": { "$ref": "#/$defs/field" },
+        "visibility": { "$ref": "#/$defs/field" },
+        "compatibleSkin": { "$ref": "#/$defs/field" },
+        "inBuildingFlag": { "$ref": "#/$defs/field" },
+        "possibleRemove": { "$ref": "#/$defs/field" },
+        "createBuild": { "$ref": "#/$defs/field" },
+        "entryCounts": { "$ref": "#/$defs/field" },
+        "firstValues": { "$ref": "#/$defs/field" },
+        "secondValues": { "$ref": "#/$defs/field" },
+        "thirdValues": { "$ref": "#/$defs/field" }
+      }
+    },
+    "skinVisualBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "assetKey", "spritePrefix", "animationClipPathId", "animatorControllerPathId", "spriteFrames"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "assetKey": { "$ref": "#/$defs/field" },
+        "spritePrefix": { "$ref": "#/$defs/field" },
+        "animationClipPathId": { "$ref": "#/$defs/field" },
+        "animatorControllerPathId": { "$ref": "#/$defs/field" },
+        "spriteFrames": { "$ref": "#/$defs/field" }
+      }
+    },
+    "skin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "buildingId", "skinId", "family", "displayName", "costs", "requiredLevel", "visibility", "visualBinding"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "buildingId": { "$ref": "#/$defs/field" },
+        "skinId": { "$ref": "#/$defs/field" },
+        "family": { "$ref": "#/$defs/field" },
+        "displayName": { "$ref": "#/$defs/field" },
+        "costs": { "$ref": "#/$defs/amountCollection" },
+        "requiredLevel": { "$ref": "#/$defs/field" },
+        "visibility": { "$ref": "#/$defs/field" },
+        "visualBinding": { "$ref": "#/$defs/skinVisualBinding" }
+      }
+    },
+    "building": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "buildId",
+        "internalName",
+        "displayName",
+        "category",
+        "sourceData",
+        "buildRows",
+        "levels",
+        "tradeRules",
+        "productIds",
+        "capabilityIds",
+        "visualBinding"
+      ],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "buildId": { "$ref": "#/$defs/field" },
+        "internalName": { "$ref": "#/$defs/field" },
+        "displayName": { "$ref": "#/$defs/field" },
+        "category": { "$ref": "#/$defs/field" },
+        "sourceData": { "$ref": "#/$defs/buildingSourceData" },
+        "buildRows": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["binding", "rows"],
+          "properties": {
+            "binding": { "$ref": "#/$defs/binding" },
+            "rows": { "type": "array", "items": { "$ref": "#/$defs/buildRow" } }
+          }
+        },
+        "levels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["binding", "rows"],
+          "properties": {
+            "binding": { "$ref": "#/$defs/binding" },
+            "rows": { "type": "array", "items": { "$ref": "#/$defs/level" } }
+          }
+        },
+        "tradeRules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["binding", "rows"],
+          "properties": {
+            "binding": { "$ref": "#/$defs/binding" },
+            "rows": { "type": "array", "items": { "$ref": "#/$defs/tradeRule" } }
+          }
+        },
+        "productIds": { "$ref": "#/$defs/referenceCollection" },
+        "capabilityIds": { "$ref": "#/$defs/referenceCollection" },
+        "visualBinding": { "$ref": "#/$defs/visualBinding" }
+      }
+    },
+    "itemCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+      }
+    },
+    "productCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/product" } }
+      }
+    },
+    "capabilityCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/capability" } }
+      }
+    },
+    "skinCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/skin" } }
+      }
+    },
+    "buildingCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "rows"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/binding" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/building" } }
+      }
+    }
+  }
+}

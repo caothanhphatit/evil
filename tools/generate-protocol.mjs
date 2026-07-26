@@ -19,7 +19,54 @@ export type BottomMenuIntent = "build" | "character" | "archive" | "store" | "ra
 export type BindingConfidence = "confirmed" | "strongly_inferred" | "tentative" | "unknown";
 export type WorldMode = "inactive" | "village" | "field";
 export type WorldEntityKind = "hunter" | "npc" | "monster";
+export type WorldEntityActionState = "idle" | "walking";
 export type Facing = "left" | "right";
+export type EntityState = "idle" | "moving" | "attacking" | "dead" | "reviving";
+
+export interface CombatEntitySnapshot {
+  id: number;
+  hp: number;
+  max_hp: number;
+  alive: boolean;
+  x: number;
+  y: number;
+  state: EntityState;
+}
+
+export interface FixtureInventoryStack { item_id: number; quantity: number }
+export interface FixtureGroundDrop { drop_id: string; item_id: number; quantity: number; x: number; y: number }
+
+export type CombatEvent =
+  | { type: "battle_started" }
+  | { type: "battle_stopped" }
+  | { type: "damage"; source_id: number; target_id: number; amount: number }
+  | { type: "monster_defeated"; monster_id: number; gold_reward: number }
+  | { type: "drop_created"; drop_id: string; item_id: number; quantity: number }
+  | { type: "drop_collected"; drop_id: string; item_id: number; quantity: number }
+  | { type: "item_equipped"; item_id: number }
+  | { type: "hunter_defeated" }
+  | { type: "hunter_respawned" }
+  | { type: "monster_respawned" }
+  | { type: "command_rejected"; reason: string };
+
+export interface FixtureCombatWorldSnapshot {
+  tick: number;
+  fighting: boolean;
+  gold: number;
+  hunter: CombatEntitySnapshot;
+  monster: CombatEntitySnapshot;
+  inventory: FixtureInventoryStack[];
+  equipped_item_id: number | null;
+  ground_drops: FixtureGroundDrop[];
+  events: CombatEvent[];
+}
+
+export interface MigrationFixtureCombatProjection {
+  content_id: "migration-fixture.slice1-combat-v1";
+  evidence_label: "deterministic_migration_fixture_not_legacy_balance";
+  active: boolean;
+  world: FixtureCombatWorldSnapshot;
+}
 
 export interface EvidenceBinding {
   id: string;
@@ -33,7 +80,15 @@ export interface VillageSnapshot {
   world_nodes: string[];
   bottom_menu: BottomMenuIntent[];
   bindings: EvidenceBinding[];
+  building_system: BuildingSystemSnapshot;
 }
+
+export interface BuildingDefinitionSnapshot { id: string; name: string; feature: string; max_level: number; construct_cost: number; prerequisite_id: string | null; prerequisite_level: number; max_build: number; grid_width: number; grid_height: number; sprite_asset_id: string | null }
+export interface BuildingStateSnapshot { id: string; constructed: boolean; level: number; upgrade_cost: number | null; can_construct: boolean; can_upgrade: boolean; condition: string | null; uses: number }
+export interface BuildingInstanceSnapshot { instance_id: string; building_id: string; level: number; grid_x: number; grid_y: number; grid_width: number; grid_height: number; sprite_asset_id: string | null; upgrade_cost: number | null; can_upgrade: boolean; condition: string | null; uses: number; seeded_by: string | null }
+export interface MaterialStockSnapshot { id: string; display_name: string; icon: string; town_quantity: number; hunter_quantity: number; requested: number; unit_price: number; difficulty: number }
+export interface ShopRecipeSnapshot { id: string; shop_id: string; icon: string; product_name: string; material_costs: Array<{ material_id: string; display_name: string; quantity: number; output_quantity: number }>; stock: number; sale_price: number; kind: string; required_level: number; duration_ms: number; effect_value: number; effect_kind: string; capacity: number }
+export interface BuildingSystemSnapshot { evidence_label: string; town_gold: number; hunter_materials: number; materials: number; runes: number; weapons: number; armor: number; hunter_equipment_purchases: number; material_stocks: MaterialStockSnapshot[]; recipes: ShopRecipeSnapshot[]; definitions: BuildingDefinitionSnapshot[]; states: BuildingStateSnapshot[]; instances: BuildingInstanceSnapshot[] }
 
 export interface HunterRosterSnapshot {
   scene_nodes: string[];
@@ -41,7 +96,31 @@ export interface HunterRosterSnapshot {
   starter_composition_resolved: boolean;
   starter_stats_resolved: boolean;
   bindings: EvidenceBinding[];
+  active_capacity: number;
+  active_hunters: HunterRosterMemberSnapshot[];
+  waiting_hunters: HunterRosterMemberSnapshot[];
+  infirmary: InfirmaryServiceSnapshot;
+  product_services: ProductServiceSnapshot[];
 }
+export interface HunterTraitSnapshot { trait_id: string; display_name: string; icon_path: string; unlocked_rank: number; equipped: boolean }
+export interface HunterSkillSnapshot { skill_id: string; display_name: string; icon_path: string | null; animation_name: string | null; level: number; equipped_slot: number | null; ready: boolean }
+export interface HunterProgressSnapshot { current: number; maximum: number }
+export interface HunterStatusSnapshot { dps_milli: number | null; critical_rate_bps: number | null; attack_speed_milli: number | null; evasion_rate_bps: number | null; awakening: HunterProgressSnapshot | null }
+export interface HunterEquipmentSlotSnapshot { slot_id: string; icon_path: string | null; placeholder_icon_path: string | null; locked: boolean | null }
+export interface HunterInfoSkillSnapshot { skill_id: string; display_name: string; icon_path: string | null; level: number | null; description: string | null; group: string | null; unlocked: boolean | null; unlock_requirement: string | null }
+export interface HunterGrowthNodeSnapshot { node_id: string; icon_path: string | null; points: number; max_points: number | null; order: number }
+export interface HunterGrowthSnapshot { secret_points: number; nodes: HunterGrowthNodeSnapshot[] }
+export type HunterRidingPetSnapshot = { state: "empty"; mounted: false; can_move_to_ranch: boolean } | { state: "mounted"; mounted: true; display_name: string | null; icon_path: string | null };
+export interface HunterMaterialSnapshot { material_id: string; display_name: string | null; icon_path: string; quantity: number; order: number }
+export interface HunterInfoSnapshot { characteristic_name: string | null; locked: boolean | null; reincarnation: HunterProgressSnapshot | null; experience: HunterProgressSnapshot | null; status: HunterStatusSnapshot; equipment_slots: HunterEquipmentSlotSnapshot[] | null; skills: HunterInfoSkillSnapshot[] | null; growth: HunterGrowthSnapshot | null; riding_pet: HunterRidingPetSnapshot | null; materials: HunterMaterialSnapshot[] | null }
+export interface HunterRosterMemberSnapshot { hunter_id: number; display_name: string; portrait_asset_id: string | null; class_id: string; class_name: string; class_family: string; rarity_id: string; rarity_name: string; level: number; xp: number; gold: number; current_hp: number; max_hp: number; stamina: number; max_stamina: number; satiety: number; max_satiety: number; mood: number; max_mood: number; attack: number; defense: number; action_state: string; animation: string; trait_name: string | null; traits: HunterTraitSnapshot[]; skills: HunterSkillSnapshot[]; hunter_info: HunterInfoSnapshot; roster_state: "active" | "waiting"; position: number }
+export interface InfirmaryHunterSnapshot { hunter_id: number; current_hp: number; max_hp: number; treatment_state: "idle" | "treating" }
+export interface InfirmaryTreatmentSnapshot { hunter_id: number; building_instance_id: string; product_id: string; remaining_ms: number; effect_value: number; payment_gold: number }
+export interface InfirmaryServiceSnapshot { roster_resolved: boolean; slots: number; available_slots: number; hunters: InfirmaryHunterSnapshot[]; active: InfirmaryTreatmentSnapshot[]; blockers: string[] }
+export type ProductServiceEffectKind = "stamina" | "hp" | "satiety" | "mood";
+export interface ProductServiceHunterSnapshot { hunter_id: number; gold: number; current_value: number; maximum_value: number; service_state: "idle" | "serving" }
+export interface ProductServiceVisitSnapshot { hunter_id: number; building_instance_id: string; product_id: string; remaining_ms: number; effect_value: number; payment_gold: number }
+export interface ProductServiceSnapshot { building_id: "build_9" | "build_12" | "build_13" | "build_19"; effect_kind: ProductServiceEffectKind; roster_resolved: boolean; slots: number; available_slots: number; hunters: ProductServiceHunterSnapshot[]; active: ProductServiceVisitSnapshot[]; blockers: string[] }
 
 export interface FieldSnapshot {
   scene_nodes: string[];
@@ -65,7 +144,9 @@ export interface WorldEntityProjection {
   x: number;
   y: number;
   facing: Facing;
+  action_state: WorldEntityActionState;
   animation: string;
+  class_family: string | null;
   selectable: boolean;
 }
 
@@ -87,6 +168,7 @@ export interface OriginalFlowSnapshot {
   hunter_roster: HunterRosterSnapshot;
   field: FieldSnapshot;
   world: WorldProjection;
+  migration_fixture_combat: MigrationFixtureCombatProjection;
 }
 
 export type ClientCommand =

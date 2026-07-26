@@ -1,0 +1,3749 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "sceneEvidence": "reverse-engineering/evidence/level1-scene-evidence-v2.json",
+    "serializedBuildingTables": "reverse-engineering/evidence/serialized-building-tables-v1.json",
+    "serializedBuildingTablesSha256": "97c25e7175bec7f6eafb06fe96bce7ac91dc93f7b9eca4930c4036ca8cc55e32",
+    "sharedAssets": "game-assets/extracted/joined_unity_files/sharedassets1.assets",
+    "sharedAssetsSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+  },
+  "runtimeCompatibility": "evidence-only",
+  "genericBuildingPrefab": {
+    "scope": "generic-template-not-bound-to-individual-build-ids",
+    "gameObjectPathId": 1628,
+    "name": "Building",
+    "controllerClass": "BuildCtrl",
+    "controllerScriptPathId": 3634,
+    "controllerComponentPathId": 12821,
+    "collider": {
+      "type": "CapsuleCollider2D",
+      "pathId": 6060,
+      "enabled": true,
+      "isTrigger": false,
+      "direction": 0,
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 0.44999998807907104,
+        "y": 0.44999998807907104
+      }
+    },
+    "visualChild": {
+      "gameObjectPathId": 1637,
+      "name": "Building",
+      "localPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+      },
+      "spriteRendererPathId": 6729,
+      "sortingLayer": 1,
+      "sortingLayerId": -396024527,
+      "sortingOrder": 0,
+      "animatorPathId": 6066,
+      "defaultAnimatorController": null
+    }
+  },
+  "sceneBindings": [
+    {
+      "gameObjectPath": "BuildGroup/ReviveBuilding[260]",
+      "gameObjectPathId": 260,
+      "active": true,
+      "transform": {
+        "children": [
+          {
+            "fileId": 0,
+            "pathId": 23315,
+            "type": "Transform"
+          }
+        ],
+        "componentType": "Transform",
+        "enabled": true,
+        "gameObjectPathId": 260,
+        "localPosition": {
+          "x": 14.713000297546387,
+          "y": 13.725000381469727,
+          "z": 0.0
+        },
+        "localRotation": {
+          "w": 1.0,
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parent": {
+          "fileId": 0,
+          "pathId": 23338,
+          "type": "Transform"
+        },
+        "pathId": 23359
+      },
+      "spriteRenderer": null,
+      "positionConfidence": "confirmed-anchor-no-sprite",
+      "note": "Serialized anchor; its visual building skin is runtime-selected."
+    }
+  ],
+  "buildingAnimationAssets": [
+    {
+      "animationClip": "build_1",
+      "animationClipPathId": 360,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 1,
+          "name": "bd_a_001_0"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 2,
+          "name": "bd_a_001_1"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 3,
+          "name": "bd_a_001_2"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 2,
+          "name": "bd_a_001_1"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 1,
+          "name": "bd_a_001_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_10",
+      "animationClipPathId": 361,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 1,
+          "name": "bd_a_010_0"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 2,
+          "name": "bd_a_010_1"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 3,
+          "name": "bd_a_010_2"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 2,
+          "name": "bd_a_010_1"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 1,
+          "name": "bd_a_010_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_11",
+      "animationClipPathId": 362,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 1,
+          "name": "bd_a_011_0"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 2,
+          "name": "bd_a_011_1"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 3,
+          "name": "bd_a_011_2"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 2,
+          "name": "bd_a_011_1"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 1,
+          "name": "bd_a_011_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_12",
+      "animationClipPathId": 363,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 1,
+          "name": "bd_a_012_0"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 1,
+          "name": "bd_a_012_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_13",
+      "animationClipPathId": 364,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 1,
+          "name": "bd_a_013_0"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 2,
+          "name": "bd_a_013_1"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 3,
+          "name": "bd_a_013_2"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 2,
+          "name": "bd_a_013_1"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 1,
+          "name": "bd_a_013_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_14",
+      "animationClipPathId": 365,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 1,
+          "name": "bd_a_014_0"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 2,
+          "name": "bd_a_014_1"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 3,
+          "name": "bd_a_014_2"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 2,
+          "name": "bd_a_014_1"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 1,
+          "name": "bd_a_014_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_15",
+      "animationClipPathId": 366,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 1,
+          "name": "bd_a_015_0"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 2,
+          "name": "bd_a_015_1"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 3,
+          "name": "bd_a_015_2"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 2,
+          "name": "bd_a_015_1"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 1,
+          "name": "bd_a_015_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_16",
+      "animationClipPathId": 367,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 1,
+          "name": "bd_a_016_0"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 2,
+          "name": "bd_a_016_1"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 3,
+          "name": "bd_a_016_2"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 2,
+          "name": "bd_a_016_1"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 1,
+          "name": "bd_a_016_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_17",
+      "animationClipPathId": 368,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 3,
+          "name": "bd_a_018_2"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_18",
+      "animationClipPathId": 369,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 3,
+          "name": "bd_a_018_2"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_19",
+      "animationClipPathId": 370,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 1,
+          "name": "bd_a_020_0"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 2,
+          "name": "bd_a_020_1"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 3,
+          "name": "bd_a_020_2"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 2,
+          "name": "bd_a_020_1"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 1,
+          "name": "bd_a_020_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_2",
+      "animationClipPathId": 371,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 1,
+          "name": "bd_a_002_0"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 2,
+          "name": "bd_a_002_1"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 3,
+          "name": "bd_a_002_2"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 2,
+          "name": "bd_a_002_1"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 1,
+          "name": "bd_a_002_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_20",
+      "animationClipPathId": 372,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 1,
+          "name": "bd_a_021_0"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 2,
+          "name": "bd_a_021_1"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 3,
+          "name": "bd_a_021_2"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 2,
+          "name": "bd_a_021_1"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 1,
+          "name": "bd_a_021_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_21",
+      "animationClipPathId": 373,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 1,
+          "name": "bd_a_022_0"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 2,
+          "name": "bd_a_022_1"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 3,
+          "name": "bd_a_022_2"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 2,
+          "name": "bd_a_022_1"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 1,
+          "name": "bd_a_022_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_22",
+      "animationClipPathId": 374,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 1,
+          "name": "bd_a_023_0"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 2,
+          "name": "bd_a_023_1"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 3,
+          "name": "bd_a_023_2"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 2,
+          "name": "bd_a_023_1"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 1,
+          "name": "bd_a_023_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_23",
+      "animationClipPathId": 375,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 1,
+          "name": "bd_a_024_0"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 2,
+          "name": "bd_a_024_1"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 3,
+          "name": "bd_a_024_2"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 2,
+          "name": "bd_a_024_1"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 1,
+          "name": "bd_a_024_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_24",
+      "animationClipPathId": 376,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 1,
+          "name": "bd_a_025_0"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 2,
+          "name": "bd_a_025_1"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 3,
+          "name": "bd_a_025_2"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 2,
+          "name": "bd_a_025_1"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 1,
+          "name": "bd_a_025_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_25",
+      "animationClipPathId": 377,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 1,
+          "name": "bd_a_026_0"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 2,
+          "name": "bd_a_026_1"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 3,
+          "name": "bd_a_026_2"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 2,
+          "name": "bd_a_026_1"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 1,
+          "name": "bd_a_026_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_26",
+      "animationClipPathId": 378,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 1,
+          "name": "bd_a_027_0"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 2,
+          "name": "bd_a_027_1"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 3,
+          "name": "bd_a_027_2"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 2,
+          "name": "bd_a_027_1"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 1,
+          "name": "bd_a_027_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_27",
+      "animationClipPathId": 379,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 3,
+          "name": "bd_a_028_2"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_28",
+      "animationClipPathId": 380,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 3,
+          "name": "bd_a_028_2"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_29",
+      "animationClipPathId": 381,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 1,
+          "name": "bd_a_029_0"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 2,
+          "name": "bd_a_029_1"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 3,
+          "name": "bd_a_029_2"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 2,
+          "name": "bd_a_029_1"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 1,
+          "name": "bd_a_029_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_3",
+      "animationClipPathId": 382,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 1,
+          "name": "bd_a_003_0"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 2,
+          "name": "bd_a_003_1"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 3,
+          "name": "bd_a_003_2"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 2,
+          "name": "bd_a_003_1"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 1,
+          "name": "bd_a_003_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_4",
+      "animationClipPathId": 383,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 1,
+          "name": "bd_a_004_0"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 1,
+          "name": "bd_a_004_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_5",
+      "animationClipPathId": 384,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 1,
+          "name": "bd_a_005_0"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 2,
+          "name": "bd_a_005_1"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 3,
+          "name": "bd_a_005_2"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 2,
+          "name": "bd_a_005_1"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 1,
+          "name": "bd_a_005_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_54",
+      "animationClipPathId": 385,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 3,
+          "name": "bd_a_054_0"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 4,
+          "name": "bd_a_054_1"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 2,
+          "name": "bd_a_054_2"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 1,
+          "name": "bd_a_054_3"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 1,
+          "name": "bd_a_054_3"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_6",
+      "animationClipPathId": 386,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 1,
+          "name": "bd_a_006_0"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 2,
+          "name": "bd_a_006_1"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 3,
+          "name": "bd_a_006_2"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 2,
+          "name": "bd_a_006_1"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 1,
+          "name": "bd_a_006_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_67",
+      "animationClipPathId": 387,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 2,
+          "name": "bd_a_067_0"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 1,
+          "name": "bd_a_067_1"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 3,
+          "name": "bd_a_067_2"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 1,
+          "name": "bd_a_067_1"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 2,
+          "name": "bd_a_067_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_68",
+      "animationClipPathId": 388,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 1,
+          "name": "bd_a_068_0"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 2,
+          "name": "bd_a_068_1"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 3,
+          "name": "bd_a_068_2"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 2,
+          "name": "bd_a_068_1"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 1,
+          "name": "bd_a_068_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_69",
+      "animationClipPathId": 389,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 1,
+          "name": "bd_a_069_0"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 2,
+          "name": "bd_a_069_1"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 3,
+          "name": "bd_a_069_2"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 3,
+          "name": "bd_a_069_2"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_7",
+      "animationClipPathId": 390,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 1,
+          "name": "bd_a_007_0"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 2,
+          "name": "bd_a_007_1"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 3,
+          "name": "bd_a_007_2"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 2,
+          "name": "bd_a_007_1"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 1,
+          "name": "bd_a_007_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_72",
+      "animationClipPathId": 391,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 3,
+          "name": "bd_a_072_1"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 1,
+          "name": "bd_a_072_2"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 3,
+          "name": "bd_a_072_1"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_73",
+      "animationClipPathId": 392,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 3,
+          "name": "bd_a_073_0"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 1,
+          "name": "bd_a_073_1"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 2,
+          "name": "bd_a_073_2"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 1,
+          "name": "bd_a_073_1"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 3,
+          "name": "bd_a_073_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_77",
+      "animationClipPathId": 393,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 2,
+          "name": "bd_a_077_0"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 1,
+          "name": "bd_a_077_1"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 3,
+          "name": "bd_a_077_2"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 3,
+          "name": "bd_a_077_2"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_8",
+      "animationClipPathId": 394,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 1,
+          "name": "bd_a_008_0"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 2,
+          "name": "bd_a_008_1"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 3,
+          "name": "bd_a_008_2"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 2,
+          "name": "bd_a_008_1"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 1,
+          "name": "bd_a_008_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_9",
+      "animationClipPathId": 395,
+      "assetClass": "building-skin",
+      "spriteFrames": [
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 1,
+          "name": "bd_a_009_0"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 2,
+          "name": "bd_a_009_1"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 3,
+          "name": "bd_a_009_2"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 2,
+          "name": "bd_a_009_1"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 1,
+          "name": "bd_a_009_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_01",
+      "animationClipPathId": 768,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "48e4de25ad4aa374dac1183289e5a8a6",
+          "sourceSha256": "031a8b70287f732cab08cfe8004d52b9c126856f90a7a9e863b06fd3b1c3064e",
+          "pathId": 1,
+          "name": "build_run_01_0"
+        },
+        {
+          "sourceBundle": "48e4de25ad4aa374dac1183289e5a8a6",
+          "sourceSha256": "031a8b70287f732cab08cfe8004d52b9c126856f90a7a9e863b06fd3b1c3064e",
+          "pathId": 2,
+          "name": "build_run_01_1"
+        },
+        {
+          "sourceBundle": "48e4de25ad4aa374dac1183289e5a8a6",
+          "sourceSha256": "031a8b70287f732cab08cfe8004d52b9c126856f90a7a9e863b06fd3b1c3064e",
+          "pathId": 3,
+          "name": "build_run_01_2"
+        },
+        {
+          "sourceBundle": "48e4de25ad4aa374dac1183289e5a8a6",
+          "sourceSha256": "031a8b70287f732cab08cfe8004d52b9c126856f90a7a9e863b06fd3b1c3064e",
+          "pathId": 4,
+          "name": "build_run_01_3"
+        },
+        {
+          "sourceBundle": "48e4de25ad4aa374dac1183289e5a8a6",
+          "sourceSha256": "031a8b70287f732cab08cfe8004d52b9c126856f90a7a9e863b06fd3b1c3064e",
+          "pathId": 1,
+          "name": "build_run_01_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_02",
+      "animationClipPathId": 769,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "7e90985a00c52d648a60333ad74b6700",
+          "sourceSha256": "d6c307b9866951c857422f428af654ea5a143411cf06653b2181bc13583cc01c",
+          "pathId": 1,
+          "name": "build_run_02_0"
+        },
+        {
+          "sourceBundle": "7e90985a00c52d648a60333ad74b6700",
+          "sourceSha256": "d6c307b9866951c857422f428af654ea5a143411cf06653b2181bc13583cc01c",
+          "pathId": 2,
+          "name": "build_run_02_1"
+        },
+        {
+          "sourceBundle": "7e90985a00c52d648a60333ad74b6700",
+          "sourceSha256": "d6c307b9866951c857422f428af654ea5a143411cf06653b2181bc13583cc01c",
+          "pathId": 3,
+          "name": "build_run_02_2"
+        },
+        {
+          "sourceBundle": "7e90985a00c52d648a60333ad74b6700",
+          "sourceSha256": "d6c307b9866951c857422f428af654ea5a143411cf06653b2181bc13583cc01c",
+          "pathId": 4,
+          "name": "build_run_02_3"
+        },
+        {
+          "sourceBundle": "7e90985a00c52d648a60333ad74b6700",
+          "sourceSha256": "d6c307b9866951c857422f428af654ea5a143411cf06653b2181bc13583cc01c",
+          "pathId": 1,
+          "name": "build_run_02_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_03",
+      "animationClipPathId": 770,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "a928d1113421b214eac21be996d6ae1f",
+          "sourceSha256": "a9f43ee857d2e7cd7b8f84ecdfc02750e8194b510ab3e802233d7b1b0d03e541",
+          "pathId": 1,
+          "name": "build_run_03_0"
+        },
+        {
+          "sourceBundle": "a928d1113421b214eac21be996d6ae1f",
+          "sourceSha256": "a9f43ee857d2e7cd7b8f84ecdfc02750e8194b510ab3e802233d7b1b0d03e541",
+          "pathId": 2,
+          "name": "build_run_03_1"
+        },
+        {
+          "sourceBundle": "a928d1113421b214eac21be996d6ae1f",
+          "sourceSha256": "a9f43ee857d2e7cd7b8f84ecdfc02750e8194b510ab3e802233d7b1b0d03e541",
+          "pathId": 3,
+          "name": "build_run_03_2"
+        },
+        {
+          "sourceBundle": "a928d1113421b214eac21be996d6ae1f",
+          "sourceSha256": "a9f43ee857d2e7cd7b8f84ecdfc02750e8194b510ab3e802233d7b1b0d03e541",
+          "pathId": 4,
+          "name": "build_run_03_3"
+        },
+        {
+          "sourceBundle": "a928d1113421b214eac21be996d6ae1f",
+          "sourceSha256": "a9f43ee857d2e7cd7b8f84ecdfc02750e8194b510ab3e802233d7b1b0d03e541",
+          "pathId": 1,
+          "name": "build_run_03_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_04",
+      "animationClipPathId": 771,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "d6b53cafd5086624ab44434bc19dbba9",
+          "sourceSha256": "6e205dc782184a042d28de9f35b05d44f2c413a5cdeebfed9bea8b7904c8048e",
+          "pathId": 1,
+          "name": "build_run_04_0"
+        },
+        {
+          "sourceBundle": "d6b53cafd5086624ab44434bc19dbba9",
+          "sourceSha256": "6e205dc782184a042d28de9f35b05d44f2c413a5cdeebfed9bea8b7904c8048e",
+          "pathId": 2,
+          "name": "build_run_04_1"
+        },
+        {
+          "sourceBundle": "d6b53cafd5086624ab44434bc19dbba9",
+          "sourceSha256": "6e205dc782184a042d28de9f35b05d44f2c413a5cdeebfed9bea8b7904c8048e",
+          "pathId": 3,
+          "name": "build_run_04_2"
+        },
+        {
+          "sourceBundle": "d6b53cafd5086624ab44434bc19dbba9",
+          "sourceSha256": "6e205dc782184a042d28de9f35b05d44f2c413a5cdeebfed9bea8b7904c8048e",
+          "pathId": 4,
+          "name": "build_run_04_3"
+        },
+        {
+          "sourceBundle": "d6b53cafd5086624ab44434bc19dbba9",
+          "sourceSha256": "6e205dc782184a042d28de9f35b05d44f2c413a5cdeebfed9bea8b7904c8048e",
+          "pathId": 1,
+          "name": "build_run_04_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_05",
+      "animationClipPathId": 772,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "972d4e408f0860e47acac131dd9aa4c0",
+          "sourceSha256": "fb8f985392ad1a0d59d04736a0ab3e83babbf691c263b8bfe5ab7bb1eb43ddb1",
+          "pathId": 1,
+          "name": "build_run_05_0"
+        },
+        {
+          "sourceBundle": "972d4e408f0860e47acac131dd9aa4c0",
+          "sourceSha256": "fb8f985392ad1a0d59d04736a0ab3e83babbf691c263b8bfe5ab7bb1eb43ddb1",
+          "pathId": 2,
+          "name": "build_run_05_1"
+        },
+        {
+          "sourceBundle": "972d4e408f0860e47acac131dd9aa4c0",
+          "sourceSha256": "fb8f985392ad1a0d59d04736a0ab3e83babbf691c263b8bfe5ab7bb1eb43ddb1",
+          "pathId": 3,
+          "name": "build_run_05_2"
+        },
+        {
+          "sourceBundle": "972d4e408f0860e47acac131dd9aa4c0",
+          "sourceSha256": "fb8f985392ad1a0d59d04736a0ab3e83babbf691c263b8bfe5ab7bb1eb43ddb1",
+          "pathId": 4,
+          "name": "build_run_05_3"
+        },
+        {
+          "sourceBundle": "972d4e408f0860e47acac131dd9aa4c0",
+          "sourceSha256": "fb8f985392ad1a0d59d04736a0ab3e83babbf691c263b8bfe5ab7bb1eb43ddb1",
+          "pathId": 1,
+          "name": "build_run_05_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_06",
+      "animationClipPathId": 773,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "d0c0658929ed95344a7276fd32030f80",
+          "sourceSha256": "28f1f00bc809f5d64dc2f87a5bfe1ff145999ba4d018e62786f9cd2aace94e58",
+          "pathId": 1,
+          "name": "build_run_06_0"
+        },
+        {
+          "sourceBundle": "d0c0658929ed95344a7276fd32030f80",
+          "sourceSha256": "28f1f00bc809f5d64dc2f87a5bfe1ff145999ba4d018e62786f9cd2aace94e58",
+          "pathId": 2,
+          "name": "build_run_06_1"
+        },
+        {
+          "sourceBundle": "d0c0658929ed95344a7276fd32030f80",
+          "sourceSha256": "28f1f00bc809f5d64dc2f87a5bfe1ff145999ba4d018e62786f9cd2aace94e58",
+          "pathId": 3,
+          "name": "build_run_06_2"
+        },
+        {
+          "sourceBundle": "d0c0658929ed95344a7276fd32030f80",
+          "sourceSha256": "28f1f00bc809f5d64dc2f87a5bfe1ff145999ba4d018e62786f9cd2aace94e58",
+          "pathId": 4,
+          "name": "build_run_06_3"
+        },
+        {
+          "sourceBundle": "d0c0658929ed95344a7276fd32030f80",
+          "sourceSha256": "28f1f00bc809f5d64dc2f87a5bfe1ff145999ba4d018e62786f9cd2aace94e58",
+          "pathId": 1,
+          "name": "build_run_06_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_07",
+      "animationClipPathId": 774,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "f16a3501990ecec47a18fd883d01000f",
+          "sourceSha256": "0a97356b2609c83c246acaebfbf9b37deb43d76803cd716e2194451c8ad6caa6",
+          "pathId": 1,
+          "name": "build_run_07_0"
+        },
+        {
+          "sourceBundle": "f16a3501990ecec47a18fd883d01000f",
+          "sourceSha256": "0a97356b2609c83c246acaebfbf9b37deb43d76803cd716e2194451c8ad6caa6",
+          "pathId": 2,
+          "name": "build_run_07_1"
+        },
+        {
+          "sourceBundle": "f16a3501990ecec47a18fd883d01000f",
+          "sourceSha256": "0a97356b2609c83c246acaebfbf9b37deb43d76803cd716e2194451c8ad6caa6",
+          "pathId": 3,
+          "name": "build_run_07_2"
+        },
+        {
+          "sourceBundle": "f16a3501990ecec47a18fd883d01000f",
+          "sourceSha256": "0a97356b2609c83c246acaebfbf9b37deb43d76803cd716e2194451c8ad6caa6",
+          "pathId": 4,
+          "name": "build_run_07_3"
+        },
+        {
+          "sourceBundle": "f16a3501990ecec47a18fd883d01000f",
+          "sourceSha256": "0a97356b2609c83c246acaebfbf9b37deb43d76803cd716e2194451c8ad6caa6",
+          "pathId": 1,
+          "name": "build_run_07_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    },
+    {
+      "animationClip": "build_run_08",
+      "animationClipPathId": 775,
+      "assetClass": "build-run-effect",
+      "spriteFrames": [
+        {
+          "sourceBundle": "a021664ea785c62429729a1d59fa1627",
+          "sourceSha256": "b43103dab80071eed703ce29b8cd097000342429036ea3c5a3dec281919c8a20",
+          "pathId": 1,
+          "name": "build_run_08_0"
+        },
+        {
+          "sourceBundle": "a021664ea785c62429729a1d59fa1627",
+          "sourceSha256": "b43103dab80071eed703ce29b8cd097000342429036ea3c5a3dec281919c8a20",
+          "pathId": 2,
+          "name": "build_run_08_1"
+        },
+        {
+          "sourceBundle": "a021664ea785c62429729a1d59fa1627",
+          "sourceSha256": "b43103dab80071eed703ce29b8cd097000342429036ea3c5a3dec281919c8a20",
+          "pathId": 3,
+          "name": "build_run_08_2"
+        },
+        {
+          "sourceBundle": "a021664ea785c62429729a1d59fa1627",
+          "sourceSha256": "b43103dab80071eed703ce29b8cd097000342429036ea3c5a3dec281919c8a20",
+          "pathId": 4,
+          "name": "build_run_08_3"
+        },
+        {
+          "sourceBundle": "a021664ea785c62429729a1d59fa1627",
+          "sourceSha256": "b43103dab80071eed703ce29b8cd097000342429036ea3c5a3dec281919c8a20",
+          "pathId": 1,
+          "name": "build_run_08_0"
+        }
+      ],
+      "position": null,
+      "positionConfidence": "unresolved-runtime-placement"
+    }
+  ],
+  "buildingVisualBindings": [
+    {
+      "sourceBuildIndex": 1,
+      "sourceBuildKey": "build_1",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_1",
+        "pathId": 360
+      },
+      "animatorController": {
+        "name": "build_1",
+        "pathId": 1031,
+        "animationClipPathIds": [
+          360
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 1,
+          "name": "bd_a_001_0"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 2,
+          "name": "bd_a_001_1"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 3,
+          "name": "bd_a_001_2"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 2,
+          "name": "bd_a_001_1"
+        },
+        {
+          "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+          "sourceSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de",
+          "pathId": 1,
+          "name": "bd_a_001_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 2,
+      "sourceBuildKey": "build_2",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_2",
+        "pathId": 371
+      },
+      "animatorController": {
+        "name": "build_2",
+        "pathId": 1042,
+        "animationClipPathIds": [
+          371
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 1,
+          "name": "bd_a_002_0"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 2,
+          "name": "bd_a_002_1"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 3,
+          "name": "bd_a_002_2"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 2,
+          "name": "bd_a_002_1"
+        },
+        {
+          "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+          "sourceSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d",
+          "pathId": 1,
+          "name": "bd_a_002_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 3,
+      "sourceBuildKey": "build_3",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_3",
+        "pathId": 382
+      },
+      "animatorController": {
+        "name": "build_3",
+        "pathId": 1053,
+        "animationClipPathIds": [
+          382
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 1,
+          "name": "bd_a_003_0"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 2,
+          "name": "bd_a_003_1"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 3,
+          "name": "bd_a_003_2"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 2,
+          "name": "bd_a_003_1"
+        },
+        {
+          "sourceBundle": "a856230073933754e91ba7fe733ad395",
+          "sourceSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4",
+          "pathId": 1,
+          "name": "bd_a_003_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 4,
+      "sourceBuildKey": "build_4",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_4",
+        "pathId": 383
+      },
+      "animatorController": {
+        "name": "build_4",
+        "pathId": 1054,
+        "animationClipPathIds": [
+          383
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 1,
+          "name": "bd_a_004_0"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 2,
+          "name": "bd_a_004_1"
+        },
+        {
+          "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+          "sourceSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54",
+          "pathId": 1,
+          "name": "bd_a_004_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 5,
+      "sourceBuildKey": "build_5",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_5",
+        "pathId": 384
+      },
+      "animatorController": {
+        "name": "build_5",
+        "pathId": 1055,
+        "animationClipPathIds": [
+          384
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 1,
+          "name": "bd_a_005_0"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 2,
+          "name": "bd_a_005_1"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 3,
+          "name": "bd_a_005_2"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 2,
+          "name": "bd_a_005_1"
+        },
+        {
+          "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+          "sourceSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166",
+          "pathId": 1,
+          "name": "bd_a_005_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 6,
+      "sourceBuildKey": "build_6",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_6",
+        "pathId": 386
+      },
+      "animatorController": {
+        "name": "build_6",
+        "pathId": 1057,
+        "animationClipPathIds": [
+          386
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 1,
+          "name": "bd_a_006_0"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 2,
+          "name": "bd_a_006_1"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 3,
+          "name": "bd_a_006_2"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 2,
+          "name": "bd_a_006_1"
+        },
+        {
+          "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+          "sourceSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0",
+          "pathId": 1,
+          "name": "bd_a_006_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 7,
+      "sourceBuildKey": "build_7",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_7",
+        "pathId": 390
+      },
+      "animatorController": {
+        "name": "build_7",
+        "pathId": 1061,
+        "animationClipPathIds": [
+          390
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 1,
+          "name": "bd_a_007_0"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 2,
+          "name": "bd_a_007_1"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 3,
+          "name": "bd_a_007_2"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 2,
+          "name": "bd_a_007_1"
+        },
+        {
+          "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+          "sourceSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972",
+          "pathId": 1,
+          "name": "bd_a_007_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 8,
+      "sourceBuildKey": "build_8",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_8",
+        "pathId": 394
+      },
+      "animatorController": {
+        "name": "build_8",
+        "pathId": 1065,
+        "animationClipPathIds": [
+          394
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 1,
+          "name": "bd_a_008_0"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 2,
+          "name": "bd_a_008_1"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 3,
+          "name": "bd_a_008_2"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 2,
+          "name": "bd_a_008_1"
+        },
+        {
+          "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+          "sourceSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264",
+          "pathId": 1,
+          "name": "bd_a_008_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 9,
+      "sourceBuildKey": "build_9",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_9",
+        "pathId": 395
+      },
+      "animatorController": {
+        "name": "build_9",
+        "pathId": 1066,
+        "animationClipPathIds": [
+          395
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 1,
+          "name": "bd_a_009_0"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 2,
+          "name": "bd_a_009_1"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 3,
+          "name": "bd_a_009_2"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 2,
+          "name": "bd_a_009_1"
+        },
+        {
+          "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+          "sourceSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4",
+          "pathId": 1,
+          "name": "bd_a_009_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 10,
+      "sourceBuildKey": "build_10",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_10",
+        "pathId": 361
+      },
+      "animatorController": {
+        "name": "build_10",
+        "pathId": 1032,
+        "animationClipPathIds": [
+          361
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 1,
+          "name": "bd_a_010_0"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 2,
+          "name": "bd_a_010_1"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 3,
+          "name": "bd_a_010_2"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 2,
+          "name": "bd_a_010_1"
+        },
+        {
+          "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+          "sourceSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a",
+          "pathId": 1,
+          "name": "bd_a_010_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 11,
+      "sourceBuildKey": "build_11",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_11",
+        "pathId": 362
+      },
+      "animatorController": {
+        "name": "build_11",
+        "pathId": 1033,
+        "animationClipPathIds": [
+          362
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 1,
+          "name": "bd_a_011_0"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 2,
+          "name": "bd_a_011_1"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 3,
+          "name": "bd_a_011_2"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 2,
+          "name": "bd_a_011_1"
+        },
+        {
+          "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+          "sourceSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f",
+          "pathId": 1,
+          "name": "bd_a_011_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 12,
+      "sourceBuildKey": "build_12",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_12",
+        "pathId": 363
+      },
+      "animatorController": {
+        "name": "build_12",
+        "pathId": 1034,
+        "animationClipPathIds": [
+          363
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 1,
+          "name": "bd_a_012_0"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 3,
+          "name": "bd_a_012_2"
+        },
+        {
+          "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+          "sourceSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206",
+          "pathId": 1,
+          "name": "bd_a_012_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 13,
+      "sourceBuildKey": "build_13",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_13",
+        "pathId": 364
+      },
+      "animatorController": {
+        "name": "build_13",
+        "pathId": 1035,
+        "animationClipPathIds": [
+          364
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 1,
+          "name": "bd_a_013_0"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 2,
+          "name": "bd_a_013_1"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 3,
+          "name": "bd_a_013_2"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 2,
+          "name": "bd_a_013_1"
+        },
+        {
+          "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+          "sourceSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796",
+          "pathId": 1,
+          "name": "bd_a_013_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 14,
+      "sourceBuildKey": "build_14",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_14",
+        "pathId": 365
+      },
+      "animatorController": {
+        "name": "build_14",
+        "pathId": 1036,
+        "animationClipPathIds": [
+          365
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 1,
+          "name": "bd_a_014_0"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 2,
+          "name": "bd_a_014_1"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 3,
+          "name": "bd_a_014_2"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 2,
+          "name": "bd_a_014_1"
+        },
+        {
+          "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+          "sourceSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902",
+          "pathId": 1,
+          "name": "bd_a_014_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 15,
+      "sourceBuildKey": "build_15",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_15",
+        "pathId": 366
+      },
+      "animatorController": {
+        "name": "build_15",
+        "pathId": 1037,
+        "animationClipPathIds": [
+          366
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 1,
+          "name": "bd_a_015_0"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 2,
+          "name": "bd_a_015_1"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 3,
+          "name": "bd_a_015_2"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 2,
+          "name": "bd_a_015_1"
+        },
+        {
+          "sourceBundle": "e598334949324554aa88712af604e4a3",
+          "sourceSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae",
+          "pathId": 1,
+          "name": "bd_a_015_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 16,
+      "sourceBuildKey": "build_16",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_16",
+        "pathId": 367
+      },
+      "animatorController": {
+        "name": "build_16",
+        "pathId": 1038,
+        "animationClipPathIds": [
+          367
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 1,
+          "name": "bd_a_016_0"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 2,
+          "name": "bd_a_016_1"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 3,
+          "name": "bd_a_016_2"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 2,
+          "name": "bd_a_016_1"
+        },
+        {
+          "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+          "sourceSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa",
+          "pathId": 1,
+          "name": "bd_a_016_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 17,
+      "sourceBuildKey": "build_17",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_17",
+        "pathId": 368
+      },
+      "animatorController": {
+        "name": "build_17",
+        "pathId": 1039,
+        "animationClipPathIds": [
+          368
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 3,
+          "name": "bd_a_018_2"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+          "sourceSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 18,
+      "sourceBuildKey": "build_18",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_18",
+        "pathId": 369
+      },
+      "animatorController": {
+        "name": "build_18",
+        "pathId": 1040,
+        "animationClipPathIds": [
+          369
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 3,
+          "name": "bd_a_018_2"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 2,
+          "name": "bd_a_018_1"
+        },
+        {
+          "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+          "sourceSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900",
+          "pathId": 1,
+          "name": "bd_a_018_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 19,
+      "sourceBuildKey": "build_19",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_19",
+        "pathId": 370
+      },
+      "animatorController": {
+        "name": "build_19",
+        "pathId": 1041,
+        "animationClipPathIds": [
+          370
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 1,
+          "name": "bd_a_020_0"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 2,
+          "name": "bd_a_020_1"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 3,
+          "name": "bd_a_020_2"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 2,
+          "name": "bd_a_020_1"
+        },
+        {
+          "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+          "sourceSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a",
+          "pathId": 1,
+          "name": "bd_a_020_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 20,
+      "sourceBuildKey": "build_20",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_20",
+        "pathId": 372
+      },
+      "animatorController": {
+        "name": "build_20",
+        "pathId": 1043,
+        "animationClipPathIds": [
+          372
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 1,
+          "name": "bd_a_021_0"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 2,
+          "name": "bd_a_021_1"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 3,
+          "name": "bd_a_021_2"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 2,
+          "name": "bd_a_021_1"
+        },
+        {
+          "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+          "sourceSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d",
+          "pathId": 1,
+          "name": "bd_a_021_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 21,
+      "sourceBuildKey": "build_21",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_21",
+        "pathId": 373
+      },
+      "animatorController": {
+        "name": "build_21",
+        "pathId": 1044,
+        "animationClipPathIds": [
+          373
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 1,
+          "name": "bd_a_022_0"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 2,
+          "name": "bd_a_022_1"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 3,
+          "name": "bd_a_022_2"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 2,
+          "name": "bd_a_022_1"
+        },
+        {
+          "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+          "sourceSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1",
+          "pathId": 1,
+          "name": "bd_a_022_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 22,
+      "sourceBuildKey": "build_22",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_22",
+        "pathId": 374
+      },
+      "animatorController": {
+        "name": "build_22",
+        "pathId": 1045,
+        "animationClipPathIds": [
+          374
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 1,
+          "name": "bd_a_023_0"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 2,
+          "name": "bd_a_023_1"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 3,
+          "name": "bd_a_023_2"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 2,
+          "name": "bd_a_023_1"
+        },
+        {
+          "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+          "sourceSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb",
+          "pathId": 1,
+          "name": "bd_a_023_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 23,
+      "sourceBuildKey": "build_23",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_23",
+        "pathId": 375
+      },
+      "animatorController": {
+        "name": "build_23",
+        "pathId": 1046,
+        "animationClipPathIds": [
+          375
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 1,
+          "name": "bd_a_024_0"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 2,
+          "name": "bd_a_024_1"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 3,
+          "name": "bd_a_024_2"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 2,
+          "name": "bd_a_024_1"
+        },
+        {
+          "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+          "sourceSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798",
+          "pathId": 1,
+          "name": "bd_a_024_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 24,
+      "sourceBuildKey": "build_24",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_24",
+        "pathId": 376
+      },
+      "animatorController": {
+        "name": "build_24",
+        "pathId": 1047,
+        "animationClipPathIds": [
+          376
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 1,
+          "name": "bd_a_025_0"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 2,
+          "name": "bd_a_025_1"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 3,
+          "name": "bd_a_025_2"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 2,
+          "name": "bd_a_025_1"
+        },
+        {
+          "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+          "sourceSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02",
+          "pathId": 1,
+          "name": "bd_a_025_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 25,
+      "sourceBuildKey": "build_25",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_25",
+        "pathId": 377
+      },
+      "animatorController": {
+        "name": "build_25",
+        "pathId": 1048,
+        "animationClipPathIds": [
+          377
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 1,
+          "name": "bd_a_026_0"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 2,
+          "name": "bd_a_026_1"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 3,
+          "name": "bd_a_026_2"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 2,
+          "name": "bd_a_026_1"
+        },
+        {
+          "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+          "sourceSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79",
+          "pathId": 1,
+          "name": "bd_a_026_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 26,
+      "sourceBuildKey": "build_26",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_26",
+        "pathId": 378
+      },
+      "animatorController": {
+        "name": "build_26",
+        "pathId": 1049,
+        "animationClipPathIds": [
+          378
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 1,
+          "name": "bd_a_027_0"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 2,
+          "name": "bd_a_027_1"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 3,
+          "name": "bd_a_027_2"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 2,
+          "name": "bd_a_027_1"
+        },
+        {
+          "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+          "sourceSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189",
+          "pathId": 1,
+          "name": "bd_a_027_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 27,
+      "sourceBuildKey": "build_27",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_27",
+        "pathId": 379
+      },
+      "animatorController": {
+        "name": "build_27",
+        "pathId": 1050,
+        "animationClipPathIds": [
+          379
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 3,
+          "name": "bd_a_028_2"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+          "sourceSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 28,
+      "sourceBuildKey": "build_28",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_28",
+        "pathId": 380
+      },
+      "animatorController": {
+        "name": "build_28",
+        "pathId": 1051,
+        "animationClipPathIds": [
+          380
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 3,
+          "name": "bd_a_028_2"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 2,
+          "name": "bd_a_028_1"
+        },
+        {
+          "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+          "sourceSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc",
+          "pathId": 1,
+          "name": "bd_a_028_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 29,
+      "sourceBuildKey": "build_29",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_29",
+        "pathId": 381
+      },
+      "animatorController": {
+        "name": "build_29",
+        "pathId": 1052,
+        "animationClipPathIds": [
+          381
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 1,
+          "name": "bd_a_029_0"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 2,
+          "name": "bd_a_029_1"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 3,
+          "name": "bd_a_029_2"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 2,
+          "name": "bd_a_029_1"
+        },
+        {
+          "sourceBundle": "367035643772a47e482ad480e98feba6",
+          "sourceSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9",
+          "pathId": 1,
+          "name": "bd_a_029_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 54,
+      "sourceBuildKey": "build_54",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_54",
+        "pathId": 385
+      },
+      "animatorController": {
+        "name": "build_54",
+        "pathId": 1056,
+        "animationClipPathIds": [
+          385
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 3,
+          "name": "bd_a_054_0"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 4,
+          "name": "bd_a_054_1"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 2,
+          "name": "bd_a_054_2"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 1,
+          "name": "bd_a_054_3"
+        },
+        {
+          "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+          "sourceSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b",
+          "pathId": 1,
+          "name": "bd_a_054_3"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 67,
+      "sourceBuildKey": "build_67",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_67",
+        "pathId": 387
+      },
+      "animatorController": {
+        "name": "build_67",
+        "pathId": 1058,
+        "animationClipPathIds": [
+          387
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 2,
+          "name": "bd_a_067_0"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 1,
+          "name": "bd_a_067_1"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 3,
+          "name": "bd_a_067_2"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 1,
+          "name": "bd_a_067_1"
+        },
+        {
+          "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+          "sourceSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa",
+          "pathId": 2,
+          "name": "bd_a_067_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 68,
+      "sourceBuildKey": "build_68",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_68",
+        "pathId": 388
+      },
+      "animatorController": {
+        "name": "build_68",
+        "pathId": 1059,
+        "animationClipPathIds": [
+          388
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 1,
+          "name": "bd_a_068_0"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 2,
+          "name": "bd_a_068_1"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 3,
+          "name": "bd_a_068_2"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 2,
+          "name": "bd_a_068_1"
+        },
+        {
+          "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+          "sourceSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f",
+          "pathId": 1,
+          "name": "bd_a_068_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 69,
+      "sourceBuildKey": "build_69",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_69",
+        "pathId": 389
+      },
+      "animatorController": {
+        "name": "build_69",
+        "pathId": 1060,
+        "animationClipPathIds": [
+          389
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 1,
+          "name": "bd_a_069_0"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 2,
+          "name": "bd_a_069_1"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 3,
+          "name": "bd_a_069_2"
+        },
+        {
+          "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+          "sourceSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760",
+          "pathId": 3,
+          "name": "bd_a_069_2"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 72,
+      "sourceBuildKey": "build_72",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_72",
+        "pathId": 391
+      },
+      "animatorController": {
+        "name": "build_72",
+        "pathId": 1062,
+        "animationClipPathIds": [
+          391
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 3,
+          "name": "bd_a_072_1"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 1,
+          "name": "bd_a_072_2"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 3,
+          "name": "bd_a_072_1"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        },
+        {
+          "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+          "sourceSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c",
+          "pathId": 2,
+          "name": "bd_a_072_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 73,
+      "sourceBuildKey": "build_73",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_73",
+        "pathId": 392
+      },
+      "animatorController": {
+        "name": "build_73",
+        "pathId": 1063,
+        "animationClipPathIds": [
+          392
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 3,
+          "name": "bd_a_073_0"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 1,
+          "name": "bd_a_073_1"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 2,
+          "name": "bd_a_073_2"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 1,
+          "name": "bd_a_073_1"
+        },
+        {
+          "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+          "sourceSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f",
+          "pathId": 3,
+          "name": "bd_a_073_0"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    },
+    {
+      "sourceBuildIndex": 77,
+      "sourceBuildKey": "build_77",
+      "bindingConfidence": "confirmed-exact-serialized-key-join",
+      "animationClip": {
+        "name": "build_77",
+        "pathId": 393
+      },
+      "animatorController": {
+        "name": "build_77",
+        "pathId": 1064,
+        "animationClipPathIds": [
+          393
+        ]
+      },
+      "spriteFrames": [
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 2,
+          "name": "bd_a_077_0"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 1,
+          "name": "bd_a_077_1"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 3,
+          "name": "bd_a_077_2"
+        },
+        {
+          "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+          "sourceSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909",
+          "pathId": 3,
+          "name": "bd_a_077_2"
+        }
+      ],
+      "controllerClass": null,
+      "popupClass": null,
+      "townPosition": null,
+      "sorting": null,
+      "collider": null,
+      "unresolvedReason": "The exact base visual assets are joined, but no per-building prefab/runtime record binds this source index to a controller class, popup, placement, sorting, or collider."
+    }
+  ],
+  "gaps": [
+    "No serialized SpriteRenderer binds a build_* skin to a town coordinate.",
+    "No per-building prefab/runtime record maps source build indices to controller classes, popups, sorting, or colliders."
+  ]
+}

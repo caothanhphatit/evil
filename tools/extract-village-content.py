@@ -13,7 +13,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "game-assets/source/unity-assets/bin/Data"
-OUT = ROOT / "game-assets/extracted/exported/village"
+OUT = ROOT / "game-assets/normalized/village"
 
 FOREGROUND = {
     "ground": ("fc6112344ba24e846ab93206222bc5ce", 1, "skin_botton_00"),
@@ -65,7 +65,18 @@ def extract_sprite(bundle: str, path_id: int, name: str, output: Path) -> None:
 
 
 OUT.mkdir(parents=True, exist_ok=True)
-metadata = {"schemaVersion": 1, "foreground": [], "npcs": {}}
+metadata = {
+    "schemaVersion": 1,
+    "stage": "normalized-evidence",
+    "sourceRoot": "game-assets/source/unity-assets/bin/Data",
+    "transformation": {
+        "id": "unitypy-sprite-export-transparent-matte-v1",
+        "approximation": True,
+        "note": "Near-white pixels are made transparent for web compositing; visual validation remains required.",
+    },
+    "foreground": [],
+    "npcs": {},
+}
 for key, (bundle, path_id, name) in FOREGROUND.items():
     target = OUT / "foreground" / f"{key}.png"
     extract_sprite(bundle, path_id, name, target)

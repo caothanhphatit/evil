@@ -1,0 +1,1510 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-serialized-binding-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": {
+    "level1": {
+      "path": "game-assets/extracted/joined_unity_files/level1",
+      "sha256": "450848793be37124e178cc072adec3255af8b2bc7d0c1e4986e473ba7c1014d8"
+    },
+    "globalManagers": {
+      "path": "game-assets/extracted/joined_unity_files/globalgamemanagers.assets",
+      "sha256": "75249ee8987222987f165755df44b4b4736d9ab43ab92926c7b21653d1015319"
+    },
+    "sharedAssets0": {
+      "path": "game-assets/extracted/joined_unity_files/sharedassets0.assets",
+      "sha256": "0880c6e644cefeeeb141024878da0046e0858a7414dfc5b972bad417cdfbdbe2"
+    },
+    "tables": {
+      "path": "reverse-engineering/evidence/hunter-info-tables-v1.json",
+      "sha256": "40e4560ef489a8e8a880efc452b1862bfff46bd0cd9b745b5222cb0a92cd8506"
+    }
+  },
+  "objects": {
+    "imageManager": {
+      "pathId": 103588,
+      "byteSize": 87996,
+      "rawSha256": "9cc468c46de2a4e69af09218fd15b2b10d1fd9009dabc1dd26d135ef021d31d9",
+      "script": {
+        "fileId": 1,
+        "pathId": 1120,
+        "className": "ImageManager",
+        "assemblyName": "Assembly-CSharp"
+      }
+    },
+    "hunterDetailPop": {
+      "pathId": 74554,
+      "byteSize": 5388,
+      "rawSha256": "9abb47f9a66815e5b6df0bc167e0402cc21bccdeb2175759da41005d0a227c18",
+      "script": {
+        "fileId": 1,
+        "pathId": 982,
+        "className": "HunterDetailPop",
+        "assemblyName": "Assembly-CSharp"
+      }
+    }
+  },
+  "serializedArrays": {
+    "hunterSkillIcons": [
+      {
+        "position": 0,
+        "pptrOffset": 31212,
+        "fileId": 3,
+        "pathId": 1395,
+        "spriteName": "skill_h1_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 31224,
+        "fileId": 3,
+        "pathId": 5620,
+        "spriteName": "skill_h1_02"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 31236,
+        "fileId": 3,
+        "pathId": 2720,
+        "spriteName": "skill_h2_01"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 31248,
+        "fileId": 3,
+        "pathId": 3615,
+        "spriteName": "skill_h2_02"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 31260,
+        "fileId": 3,
+        "pathId": 4766,
+        "spriteName": "skill_h3_01"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 31272,
+        "fileId": 3,
+        "pathId": 5536,
+        "spriteName": "skill_h3_02"
+      },
+      {
+        "position": 6,
+        "pptrOffset": 31284,
+        "fileId": 3,
+        "pathId": 5619,
+        "spriteName": "skill_h4_01"
+      },
+      {
+        "position": 7,
+        "pptrOffset": 31296,
+        "fileId": 3,
+        "pathId": 6451,
+        "spriteName": "skill_h4_02"
+      },
+      {
+        "position": 8,
+        "pptrOffset": 31308,
+        "fileId": 3,
+        "pathId": 1458,
+        "spriteName": "skill_h5_01"
+      },
+      {
+        "position": 9,
+        "pptrOffset": 31320,
+        "fileId": 3,
+        "pathId": 5898,
+        "spriteName": "skill_h5_02"
+      },
+      {
+        "position": 10,
+        "pptrOffset": 31332,
+        "fileId": 3,
+        "pathId": 5024,
+        "spriteName": "skill_h1_03"
+      },
+      {
+        "position": 11,
+        "pptrOffset": 31344,
+        "fileId": 3,
+        "pathId": 2977,
+        "spriteName": "skill_h1_04"
+      },
+      {
+        "position": 12,
+        "pptrOffset": 31356,
+        "fileId": 3,
+        "pathId": 3276,
+        "spriteName": "skill_h2_03"
+      },
+      {
+        "position": 13,
+        "pptrOffset": 31368,
+        "fileId": 3,
+        "pathId": 2872,
+        "spriteName": "skill_h2_04"
+      },
+      {
+        "position": 14,
+        "pptrOffset": 31380,
+        "fileId": 3,
+        "pathId": 3103,
+        "spriteName": "skill_h3_03"
+      },
+      {
+        "position": 15,
+        "pptrOffset": 31392,
+        "fileId": 3,
+        "pathId": 3086,
+        "spriteName": "skill_h3_04"
+      },
+      {
+        "position": 16,
+        "pptrOffset": 31404,
+        "fileId": 3,
+        "pathId": 7415,
+        "spriteName": "skill_h4_03"
+      },
+      {
+        "position": 17,
+        "pptrOffset": 31416,
+        "fileId": 3,
+        "pathId": 1500,
+        "spriteName": "skill_h4_04"
+      },
+      {
+        "position": 18,
+        "pptrOffset": 31428,
+        "fileId": 3,
+        "pathId": 1848,
+        "spriteName": "skill_h5_03"
+      },
+      {
+        "position": 19,
+        "pptrOffset": 31440,
+        "fileId": 3,
+        "pathId": 6389,
+        "spriteName": "skill_h5_04"
+      },
+      {
+        "position": 20,
+        "pptrOffset": 31452,
+        "fileId": 3,
+        "pathId": 2439,
+        "spriteName": "skill_h1_05"
+      },
+      {
+        "position": 21,
+        "pptrOffset": 31464,
+        "fileId": 3,
+        "pathId": 3963,
+        "spriteName": "skill_h1_06"
+      },
+      {
+        "position": 22,
+        "pptrOffset": 31476,
+        "fileId": 3,
+        "pathId": 3865,
+        "spriteName": "skill_h2_05"
+      },
+      {
+        "position": 23,
+        "pptrOffset": 31488,
+        "fileId": 3,
+        "pathId": 4554,
+        "spriteName": "skill_h2_06"
+      },
+      {
+        "position": 24,
+        "pptrOffset": 31500,
+        "fileId": 3,
+        "pathId": 4796,
+        "spriteName": "skill_h3_05"
+      },
+      {
+        "position": 25,
+        "pptrOffset": 31512,
+        "fileId": 3,
+        "pathId": 2646,
+        "spriteName": "skill_h3_06"
+      },
+      {
+        "position": 26,
+        "pptrOffset": 31524,
+        "fileId": 3,
+        "pathId": 2730,
+        "spriteName": "skill_h4_05"
+      },
+      {
+        "position": 27,
+        "pptrOffset": 31536,
+        "fileId": 3,
+        "pathId": 1897,
+        "spriteName": "skill_h4_06"
+      },
+      {
+        "position": 28,
+        "pptrOffset": 31548,
+        "fileId": 3,
+        "pathId": 2157,
+        "spriteName": "skill_h5_05"
+      },
+      {
+        "position": 29,
+        "pptrOffset": 31560,
+        "fileId": 3,
+        "pathId": 7357,
+        "spriteName": "skill_h5_06"
+      },
+      {
+        "position": 30,
+        "pptrOffset": 31572,
+        "fileId": 3,
+        "pathId": 4555,
+        "spriteName": "skill_h1_07"
+      },
+      {
+        "position": 31,
+        "pptrOffset": 31584,
+        "fileId": 3,
+        "pathId": 3979,
+        "spriteName": "skill_h1_08"
+      },
+      {
+        "position": 32,
+        "pptrOffset": 31596,
+        "fileId": 3,
+        "pathId": 2178,
+        "spriteName": "skill_h2_07"
+      },
+      {
+        "position": 33,
+        "pptrOffset": 31608,
+        "fileId": 3,
+        "pathId": 5716,
+        "spriteName": "skill_h2_08"
+      },
+      {
+        "position": 34,
+        "pptrOffset": 31620,
+        "fileId": 3,
+        "pathId": 6137,
+        "spriteName": "skill_h3_07"
+      },
+      {
+        "position": 35,
+        "pptrOffset": 31632,
+        "fileId": 3,
+        "pathId": 3879,
+        "spriteName": "skill_h3_08"
+      },
+      {
+        "position": 36,
+        "pptrOffset": 31644,
+        "fileId": 3,
+        "pathId": 7450,
+        "spriteName": "skill_h4_07"
+      },
+      {
+        "position": 37,
+        "pptrOffset": 31656,
+        "fileId": 3,
+        "pathId": 5759,
+        "spriteName": "skill_h4_08"
+      },
+      {
+        "position": 38,
+        "pptrOffset": 31668,
+        "fileId": 3,
+        "pathId": 7518,
+        "spriteName": "skill_h5_07"
+      },
+      {
+        "position": 39,
+        "pptrOffset": 31680,
+        "fileId": 3,
+        "pathId": 7390,
+        "spriteName": "skill_h5_08"
+      },
+      {
+        "position": 40,
+        "pptrOffset": 31692,
+        "fileId": 3,
+        "pathId": 6736,
+        "spriteName": "skill_h1_09"
+      },
+      {
+        "position": 41,
+        "pptrOffset": 31704,
+        "fileId": 3,
+        "pathId": 3756,
+        "spriteName": "skill_h1_10"
+      },
+      {
+        "position": 42,
+        "pptrOffset": 31716,
+        "fileId": 3,
+        "pathId": 1425,
+        "spriteName": "skill_h2_09"
+      },
+      {
+        "position": 43,
+        "pptrOffset": 31728,
+        "fileId": 3,
+        "pathId": 1520,
+        "spriteName": "skill_h2_10"
+      },
+      {
+        "position": 44,
+        "pptrOffset": 31740,
+        "fileId": 3,
+        "pathId": 1836,
+        "spriteName": "skill_h3_09"
+      },
+      {
+        "position": 45,
+        "pptrOffset": 31752,
+        "fileId": 3,
+        "pathId": 4509,
+        "spriteName": "skill_h3_10"
+      },
+      {
+        "position": 46,
+        "pptrOffset": 31764,
+        "fileId": 3,
+        "pathId": 4787,
+        "spriteName": "skill_h4_09"
+      },
+      {
+        "position": 47,
+        "pptrOffset": 31776,
+        "fileId": 3,
+        "pathId": 3864,
+        "spriteName": "skill_h4_10"
+      },
+      {
+        "position": 48,
+        "pptrOffset": 31788,
+        "fileId": 3,
+        "pathId": 4217,
+        "spriteName": "skill_h5_09"
+      },
+      {
+        "position": 49,
+        "pptrOffset": 31800,
+        "fileId": 3,
+        "pathId": 1670,
+        "spriteName": "skill_h5_10"
+      }
+    ],
+    "growthPropertyIcons": [
+      {
+        "position": 0,
+        "pptrOffset": 73328,
+        "fileId": 3,
+        "pathId": 5672,
+        "spriteName": "growth_ic_00"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 73340,
+        "fileId": 3,
+        "pathId": 6236,
+        "spriteName": "growth_ic_01"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 73352,
+        "fileId": 3,
+        "pathId": 2676,
+        "spriteName": "growth_ic_02"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 73364,
+        "fileId": 3,
+        "pathId": 6357,
+        "spriteName": "growth_ic_03"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 73376,
+        "fileId": 3,
+        "pathId": 4308,
+        "spriteName": "growth_ic_04"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 73388,
+        "fileId": 3,
+        "pathId": 4220,
+        "spriteName": "growth_ic_05"
+      },
+      {
+        "position": 6,
+        "pptrOffset": 73400,
+        "fileId": 3,
+        "pathId": 5960,
+        "spriteName": "growth_ic_06"
+      },
+      {
+        "position": 7,
+        "pptrOffset": 73412,
+        "fileId": 3,
+        "pathId": 2125,
+        "spriteName": "growth_ic_07"
+      },
+      {
+        "position": 8,
+        "pptrOffset": 73424,
+        "fileId": 3,
+        "pathId": 1506,
+        "spriteName": "growth_ic_08"
+      },
+      {
+        "position": 9,
+        "pptrOffset": 73436,
+        "fileId": 3,
+        "pathId": 7392,
+        "spriteName": "growth_ic_09"
+      },
+      {
+        "position": 10,
+        "pptrOffset": 73448,
+        "fileId": 3,
+        "pathId": 7011,
+        "spriteName": "growth_ic_10"
+      },
+      {
+        "position": 11,
+        "pptrOffset": 73460,
+        "fileId": 3,
+        "pathId": 3254,
+        "spriteName": "growth_ic_11"
+      },
+      {
+        "position": 12,
+        "pptrOffset": 73472,
+        "fileId": 3,
+        "pathId": 5120,
+        "spriteName": "growth_ic_12"
+      },
+      {
+        "position": 13,
+        "pptrOffset": 73484,
+        "fileId": 3,
+        "pathId": 6059,
+        "spriteName": "growth_ic_13"
+      },
+      {
+        "position": 14,
+        "pptrOffset": 73496,
+        "fileId": 3,
+        "pathId": 4190,
+        "spriteName": "growth_ic_14"
+      }
+    ],
+    "ridingPetPortraits": [
+      {
+        "position": 0,
+        "pptrOffset": 78380,
+        "fileId": 3,
+        "pathId": 6196,
+        "spriteName": "ride_pet_tb_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 78392,
+        "fileId": 3,
+        "pathId": 6196,
+        "spriteName": "ride_pet_tb_01"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 78404,
+        "fileId": 3,
+        "pathId": 6209,
+        "spriteName": "ride_pet_tb_02"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 78416,
+        "fileId": 3,
+        "pathId": 1722,
+        "spriteName": "ride_pet_tb_03"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 78428,
+        "fileId": 3,
+        "pathId": 1885,
+        "spriteName": "ride_pet_tb_04"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 78440,
+        "fileId": 3,
+        "pathId": 5533,
+        "spriteName": "ride_pet_tb_05"
+      },
+      {
+        "position": 6,
+        "pptrOffset": 78452,
+        "fileId": 3,
+        "pathId": 4340,
+        "spriteName": "ride_pet_tb_06"
+      },
+      {
+        "position": 7,
+        "pptrOffset": 78464,
+        "fileId": 3,
+        "pathId": 7664,
+        "spriteName": "ride_pet_tb_07"
+      },
+      {
+        "position": 8,
+        "pptrOffset": 78476,
+        "fileId": 3,
+        "pathId": 6825,
+        "spriteName": "ride_pet_tb_08"
+      },
+      {
+        "position": 9,
+        "pptrOffset": 78488,
+        "fileId": 3,
+        "pathId": 3346,
+        "spriteName": "ride_pet_tb_09"
+      },
+      {
+        "position": 10,
+        "pptrOffset": 78500,
+        "fileId": 3,
+        "pathId": 4115,
+        "spriteName": "ride_pet_tb_10"
+      },
+      {
+        "position": 11,
+        "pptrOffset": 78512,
+        "fileId": 3,
+        "pathId": 7505,
+        "spriteName": "ride_pet_tb_11"
+      },
+      {
+        "position": 12,
+        "pptrOffset": 78524,
+        "fileId": 3,
+        "pathId": 1850,
+        "spriteName": "ride_pet_tb_12"
+      },
+      {
+        "position": 13,
+        "pptrOffset": 78536,
+        "fileId": 3,
+        "pathId": 1956,
+        "spriteName": "ride_pet_tb_13"
+      },
+      {
+        "position": 14,
+        "pptrOffset": 78548,
+        "fileId": 3,
+        "pathId": 4358,
+        "spriteName": "ride_pet_tb_14"
+      },
+      {
+        "position": 15,
+        "pptrOffset": 78560,
+        "fileId": 3,
+        "pathId": 4299,
+        "spriteName": "ride_pet_tb_15"
+      },
+      {
+        "position": 16,
+        "pptrOffset": 78572,
+        "fileId": 3,
+        "pathId": 1600,
+        "spriteName": "ride_pet_tb_16"
+      },
+      {
+        "position": 17,
+        "pptrOffset": 78584,
+        "fileId": 3,
+        "pathId": 1726,
+        "spriteName": "ride_pet_tb_17"
+      },
+      {
+        "position": 18,
+        "pptrOffset": 78596,
+        "fileId": 3,
+        "pathId": 4002,
+        "spriteName": "ride_pet_tb_18"
+      },
+      {
+        "position": 19,
+        "pptrOffset": 78608,
+        "fileId": 3,
+        "pathId": 5872,
+        "spriteName": "ride_pet_tb_19"
+      },
+      {
+        "position": 20,
+        "pptrOffset": 78620,
+        "fileId": 3,
+        "pathId": 3820,
+        "spriteName": "ride_pet_tb_20"
+      }
+    ],
+    "ridingPetSkillIcons": [
+      {
+        "position": 0,
+        "pptrOffset": 78636,
+        "fileId": 3,
+        "pathId": 6185,
+        "spriteName": "rp_skill_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 78648,
+        "fileId": 3,
+        "pathId": 2839,
+        "spriteName": "rp_skill_02"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 78660,
+        "fileId": 3,
+        "pathId": 2080,
+        "spriteName": "rp_skill_03"
+      }
+    ],
+    "ridingPetTraitIcons": [
+      {
+        "position": 0,
+        "pptrOffset": 78676,
+        "fileId": 3,
+        "pathId": 2339,
+        "spriteName": "rp_trait_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 78688,
+        "fileId": 3,
+        "pathId": 7687,
+        "spriteName": "rp_trait_02"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 78700,
+        "fileId": 3,
+        "pathId": 6650,
+        "spriteName": "rp_trait_03"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 78712,
+        "fileId": 3,
+        "pathId": 5896,
+        "spriteName": "rp_trait_04"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 78724,
+        "fileId": 3,
+        "pathId": 2547,
+        "spriteName": "rp_trait_05"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 78736,
+        "fileId": 3,
+        "pathId": 4393,
+        "spriteName": "rp_trait_06"
+      }
+    ],
+    "ridingPetActorThumbnails": [
+      {
+        "position": 0,
+        "pptrOffset": 78752,
+        "fileId": 3,
+        "pathId": 1898,
+        "spriteName": "tb_ride_pet_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 78764,
+        "fileId": 3,
+        "pathId": 1898,
+        "spriteName": "tb_ride_pet_01"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 78776,
+        "fileId": 3,
+        "pathId": 4852,
+        "spriteName": "tb_ride_pet_02"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 78788,
+        "fileId": 3,
+        "pathId": 4581,
+        "spriteName": "tb_ride_pet_03"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 78800,
+        "fileId": 3,
+        "pathId": 3101,
+        "spriteName": "tb_ride_pet_04"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 78812,
+        "fileId": 3,
+        "pathId": 5005,
+        "spriteName": "tb_ride_pet_05"
+      },
+      {
+        "position": 6,
+        "pptrOffset": 78824,
+        "fileId": 3,
+        "pathId": 4822,
+        "spriteName": "tb_ride_pet_06"
+      },
+      {
+        "position": 7,
+        "pptrOffset": 78836,
+        "fileId": 3,
+        "pathId": 7501,
+        "spriteName": "tb_ride_pet_07"
+      },
+      {
+        "position": 8,
+        "pptrOffset": 78848,
+        "fileId": 3,
+        "pathId": 5497,
+        "spriteName": "tb_ride_pet_08"
+      },
+      {
+        "position": 9,
+        "pptrOffset": 78860,
+        "fileId": 3,
+        "pathId": 7373,
+        "spriteName": "tb_ride_pet_09"
+      },
+      {
+        "position": 10,
+        "pptrOffset": 78872,
+        "fileId": 3,
+        "pathId": 7210,
+        "spriteName": "tb_ride_pet_10"
+      },
+      {
+        "position": 11,
+        "pptrOffset": 78884,
+        "fileId": 3,
+        "pathId": 4154,
+        "spriteName": "tb_ride_pet_11"
+      },
+      {
+        "position": 12,
+        "pptrOffset": 78896,
+        "fileId": 3,
+        "pathId": 2806,
+        "spriteName": "tb_ride_pet_12"
+      },
+      {
+        "position": 13,
+        "pptrOffset": 78908,
+        "fileId": 3,
+        "pathId": 5929,
+        "spriteName": "tb_ride_pet_13"
+      },
+      {
+        "position": 14,
+        "pptrOffset": 78920,
+        "fileId": 3,
+        "pathId": 4761,
+        "spriteName": "tb_ride_pet_14"
+      },
+      {
+        "position": 15,
+        "pptrOffset": 78932,
+        "fileId": 3,
+        "pathId": 1944,
+        "spriteName": "tb_ride_pet_15"
+      },
+      {
+        "position": 16,
+        "pptrOffset": 78944,
+        "fileId": 3,
+        "pathId": 1557,
+        "spriteName": "tb_ride_pet_16"
+      },
+      {
+        "position": 17,
+        "pptrOffset": 78956,
+        "fileId": 3,
+        "pathId": 5147,
+        "spriteName": "tb_ride_pet_17"
+      },
+      {
+        "position": 18,
+        "pptrOffset": 78968,
+        "fileId": 3,
+        "pathId": 4844,
+        "spriteName": "tb_ride_pet_18"
+      },
+      {
+        "position": 19,
+        "pptrOffset": 78980,
+        "fileId": 3,
+        "pathId": 6679,
+        "spriteName": "tb_ride_pet_19"
+      },
+      {
+        "position": 20,
+        "pptrOffset": 78992,
+        "fileId": 3,
+        "pathId": 4818,
+        "spriteName": "tb_ride_pet_20"
+      }
+    ],
+    "jobTraitIcons": [
+      {
+        "position": 0,
+        "pptrOffset": 79368,
+        "fileId": 3,
+        "pathId": 1983,
+        "spriteName": "job_trait_all_01"
+      },
+      {
+        "position": 1,
+        "pptrOffset": 79380,
+        "fileId": 3,
+        "pathId": 2963,
+        "spriteName": "job_trait_all_02"
+      },
+      {
+        "position": 2,
+        "pptrOffset": 79392,
+        "fileId": 3,
+        "pathId": 5691,
+        "spriteName": "job_trait_all_03"
+      },
+      {
+        "position": 3,
+        "pptrOffset": 79404,
+        "fileId": 3,
+        "pathId": 7181,
+        "spriteName": "job_trait_all_04"
+      },
+      {
+        "position": 4,
+        "pptrOffset": 79416,
+        "fileId": 3,
+        "pathId": 3473,
+        "spriteName": "job_trait_h1_s1_01"
+      },
+      {
+        "position": 5,
+        "pptrOffset": 79428,
+        "fileId": 3,
+        "pathId": 6281,
+        "spriteName": "job_trait_h1_s1_02"
+      },
+      {
+        "position": 6,
+        "pptrOffset": 79440,
+        "fileId": 3,
+        "pathId": 1436,
+        "spriteName": "job_trait_h1_s1_03"
+      },
+      {
+        "position": 7,
+        "pptrOffset": 79452,
+        "fileId": 3,
+        "pathId": 3301,
+        "spriteName": "job_trait_h1_s2_01"
+      },
+      {
+        "position": 8,
+        "pptrOffset": 79464,
+        "fileId": 3,
+        "pathId": 3154,
+        "spriteName": "job_trait_h1_s2_02"
+      },
+      {
+        "position": 9,
+        "pptrOffset": 79476,
+        "fileId": 3,
+        "pathId": 1918,
+        "spriteName": "job_trait_h1_s2_03"
+      },
+      {
+        "position": 10,
+        "pptrOffset": 79488,
+        "fileId": 3,
+        "pathId": 6121,
+        "spriteName": "job_trait_h1_s3_01"
+      },
+      {
+        "position": 11,
+        "pptrOffset": 79500,
+        "fileId": 3,
+        "pathId": 4984,
+        "spriteName": "job_trait_h1_s3_02"
+      },
+      {
+        "position": 12,
+        "pptrOffset": 79512,
+        "fileId": 3,
+        "pathId": 7408,
+        "spriteName": "job_trait_h1_s3_03"
+      },
+      {
+        "position": 13,
+        "pptrOffset": 79524,
+        "fileId": 3,
+        "pathId": 3829,
+        "spriteName": "job_trait_h1_s4_01"
+      },
+      {
+        "position": 14,
+        "pptrOffset": 79536,
+        "fileId": 3,
+        "pathId": 2223,
+        "spriteName": "job_trait_h1_s4_02"
+      },
+      {
+        "position": 15,
+        "pptrOffset": 79548,
+        "fileId": 3,
+        "pathId": 3108,
+        "spriteName": "job_trait_h1_s4_03"
+      },
+      {
+        "position": 16,
+        "pptrOffset": 79560,
+        "fileId": 3,
+        "pathId": 5146,
+        "spriteName": "job_trait_h1_s4_04"
+      },
+      {
+        "position": 17,
+        "pptrOffset": 79572,
+        "fileId": 3,
+        "pathId": 4196,
+        "spriteName": "job_trait_h2_s1_01"
+      },
+      {
+        "position": 18,
+        "pptrOffset": 79584,
+        "fileId": 3,
+        "pathId": 2265,
+        "spriteName": "job_trait_h2_s1_02"
+      },
+      {
+        "position": 19,
+        "pptrOffset": 79596,
+        "fileId": 3,
+        "pathId": 6362,
+        "spriteName": "job_trait_h2_s1_03"
+      },
+      {
+        "position": 20,
+        "pptrOffset": 79608,
+        "fileId": 3,
+        "pathId": 5753,
+        "spriteName": "job_trait_h2_s2_01"
+      },
+      {
+        "position": 21,
+        "pptrOffset": 79620,
+        "fileId": 3,
+        "pathId": 6517,
+        "spriteName": "job_trait_h2_s2_02"
+      },
+      {
+        "position": 22,
+        "pptrOffset": 79632,
+        "fileId": 3,
+        "pathId": 5678,
+        "spriteName": "job_trait_h2_s2_03"
+      },
+      {
+        "position": 23,
+        "pptrOffset": 79644,
+        "fileId": 3,
+        "pathId": 3911,
+        "spriteName": "job_trait_h2_s3_01"
+      },
+      {
+        "position": 24,
+        "pptrOffset": 79656,
+        "fileId": 3,
+        "pathId": 2143,
+        "spriteName": "job_trait_h2_s3_02"
+      },
+      {
+        "position": 25,
+        "pptrOffset": 79668,
+        "fileId": 3,
+        "pathId": 2965,
+        "spriteName": "job_trait_h2_s3_03"
+      },
+      {
+        "position": 26,
+        "pptrOffset": 79680,
+        "fileId": 3,
+        "pathId": 3606,
+        "spriteName": "job_trait_h2_s4_01"
+      },
+      {
+        "position": 27,
+        "pptrOffset": 79692,
+        "fileId": 3,
+        "pathId": 2500,
+        "spriteName": "job_trait_h2_s4_02"
+      },
+      {
+        "position": 28,
+        "pptrOffset": 79704,
+        "fileId": 3,
+        "pathId": 6615,
+        "spriteName": "job_trait_h2_s4_03"
+      },
+      {
+        "position": 29,
+        "pptrOffset": 79716,
+        "fileId": 3,
+        "pathId": 1558,
+        "spriteName": "job_trait_h2_s4_04"
+      },
+      {
+        "position": 30,
+        "pptrOffset": 79728,
+        "fileId": 3,
+        "pathId": 4123,
+        "spriteName": "job_trait_h3_s1_01"
+      },
+      {
+        "position": 31,
+        "pptrOffset": 79740,
+        "fileId": 3,
+        "pathId": 2389,
+        "spriteName": "job_trait_h3_s1_02"
+      },
+      {
+        "position": 32,
+        "pptrOffset": 79752,
+        "fileId": 3,
+        "pathId": 2124,
+        "spriteName": "job_trait_h3_s1_03"
+      },
+      {
+        "position": 33,
+        "pptrOffset": 79764,
+        "fileId": 3,
+        "pathId": 4365,
+        "spriteName": "job_trait_h3_s2_01"
+      },
+      {
+        "position": 34,
+        "pptrOffset": 79776,
+        "fileId": 3,
+        "pathId": 3948,
+        "spriteName": "job_trait_h3_s2_02"
+      },
+      {
+        "position": 35,
+        "pptrOffset": 79788,
+        "fileId": 3,
+        "pathId": 4773,
+        "spriteName": "job_trait_h3_s2_03"
+      },
+      {
+        "position": 36,
+        "pptrOffset": 79800,
+        "fileId": 3,
+        "pathId": 2437,
+        "spriteName": "job_trait_h3_s3_01"
+      },
+      {
+        "position": 37,
+        "pptrOffset": 79812,
+        "fileId": 3,
+        "pathId": 2833,
+        "spriteName": "job_trait_h3_s3_02"
+      },
+      {
+        "position": 38,
+        "pptrOffset": 79824,
+        "fileId": 3,
+        "pathId": 3446,
+        "spriteName": "job_trait_h3_s3_03"
+      },
+      {
+        "position": 39,
+        "pptrOffset": 79836,
+        "fileId": 3,
+        "pathId": 6304,
+        "spriteName": "job_trait_h3_s4_01"
+      },
+      {
+        "position": 40,
+        "pptrOffset": 79848,
+        "fileId": 3,
+        "pathId": 3351,
+        "spriteName": "job_trait_h3_s4_02"
+      },
+      {
+        "position": 41,
+        "pptrOffset": 79860,
+        "fileId": 3,
+        "pathId": 2477,
+        "spriteName": "job_trait_h3_s4_03"
+      },
+      {
+        "position": 42,
+        "pptrOffset": 79872,
+        "fileId": 3,
+        "pathId": 4838,
+        "spriteName": "job_trait_h3_s4_04"
+      },
+      {
+        "position": 43,
+        "pptrOffset": 79884,
+        "fileId": 3,
+        "pathId": 2403,
+        "spriteName": "job_trait_h4_s1_01"
+      },
+      {
+        "position": 44,
+        "pptrOffset": 79896,
+        "fileId": 3,
+        "pathId": 7405,
+        "spriteName": "job_trait_h4_s1_02"
+      },
+      {
+        "position": 45,
+        "pptrOffset": 79908,
+        "fileId": 3,
+        "pathId": 5725,
+        "spriteName": "job_trait_h4_s1_03"
+      },
+      {
+        "position": 46,
+        "pptrOffset": 79920,
+        "fileId": 3,
+        "pathId": 4437,
+        "spriteName": "job_trait_h4_s2_01"
+      },
+      {
+        "position": 47,
+        "pptrOffset": 79932,
+        "fileId": 3,
+        "pathId": 6878,
+        "spriteName": "job_trait_h4_s2_02"
+      },
+      {
+        "position": 48,
+        "pptrOffset": 79944,
+        "fileId": 3,
+        "pathId": 3230,
+        "spriteName": "job_trait_h4_s2_03"
+      },
+      {
+        "position": 49,
+        "pptrOffset": 79956,
+        "fileId": 3,
+        "pathId": 5155,
+        "spriteName": "job_trait_h4_s3_01"
+      },
+      {
+        "position": 50,
+        "pptrOffset": 79968,
+        "fileId": 3,
+        "pathId": 7198,
+        "spriteName": "job_trait_h4_s3_02"
+      },
+      {
+        "position": 51,
+        "pptrOffset": 79980,
+        "fileId": 3,
+        "pathId": 6244,
+        "spriteName": "job_trait_h4_s3_03"
+      },
+      {
+        "position": 52,
+        "pptrOffset": 79992,
+        "fileId": 3,
+        "pathId": 7351,
+        "spriteName": "job_trait_h4_s4_01"
+      },
+      {
+        "position": 53,
+        "pptrOffset": 80004,
+        "fileId": 3,
+        "pathId": 4374,
+        "spriteName": "job_trait_h4_s4_02"
+      },
+      {
+        "position": 54,
+        "pptrOffset": 80016,
+        "fileId": 3,
+        "pathId": 3954,
+        "spriteName": "job_trait_h4_s4_03"
+      },
+      {
+        "position": 55,
+        "pptrOffset": 80028,
+        "fileId": 3,
+        "pathId": 6810,
+        "spriteName": "job_trait_h4_s4_04"
+      },
+      {
+        "position": 56,
+        "pptrOffset": 80040,
+        "fileId": 3,
+        "pathId": 5097,
+        "spriteName": "job_trait_h5_s1_01"
+      },
+      {
+        "position": 57,
+        "pptrOffset": 80052,
+        "fileId": 3,
+        "pathId": 3842,
+        "spriteName": "job_trait_h5_s1_02"
+      },
+      {
+        "position": 58,
+        "pptrOffset": 80064,
+        "fileId": 3,
+        "pathId": 4895,
+        "spriteName": "job_trait_h5_s1_03"
+      },
+      {
+        "position": 59,
+        "pptrOffset": 80076,
+        "fileId": 3,
+        "pathId": 6539,
+        "spriteName": "job_trait_h5_s2_01"
+      },
+      {
+        "position": 60,
+        "pptrOffset": 80088,
+        "fileId": 3,
+        "pathId": 2698,
+        "spriteName": "job_trait_h5_s2_02"
+      },
+      {
+        "position": 61,
+        "pptrOffset": 80100,
+        "fileId": 3,
+        "pathId": 1747,
+        "spriteName": "job_trait_h5_s2_03"
+      },
+      {
+        "position": 62,
+        "pptrOffset": 80112,
+        "fileId": 3,
+        "pathId": 5169,
+        "spriteName": "job_trait_h5_s3_01"
+      },
+      {
+        "position": 63,
+        "pptrOffset": 80124,
+        "fileId": 3,
+        "pathId": 3617,
+        "spriteName": "job_trait_h5_s3_02"
+      },
+      {
+        "position": 64,
+        "pptrOffset": 80136,
+        "fileId": 3,
+        "pathId": 6853,
+        "spriteName": "job_trait_h5_s3_03"
+      },
+      {
+        "position": 65,
+        "pptrOffset": 80148,
+        "fileId": 3,
+        "pathId": 7038,
+        "spriteName": "job_trait_h5_s4_01"
+      },
+      {
+        "position": 66,
+        "pptrOffset": 80160,
+        "fileId": 3,
+        "pathId": 1924,
+        "spriteName": "job_trait_h5_s4_02"
+      },
+      {
+        "position": 67,
+        "pptrOffset": 80172,
+        "fileId": 3,
+        "pathId": 6644,
+        "spriteName": "job_trait_h5_s4_03"
+      },
+      {
+        "position": 68,
+        "pptrOffset": 80184,
+        "fileId": 3,
+        "pathId": 4830,
+        "spriteName": "job_trait_h5_s4_04"
+      }
+    ]
+  },
+  "hunterDetailReferences": {
+    "statGroup": {
+      "pptrOffset": 628,
+      "fileId": 0,
+      "pathId": 1810,
+      "gameObjectName": "StatGroup"
+    },
+    "skillGroup": {
+      "pptrOffset": 640,
+      "fileId": 0,
+      "pathId": 1338,
+      "gameObjectName": "SkillGroup"
+    },
+    "inventoryGroup": {
+      "pptrOffset": 652,
+      "fileId": 0,
+      "pathId": 1671,
+      "gameObjectName": "InventoryGroup"
+    },
+    "growthGroup": {
+      "pptrOffset": 664,
+      "fileId": 0,
+      "pathId": 17370,
+      "gameObjectName": "GrowUpGroup"
+    },
+    "ridingPetGroup": {
+      "pptrOffset": 676,
+      "fileId": 0,
+      "pathId": 16890,
+      "gameObjectName": "RidingPetGroup"
+    },
+    "basicSkillOneIcon": {
+      "pptrOffset": 2604,
+      "fileId": 0,
+      "pathId": 76783,
+      "sprite": {
+        "fileId": 3,
+        "pathId": 1395,
+        "spriteName": "skill_h1_01"
+      }
+    },
+    "basicSkillTwoIcon": {
+      "pptrOffset": 2616,
+      "fileId": 0,
+      "pathId": 73998,
+      "sprite": {
+        "fileId": 3,
+        "pathId": 5620,
+        "spriteName": "skill_h1_02"
+      }
+    },
+    "heroicSkillOneIcon": {
+      "pptrOffset": 5252,
+      "fileId": 0,
+      "pathId": 78639,
+      "sprite": {
+        "fileId": 3,
+        "pathId": 6736,
+        "spriteName": "skill_h1_09"
+      }
+    },
+    "heroicSkillTwoIcon": {
+      "pptrOffset": 5264,
+      "fileId": 0,
+      "pathId": 90932,
+      "sprite": {
+        "fileId": 3,
+        "pathId": 3756,
+        "spriteName": "skill_h1_10"
+      }
+    }
+  },
+  "tableCorrelations": {
+    "basicSkills": {
+      "tableRows": 10,
+      "arrayPositions": [
+        0,
+        9
+      ],
+      "status": "partially-confirmed",
+      "confirmed": [
+        {
+          "tableIndex": 0,
+          "name": "Fury",
+          "spriteName": "skill_h1_01",
+          "evidence": "Berserker FirstSkillGroup serialized default plus supplied original screenshot"
+        },
+        {
+          "tableIndex": 1,
+          "name": "War Cry",
+          "spriteName": "skill_h1_02",
+          "evidence": "Berserker SecondSkillGroup serialized default plus supplied original screenshot"
+        }
+      ],
+      "limitation": "The other class pairs match the ImageManager job-major array structurally, but protected method bodies still hide the lookup expression."
+    },
+    "subJobSkills": {
+      "tableRows": 40,
+      "arrayPositions": [
+        10,
+        49
+      ],
+      "status": "structural-only",
+      "limitation": "The 40 icons are serialized in four class-major blocks, while QuickSheet rows are progression-major and H5 rows are appended; exact row lookup still requires the native selection expression."
+    },
+    "growthProperties": {
+      "tableRows": 15,
+      "arrayPositions": [
+        0,
+        14
+      ],
+      "status": "serialized-position-match",
+      "limitation": "Count, contiguous indices and icon suffixes align one-to-one; native array indexing is not decompiled."
+    },
+    "ridingPets": {
+      "tableRows": 21,
+      "arrayPositions": [
+        0,
+        20
+      ],
+      "status": "serialized-position-match",
+      "limitation": "Position zero and one intentionally share the first sprite; native table-index lookup is not decompiled."
+    },
+    "ridingPetSkills": {
+      "tableRows": 3,
+      "arrayPositions": [
+        0,
+        2
+      ],
+      "status": "serialized-position-match",
+      "limitation": "Native table-index lookup is not decompiled."
+    },
+    "ridingPetTraits": {
+      "tableRows": 6,
+      "arrayPositions": [
+        0,
+        5
+      ],
+      "status": "serialized-position-match",
+      "limitation": "Native table-index lookup is not decompiled."
+    },
+    "jobTraits": {
+      "tableRows": 69,
+      "arrayPositions": [
+        0,
+        68
+      ],
+      "status": "serialized-position-match",
+      "limitation": "The asset names encode the same all/job/branch/order grouping, but native table-index lookup is not decompiled."
+    }
+  },
+  "policy": "PPtr offsets, object identities, array lengths and sprite names are exact serialized facts. A table-row binding is not marked confirmed solely because names, counts or positions look compatible."
+}

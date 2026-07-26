@@ -11,10 +11,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     init_tracing(&config.log_format);
 
     let address: SocketAddr = format!("{}:{}", config.host, config.port).parse()?;
+    let tick_rate = config.simulation.tick_rate;
+    let router = app(config).await?;
     let listener = TcpListener::bind(address).await?;
-    info!(%address, tick_rate = config.simulation.tick_rate, "authoritative game server listening");
+    info!(%address, tick_rate, "authoritative game server listening");
 
-    axum::serve(listener, app(config)?)
+    axum::serve(listener, router)
         .with_graceful_shutdown(shutdown_signal())
         .await?;
 

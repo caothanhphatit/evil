@@ -1,49 +1,34 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Skin } from "@esotericsoftware/spine-core";
 import { Assets, Container, Sprite, Texture } from "pixi.js";
+import { loadVerifiedVisibleWorldRelease, type ActorBundle, type TownBuilding } from "../assets/visible-world-release";
+import type { BuildingInstanceSnapshot, WorldEntityProjection } from "../generated/protocol";
+import { projectRenderableBuildingInstances } from "./building-placement";
+import { panWorldViewport } from "./camera";
+import { sceneDepthFromUnityZ, villageActorDepth } from "./depth";
+import { ProjectionBuffer } from "./projection-interpolation";
+import { hunterActorVisual } from "../ui/hunter-roster";
+import {
+  FIELD_CAMERA_CENTER,
+  FIELD_CAMERA_ZOOM,
+  projectNormalizedEntityPoint,
+  projectScenePoint,
+  runtimeScenePieces,
+  SCENE_WORLD_HEIGHT,
+  SCENE_WORLD_WIDTH,
+  TOWN_BUILDING_GRID,
+  TOWN_CAMERA_CENTER,
+  TOWN_CAMERA_ZOOM,
+} from "./scene-projection";
 
-const RELEASE_MANIFEST = "/content/releases/visible-world-v1/release.json";
-const WORLD_SIZE = 1000;
+const BUILDING_GRID_CELL_WIDTH = TOWN_BUILDING_GRID.cellWidth;
+const BUILDING_GRID_CELL_HEIGHT = TOWN_BUILDING_GRID.cellHeight;
+const BUILDING_GRID_ORIGIN_X = TOWN_BUILDING_GRID.originX;
+const BUILDING_GRID_ORIGIN_Y = TOWN_BUILDING_GRID.originY;
 
-export interface VisualEntityProjection {
-  descriptor: {
-    entity_id: string;
-    kind: "hunter" | "npc" | "monster";
-    asset_bundle_id: string;
-    source_skeleton_name: string;
-  };
-  x: number;
-  y: number;
-  facing: "left" | "right";
-  animation: string;
-  selectable: boolean;
-}
-
-interface ActorBundle {
-  family: string;
-  skeleton: { publicPath: string };
-  atlas: { publicPath: string };
-}
-
-interface VisibleWorldManifest {
-  releaseId: "visible-world-v1";
-  map: { publicPath: string };
-  village?: {
-    tiles?: ScenePiece[];
-    foreground?: ScenePiece[];
-    decorations?: ScenePiece[];
-  };
-  actors: ActorBundle[];
-}
-
-interface ScenePiece {
-  id?: string;
-  publicPath: string;
-  x: number;
-  y: number;
-  z?: number;
-  scale?: number;
-  anchor?: { x?: number; y?: number };
+export interface VisibleWorldDiagnostics {
+  fixture: boolean;
+  unresolved: string[];
 }
 
 interface ActorView {
@@ -51,61 +36,186 @@ interface ActorView {
   spine: Spine;
   animation: string;
   family: string;
-  targetX: number;
-  targetY: number;
+  skinSignature: string;
 }
+interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; }
+interface BuildingTemplate { visual: TownBuilding; texture: Texture; }
 
 export class VisibleEntityWorld {
   readonly root = new Container();
-  private readonly entities = new Container();
   private readonly views = new Map<string, ActorView>();
   private readonly pending = new Set<string>();
   private readonly familyLoads = new Map<string, Promise<void>>();
   private readonly bundles = new Map<string, ActorBundle>();
+  private readonly projectionBuffer = new ProjectionBuffer();
+  private buildingFootprints: BuildingFootprint[] = [];
+  private readonly buildingTemplates = new Map<string, BuildingTemplate>();
+  private readonly buildingInstances = new Map<string, BuildingInstanceSnapshot>();
+  private readonly buildingSprites = new Map<string, Sprite>();
   private readonly villageLayer = new Container();
-  private readonly fieldLayer = new Container();
   private mode: "village" | "field" = "village";
-  private latest: VisualEntityProjection[] = [];
+  private latest: WorldEntityProjection[] = [];
+  private viewportWidth = 1;
+  private viewportHeight = 1;
+  private cameraX: number = TOWN_CAMERA_CENTER.x;
+  private cameraY: number = TOWN_CAMERA_CENTER.y;
+  private cameraZoom = TOWN_CAMERA_ZOOM;
 
-  constructor(private readonly onSelect: (entityId: string) => void) {
+  constructor(
+    private readonly onSelect: (entityId: string) => void,
+    private readonly onBuildingSelect?: (instance: BuildingInstanceSnapshot, visual: TownBuilding) => void,
+  ) {
     this.root.sortableChildren = true;
-    this.entities.sortableChildren = true;
     this.villageLayer.sortableChildren = true;
-    this.fieldLayer.sortableChildren = true;
   }
 
-  async initialize(): Promise<void> {
-    const response = await fetch(RELEASE_MANIFEST);
-    if (!response.ok) throw new Error(`Visible-world manifest returned ${response.status}`);
-    const manifest = await response.json() as VisibleWorldManifest;
-    if (manifest.releaseId !== "visible-world-v1" || !Array.isArray(manifest.actors)) throw new Error("Visible-world manifest is invalid");
+  async initialize(onProgress?: (loaded: number, total: number) => void): Promise<VisibleWorldDiagnostics> {
+    const manifest = await loadVerifiedVisibleWorldRelease(fetch, onProgress);
     for (const bundle of manifest.actors) this.bundles.set(bundle.family, bundle);
 
-    await this.buildVillage(manifest);
-    const texture = await Assets.load<Texture>(manifest.map.publicPath);
-    const map = new Sprite(texture);
-    map.anchor.set(0.5);
-    map.position.set(WORLD_SIZE / 2);
-    const scale = Math.max(WORLD_SIZE / texture.width, WORLD_SIZE / texture.height);
-    map.scale.set(scale);
-    this.fieldLayer.addChild(map);
-    this.root.addChild(this.villageLayer, this.fieldLayer, this.entities);
+    await this.addScenePieces([
+      ...manifest.village.tiles,
+      ...runtimeScenePieces(manifest.village.foreground),
+      ...manifest.village.decorations,
+    ]);
+    if (manifest.village.buildings?.length) await this.loadTownBuildingTemplates(manifest.village.buildings);
+    this.root.addChild(this.villageLayer);
     this.setMode(this.mode);
+    return { fixture: manifest.runtimeDiagnostics.fixture, unresolved: manifest.runtimeDiagnostics.unresolved };
+  }
+
+  private async addScenePieces(pieces: Array<{ publicPath: string; x: number; y: number; z?: number; scale?: number; anchor?: { x?: number; y?: number } }>): Promise<void> {
+    await Promise.all(pieces.map(async (piece) => {
+      const texture = await Assets.load<Texture>(piece.publicPath);
+      const sprite = new Sprite(texture);
+      const position = projectScenePoint(piece.x, piece.y);
+      sprite.anchor.set(piece.anchor?.x ?? 0.5, piece.anchor?.y ?? 0.5);
+      sprite.position.set(position.x, position.y);
+      sprite.scale.set(piece.scale ?? 1);
+      sprite.zIndex = sceneDepthFromUnityZ(piece.z ?? 499);
+      this.villageLayer.addChild(sprite);
+    }));
+  }
+
+  private async loadTownBuildingTemplates(buildings: TownBuilding[]): Promise<void> {
+    await Promise.all(buildings.map(async (building) => {
+      try {
+        const texture = await Assets.load<Texture>(building.publicPath);
+        this.buildingTemplates.set(building.id, { visual: building, texture });
+      } catch (error) {
+        console.warn(`Could not load town building ${building.publicPath}.`, error);
+      }
+    }));
   }
 
   setMode(mode: "village" | "field"): void {
+    if (mode === this.mode) return;
     this.mode = mode;
-    this.villageLayer.visible = mode === "village";
-    this.fieldLayer.visible = mode === "field";
+    const focus = mode === "village" ? TOWN_CAMERA_CENTER : FIELD_CAMERA_CENTER;
+    this.cameraX = focus.x;
+    this.cameraY = focus.y;
+    this.cameraZoom = mode === "village" ? TOWN_CAMERA_ZOOM : FIELD_CAMERA_ZOOM;
+    this.applyCamera();
+  }
+
+  setBuildingPresentation(instances: BuildingInstanceSnapshot[], resolvedSpriteIds: Iterable<string>): void {
+    const resolved = new Set(resolvedSpriteIds);
+    const placements = projectRenderableBuildingInstances(instances.map((instance) => ({
+      instanceId: instance.instance_id,
+      buildingId: instance.building_id,
+      spriteAssetId: instance.sprite_asset_id,
+      gridX: instance.grid_x,
+      gridY: instance.grid_y,
+      width: instance.grid_width,
+      height: instance.grid_height,
+    })), resolved, BUILDING_GRID_CELL_WIDTH, BUILDING_GRID_CELL_HEIGHT, BUILDING_GRID_ORIGIN_X, BUILDING_GRID_ORIGIN_Y);
+    const active = new Set<string>();
+    this.buildingInstances.clear();
+    for (const instance of instances) this.buildingInstances.set(instance.instance_id, instance);
+    this.buildingFootprints = [];
+
+    for (const placement of placements) {
+      const template = placement.spriteAssetId ? this.buildingTemplates.get(placement.spriteAssetId) : null;
+      if (!template) continue;
+      active.add(placement.instanceId);
+      let sprite = this.buildingSprites.get(placement.instanceId);
+      if (!sprite) {
+        sprite = new Sprite(template.texture);
+        sprite.eventMode = "static";
+        sprite.cursor = "pointer";
+        sprite.on("pointertap", () => {
+          const current = this.buildingInstances.get(placement.instanceId);
+          const currentTemplate = current?.sprite_asset_id ? this.buildingTemplates.get(current.sprite_asset_id) : null;
+          if (current && currentTemplate) this.onBuildingSelect?.(current, currentTemplate.visual);
+        });
+        this.villageLayer.addChild(sprite);
+        this.buildingSprites.set(placement.instanceId, sprite);
+      }
+      sprite.texture = template.texture;
+      sprite.anchor.set(template.visual.anchor.x, template.visual.anchor.y);
+      sprite.position.set(placement.x, placement.y);
+      sprite.scale.set(template.visual.scale);
+      sprite.zIndex = villageActorDepth(placement.y, SCENE_WORLD_HEIGHT);
+      sprite.visible = true;
+      this.buildingFootprints.push({
+        id: placement.instanceId,
+        x: placement.x,
+        y: placement.y,
+        halfWidth: template.texture.width * template.visual.scale * 0.32,
+        top: placement.y - template.texture.height * template.visual.scale * 0.72,
+      });
+    }
+    for (const [instanceId, sprite] of this.buildingSprites) {
+      if (active.has(instanceId)) continue;
+      sprite.destroy();
+      this.buildingSprites.delete(instanceId);
+    }
   }
 
   resize(width: number, height: number): void {
-    const scale = Math.max(width / WORLD_SIZE, height / WORLD_SIZE);
-    this.root.scale.set(scale);
-    this.root.position.set((width - WORLD_SIZE * scale) / 2, (height - WORLD_SIZE * scale) / 2);
+    this.viewportWidth = width;
+    this.viewportHeight = height;
+    this.applyCamera();
   }
 
-  update(entities: VisualEntityProjection[]): void {
+  panBy(screenDeltaX: number, screenDeltaY: number): void {
+    const scale = Math.max(0.001, this.root.scale.x);
+    this.cameraX -= screenDeltaX / scale;
+    this.cameraY -= screenDeltaY / scale;
+    this.applyCamera();
+  }
+
+  zoomBy(delta: number): void {
+    this.cameraZoom = Math.max(1, Math.min(1.8, this.cameraZoom + delta));
+    this.applyCamera();
+  }
+
+  private applyCamera(): void {
+    const transform = panWorldViewport(
+      this.viewportWidth,
+      this.viewportHeight,
+      SCENE_WORLD_WIDTH,
+      SCENE_WORLD_HEIGHT,
+      this.cameraX,
+      this.cameraY,
+      this.cameraZoom,
+    );
+    this.root.scale.set(transform.scale);
+    this.root.position.set(transform.x, transform.y);
+  }
+
+  update(entities: WorldEntityProjection[], visualTick: number, receivedAtMs = performance.now()): void {
+    this.projectionBuffer.push(this.mode, visualTick, entities, receivedAtMs);
+    const sample = this.projectionBuffer.sample(receivedAtMs);
+    if (sample) this.applyProjection(sample.entities);
+  }
+
+  tick(nowMs = performance.now()): void {
+    const sample = this.projectionBuffer.sample(nowMs);
+    if (sample) this.applyProjection(sample.entities);
+  }
+
+  private applyProjection(entities: WorldEntityProjection[]): void {
     this.latest = entities;
     const active = new Set(entities.map((entity) => entity.descriptor.entity_id));
     for (const entity of entities) {
@@ -121,22 +231,14 @@ export class VisibleEntityWorld {
     }
   }
 
-  tick(deltaSeconds: number): void {
-    const blend = 1 - Math.exp(-Math.min(deltaSeconds, 0.1) * 12);
-    for (const view of this.views.values()) {
-      view.root.position.x += (view.targetX - view.root.position.x) * blend;
-      view.root.position.y += (view.targetY - view.root.position.y) * blend;
-      view.root.zIndex = view.root.position.y;
-    }
-  }
-
   destroy(): void {
     this.root.destroy({ children: true });
     this.views.clear();
     this.pending.clear();
+    this.projectionBuffer.reset();
   }
 
-  private async create(entity: VisualEntityProjection): Promise<void> {
+  private async create(entity: WorldEntityProjection): Promise<void> {
     const id = entity.descriptor.entity_id;
     if (this.pending.has(id)) return;
     this.pending.add(id);
@@ -151,14 +253,14 @@ export class VisibleEntityWorld {
       const current = this.latest.find((candidate) => candidate.descriptor.entity_id === id);
       if (!current) return;
       const spine = Spine.from({ skeleton: skeletonAlias, atlas: atlasAlias, autoUpdate: true });
-      this.applyMigrationVisualSkin(spine, family);
+      const skinSignature = this.applyProjectionVisualSkin(spine, family, current);
       const root = new Container();
       root.eventMode = current.selectable ? "static" : "none";
       root.cursor = current.selectable ? "pointer" : "default";
       root.on("pointertap", () => this.onSelect(id));
       root.addChild(spine);
-      this.entities.addChild(root);
-      const view = { root, spine, animation: "", family, targetX: current.x, targetY: current.y };
+      this.activeLayer().addChild(root);
+      const view = { root, spine, animation: "", family, skinSignature };
       root.position.set(current.x, current.y);
       this.views.set(id, view);
       this.project(view, current);
@@ -169,22 +271,52 @@ export class VisibleEntityWorld {
     }
   }
 
-  private project(view: ActorView, entity: VisualEntityProjection): void {
-    view.targetX = entity.x;
-    view.targetY = entity.y;
+  private project(view: ActorView, entity: WorldEntityProjection): void {
+    const projected = projectNormalizedEntityPoint(this.mode, entity.x, entity.y);
+    const position = this.resolveActorPosition(projected.x, projected.y);
+    view.root.position.set(position.x, position.y);
+    view.root.zIndex = villageActorDepth(position.y, SCENE_WORLD_HEIGHT);
     view.root.eventMode = entity.selectable ? "static" : "none";
     view.root.cursor = entity.selectable ? "pointer" : "default";
     const direction = entity.facing === "left" ? -1 : 1;
-    view.spine.scale.set(2.15 * direction, 2.15);
-    if (view.animation === entity.animation) return;
-    if (view.spine.skeleton.data.findAnimation(entity.animation)) {
-      view.spine.state.setAnimation(0, entity.animation, true);
-      view.animation = entity.animation;
+    const actorScale: Record<string, number> = {
+      hunter: 1.02,
+      Chief: 1.08,
+      Npc: 0.80,
+      npc_animal: 0.68,
+      pet: 0.58,
+      mon_goldblin: 0.88,
+      mon_a_01_1: 0.88,
+    };
+    const scale = actorScale[view.family] ?? 0.72;
+    view.spine.scale.set(scale * direction, scale);
+    if (view.family === "hunter") {
+      const visual = hunterActorVisual(entity);
+      view.root.tint = visual.tint;
+      if (visual.signature !== view.skinSignature) view.skinSignature = this.applyProjectionVisualSkin(view.spine, view.family, entity);
+    }
+    const requestedAnimation = view.family === "hunter" ? hunterActorVisual(entity).animation ?? entity.animation : entity.animation;
+    if (view.animation === requestedAnimation) return;
+    if (view.spine.skeleton.data.findAnimation(requestedAnimation)) {
+      view.spine.state.setAnimation(0, requestedAnimation, true);
+      view.animation = requestedAnimation;
     } else {
-      console.warn(`Animation ${entity.animation} is missing from ${view.family}; setup pose retained.`);
+      console.warn(`Animation ${requestedAnimation} is missing from ${view.family}; setup pose retained.`);
       view.spine.state.clearTrack(0);
       view.animation = "";
     }
+  }
+
+  private resolveActorPosition(x: number, y: number): { x: number; y: number } {
+    for (const footprint of this.buildingFootprints) {
+      if (!this.buildingSprites.has(footprint.id)) continue;
+      if (Math.abs(x - footprint.x) > footprint.halfWidth || y < footprint.top || y > footprint.y + 24) continue;
+      // Keep actors on a walkable lane in front of or behind a building, never inside its body.
+      const behind = footprint.top - 18;
+      const inFront = footprint.y + 28;
+      y = Math.abs(y - behind) < Math.abs(y - inFront) ? behind : inFront;
+    }
+    return { x, y };
   }
 
   private loadFamily(family: string, skeletonAlias: string, atlasAlias: string, bundle: ActorBundle): Promise<void> {
@@ -200,7 +332,7 @@ export class VisibleEntityWorld {
     return load;
   }
 
-  private applyMigrationVisualSkin(spine: Spine, family: string): void {
+  private applyProjectionVisualSkin(spine: Spine, family: string, entity: WorldEntityProjection): string {
     const candidates: Record<string, string[]> = {
       hunter: ["All_h1"],
       Chief: ["chief_body_01", "cos_01"],
@@ -209,7 +341,8 @@ export class VisibleEntityWorld {
       mon_goldblin: ["lv1"],
       mon_a_01_1: ["lv1"],
     };
-    const skinNames = candidates[family] ?? [];
+    const projected = family === "hunter" ? hunterActorVisual(entity) : null;
+    const skinNames = projected?.skinNames ?? candidates[family] ?? [];
     if (skinNames.length === 1 && spine.skeleton.data.findSkin(skinNames[0])) {
       spine.skeleton.setSkinByName(skinNames[0]);
     } else if (skinNames.length > 1) {
@@ -221,39 +354,10 @@ export class VisibleEntityWorld {
       spine.skeleton.setSkin(composition);
     }
     spine.skeleton.setSlotsToSetupPose();
+    return projected?.signature ?? skinNames.join("|");
   }
 
-  private async buildVillage(manifest: VisibleWorldManifest): Promise<void> {
-    const fallback: ScenePiece[] = [
-      ["background_01__1548.png", 4.30, 14.11], ["background_02__1515.png", 9.42, 14.11],
-      ["background_05__1522.png", 24.78, 15.39], ["background_06__1547.png", 29.90, 14.11],
-      ["background_07__1533.png", 4.30, 8.99], ["background_08__1530.png", 9.42, 8.99],
-      ["background_11__1508.png", 24.78, 7.71], ["background_12__1519.png", 29.90, 8.99],
-      ["background_13__1506.png", 4.30, 3.87], ["background_14__1541.png", 9.42, 3.87],
-      ["background_15__1542.png", 14.54, 3.87], ["background_16__1517.png", 19.66, 3.87],
-      ["background_17__1516.png", 24.78, 3.87], ["background_18__1535.png", 29.90, 3.87],
-    ].map(([name, x, y]) => ({ publicPath: `/content/releases/original-flow-v1/sprites/${name}`, x: x as number, y: y as number, z: 499 }));
-    const village = manifest.village;
-    const pieces = village?.tiles?.length ? village.tiles : fallback;
-    await this.addScenePieces(this.villageLayer, pieces, 499);
-    await this.addScenePieces(this.villageLayer, village?.foreground ?? [], 486);
-    await this.addScenePieces(this.villageLayer, village?.decorations ?? [], 492);
-  }
-
-  private async addScenePieces(layer: Container, pieces: ScenePiece[], defaultZ: number): Promise<void> {
-    await Promise.all(pieces.map(async (piece) => {
-      try {
-        const texture = await Assets.load<Texture>(piece.publicPath);
-        const sprite = new Sprite(texture);
-        sprite.anchor.set(piece.anchor?.x ?? 0.5, piece.anchor?.y ?? 0.5);
-        // Unity scene units map to the recovered 32 px grid used by the web viewport.
-        sprite.position.set(piece.x * 31.25, (18 - piece.y) * 31.25);
-        sprite.scale.set(piece.scale ?? 0.3125);
-        sprite.zIndex = piece.z ?? defaultZ;
-        layer.addChild(sprite);
-      } catch (error) {
-        console.warn(`Could not load village piece ${piece.publicPath}.`, error);
-      }
-    }));
+  private activeLayer(): Container {
+    return this.villageLayer;
   }
 }

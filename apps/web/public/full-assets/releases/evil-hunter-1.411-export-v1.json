@@ -5,8 +5,7 @@
   "gameVersion": "1.411",
   "generatedFrom": {
     "assetIndex": "game-assets/asset-index.json",
-    "sourceInventory": "game-assets/manifests/full-source-inventory.json",
-    "assetIndexGeneratedAt": "2026-07-22T18:18:05.251Z"
+    "sourceInventory": "game-assets/manifests/full-source-inventory.json"
   },
   "runtime": {
     "catalogPath": "/full-assets/releases/evil-hunter-1.411-export-v1.json",

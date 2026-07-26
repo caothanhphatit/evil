@@ -39,8 +39,10 @@ export class ServerSequenceGuard {
 export class WorldClient {
   private socket: WebSocket | null = null;
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  private welcomeTimer: ReturnType<typeof setTimeout> | null = null;
   private stopped = false;
   private connectionAttempt = 0;
+  private pendingBoot = false;
   private readonly socketFactory: (url: string) => WebSocket;
   private readonly fetchFn: typeof fetch;
   private readonly uuidFactory: () => string;
@@ -69,17 +71,39 @@ export class WorldClient {
   connect(): void { this.stopped = false; void this.openSocket("connecting"); }
   disconnect(): void {
     this.stopped = true;
+    this.pendingBoot = false;
     this.connectionAttempt += 1;
     this.socket?.close();
     this.socket = null;
     if (this.reconnectTimer !== null) clearTimeout(this.reconnectTimer);
     this.reconnectTimer = null;
+    if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
+    this.welcomeTimer = null;
   }
-  completeBoot(): boolean { return this.send({ type: "complete_boot" }); }
+  completeBoot(): boolean {
+    if (this.stopped) return false;
+    this.pendingBoot = true;
+    this.send({ type: "complete_boot" });
+    return true;
+  }
   selectBottomMenu(menu: BottomMenuIntent): boolean { return this.send({ type: "select_bottom_menu", menu }); }
   navigateBack(): boolean { return this.send({ type: "navigate_back" }); }
   enterField(): boolean { return this.send({ type: "enter_field" }); }
   selectEntity(entityId: string): boolean { return this.send({ type: "select_entity", entity_id: entityId }); }
+  constructBuilding(buildingId: string): boolean { return this.send({ type: "construct_building", building_id: buildingId }); }
+  constructBuildingAt(buildingId: string, gridX: number, gridY: number): boolean { return this.send({ type: "construct_building_at", building_id: buildingId, grid_x: gridX, grid_y: gridY }); }
+  upgradeBuilding(instanceId: string): boolean { return this.send({ type: "upgrade_building", instance_id: instanceId }); }
+  moveBuilding(instanceId: string, gridX: number, gridY: number): boolean { return this.send({ type: "move_building", instance_id: instanceId, grid_x: gridX, grid_y: gridY }); }
+  useBuilding(instanceId: string): boolean { return this.send({ type: "use_building", instance_id: instanceId }); }
+  startBuildingService(instanceId: string, hunterId: number, productId: string): boolean { return this.send({ type: "start_building_service", instance_id: instanceId, hunter_id: hunterId, product_id: productId }); }
+  setMaterialRequest(instanceId: string, materialId: string, quantity: number): boolean { return this.send({ type: "set_material_request", instance_id: instanceId, material_id: materialId, quantity }); }
+  cancelMaterialRequest(instanceId: string, materialId: string): boolean { return this.send({ type: "cancel_material_request", instance_id: instanceId, material_id: materialId }); }
+  craftShopItem(instanceId: string, recipeId: string, quantity: number, materialId: string | null = null): boolean { return this.send({ type: "craft_shop_item", instance_id: instanceId, recipe_id: recipeId, material_id: materialId, quantity }); }
+  purchaseShopItem(shopId: string, productId: string): boolean { return this.send({ type: "purchase_shop_item", shop_id: shopId, product_id: productId }); }
+  sellShopItem(shopId: string, productId: string): boolean { return this.send({ type: "sell_shop_item", shop_id: shopId, product_id: productId }); }
+  openHunterProgression(hunterId: number): boolean { return this.send({ type: "open_hunter_progression", hunter_id: hunterId }); }
+  banishHunter(hunterId: number): boolean { return this.send({ type: "banish_hunter", hunter_id: hunterId }); }
+  equipHunterItem(hunterId: number, itemId: number): boolean { return this.send({ type: "equip_hunter_item", hunter_id: hunterId, item_id: itemId }); }
   requestResync(): boolean { return this.send({ type: "request_resync" }); }
 
   private async openSocket(status: ConnectionStatus): Promise<void> {
@@ -96,18 +120,37 @@ export class WorldClient {
       if (!response.ok) throw new Error(`Session bootstrap failed with HTTP ${response.status}`);
       if (this.stopped || attempt !== this.connectionAttempt) return;
 
-      this.socket = this.socketFactory(this.webSocketUrl);
-      this.socket.addEventListener("open", () => this.onStatus("online"));
-      this.socket.addEventListener("message", (event) => this.handleMessage(event.data));
-      this.socket.addEventListener("error", () => this.socket?.close());
-      this.socket.addEventListener("close", () => this.scheduleReconnect());
+      const socket = this.socketFactory(this.webSocketUrl);
+      this.socket = socket;
+      socket.addEventListener("open", () => {
+        if (this.socket !== socket) return;
+        if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
+        this.welcomeTimer = setTimeout(() => {
+          if (this.socket !== socket || this.envelopeSequencer.isReady()) return;
+          console.warn("WebSocket opened but the server welcome timed out.");
+          this.failProtocol(socket);
+        }, 10000);
+      });
+      socket.addEventListener("message", (event) => {
+        if (this.socket === socket) this.handleMessage(event.data, socket);
+      });
+      socket.addEventListener("error", () => {
+        if (this.socket === socket) socket.close();
+      });
+      socket.addEventListener("close", () => {
+        if (this.socket !== socket) return;
+        this.socket = null;
+        if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
+        this.welcomeTimer = null;
+        this.scheduleReconnect();
+      });
     } catch (error) {
       console.warn("Session bootstrap or WebSocket connection failed.", error);
       if (attempt === this.connectionAttempt) this.scheduleReconnect();
     }
   }
 
-  private handleMessage(data: unknown): void {
+  private handleMessage(data: unknown, socket: WebSocket): void {
     try {
       const wire = String(data);
       if (new TextEncoder().encode(wire).byteLength > MAX_MESSAGE_BYTES) throw new Error("Server message exceeds protocol limit");
@@ -115,15 +158,41 @@ export class WorldClient {
       if (!isServerEnvelope(parsed) || parsed.version !== PROTOCOL_VERSION || !this.serverSequenceGuard.accept(parsed.sequence)) throw new Error("Unsupported or out-of-order server envelope");
       const message = parsed.payload;
       if (message.type === "welcome") {
+        if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
+        this.welcomeTimer = null;
         this.envelopeSequencer.acceptWelcome(message.session_id);
         this.onPlayerIdentity(message.player_token);
+        this.onStatus("online");
         this.requestResync();
+        if (message.snapshot.screen === "boot") this.flushPendingBoot();
+        else this.pendingBoot = false;
       }
       if (message.type === "intent_result") this.onIntentFeedback({ intent: message.intent, accepted: message.accepted, reason: message.reason });
       if (message.type === "binding_blocked") this.onBindingBlocked({ intent: message.intent, blockers: message.blockers });
       const snapshot = snapshotFromMessage(message);
-      if (snapshot) this.onSnapshot(snapshot);
-    } catch (error) { console.warn("Ignored malformed server message.", error); }
+      if (snapshot) {
+        if (snapshot.screen !== "boot") this.pendingBoot = false;
+        this.onSnapshot(snapshot);
+      }
+    } catch (error) {
+      console.warn("Protocol fault; reconnecting for a clean resync.", error);
+      this.failProtocol(socket);
+    }
+  }
+
+  private flushPendingBoot(): void {
+    if (this.pendingBoot && this.send({ type: "complete_boot" })) this.pendingBoot = false;
+  }
+
+  private failProtocol(socket: WebSocket): void {
+    if (this.socket !== socket) return;
+    this.socket = null;
+    if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
+    this.welcomeTimer = null;
+    this.envelopeSequencer.reset();
+    this.serverSequenceGuard.reset();
+    socket.close(4002, "Protocol error");
+    this.scheduleReconnect();
   }
 
   private send(command: ClientCommand): boolean {
@@ -140,16 +209,30 @@ export class WorldClient {
 }
 
 function defaultApiBaseUrl(): string {
-  const protocol = location.protocol === "https:" ? "https" : "http";
-  return import.meta.env.VITE_WORLD_API_URL ?? `${protocol}://${location.hostname}:8080`;
+  return apiBaseUrlFor(location, window.__EVIL_HUNTER_CONFIG__?.apiBaseUrl || import.meta.env.VITE_WORLD_API_URL);
 }
 
 function defaultWebSocketUrl(): string {
-  const protocol = location.protocol === "https:" ? "wss" : "ws";
-  return import.meta.env.VITE_WORLD_WS_URL ?? `${protocol}://${location.hostname}:8080/ws`;
+  return webSocketUrlFor(location, window.__EVIL_HUNTER_CONFIG__?.webSocketUrl || import.meta.env.VITE_WORLD_WS_URL);
+}
+
+export function apiBaseUrlFor(currentLocation: Pick<Location, "origin">, configured?: string): string {
+  return stripTrailingSlash(configured?.trim() || currentLocation.origin);
+}
+
+export function webSocketUrlFor(currentLocation: Pick<Location, "protocol" | "host">, configured?: string): string {
+  if (configured?.trim()) return configured.trim();
+  const protocol = currentLocation.protocol === "https:" ? "wss" : "ws";
+  return `${protocol}://${currentLocation.host}/ws`;
 }
 
 function stripTrailingSlash(value: string): string { return value.replace(/\/+$/, ""); }
+
+declare global {
+  interface Window {
+    __EVIL_HUNTER_CONFIG__?: { apiBaseUrl?: string; webSocketUrl?: string };
+  }
+}
 
 function snapshotFromMessage(message: ServerMessage): OriginalFlowSnapshot | null {
   if (message.type === "welcome" || message.type === "resync" || message.type === "world_update" || message.type === "intent_result" || message.type === "binding_blocked") return message.snapshot;

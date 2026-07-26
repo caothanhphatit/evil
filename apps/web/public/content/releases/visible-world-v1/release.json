@@ -1,22 +1,60 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "releaseId": "visible-world-v1",
-  "bindingState": "migration-derived-visible-world",
+  "releaseState": "development-evidence",
+  "bindingState": "mixed-resolved-and-unresolved",
+  "evidencePolicy": {
+    "runtimeAuthority": "presentation-only",
+    "fixtureLabelRequired": true,
+    "allowedConfidence": [
+      "confirmed",
+      "strongly-inferred",
+      "tentative",
+      "unknown"
+    ],
+    "note": "Source-complete assets may still have unresolved skin, spawn, role, map, or gameplay bindings."
+  },
+  "runtimeDiagnostics": {
+    "fixture": true,
+    "unresolved": [
+      "starter-skins",
+      "dynamic-spawns",
+      "first-field-map",
+      "first-field-monster",
+      "gameplay-rules",
+      "town-building-placement"
+    ]
+  },
   "map": {
+    "sourceNamespace": "immutable-export",
     "sourcePath": "textures/map_new01__185.png",
     "publicPath": "/content/releases/visible-world-v1/maps/map_new01.png",
     "bytes": 1029228,
-    "sha256": "009f9c67b67d294c91992e4ad7fb5fcea71a32bef9b621a098cc200e80432f3f"
+    "sha256": "009f9c67b67d294c91992e4ad7fb5fcea71a32bef9b621a098cc200e80432f3f",
+    "runtimeUse": "migration-fixture",
+    "evidence": {
+      "resolution": "candidate",
+      "confidence": "tentative",
+      "note": "map_new01 is source-confirmed but is not verified as the original first field or a complete village map."
+    }
   },
   "fieldMap": {
+    "sourceNamespace": "immutable-export",
     "sourcePath": "textures/map_new01__185.png",
     "publicPath": "/content/releases/visible-world-v1/maps/map_new01.png",
     "bytes": 1029228,
-    "sha256": "009f9c67b67d294c91992e4ad7fb5fcea71a32bef9b621a098cc200e80432f3f"
+    "sha256": "009f9c67b67d294c91992e4ad7fb5fcea71a32bef9b621a098cc200e80432f3f",
+    "runtimeUse": "migration-fixture",
+    "evidence": {
+      "resolution": "candidate",
+      "confidence": "tentative",
+      "note": "map_new01 is source-confirmed but is not verified as the original first field or a complete village map."
+    }
   },
   "village": {
     "tiles": [
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_01__1548.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_01__1548.png",
         "bytes": 32025,
@@ -26,6 +64,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_02__1515.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_02__1515.png",
         "bytes": 107875,
@@ -35,6 +74,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_05__1522.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_05__1522.png",
         "bytes": 11141,
@@ -44,6 +84,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_06__1547.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_06__1547.png",
         "bytes": 95049,
@@ -53,6 +94,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_07__1533.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_07__1533.png",
         "bytes": 149875,
@@ -62,6 +104,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_08__1530.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_08__1530.png",
         "bytes": 108474,
@@ -71,6 +114,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_11__1508.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_11__1508.png",
         "bytes": 49284,
@@ -80,6 +124,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_12__1519.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_12__1519.png",
         "bytes": 155464,
@@ -89,6 +134,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_13__1506.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_13__1506.png",
         "bytes": 58024,
@@ -98,6 +144,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_14__1541.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_14__1541.png",
         "bytes": 145239,
@@ -107,6 +154,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_15__1542.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_15__1542.png",
         "bytes": 101323,
@@ -116,6 +164,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_16__1517.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_16__1517.png",
         "bytes": 120753,
@@ -125,6 +174,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_17__1516.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_17__1516.png",
         "bytes": 156659,
@@ -134,6 +184,7 @@
         "z": 499
       },
       {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/background_18__1535.png",
         "publicPath": "/content/releases/visible-world-v1/village/background/background_18__1535.png",
         "bytes": 88251,
@@ -141,11 +192,32 @@
         "x": 29.9,
         "y": 3.87,
         "z": 499
+      },
+      {
+        "sourceNamespace": "immutable-export",
+        "sourcePath": "sprites/back_anim_a_01__1529.png",
+        "publicPath": "/content/releases/visible-world-v1/village/background/back_anim_a_01__1529.png",
+        "bytes": 288215,
+        "sha256": "01bdaa9ccddc2e8cbfad9785f7853c2e3ac6b089bcda41ba4616ba70d088abf0",
+        "x": 17.1,
+        "y": 11.55,
+        "z": 494
+      },
+      {
+        "sourceNamespace": "immutable-export",
+        "sourcePath": "sprites/back_anim_b_01__1546.png",
+        "publicPath": "/content/releases/visible-world-v1/village/background/back_anim_b_01__1546.png",
+        "bytes": 177268,
+        "sha256": "eba25f5d8d8d33351d77ae01d8140c5a14cce338cb64885ccff86617c0a6be65",
+        "x": 24.78,
+        "y": 11.55,
+        "z": 494
       }
     ],
     "foreground": [
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/ground.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/ground.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/ground.png",
         "bytes": 56904,
         "sha256": "3f67e51bbb88a70b4c5eb43c399d3aa4ee0176f54dd77dbe9054be6403323dab",
@@ -155,7 +227,8 @@
         "z": 489
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/gate.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/gate.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/gate.png",
         "bytes": 10050,
         "sha256": "178b0667414c73c2f55fa9a94f7ce8bb7b25d07d628439d1af08349be66625b2",
@@ -165,7 +238,8 @@
         "z": 493
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/wallA.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/wallA.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/wallA.png",
         "bytes": 17722,
         "sha256": "56cffefa6e1e4431cbfb8b870117071d1a05b4e8eccf8d041c70953664a62356",
@@ -175,7 +249,8 @@
         "z": 486
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/wallB.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/wallB.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/wallB.png",
         "bytes": 13756,
         "sha256": "a328c065833432d184df4c04726d56e558bec0549d22c345a3a90d55b316da9a",
@@ -185,7 +260,8 @@
         "z": 488
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/wallC.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/wallC.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/wallC.png",
         "bytes": 6687,
         "sha256": "317212f4d9360ee3ad6e9a787beae809d866c96e273ef23a397dd91a8fd6335a",
@@ -195,7 +271,8 @@
         "z": 488
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/wallD.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/wallD.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/wallD.png",
         "bytes": 3878,
         "sha256": "c29eabf0ff384d0402db9b0cd8e19f6eb4bd990e4865006bed3f8180a64c092c",
@@ -205,7 +282,8 @@
         "z": 490
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/wallE.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/wallE.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/wallE.png",
         "bytes": 13839,
         "sha256": "7499947307c8a047f38f654c82eb939c3e70a2fb6d3d359eb9c936663bc2d2ba",
@@ -215,7 +293,8 @@
         "z": 492
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/bridgeA.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/bridgeA.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/bridgeA.png",
         "bytes": 4708,
         "sha256": "39ffe0d1149e9e8de801043b4d10fdfbb85220b04ec641401c05e37d681245d4",
@@ -225,7 +304,8 @@
         "z": 491
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/bridgeB.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/bridgeB.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/bridgeB.png",
         "bytes": 7695,
         "sha256": "ee87afb92dcbdf5a68c6e3c9172cfc18b0aab342561c06891ec2d89917e8563f",
@@ -235,7 +315,8 @@
         "z": 487
       },
       {
-        "sourcePath": "game-assets/extracted/exported/village/foreground/bridgeC.png",
+        "sourceNamespace": "normalized-evidence",
+        "sourcePath": "game-assets/normalized/village/foreground/bridgeC.png",
         "publicPath": "/content/releases/visible-world-v1/village/foreground/bridgeC.png",
         "bytes": 6193,
         "sha256": "60605d2fe74b64b35d00fce05bcba2a8e6429e8b63f019491bf5f46c2828fd1c",
@@ -254,7 +335,8 @@
         "z": 492,
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
             "bytes": 7801,
             "sha256": "18e984d87c2d57046a248c47b4eeeba61da4c6bb9bb6265b083411b36908e6cf",
@@ -262,7 +344,8 @@
             "name": "img_farm_npc_1_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
             "bytes": 7781,
             "sha256": "672012446f8450157ba0f6d62339704062244f45f6a427f2fc01e9e0310c4d36",
@@ -270,7 +353,8 @@
             "name": "img_farm_npc_1_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
             "bytes": 7778,
             "sha256": "7158c92444f506b934ae9118cea67872ce8e4664b5ad5a2609560b91686ddfe8",
@@ -278,7 +362,8 @@
             "name": "img_farm_npc_1_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
             "bytes": 7869,
             "sha256": "354da1066fb431e6e1916d4c42ac6bd88791cacb315e882ca4f6b85084dcc92b",
@@ -295,7 +380,8 @@
         "z": 492,
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
             "bytes": 704,
             "sha256": "4f36996512d691b55da6ab873028fb7e9938af09eb7ed752af8ea81fbd3ca16f",
@@ -303,7 +389,8 @@
             "name": "img_farm_npc_2_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
             "bytes": 674,
             "sha256": "366692f5a514fd8d9881d48ed396b760b1e585fde4cfd9107e403969eaca5809",
@@ -311,7 +398,8 @@
             "name": "img_farm_npc_2_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
             "bytes": 688,
             "sha256": "171611de3d4f4c92d09a79ed77aed4002683cf6b818e8f6479f4fa4a1fa80805",
@@ -319,7 +407,8 @@
             "name": "img_farm_npc_2_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
             "bytes": 702,
             "sha256": "d3d6be88893b117612321c26d5ec975404602058b31809be1b5c81725cd61387",
@@ -336,7 +425,8 @@
         "z": 492,
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
             "bytes": 8179,
             "sha256": "fea53d25123410a86e088fd982c20e761f73f4733cc581c36229d724625a54b6",
@@ -344,7 +434,8 @@
             "name": "fallen_pasture_npc_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
             "bytes": 8178,
             "sha256": "73b97574fbcad66ceee13e19a0bf3ff59926902c68ba73a5d407588dc9b95aea",
@@ -352,7 +443,8 @@
             "name": "fallen_pasture_npc_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
             "bytes": 8336,
             "sha256": "304fec841a1a88df82a3e797d26e3b1973952c2839d7a7d28959b468ec0a466d",
@@ -360,7 +452,8 @@
             "name": "fallen_pasture_npc_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
             "bytes": 8328,
             "sha256": "c8f4808626876379e0befd999b3d2b667e61028e8d2ba8eeece93b8412e47ca2",
@@ -368,7 +461,8 @@
             "name": "fallen_pasture_npc_3"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
             "bytes": 8179,
             "sha256": "f297bf42ffb97161a5648b3eb1692f7629daf040c9aba4d3ffb0ae0e747e86b6",
@@ -376,7 +470,8 @@
             "name": "fallen_pasture_npc_4"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
             "bytes": 8228,
             "sha256": "dcd807cc817ba8b35a169b4a733cea94b1395365feedddbcaaa2b7b064fb63fe",
@@ -387,6 +482,7 @@
       },
       {
         "id": "mole_npc_1",
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/img_mole_npc_1_0__382.png",
         "publicPath": "/content/releases/visible-world-v1/village/decorations/mole_npc_1.png",
         "bytes": 1204,
@@ -397,6 +493,7 @@
       },
       {
         "id": "mole_npc_2",
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/img_mole_npc_2_0__856.png",
         "publicPath": "/content/releases/visible-world-v1/village/decorations/mole_npc_2.png",
         "bytes": 2031,
@@ -407,6 +504,7 @@
       },
       {
         "id": "rift_village_npc",
+        "sourceNamespace": "immutable-export",
         "sourcePath": "sprites/img_devilmotion_01_0__8345.png",
         "publicPath": "/content/releases/visible-world-v1/village/decorations/rift_village_npc.png",
         "bytes": 4723,
@@ -425,7 +523,8 @@
         },
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_0.png",
             "bytes": 7801,
             "sha256": "18e984d87c2d57046a248c47b4eeeba61da4c6bb9bb6265b083411b36908e6cf",
@@ -433,7 +532,8 @@
             "name": "img_farm_npc_1_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_1.png",
             "bytes": 7781,
             "sha256": "672012446f8450157ba0f6d62339704062244f45f6a427f2fc01e9e0310c4d36",
@@ -441,7 +541,8 @@
             "name": "img_farm_npc_1_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_2.png",
             "bytes": 7778,
             "sha256": "7158c92444f506b934ae9118cea67872ce8e4664b5ad5a2609560b91686ddfe8",
@@ -449,7 +550,8 @@
             "name": "img_farm_npc_1_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_1/img_farm_npc_1_3.png",
             "bytes": 7869,
             "sha256": "354da1066fb431e6e1916d4c42ac6bd88791cacb315e882ca4f6b85084dcc92b",
@@ -466,7 +568,8 @@
         },
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_0.png",
             "bytes": 704,
             "sha256": "4f36996512d691b55da6ab873028fb7e9938af09eb7ed752af8ea81fbd3ca16f",
@@ -474,7 +577,8 @@
             "name": "img_farm_npc_2_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_1.png",
             "bytes": 674,
             "sha256": "366692f5a514fd8d9881d48ed396b760b1e585fde4cfd9107e403969eaca5809",
@@ -482,7 +586,8 @@
             "name": "img_farm_npc_2_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_2.png",
             "bytes": 688,
             "sha256": "171611de3d4f4c92d09a79ed77aed4002683cf6b818e8f6479f4fa4a1fa80805",
@@ -490,7 +595,8 @@
             "name": "img_farm_npc_2_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/farm_npc_2/img_farm_npc_2_3.png",
             "bytes": 702,
             "sha256": "d3d6be88893b117612321c26d5ec975404602058b31809be1b5c81725cd61387",
@@ -507,7 +613,8 @@
         },
         "frames": [
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_0.png",
             "bytes": 8179,
             "sha256": "fea53d25123410a86e088fd982c20e761f73f4733cc581c36229d724625a54b6",
@@ -515,7 +622,8 @@
             "name": "fallen_pasture_npc_0"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_1.png",
             "bytes": 8178,
             "sha256": "73b97574fbcad66ceee13e19a0bf3ff59926902c68ba73a5d407588dc9b95aea",
@@ -523,7 +631,8 @@
             "name": "fallen_pasture_npc_1"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_2.png",
             "bytes": 8336,
             "sha256": "304fec841a1a88df82a3e797d26e3b1973952c2839d7a7d28959b468ec0a466d",
@@ -531,7 +640,8 @@
             "name": "fallen_pasture_npc_2"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_3.png",
             "bytes": 8328,
             "sha256": "c8f4808626876379e0befd999b3d2b667e61028e8d2ba8eeece93b8412e47ca2",
@@ -539,7 +649,8 @@
             "name": "fallen_pasture_npc_3"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_4.png",
             "bytes": 8179,
             "sha256": "f297bf42ffb97161a5648b3eb1692f7629daf040c9aba4d3ffb0ae0e747e86b6",
@@ -547,7 +658,8 @@
             "name": "fallen_pasture_npc_4"
           },
           {
-            "sourcePath": "game-assets/extracted/exported/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
             "publicPath": "/content/releases/visible-world-v1/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
             "bytes": 8228,
             "sha256": "dcd807cc817ba8b35a169b4a733cea94b1395365feedddbcaaa2b7b064fb63fe",
@@ -557,24 +669,651 @@
         ]
       }
     },
-    "bindingState": "confirmed-scene-bindings"
+    "bindingState": "partial-scene-derived",
+    "confidence": "confirmed",
+    "completeness": "partial",
+    "evidenceReference": "docs/migration/corrective-village-binding-report.md",
+    "unresolved": [
+      "complete-building-layout",
+      "camera-bounds",
+      "runtime-building-state",
+      "dynamic-actor-spawns"
+    ],
+    "buildings": [
+      {
+        "id": "build_1",
+        "sourceSprite": "bd_a_001_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_1.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_1.png",
+        "bytes": 13508,
+        "sha256": "e4620dc62cd169233920ba83a3c3e13d4e018ef6d25ec4c895a610c4d5ab1482",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 110,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_2",
+        "sourceSprite": "bd_a_002_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_2.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_2.png",
+        "bytes": 4712,
+        "sha256": "febfad7289623eb353e32f4e1cbd19c07d7253dc9968113044adfc985321f4f8",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 240,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_3",
+        "sourceSprite": "bd_a_003_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_3.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_3.png",
+        "bytes": 9002,
+        "sha256": "011c2126742d16e613e1cc87bbc433994926acdb6d2371592e62b1f5ce7f73ef",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 370,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_4",
+        "sourceSprite": "bd_a_004_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_4.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_4.png",
+        "bytes": 6234,
+        "sha256": "baa22aa831f13b578fb13f9479b4c2f49871c309414096038a2ed66e4d5c4d1d",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 500,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_5",
+        "sourceSprite": "bd_a_005_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_5.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_5.png",
+        "bytes": 4476,
+        "sha256": "2ea5b185faa134364f3a98df6033d695332c545b817970dd33b509d5ed6acd7d",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 630,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_6",
+        "sourceSprite": "bd_a_006_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_6.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_6.png",
+        "bytes": 3225,
+        "sha256": "4f45af4562c3baf85ba1d414cde271e728f8c5132730613118296f975a2342be",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 760,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_7",
+        "sourceSprite": "bd_a_007_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_7.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_7.png",
+        "bytes": 8424,
+        "sha256": "90aad07affacca83b270f054e7fb67f01c6219a221b83e74c82af31614a133cf",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 890,
+        "y": 190,
+        "z": 190,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_8",
+        "sourceSprite": "bd_a_008_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_8.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_8.png",
+        "bytes": 8555,
+        "sha256": "373e7e8ae644ad8404ada48734acbb95acf3096a952364cb99fcf9138d3f01fe",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 110,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_9",
+        "sourceSprite": "bd_a_009_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_9.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_9.png",
+        "bytes": 10927,
+        "sha256": "4c10a959840257b3aa899f48a5fb4533aba784e66046592f38dbdda036c06b84",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 240,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_10",
+        "sourceSprite": "bd_a_010_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_10.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_10.png",
+        "bytes": 8674,
+        "sha256": "2930b4f35754edc24ce33ab7898e13ac38f13aec20bcd5449c771e1e721ee54c",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 370,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_11",
+        "sourceSprite": "bd_a_011_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_11.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_11.png",
+        "bytes": 7782,
+        "sha256": "e0cebc97fe21f1dd2f05c400cb8fb48df303f29198cc0e7fa2e75cbb08ea946d",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 500,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_12",
+        "sourceSprite": "bd_a_012_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_12.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_12.png",
+        "bytes": 8011,
+        "sha256": "92ea4d09a352cdebecbbe69138416050d9ee9113305d08a93e7c26e6b1d19bf2",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 630,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_13",
+        "sourceSprite": "bd_a_013_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_13.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_13.png",
+        "bytes": 9943,
+        "sha256": "e5e373cce5650b7b7954fecf6d818bf4788a267d595f2a92c9eadb1323074d5e",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 760,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_14",
+        "sourceSprite": "bd_a_014_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_14.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_14.png",
+        "bytes": 6187,
+        "sha256": "05c0653a4bf0e5a534dfaf2b84b94c49f74c6e9a4cd7f266a40d76a4b92e9740",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 890,
+        "y": 400,
+        "z": 400,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_15",
+        "sourceSprite": "bd_a_015_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_15.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_15.png",
+        "bytes": 6381,
+        "sha256": "9a7a9c9f62a872a2c59a2eb70d558e779e17c28af92b21c99fe4eba496dc6847",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 110,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_16",
+        "sourceSprite": "bd_a_016_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_16.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_16.png",
+        "bytes": 6183,
+        "sha256": "4018fb5bde1608c9df0d00d42c7a374042bba1024e4f6f4cdf24a26efeb143d6",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 240,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_17",
+        "sourceSprite": "bd_a_018_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_17.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_17.png",
+        "bytes": 4708,
+        "sha256": "84edb11a216066cc905fc589b95eb5bfb652ab02ee75694a45afd53ea16f4a89",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 370,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_18",
+        "sourceSprite": "bd_a_018_1",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_18.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_18.png",
+        "bytes": 4390,
+        "sha256": "4be0c3abffa97a55ac2ec5f6a875651be6f3beaff8c3a664a8cf6f15faa8a591",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 500,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_19",
+        "sourceSprite": "bd_a_020_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_19.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_19.png",
+        "bytes": 6434,
+        "sha256": "21f3fe904f850cfa05422fdc43a2fd3d9d84b6443fa1420c2f50034e55259edb",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 630,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_20",
+        "sourceSprite": "bd_a_021_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_20.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_20.png",
+        "bytes": 8411,
+        "sha256": "6065c16905dcdea06e262be784e240371391e0729888e83c22bad67db4662da9",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 760,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_21",
+        "sourceSprite": "bd_a_022_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_21.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_21.png",
+        "bytes": 9961,
+        "sha256": "d98365190e21e86d407dc19ec2aa5267e93b22a886332982a3ab01741b5b92a5",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 890,
+        "y": 610,
+        "z": 610,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_22",
+        "sourceSprite": "bd_a_023_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_22.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_22.png",
+        "bytes": 10104,
+        "sha256": "809d69c44c1e6ca3aac4cdb477778583ab62e3ca441d2eb36387e3c0101d503c",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 110,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_23",
+        "sourceSprite": "bd_a_024_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_23.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_23.png",
+        "bytes": 9503,
+        "sha256": "358d792fb3c90e09468996cceeaaef032787bda0ef497c06b23e09be34579bf7",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 240,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_24",
+        "sourceSprite": "bd_a_025_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_24.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_24.png",
+        "bytes": 7142,
+        "sha256": "056c409e117844c1e2d9bc55780a6cefb44567930bdf64248fa64911106682d1",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 370,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_25",
+        "sourceSprite": "bd_a_026_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_25.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_25.png",
+        "bytes": 7680,
+        "sha256": "1109ad8b95d5e39dcfe90901b006a93442711e2d6c4b9ea4fc3e03799d9275fc",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 500,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_26",
+        "sourceSprite": "bd_a_027_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_26.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_26.png",
+        "bytes": 9591,
+        "sha256": "09d8fe2308847f347bb3c894dfa8c6a8e81495099865e2d74d597e9d828f757d",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 630,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_27",
+        "sourceSprite": "bd_a_028_0",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_27.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_27.png",
+        "bytes": 2463,
+        "sha256": "0a8f9b6103f9fa72139076662a4ede3bf1c96e2ac8d024cc99aad63568cc3bff",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 760,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "id": "build_28",
+        "sourceSprite": "bd_a_028_1",
+        "sourceNamespace": "runtime-extracted",
+        "sourcePath": "apps/web/public/content/releases/visible-world-v1/village/buildings/build_28.png",
+        "publicPath": "/content/releases/visible-world-v1/village/buildings/build_28.png",
+        "bytes": 7496,
+        "sha256": "5c1e66f21997f7f0fb2f2612aefae99121f44ed60e1e89ea9563f6882241032c",
+        "runtimeUse": "migration-fixture-town-candidate",
+        "positionConfidence": "unresolved-runtime-placement",
+        "contractEvidence": "reverse-engineering/evidence/building-ui-contract-v1.json",
+        "semanticBinding": "unresolved",
+        "x": 890,
+        "y": 820,
+        "z": 820,
+        "scale": 0.78,
+        "anchor": {
+          "x": 0.5,
+          "y": 1
+        }
+      }
+    ]
   },
   "actors": [
     {
       "family": "hunter",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "resolved",
+          "confidence": "confirmed"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Hunter family is confirmed; starter skin, composition, and spawn are unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/hunter.json__245.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/hunter/hunter.json",
         "bytes": 4591829,
         "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/hunter.atlas__258.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/hunter/hunter.atlas",
         "bytes": 675809,
         "sha256": "112b655cfefe6465c2f296f2e9043212a9e91d7f50be9a9327dae377aa57d9d8"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/hunter__166.png",
         "publicPath": "/content/releases/visible-world-v1/actors/hunter/hunter.png",
         "bytes": 4203445,
@@ -583,19 +1322,47 @@
     },
     {
       "family": "Chief",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "strongly-inferred"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Chief identity is strongly inferred; village placement and starter composition are unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/Chief.json__234.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/Chief/Chief.json",
         "bytes": 165903,
         "sha256": "2506798cb20e37d49e5c8a2d36e82d915009e5ffb256aca2e023d8a09af563dc"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/Chief.atlas__268.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/Chief/Chief.atlas",
         "bytes": 54208,
         "sha256": "3b83fc06242e9502d1a38b1afb030eaa614d43f8ec1ab922fa0ab59db9bef7b6"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/Chief__175.png",
         "publicPath": "/content/releases/visible-world-v1/actors/Chief/Chief.png",
         "bytes": 145307,
@@ -604,19 +1371,47 @@
     },
     {
       "family": "Npc",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "strongly-inferred"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Generic NPC family is strongly inferred; saved-scene skin and placement are unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/Npc.json__287.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/Npc/Npc.json",
         "bytes": 162324,
         "sha256": "4b611a5732ac65bc2dc66d411c211a08e0b309b957bdbb2371058996a6bdbc2a"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/Npc.atlas__314.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/Npc/Npc.atlas",
         "bytes": 7886,
         "sha256": "a189d02d8a94746018078be019339fef78e6ffdaef9e90562661212877c63ae8"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/Npc__74.png",
         "publicPath": "/content/releases/visible-world-v1/actors/Npc/Npc.png",
         "bytes": 36106,
@@ -625,19 +1420,47 @@
     },
     {
       "family": "npc_animal",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "strongly-inferred"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Animal family is strongly inferred; species, skin, and placement are unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/npc_animal.json__294.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/npc_animal/npc_animal.json",
         "bytes": 22063,
         "sha256": "e46a227d7dd9fe8e266c5e0431c1637cd92469716d005f1725e183a598ab2ff1"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/npc_animal.atlas__326.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/npc_animal/npc_animal.atlas",
         "bytes": 984,
         "sha256": "c0992f2698a9240f776fde8bf724dc865eb99a28a1c6c8e7c24f69a2d98faffb"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/npc_animal__177.png",
         "publicPath": "/content/releases/visible-world-v1/actors/npc_animal/npc_animal.png",
         "bytes": 5757,
@@ -646,19 +1469,47 @@
     },
     {
       "family": "pet",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "strongly-inferred"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Pet family is strongly inferred; owned/default pet and placement are unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/pet.json__272.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/pet/pet.json",
         "bytes": 255616,
         "sha256": "4310aa295fc88fd1f0d0ee11c06f320081112279861ad485603895a8c501ac84"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/pet.atlas__248.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/pet/pet.atlas",
         "bytes": 6580,
         "sha256": "c8831e104e4b5038a5a219459a85e9b19f26f77fd2418468aa83b279d9bd98f1"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/pet__181.png",
         "publicPath": "/content/releases/visible-world-v1/actors/pet/pet.png",
         "bytes": 34910,
@@ -667,19 +1518,47 @@
     },
     {
       "family": "mon_goldblin",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "tentative"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Render-capable passive candidate only; no original field or combat identity is claimed."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/mon_goldblin.json__332.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_goldblin/mon_goldblin.json",
         "bytes": 41237,
         "sha256": "8f678862d096b296d19a7de0bc45d249833d1e142683049bbdb4bbce8c8213ba"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/mon_goldblin.atlas__338.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_goldblin/mon_goldblin.atlas",
         "bytes": 387,
         "sha256": "ddbf4b8a622de11159e79f1a8e120072aa9bb6300fcbb907ea616e42efd9b680"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/mon_goldblin__115.png",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_goldblin/mon_goldblin.png",
         "bytes": 4577,
@@ -688,19 +1567,47 @@
     },
     {
       "family": "mon_a_01_1",
+      "runtimeUse": "migration-fixture",
+      "evidence": {
+        "sourceBundle": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "basis": "full-asset-catalog"
+        },
+        "runtimeRole": {
+          "resolution": "candidate",
+          "confidence": "tentative"
+        },
+        "skin": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "spawn": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "legacyGameplayIdentity": {
+          "resolution": "unresolved",
+          "confidence": "unknown"
+        },
+        "note": "Render-capable combat candidate only; original first-field identity is unresolved."
+      },
       "skeleton": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/mon_a_01_1.json__289.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_a_01_1/mon_a_01_1.json",
         "bytes": 50821,
         "sha256": "9821db8a8dff12694b43c74c88502a752246cbe27bef795ce5f76dc63ad00f7a"
       },
       "atlas": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "text/mon_a_01_1.atlas__333.bin",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_a_01_1/mon_a_01_1.atlas",
         "bytes": 2104,
         "sha256": "455b264baca7dee293d147510ac6d5e3a8ec3a37429d78be1aec16d74f01fe09"
       },
       "texture": {
+        "sourceNamespace": "immutable-export",
         "sourcePath": "textures/mon_a_01_1__171.png",
         "publicPath": "/content/releases/visible-world-v1/actors/mon_a_01_1/mon_a_01_1.png",
         "bytes": 9443,

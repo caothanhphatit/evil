@@ -10,6 +10,7 @@ use uuid::Uuid;
 use std::time::Duration;
 
 use crate::{
+    identity::SessionTokenHash,
     simulation::{
         ClientCommand, ClientEnvelope, OriginalFlowSession, ServerEnvelope, ServerMessage,
         MAX_MESSAGE_BYTES, PROTOCOL_VERSION,
@@ -17,7 +18,7 @@ use crate::{
     AppState,
 };
 
-use super::session::session_token;
+use super::session::{resolve_player, session_token};
 
 pub async fn upgrade(
     ws: WebSocketUpgrade,
@@ -28,19 +29,26 @@ pub async fn upgrade(
         return StatusCode::UNAUTHORIZED.into_response();
     };
     let ttl = Duration::from_secs(state.config.session.ttl_seconds);
-    let player_token = match state.coordinator.resolve(token, ttl).await {
+    let player_token = match resolve_player(&state, token, ttl).await {
         Ok(Some(player)) => player,
         Ok(None) => return StatusCode::UNAUTHORIZED.into_response(),
         Err(_) => return StatusCode::SERVICE_UNAVAILABLE.into_response(),
     };
     ws.max_message_size(MAX_MESSAGE_BYTES)
-        .on_upgrade(move |socket| handle_socket(socket, state, token, player_token))
+        .on_upgrade(move |socket| {
+            handle_socket(
+                socket,
+                state,
+                SessionTokenHash::from_token(token),
+                player_token,
+            )
+        })
 }
 
 async fn handle_socket(
     mut socket: WebSocket,
     state: AppState,
-    session_token: Uuid,
+    session_token_hash: SessionTokenHash,
     player_token: Uuid,
 ) {
     let session_id = Uuid::new_v4();
@@ -72,7 +80,13 @@ async fn handle_socket(
         }
     };
     let mut revision = loaded.revision;
-    let mut flow = OriginalFlowSession::from_state(loaded.state);
+    let mut flow = OriginalFlowSession::from_aggregate_with_content(
+        loaded.state,
+        state.config.simulation.seed,
+        state.building_content.clone(),
+    );
+    let mut durable_state_dirty = false;
+    let mut pending_operations = Vec::new();
     let mut server_sequence = 0_u64;
     let mut last_client_sequence = 0_u64;
     if !send_message(
@@ -97,9 +111,56 @@ async fn handle_socket(
     let mut visual_interval = tokio::time::interval(Duration::from_millis(200));
     visual_interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
     visual_interval.tick().await;
+    let simulation_step =
+        Duration::from_nanos(1_000_000_000_u64 / u64::from(state.config.simulation.tick_rate));
+    let mut simulation_interval = tokio::time::interval(simulation_step);
+    simulation_interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
+    simulation_interval.tick().await;
 
     loop {
         tokio::select! {
+            _ = simulation_interval.tick() => {
+                let Some(result) = flow.advance_simulation_tick() else { continue };
+                durable_state_dirty = true;
+                pending_operations.extend(result.operations);
+                let combat_tick = result.snapshot.migration_fixture_combat.world.tick;
+                let should_checkpoint = !pending_operations.is_empty()
+                    || combat_tick % u64::from(state.config.simulation.tick_rate) == 0;
+                if should_checkpoint {
+                    match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
+                        Ok(true) => {}
+                        Ok(false) | Err(_) => {
+                            warn!(%session_id, %player_token, "player lease lost before simulation checkpoint");
+                            break;
+                        }
+                    }
+                    let durable_state = flow.durable_state();
+                    match state.repository.persist(
+                        player_token,
+                        &durable_state,
+                        revision,
+                        lease.fence,
+                        &pending_operations,
+                    ).await {
+                        Ok(next_revision) => {
+                            revision = next_revision;
+                            durable_state_dirty = false;
+                            pending_operations.clear();
+                        }
+                        Err(error) => {
+                            error!(%session_id, %player_token, %error, "failed to persist simulation state");
+                            break;
+                        }
+                    }
+                }
+                if !send_message(
+                    &mut socket,
+                    session_id,
+                    &mut server_sequence,
+                    None,
+                    &ServerMessage::WorldUpdate { snapshot: result.snapshot },
+                ).await { break; }
+            }
             _ = visual_interval.tick() => {
                 let Some(snapshot) = flow.advance_visual_tick() else { continue };
                 if !send_message(
@@ -124,7 +185,7 @@ async fn handle_socket(
                 match incoming {
                     Ok(Message::Text(text)) => {
                         match state.coordinator.allow_command(
-                            session_token,
+                            session_token_hash,
                             state.config.session.command_limit,
                             Duration::from_millis(state.config.session.command_window_ms),
                         ).await {
@@ -170,22 +231,37 @@ async fn handle_socket(
                             ).await { break; }
                             continue;
                         }
-                        if let Some(message) = flow.handle_command(command) {
-                            match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
-                                Ok(true) => {}
-                                Ok(false) | Err(_) => {
-                                    warn!(%session_id, %player_token, "player lease lost before checkpoint");
-                                    break;
+                        if let Some(result) = flow.handle_command_with_id(command, correlation_id) {
+                            pending_operations.extend(result.operations);
+                            if result.durable_state_changed || !pending_operations.is_empty() {
+                                durable_state_dirty = true;
+                                match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
+                                    Ok(true) => {}
+                                    Ok(false) | Err(_) => {
+                                        warn!(%session_id, %player_token, "player lease lost before checkpoint");
+                                        break;
+                                    }
+                                }
+                                let durable_state = flow.durable_state();
+                                match state.repository.persist(
+                                    player_token,
+                                    &durable_state,
+                                    revision,
+                                    lease.fence,
+                                    &pending_operations,
+                                ).await {
+                                    Ok(next_revision) => {
+                                        revision = next_revision;
+                                        durable_state_dirty = false;
+                                        pending_operations.clear();
+                                    }
+                                    Err(error) => {
+                                        error!(%session_id, %player_token, %error, "failed to persist flow state");
+                                        break;
+                                    }
                                 }
                             }
-                            match state.repository.persist(player_token, flow.state(), revision, lease.fence).await {
-                                Ok(next_revision) => revision = next_revision,
-                                Err(error) => {
-                                    error!(%session_id, %player_token, %error, "failed to persist flow state");
-                                    break;
-                                }
-                            }
-                            if !send_message(&mut socket, session_id, &mut server_sequence, Some(correlation_id), &message).await { break; }
+                            if !send_message(&mut socket, session_id, &mut server_sequence, Some(correlation_id), &result.message).await { break; }
                         }
                     }
                     Ok(Message::Close(_)) | Err(_) => break,
@@ -198,22 +274,30 @@ async fn handle_socket(
         }
     }
 
-    match state
-        .coordinator
-        .renew_lease(player_token, &lease, lease_ttl)
-        .await
-    {
-        Ok(true) => {
-            if let Err(error) = state
-                .repository
-                .persist(player_token, flow.state(), revision, lease.fence)
-                .await
-            {
-                warn!(%session_id, %player_token, %error, "failed final player checkpoint");
+    if durable_state_dirty {
+        match state
+            .coordinator
+            .renew_lease(player_token, &lease, lease_ttl)
+            .await
+        {
+            Ok(true) => {
+                if let Err(error) = state
+                    .repository
+                    .persist(
+                        player_token,
+                        &flow.durable_state(),
+                        revision,
+                        lease.fence,
+                        &pending_operations,
+                    )
+                    .await
+                {
+                    warn!(%session_id, %player_token, %error, "failed final player checkpoint");
+                }
             }
-        }
-        Ok(false) | Err(_) => {
-            warn!(%session_id, %player_token, "skipped final checkpoint without player lease");
+            Ok(false) | Err(_) => {
+                warn!(%session_id, %player_token, "skipped final checkpoint without player lease");
+            }
         }
     }
     debug!(%session_id, %player_token, "websocket session stopped");

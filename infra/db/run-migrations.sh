@@ -4,8 +4,10 @@ set -eu
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
 CREATE TABLE IF NOT EXISTS schema_migration (
     version TEXT PRIMARY KEY,
+    checksum TEXT,
     applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+ALTER TABLE schema_migration ADD COLUMN IF NOT EXISTS checksum TEXT;
 SQL
 
 migration_dir="/migrations/migrations"
@@ -20,13 +22,24 @@ for migration in "$@"; do
         *.down.sql) continue ;;
     esac
     version="$(basename "$migration" .sql)"
-    applied="$(psql "$DATABASE_URL" -Atc "SELECT 1 FROM schema_migration WHERE version = '$version'")"
-    if [ "$applied" = "1" ]; then
+    case "$version" in
+        *[!A-Za-z0-9_-]*) echo "Invalid migration version: $version" >&2; exit 1 ;;
+    esac
+    checksum="$(sha256sum "$migration" | awk '{print $1}')"
+    applied_checksum="$(psql "$DATABASE_URL" -Atc "SELECT COALESCE(checksum, '__missing__') FROM schema_migration WHERE version = '$version'")"
+    if [ -n "$applied_checksum" ]; then
+        if [ "$applied_checksum" = "__missing__" ]; then
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 \
+                -c "UPDATE schema_migration SET checksum = '$checksum' WHERE version = '$version'"
+        elif [ "$applied_checksum" != "$checksum" ]; then
+            echo "Migration checksum mismatch for $version" >&2
+            exit 1
+        fi
         echo "Skipping already-applied migration $version"
         continue
     fi
     echo "Applying migration $version"
     psql "$DATABASE_URL" -v ON_ERROR_STOP=1 --single-transaction \
         -f "$migration" \
-        -c "INSERT INTO schema_migration(version) VALUES ('$version')"
+        -c "INSERT INTO schema_migration(version, checksum) VALUES ('$version', '$checksum')"
 done

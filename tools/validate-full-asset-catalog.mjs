@@ -8,6 +8,8 @@ import {
   FULL_ASSET_BOOTSTRAP_PATH,
   FULL_ASSET_CATALOG_PATH,
   FULL_ASSET_PUBLIC_CATALOG_PATH,
+  compareAssetCoverage,
+  listRelativeFiles,
   readJson,
   serializeJson,
   sha256
@@ -49,6 +51,16 @@ if (expected.extractionOutcomes.filter((outcome) => outcome.state === "excluded-
 }
 
 const exportedRoot = path.join(repoRoot, EXPORTED_ROOT);
+const coverage = compareAssetCoverage(
+  expected.assets.map((asset) => asset.path),
+  await listRelativeFiles(exportedRoot)
+);
+if (coverage.missing.length || coverage.unindexed.length) {
+  throw new Error(
+    `Full export/index coverage mismatch: missing=${JSON.stringify(coverage.missing)}, ` +
+    `unindexed=${JSON.stringify(coverage.unindexed)}`
+  );
+}
 for (const asset of expected.assets) {
   const payload = await fs.readFile(path.join(exportedRoot, asset.path));
   if (payload.length !== asset.bytes) throw new Error(`Byte length mismatch: ${asset.path}`);

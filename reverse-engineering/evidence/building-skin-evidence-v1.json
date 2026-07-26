@@ -1,0 +1,4485 @@
+{
+  "contractType": "building-skin-serialized-visual-evidence",
+  "coverage": {
+    "orphanAssetKeys": 1,
+    "resolvedVisualBindings": 47,
+    "serializedRows": 61,
+    "unresolvedVisualBindings": 14
+  },
+  "familyRules": [
+    {
+      "assetKeyRule": "buildSkin_1_{buildingId-1}",
+      "evidence": "Every resolved row must satisfy the table-derived key, same-name clip/controller link, and sprite prefix.",
+      "family": "middle-ages",
+      "skinId": 1,
+      "spritePrefixRule": "bd_a_cos_{buildingId:03}_"
+    },
+    {
+      "assetKeyRule": "buildSkin_2_{buildingId}",
+      "evidence": "Every resolved row must satisfy the table-derived key, same-name clip/controller link, and sprite prefix.",
+      "family": "halloween",
+      "skinId": 2,
+      "spritePrefixRule": "bd_a_halloween_{buildingId:03}_"
+    },
+    {
+      "assetKeyRule": "buildSkin_3_{buildingId}",
+      "evidence": "Every resolved row must satisfy the table-derived key, same-name clip/controller link, and sprite prefix.",
+      "family": "christmas",
+      "skinId": 3,
+      "spritePrefixRule": "bd_a_christmas_{buildingId:03}_"
+    }
+  ],
+  "orphanAssets": [
+    {
+      "animationClipPathId": 437,
+      "animatorControllerPathId": 1108,
+      "assetKey": "buildSkin_3_29",
+      "reason": "No AdminBuildSkinData row produces this key under the exact family rules."
+    }
+  ],
+  "policy": "Missing or orphan visual assets remain explicit; no filename-similarity fallback is permitted.",
+  "rows": [
+    {
+      "buildingId": 1,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        267,
+        269,
+        271,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 0,
+      "titles": {
+        "de": "Mittelalter Stadthalle",
+        "en": "Middle Ages Town Hall",
+        "es": "Alcald\u00eda de la Edad Media",
+        "fr": "Mairie du Moyen \u00c2ge",
+        "id": "Balai Kota Abad Pertengahan",
+        "it": "Municipio medievale",
+        "ja": "\u4e2d\u4e16\u306e\u753a\u5185\u4f1a\u9928",
+        "ko": "\uc911\uc138 \ub9c8\uc744\ud68c\uad00",
+        "pt": "Prefeitura da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0420\u0430\u0442\u0443\u0448\u0430",
+        "th": "\u0e2b\u0e2d\u0e1b\u0e23\u0e30\u0e0a\u0e38\u0e21\u0e2b\u0e21\u0e39\u0e48\u0e1a\u0e49\u0e32\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "T\u00f2a th\u1ecb ch\u00ednh trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u4e3b\u57ce\u4f1a\u9986",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u4e3b\u57ce\u6703\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_0",
+          "pathId": 396
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            396
+          ],
+          "name": "buildSkin_1_0",
+          "pathId": 1067
+        },
+        "assetKey": "buildSkin_1_0",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_001_0",
+            "pathId": 1,
+            "sourceBundle": "010da04394770b14d921e4ac1afcf967",
+            "sourceSha256": "b3e1c5176eef77593b7a130d8c83221c93663e42535efbc2d9a8ae37ec078fc4"
+          },
+          {
+            "name": "bd_a_cos_001_1",
+            "pathId": 3,
+            "sourceBundle": "010da04394770b14d921e4ac1afcf967",
+            "sourceSha256": "b3e1c5176eef77593b7a130d8c83221c93663e42535efbc2d9a8ae37ec078fc4"
+          },
+          {
+            "name": "bd_a_cos_001_2",
+            "pathId": 2,
+            "sourceBundle": "010da04394770b14d921e4ac1afcf967",
+            "sourceSha256": "b3e1c5176eef77593b7a130d8c83221c93663e42535efbc2d9a8ae37ec078fc4"
+          },
+          {
+            "name": "bd_a_cos_001_1",
+            "pathId": 3,
+            "sourceBundle": "010da04394770b14d921e4ac1afcf967",
+            "sourceSha256": "b3e1c5176eef77593b7a130d8c83221c93663e42535efbc2d9a8ae37ec078fc4"
+          },
+          {
+            "name": "bd_a_cos_001_0",
+            "pathId": 1,
+            "sourceBundle": "010da04394770b14d921e4ac1afcf967",
+            "sourceSha256": "b3e1c5176eef77593b7a130d8c83221c93663e42535efbc2d9a8ae37ec078fc4"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_001_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 3,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        267,
+        272,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 1,
+      "titles": {
+        "de": "Mittelalter Handelsposten",
+        "en": "Middle Ages Trading Post",
+        "es": "Puesto de Comercio de la Edad Media",
+        "fr": "Comptoir Commercial du Moyen \u00c2ge",
+        "id": "Pos Jualan Abad Pertengahan",
+        "it": "Negozio medievale",
+        "ja": "\u4e2d\u4e16\u306e\u53d6\u5f15\u6240",
+        "ko": "\uc911\uc138 \uac70\ub798\uc18c",
+        "pt": "Posto Comercial da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0422\u043e\u0440\u0433\u043e\u0432\u044b\u0439 \u041f\u043e\u0441\u0442",
+        "th": "\u0e15\u0e25\u0e32\u0e14\u0e0b\u0e37\u0e49\u0e2d\u0e02\u0e32\u0e22\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Ch\u1ee3 trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u4ea4\u6613\u6240",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u4ea4\u6613\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_2",
+          "pathId": 404
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            404
+          ],
+          "name": "buildSkin_1_2",
+          "pathId": 1075
+        },
+        "assetKey": "buildSkin_1_2",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_003_0",
+            "pathId": 3,
+            "sourceBundle": "d2d3a8336575bb448974492def794bf3",
+            "sourceSha256": "affd4ff752e70913cec8a279401d508b5540673d06d07cbae2ead0df88e69f17"
+          },
+          {
+            "name": "bd_a_cos_003_1",
+            "pathId": 2,
+            "sourceBundle": "d2d3a8336575bb448974492def794bf3",
+            "sourceSha256": "affd4ff752e70913cec8a279401d508b5540673d06d07cbae2ead0df88e69f17"
+          },
+          {
+            "name": "bd_a_cos_003_2",
+            "pathId": 1,
+            "sourceBundle": "d2d3a8336575bb448974492def794bf3",
+            "sourceSha256": "affd4ff752e70913cec8a279401d508b5540673d06d07cbae2ead0df88e69f17"
+          },
+          {
+            "name": "bd_a_cos_003_1",
+            "pathId": 2,
+            "sourceBundle": "d2d3a8336575bb448974492def794bf3",
+            "sourceSha256": "affd4ff752e70913cec8a279401d508b5540673d06d07cbae2ead0df88e69f17"
+          },
+          {
+            "name": "bd_a_cos_003_0",
+            "pathId": 3,
+            "sourceBundle": "d2d3a8336575bb448974492def794bf3",
+            "sourceSha256": "affd4ff752e70913cec8a279401d508b5540673d06d07cbae2ead0df88e69f17"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_003_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 4,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        267,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 2,
+      "titles": {
+        "de": "Mittelalter Kopfgeldh\u00fctte",
+        "en": "Middle Ages Bounty Hut",
+        "es": "Caba\u00f1a de Misiones Recompensadas de la Edad Media",
+        "fr": "Hutte des Primes du Moyen \u00c2ge",
+        "id": "Bilik Amalan Abad Pertengahan",
+        "it": "Capanno di caccia medievale",
+        "ja": "\u4e2d\u4e16\u306e\u4f9d\u983c\u6240",
+        "ko": "\uc911\uc138 \uc758\ub8b0\uc18c",
+        "pt": "Cabana de Pr\u00eamios da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0425\u0438\u0436\u0438\u043d\u0430 \u041d\u0430\u0433\u0440\u0430\u0434",
+        "th": "\u0e28\u0e39\u0e19\u0e22\u0e4c\u0e43\u0e2b\u0e49\u0e04\u0e27\u0e32\u0e21\u0e0a\u0e48\u0e27\u0e22\u0e40\u0e2b\u0e25\u0e37\u0e2d\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Tr\u1ea1m treo th\u01b0\u1edfng trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u59d4\u6258\u6240",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u59d4\u8a17\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_3",
+          "pathId": 408
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            408
+          ],
+          "name": "buildSkin_1_3",
+          "pathId": 1079
+        },
+        "assetKey": "buildSkin_1_3",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_004_0",
+            "pathId": 1,
+            "sourceBundle": "26733623d3ff82d458b3a94c34857a07",
+            "sourceSha256": "6933444eb3f3726c231ac2f825c5fce4fda7c96b7483de226d6bcbf4ab00423a"
+          },
+          {
+            "name": "bd_a_cos_004_1",
+            "pathId": 2,
+            "sourceBundle": "26733623d3ff82d458b3a94c34857a07",
+            "sourceSha256": "6933444eb3f3726c231ac2f825c5fce4fda7c96b7483de226d6bcbf4ab00423a"
+          },
+          {
+            "name": "bd_a_cos_004_2",
+            "pathId": 3,
+            "sourceBundle": "26733623d3ff82d458b3a94c34857a07",
+            "sourceSha256": "6933444eb3f3726c231ac2f825c5fce4fda7c96b7483de226d6bcbf4ab00423a"
+          },
+          {
+            "name": "bd_a_cos_004_1",
+            "pathId": 2,
+            "sourceBundle": "26733623d3ff82d458b3a94c34857a07",
+            "sourceSha256": "6933444eb3f3726c231ac2f825c5fce4fda7c96b7483de226d6bcbf4ab00423a"
+          },
+          {
+            "name": "bd_a_cos_004_0",
+            "pathId": 1,
+            "sourceBundle": "26733623d3ff82d458b3a94c34857a07",
+            "sourceSha256": "6933444eb3f3726c231ac2f825c5fce4fda7c96b7483de226d6bcbf4ab00423a"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_004_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 7,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        267,
+        272,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 3,
+      "titles": {
+        "de": "Mittelalter Waffenladen",
+        "en": "Middle Ages Weapon Shop",
+        "es": "Tienda de Armas de la Edad Media",
+        "fr": "Boutique d\u2019Armes du Moyen \u00c2ge",
+        "id": "Toko Senjata Abad Pertengahan",
+        "it": "Negozio di armi medievale",
+        "ja": "\u4e2d\u4e16\u306e\u6b66\u5668\u5e97",
+        "ko": "\uc911\uc138 \ubb34\uae30 \uc0c1\uc810",
+        "pt": "Loja de Armas da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u041e\u0440\u0443\u0436\u0438\u0439",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e2d\u0e32\u0e27\u0e38\u0e18\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Shop v\u0169 kh\u00ed trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u6b66\u5668\u5546\u5e97",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u6b66\u5668\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_6",
+          "pathId": 409
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            409
+          ],
+          "name": "buildSkin_1_6",
+          "pathId": 1080
+        },
+        "assetKey": "buildSkin_1_6",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_007_0",
+            "pathId": 1,
+            "sourceBundle": "2888b1787956db143997e27b06d1ff8f",
+            "sourceSha256": "4bb0930ed01167a57a5da25e80a3b588ccf5394abf57f7b368af337249ce164a"
+          },
+          {
+            "name": "bd_a_cos_007_1",
+            "pathId": 3,
+            "sourceBundle": "2888b1787956db143997e27b06d1ff8f",
+            "sourceSha256": "4bb0930ed01167a57a5da25e80a3b588ccf5394abf57f7b368af337249ce164a"
+          },
+          {
+            "name": "bd_a_cos_007_2",
+            "pathId": 2,
+            "sourceBundle": "2888b1787956db143997e27b06d1ff8f",
+            "sourceSha256": "4bb0930ed01167a57a5da25e80a3b588ccf5394abf57f7b368af337249ce164a"
+          },
+          {
+            "name": "bd_a_cos_007_1",
+            "pathId": 3,
+            "sourceBundle": "2888b1787956db143997e27b06d1ff8f",
+            "sourceSha256": "4bb0930ed01167a57a5da25e80a3b588ccf5394abf57f7b368af337249ce164a"
+          },
+          {
+            "name": "bd_a_cos_007_0",
+            "pathId": 1,
+            "sourceBundle": "2888b1787956db143997e27b06d1ff8f",
+            "sourceSha256": "4bb0930ed01167a57a5da25e80a3b588ccf5394abf57f7b368af337249ce164a"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_007_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 8,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        272,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 4,
+      "titles": {
+        "de": "Mittelalter R\u00fcstungsladen",
+        "en": "Middle Ages Armor Shop",
+        "es": "Tienda de Armadura de la Edad Media",
+        "fr": "Boutique d\u2019Armures du Moyen \u00c2ge",
+        "id": "Toko Baju Baja Abad Pertengahan",
+        "it": "Negozio di armature medievale",
+        "ja": "\u4e2d\u4e16\u306e\u9632\u5177\u5e97",
+        "ko": "\uc911\uc138 \ubc29\uc5b4\uad6c \uc0c1\uc810",
+        "pt": "Loja de Armaduras da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0411\u0440\u043e\u043d\u0438",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e1b\u0e49\u0e2d\u0e07\u0e01\u0e31\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Shop gi\u00e1p trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u9632\u5177\u5546\u5e97",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u9632\u5177\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_7",
+          "pathId": 410
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            410
+          ],
+          "name": "buildSkin_1_7",
+          "pathId": 1081
+        },
+        "assetKey": "buildSkin_1_7",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_008_0",
+            "pathId": 2,
+            "sourceBundle": "c80974bf3cb8be4439b702f9b9923bfc",
+            "sourceSha256": "138b2a0d06477e346bdfc8d8a1ca69f2bfb8fe39dc2bcf6e46fdfb8f42c541c1"
+          },
+          {
+            "name": "bd_a_cos_008_1",
+            "pathId": 3,
+            "sourceBundle": "c80974bf3cb8be4439b702f9b9923bfc",
+            "sourceSha256": "138b2a0d06477e346bdfc8d8a1ca69f2bfb8fe39dc2bcf6e46fdfb8f42c541c1"
+          },
+          {
+            "name": "bd_a_cos_008_2",
+            "pathId": 1,
+            "sourceBundle": "c80974bf3cb8be4439b702f9b9923bfc",
+            "sourceSha256": "138b2a0d06477e346bdfc8d8a1ca69f2bfb8fe39dc2bcf6e46fdfb8f42c541c1"
+          },
+          {
+            "name": "bd_a_cos_008_1",
+            "pathId": 3,
+            "sourceBundle": "c80974bf3cb8be4439b702f9b9923bfc",
+            "sourceSha256": "138b2a0d06477e346bdfc8d8a1ca69f2bfb8fe39dc2bcf6e46fdfb8f42c541c1"
+          },
+          {
+            "name": "bd_a_cos_008_0",
+            "pathId": 2,
+            "sourceBundle": "c80974bf3cb8be4439b702f9b9923bfc",
+            "sourceSha256": "138b2a0d06477e346bdfc8d8a1ca69f2bfb8fe39dc2bcf6e46fdfb8f42c541c1"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_008_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 9,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        267,
+        269,
+        271,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 5,
+      "titles": {
+        "de": "Mittelalter Gasthaus",
+        "en": "Middle Ages Inn",
+        "es": "Hostal de la Edad Media",
+        "fr": "Auberge du Moyen \u00c2ge",
+        "id": "Penginapan Abad Pertengahan",
+        "it": "Taverna medievale",
+        "ja": "\u4e2d\u4e16\u306e\u65c5\u9928",
+        "ko": "\uc911\uc138 \uc5ec\uad00",
+        "pt": "Pens\u00e3o da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0413\u043e\u0441\u0442\u0438\u043d\u0438\u0446\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e41\u0e23\u0e21\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "L\u1eef qu\u00e1n trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u65c5\u9986",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u65c5\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_8",
+          "pathId": 411
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            411
+          ],
+          "name": "buildSkin_1_8",
+          "pathId": 1082
+        },
+        "assetKey": "buildSkin_1_8",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_009_0",
+            "pathId": 1,
+            "sourceBundle": "bfeaa69873f3bc9459f8fe8cce136bcf",
+            "sourceSha256": "cfb5ab6d00a6203b57d3f8b263d4daf63c54e12a95f9cdb954bf0f774d3c5d94"
+          },
+          {
+            "name": "bd_a_cos_009_1",
+            "pathId": 3,
+            "sourceBundle": "bfeaa69873f3bc9459f8fe8cce136bcf",
+            "sourceSha256": "cfb5ab6d00a6203b57d3f8b263d4daf63c54e12a95f9cdb954bf0f774d3c5d94"
+          },
+          {
+            "name": "bd_a_cos_009_2",
+            "pathId": 2,
+            "sourceBundle": "bfeaa69873f3bc9459f8fe8cce136bcf",
+            "sourceSha256": "cfb5ab6d00a6203b57d3f8b263d4daf63c54e12a95f9cdb954bf0f774d3c5d94"
+          },
+          {
+            "name": "bd_a_cos_009_1",
+            "pathId": 3,
+            "sourceBundle": "bfeaa69873f3bc9459f8fe8cce136bcf",
+            "sourceSha256": "cfb5ab6d00a6203b57d3f8b263d4daf63c54e12a95f9cdb954bf0f774d3c5d94"
+          },
+          {
+            "name": "bd_a_cos_009_0",
+            "pathId": 1,
+            "sourceBundle": "bfeaa69873f3bc9459f8fe8cce136bcf",
+            "sourceSha256": "cfb5ab6d00a6203b57d3f8b263d4daf63c54e12a95f9cdb954bf0f774d3c5d94"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_009_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 10,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        267,
+        272,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 6,
+      "titles": {
+        "de": "Mittelalter Schmiede",
+        "en": "Middle Ages Blacksmith",
+        "es": "Herrer\u00eda de la Edad Media",
+        "fr": "Forgeron du Moyen \u00c2ge",
+        "id": "Pandai Besi Abad Pertengahan",
+        "it": "Fabbro medievale",
+        "ja": "\u4e2d\u4e16\u306e\u935b\u51b6\u5c4b",
+        "ko": "\uc911\uc138 \ub300\uc7a5\uac04",
+        "pt": "Ferreiro da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u041a\u0443\u0437\u043d\u0438\u0446\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e15\u0e35\u0e40\u0e2b\u0e25\u0e47\u0e01\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "L\u00f2 r\u00e8n trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u94c1\u5320\u94fa",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u9435\u5320\u92ea"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_9",
+          "pathId": 412
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            412
+          ],
+          "name": "buildSkin_1_9",
+          "pathId": 1083
+        },
+        "assetKey": "buildSkin_1_9",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_010_0",
+            "pathId": 2,
+            "sourceBundle": "987290f840e759645bf73a88cce789c9",
+            "sourceSha256": "66bc341d0d9077949d68274869c7f7d45e1bcd4e77aee25002fc467b7fd65e81"
+          },
+          {
+            "name": "bd_a_cos_010_1",
+            "pathId": 1,
+            "sourceBundle": "987290f840e759645bf73a88cce789c9",
+            "sourceSha256": "66bc341d0d9077949d68274869c7f7d45e1bcd4e77aee25002fc467b7fd65e81"
+          },
+          {
+            "name": "bd_a_cos_010_2",
+            "pathId": 3,
+            "sourceBundle": "987290f840e759645bf73a88cce789c9",
+            "sourceSha256": "66bc341d0d9077949d68274869c7f7d45e1bcd4e77aee25002fc467b7fd65e81"
+          },
+          {
+            "name": "bd_a_cos_010_1",
+            "pathId": 1,
+            "sourceBundle": "987290f840e759645bf73a88cce789c9",
+            "sourceSha256": "66bc341d0d9077949d68274869c7f7d45e1bcd4e77aee25002fc467b7fd65e81"
+          },
+          {
+            "name": "bd_a_cos_010_0",
+            "pathId": 2,
+            "sourceBundle": "987290f840e759645bf73a88cce789c9",
+            "sourceSha256": "66bc341d0d9077949d68274869c7f7d45e1bcd4e77aee25002fc467b7fd65e81"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_010_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 11,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        269,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 7,
+      "titles": {
+        "de": "Mittelalter Trankladen",
+        "en": "Middle Ages Potion Shop",
+        "es": "Tienda de Pociones de la Edad Media",
+        "fr": "Boutique de Potions du Moyen \u00c2ge",
+        "id": "Toko Ramuan Abad Pertengahan",
+        "it": "Negozio di pozioni medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30dd\u30fc\u30b7\u30e7\u30f3\u5e97",
+        "ko": "\uc911\uc138 \ud3ec\uc158 \uc0c1\uc810",
+        "pt": "Loja de Po\u00e7\u00f5es da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0417\u0435\u043b\u044c\u044f",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e42\u0e1e\u0e0a\u0e31\u0e48\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Shop d\u01b0\u1ee3c li\u1ec7u trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u836f\u6c34\u5546\u5e97",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u85e5\u6c34\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_10",
+          "pathId": 397
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            397
+          ],
+          "name": "buildSkin_1_10",
+          "pathId": 1068
+        },
+        "assetKey": "buildSkin_1_10",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_011_0",
+            "pathId": 3,
+            "sourceBundle": "0ddd45cc857315e428a674fb3832b68a",
+            "sourceSha256": "38cf58e73422984a503c14c9c399b4ccb0ba5697a4262a47c28b7c9a0c1a5a4b"
+          },
+          {
+            "name": "bd_a_cos_011_1",
+            "pathId": 1,
+            "sourceBundle": "0ddd45cc857315e428a674fb3832b68a",
+            "sourceSha256": "38cf58e73422984a503c14c9c399b4ccb0ba5697a4262a47c28b7c9a0c1a5a4b"
+          },
+          {
+            "name": "bd_a_cos_011_2",
+            "pathId": 2,
+            "sourceBundle": "0ddd45cc857315e428a674fb3832b68a",
+            "sourceSha256": "38cf58e73422984a503c14c9c399b4ccb0ba5697a4262a47c28b7c9a0c1a5a4b"
+          },
+          {
+            "name": "bd_a_cos_011_1",
+            "pathId": 1,
+            "sourceBundle": "0ddd45cc857315e428a674fb3832b68a",
+            "sourceSha256": "38cf58e73422984a503c14c9c399b4ccb0ba5697a4262a47c28b7c9a0c1a5a4b"
+          },
+          {
+            "name": "bd_a_cos_011_0",
+            "pathId": 3,
+            "sourceBundle": "0ddd45cc857315e428a674fb3832b68a",
+            "sourceSha256": "38cf58e73422984a503c14c9c399b4ccb0ba5697a4262a47c28b7c9a0c1a5a4b"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_011_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 12,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        267,
+        269,
+        271,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 8,
+      "titles": {
+        "de": "Mittelalter Krankenstation",
+        "en": "Middle Ages Infirmary",
+        "es": "Enfermer\u00eda de la Edad Media",
+        "fr": "Infirmerie du Moyen \u00c2ge",
+        "id": "Rumah Sakit Abad Pertengahan",
+        "it": "Infermeria medievale",
+        "ja": "\u4e2d\u4e16\u306e\u6cbb\u7642\u6240",
+        "ko": "\uc911\uc138 \uce58\ub8cc\uc18c",
+        "pt": "Enfermaria da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041b\u0430\u0437\u0430\u0440\u0435\u0442",
+        "th": "\u0e28\u0e39\u0e19\u0e22\u0e4c\u0e1e\u0e22\u0e32\u0e1a\u0e32\u0e25\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "B\u1ec7nh x\u00e1 trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u6cbb\u7597\u6240",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u6cbb\u7642\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_11",
+          "pathId": 398
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            398
+          ],
+          "name": "buildSkin_1_11",
+          "pathId": 1069
+        },
+        "assetKey": "buildSkin_1_11",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_012_0",
+            "pathId": 2,
+            "sourceBundle": "09a46c69c9787ed4ca824c6325c6dfcb",
+            "sourceSha256": "4017f988ba603fea738f70fb0899e6f52a9e36b193036a163451f9405788ee78"
+          },
+          {
+            "name": "bd_a_cos_012_1",
+            "pathId": 3,
+            "sourceBundle": "09a46c69c9787ed4ca824c6325c6dfcb",
+            "sourceSha256": "4017f988ba603fea738f70fb0899e6f52a9e36b193036a163451f9405788ee78"
+          },
+          {
+            "name": "bd_a_cos_012_2",
+            "pathId": 1,
+            "sourceBundle": "09a46c69c9787ed4ca824c6325c6dfcb",
+            "sourceSha256": "4017f988ba603fea738f70fb0899e6f52a9e36b193036a163451f9405788ee78"
+          },
+          {
+            "name": "bd_a_cos_012_1",
+            "pathId": 3,
+            "sourceBundle": "09a46c69c9787ed4ca824c6325c6dfcb",
+            "sourceSha256": "4017f988ba603fea738f70fb0899e6f52a9e36b193036a163451f9405788ee78"
+          },
+          {
+            "name": "bd_a_cos_012_0",
+            "pathId": 2,
+            "sourceBundle": "09a46c69c9787ed4ca824c6325c6dfcb",
+            "sourceSha256": "4017f988ba603fea738f70fb0899e6f52a9e36b193036a163451f9405788ee78"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_012_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 13,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        265,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 9,
+      "titles": {
+        "de": "Mittelalter Restaurant",
+        "en": "Middle Ages Restaurant",
+        "es": "Restaurante de la Edad Media",
+        "fr": "Restaurant du Moyen \u00c2ge",
+        "id": "Restoran Abad Pertengahan",
+        "it": "Ristorante medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30ec\u30b9\u30c8\u30e9\u30f3",
+        "ko": "\uc911\uc138 \ub808\uc2a4\ud1a0\ub791",
+        "pt": "Restaurante da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0420\u0435\u0441\u0442\u043e\u0440\u0430\u043d",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Nh\u00e0 h\u00e0ng trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u9910\u5385",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u9910\u5ef3"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_12",
+          "pathId": 399
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            399
+          ],
+          "name": "buildSkin_1_12",
+          "pathId": 1070
+        },
+        "assetKey": "buildSkin_1_12",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_013_0",
+            "pathId": 1,
+            "sourceBundle": "099107cbbfb19db4baa87d90c8346dd6",
+            "sourceSha256": "bcd536841ac49fb8b38b6591f971449a6afca63a99ed7933c53c0815ec863a3e"
+          },
+          {
+            "name": "bd_a_cos_013_1",
+            "pathId": 3,
+            "sourceBundle": "099107cbbfb19db4baa87d90c8346dd6",
+            "sourceSha256": "bcd536841ac49fb8b38b6591f971449a6afca63a99ed7933c53c0815ec863a3e"
+          },
+          {
+            "name": "bd_a_cos_013_2",
+            "pathId": 2,
+            "sourceBundle": "099107cbbfb19db4baa87d90c8346dd6",
+            "sourceSha256": "bcd536841ac49fb8b38b6591f971449a6afca63a99ed7933c53c0815ec863a3e"
+          },
+          {
+            "name": "bd_a_cos_013_1",
+            "pathId": 3,
+            "sourceBundle": "099107cbbfb19db4baa87d90c8346dd6",
+            "sourceSha256": "bcd536841ac49fb8b38b6591f971449a6afca63a99ed7933c53c0815ec863a3e"
+          },
+          {
+            "name": "bd_a_cos_013_0",
+            "pathId": 1,
+            "sourceBundle": "099107cbbfb19db4baa87d90c8346dd6",
+            "sourceSha256": "bcd536841ac49fb8b38b6591f971449a6afca63a99ed7933c53c0815ec863a3e"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_013_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 14,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 10,
+      "titles": {
+        "de": "Mittelalter Alchemistenh\u00fctte",
+        "en": "Middle Ages Alchemist's Home",
+        "es": "Casa del Alquimista de la Edad Media",
+        "fr": "Maison de l\u2019Alchimiste du Moyen \u00c2ge",
+        "id": "Rumah Ilmuwan Abad Pertengahan",
+        "it": "Casa dell'alchimista medievale",
+        "ja": "\u4e2d\u4e16\u306e\u932c\u91d1\u8853\u5e2b\u306e\u5bb6",
+        "ko": "\uc911\uc138 \uc5f0\uae08\uc220\uc0ac\uc758 \uc9d1",
+        "pt": "Casa do Alquimista da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0414\u043e\u043c \u0410\u043b\u0445\u0438\u043c\u0438\u043a\u0430",
+        "th": "\u0e1a\u0e49\u0e32\u0e19\u0e02\u0e2d\u0e07\u0e19\u0e31\u0e01\u0e41\u0e1b\u0e23\u0e18\u0e32\u0e15\u0e38\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Nh\u00e0 gi\u1ea3 kim trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u70bc\u91d1\u672f\u4e4b\u5bb6",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u7149\u91d1\u8853\u4e4b\u5bb6"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_13",
+          "pathId": 400
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            400
+          ],
+          "name": "buildSkin_1_13",
+          "pathId": 1071
+        },
+        "assetKey": "buildSkin_1_13",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_014_0",
+            "pathId": 1,
+            "sourceBundle": "516f79758852e5c43a47f8a96e0ac7d5",
+            "sourceSha256": "be1b585e8e6f20c8d06b1a2efdea0cd456976e0755c302cbac77803e6aed0663"
+          },
+          {
+            "name": "bd_a_cos_014_1",
+            "pathId": 3,
+            "sourceBundle": "516f79758852e5c43a47f8a96e0ac7d5",
+            "sourceSha256": "be1b585e8e6f20c8d06b1a2efdea0cd456976e0755c302cbac77803e6aed0663"
+          },
+          {
+            "name": "bd_a_cos_014_2",
+            "pathId": 2,
+            "sourceBundle": "516f79758852e5c43a47f8a96e0ac7d5",
+            "sourceSha256": "be1b585e8e6f20c8d06b1a2efdea0cd456976e0755c302cbac77803e6aed0663"
+          },
+          {
+            "name": "bd_a_cos_014_1",
+            "pathId": 3,
+            "sourceBundle": "516f79758852e5c43a47f8a96e0ac7d5",
+            "sourceSha256": "be1b585e8e6f20c8d06b1a2efdea0cd456976e0755c302cbac77803e6aed0663"
+          },
+          {
+            "name": "bd_a_cos_014_0",
+            "pathId": 1,
+            "sourceBundle": "516f79758852e5c43a47f8a96e0ac7d5",
+            "sourceSha256": "be1b585e8e6f20c8d06b1a2efdea0cd456976e0755c302cbac77803e6aed0663"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_014_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 15,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        265,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 11,
+      "titles": {
+        "de": "Mittelalter Verbesserungsschmiede",
+        "en": "Middle Ages Enhancement Forge",
+        "es": "Creador de Mejoramientos de la Edad Media",
+        "fr": "Forge de Renforcement du Moyen \u00c2ge",
+        "id": "Bengkel Penambahan Abad Pertengahan",
+        "it": "Forgia del potenziamento medievale",
+        "ja": "\u4e2d\u4e16\u306e\u5f37\u5316\u7cbe\u932c\u6240",
+        "ko": "\uc911\uc138 \uac15\ud654 \uc81c\ub828\uc18c",
+        "pt": "Forja de Melhoramento da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u041a\u043e\u0432\u043a\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e16\u0e25\u0e38\u0e07\u0e2d\u0e31\u0e1b\u0e40\u0e01\u0e23\u0e14\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "L\u00f2 r\u00e8n c\u01b0\u1eddng h\u00f3a trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u5f3a\u5316\u7cbe\u70bc\u6240",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u5f37\u5316\u7cbe\u7149\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_14",
+          "pathId": 401
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            401
+          ],
+          "name": "buildSkin_1_14",
+          "pathId": 1072
+        },
+        "assetKey": "buildSkin_1_14",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_015_0",
+            "pathId": 1,
+            "sourceBundle": "c78902769f4f120499ccbabbe484f813",
+            "sourceSha256": "8bfdd01d3aac69bf3c2364870f14092226367f0ae0c188fbc0cf4be7104aaaed"
+          },
+          {
+            "name": "bd_a_cos_015_1",
+            "pathId": 3,
+            "sourceBundle": "c78902769f4f120499ccbabbe484f813",
+            "sourceSha256": "8bfdd01d3aac69bf3c2364870f14092226367f0ae0c188fbc0cf4be7104aaaed"
+          },
+          {
+            "name": "bd_a_cos_015_2",
+            "pathId": 2,
+            "sourceBundle": "c78902769f4f120499ccbabbe484f813",
+            "sourceSha256": "8bfdd01d3aac69bf3c2364870f14092226367f0ae0c188fbc0cf4be7104aaaed"
+          },
+          {
+            "name": "bd_a_cos_015_1",
+            "pathId": 3,
+            "sourceBundle": "c78902769f4f120499ccbabbe484f813",
+            "sourceSha256": "8bfdd01d3aac69bf3c2364870f14092226367f0ae0c188fbc0cf4be7104aaaed"
+          },
+          {
+            "name": "bd_a_cos_015_0",
+            "pathId": 1,
+            "sourceBundle": "c78902769f4f120499ccbabbe484f813",
+            "sourceSha256": "8bfdd01d3aac69bf3c2364870f14092226367f0ae0c188fbc0cf4be7104aaaed"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_015_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 16,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        265,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 12,
+      "titles": {
+        "de": "Mittelalter Dungeoneingang",
+        "en": "Middle Ages Dungeon Entrance",
+        "es": "Entrada a la Mazmorra de la Edad Media",
+        "fr": "Entr\u00e9e de Donjon du Moyen \u00c2ge",
+        "id": "Pintu Masuk Penjara Abad Pertengahan",
+        "it": "Entrata del Dungeon medievale",
+        "ja": "\u4e2d\u4e16\u306e\u5730\u4e0b\u30c0\u30f3\u30b8\u30e7\u30f3\u306e\u5165\u308a\u53e3",
+        "ko": "\uc911\uc138 \uc9c0\ud558\ub358\uc804 \uc785\uad6c",
+        "pt": "Entrada da Masmorra da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0412\u0445\u043e\u0434 \u0432 \u041f\u043e\u0434\u0437\u0435\u043c\u0435\u043b\u044c\u0435",
+        "th": "\u0e17\u0e32\u0e07\u0e40\u0e02\u0e49\u0e32\u0e14\u0e31\u0e19\u0e40\u0e08\u0e35\u0e49\u0e22\u0e19\u0e43\u0e15\u0e49\u0e14\u0e34\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "C\u1ed5ng h\u1ea7m ng\u1ee5c trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u5730\u4e0b\u526f\u672c\u5165\u53e3",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u5730\u4e0b\u526f\u672c\u5165\u53e3"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_15",
+        "expectedSpritePrefix": "bd_a_cos_016_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 19,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        265,
+        270,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 13,
+      "titles": {
+        "de": "Mittelalter Taverne",
+        "en": "Middle Ages Tavern",
+        "es": "Taberna de la Edad Media",
+        "fr": "Taverne du Moyen \u00c2ge",
+        "id": "Warung Abad Pertengahan",
+        "it": "Ostello medievale",
+        "ja": "\u4e2d\u4e16\u306e\u98f2\u307f\u5c4b",
+        "ko": "\uc911\uc138 \uc8fc\uc810",
+        "pt": "Taverna da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0422\u0430\u0432\u0435\u0440\u043d\u0430",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e40\u0e2b\u0e25\u0e49\u0e32\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Qu\u00e1n r\u01b0\u1ee3u trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u9152\u9986",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u9152\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_18",
+          "pathId": 402
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            402
+          ],
+          "name": "buildSkin_1_18",
+          "pathId": 1073
+        },
+        "assetKey": "buildSkin_1_18",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_019_0",
+            "pathId": 2,
+            "sourceBundle": "b6a2577a9f5823848ac6d8ce0c94aabb",
+            "sourceSha256": "d151a7e558eeb0877fba4c150e1d6d98e1f0c306a095ef863c05dbcc60ccca8e"
+          },
+          {
+            "name": "bd_a_cos_019_1",
+            "pathId": 1,
+            "sourceBundle": "b6a2577a9f5823848ac6d8ce0c94aabb",
+            "sourceSha256": "d151a7e558eeb0877fba4c150e1d6d98e1f0c306a095ef863c05dbcc60ccca8e"
+          },
+          {
+            "name": "bd_a_cos_019_2",
+            "pathId": 3,
+            "sourceBundle": "b6a2577a9f5823848ac6d8ce0c94aabb",
+            "sourceSha256": "d151a7e558eeb0877fba4c150e1d6d98e1f0c306a095ef863c05dbcc60ccca8e"
+          },
+          {
+            "name": "bd_a_cos_019_1",
+            "pathId": 1,
+            "sourceBundle": "b6a2577a9f5823848ac6d8ce0c94aabb",
+            "sourceSha256": "d151a7e558eeb0877fba4c150e1d6d98e1f0c306a095ef863c05dbcc60ccca8e"
+          },
+          {
+            "name": "bd_a_cos_019_0",
+            "pathId": 2,
+            "sourceBundle": "b6a2577a9f5823848ac6d8ce0c94aabb",
+            "sourceSha256": "d151a7e558eeb0877fba4c150e1d6d98e1f0c306a095ef863c05dbcc60ccca8e"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_019_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 20,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        267,
+        271,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 14,
+      "titles": {
+        "de": "Mittelalter Accessoireladen",
+        "en": "Middle Ages Accessory Shop",
+        "es": "Tienda de Accesorios de la Edad Media",
+        "fr": "Boutique d\u2019Accessoires du Moyen \u00c2ge",
+        "id": "Toko Aksesoris Abad Pertengahan",
+        "it": "Negozio di accessori medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30a2\u30af\u30bb\u30b5\u30ea\u30fc\u5e97",
+        "ko": "\uc911\uc138 \uc545\uc138\uc0ac\ub9ac \uc0c1\uc810",
+        "pt": "Loja de Acess\u00f3rios da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0410\u043a\u0441\u0435\u0441\u0441\u0443\u0430\u0440\u043e\u0432",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e1b\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Shop ph\u1ee5 ki\u1ec7n trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u9970\u54c1\u5546\u5e97",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u98fe\u54c1\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_19",
+          "pathId": 403
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            403
+          ],
+          "name": "buildSkin_1_19",
+          "pathId": 1074
+        },
+        "assetKey": "buildSkin_1_19",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_020_0",
+            "pathId": 3,
+            "sourceBundle": "56855a5e866670f4dad8219c8e9d6149",
+            "sourceSha256": "54a183d6cbaf4a4cebc3717df5799426966cb0585f8a9a213c9d58e5a25e89a0"
+          },
+          {
+            "name": "bd_a_cos_020_1",
+            "pathId": 2,
+            "sourceBundle": "56855a5e866670f4dad8219c8e9d6149",
+            "sourceSha256": "54a183d6cbaf4a4cebc3717df5799426966cb0585f8a9a213c9d58e5a25e89a0"
+          },
+          {
+            "name": "bd_a_cos_020_2",
+            "pathId": 1,
+            "sourceBundle": "56855a5e866670f4dad8219c8e9d6149",
+            "sourceSha256": "54a183d6cbaf4a4cebc3717df5799426966cb0585f8a9a213c9d58e5a25e89a0"
+          },
+          {
+            "name": "bd_a_cos_020_1",
+            "pathId": 2,
+            "sourceBundle": "56855a5e866670f4dad8219c8e9d6149",
+            "sourceSha256": "54a183d6cbaf4a4cebc3717df5799426966cb0585f8a9a213c9d58e5a25e89a0"
+          },
+          {
+            "name": "bd_a_cos_020_0",
+            "pathId": 3,
+            "sourceBundle": "56855a5e866670f4dad8219c8e9d6149",
+            "sourceSha256": "54a183d6cbaf4a4cebc3717df5799426966cb0585f8a9a213c9d58e5a25e89a0"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_020_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 21,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 15,
+      "titles": {
+        "de": "Mittelalter Juwelier",
+        "en": "Middle Ages Jeweler",
+        "es": "Joyer\u00eda de la Edad Media",
+        "fr": "Bijoutier du Moyen \u00c2ge",
+        "id": "Tukang Emas Abad Pertengahan",
+        "it": "Gioielliere medievale",
+        "ja": "\u4e2d\u4e16\u306e\u7d30\u5de5\u6240",
+        "ko": "\uc911\uc138 \uc138\uacf5\uc18c",
+        "pt": "Joalheiro da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u042e\u0432\u0435\u043b\u0438\u0440\u043a\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e1b\u0e23\u0e30\u0e14\u0e34\u0e29\u0e10\u0e4c\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Th\u1ee3 kim ho\u00e0n trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u52a0\u5de5\u5e97",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u52a0\u5de5\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_20",
+          "pathId": 405
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            405
+          ],
+          "name": "buildSkin_1_20",
+          "pathId": 1076
+        },
+        "assetKey": "buildSkin_1_20",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_021_0",
+            "pathId": 2,
+            "sourceBundle": "f91350feb0c90dd4ebfae045a0655df2",
+            "sourceSha256": "8967b8f229a8a1bc81dd7db256239ee4a2eb0b47ab43b5fe0dc0868dcdbcd1c8"
+          },
+          {
+            "name": "bd_a_cos_021_1",
+            "pathId": 3,
+            "sourceBundle": "f91350feb0c90dd4ebfae045a0655df2",
+            "sourceSha256": "8967b8f229a8a1bc81dd7db256239ee4a2eb0b47ab43b5fe0dc0868dcdbcd1c8"
+          },
+          {
+            "name": "bd_a_cos_021_2",
+            "pathId": 1,
+            "sourceBundle": "f91350feb0c90dd4ebfae045a0655df2",
+            "sourceSha256": "8967b8f229a8a1bc81dd7db256239ee4a2eb0b47ab43b5fe0dc0868dcdbcd1c8"
+          },
+          {
+            "name": "bd_a_cos_021_1",
+            "pathId": 3,
+            "sourceBundle": "f91350feb0c90dd4ebfae045a0655df2",
+            "sourceSha256": "8967b8f229a8a1bc81dd7db256239ee4a2eb0b47ab43b5fe0dc0868dcdbcd1c8"
+          },
+          {
+            "name": "bd_a_cos_021_0",
+            "pathId": 2,
+            "sourceBundle": "f91350feb0c90dd4ebfae045a0655df2",
+            "sourceSha256": "8967b8f229a8a1bc81dd7db256239ee4a2eb0b47ab43b5fe0dc0868dcdbcd1c8"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_021_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 22,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        267,
+        272,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 16,
+      "titles": {
+        "de": "Mittelalter Haus",
+        "en": "Middle Ages House",
+        "es": "Casa de la Edad Media",
+        "fr": "Maison du Moyen \u00c2ge",
+        "id": "Rumah Abad Pertengahan",
+        "it": "Casa medievale",
+        "ja": "\u4e2d\u4e16\u306e\u90b8\u5b85",
+        "ko": "\uc911\uc138 \uc800\ud0dd",
+        "pt": "Casa da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0414\u043e\u043c",
+        "th": "\u0e1a\u0e49\u0e32\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Nh\u00e0 trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u4f4f\u6240",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u4f4f\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_21",
+          "pathId": 406
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            406
+          ],
+          "name": "buildSkin_1_21",
+          "pathId": 1077
+        },
+        "assetKey": "buildSkin_1_21",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_022_0",
+            "pathId": 2,
+            "sourceBundle": "9a7dd0d1c8097ba43ba404a88e9dd48f",
+            "sourceSha256": "12e7947c623d133f81045b9a9192f0a5ce5ba7a1559a70c87ba74f3ec1bfe404"
+          },
+          {
+            "name": "bd_a_cos_022_1",
+            "pathId": 1,
+            "sourceBundle": "9a7dd0d1c8097ba43ba404a88e9dd48f",
+            "sourceSha256": "12e7947c623d133f81045b9a9192f0a5ce5ba7a1559a70c87ba74f3ec1bfe404"
+          },
+          {
+            "name": "bd_a_cos_022_2",
+            "pathId": 3,
+            "sourceBundle": "9a7dd0d1c8097ba43ba404a88e9dd48f",
+            "sourceSha256": "12e7947c623d133f81045b9a9192f0a5ce5ba7a1559a70c87ba74f3ec1bfe404"
+          },
+          {
+            "name": "bd_a_cos_022_1",
+            "pathId": 1,
+            "sourceBundle": "9a7dd0d1c8097ba43ba404a88e9dd48f",
+            "sourceSha256": "12e7947c623d133f81045b9a9192f0a5ce5ba7a1559a70c87ba74f3ec1bfe404"
+          },
+          {
+            "name": "bd_a_cos_022_0",
+            "pathId": 2,
+            "sourceBundle": "9a7dd0d1c8097ba43ba404a88e9dd48f",
+            "sourceSha256": "12e7947c623d133f81045b9a9192f0a5ce5ba7a1559a70c87ba74f3ec1bfe404"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_022_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 23,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        265,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 17,
+      "titles": {
+        "de": "Mittelalter Akademie",
+        "en": "Middle Ages Academy",
+        "es": "Academia de la Edad Media",
+        "fr": "Acad\u00e9mie du Moyen \u00c2ge",
+        "id": "Akademi Abad Pertengahan",
+        "it": "Accademia medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30a2\u30ab\u30c7\u30df\u30fc",
+        "ko": "\uc911\uc138 \uc544\uce74\ub370\ubbf8",
+        "pt": "Academia da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0410\u043a\u0430\u0434\u0435\u043c\u0438\u044f",
+        "th": "\u0e2d\u0e30\u0e04\u0e32\u0e40\u0e14\u0e21\u0e35\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "H\u1ecdc vi\u1ec7n trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u5b66\u9662",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u5b78\u9662"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_1_22",
+          "pathId": 407
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            407
+          ],
+          "name": "buildSkin_1_22",
+          "pathId": 1078
+        },
+        "assetKey": "buildSkin_1_22",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_cos_023_0",
+            "pathId": 3,
+            "sourceBundle": "160f79950d651674a9bfefd5cb5384a4",
+            "sourceSha256": "b6c2145fc5f90debfbd77dafaf531bfa88f239a89fa92d677f67f85e19c7e6e9"
+          },
+          {
+            "name": "bd_a_cos_023_1",
+            "pathId": 1,
+            "sourceBundle": "160f79950d651674a9bfefd5cb5384a4",
+            "sourceSha256": "b6c2145fc5f90debfbd77dafaf531bfa88f239a89fa92d677f67f85e19c7e6e9"
+          },
+          {
+            "name": "bd_a_cos_023_2",
+            "pathId": 2,
+            "sourceBundle": "160f79950d651674a9bfefd5cb5384a4",
+            "sourceSha256": "b6c2145fc5f90debfbd77dafaf531bfa88f239a89fa92d677f67f85e19c7e6e9"
+          },
+          {
+            "name": "bd_a_cos_023_1",
+            "pathId": 1,
+            "sourceBundle": "160f79950d651674a9bfefd5cb5384a4",
+            "sourceSha256": "b6c2145fc5f90debfbd77dafaf531bfa88f239a89fa92d677f67f85e19c7e6e9"
+          },
+          {
+            "name": "bd_a_cos_023_0",
+            "pathId": 3,
+            "sourceBundle": "160f79950d651674a9bfefd5cb5384a4",
+            "sourceSha256": "b6c2145fc5f90debfbd77dafaf531bfa88f239a89fa92d677f67f85e19c7e6e9"
+          }
+        ],
+        "spritePrefix": "bd_a_cos_023_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 24,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 18,
+      "titles": {
+        "de": "Mittelalter Bank",
+        "en": "Middle Ages Bank",
+        "es": "Banco de la Edad Media",
+        "fr": "Banque du Moyen \u00c2ge",
+        "id": "Bank Abad Pertengahan",
+        "it": "Banca medievale",
+        "ja": "\u4e2d\u4e16\u306e\u9280\u884c",
+        "ko": "\uc911\uc138 \uc740\ud589",
+        "pt": "Banco da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0411\u0430\u043d\u043a",
+        "th": "\u0e18\u0e19\u0e32\u0e04\u0e32\u0e23\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Ng\u00e2n h\u00e0ng trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u94f6\u884c",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u9280\u884c"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_23",
+        "expectedSpritePrefix": "bd_a_cos_024_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 25,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 19,
+      "titles": {
+        "de": "Mittelalter B\u00fccherei der Weisheit",
+        "en": "Middle Ages Library of Wisdom",
+        "es": "Biblioteca de la Sabidur\u00eda de la Edad Media",
+        "fr": "Biblioth\u00e8que de Sagesse du Moyen \u00c2ge",
+        "id": "Perpustakaan Kebijakan Abad Pertengahan",
+        "it": "Biblioteca della Saggezza medievale",
+        "ja": "\u4e2d\u4e16\u306e\u77e5\u8b58\u306e\u56f3\u66f8\u9928",
+        "ko": "\uc911\uc138 \uc9c0\uc2dd\uc758 \ub3c4\uc11c\uad00",
+        "pt": "Biblioteca da Sabedoria da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u0411\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0430",
+        "th": "\u0e2b\u0e49\u0e2d\u0e07\u0e2a\u0e21\u0e38\u0e14\u0e41\u0e2b\u0e48\u0e07\u0e04\u0e27\u0e32\u0e21\u0e23\u0e39\u0e49\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Th\u01b0 vi\u1ec7n tri th\u1ee9c trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u77e5\u8bc6\u56fe\u4e66\u9986",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u77e5\u8b58\u5716\u66f8\u9928"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_24",
+        "expectedSpritePrefix": "bd_a_cos_025_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 26,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 20,
+      "titles": {
+        "de": "Mittelalter Brunnen des Lebens",
+        "en": "Middle Ages Fountain of Life",
+        "es": "Fuente de la Vida de la Edad Media",
+        "fr": "Fontaine de Vie du Moyen \u00c2ge",
+        "id": "Air Mancur Kehidupan Abad Pertengahan",
+        "it": "Fontana della Vita medievale",
+        "ja": "\u4e2d\u4e16\u306e\u547d\u306e\u6cc9",
+        "ko": "\uc911\uc138 \uc0dd\uba85\uc758 \uc0d8",
+        "pt": "Fonte da Vida da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0424\u043e\u043d\u0442\u0430\u043d \u0416\u0438\u0437\u043d\u0438",
+        "th": "\u0e19\u0e49\u0e33\u0e1e\u0e38\u0e41\u0e2b\u0e48\u0e07\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Su\u1ed1i n\u01b0\u1edbc sinh m\u1ec7nh trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u751f\u547d\u4e4b\u6cc9",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u751f\u547d\u4e4b\u6cc9"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_25",
+        "expectedSpritePrefix": "bd_a_cos_026_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 27,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 21,
+      "titles": {
+        "de": "Mittelalter Mutgrabstein",
+        "en": "Middle Ages Courage Headstone",
+        "es": "L\u00e1pida del Coraje de la Edad Media",
+        "fr": "Pierre Tombale de Courage du Moyen \u00c2ge",
+        "id": "Nisan Keberanian Abad Pertengahan",
+        "it": "Pietra del Coraggio medievale",
+        "ja": "\u4e2d\u4e16\u306e\u52c7\u6c17\u306e\u7891\u77f3",
+        "ko": "\uc911\uc138 \uc6a9\uae30\uc758 \ube44\uc11d",
+        "pt": "L\u00e1pide da Coragem da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u043e\u0435 \u041d\u0430\u0434\u0433\u0440\u043e\u0431\u0438\u0435",
+        "th": "\u0e28\u0e34\u0e25\u0e32\u0e08\u0e32\u0e23\u0e36\u0e01\u0e41\u0e2b\u0e48\u0e07\u0e04\u0e27\u0e32\u0e21\u0e01\u0e25\u0e49\u0e32\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Bia \u0111\u00e1 d\u0169ng c\u1ea3m trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u52c7\u6c14\u7891\u77f3",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u52c7\u6c23\u7891\u77f3"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_26",
+        "expectedSpritePrefix": "bd_a_cos_027_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 28,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 22,
+      "titles": {
+        "de": "Mittelalter Trainingsfeld",
+        "en": "Middle Ages Training Ground",
+        "es": "\u00c1rea de Entrenamiento de la Edad Media",
+        "fr": "Terrain d\u2019Entra\u00eenement du Moyen \u00c2ge",
+        "id": "Tempat Latihan Abad Pertengahan",
+        "it": "Zona di allenamento medievale",
+        "ja": "\u4e2d\u4e16\u306e\u4fee\u884c\u5834",
+        "ko": "\uc911\uc138 \uc218\ub828\uc7a5",
+        "pt": "Campo de Treinamento da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0423\u0447\u0435\u0431\u043d\u044b\u0439 \u0426\u0435\u043d\u0442\u0440",
+        "th": "\u0e42\u0e23\u0e07\u0e1d\u0e36\u0e01\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Thao tr\u01b0\u1eddng trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u4fee\u70bc\u5730",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u4fee\u7149\u5730"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_27",
+        "expectedSpritePrefix": "bd_a_cos_028_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 39,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 23,
+      "titles": {
+        "de": "Mittelalter Bosshorn",
+        "en": "Middle Ages Boss Horn",
+        "es": "Cuerno de Bosses de la Edad Media",
+        "fr": "Corne de Boss du Moyen \u00c2ge",
+        "id": "Terompet Boss Abad Pertengahan",
+        "it": "Corno del Boss medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30dc\u30b9\u306e\u89d2\u7b1b",
+        "ko": "\uc911\uc138 \ubcf4\uc2a4\uc758 \ubfd4\ud53c\ub9ac",
+        "pt": "Chifre do Maioral da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0420\u043e\u0433 \u0411\u043e\u0441\u0441\u0430",
+        "th": "\u0e41\u0e15\u0e23\u0e42\u0e0a\u0e1f\u0e32\u0e23\u0e4c\u0e02\u0e2d\u0e07\u0e1a\u0e2d\u0e2a\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "T\u00f9 v\u00e0 boss trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa BOSS\u7684\u53f7\u89d2",
+        "zh-TW": "\u4e2d\u4e16\u7d00 BOSS\u7684\u865f\u89d2"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_38",
+        "expectedSpritePrefix": "bd_a_cos_039_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 40,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 24,
+      "titles": {
+        "de": "Mittelalter Kolosseum",
+        "en": "Middle Ages Colosseum",
+        "es": "Coliseo de la Edad Media",
+        "fr": "Colis\u00e9e du Moyen \u00c2ge",
+        "id": "Colosseum Abad Pertengahan",
+        "it": "Colosseo medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30b3\u30ed\u30bb\u30a6\u30e0",
+        "ko": "\uc911\uc138 \ucf5c\ub85c\uc138\uc6c0",
+        "pt": "Coliseu da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u041a\u043e\u043b\u0438\u0437\u0435\u0439",
+        "th": "\u0e42\u0e04\u0e25\u0e2d\u0e2a\u0e40\u0e0b\u0e35\u0e22\u0e21\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Colosseum trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u89d2\u6597\u573a",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u89d2\u9b25\u5834"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_39",
+        "expectedSpritePrefix": "bd_a_cos_040_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 53,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 25,
+      "titles": {
+        "de": "Mittelalter Gilden-HQ",
+        "en": "Middle Ages Guild HQ",
+        "es": "CG del Gremio de la Edad Media",
+        "fr": "QG de Guilde du Moyen \u00c2ge",
+        "id": "Kantor Guild Abad Pertengahan",
+        "it": "HQ della Gilda medievale",
+        "ja": "\u4e2d\u4e16\u306e\u9023\u5408\u53f8\u4ee4\u90e8",
+        "ko": "\uc911\uc138 \uc5f0\ud569\uc0ac\ub839\ubd80",
+        "pt": "QG da Guilda da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0439 \u0428\u0442\u0430\u0431 \u0413\u0438\u043b\u044c\u0434\u0438\u0438",
+        "th": "\u0e01\u0e2d\u0e07\u0e1a\u0e31\u0e0d\u0e0a\u0e32\u0e01\u0e32\u0e23\u0e01\u0e34\u0e25\u0e14\u0e4c\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "B\u1ed9 t\u01b0 l\u1ec7nh bang trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u516c\u4f1a\u53f8\u4ee4\u90e8",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u516c\u6703\u53f8\u4ee4\u90e8"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_52",
+        "expectedSpritePrefix": "bd_a_cos_053_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 61,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 26,
+      "titles": {
+        "de": "Mittelalter Tr\u00e4nkereifungsraum",
+        "en": "Middle Ages Potion Curing Room",
+        "es": "Sala de fermentaci\u00f3n de pociones de la Edad Media",
+        "fr": "Pi\u00e8ce de fermentation de Potions du Moyen \u00c2ge",
+        "id": "Ruang Penyembuhan Ramuan Abad Pertengahan",
+        "it": "Stanza delle Pozioni di Cura medievale",
+        "ja": "\u4e2d\u4e16\u306e\u30dd\u30fc\u30b7\u30e7\u30f3\u719f\u6210\u5ba4",
+        "ko": "\uc911\uc138 \ud3ec\uc158 \uc219\uc131\uc2e4",
+        "pt": "Sala de fermenta\u00e7\u00e3o de po\u00e7\u00f5es da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u044b\u0435 \u041b\u0435\u0447\u0435\u0431\u043d\u044b\u0435 \u0417\u0435\u043b\u044c\u044f",
+        "th": "\u0e2b\u0e49\u0e2d\u0e07\u0e1a\u0e48\u0e21\u0e42\u0e1e\u0e0a\u0e31\u0e48\u0e19\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Ph\u00f2ng \u1ee7 d\u01b0\u1ee3c li\u1ec7u trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u836f\u6c34\u50ac\u5316\u5ba4",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u85e5\u6c34\u50ac\u5316\u5ba4"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_60",
+        "expectedSpritePrefix": "bd_a_cos_061_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 62,
+      "family": "middle-ages",
+      "requiredGold": 1000000,
+      "requiredLevel": 4,
+      "requiredMaterialIds": [
+        268,
+        269,
+        266,
+        277
+      ],
+      "requiredMaterialQuantities": [
+        50,
+        50,
+        50,
+        3
+      ],
+      "skinId": 1,
+      "sourceRowIndex": 27,
+      "titles": {
+        "de": "Mittelalter Medizin-Lagerraum",
+        "en": "Middle Ages Medical Storage Room",
+        "es": "Sala de almacenamiento de medicamentos de la Edad Media",
+        "fr": "Salle de stockage des m\u00e9dicaments du Moyen \u00c2ge",
+        "id": "Ruang Penyimpanan Obat Abad Pertengahan",
+        "it": "Stanza del Magazzino del Medico medievale",
+        "ja": "\u4e2d\u4e16\u306e\u85ac\u54c1\u4fdd\u7ba1\u5eab",
+        "ko": "\uc911\uc138 \uc57d\ud488 \ubcf4\uad00\uc2e4",
+        "pt": "Sala de armazenamento de medicamentos da Idade M\u00e9dia",
+        "ru": "\u0421\u0440\u0435\u0434\u043d\u0435\u0432\u0435\u043a\u043e\u0432\u0430\u044f \u041c\u0435\u0434. \u041a\u043b\u0430\u0434\u043e\u0432\u0430\u044f",
+        "th": "\u0e2b\u0e49\u0e2d\u0e07\u0e40\u0e01\u0e47\u0e1a\u0e22\u0e32\u0e22\u0e38\u0e04\u0e01\u0e25\u0e32\u0e07",
+        "vi": "Ph\u00f2ng b\u1ea3o qu\u1ea3n d\u01b0\u1ee3c ph\u1ea9m trung c\u1ed5",
+        "zh-CN": "\u4e2d\u4e16\u7eaa \u836f\u54c1\u4fdd\u7ba1\u5ba4",
+        "zh-TW": "\u4e2d\u4e16\u7d00 \u85e5\u54c1\u4fdd\u7ba1\u5ba4"
+      },
+      "visibility": 1,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_1_61",
+        "expectedSpritePrefix": "bd_a_cos_062_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 1,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        2500
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 28,
+      "titles": {
+        "de": "Halloween Stadthalle",
+        "en": "Halloween Town Hall",
+        "es": "Alcald\u00eda de Halloween",
+        "fr": "Mairie d'Halloween",
+        "id": "Balai Kota Halloween",
+        "it": "Municipio di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u753a\u5185\u4f1a\u9928",
+        "ko": "\ud560\ub85c\uc708 \ub9c8\uc744\ud68c\uad00",
+        "pt": "Prefeitura de Halloween",
+        "ru": "\u0420\u0430\u0442\u0443\u0448\u0430 \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d",
+        "th": "\u0e2b\u0e2d\u0e1b\u0e23\u0e30\u0e0a\u0e38\u0e21\u0e2b\u0e21\u0e39\u0e48\u0e1a\u0e49\u0e32\u0e19\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "T\u00f2a Th\u1ecb ch\u00ednh Halloween",
+        "zh-CN": "\u4e07\u5723\u8282\u4e3b\u57ce\u4f1a\u9986",
+        "zh-TW": "\u842c\u8056\u7bc0\u4e3b\u57ce\u6703\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_2_1",
+          "pathId": 413
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            413
+          ],
+          "name": "buildSkin_2_1",
+          "pathId": 1084
+        },
+        "assetKey": "buildSkin_2_1",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_halloween_001_0",
+            "pathId": 1,
+            "sourceBundle": "6467e755359c1eb4aa8565ecd8642b27",
+            "sourceSha256": "7ac4411d8e026aa2ec3913547314c31c4ac6dd382cd1e874dc8683554e834d1d"
+          },
+          {
+            "name": "bd_a_halloween_001_1",
+            "pathId": 3,
+            "sourceBundle": "6467e755359c1eb4aa8565ecd8642b27",
+            "sourceSha256": "7ac4411d8e026aa2ec3913547314c31c4ac6dd382cd1e874dc8683554e834d1d"
+          },
+          {
+            "name": "bd_a_halloween_001_2",
+            "pathId": 2,
+            "sourceBundle": "6467e755359c1eb4aa8565ecd8642b27",
+            "sourceSha256": "7ac4411d8e026aa2ec3913547314c31c4ac6dd382cd1e874dc8683554e834d1d"
+          },
+          {
+            "name": "bd_a_halloween_001_1",
+            "pathId": 3,
+            "sourceBundle": "6467e755359c1eb4aa8565ecd8642b27",
+            "sourceSha256": "7ac4411d8e026aa2ec3913547314c31c4ac6dd382cd1e874dc8683554e834d1d"
+          },
+          {
+            "name": "bd_a_halloween_001_0",
+            "pathId": 1,
+            "sourceBundle": "6467e755359c1eb4aa8565ecd8642b27",
+            "sourceSha256": "7ac4411d8e026aa2ec3913547314c31c4ac6dd382cd1e874dc8683554e834d1d"
+          }
+        ],
+        "spritePrefix": "bd_a_halloween_001_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 11,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        1500
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 29,
+      "titles": {
+        "de": "Halloween Trankladen",
+        "en": "Halloween Potion Shop",
+        "es": "Tienda de Pociones de Halloween",
+        "fr": "Boutique de potions d'Halloween",
+        "id": "Toko Ramuan Halloween",
+        "it": "Negozio di Pozioni di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u30dd\u30fc\u30b7\u30e7\u30f3\u5e97",
+        "ko": "\ud560\ub85c\uc708 \ud3ec\uc158\uc0c1\uc810",
+        "pt": "Loja de Po\u00e7\u00f5es de Halloween",
+        "ru": "\u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0417\u0435\u043b\u0438\u0439 \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e19\u0e49\u0e33\u0e22\u0e32\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "C\u1eeda h\u00e0ng d\u01b0\u1ee3c li\u1ec7u Halloween",
+        "zh-CN": "\u4e07\u5723\u8282\u836f\u6c34\u5546\u5e97",
+        "zh-TW": "\u842c\u8056\u7bc0\u85e5\u6c34\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_2_11",
+          "pathId": 414
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            414
+          ],
+          "name": "buildSkin_2_11",
+          "pathId": 1085
+        },
+        "assetKey": "buildSkin_2_11",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_halloween_011_0",
+            "pathId": 1,
+            "sourceBundle": "086c51c15ec553a41a256f45b7bd7f65",
+            "sourceSha256": "b9e9dad529d10b32b91ed5898188e80d632b431d82f801d1eafe72c1369d2c99"
+          },
+          {
+            "name": "bd_a_halloween_011_1",
+            "pathId": 3,
+            "sourceBundle": "086c51c15ec553a41a256f45b7bd7f65",
+            "sourceSha256": "b9e9dad529d10b32b91ed5898188e80d632b431d82f801d1eafe72c1369d2c99"
+          },
+          {
+            "name": "bd_a_halloween_011_2",
+            "pathId": 2,
+            "sourceBundle": "086c51c15ec553a41a256f45b7bd7f65",
+            "sourceSha256": "b9e9dad529d10b32b91ed5898188e80d632b431d82f801d1eafe72c1369d2c99"
+          },
+          {
+            "name": "bd_a_halloween_011_1",
+            "pathId": 3,
+            "sourceBundle": "086c51c15ec553a41a256f45b7bd7f65",
+            "sourceSha256": "b9e9dad529d10b32b91ed5898188e80d632b431d82f801d1eafe72c1369d2c99"
+          },
+          {
+            "name": "bd_a_halloween_011_0",
+            "pathId": 1,
+            "sourceBundle": "086c51c15ec553a41a256f45b7bd7f65",
+            "sourceSha256": "b9e9dad529d10b32b91ed5898188e80d632b431d82f801d1eafe72c1369d2c99"
+          }
+        ],
+        "spritePrefix": "bd_a_halloween_011_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 14,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        1500
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 30,
+      "titles": {
+        "de": "Halloween Alchemistenh\u00fctte",
+        "en": "Halloween Alchemist's Home",
+        "es": "Casa del Alquimista de Halloween",
+        "fr": "Maison de l'alchimiste d'Halloween",
+        "id": "Rumah Alkemis Halloween",
+        "it": "Casa dell'Alchimista di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u932c\u91d1\u8853\u5e2b\u306e\u5bb6",
+        "ko": "\ud560\ub85c\uc708 \uc5f0\uae08\uc220\uc0ac\uc758 \uc9d1",
+        "pt": "Casa do Alquimista de Halloween",
+        "ru": "\u0414\u043e\u043c \u0410\u043b\u0445\u0438\u043c\u0438\u043a\u0430 \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d",
+        "th": "\u0e1a\u0e49\u0e32\u0e19\u0e19\u0e31\u0e01\u0e40\u0e25\u0e48\u0e19\u0e41\u0e23\u0e48\u0e41\u0e1b\u0e23\u0e18\u0e32\u0e15\u0e38\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "Nh\u00e0 c\u1ee7a Nh\u00e0 gi\u1ea3 kim Halloween",
+        "zh-CN": "\u4e07\u5723\u8282\u70bc\u91d1\u672f\u4e4b\u5bb6",
+        "zh-TW": "\u842c\u8056\u7bc0\u7149\u91d1\u8853\u4e4b\u5bb6"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_2_14",
+          "pathId": 416
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            416
+          ],
+          "name": "buildSkin_2_14",
+          "pathId": 1087
+        },
+        "assetKey": "buildSkin_2_14",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_halloween_014_0",
+            "pathId": 1,
+            "sourceBundle": "34a7b40786c98c644985fb97eeba6f29",
+            "sourceSha256": "fda1301266cdbdb3fc4e66522c262dc265e2c840699c515c5d3e02554e8d97b0"
+          },
+          {
+            "name": "bd_a_halloween_014_1",
+            "pathId": 2,
+            "sourceBundle": "34a7b40786c98c644985fb97eeba6f29",
+            "sourceSha256": "fda1301266cdbdb3fc4e66522c262dc265e2c840699c515c5d3e02554e8d97b0"
+          },
+          {
+            "name": "bd_a_halloween_014_2",
+            "pathId": 3,
+            "sourceBundle": "34a7b40786c98c644985fb97eeba6f29",
+            "sourceSha256": "fda1301266cdbdb3fc4e66522c262dc265e2c840699c515c5d3e02554e8d97b0"
+          },
+          {
+            "name": "bd_a_halloween_014_1",
+            "pathId": 2,
+            "sourceBundle": "34a7b40786c98c644985fb97eeba6f29",
+            "sourceSha256": "fda1301266cdbdb3fc4e66522c262dc265e2c840699c515c5d3e02554e8d97b0"
+          },
+          {
+            "name": "bd_a_halloween_014_0",
+            "pathId": 1,
+            "sourceBundle": "34a7b40786c98c644985fb97eeba6f29",
+            "sourceSha256": "fda1301266cdbdb3fc4e66522c262dc265e2c840699c515c5d3e02554e8d97b0"
+          }
+        ],
+        "spritePrefix": "bd_a_halloween_014_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 22,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        1000
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 31,
+      "titles": {
+        "de": "Halloween Haus",
+        "en": "Halloween House",
+        "es": "Casa de halloween",
+        "fr": "Maison d'Halloween",
+        "id": "Rumah Halloween",
+        "it": "Casa di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u90b8\u5b85",
+        "ko": "\ud560\ub85c\uc708 \uc800\ud0dd",
+        "pt": "Casa de halloween",
+        "ru": "\u0414\u043e\u043c \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d",
+        "th": "\u0e04\u0e24\u0e2b\u0e32\u0e2a\u0e19\u0e4c\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "Nh\u00e0 Halloween",
+        "zh-CN": "\u4e07\u5723\u8282\u4f4f\u6240",
+        "zh-TW": "\u842c\u8056\u7bc0\u4f4f\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_2_22",
+          "pathId": 417
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            417
+          ],
+          "name": "buildSkin_2_22",
+          "pathId": 1088
+        },
+        "assetKey": "buildSkin_2_22",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_halloween_022_0",
+            "pathId": 2,
+            "sourceBundle": "244380baefda717419908943c1805dd4",
+            "sourceSha256": "ae36ce5854d2c928971937f166258b50cfd1049c9236245b4f1437ec3fc499b4"
+          },
+          {
+            "name": "bd_a_halloween_022_1",
+            "pathId": 1,
+            "sourceBundle": "244380baefda717419908943c1805dd4",
+            "sourceSha256": "ae36ce5854d2c928971937f166258b50cfd1049c9236245b4f1437ec3fc499b4"
+          },
+          {
+            "name": "bd_a_halloween_022_2",
+            "pathId": 3,
+            "sourceBundle": "244380baefda717419908943c1805dd4",
+            "sourceSha256": "ae36ce5854d2c928971937f166258b50cfd1049c9236245b4f1437ec3fc499b4"
+          },
+          {
+            "name": "bd_a_halloween_022_1",
+            "pathId": 1,
+            "sourceBundle": "244380baefda717419908943c1805dd4",
+            "sourceSha256": "ae36ce5854d2c928971937f166258b50cfd1049c9236245b4f1437ec3fc499b4"
+          },
+          {
+            "name": "bd_a_halloween_022_0",
+            "pathId": 2,
+            "sourceBundle": "244380baefda717419908943c1805dd4",
+            "sourceSha256": "ae36ce5854d2c928971937f166258b50cfd1049c9236245b4f1437ec3fc499b4"
+          }
+        ],
+        "spritePrefix": "bd_a_halloween_022_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 1,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        800
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 32,
+      "titles": {
+        "de": "Weihnachts Stadthalle",
+        "en": "XMas Town Hall",
+        "es": "Alcald\u00eda Festiva",
+        "fr": "Mairie Festive",
+        "id": "Balai Kota Natal",
+        "it": "Municipio Natalizio",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u753a\u5185\u4f1a\u9928",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ub9c8\uc744\ud68c\uad00",
+        "pt": "Prefeitura Festiva",
+        "ru": "\u0420\u043e\u0436\u0434\u0435\u0441\u0442\u0432\u0435\u043d\u0441\u043a\u0430\u044f \u0420\u0430\u0442\u0443\u0448\u0430",
+        "th": "\u0e2b\u0e2d\u0e1b\u0e23\u0e30\u0e0a\u0e38\u0e21\u0e2b\u0e21\u0e39\u0e48\u0e1a\u0e49\u0e32\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "T\u00f2a Th\u1ecb ch\u00ednh Noel",
+        "zh-CN": "\u5723\u8bde\u4e3b\u57ce\u4f1a\u9986",
+        "zh-TW": "\u8056\u8a95\u4e3b\u57ce\u6703\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_1",
+          "pathId": 418
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            418
+          ],
+          "name": "buildSkin_3_1",
+          "pathId": 1089
+        },
+        "assetKey": "buildSkin_3_1",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_001_0",
+            "pathId": 1,
+            "sourceBundle": "74f626a4b0f63b344b20080fa78c1e7c",
+            "sourceSha256": "270d710418b1ad97ee4f9e397f20e4c0c32eba9301893c21e6c8b9aae0b95712"
+          },
+          {
+            "name": "bd_a_christmas_001_1",
+            "pathId": 2,
+            "sourceBundle": "74f626a4b0f63b344b20080fa78c1e7c",
+            "sourceSha256": "270d710418b1ad97ee4f9e397f20e4c0c32eba9301893c21e6c8b9aae0b95712"
+          },
+          {
+            "name": "bd_a_christmas_001_2",
+            "pathId": 3,
+            "sourceBundle": "74f626a4b0f63b344b20080fa78c1e7c",
+            "sourceSha256": "270d710418b1ad97ee4f9e397f20e4c0c32eba9301893c21e6c8b9aae0b95712"
+          },
+          {
+            "name": "bd_a_christmas_001_1",
+            "pathId": 2,
+            "sourceBundle": "74f626a4b0f63b344b20080fa78c1e7c",
+            "sourceSha256": "270d710418b1ad97ee4f9e397f20e4c0c32eba9301893c21e6c8b9aae0b95712"
+          },
+          {
+            "name": "bd_a_christmas_001_0",
+            "pathId": 1,
+            "sourceBundle": "74f626a4b0f63b344b20080fa78c1e7c",
+            "sourceSha256": "270d710418b1ad97ee4f9e397f20e4c0c32eba9301893c21e6c8b9aae0b95712"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_001_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 13,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 33,
+      "titles": {
+        "de": "Weihnachts Restaurant",
+        "en": "XMas Restaurant",
+        "es": "Restaurante Festivo",
+        "fr": "Restaurant Festif",
+        "id": "Restoran Natal",
+        "it": "Ristorante Natalizio",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30ec\u30b9\u30c8\u30e9\u30f3",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ub808\uc2a4\ud1a0\ub791",
+        "pt": "Restaurante Festivo",
+        "ru": "\u0420\u043e\u0436\u0434\u0435\u0441\u0442\u0432\u0435\u043d\u0441\u043a\u0438\u0439 \u0420\u0435\u0441\u0442\u043e\u0440\u0430\u043d",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e2d\u0e32\u0e2b\u0e32\u0e23\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Nh\u00e0 h\u00e0ng Noel",
+        "zh-CN": "\u5723\u8bde\u9910\u5385",
+        "zh-TW": "\u8056\u8a95\u9910\u5ef3"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_13",
+          "pathId": 422
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            422
+          ],
+          "name": "buildSkin_3_13",
+          "pathId": 1093
+        },
+        "assetKey": "buildSkin_3_13",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_013_0",
+            "pathId": 2,
+            "sourceBundle": "9c5a3cc741f646340ad3979444f96fe8",
+            "sourceSha256": "ace1a67814118f83c577b7417b1a83ccaa4c038e76680bb963517f8aea28acca"
+          },
+          {
+            "name": "bd_a_christmas_013_1",
+            "pathId": 3,
+            "sourceBundle": "9c5a3cc741f646340ad3979444f96fe8",
+            "sourceSha256": "ace1a67814118f83c577b7417b1a83ccaa4c038e76680bb963517f8aea28acca"
+          },
+          {
+            "name": "bd_a_christmas_013_2",
+            "pathId": 1,
+            "sourceBundle": "9c5a3cc741f646340ad3979444f96fe8",
+            "sourceSha256": "ace1a67814118f83c577b7417b1a83ccaa4c038e76680bb963517f8aea28acca"
+          },
+          {
+            "name": "bd_a_christmas_013_1",
+            "pathId": 3,
+            "sourceBundle": "9c5a3cc741f646340ad3979444f96fe8",
+            "sourceSha256": "ace1a67814118f83c577b7417b1a83ccaa4c038e76680bb963517f8aea28acca"
+          },
+          {
+            "name": "bd_a_christmas_013_0",
+            "pathId": 2,
+            "sourceBundle": "9c5a3cc741f646340ad3979444f96fe8",
+            "sourceSha256": "ace1a67814118f83c577b7417b1a83ccaa4c038e76680bb963517f8aea28acca"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_013_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 9,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 34,
+      "titles": {
+        "de": "Weihnachts Gasthaus",
+        "en": "XMas Inn",
+        "es": "Hostal Festivo",
+        "fr": "Auberge Festive",
+        "id": "Penginapan Natal",
+        "it": "Locanda Natalizia",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u65c5\u9928",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc5ec\uad00",
+        "pt": "Pens\u00e3o Festiva",
+        "ru": "\u0420\u043e\u0436\u0434\u0435\u0441\u0442\u0432\u0435\u043d\u0441\u043a\u0430\u044f \u0413\u043e\u0441\u0442\u0438\u043d\u0438\u0446\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e41\u0e23\u0e21\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "L\u1eef qu\u00e1n Noel",
+        "zh-CN": "\u5723\u8bde\u65c5\u9986",
+        "zh-TW": "\u8056\u8a95\u65c5\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_9",
+          "pathId": 443
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            443
+          ],
+          "name": "buildSkin_3_9",
+          "pathId": 1114
+        },
+        "assetKey": "buildSkin_3_9",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_009_0",
+            "pathId": 1,
+            "sourceBundle": "e1768a8dad4afc74aa6749ff93261be2",
+            "sourceSha256": "f56a9f81333fbcfbd71049e21f1b2cf85c6ca6592450a5efda7a8988b23cadc5"
+          },
+          {
+            "name": "bd_a_christmas_009_1",
+            "pathId": 2,
+            "sourceBundle": "e1768a8dad4afc74aa6749ff93261be2",
+            "sourceSha256": "f56a9f81333fbcfbd71049e21f1b2cf85c6ca6592450a5efda7a8988b23cadc5"
+          },
+          {
+            "name": "bd_a_christmas_009_2",
+            "pathId": 3,
+            "sourceBundle": "e1768a8dad4afc74aa6749ff93261be2",
+            "sourceSha256": "f56a9f81333fbcfbd71049e21f1b2cf85c6ca6592450a5efda7a8988b23cadc5"
+          },
+          {
+            "name": "bd_a_christmas_009_1",
+            "pathId": 2,
+            "sourceBundle": "e1768a8dad4afc74aa6749ff93261be2",
+            "sourceSha256": "f56a9f81333fbcfbd71049e21f1b2cf85c6ca6592450a5efda7a8988b23cadc5"
+          },
+          {
+            "name": "bd_a_christmas_009_0",
+            "pathId": 1,
+            "sourceBundle": "e1768a8dad4afc74aa6749ff93261be2",
+            "sourceSha256": "f56a9f81333fbcfbd71049e21f1b2cf85c6ca6592450a5efda7a8988b23cadc5"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_009_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 19,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 35,
+      "titles": {
+        "de": "Weihnachts Taverne",
+        "en": "XMas Tavern",
+        "es": "Taberna Festiva",
+        "fr": "Taverne Festive",
+        "id": "Kedai Natal",
+        "it": "Taverna Natalizia",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u98f2\u307f\u5c4b",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc8fc\uc810",
+        "pt": "Taverna Festiva",
+        "ru": "\u0420\u043e\u0436\u0434\u0435\u0441\u0442\u0432\u0435\u043d\u0441\u043a\u0430\u044f \u0422\u0430\u0432\u0435\u0440\u043d\u0430",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e40\u0e2b\u0e25\u0e49\u0e32\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Qu\u00e1n r\u01b0\u1ee3u Noel",
+        "zh-CN": "\u5723\u8bde\u9152\u9986",
+        "zh-TW": "\u8056\u8a95\u9152\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_19",
+          "pathId": 426
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            426
+          ],
+          "name": "buildSkin_3_19",
+          "pathId": 1097
+        },
+        "assetKey": "buildSkin_3_19",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_019_0",
+            "pathId": 2,
+            "sourceBundle": "035dba67939837e44aeda5571fec502b",
+            "sourceSha256": "722e436cdec4e4658bf3b9023426b75c460ed510bc586c1684a40c1f928d5613"
+          },
+          {
+            "name": "bd_a_christmas_019_1",
+            "pathId": 3,
+            "sourceBundle": "035dba67939837e44aeda5571fec502b",
+            "sourceSha256": "722e436cdec4e4658bf3b9023426b75c460ed510bc586c1684a40c1f928d5613"
+          },
+          {
+            "name": "bd_a_christmas_019_2",
+            "pathId": 1,
+            "sourceBundle": "035dba67939837e44aeda5571fec502b",
+            "sourceSha256": "722e436cdec4e4658bf3b9023426b75c460ed510bc586c1684a40c1f928d5613"
+          },
+          {
+            "name": "bd_a_christmas_019_1",
+            "pathId": 3,
+            "sourceBundle": "035dba67939837e44aeda5571fec502b",
+            "sourceSha256": "722e436cdec4e4658bf3b9023426b75c460ed510bc586c1684a40c1f928d5613"
+          },
+          {
+            "name": "bd_a_christmas_019_0",
+            "pathId": 2,
+            "sourceBundle": "035dba67939837e44aeda5571fec502b",
+            "sourceSha256": "722e436cdec4e4658bf3b9023426b75c460ed510bc586c1684a40c1f928d5613"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_019_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 53,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 36,
+      "titles": {
+        "de": "Weihnachts Gilden-HQ",
+        "en": "XMas Guild HQ",
+        "es": "CG Festivo del Gremio",
+        "fr": "QG Festif de Guilde",
+        "id": "Markas Guild Natal",
+        "it": "HQ della Gilda Natalizio",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u9023\u5408\u53f8\u4ee4\u90e8",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc5f0\ud569\uc0ac\ub839\ubd80",
+        "pt": "GQ Festivo da Guilda",
+        "ru": "\u0420\u043e\u0436\u0434\u0435\u0441\u0442\u0432\u0435\u043d\u0441\u043a\u0430\u044f \u0413\u0438\u043b\u044c\u0434\u0438\u044f",
+        "th": "\u0e01\u0e2d\u0e07\u0e1a\u0e31\u0e0d\u0e0a\u0e32\u0e01\u0e32\u0e23\u0e01\u0e34\u0e25\u0e14\u0e4c\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "B\u1ed9 T\u01b0 l\u1ec7nh Bang Noel",
+        "zh-CN": "\u5723\u8bde\u516c\u4f1a\u53f8\u4ee4\u90e8",
+        "zh-TW": "\u8056\u8a95\u516c\u6703\u53f8\u4ee4\u90e8"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_3_53",
+        "expectedSpritePrefix": "bd_a_christmas_053_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 12,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        1000
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 37,
+      "titles": {
+        "de": "Halloween Krankenhaus",
+        "en": "Halloween Infirmary",
+        "es": "Enfermer\u00eda de Halloween",
+        "fr": "Infirmerie d'Halloween",
+        "id": "Rumah Sakit Halloween",
+        "it": "Infermeria di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u6cbb\u7642\u6240",
+        "ko": "\ud560\ub85c\uc708 \uce58\ub8cc\uc18c",
+        "pt": "Enfermaria de Halloween",
+        "ru": "\u041b\u0430\u0437\u0430\u0440\u0435\u0442 \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e1e\u0e22\u0e32\u0e1a\u0e32\u0e25\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "Tr\u1ea1m c\u1ea5p c\u1ee9u Halloween",
+        "zh-CN": "\u4e07\u5723\u6cbb\u7597\u6240",
+        "zh-TW": "\u842c\u8056\u6cbb\u7642\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_2_12",
+          "pathId": 415
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            415
+          ],
+          "name": "buildSkin_2_12",
+          "pathId": 1086
+        },
+        "assetKey": "buildSkin_2_12",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_halloween_012_0",
+            "pathId": 3,
+            "sourceBundle": "d9d33b82c6052844a97320c71c2270fa",
+            "sourceSha256": "ed23996fd8fefd6084fc81f7bf8328f0cd78530d738b0274294e26017cff0979"
+          },
+          {
+            "name": "bd_a_halloween_012_1",
+            "pathId": 2,
+            "sourceBundle": "d9d33b82c6052844a97320c71c2270fa",
+            "sourceSha256": "ed23996fd8fefd6084fc81f7bf8328f0cd78530d738b0274294e26017cff0979"
+          },
+          {
+            "name": "bd_a_halloween_012_2",
+            "pathId": 1,
+            "sourceBundle": "d9d33b82c6052844a97320c71c2270fa",
+            "sourceSha256": "ed23996fd8fefd6084fc81f7bf8328f0cd78530d738b0274294e26017cff0979"
+          },
+          {
+            "name": "bd_a_halloween_012_2",
+            "pathId": 1,
+            "sourceBundle": "d9d33b82c6052844a97320c71c2270fa",
+            "sourceSha256": "ed23996fd8fefd6084fc81f7bf8328f0cd78530d738b0274294e26017cff0979"
+          },
+          {
+            "name": "bd_a_halloween_012_0",
+            "pathId": 3,
+            "sourceBundle": "d9d33b82c6052844a97320c71c2270fa",
+            "sourceSha256": "ed23996fd8fefd6084fc81f7bf8328f0cd78530d738b0274294e26017cff0979"
+          }
+        ],
+        "spritePrefix": "bd_a_halloween_012_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 53,
+      "family": "halloween",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        284
+      ],
+      "requiredMaterialQuantities": [
+        1500
+      ],
+      "skinId": 2,
+      "sourceRowIndex": 38,
+      "titles": {
+        "de": "Halloween Gilden-Hauptquartier",
+        "en": "Halloween Guild HQ",
+        "es": "CG de Halloween",
+        "fr": "QG de Halloween",
+        "id": "Markas Guild Halloween",
+        "it": "HQ della Gilda di Halloween",
+        "ja": "\u30cf\u30ed\u30a6\u30a3\u30f3\u9023\u5408\u8f9e\u4ee4\u90e8",
+        "ko": "\ud560\ub85c\uc708 \uc5f0\ud569\uc0ac\ub839\ubd80",
+        "pt": "QG de Halloween",
+        "ru": "\u0428\u0442\u0430\u0431 \u0413\u0438\u043b\u044c\u0434\u0438\u0438 \u0425\u044d\u043b\u043b\u043e\u0443\u0438\u043d\u0430",
+        "th": "\u0e01\u0e2d\u0e07\u0e1a\u0e31\u0e0d\u0e0a\u0e32\u0e01\u0e32\u0e23\u0e01\u0e34\u0e25\u0e14\u0e4c\u0e2e\u0e32\u0e42\u0e25\u0e27\u0e35\u0e19",
+        "vi": "B\u1ed9 t\u01b0 l\u1ec7nh Bang Halloweem",
+        "zh-CN": "\u4e07\u5723\u516c\u4f1a\u53f8\u4ee4\u90e8",
+        "zh-TW": "\u842c\u8056\u516c\u6703\u53f8\u4ee4\u90e8"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_2_53",
+        "expectedSpritePrefix": "bd_a_halloween_053_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 3,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 39,
+      "titles": {
+        "de": "Weihnachts Handelsposten",
+        "en": "X-Mas Trading Post",
+        "es": "Puesto de Comercio de Navidad",
+        "fr": "Comptoir Commercial de No\u00ebl",
+        "id": "Pos Jualan Natal",
+        "it": "Stazione commerciale di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u53d6\u5f15\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uac70\ub798\uc18c",
+        "pt": "Posto Comercial de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0422\u043e\u0440\u0433\u043e\u0432\u0430\u044f \u041f\u043b\u043e\u0449\u0430\u0434\u043a\u0430",
+        "th": "\u0e15\u0e25\u0e32\u0e14\u0e0b\u0e37\u0e49\u0e2d\u0e02\u0e32\u0e22\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "\u0110i\u1ec3m gia d\u1ecbch Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u4ea4\u6613\u6240",
+        "zh-TW": "\u8056\u8a95\u4ea4\u6613\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_3",
+          "pathId": 438
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            438
+          ],
+          "name": "buildSkin_3_3",
+          "pathId": 1109
+        },
+        "assetKey": "buildSkin_3_3",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_003_0",
+            "pathId": 1,
+            "sourceBundle": "7dfb6c05ff6a9b642ba22089e326bfbd",
+            "sourceSha256": "8682b94b80bb02dfbed463f597e7271ef406cee90a35bd4f783f081aba644b0e"
+          },
+          {
+            "name": "bd_a_christmas_003_1",
+            "pathId": 2,
+            "sourceBundle": "7dfb6c05ff6a9b642ba22089e326bfbd",
+            "sourceSha256": "8682b94b80bb02dfbed463f597e7271ef406cee90a35bd4f783f081aba644b0e"
+          },
+          {
+            "name": "bd_a_christmas_003_2",
+            "pathId": 3,
+            "sourceBundle": "7dfb6c05ff6a9b642ba22089e326bfbd",
+            "sourceSha256": "8682b94b80bb02dfbed463f597e7271ef406cee90a35bd4f783f081aba644b0e"
+          },
+          {
+            "name": "bd_a_christmas_003_1",
+            "pathId": 2,
+            "sourceBundle": "7dfb6c05ff6a9b642ba22089e326bfbd",
+            "sourceSha256": "8682b94b80bb02dfbed463f597e7271ef406cee90a35bd4f783f081aba644b0e"
+          },
+          {
+            "name": "bd_a_christmas_003_0",
+            "pathId": 1,
+            "sourceBundle": "7dfb6c05ff6a9b642ba22089e326bfbd",
+            "sourceSha256": "8682b94b80bb02dfbed463f597e7271ef406cee90a35bd4f783f081aba644b0e"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_003_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 4,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 40,
+      "titles": {
+        "de": "Weihnachts Kopfgeldh\u00fctte",
+        "en": "X-Mas Bounty Hut",
+        "es": "Caba\u00f1a de Misiones Recompensadas de Navidad",
+        "fr": "Hutte des Primes de No\u00ebl",
+        "id": "Bilik Amalan Natal",
+        "it": "Capanna delle taglie di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u4f9d\u983c\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc758\ub8b0\uc18c",
+        "pt": "Cabana de Pr\u00eamios de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0425\u0438\u0436\u0438\u043d\u0430 \u041d\u0430\u0433\u0440\u0430\u0434",
+        "th": "\u0e28\u0e39\u0e19\u0e22\u0e4c\u0e43\u0e2b\u0e49\u0e04\u0e27\u0e32\u0e21\u0e0a\u0e48\u0e27\u0e22\u0e40\u0e2b\u0e25\u0e37\u0e2d\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "\u0110i\u1ec3m \u1ee7y th\u00e1c Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u59d4\u6258\u6240",
+        "zh-TW": "\u8056\u8a95\u59d4\u8a17\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_4",
+          "pathId": 439
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            439
+          ],
+          "name": "buildSkin_3_4",
+          "pathId": 1110
+        },
+        "assetKey": "buildSkin_3_4",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_004_0",
+            "pathId": 2,
+            "sourceBundle": "df90c2416f153da4fa9830c95e3fc55f",
+            "sourceSha256": "b00dc8b89cb1c7c87ff42d559f1b8f5e93e8d4f8d5c67fa42aea5c71d1556bd3"
+          },
+          {
+            "name": "bd_a_christmas_004_1",
+            "pathId": 3,
+            "sourceBundle": "df90c2416f153da4fa9830c95e3fc55f",
+            "sourceSha256": "b00dc8b89cb1c7c87ff42d559f1b8f5e93e8d4f8d5c67fa42aea5c71d1556bd3"
+          },
+          {
+            "name": "bd_a_christmas_004_2",
+            "pathId": 1,
+            "sourceBundle": "df90c2416f153da4fa9830c95e3fc55f",
+            "sourceSha256": "b00dc8b89cb1c7c87ff42d559f1b8f5e93e8d4f8d5c67fa42aea5c71d1556bd3"
+          },
+          {
+            "name": "bd_a_christmas_004_1",
+            "pathId": 3,
+            "sourceBundle": "df90c2416f153da4fa9830c95e3fc55f",
+            "sourceSha256": "b00dc8b89cb1c7c87ff42d559f1b8f5e93e8d4f8d5c67fa42aea5c71d1556bd3"
+          },
+          {
+            "name": "bd_a_christmas_004_0",
+            "pathId": 2,
+            "sourceBundle": "df90c2416f153da4fa9830c95e3fc55f",
+            "sourceSha256": "b00dc8b89cb1c7c87ff42d559f1b8f5e93e8d4f8d5c67fa42aea5c71d1556bd3"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_004_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 7,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 41,
+      "titles": {
+        "de": "Weihnachts Waffenladen",
+        "en": "X-Mas Weapon Shop",
+        "es": "Tienda de Armas de Navidad",
+        "fr": "Boutique d\u2019Armes de No\u00ebl",
+        "id": "Toko Senjata Natal",
+        "it": "Negozio di armi natalizie",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u6b66\u5668\u5e97",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ubb34\uae30 \uc0c1\uc810",
+        "pt": "Loja de Armas de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u041e\u0440\u0443\u0436\u0438\u044f",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e2d\u0e32\u0e27\u0e38\u0e18\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "C\u1eeda h\u00e0ng V\u0169 kh\u00ed Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u6b66\u5668\u5546\u5e97",
+        "zh-TW": "\u8056\u8a95\u6b66\u5668\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_7",
+          "pathId": 440
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            440
+          ],
+          "name": "buildSkin_3_7",
+          "pathId": 1111
+        },
+        "assetKey": "buildSkin_3_7",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_007_0",
+            "pathId": 1,
+            "sourceBundle": "d32de043cfa868341a1c0bde28749a28",
+            "sourceSha256": "202f92627692465ed9cec3ec80f9e3afd62d7a3a54f187081e5bc73391826564"
+          },
+          {
+            "name": "bd_a_christmas_007_1",
+            "pathId": 3,
+            "sourceBundle": "d32de043cfa868341a1c0bde28749a28",
+            "sourceSha256": "202f92627692465ed9cec3ec80f9e3afd62d7a3a54f187081e5bc73391826564"
+          },
+          {
+            "name": "bd_a_christmas_007_2",
+            "pathId": 2,
+            "sourceBundle": "d32de043cfa868341a1c0bde28749a28",
+            "sourceSha256": "202f92627692465ed9cec3ec80f9e3afd62d7a3a54f187081e5bc73391826564"
+          },
+          {
+            "name": "bd_a_christmas_007_1",
+            "pathId": 3,
+            "sourceBundle": "d32de043cfa868341a1c0bde28749a28",
+            "sourceSha256": "202f92627692465ed9cec3ec80f9e3afd62d7a3a54f187081e5bc73391826564"
+          },
+          {
+            "name": "bd_a_christmas_007_0",
+            "pathId": 1,
+            "sourceBundle": "d32de043cfa868341a1c0bde28749a28",
+            "sourceSha256": "202f92627692465ed9cec3ec80f9e3afd62d7a3a54f187081e5bc73391826564"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_007_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 8,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 42,
+      "titles": {
+        "de": "Weihnachts R\u00fcstungsladen",
+        "en": "X-Mas Armor Shop",
+        "es": "Tienda de Armadura de Navidad",
+        "fr": "Boutique d\u2019Armures de No\u00ebl",
+        "id": "Toko Baju Baja Natal",
+        "it": "Negozio di armature natalizie",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u9632\u5177\u5e97",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ubc29\uc5b4\uad6c \uc0c1\uc810",
+        "pt": "Loja de Armaduras de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0414\u043e\u0441\u043f\u0435\u0445\u043e\u0432",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e1b\u0e49\u0e2d\u0e07\u0e01\u0e31\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "C\u1eeda h\u00e0ng Gi\u00e1p Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u9632\u5177\u5546\u5e97",
+        "zh-TW": "\u8056\u8a95\u9632\u5177\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_8",
+          "pathId": 442
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            442
+          ],
+          "name": "buildSkin_3_8",
+          "pathId": 1113
+        },
+        "assetKey": "buildSkin_3_8",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_008_0",
+            "pathId": 3,
+            "sourceBundle": "faef2bf76dcdff54990aabdca09402cb",
+            "sourceSha256": "14371c62961f9f0eb90a9b1abe06a117d44ae415703bdf597adf0b28a3bfeba5"
+          },
+          {
+            "name": "bd_a_christmas_008_1",
+            "pathId": 2,
+            "sourceBundle": "faef2bf76dcdff54990aabdca09402cb",
+            "sourceSha256": "14371c62961f9f0eb90a9b1abe06a117d44ae415703bdf597adf0b28a3bfeba5"
+          },
+          {
+            "name": "bd_a_christmas_008_2",
+            "pathId": 1,
+            "sourceBundle": "faef2bf76dcdff54990aabdca09402cb",
+            "sourceSha256": "14371c62961f9f0eb90a9b1abe06a117d44ae415703bdf597adf0b28a3bfeba5"
+          },
+          {
+            "name": "bd_a_christmas_008_1",
+            "pathId": 2,
+            "sourceBundle": "faef2bf76dcdff54990aabdca09402cb",
+            "sourceSha256": "14371c62961f9f0eb90a9b1abe06a117d44ae415703bdf597adf0b28a3bfeba5"
+          },
+          {
+            "name": "bd_a_christmas_008_0",
+            "pathId": 3,
+            "sourceBundle": "faef2bf76dcdff54990aabdca09402cb",
+            "sourceSha256": "14371c62961f9f0eb90a9b1abe06a117d44ae415703bdf597adf0b28a3bfeba5"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_008_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 10,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 43,
+      "titles": {
+        "de": "Weihnachts Schmiede",
+        "en": "X-Mas Blacksmith",
+        "es": "Herrer\u00eda de Navidad",
+        "fr": "Forgeron de No\u00ebl",
+        "id": "Pandai Besi Natal",
+        "it": "Fabbro di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u935b\u51b6\u5c4b",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ub300\uc7a5\uac04",
+        "pt": "Ferreiro de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u041a\u0443\u0437\u043d\u0438\u0446\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e15\u0e35\u0e40\u0e2b\u0e25\u0e47\u0e01\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "L\u00f2 r\u00e8n Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u94c1\u5320\u94fa",
+        "zh-TW": "\u8056\u8a95\u9435\u5320\u92ea"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_10",
+          "pathId": 419
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            419
+          ],
+          "name": "buildSkin_3_10",
+          "pathId": 1090
+        },
+        "assetKey": "buildSkin_3_10",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_010_0",
+            "pathId": 2,
+            "sourceBundle": "64635e86b9762484d8d11c5d1e4adaf7",
+            "sourceSha256": "33856c9627c8d9e2b932b9ea6759c3dcbbb99d39538269f8e04a5bcd7ce35d5c"
+          },
+          {
+            "name": "bd_a_christmas_010_1",
+            "pathId": 3,
+            "sourceBundle": "64635e86b9762484d8d11c5d1e4adaf7",
+            "sourceSha256": "33856c9627c8d9e2b932b9ea6759c3dcbbb99d39538269f8e04a5bcd7ce35d5c"
+          },
+          {
+            "name": "bd_a_christmas_010_2",
+            "pathId": 1,
+            "sourceBundle": "64635e86b9762484d8d11c5d1e4adaf7",
+            "sourceSha256": "33856c9627c8d9e2b932b9ea6759c3dcbbb99d39538269f8e04a5bcd7ce35d5c"
+          },
+          {
+            "name": "bd_a_christmas_010_1",
+            "pathId": 3,
+            "sourceBundle": "64635e86b9762484d8d11c5d1e4adaf7",
+            "sourceSha256": "33856c9627c8d9e2b932b9ea6759c3dcbbb99d39538269f8e04a5bcd7ce35d5c"
+          },
+          {
+            "name": "bd_a_christmas_010_0",
+            "pathId": 2,
+            "sourceBundle": "64635e86b9762484d8d11c5d1e4adaf7",
+            "sourceSha256": "33856c9627c8d9e2b932b9ea6759c3dcbbb99d39538269f8e04a5bcd7ce35d5c"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_010_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 11,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 44,
+      "titles": {
+        "de": "Weihnachts Trankladen",
+        "en": "X-Mas Potion Shop",
+        "es": "Tienda de Pociones de Navidad",
+        "fr": "Boutique de Potions de No\u00ebl",
+        "id": "Toko Ramuan Natal",
+        "it": "Negozio di pozioni natalizie",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30dd\u30fc\u30b7\u30e7\u30f3\u5e97",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ud3ec\uc158 \uc0c1\uc810",
+        "pt": "Loja de Po\u00e7\u00f5es de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0417\u0435\u043b\u044c\u044f",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e42\u0e1e\u0e0a\u0e31\u0e48\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Shop D\u01b0\u1ee3c Li\u1ec7u Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u836f\u6c34\u5546\u5e97",
+        "zh-TW": "\u8056\u8a95\u85e5\u6c34\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_11",
+          "pathId": 420
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            420
+          ],
+          "name": "buildSkin_3_11",
+          "pathId": 1091
+        },
+        "assetKey": "buildSkin_3_11",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_011_0",
+            "pathId": 1,
+            "sourceBundle": "01c1b65d5bd3d9c409bab35b3882b0e2",
+            "sourceSha256": "c973a74f4b903140e23c6987133b31a050110a0982074b7a44c47251f41a151c"
+          },
+          {
+            "name": "bd_a_christmas_011_1",
+            "pathId": 3,
+            "sourceBundle": "01c1b65d5bd3d9c409bab35b3882b0e2",
+            "sourceSha256": "c973a74f4b903140e23c6987133b31a050110a0982074b7a44c47251f41a151c"
+          },
+          {
+            "name": "bd_a_christmas_011_2",
+            "pathId": 2,
+            "sourceBundle": "01c1b65d5bd3d9c409bab35b3882b0e2",
+            "sourceSha256": "c973a74f4b903140e23c6987133b31a050110a0982074b7a44c47251f41a151c"
+          },
+          {
+            "name": "bd_a_christmas_011_1",
+            "pathId": 3,
+            "sourceBundle": "01c1b65d5bd3d9c409bab35b3882b0e2",
+            "sourceSha256": "c973a74f4b903140e23c6987133b31a050110a0982074b7a44c47251f41a151c"
+          },
+          {
+            "name": "bd_a_christmas_011_0",
+            "pathId": 1,
+            "sourceBundle": "01c1b65d5bd3d9c409bab35b3882b0e2",
+            "sourceSha256": "c973a74f4b903140e23c6987133b31a050110a0982074b7a44c47251f41a151c"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_011_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 12,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 45,
+      "titles": {
+        "de": "Weihnachts Krankenstation",
+        "en": "X-Mas Infirmary",
+        "es": "Enfermer\u00eda de Navidad",
+        "fr": "Infirmerie de No\u00ebl",
+        "id": "Rumah Sakit Natal",
+        "it": "Infermeria di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u6cbb\u7642\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uce58\ub8cc\uc18c",
+        "pt": "Enfermaria de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041b\u0430\u0437\u0430\u0440\u0435\u0442",
+        "th": "\u0e28\u0e39\u0e19\u0e22\u0e4c\u0e1e\u0e22\u0e32\u0e1a\u0e32\u0e25\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "B\u1ec7nh X\u00e1 Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u6cbb\u7597\u6240",
+        "zh-TW": "\u8056\u8a95\u6cbb\u7642\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_12",
+          "pathId": 421
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            421
+          ],
+          "name": "buildSkin_3_12",
+          "pathId": 1092
+        },
+        "assetKey": "buildSkin_3_12",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_012_0",
+            "pathId": 3,
+            "sourceBundle": "9fa0437fd5d677c48be2872250b549f0",
+            "sourceSha256": "8d5e4fc2843e520f09f3d7174eb175d1c8f04b6335050781a9fe540251a76fcc"
+          },
+          {
+            "name": "bd_a_christmas_012_1",
+            "pathId": 1,
+            "sourceBundle": "9fa0437fd5d677c48be2872250b549f0",
+            "sourceSha256": "8d5e4fc2843e520f09f3d7174eb175d1c8f04b6335050781a9fe540251a76fcc"
+          },
+          {
+            "name": "bd_a_christmas_012_2",
+            "pathId": 2,
+            "sourceBundle": "9fa0437fd5d677c48be2872250b549f0",
+            "sourceSha256": "8d5e4fc2843e520f09f3d7174eb175d1c8f04b6335050781a9fe540251a76fcc"
+          },
+          {
+            "name": "bd_a_christmas_012_1",
+            "pathId": 1,
+            "sourceBundle": "9fa0437fd5d677c48be2872250b549f0",
+            "sourceSha256": "8d5e4fc2843e520f09f3d7174eb175d1c8f04b6335050781a9fe540251a76fcc"
+          },
+          {
+            "name": "bd_a_christmas_012_0",
+            "pathId": 3,
+            "sourceBundle": "9fa0437fd5d677c48be2872250b549f0",
+            "sourceSha256": "8d5e4fc2843e520f09f3d7174eb175d1c8f04b6335050781a9fe540251a76fcc"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_012_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 14,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 46,
+      "titles": {
+        "de": "Weihnachts Alchemistenh\u00fctte",
+        "en": "The Alchemist's X-Mas Home",
+        "es": "Casa del Alquimista de Navidad",
+        "fr": "Maison de l\u2019Alchimiste de No\u00ebl",
+        "id": "Rumah Ilmuwan Natal",
+        "it": "La casa di Natale dell'alchimista",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u932c\u91d1\u8853\u5e2b\u306e\u5bb6",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc5f0\uae08\uc220\uc0ac\uc758 \uc9d1",
+        "pt": "Casa do Alquimista de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u0414\u043e\u043c \u0410\u043b\u0445\u0438\u043c\u0438\u043a\u0430",
+        "th": "\u0e1a\u0e49\u0e32\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a\u0e02\u0e2d\u0e07\u0e19\u0e31\u0e01\u0e41\u0e1b\u0e23\u0e18\u0e32\u0e15\u0e38",
+        "vi": "Nh\u00e0 Gi\u1ea3 Kim Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u70bc\u91d1\u672f\u4e4b\u5bb6",
+        "zh-TW": "\u8056\u8a95\u7149\u91d1\u8853\u4e4b\u5bb6"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_14",
+          "pathId": 423
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            423
+          ],
+          "name": "buildSkin_3_14",
+          "pathId": 1094
+        },
+        "assetKey": "buildSkin_3_14",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_014_0",
+            "pathId": 3,
+            "sourceBundle": "c7114f2a8a8894448a6f906f3a60a7c6",
+            "sourceSha256": "af99f6427aaa9f14b6cff230352df5274f102e18a3f62d2b595383f8bf98c1a4"
+          },
+          {
+            "name": "bd_a_christmas_014_1",
+            "pathId": 1,
+            "sourceBundle": "c7114f2a8a8894448a6f906f3a60a7c6",
+            "sourceSha256": "af99f6427aaa9f14b6cff230352df5274f102e18a3f62d2b595383f8bf98c1a4"
+          },
+          {
+            "name": "bd_a_christmas_014_2",
+            "pathId": 2,
+            "sourceBundle": "c7114f2a8a8894448a6f906f3a60a7c6",
+            "sourceSha256": "af99f6427aaa9f14b6cff230352df5274f102e18a3f62d2b595383f8bf98c1a4"
+          },
+          {
+            "name": "bd_a_christmas_014_1",
+            "pathId": 1,
+            "sourceBundle": "c7114f2a8a8894448a6f906f3a60a7c6",
+            "sourceSha256": "af99f6427aaa9f14b6cff230352df5274f102e18a3f62d2b595383f8bf98c1a4"
+          },
+          {
+            "name": "bd_a_christmas_014_0",
+            "pathId": 3,
+            "sourceBundle": "c7114f2a8a8894448a6f906f3a60a7c6",
+            "sourceSha256": "af99f6427aaa9f14b6cff230352df5274f102e18a3f62d2b595383f8bf98c1a4"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_014_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 15,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 47,
+      "titles": {
+        "de": "Weihnachts Verbesserungsschmiede",
+        "en": "X-Mas Enhancement Forge",
+        "es": "Creador de Mejoramientos de Navidad",
+        "fr": "Forge de Renforcement de No\u00ebl",
+        "id": "Bengkel Penambahan Natal",
+        "it": "Forgia degli incanti di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u5f37\u5316\u7cbe\u932c\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uac15\ud654 \uc7ac\ub828\uc18c",
+        "pt": "Forja de Melhoramento de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u041a\u0443\u0437\u043d\u0438\u0446\u0430 \u0423\u0441\u0438\u043b\u0435\u043d\u0438\u044f",
+        "th": "\u0e42\u0e23\u0e07\u0e16\u0e25\u0e38\u0e07\u0e2d\u0e31\u0e1b\u0e40\u0e01\u0e23\u0e14\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "L\u00f2 R\u00e8n C\u01b0\u1eddng H\u00f3a Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u5f3a\u5316\u7cbe\u70bc\u6240",
+        "zh-TW": "\u8056\u8a95\u5f37\u5316\u7cbe\u7149\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_15",
+          "pathId": 424
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            424
+          ],
+          "name": "buildSkin_3_15",
+          "pathId": 1095
+        },
+        "assetKey": "buildSkin_3_15",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_015_0",
+            "pathId": 2,
+            "sourceBundle": "9af25487972cad14a8adf5080f920b02",
+            "sourceSha256": "8cb9ecccf7e9478a0c7d9bca104dbdeeb2e47ad6fdcd163ebce2be63f237a0f4"
+          },
+          {
+            "name": "bd_a_christmas_015_1",
+            "pathId": 1,
+            "sourceBundle": "9af25487972cad14a8adf5080f920b02",
+            "sourceSha256": "8cb9ecccf7e9478a0c7d9bca104dbdeeb2e47ad6fdcd163ebce2be63f237a0f4"
+          },
+          {
+            "name": "bd_a_christmas_015_2",
+            "pathId": 3,
+            "sourceBundle": "9af25487972cad14a8adf5080f920b02",
+            "sourceSha256": "8cb9ecccf7e9478a0c7d9bca104dbdeeb2e47ad6fdcd163ebce2be63f237a0f4"
+          },
+          {
+            "name": "bd_a_christmas_015_1",
+            "pathId": 1,
+            "sourceBundle": "9af25487972cad14a8adf5080f920b02",
+            "sourceSha256": "8cb9ecccf7e9478a0c7d9bca104dbdeeb2e47ad6fdcd163ebce2be63f237a0f4"
+          },
+          {
+            "name": "bd_a_christmas_015_0",
+            "pathId": 2,
+            "sourceBundle": "9af25487972cad14a8adf5080f920b02",
+            "sourceSha256": "8cb9ecccf7e9478a0c7d9bca104dbdeeb2e47ad6fdcd163ebce2be63f237a0f4"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_015_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 16,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 48,
+      "titles": {
+        "de": "Weihnachts Dungeoneingang",
+        "en": "X-Mas Dungeon Entrance",
+        "es": "Entrada a la Mazmorra de Navidad",
+        "fr": "Entr\u00e9e de Donjon de No\u00ebl",
+        "id": "Pintu Masuk Penjara Natal",
+        "it": "Ingresso al Dungeon di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u5730\u4e0b\u30c0\u30f3\u30b8\u30e7\u30f3\u306e\u5165\u308a\u53e3",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc9c0\ud558\ub358\uc804 \uc785\uad6c",
+        "pt": "Entrada da Masmorra de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u0412\u0445\u043e\u0434 \u0432 \u041f\u043e\u0434\u0437\u0435\u043c\u0435\u043b\u044c\u0435",
+        "th": "\u0e17\u0e32\u0e07\u0e40\u0e02\u0e49\u0e32\u0e14\u0e31\u0e19\u0e40\u0e08\u0e35\u0e49\u0e22\u0e19\u0e43\u0e15\u0e49\u0e14\u0e34\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "C\u1ed5ng H\u1ea7m Ng\u1ee5c Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u5730\u4e0b\u526f\u672c\u5165\u53e3",
+        "zh-TW": "\u8056\u8a95\u5730\u4e0b\u526f\u672c\u5165\u53e3"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_16",
+          "pathId": 425
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            425
+          ],
+          "name": "buildSkin_3_16",
+          "pathId": 1096
+        },
+        "assetKey": "buildSkin_3_16",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_016_0",
+            "pathId": 3,
+            "sourceBundle": "8592d76efc807ac478e01186490cb118",
+            "sourceSha256": "9a4c6f50b6f47667974d47fd34e27512f04ab57e6d968236865dc64f9a1e5ec2"
+          },
+          {
+            "name": "bd_a_christmas_016_1",
+            "pathId": 1,
+            "sourceBundle": "8592d76efc807ac478e01186490cb118",
+            "sourceSha256": "9a4c6f50b6f47667974d47fd34e27512f04ab57e6d968236865dc64f9a1e5ec2"
+          },
+          {
+            "name": "bd_a_christmas_016_2",
+            "pathId": 2,
+            "sourceBundle": "8592d76efc807ac478e01186490cb118",
+            "sourceSha256": "9a4c6f50b6f47667974d47fd34e27512f04ab57e6d968236865dc64f9a1e5ec2"
+          },
+          {
+            "name": "bd_a_christmas_016_1",
+            "pathId": 1,
+            "sourceBundle": "8592d76efc807ac478e01186490cb118",
+            "sourceSha256": "9a4c6f50b6f47667974d47fd34e27512f04ab57e6d968236865dc64f9a1e5ec2"
+          },
+          {
+            "name": "bd_a_christmas_016_0",
+            "pathId": 3,
+            "sourceBundle": "8592d76efc807ac478e01186490cb118",
+            "sourceSha256": "9a4c6f50b6f47667974d47fd34e27512f04ab57e6d968236865dc64f9a1e5ec2"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_016_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 20,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 49,
+      "titles": {
+        "de": "Weihnachts Accessoireladen",
+        "en": "X-Mas  Accessory Shop",
+        "es": "Tienda de Accesorios de Navidad",
+        "fr": "Boutique d\u2019Accessoires de No\u00ebl",
+        "id": "Toko Aksesoris Natal",
+        "it": "Negozio di accessori natalizi",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30a2\u30af\u30bb\u30b5\u30ea\u30fc\u5e97",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc545\uc138\uc0ac\ub9ac \uc0c1\uc810",
+        "pt": "Loja de Acess\u00f3rios de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041c\u0430\u0433\u0430\u0437\u0438\u043d \u0410\u043a\u0441\u0435\u0441\u0441\u0443\u0430\u0440\u043e\u0432",
+        "th": "\u0e23\u0e49\u0e32\u0e19\u0e04\u0e49\u0e32\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e1b\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Shop Ph\u1ee5 ki\u1ec7n Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u9970\u54c1\u5546\u5e97",
+        "zh-TW": "\u8056\u8a95\u98fe\u54c1\u5546\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_20",
+          "pathId": 428
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            428
+          ],
+          "name": "buildSkin_3_20",
+          "pathId": 1099
+        },
+        "assetKey": "buildSkin_3_20",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_020_0",
+            "pathId": 3,
+            "sourceBundle": "bc9fae6f1bae2aa41b9802c78c53b3c3",
+            "sourceSha256": "314c8a13af77e2300a85a5477753aa26e30c779c286d8f8f5d24e093425b13ea"
+          },
+          {
+            "name": "bd_a_christmas_020_1",
+            "pathId": 1,
+            "sourceBundle": "bc9fae6f1bae2aa41b9802c78c53b3c3",
+            "sourceSha256": "314c8a13af77e2300a85a5477753aa26e30c779c286d8f8f5d24e093425b13ea"
+          },
+          {
+            "name": "bd_a_christmas_020_2",
+            "pathId": 2,
+            "sourceBundle": "bc9fae6f1bae2aa41b9802c78c53b3c3",
+            "sourceSha256": "314c8a13af77e2300a85a5477753aa26e30c779c286d8f8f5d24e093425b13ea"
+          },
+          {
+            "name": "bd_a_christmas_020_1",
+            "pathId": 1,
+            "sourceBundle": "bc9fae6f1bae2aa41b9802c78c53b3c3",
+            "sourceSha256": "314c8a13af77e2300a85a5477753aa26e30c779c286d8f8f5d24e093425b13ea"
+          },
+          {
+            "name": "bd_a_christmas_020_0",
+            "pathId": 3,
+            "sourceBundle": "bc9fae6f1bae2aa41b9802c78c53b3c3",
+            "sourceSha256": "314c8a13af77e2300a85a5477753aa26e30c779c286d8f8f5d24e093425b13ea"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_020_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 21,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 50,
+      "titles": {
+        "de": "Weihnachts Juwelier",
+        "en": "X-Mas Jeweler",
+        "es": "Joyer\u00eda de Navidad",
+        "fr": "Bijoutier de No\u00ebl",
+        "id": "Tukang Emas Natal",
+        "it": "Gioielliere natalizio",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u7d30\u5de5\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc138\uacf5\uc18c",
+        "pt": "Joalheiro de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u042e\u0432\u0435\u043b\u0438\u0440\u043a\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e1b\u0e23\u0e30\u0e14\u0e34\u0e29\u0e10\u0e4c\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Th\u1ee3 Kim Ho\u00e0n Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u52a0\u5de5\u5e97",
+        "zh-TW": "\u8056\u8a95\u52a0\u5de5\u5e97"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_21",
+          "pathId": 429
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            429
+          ],
+          "name": "buildSkin_3_21",
+          "pathId": 1100
+        },
+        "assetKey": "buildSkin_3_21",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_021_0",
+            "pathId": 2,
+            "sourceBundle": "12970ff63f68fc943b86506f3fe6388b",
+            "sourceSha256": "e76f9d989814e4b695c94e5e94b2a0aeca313d7f3e436bcb49037e3e07908395"
+          },
+          {
+            "name": "bd_a_christmas_021_1",
+            "pathId": 1,
+            "sourceBundle": "12970ff63f68fc943b86506f3fe6388b",
+            "sourceSha256": "e76f9d989814e4b695c94e5e94b2a0aeca313d7f3e436bcb49037e3e07908395"
+          },
+          {
+            "name": "bd_a_christmas_021_2",
+            "pathId": 3,
+            "sourceBundle": "12970ff63f68fc943b86506f3fe6388b",
+            "sourceSha256": "e76f9d989814e4b695c94e5e94b2a0aeca313d7f3e436bcb49037e3e07908395"
+          },
+          {
+            "name": "bd_a_christmas_021_1",
+            "pathId": 1,
+            "sourceBundle": "12970ff63f68fc943b86506f3fe6388b",
+            "sourceSha256": "e76f9d989814e4b695c94e5e94b2a0aeca313d7f3e436bcb49037e3e07908395"
+          },
+          {
+            "name": "bd_a_christmas_021_0",
+            "pathId": 2,
+            "sourceBundle": "12970ff63f68fc943b86506f3fe6388b",
+            "sourceSha256": "e76f9d989814e4b695c94e5e94b2a0aeca313d7f3e436bcb49037e3e07908395"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_021_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 22,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 51,
+      "titles": {
+        "de": "Weihnachts Haus",
+        "en": "X-Mas House",
+        "es": "Casa de Navidad",
+        "fr": "Maison de No\u00ebl",
+        "id": "Rumah Natal",
+        "it": "Casa di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u90b8\u5b85",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc800\ud0dd",
+        "pt": "Casa de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u0414\u043e\u043c",
+        "th": "\u0e1a\u0e49\u0e32\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Nh\u00e0 Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u4f4f\u6240",
+        "zh-TW": "\u8056\u8a95\u4f4f\u6240"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_22",
+          "pathId": 430
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            430
+          ],
+          "name": "buildSkin_3_22",
+          "pathId": 1101
+        },
+        "assetKey": "buildSkin_3_22",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_022_2",
+            "pathId": 3,
+            "sourceBundle": "076daf32a86039748a586744c6b5ddf4",
+            "sourceSha256": "d10e0545bea7275de63307965ef973d6079aa7425f7f8b784aee7a1693bd9cfe"
+          },
+          {
+            "name": "bd_a_christmas_022_1",
+            "pathId": 2,
+            "sourceBundle": "076daf32a86039748a586744c6b5ddf4",
+            "sourceSha256": "d10e0545bea7275de63307965ef973d6079aa7425f7f8b784aee7a1693bd9cfe"
+          },
+          {
+            "name": "bd_a_christmas_022_0",
+            "pathId": 1,
+            "sourceBundle": "076daf32a86039748a586744c6b5ddf4",
+            "sourceSha256": "d10e0545bea7275de63307965ef973d6079aa7425f7f8b784aee7a1693bd9cfe"
+          },
+          {
+            "name": "bd_a_christmas_022_0",
+            "pathId": 1,
+            "sourceBundle": "076daf32a86039748a586744c6b5ddf4",
+            "sourceSha256": "d10e0545bea7275de63307965ef973d6079aa7425f7f8b784aee7a1693bd9cfe"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_022_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 23,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 52,
+      "titles": {
+        "de": "Weihnachts Akademie",
+        "en": "X-Mas Academy",
+        "es": "Academia de Navidad",
+        "fr": "Acad\u00e9mie de No\u00ebl",
+        "id": "Akademi Natal",
+        "it": "Accademia di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30a2\u30ab\u30c7\u30df\u30fc",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc544\uce74\ub370\ubbf8",
+        "pt": "Academia de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0410\u043a\u0430\u0434\u0435\u043c\u0438\u044f",
+        "th": "\u0e2d\u0e30\u0e04\u0e32\u0e40\u0e14\u0e21\u0e35\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "H\u1ecdc Vi\u1ec7n Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u5b66\u9662",
+        "zh-TW": "\u8056\u8a95\u5b78\u9662"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_23",
+          "pathId": 431
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            431
+          ],
+          "name": "buildSkin_3_23",
+          "pathId": 1102
+        },
+        "assetKey": "buildSkin_3_23",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_023_0",
+            "pathId": 3,
+            "sourceBundle": "6ac546be0f9cf6942910e2b5633333e6",
+            "sourceSha256": "49156b8d9ab19798d39ad6ca5e490ece60681424f3eaa3d88ae69aedb5eb39dc"
+          },
+          {
+            "name": "bd_a_christmas_023_1",
+            "pathId": 1,
+            "sourceBundle": "6ac546be0f9cf6942910e2b5633333e6",
+            "sourceSha256": "49156b8d9ab19798d39ad6ca5e490ece60681424f3eaa3d88ae69aedb5eb39dc"
+          },
+          {
+            "name": "bd_a_christmas_023_2",
+            "pathId": 2,
+            "sourceBundle": "6ac546be0f9cf6942910e2b5633333e6",
+            "sourceSha256": "49156b8d9ab19798d39ad6ca5e490ece60681424f3eaa3d88ae69aedb5eb39dc"
+          },
+          {
+            "name": "bd_a_christmas_023_1",
+            "pathId": 1,
+            "sourceBundle": "6ac546be0f9cf6942910e2b5633333e6",
+            "sourceSha256": "49156b8d9ab19798d39ad6ca5e490ece60681424f3eaa3d88ae69aedb5eb39dc"
+          },
+          {
+            "name": "bd_a_christmas_023_0",
+            "pathId": 3,
+            "sourceBundle": "6ac546be0f9cf6942910e2b5633333e6",
+            "sourceSha256": "49156b8d9ab19798d39ad6ca5e490ece60681424f3eaa3d88ae69aedb5eb39dc"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_023_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 24,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 53,
+      "titles": {
+        "de": "Weihnachts Bank",
+        "en": "X-Mas Bank",
+        "es": "Banco de Navidad",
+        "fr": "Banque de No\u00ebl",
+        "id": "Bank Natal",
+        "it": "Banca di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u9280\u884c",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc740\ud589",
+        "pt": "Banco de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u0411\u0430\u043d\u043a",
+        "th": "\u0e18\u0e19\u0e32\u0e04\u0e32\u0e23\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Ng\u00e2n H\u00e0ng Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u94f6\u884c",
+        "zh-TW": "\u8056\u8a95\u9280\u884c"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_24",
+          "pathId": 432
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            432
+          ],
+          "name": "buildSkin_3_24",
+          "pathId": 1103
+        },
+        "assetKey": "buildSkin_3_24",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_024_0",
+            "pathId": 1,
+            "sourceBundle": "8ccdd993311409049be2bb3a9f4f3b30",
+            "sourceSha256": "738324ed5cafef49a534c74b7d635ddd4a42204663f6f3c9dc438147e249b4af"
+          },
+          {
+            "name": "bd_a_christmas_024_1",
+            "pathId": 2,
+            "sourceBundle": "8ccdd993311409049be2bb3a9f4f3b30",
+            "sourceSha256": "738324ed5cafef49a534c74b7d635ddd4a42204663f6f3c9dc438147e249b4af"
+          },
+          {
+            "name": "bd_a_christmas_024_2",
+            "pathId": 3,
+            "sourceBundle": "8ccdd993311409049be2bb3a9f4f3b30",
+            "sourceSha256": "738324ed5cafef49a534c74b7d635ddd4a42204663f6f3c9dc438147e249b4af"
+          },
+          {
+            "name": "bd_a_christmas_024_1",
+            "pathId": 2,
+            "sourceBundle": "8ccdd993311409049be2bb3a9f4f3b30",
+            "sourceSha256": "738324ed5cafef49a534c74b7d635ddd4a42204663f6f3c9dc438147e249b4af"
+          },
+          {
+            "name": "bd_a_christmas_024_0",
+            "pathId": 1,
+            "sourceBundle": "8ccdd993311409049be2bb3a9f4f3b30",
+            "sourceSha256": "738324ed5cafef49a534c74b7d635ddd4a42204663f6f3c9dc438147e249b4af"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_024_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 25,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 54,
+      "titles": {
+        "de": "Weihnachts B\u00fccherei der Weisheit",
+        "en": "X-Mas Library of Wisdom",
+        "es": "Biblioteca de la Sabidur\u00eda de Navidad",
+        "fr": "Biblioth\u00e8que de Sagesse de No\u00ebl",
+        "id": "Perpustakaan Kebijakan Natal",
+        "it": "Biblioteca della saggezza di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u77e5\u8b58\u306e\u56f3\u66f8\u9928",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc9c0\uc2dd\uc758 \ub3c4\uc11c\uad00",
+        "pt": "Biblioteca da Sabedoria de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0411\u0438\u0431\u043b\u0438\u043e\u0442\u0435\u043a\u0430",
+        "th": "\u0e2b\u0e49\u0e2d\u0e07\u0e2a\u0e21\u0e38\u0e14\u0e41\u0e2b\u0e48\u0e07\u0e04\u0e27\u0e32\u0e21\u0e23\u0e39\u0e49\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Th\u01b0 Vi\u1ec7n Tri Th\u1ee9c Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u77e5\u8bc6\u56fe\u4e66\u9986",
+        "zh-TW": "\u8056\u8a95\u77e5\u8b58\u5716\u66f8\u9928"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_25",
+          "pathId": 433
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            433
+          ],
+          "name": "buildSkin_3_25",
+          "pathId": 1104
+        },
+        "assetKey": "buildSkin_3_25",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_025_0",
+            "pathId": 3,
+            "sourceBundle": "03b8cfef7e7b7664db3822d6448db3a6",
+            "sourceSha256": "7461b5ffe88a722087c1dde90a463c096f41d21a609e73e45f9a9538f79aad48"
+          },
+          {
+            "name": "bd_a_christmas_025_1",
+            "pathId": 1,
+            "sourceBundle": "03b8cfef7e7b7664db3822d6448db3a6",
+            "sourceSha256": "7461b5ffe88a722087c1dde90a463c096f41d21a609e73e45f9a9538f79aad48"
+          },
+          {
+            "name": "bd_a_christmas_025_2",
+            "pathId": 2,
+            "sourceBundle": "03b8cfef7e7b7664db3822d6448db3a6",
+            "sourceSha256": "7461b5ffe88a722087c1dde90a463c096f41d21a609e73e45f9a9538f79aad48"
+          },
+          {
+            "name": "bd_a_christmas_025_1",
+            "pathId": 1,
+            "sourceBundle": "03b8cfef7e7b7664db3822d6448db3a6",
+            "sourceSha256": "7461b5ffe88a722087c1dde90a463c096f41d21a609e73e45f9a9538f79aad48"
+          },
+          {
+            "name": "bd_a_christmas_025_0",
+            "pathId": 3,
+            "sourceBundle": "03b8cfef7e7b7664db3822d6448db3a6",
+            "sourceSha256": "7461b5ffe88a722087c1dde90a463c096f41d21a609e73e45f9a9538f79aad48"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_025_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 26,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 55,
+      "titles": {
+        "de": "Weihnachts Brunnen des Lebens",
+        "en": "X-Mas Fountain of life",
+        "es": "Fuente de la Vida de Navidad",
+        "fr": "Fontaine de Vie de No\u00ebl",
+        "id": "Air Mancur Kehidupan Natal",
+        "it": "Fontana della vita di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u547d\u306e\u6cc9",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc0dd\uba85\uc758 \uc0d8",
+        "pt": "Fonte de Vida de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u0424\u043e\u043d\u0442\u0430\u043d \u0416\u0438\u0437\u043d\u0438",
+        "th": "\u0e19\u0e49\u0e33\u0e1e\u0e38\u0e41\u0e2b\u0e48\u0e07\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e18\u0e35\u0e21\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Su\u1ed1i N\u01b0\u1edbc Sinh M\u1ec7nh Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u751f\u547d\u4e4b\u6cc9",
+        "zh-TW": "\u8056\u8a95\u751f\u547d\u4e4b\u6cc9"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_26",
+          "pathId": 434
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            434
+          ],
+          "name": "buildSkin_3_26",
+          "pathId": 1105
+        },
+        "assetKey": "buildSkin_3_26",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_026_0",
+            "pathId": 3,
+            "sourceBundle": "62c8f3753ca6b94478b75699f23b47cf",
+            "sourceSha256": "ddd8fa94a3c49be5e1fba429baf7331343c9211f2e9936b84a58e6e24cddacbc"
+          },
+          {
+            "name": "bd_a_christmas_026_1",
+            "pathId": 2,
+            "sourceBundle": "62c8f3753ca6b94478b75699f23b47cf",
+            "sourceSha256": "ddd8fa94a3c49be5e1fba429baf7331343c9211f2e9936b84a58e6e24cddacbc"
+          },
+          {
+            "name": "bd_a_christmas_026_2",
+            "pathId": 1,
+            "sourceBundle": "62c8f3753ca6b94478b75699f23b47cf",
+            "sourceSha256": "ddd8fa94a3c49be5e1fba429baf7331343c9211f2e9936b84a58e6e24cddacbc"
+          },
+          {
+            "name": "bd_a_christmas_026_1",
+            "pathId": 2,
+            "sourceBundle": "62c8f3753ca6b94478b75699f23b47cf",
+            "sourceSha256": "ddd8fa94a3c49be5e1fba429baf7331343c9211f2e9936b84a58e6e24cddacbc"
+          },
+          {
+            "name": "bd_a_christmas_026_0",
+            "pathId": 3,
+            "sourceBundle": "62c8f3753ca6b94478b75699f23b47cf",
+            "sourceSha256": "ddd8fa94a3c49be5e1fba429baf7331343c9211f2e9936b84a58e6e24cddacbc"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_026_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 27,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 56,
+      "titles": {
+        "de": "Weihnachts Mutgrabstein",
+        "en": "X-Mas Courage Headstone",
+        "es": "L\u00e1pida del Coraje de Navidad",
+        "fr": "Pierre Tombale de Courage de No\u00ebl",
+        "id": "Nisan Keberanian Natal",
+        "it": "Lapide del coraggio di Natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u52c7\u6c17\u306e\u7891\u77f3",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc6a9\uae30\uc758 \ube44\uc11d",
+        "pt": "L\u00e1pide da Coragem de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u043e\u0435 \u041d\u0430\u0434\u0433\u0440\u043e\u0431\u0438\u0435 \u041c\u0443\u0436\u0435\u0441\u0442\u0432\u0430",
+        "th": "\u0e28\u0e34\u0e25\u0e32\u0e08\u0e32\u0e23\u0e36\u0e01\u0e41\u0e2b\u0e48\u0e07\u0e04\u0e27\u0e32\u0e21\u0e01\u0e25\u0e49\u0e32\u0e18\u0e35\u0e21\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Bia \u0110\u00e1 D\u0169ng C\u1ea3m Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde \u52c7\u6c14\u7891\u77f3",
+        "zh-TW": "\u8056\u8a95 \u52c7\u6c23\u7891\u77f3"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_27",
+          "pathId": 435
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            435
+          ],
+          "name": "buildSkin_3_27",
+          "pathId": 1106
+        },
+        "assetKey": "buildSkin_3_27",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_027_0",
+            "pathId": 3,
+            "sourceBundle": "d0e9adf078cdf904caf7ba205157d3c7",
+            "sourceSha256": "7ce914bfbdf2ec13ef3a807aaba05fb0d4cdf9880e8e4ad46f07bb672319f330"
+          },
+          {
+            "name": "bd_a_christmas_027_1",
+            "pathId": 1,
+            "sourceBundle": "d0e9adf078cdf904caf7ba205157d3c7",
+            "sourceSha256": "7ce914bfbdf2ec13ef3a807aaba05fb0d4cdf9880e8e4ad46f07bb672319f330"
+          },
+          {
+            "name": "bd_a_christmas_027_2",
+            "pathId": 2,
+            "sourceBundle": "d0e9adf078cdf904caf7ba205157d3c7",
+            "sourceSha256": "7ce914bfbdf2ec13ef3a807aaba05fb0d4cdf9880e8e4ad46f07bb672319f330"
+          },
+          {
+            "name": "bd_a_christmas_027_1",
+            "pathId": 1,
+            "sourceBundle": "d0e9adf078cdf904caf7ba205157d3c7",
+            "sourceSha256": "7ce914bfbdf2ec13ef3a807aaba05fb0d4cdf9880e8e4ad46f07bb672319f330"
+          },
+          {
+            "name": "bd_a_christmas_027_0",
+            "pathId": 3,
+            "sourceBundle": "d0e9adf078cdf904caf7ba205157d3c7",
+            "sourceSha256": "7ce914bfbdf2ec13ef3a807aaba05fb0d4cdf9880e8e4ad46f07bb672319f330"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_027_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 28,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 57,
+      "titles": {
+        "de": "Weihnachts Trainingsfeld",
+        "en": "X-Mas Training Ground",
+        "es": "\u00c1rea de Entrenamiento de Navidad",
+        "fr": "Terrain d\u2019Entra\u00eenement de No\u00ebl",
+        "id": "Tempat Latihan Natal",
+        "it": "Campo di allenamento natalizio",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u4fee\u884c\u5834",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uc218\ub828\uc7a5",
+        "pt": "Campo de Treinamento de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0422\u0440\u0435\u043d\u0438\u0440\u043e\u0432\u043e\u0447\u043d\u0430\u044f \u0411\u0430\u0437\u0430",
+        "th": "\u0e42\u0e23\u0e07\u0e1d\u0e36\u0e01\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Thao Tr\u01b0\u1eddng Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u4fee\u70bc\u5730",
+        "zh-TW": "\u8056\u8a95\u4fee\u7149\u5730"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_28",
+          "pathId": 436
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            436
+          ],
+          "name": "buildSkin_3_28",
+          "pathId": 1107
+        },
+        "assetKey": "buildSkin_3_28",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_028_0",
+            "pathId": 3,
+            "sourceBundle": "5d3d098e9b59c8045bf7042b1d924702",
+            "sourceSha256": "7826c124c6a78bcc1e587bd957e8ef456ea0af67853fa19bc6af15beee1ea12b"
+          },
+          {
+            "name": "bd_a_christmas_028_1",
+            "pathId": 2,
+            "sourceBundle": "5d3d098e9b59c8045bf7042b1d924702",
+            "sourceSha256": "7826c124c6a78bcc1e587bd957e8ef456ea0af67853fa19bc6af15beee1ea12b"
+          },
+          {
+            "name": "bd_a_christmas_028_2",
+            "pathId": 1,
+            "sourceBundle": "5d3d098e9b59c8045bf7042b1d924702",
+            "sourceSha256": "7826c124c6a78bcc1e587bd957e8ef456ea0af67853fa19bc6af15beee1ea12b"
+          },
+          {
+            "name": "bd_a_christmas_028_1",
+            "pathId": 2,
+            "sourceBundle": "5d3d098e9b59c8045bf7042b1d924702",
+            "sourceSha256": "7826c124c6a78bcc1e587bd957e8ef456ea0af67853fa19bc6af15beee1ea12b"
+          },
+          {
+            "name": "bd_a_christmas_028_0",
+            "pathId": 3,
+            "sourceBundle": "5d3d098e9b59c8045bf7042b1d924702",
+            "sourceSha256": "7826c124c6a78bcc1e587bd957e8ef456ea0af67853fa19bc6af15beee1ea12b"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_028_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 40,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 58,
+      "titles": {
+        "de": "Weihnachts Kolosseum",
+        "en": "X-Mas Colosseum",
+        "es": "Coliseo de Navidad",
+        "fr": "Colis\u00e9e de No\u00ebl",
+        "id": "Colosseum Natal",
+        "it": "Colosseo di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30b3\u30ed\u30bb\u30a6\u30e0",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ucf5c\ub85c\uc138\uc6c0",
+        "pt": "Coliseu de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u044b\u0439 \u041a\u043e\u043b\u0438\u0437\u0435\u0439",
+        "th": "\u0e42\u0e04\u0e25\u0e2d\u0e2a\u0e40\u0e0b\u0e35\u0e22\u0e21\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Closseum Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u89d2\u6597\u573a",
+        "zh-TW": "\u8056\u8a95\u89d2\u9b25\u5834"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "expectedAssetKey": "buildSkin_3_40",
+        "expectedSpritePrefix": "bd_a_christmas_040_",
+        "reason": "exact animation clip is absent from sharedassets1.assets",
+        "state": "unresolved"
+      }
+    },
+    {
+      "buildingId": 2,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 59,
+      "titles": {
+        "de": "Weihnachts Heiligtum der Wiederbelebung",
+        "en": "X-Mas Sanctuary of Resurrection",
+        "es": "Santuario de Resurrecci\u00f3n de Navidad",
+        "fr": "Sanctuaire de R\u00e9surrection de No\u00ebl",
+        "id": "Ruang Kebangkitan Natal",
+        "it": "Santuario della Resurrezione di natale",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u306e\u5fa9\u6d3b\u306e\u8056\u6240",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \ubd80\ud65c\uc758 \uc131\uc18c",
+        "pt": "Santu\u00e1rio da Ressurrei\u00e7\u00e3o de Natal",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u043e\u0435 \u0421\u0432\u044f\u0442\u0438\u043b\u0438\u0449\u0435",
+        "th": "\u0e27\u0e34\u0e2b\u0e32\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c\u0e2a\u0e34\u0e17\u0e18\u0e34\u0e4c\u0e41\u0e2b\u0e48\u0e07\u0e01\u0e32\u0e23\u0e04\u0e37\u0e19\u0e0a\u0e35\u0e1e\u0e18\u0e35\u0e21\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Th\u00e1nh \u0110\u1ecba H\u1ed3i Sinh Gi\u00e1ng sinh",
+        "zh-CN": "\u5723\u8bde\u590d\u6d3b\u5723\u5730",
+        "zh-TW": "\u8056\u8a95\u5fa9\u6d3b\u8056\u5730"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_2",
+          "pathId": 427
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            427
+          ],
+          "name": "buildSkin_3_2",
+          "pathId": 1098
+        },
+        "assetKey": "buildSkin_3_2",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_002_2",
+            "pathId": 3,
+            "sourceBundle": "b55dfbb332dd5d5459afb756c961f2fb",
+            "sourceSha256": "509b0c373828116d32a0f86d591dee872bd46b4004cd7b5ec5b3ed671eee1d1b"
+          },
+          {
+            "name": "bd_a_christmas_002_0",
+            "pathId": 1,
+            "sourceBundle": "b55dfbb332dd5d5459afb756c961f2fb",
+            "sourceSha256": "509b0c373828116d32a0f86d591dee872bd46b4004cd7b5ec5b3ed671eee1d1b"
+          },
+          {
+            "name": "bd_a_christmas_002_1",
+            "pathId": 2,
+            "sourceBundle": "b55dfbb332dd5d5459afb756c961f2fb",
+            "sourceSha256": "509b0c373828116d32a0f86d591dee872bd46b4004cd7b5ec5b3ed671eee1d1b"
+          },
+          {
+            "name": "bd_a_christmas_002_1",
+            "pathId": 2,
+            "sourceBundle": "b55dfbb332dd5d5459afb756c961f2fb",
+            "sourceSha256": "509b0c373828116d32a0f86d591dee872bd46b4004cd7b5ec5b3ed671eee1d1b"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_002_",
+        "state": "resolved"
+      }
+    },
+    {
+      "buildingId": 73,
+      "family": "christmas",
+      "requiredGold": 10000,
+      "requiredLevel": 0,
+      "requiredMaterialIds": [
+        296
+      ],
+      "requiredMaterialQuantities": [
+        500
+      ],
+      "skinId": 3,
+      "sourceRowIndex": 60,
+      "titles": {
+        "de": "Festlicher Handelswagen",
+        "en": "Festive Trading Wagon",
+        "es": "Vagoneta de Comercio Festiva",
+        "fr": "Chariot de commerce festif",
+        "id": "Kereta Dagang Natal",
+        "it": "Carro commerciale festivo",
+        "ja": "\u30af\u30ea\u30b9\u30de\u30b9\u8cbf\u6613\u99ac\u8eca",
+        "ko": "\ud06c\ub9ac\uc2a4\ub9c8\uc2a4 \uad50\uc5ed\ub9c8\ucc28",
+        "pt": "Vag\u00e3o Comercial Festivo",
+        "ru": "\u041f\u0440\u0430\u0437\u0434\u043d\u0438\u0447\u043d\u0430\u044f \u0422\u043e\u0440\u0433\u043e\u0432\u0430\u044f \u041f\u043e\u0432\u043e\u0437\u043a\u0430",
+        "th": "\u0e40\u0e01\u0e27\u0e35\u0e22\u0e19\u0e04\u0e49\u0e32\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e21\u0e32\u0e2a",
+        "vi": "Xe ng\u1ef1a ch\u1edf h\u00e0ng Noel",
+        "zh-CN": "\u5723\u8bde\u4ea4\u6613\u9a6c\u8f66",
+        "zh-TW": "\u8056\u8a95\u4ea4\u6613\u99ac\u8eca"
+      },
+      "visibility": 0,
+      "visualBinding": {
+        "animationClip": {
+          "name": "buildSkin_3_73",
+          "pathId": 441
+        },
+        "animatorController": {
+          "animationClipPathIds": [
+            441
+          ],
+          "name": "buildSkin_3_73",
+          "pathId": 1112
+        },
+        "assetKey": "buildSkin_3_73",
+        "bindingConfidence": "exact-table-rule-clip-controller-sprite-chain",
+        "spriteFrames": [
+          {
+            "name": "bd_a_christmas_073_0",
+            "pathId": 1557,
+            "sourceBundle": null,
+            "sourceSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+          },
+          {
+            "name": "bd_a_christmas_073_1",
+            "pathId": 1555,
+            "sourceBundle": null,
+            "sourceSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+          },
+          {
+            "name": "bd_a_christmas_073_2",
+            "pathId": 1491,
+            "sourceBundle": null,
+            "sourceSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+          },
+          {
+            "name": "bd_a_christmas_073_1",
+            "pathId": 1555,
+            "sourceBundle": null,
+            "sourceSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+          },
+          {
+            "name": "bd_a_christmas_073_0",
+            "pathId": 1557,
+            "sourceBundle": null,
+            "sourceSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+          }
+        ],
+        "spritePrefix": "bd_a_christmas_073_",
+        "state": "resolved"
+      }
+    }
+  ],
+  "runtimeCompatibility": "evidence-only",
+  "schemaVersion": 1,
+  "sources": {
+    "serializedBuildingTables": "reverse-engineering/evidence/serialized-building-tables-v1.json",
+    "serializedBuildingTablesSha256": "97c25e7175bec7f6eafb06fe96bce7ac91dc93f7b9eca4930c4036ca8cc55e32",
+    "sharedAssets": "game-assets/extracted/joined_unity_files/sharedassets1.assets",
+    "sharedAssetsSha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+  }
+}

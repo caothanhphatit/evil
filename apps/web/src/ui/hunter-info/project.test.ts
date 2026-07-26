@@ -1,0 +1,48 @@
+import { describe, expect, it } from "vitest";
+import type { HunterView } from "../hunter-roster";
+import { projectHunterInfo } from "./project";
+
+const hunter: HunterView = {
+  id: "hunter-1", numericId: 1, name: "Ocos", rosterState: "active", queuePosition: null,
+  level: 24, xp: 262, classId: "h1", className: "Berserker", classFamily: "H1",
+  rarityId: "rare", rarityName: "RARE", traitName: "Job Trait", traits: [], action: "Fun",
+  animation: null, hp: 775, maxHp: 7283, stamina: 96, maxStamina: 100,
+  satiety: 100, maxSatiety: 140, mood: 57, maxMood: 120, attack: 639, defense: 444,
+  gold: 6684, portrait: "/content/hunter.png",
+  skills: [{ id: "legacy", name: "Legacy", level: 1, icon: null, ready: true }],
+};
+
+describe("projectHunterInfo", () => {
+  it("projects explicit nested Hunter information without confusing Characteristic and Job Trait", () => {
+    const view = projectHunterInfo({
+      hunter_info: {
+        characteristic_name: "Charismatic",
+        status: { dps_milli: 245770, critical_rate_bps: 700, attack_speed_milli: 2600, evasion_rate_bps: 300, awakening: { current: 0, maximum: 4 } },
+        skills: [{ skill_id: "fury", display_name: "Fury", level: 1, group: "Basic Skill", description: "Attack quickly." }],
+        growth: { secret_points: 0, nodes: [{ node_id: "node-1", icon_path: "/content/node.png", points: 0, max_points: 100, order: 1 }] },
+        riding_pet: { mounted: false, can_move_to_ranch: true },
+        materials: [{ material_id: "wood", icon_path: "/content/wood.png", quantity: 18, order: 1 }],
+      },
+    }, hunter);
+    expect(view.title).toBe("Charismatic Ocos");
+    expect(view.dps).toBe(245.77);
+    expect(view.skills?.[0]).toMatchObject({ id: "fury", group: "Basic Skill", description: "Attack quickly." });
+    expect(view.growth?.nodes[0]).toMatchObject({ id: "node-1", maxPoints: 100 });
+    expect(view.riding).toEqual({ mounted: false, canMoveToRanch: true });
+    expect(view.materials?.[0]).toMatchObject({ id: "wood", quantity: 18 });
+  });
+
+  it("does not borrow roster skills, Job Trait, or pooled materials when nested payloads are absent", () => {
+    const view = projectHunterInfo({}, hunter);
+    expect(view.title).toBe("Ocos");
+    expect(view.skills).toBeNull();
+    expect(view.growth).toBeNull();
+    expect(view.riding).toBeNull();
+    expect(view.materials).toBeNull();
+  });
+
+  it("drops material rows that do not have explicit per-Hunter identity, icon and quantity", () => {
+    const view = projectHunterInfo({ hunter_info: { materials: [{ material_id: "wood", quantity: 4 }, { icon_path: "/content/ore.png", quantity: 3 }] } }, hunter);
+    expect(view.materials).toEqual([]);
+  });
+});

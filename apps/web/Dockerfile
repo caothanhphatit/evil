@@ -5,8 +5,13 @@ COPY apps/web/package*.json ./
 RUN npm ci
 
 COPY apps/web/ ./
-ARG VITE_WORLD_WS_URL=ws://localhost:8080/ws
-ARG VITE_WORLD_API_URL=http://localhost:8080
+COPY packages/content/releases/evil-hunter-1.411/building-registry.json /app/public/content/releases/evil-hunter-1.411/building-registry.json
+COPY packages/content/releases/evil-hunter-1.411/gear-catalog.json /app/public/content/releases/evil-hunter-1.411/gear-catalog.json
+# The full catalog is served at /game-assets/ in production as well as dev.
+# Keep it in the image so runtime URLs do not depend on a compose-only mount.
+COPY game-assets/extracted/exported/ /app/public/game-assets/
+ARG VITE_WORLD_WS_URL
+ARG VITE_WORLD_API_URL
 ENV VITE_WORLD_WS_URL=$VITE_WORLD_WS_URL
 ENV VITE_WORLD_API_URL=$VITE_WORLD_API_URL
 RUN npm run build

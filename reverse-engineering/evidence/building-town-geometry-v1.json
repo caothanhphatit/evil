@@ -1,0 +1,2086 @@
+{
+  "buildings": [
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 150,
+          "width": 137
+        },
+        "name": "bd_a_001_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 148,
+          "left": 2,
+          "right": 135,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 160.0,
+          "width": 180.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 149.92555236816406,
+          "width": 136.9508056640625,
+          "x": 23.036285400390625,
+          "y": 7.0267510414123535
+        },
+        "renderTextureRectOffset": {
+          "x": 23.036285400390625,
+          "y": 7.0267510414123535
+        },
+        "sourceBundle": "1acfdffb442984742af4fa74574effd4",
+        "sourceBundleSha256": "ec741575f523b9c54c3c64c3b2267fa1728ad86cd16fa2bdcbb8d1167b8e00de"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        3,
+        3
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 1,
+      "sourceBuildKey": "build_1",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 91,
+          "width": 80
+        },
+        "name": "bd_a_002_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 89,
+          "left": 2,
+          "right": 78,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 90.84776306152344,
+          "width": 79.89713287353516,
+          "x": 23.026750564575195,
+          "y": 9.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 23.026750564575195,
+          "y": 9.076120376586914
+        },
+        "sourceBundle": "1a11bc98b0ba3804a83d77668afcedcb",
+        "sourceBundleSha256": "115ea0f25f6ef211039157f492e64699b84085cf7951e9c97da3c2bf7349875d"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 2,
+      "sourceBuildKey": "build_2",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 87,
+          "width": 101
+        },
+        "name": "bd_a_003_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 85,
+          "left": 2,
+          "right": 99,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 86.89713287353516,
+          "width": 100.89713287353516,
+          "x": 13.026750564575195,
+          "y": 13.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 13.026750564575195,
+          "y": 13.076120376586914
+        },
+        "sourceBundle": "a856230073933754e91ba7fe733ad395",
+        "sourceBundleSha256": "c89cdca390c9398c3e7ab2ebb94f7f8ad9a825daa1140f74a730353026af6fe4"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 3,
+      "sourceBuildKey": "build_3",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 91,
+          "width": 95
+        },
+        "name": "bd_a_004_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 89,
+          "left": 2,
+          "right": 93,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 90.96034240722656,
+          "width": 94.91097259521484,
+          "x": 15.076120376586914,
+          "y": 7.012912750244141
+        },
+        "renderTextureRectOffset": {
+          "x": 15.076120376586914,
+          "y": 7.012912750244141
+        },
+        "sourceBundle": "ccb1662fd9929d9499ba12c66374c917",
+        "sourceBundleSha256": "fa3e8cb0c39b120594dabf3ab81c6e23b32ca4c1ca09093816e1c5381fa55e54"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 4,
+      "sourceBuildKey": "build_4",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 88,
+          "width": 60
+        },
+        "name": "bd_a_005_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 86,
+          "left": 0,
+          "right": 60,
+          "top": 0
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 87.92388153076172,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 2.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 0.0,
+          "y": 2.076120376586914
+        },
+        "sourceBundle": "1c6206114d2d77e4b88a0a74fcc1bbac",
+        "sourceBundleSha256": "12fb3e426b5e95e891dfb5063560bbc608e55fefe03b144d8d0cd28d3bf03166"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 5,
+      "sourceBuildKey": "build_5",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 90,
+          "width": 56
+        },
+        "name": "bd_a_006_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 88,
+          "left": 2,
+          "right": 54,
+          "top": 0
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 89.94868469238281,
+          "width": 55.88759231567383,
+          "x": 4.036284923553467,
+          "y": 0.051316678524017334
+        },
+        "renderTextureRectOffset": {
+          "x": 4.036284923553467,
+          "y": 0.051316678524017334
+        },
+        "sourceBundle": "c0971cc8bf818d34f945eb18c4d4e02a",
+        "sourceBundleSha256": "fd094ecf343b3a0cbebf30901aab82fd1b6151813476e2740e27a53353e9e5f0"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 6,
+      "sourceBuildKey": "build_6",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 112,
+          "width": 115
+        },
+        "name": "bd_a_007_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 110,
+          "left": 2,
+          "right": 113,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 111.84776306152344,
+          "width": 114.91097259521484,
+          "x": 3.0129125118255615,
+          "y": 2.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 3.0129125118255615,
+          "y": 2.076120376586914
+        },
+        "sourceBundle": "ff822506664c6c045af3312718b3a5dc",
+        "sourceBundleSha256": "4d45e0f40707a8774f952bd8436e54c08d02ea63d0a21802d534c36a319fb972"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 7,
+      "sourceBuildKey": "build_7",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 112,
+          "width": 100
+        },
+        "name": "bd_a_008_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 110,
+          "left": 2,
+          "right": 98,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 111.93696594238281,
+          "width": 99.89713287353516,
+          "x": 12.026750564575195,
+          "y": 4.036284923553467
+        },
+        "renderTextureRectOffset": {
+          "x": 12.026750564575195,
+          "y": 4.036284923553467
+        },
+        "sourceBundle": "3a07cd7518b1b05499d32c27652cb93f",
+        "sourceBundleSha256": "557af23a039e5aa38bee12fbac9e8f8c9d7ee27f93ae11d0de88f4a978f67264"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 8,
+      "sourceBuildKey": "build_8",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 119,
+          "width": 105
+        },
+        "name": "bd_a_009_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 117,
+          "left": 2,
+          "right": 103,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 118.89713287353516,
+          "width": 104.85492706298828,
+          "x": 9.026750564575195,
+          "y": 3.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 9.026750564575195,
+          "y": 3.076120376586914
+        },
+        "sourceBundle": "b911ff9ced273584ebb22435ea743218",
+        "sourceBundleSha256": "0ba61ddb3468c99e5aa93d202f852aeee78731ffc89ffab30f57664e344645b4"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 9,
+      "sourceBuildKey": "build_9",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 92,
+          "width": 107
+        },
+        "name": "bd_a_010_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 90,
+          "left": 2,
+          "right": 105,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 91.94650268554688,
+          "width": 106.89713287353516,
+          "x": 7.076120376586914,
+          "y": 8.026750564575195
+        },
+        "renderTextureRectOffset": {
+          "x": 7.076120376586914,
+          "y": 8.026750564575195
+        },
+        "sourceBundle": "063d072e8f4246444b0a089a9bdbccce",
+        "sourceBundleSha256": "830f6dcbb4e7e6874e2d3b3aa188b262e3dd4fc41523f33e48d4b77d4694e17a"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 10,
+      "sourceBuildKey": "build_10",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 104,
+          "width": 113
+        },
+        "name": "bd_a_011_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 102,
+          "left": 2,
+          "right": 111,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 103.89713287353516,
+          "width": 112.77452850341797,
+          "x": 3.076120376586914,
+          "y": 9.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 3.076120376586914,
+          "y": 9.076120376586914
+        },
+        "sourceBundle": "1ee17c59f92ad5143a184ff88b9b9674",
+        "sourceBundleSha256": "e3995b967850ad2c6f794155cf2715b8063b22df2f4e67e8b9a1c4712a8a405f"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 11,
+      "sourceBuildKey": "build_11",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 118,
+          "width": 93
+        },
+        "name": "bd_a_012_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 116,
+          "left": 2,
+          "right": 91,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 117.94464111328125,
+          "width": 92.77452850341797,
+          "x": 14.076120376586914,
+          "y": 6.051316738128662
+        },
+        "renderTextureRectOffset": {
+          "x": 14.076120376586914,
+          "y": 6.051316738128662
+        },
+        "sourceBundle": "e56d894497b9e564ba622cc555c72b9c",
+        "sourceBundleSha256": "b85ef5ee655f34c9bab613cb569b63fe04ec9395921a5f84067ae422c632a206"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 12,
+      "sourceBuildKey": "build_12",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 112,
+          "width": 108
+        },
+        "name": "bd_a_013_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 110,
+          "left": 2,
+          "right": 106,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 111.93975067138672,
+          "width": 107.91097259521484,
+          "x": 7.076120376586914,
+          "y": 7.033500671386719
+        },
+        "renderTextureRectOffset": {
+          "x": 7.076120376586914,
+          "y": 7.033500671386719
+        },
+        "sourceBundle": "135359eb98b0bd6498f8995dc9a9bb60",
+        "sourceBundleSha256": "3197191d0bc5e9f39995879171895906656d7b11351dc8ee35b30de37ec52796"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 13,
+      "sourceBuildKey": "build_13",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 88,
+          "width": 104
+        },
+        "name": "bd_a_014_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 86,
+          "left": 2,
+          "right": 102,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 87.84776306152344,
+          "width": 103.84776306152344,
+          "x": 7.076120376586914,
+          "y": 8.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 7.076120376586914,
+          "y": 8.076120376586914
+        },
+        "sourceBundle": "268a139cae36bec45835e5e161289a6c",
+        "sourceBundleSha256": "b533bdfa01b3a9c24195e9fcd6afc77bf7b48eb9d2b6bdc67089fdd70ef0f902"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 14,
+      "sourceBuildKey": "build_14",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 107,
+          "width": 106
+        },
+        "name": "bd_a_015_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 105,
+          "left": 2,
+          "right": 104,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 106.96034240722656,
+          "width": 105.77452850341797,
+          "x": 11.076120376586914,
+          "y": 2.0129125118255615
+        },
+        "renderTextureRectOffset": {
+          "x": 11.076120376586914,
+          "y": 2.0129125118255615
+        },
+        "sourceBundle": "e598334949324554aa88712af604e4a3",
+        "sourceBundleSha256": "63e00301dbb8fe8392de45a1ada0519c596a57268eb1eaea6f41c16e670ae4ae"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 15,
+      "sourceBuildKey": "build_15",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 88,
+          "width": 113
+        },
+        "name": "bd_a_016_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 88,
+          "left": 2,
+          "right": 113,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 87.95709228515625,
+          "width": 112.84776306152344,
+          "x": 3.076120376586914,
+          "y": 3.042907953262329
+        },
+        "renderTextureRectOffset": {
+          "x": 3.076120376586914,
+          "y": 3.042907953262329
+        },
+        "sourceBundle": "0f8b8a043a6786a4381a08c41d04edc6",
+        "sourceBundleSha256": "7c8adfc785a2d6488495c4b14b80c89ccd7eb72d6420b81a31da89f4f17740aa"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 16,
+      "sourceBuildKey": "build_16",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 90,
+          "width": 58
+        },
+        "name": "bd_a_018_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 89,
+          "left": 2,
+          "right": 56,
+          "top": 0
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 90.0,
+          "width": 57.946495056152344,
+          "x": 1.0267510414123535,
+          "y": 0.0
+        },
+        "renderTextureRectOffset": {
+          "x": 1.0267510414123535,
+          "y": 0.0
+        },
+        "sourceBundle": "1b7dbd85174877145b3aa29c2669f12f",
+        "sourceBundleSha256": "d1553dc869acb5285154728cb892648f7f6c2c9cc691a9838d4c8002051cc6d9"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 17,
+      "sourceBuildKey": "build_17",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 90,
+          "width": 58
+        },
+        "name": "bd_a_018_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 89,
+          "left": 2,
+          "right": 56,
+          "top": 0
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 90.0,
+          "width": 57.946495056152344,
+          "x": 1.0267510414123535,
+          "y": 0.0
+        },
+        "renderTextureRectOffset": {
+          "x": 1.0267510414123535,
+          "y": 0.0
+        },
+        "sourceBundle": "82faf569967e5aa4081f711be6736dc6",
+        "sourceBundleSha256": "f0467e79185e318c9eba6693689a7b572bd7e8fe14f12ceed4bd02e35fa39900"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 18,
+      "sourceBuildKey": "build_18",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 109,
+          "width": 105
+        },
+        "name": "bd_a_020_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 107,
+          "left": 2,
+          "right": 103,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 108.84776306152344,
+          "width": 104.97418212890625,
+          "x": 8.01291275024414,
+          "y": 8.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 8.01291275024414,
+          "y": 8.076120376586914
+        },
+        "sourceBundle": "699d492d6b0030e4dad2d7ed261ce9cc",
+        "sourceBundleSha256": "657014b1f3abad1159795aa1794ad120c8c660755a07999db99ffb31f363224a"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 19,
+      "sourceBuildKey": "build_19",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 103,
+          "width": 109
+        },
+        "name": "bd_a_021_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 101,
+          "left": 2,
+          "right": 107,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 102.89713287353516,
+          "width": 108.890380859375,
+          "x": 7.076120376586914,
+          "y": 12.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 7.076120376586914,
+          "y": 12.076120376586914
+        },
+        "sourceBundle": "7fdf4ea7b4f57c94c8f143981d770fcc",
+        "sourceBundleSha256": "02af72bc8993391291095715bb624b6844f57eec285acf325749188b6e4bd91d"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 20,
+      "sourceBuildKey": "build_20",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 112,
+          "width": 114
+        },
+        "name": "bd_a_022_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 110,
+          "left": 2,
+          "right": 112,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 111.89713287353516,
+          "width": 113.84776306152344,
+          "x": 2.076120376586914,
+          "y": 2.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 2.076120376586914,
+          "y": 2.076120376586914
+        },
+        "sourceBundle": "52e1e83ea992b044ea58d83d8b76f902",
+        "sourceBundleSha256": "298dc139c172f3dfc4b34402edd14e84df651fa77790a211e99d2857b9faa0c1"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 21,
+      "sourceBuildKey": "build_21",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 107,
+          "width": 110
+        },
+        "name": "bd_a_023_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 105,
+          "left": 2,
+          "right": 108,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 106.94650268554688,
+          "width": 109.84776306152344,
+          "x": 3.076120376586914,
+          "y": 7.0267510414123535
+        },
+        "renderTextureRectOffset": {
+          "x": 3.076120376586914,
+          "y": 7.0267510414123535
+        },
+        "sourceBundle": "b519c22275ec40148bea9c26e9b9f17d",
+        "sourceBundleSha256": "b1ea8553a755295f463dccc0a56db7e58f1c44b3291547788ee3ad81e1458fdb"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 22,
+      "sourceBuildKey": "build_22",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 115,
+          "width": 114
+        },
+        "name": "bd_a_024_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 113,
+          "left": 2,
+          "right": 112,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 114.84776306152344,
+          "width": 113.89713287353516,
+          "x": 4.0267510414123535,
+          "y": 3.076120376586914
+        },
+        "renderTextureRectOffset": {
+          "x": 4.0267510414123535,
+          "y": 3.076120376586914
+        },
+        "sourceBundle": "a1dfa8137d235c94b8d9dec1d9a02100",
+        "sourceBundleSha256": "92a9b2872054a2b06572699c3d6dcd119310aa65eac442fe770e0ee677e66798"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 23,
+      "sourceBuildKey": "build_23",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 102,
+          "width": 98
+        },
+        "name": "bd_a_025_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 100,
+          "left": 2,
+          "right": 96,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 101.96034240722656,
+          "width": 97.87256622314453,
+          "x": 15.051316261291504,
+          "y": 5.012912750244141
+        },
+        "renderTextureRectOffset": {
+          "x": 15.051316261291504,
+          "y": 5.012912750244141
+        },
+        "sourceBundle": "d7daea9c5561d9a4e9bdaf39576b2f19",
+        "sourceBundleSha256": "a85221540a8806315be25f61789957e34a99f1fc06efdfc313a5e311ecf9ab02"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 24,
+      "sourceBuildKey": "build_24",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 107,
+          "width": 115
+        },
+        "name": "bd_a_026_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 105,
+          "left": 2,
+          "right": 113,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 106.96034240722656,
+          "width": 114.8323974609375,
+          "x": 3.076120376586914,
+          "y": 1.0129125118255615
+        },
+        "renderTextureRectOffset": {
+          "x": 3.076120376586914,
+          "y": 1.0129125118255615
+        },
+        "sourceBundle": "a1e557fb5a2b0ec49b998811e367a538",
+        "sourceBundleSha256": "4790c5c23ea564bc71ddc2aad2affae3815bf501e6a83ac13b53dbf1483a8b79"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 25,
+      "sourceBuildKey": "build_25",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 79,
+          "width": 110
+        },
+        "name": "bd_a_027_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 77,
+          "left": 2,
+          "right": 108,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 78.96034240722656,
+          "width": 109.82518768310547,
+          "x": 4.076120376586914,
+          "y": 1.0129125118255615
+        },
+        "renderTextureRectOffset": {
+          "x": 4.076120376586914,
+          "y": 1.0129125118255615
+        },
+        "sourceBundle": "2b12ecfef0385684b8eee24e78297855",
+        "sourceBundleSha256": "1d3e296fbe314fabaa843a1ede59233e8fdb7af4c14fe7a8afb64dd78a5de189"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 26,
+      "sourceBuildKey": "build_26",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 106,
+          "width": 91
+        },
+        "name": "bd_a_028_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 104,
+          "left": 2,
+          "right": 89,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 105.91912078857422,
+          "width": 90.83773803710938,
+          "x": 16.01291275024414,
+          "y": 4.0267510414123535
+        },
+        "renderTextureRectOffset": {
+          "x": 16.01291275024414,
+          "y": 4.0267510414123535
+        },
+        "sourceBundle": "5ab632b2e1d8e2543b634ff06e01ad94",
+        "sourceBundleSha256": "8047a4b3822524638ebf1fbbb78a1e841138f24cb6fce5e4e5e937e3e5f8a735"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 27,
+      "sourceBuildKey": "build_27",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 102,
+          "width": 111
+        },
+        "name": "bd_a_028_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 100,
+          "left": 2,
+          "right": 109,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 101.93975067138672,
+          "width": 110.84776306152344,
+          "x": 8.076120376586914,
+          "y": 2.0335004329681396
+        },
+        "renderTextureRectOffset": {
+          "x": 8.076120376586914,
+          "y": 2.0335004329681396
+        },
+        "sourceBundle": "41d8ac7dcb106404dbd19fbd98586d60",
+        "sourceBundleSha256": "3b6dd94c4b90720b833d85083209dac57d16ef2a3d0aa21f5326660c8a23d1dc"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 28,
+      "sourceBuildKey": "build_28",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 126,
+          "width": 111
+        },
+        "name": "bd_a_029_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 124,
+          "left": 2,
+          "right": 109,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 125.890380859375,
+          "width": 110.80555725097656,
+          "x": 4.076120376586914,
+          "y": 1.0335004329681396
+        },
+        "renderTextureRectOffset": {
+          "x": 4.076120376586914,
+          "y": 1.0335004329681396
+        },
+        "sourceBundle": "367035643772a47e482ad480e98feba6",
+        "sourceBundleSha256": "0f1737e9eecff8f393298caeb036ce634fb1e4fcfb09aac5d8c361b8352d30d9"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 29,
+      "sourceBuildKey": "build_29",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 90,
+          "width": 60
+        },
+        "name": "bd_a_054_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 89,
+          "left": 1,
+          "right": 59,
+          "top": 0
+        },
+        "pathId": 3,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRectOffset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "sourceBundle": "fd7f09abc91956b45b9429105d2bc831",
+        "sourceBundleSha256": "eef4a2c4572b176676bceb1074ff285f5c96c2f2346516c552935caa77b62a5b"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 54,
+      "sourceBuildKey": "build_54",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 112,
+          "width": 78
+        },
+        "name": "bd_a_067_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 110,
+          "left": 2,
+          "right": 76,
+          "top": 2
+        },
+        "pathId": 2,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 111.890380859375,
+          "width": 77.87256622314453,
+          "x": 21.076120376586914,
+          "y": 4.033500671386719
+        },
+        "renderTextureRectOffset": {
+          "x": 21.076120376586914,
+          "y": 4.033500671386719
+        },
+        "sourceBundle": "1f738003a0d5c6d47af7b1d7f729b75c",
+        "sourceBundleSha256": "cce0c405b80c70210af055973635a42d7432e3878ef983eda658e6705c9552fa"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 67,
+      "sourceBuildKey": "build_67",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 69,
+          "width": 90
+        },
+        "name": "bd_a_068_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 67,
+          "left": 2,
+          "right": 88,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 68.92554473876953,
+          "width": 89.94650268554688,
+          "x": 15.026750564575195,
+          "y": 12.026750564575195
+        },
+        "renderTextureRectOffset": {
+          "x": 15.026750564575195,
+          "y": 12.026750564575195
+        },
+        "sourceBundle": "915fbe1cafc513d4289e1e42232bc107",
+        "sourceBundleSha256": "5ff4b995e9fe7b40d482cb5ec79d3006ecf859fe6df3d96beb4ddbf4bd481f3f"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 68,
+      "sourceBuildKey": "build_68",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 90,
+          "width": 70
+        },
+        "name": "bd_a_069_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 88,
+          "left": 2,
+          "right": 68,
+          "top": 2
+        },
+        "pathId": 1,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 89.93577575683594,
+          "width": 69.84776306152344,
+          "x": 27.076120376586914,
+          "y": 16.01291275024414
+        },
+        "renderTextureRectOffset": {
+          "x": 27.076120376586914,
+          "y": 16.01291275024414
+        },
+        "sourceBundle": "7d987251129e4714e8d40f5c578625f6",
+        "sourceBundleSha256": "58db57cd411430e4cf36d202d9ac00f537ee578cacbb7570bf46be8d15b02760"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 69,
+      "sourceBuildKey": "build_69",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 79,
+          "width": 46
+        },
+        "name": "bd_a_072_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 77,
+          "left": 2,
+          "right": 44,
+          "top": 2
+        },
+        "pathId": 2,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 90.0,
+          "width": 60.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 78.89713287353516,
+          "width": 45.890377044677734,
+          "x": 9.033500671386719,
+          "y": 2.0267510414123535
+        },
+        "renderTextureRectOffset": {
+          "x": 9.033500671386719,
+          "y": 2.0267510414123535
+        },
+        "sourceBundle": "fe070c35485064a459f749daf449a3e9",
+        "sourceBundleSha256": "011baeb208b20a7d8b9ca27d4f24fd7659ba4d74d4bbbb4005ccb1ffb4714d4c"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 72,
+      "sourceBuildKey": "build_72",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 95,
+          "width": 108
+        },
+        "name": "bd_a_073_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 93,
+          "left": 2,
+          "right": 106,
+          "top": 2
+        },
+        "pathId": 3,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 94.95709228515625,
+          "width": 107.9009780883789,
+          "x": 8.047704696655273,
+          "y": 6.0
+        },
+        "renderTextureRectOffset": {
+          "x": 8.047704696655273,
+          "y": 6.0
+        },
+        "sourceBundle": "7b29e6330df7f0945aca933d18c56f61",
+        "sourceBundleSha256": "e0524b42677dc26228d9326b06bff700f6441e8dac62c974fd4dbe54fb35249f"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        2,
+        2
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 73,
+      "sourceBuildKey": "build_73",
+      "townPosition": null
+    },
+    {
+      "baseSprite": {
+        "decodedImagePixels": {
+          "height": 88,
+          "width": 73
+        },
+        "name": "bd_a_077_0",
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "opaquePixelBounds": {
+          "bottom": 86,
+          "left": 2,
+          "right": 71,
+          "top": 2
+        },
+        "pathId": 2,
+        "physicsShapeCount": 0,
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pixelsToUnits": 100.0,
+        "rect": {
+          "height": 130.0,
+          "width": 120.0,
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderTextureRect": {
+          "height": 87.9009780883789,
+          "width": 72.94650268554688,
+          "x": 24.026750564575195,
+          "y": 22.047704696655273
+        },
+        "renderTextureRectOffset": {
+          "x": 24.026750564575195,
+          "y": 22.047704696655273
+        },
+        "sourceBundle": "13b1d385b47e3314fa62fd11988e1041",
+        "sourceBundleSha256": "27061c81e00780601a9e968547d0279773d357a22a100887b7d891f8dc6a8909"
+      },
+      "collider": null,
+      "resolution": "exact-visual-geometry-placement-unresolved",
+      "serializedGridSize": [
+        1,
+        1
+      ],
+      "serializedMovable": 0,
+      "sorting": null,
+      "sourceBuildIndex": 77,
+      "sourceBuildKey": "build_77",
+      "townPosition": null
+    }
+  ],
+  "gaps": [
+    "Town coordinates for individual build IDs are runtime/save state and are not present in level1.",
+    "The shared prefab collider and sorting values cannot be promoted to per-ID bindings without runtime evidence.",
+    "Sprite opaque bounds describe source pixels, not navigation or collision geometry."
+  ],
+  "genericBuildingTemplate": {
+    "bindingToIndividualBuildIds": null,
+    "collider": {
+      "direction": 0,
+      "enabled": true,
+      "isTrigger": false,
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "pathId": 6060,
+      "size": {
+        "x": 0.44999998807907104,
+        "y": 0.44999998807907104
+      },
+      "type": "CapsuleCollider2D"
+    },
+    "controllerClass": "BuildCtrl",
+    "gameObjectPathId": 1628,
+    "scope": "generic-template-not-bound-to-individual-build-ids",
+    "visualChild": {
+      "animatorPathId": 6066,
+      "defaultAnimatorController": null,
+      "gameObjectPathId": 1637,
+      "localPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+      },
+      "name": "Building",
+      "sortingLayer": 1,
+      "sortingLayerId": -396024527,
+      "sortingOrder": 0,
+      "spriteRendererPathId": 6729
+    }
+  },
+  "manifestType": "building-town-geometry-evidence",
+  "placementFinding": {
+    "exactSerializedAnchors": 1,
+    "note": "level1 serializes only the ReviveBuilding anchor. No build_* sprite renderer or per-ID prefab instance is serialized at a town coordinate.",
+    "serializedPerBuildingPositions": 0,
+    "status": "runtime-or-save-owned"
+  },
+  "runtimeCompatibility": "evidence-only",
+  "schemaVersion": 1,
+  "serializedAnchors": [
+    {
+      "active": true,
+      "gameObjectPath": "BuildGroup/ReviveBuilding[260]",
+      "gameObjectPathId": 260,
+      "note": "Serialized anchor; its visual building skin is runtime-selected.",
+      "positionConfidence": "confirmed-anchor-no-sprite",
+      "spriteRenderer": null,
+      "transform": {
+        "children": [
+          {
+            "fileId": 0,
+            "pathId": 23315,
+            "type": "Transform"
+          }
+        ],
+        "componentType": "Transform",
+        "enabled": true,
+        "gameObjectPathId": 260,
+        "localPosition": {
+          "x": 14.713000297546387,
+          "y": 13.725000381469727,
+          "z": 0.0
+        },
+        "localRotation": {
+          "w": 1.0,
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "parent": {
+          "fileId": 0,
+          "pathId": 23338,
+          "type": "Transform"
+        },
+        "pathId": 23359
+      }
+    }
+  ],
+  "source": {
+    "buildingAssetEvidence": "reverse-engineering/evidence/building-asset-evidence-v1.json",
+    "buildingAssetEvidenceSha256": "84af8fe5e88591f81e06dc34b679429a40c8d98f64a9dd294b3b68aa4a9abe8d",
+    "sceneEvidence": "reverse-engineering/evidence/level1-scene-evidence-v2.json",
+    "sceneEvidenceSha256": "1cc26c700e58bfc21eb1e705d38bda77176a2feea326ee9c2f97c559d229af69",
+    "serializedBuildingTables": "reverse-engineering/evidence/serialized-building-tables-v1.json",
+    "serializedBuildingTablesSha256": "97c25e7175bec7f6eafb06fe96bce7ac91dc93f7b9eca4930c4036ca8cc55e32"
+  }
+}

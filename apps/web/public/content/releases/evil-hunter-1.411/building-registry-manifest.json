@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "contractType": "building-registry-bootstrap",
+  "registryId": "evil-hunter-1.411.buildings-v1",
+  "registryPath": "/content/releases/evil-hunter-1.411/building-registry.json",
+  "registryBytes": 38954443,
+  "registrySha256": "a262f6f452aa5d88b74bb8b3b739e3564c57d3cd1bcf88d36b4f7712f72e210e"
+}

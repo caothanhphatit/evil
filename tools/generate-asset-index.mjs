@@ -29,7 +29,6 @@ for (const absolute of files) {
 const byType = Object.groupBy(assets, (asset) => asset.path.split("/")[0]);
 const document = {
   schemaVersion: 1,
-  generatedAt: new Date().toISOString(),
   root: "game-assets/extracted/exported",
   totalFiles: assets.length,
   totalBytes: assets.reduce((sum, asset) => sum + asset.bytes, 0),

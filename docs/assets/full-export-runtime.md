@@ -14,13 +14,20 @@ Consumers must verify the catalog payload against the bootstrap SHA-256 before t
 
 The catalog is an evidence transport, not a gameplay release. Its default binding state is `unbound-evidence`; assets become behavior-bound only through a separate validated content release with scene, UI, animation, audio, or server-content evidence.
 
+Versioned village intermediates live under `game-assets/normalized/village`, outside this immutable export root. Their manifest records the Unity bundle, path ID, byte length, and checksum; the current transparent-matte conversion is an explicit approximation that still requires visual validation. Full-catalog validation is exhaustive: any file added below `game-assets/extracted/exported` without a matching index entry fails validation.
+
 ## Generate and validate
 
 ```bash
 pnpm assets:index
 pnpm assets:catalog:full
 pnpm assets:validate:full
+pnpm assets:verify
 ```
+
+`assets:verify` extracts `base_assets.apk` from the repository XAPK into a temporary directory and verifies all 415 Unity asset files byte-for-byte. Use `tools/verify-asset-copy.sh --source <assets-dir>` only when checking an already extracted authorized source.
+
+`pnpm assets:validate:visible-world` validates the development-only visible-world release separately. It requires exact source and publication hashes, all seven atomic Spine bundles, normalized-village provenance, exhaustive public paths, and explicit unresolved metadata for fixture skins, spawns, map identity, and monster candidates.
 
 Validation hashes all 9,359 files, checks the exact audio/font/metadata/sprite/text/texture counts, validates the bootstrap checksum, and requires skeleton JSON, atlas text, and every referenced page for all 53 Spine families. It also requires explicit outcomes for the four original exporter errors: two recovered fonts and two excluded 0x0 `Font Texture` placeholders.
 

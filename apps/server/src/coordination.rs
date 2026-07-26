@@ -6,6 +6,8 @@ use thiserror::Error;
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
+use crate::identity::SessionTokenHash;
+
 #[derive(Clone, Debug)]
 pub struct PlayerLease {
     pub owner: Uuid,
@@ -20,12 +22,17 @@ pub enum CoordinationError {
 
 #[async_trait]
 pub trait SessionCoordinator: Send + Sync {
-    async fn bootstrap(
+    async fn cache_session(
         &self,
-        existing: Option<Uuid>,
+        token_hash: SessionTokenHash,
+        player: Uuid,
         ttl: Duration,
-    ) -> Result<(Uuid, Uuid), CoordinationError>;
-    async fn resolve(&self, token: Uuid, ttl: Duration) -> Result<Option<Uuid>, CoordinationError>;
+    ) -> Result<(), CoordinationError>;
+    async fn resolve(
+        &self,
+        token_hash: SessionTokenHash,
+        ttl: Duration,
+    ) -> Result<Option<Uuid>, CoordinationError>;
     async fn acquire_lease(
         &self,
         player: Uuid,
@@ -45,7 +52,7 @@ pub trait SessionCoordinator: Send + Sync {
     ) -> Result<(), CoordinationError>;
     async fn allow_command(
         &self,
-        token: Uuid,
+        token_hash: SessionTokenHash,
         limit: u32,
         window: Duration,
     ) -> Result<bool, CoordinationError>;
@@ -61,37 +68,30 @@ pub struct InMemorySessionCoordinator {
 
 #[derive(Default)]
 struct MemoryState {
-    sessions: HashMap<Uuid, Uuid>,
+    sessions: HashMap<SessionTokenHash, Uuid>,
     leases: HashMap<Uuid, PlayerLease>,
     fences: HashMap<Uuid, i64>,
-    rates: HashMap<Uuid, (tokio::time::Instant, u32)>,
+    rates: HashMap<SessionTokenHash, (tokio::time::Instant, u32)>,
 }
 
 #[async_trait]
 impl SessionCoordinator for InMemorySessionCoordinator {
-    async fn bootstrap(
+    async fn cache_session(
         &self,
-        existing: Option<Uuid>,
+        token_hash: SessionTokenHash,
+        player: Uuid,
         _ttl: Duration,
-    ) -> Result<(Uuid, Uuid), CoordinationError> {
-        let mut state = self.inner.lock().await;
-        if let Some(token) = existing {
-            if let Some(player) = state.sessions.get(&token).copied() {
-                return Ok((token, player));
-            }
-        }
-        let token = Uuid::new_v4();
-        let player = Uuid::new_v4();
-        state.sessions.insert(token, player);
-        Ok((token, player))
+    ) -> Result<(), CoordinationError> {
+        self.inner.lock().await.sessions.insert(token_hash, player);
+        Ok(())
     }
 
     async fn resolve(
         &self,
-        token: Uuid,
+        token_hash: SessionTokenHash,
         _ttl: Duration,
     ) -> Result<Option<Uuid>, CoordinationError> {
-        Ok(self.inner.lock().await.sessions.get(&token).copied())
+        Ok(self.inner.lock().await.sessions.get(&token_hash).copied())
     }
 
     async fn acquire_lease(
@@ -145,13 +145,13 @@ impl SessionCoordinator for InMemorySessionCoordinator {
 
     async fn allow_command(
         &self,
-        token: Uuid,
+        token_hash: SessionTokenHash,
         limit: u32,
         window: Duration,
     ) -> Result<bool, CoordinationError> {
         let mut state = self.inner.lock().await;
         let now = tokio::time::Instant::now();
-        let entry = state.rates.entry(token).or_insert((now, 0));
+        let entry = state.rates.entry(token_hash).or_insert((now, 0));
         if now.duration_since(entry.0) >= window {
             *entry = (now, 0);
         }
@@ -180,8 +180,8 @@ impl RedisSessionCoordinator {
     }
 }
 
-fn session_key(token: Uuid) -> String {
-    format!("eh:session:{token}")
+fn session_key(token_hash: SessionTokenHash) -> String {
+    format!("eh:session:{}", token_hash.cache_key_suffix())
 }
 fn lease_key(player: Uuid) -> String {
     format!("eh:player:{player}:lease")
@@ -195,28 +195,26 @@ fn lease_value(lease: &PlayerLease) -> String {
 
 #[async_trait]
 impl SessionCoordinator for RedisSessionCoordinator {
-    async fn bootstrap(
+    async fn cache_session(
         &self,
-        existing: Option<Uuid>,
+        token_hash: SessionTokenHash,
+        player: Uuid,
         ttl: Duration,
-    ) -> Result<(Uuid, Uuid), CoordinationError> {
-        if let Some(token) = existing {
-            if let Some(player) = self.resolve(token, ttl).await? {
-                return Ok((token, player));
-            }
-        }
-        let token = Uuid::new_v4();
-        let player = Uuid::new_v4();
+    ) -> Result<(), CoordinationError> {
         let mut connection = self.connection().await?;
         let _: () = connection
-            .set_ex(session_key(token), player.to_string(), ttl.as_secs())
+            .set_ex(session_key(token_hash), player.to_string(), ttl.as_secs())
             .await?;
-        Ok((token, player))
+        Ok(())
     }
 
-    async fn resolve(&self, token: Uuid, ttl: Duration) -> Result<Option<Uuid>, CoordinationError> {
+    async fn resolve(
+        &self,
+        token_hash: SessionTokenHash,
+        ttl: Duration,
+    ) -> Result<Option<Uuid>, CoordinationError> {
         let mut connection = self.connection().await?;
-        let key = session_key(token);
+        let key = session_key(token_hash);
         let value: Option<String> = connection.get(&key).await?;
         let Some(value) = value else { return Ok(None) };
         let _: bool = connection.expire(&key, ttl.as_secs() as i64).await?;
@@ -282,14 +280,14 @@ impl SessionCoordinator for RedisSessionCoordinator {
 
     async fn allow_command(
         &self,
-        token: Uuid,
+        token_hash: SessionTokenHash,
         limit: u32,
         window: Duration,
     ) -> Result<bool, CoordinationError> {
         let script = redis::Script::new("local n = redis.call('INCR', KEYS[1]); if n == 1 then redis.call('PEXPIRE', KEYS[1], ARGV[1]) end; return n");
         let mut connection = self.connection().await?;
         let count: u32 = script
-            .key(format!("eh:rate:{token}"))
+            .key(format!("eh:rate:{}", token_hash.cache_key_suffix()))
             .arg(window.as_millis() as u64)
             .invoke_async(&mut connection)
             .await?;
@@ -312,15 +310,19 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn bootstrap_resumes_server_side_identity() {
+    async fn session_cache_resolves_hashed_tokens() {
         let coordinator = InMemorySessionCoordinator::default();
         let ttl = Duration::from_secs(60);
-        let (token, player) = coordinator.bootstrap(None, ttl).await.unwrap();
+        let token_hash = SessionTokenHash::from_token(Uuid::new_v4());
+        let player = Uuid::new_v4();
+        coordinator
+            .cache_session(token_hash, player, ttl)
+            .await
+            .unwrap();
         assert_eq!(
-            coordinator.bootstrap(Some(token), ttl).await.unwrap(),
-            (token, player)
+            coordinator.resolve(token_hash, ttl).await.unwrap(),
+            Some(player)
         );
-        assert_eq!(coordinator.resolve(token, ttl).await.unwrap(), Some(player));
     }
 
     #[tokio::test]
@@ -350,10 +352,19 @@ mod tests {
     #[tokio::test]
     async fn command_budget_rejects_excess() {
         let coordinator = InMemorySessionCoordinator::default();
-        let token = Uuid::new_v4();
+        let token_hash = SessionTokenHash::from_token(Uuid::new_v4());
         let window = Duration::from_secs(1);
-        assert!(coordinator.allow_command(token, 2, window).await.unwrap());
-        assert!(coordinator.allow_command(token, 2, window).await.unwrap());
-        assert!(!coordinator.allow_command(token, 2, window).await.unwrap());
+        assert!(coordinator
+            .allow_command(token_hash, 2, window)
+            .await
+            .unwrap());
+        assert!(coordinator
+            .allow_command(token_hash, 2, window)
+            .await
+            .unwrap());
+        assert!(!coordinator
+            .allow_command(token_hash, 2, window)
+            .await
+            .unwrap());
     }
 }

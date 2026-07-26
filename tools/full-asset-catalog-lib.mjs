@@ -16,6 +16,30 @@ export async function readJson(file) {
   return JSON.parse(await fs.readFile(file, "utf8"));
 }
 
+export async function listRelativeFiles(root) {
+  async function walk(directory) {
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    const files = [];
+    for (const entry of entries) {
+      if (entry.name.startsWith(".")) continue;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isDirectory()) files.push(...await walk(absolute));
+      else if (entry.isFile()) files.push(path.relative(root, absolute).split(path.sep).join("/"));
+    }
+    return files;
+  }
+  return (await walk(root)).sort();
+}
+
+export function compareAssetCoverage(indexedPaths, exportedPaths) {
+  const indexed = new Set(indexedPaths);
+  const exported = new Set(exportedPaths);
+  return {
+    missing: [...indexed].filter((assetPath) => !exported.has(assetPath)).sort(),
+    unindexed: [...exported].filter((assetPath) => !indexed.has(assetPath)).sort()
+  };
+}
+
 function atlasPages(text) {
   const pages = [];
   const lines = text.split(/\r?\n/);
@@ -72,8 +96,7 @@ export async function buildFullAssetCatalog(repoRoot) {
     gameVersion: inventory.version,
     generatedFrom: {
       assetIndex: "game-assets/asset-index.json",
-      sourceInventory: "game-assets/manifests/full-source-inventory.json",
-      assetIndexGeneratedAt: assetIndex.generatedAt
+      sourceInventory: "game-assets/manifests/full-source-inventory.json"
     },
     runtime: {
       catalogPath: `/full-assets/releases/${FULL_ASSET_RELEASE_ID}.json`,

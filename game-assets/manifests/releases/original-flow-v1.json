@@ -24,8 +24,8 @@
     },
     {
       "path": "game-assets/asset-index.json",
-      "bytes": 1560431,
-      "sha256": "9b2d1f96605e14e04fd04720926f2846b6b21bef95f9caa2df35dba46e49d67e"
+      "bytes": 1560386,
+      "sha256": "2a5929781626f79d3bd1806575ca45dadb15c2387169f75b4cd4794c5c4b7e02"
     },
     {
       "path": "game-assets/extracted/exported/metadata/inventory.json",

@@ -1,0 +1,1668 @@
+{
+  "schemaVersion": 1,
+  "contractType": "building-town-hall-condition-evidence",
+  "sources": {
+    "localUi": {
+      "path": "game-assets/extracted/joined_unity_files/sharedassets0.assets",
+      "pathId": 9082,
+      "assetSha256": "0880c6e644cefeeeb141024878da0046e0858a7414dfc5b972bad417cdfbdbe2",
+      "rawBytes": 2937764,
+      "rawSha256": "36cc1787307d3b9a8b68c68f7eda4d7865c84484ee21ccc8c5006cf5cdcaef35",
+      "header": {
+        "name": "localUI_global",
+        "monoScriptPathId": 3985,
+        "spreadsheetId": "1_i2_M1-enmBOAqqqRKPCBMGnQid6uxlkGvxd-5YsA6U",
+        "spreadsheetName": "evilhunterdata_global",
+        "worksheetName": "localUI",
+        "rowCount": 3544
+      }
+    },
+    "buildingTables": {
+      "path": "reverse-engineering/evidence/serialized-building-tables-v1.json",
+      "bytes": 759208,
+      "sha256": "97c25e7175bec7f6eafb06fe96bce7ac91dc93f7b9eca4930c4036ca8cc55e32"
+    }
+  },
+  "evaluator": {
+    "subjectId": "build_1.level",
+    "operator": "greater-than-or-equal",
+    "operandField": "AdminBuildData.possibleBuild[levelIndex]",
+    "confidence": "strongly-inferred",
+    "reason": "Both recovered build-condition UI rows format the operand as a minimum Town Hall level."
+  },
+  "localizationRows": [
+    {
+      "index": 1509,
+      "key": "buildpop_9",
+      "explanationKo": "업그레이드 조건 표기",
+      "localized": {
+        "ko": "<color=#D97C7C>Lv.{0}이상 마을회관 필요</color>",
+        "ja": "<color=#D97C7C>Lv.{0}以上の町内会館必要 </color>",
+        "en": "<color=#D97C7C>Town Hall Lv.{0} or higher required.</color>",
+        "zh-TW": "<color=#D97C7C>需要Lv.{0}以上主城會館</color>",
+        "zh-CN": "<color=#D97C7C>需要Lv.{0}以上主城会馆</color>",
+        "ru": "<color=#D97C7C>Требуется Ратуша Ур.{0} или выше.</color>",
+        "fr": "<color=#D97C7C>Mairie Nv.{0} ou supérieur requise.</color>",
+        "es": "Se requiere el<color=#D97C7C>Niv.de Alcaldía {0} o más.</color>",
+        "pt": "<color=#D97C7C>Necessário Prefeitura Nv.{0} ou acima.</color>",
+        "it": "<color=#D97C7C>Richiesto LIV Municipio {0} o superiore.</color>",
+        "de": "<color=#D97C7C>Stadthalle Lv.{0} oder höher benötigt.</color>",
+        "th": "<color=#D97C7C>ต้องการหอประชุมหมู่บ้านเลเวล Lv.{0} ขึ้นไป</color>",
+        "vi": "<color=#D97C7C>Cần Tòa Thị Chính từ Lv.{0} trở lên</color>",
+        "id": "<color=#D97C7C>Dibutuhkan Balai Kota Lv.{0} atau lebih tinggi.</color>"
+      }
+    },
+    {
+      "index": 1537,
+      "key": "buildtoast_0",
+      "explanationKo": "마을 회관 레벨 부족 알림",
+      "localized": {
+        "ko": "<color=#EB5050>Lv.{0} 이상의 마을회관이 필요합니다.</color>",
+        "ja": "<color=#EB5050>Lv.{0} 以上の町内会館が必要です。</color>",
+        "en": "<color=#EB5050>Town Hall Lv.{0} or higher required.</color>",
+        "zh-TW": "<color=#EB5050>需要Lv.{0}以上主城會館</color>",
+        "zh-CN": "<color=#EB5050>需要Lv.{0}以上主城会馆</color>",
+        "ru": "<color=#EB5050>Требуется ратуша Ур. {0} или выше.</color>",
+        "fr": "<color=#EB5050>Mairie Nv.{0} ou plus requise.</color>",
+        "es": "Se requiere un<color=#EB5050>Niv.de Alcaldía {0} o más.</color>",
+        "pt": "<color=#EB5050>Necessário Prefeitura Nv.{0} ou acima.</color>",
+        "it": "<color=#EB5050>LIV del Municipio{0} o superiore richiesto.</color>",
+        "de": "<color=#EB5050>Stadthalle Lv.{0} oder höher benötigt.</color>",
+        "th": "<color=#EB5050>ต้องการหอประชุมหมู่บ้านเลเวล Lv.{0} ขึ้นไป</color>",
+        "vi": "<color=#EB5050>Cần Tòa Thị Chính từ Lv.{0} trở lên</color>",
+        "id": "<color=#EB5050>Dibutuhkan Balai Kota Lv.{0} atau lebih tinggi.</color>"
+      }
+    }
+  ],
+  "conditionRows": [
+    {
+      "key": "build_0:level:1",
+      "buildingId": 0,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=0].possibleBuild[0]"
+    },
+    {
+      "key": "build_1:level:1",
+      "buildingId": 1,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[0]"
+    },
+    {
+      "key": "build_1:level:2",
+      "buildingId": 1,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[1]"
+    },
+    {
+      "key": "build_1:level:3",
+      "buildingId": 1,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[2]"
+    },
+    {
+      "key": "build_1:level:4",
+      "buildingId": 1,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[3]"
+    },
+    {
+      "key": "build_1:level:5",
+      "buildingId": 1,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[4]"
+    },
+    {
+      "key": "build_1:level:6",
+      "buildingId": 1,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[5]"
+    },
+    {
+      "key": "build_1:level:7",
+      "buildingId": 1,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[6]"
+    },
+    {
+      "key": "build_1:level:8",
+      "buildingId": 1,
+      "buildingLevel": 8,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[7]"
+    },
+    {
+      "key": "build_1:level:9",
+      "buildingId": 1,
+      "buildingLevel": 9,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[8]"
+    },
+    {
+      "key": "build_1:level:10",
+      "buildingId": 1,
+      "buildingLevel": 10,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[9]"
+    },
+    {
+      "key": "build_1:level:11",
+      "buildingId": 1,
+      "buildingLevel": 11,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[10]"
+    },
+    {
+      "key": "build_1:level:12",
+      "buildingId": 1,
+      "buildingLevel": 12,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[11]"
+    },
+    {
+      "key": "build_1:level:13",
+      "buildingId": 1,
+      "buildingLevel": 13,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[12]"
+    },
+    {
+      "key": "build_1:level:14",
+      "buildingId": 1,
+      "buildingLevel": 14,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[13]"
+    },
+    {
+      "key": "build_1:level:15",
+      "buildingId": 1,
+      "buildingLevel": 15,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[14]"
+    },
+    {
+      "key": "build_1:level:16",
+      "buildingId": 1,
+      "buildingLevel": 16,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[15]"
+    },
+    {
+      "key": "build_1:level:17",
+      "buildingId": 1,
+      "buildingLevel": 17,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=1].possibleBuild[16]"
+    },
+    {
+      "key": "build_2:level:1",
+      "buildingId": 2,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=2].possibleBuild[0]"
+    },
+    {
+      "key": "build_2:level:2",
+      "buildingId": 2,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=2].possibleBuild[1]"
+    },
+    {
+      "key": "build_2:level:3",
+      "buildingId": 2,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=2].possibleBuild[2]"
+    },
+    {
+      "key": "build_2:level:4",
+      "buildingId": 2,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=2].possibleBuild[3]"
+    },
+    {
+      "key": "build_2:level:5",
+      "buildingId": 2,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=2].possibleBuild[4]"
+    },
+    {
+      "key": "build_2:level:6",
+      "buildingId": 2,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=2].possibleBuild[5]"
+    },
+    {
+      "key": "build_3:level:1",
+      "buildingId": 3,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=3].possibleBuild[0]"
+    },
+    {
+      "key": "build_3:level:2",
+      "buildingId": 3,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=3].possibleBuild[1]"
+    },
+    {
+      "key": "build_3:level:3",
+      "buildingId": 3,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=3].possibleBuild[2]"
+    },
+    {
+      "key": "build_3:level:4",
+      "buildingId": 3,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=3].possibleBuild[3]"
+    },
+    {
+      "key": "build_3:level:5",
+      "buildingId": 3,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=3].possibleBuild[4]"
+    },
+    {
+      "key": "build_3:level:6",
+      "buildingId": 3,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=3].possibleBuild[5]"
+    },
+    {
+      "key": "build_4:level:1",
+      "buildingId": 4,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=4].possibleBuild[0]"
+    },
+    {
+      "key": "build_4:level:2",
+      "buildingId": 4,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=4].possibleBuild[1]"
+    },
+    {
+      "key": "build_4:level:3",
+      "buildingId": 4,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=4].possibleBuild[2]"
+    },
+    {
+      "key": "build_4:level:4",
+      "buildingId": 4,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=4].possibleBuild[3]"
+    },
+    {
+      "key": "build_4:level:5",
+      "buildingId": 4,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=4].possibleBuild[4]"
+    },
+    {
+      "key": "build_4:level:6",
+      "buildingId": 4,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=4].possibleBuild[5]"
+    },
+    {
+      "key": "build_5:level:1",
+      "buildingId": 5,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=5].possibleBuild[0]"
+    },
+    {
+      "key": "build_5:level:2",
+      "buildingId": 5,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=5].possibleBuild[1]"
+    },
+    {
+      "key": "build_5:level:3",
+      "buildingId": 5,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=5].possibleBuild[2]"
+    },
+    {
+      "key": "build_6:level:1",
+      "buildingId": 6,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=6].possibleBuild[0]"
+    },
+    {
+      "key": "build_6:level:2",
+      "buildingId": 6,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=6].possibleBuild[1]"
+    },
+    {
+      "key": "build_6:level:3",
+      "buildingId": 6,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=6].possibleBuild[2]"
+    },
+    {
+      "key": "build_7:level:1",
+      "buildingId": 7,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=7].possibleBuild[0]"
+    },
+    {
+      "key": "build_7:level:2",
+      "buildingId": 7,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=7].possibleBuild[1]"
+    },
+    {
+      "key": "build_7:level:3",
+      "buildingId": 7,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=7].possibleBuild[2]"
+    },
+    {
+      "key": "build_7:level:4",
+      "buildingId": 7,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=7].possibleBuild[3]"
+    },
+    {
+      "key": "build_7:level:5",
+      "buildingId": 7,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=7].possibleBuild[4]"
+    },
+    {
+      "key": "build_8:level:1",
+      "buildingId": 8,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=8].possibleBuild[0]"
+    },
+    {
+      "key": "build_8:level:2",
+      "buildingId": 8,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=8].possibleBuild[1]"
+    },
+    {
+      "key": "build_8:level:3",
+      "buildingId": 8,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=8].possibleBuild[2]"
+    },
+    {
+      "key": "build_8:level:4",
+      "buildingId": 8,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=8].possibleBuild[3]"
+    },
+    {
+      "key": "build_8:level:5",
+      "buildingId": 8,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=8].possibleBuild[4]"
+    },
+    {
+      "key": "build_9:level:1",
+      "buildingId": 9,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=9].possibleBuild[0]"
+    },
+    {
+      "key": "build_9:level:2",
+      "buildingId": 9,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=9].possibleBuild[1]"
+    },
+    {
+      "key": "build_9:level:3",
+      "buildingId": 9,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=9].possibleBuild[2]"
+    },
+    {
+      "key": "build_9:level:4",
+      "buildingId": 9,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=9].possibleBuild[3]"
+    },
+    {
+      "key": "build_9:level:5",
+      "buildingId": 9,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=9].possibleBuild[4]"
+    },
+    {
+      "key": "build_9:level:6",
+      "buildingId": 9,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=9].possibleBuild[5]"
+    },
+    {
+      "key": "build_9:level:7",
+      "buildingId": 9,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=9].possibleBuild[6]"
+    },
+    {
+      "key": "build_10:level:1",
+      "buildingId": 10,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=10].possibleBuild[0]"
+    },
+    {
+      "key": "build_10:level:2",
+      "buildingId": 10,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=10].possibleBuild[1]"
+    },
+    {
+      "key": "build_10:level:3",
+      "buildingId": 10,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=10].possibleBuild[2]"
+    },
+    {
+      "key": "build_10:level:4",
+      "buildingId": 10,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=10].possibleBuild[3]"
+    },
+    {
+      "key": "build_10:level:5",
+      "buildingId": 10,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=10].possibleBuild[4]"
+    },
+    {
+      "key": "build_11:level:1",
+      "buildingId": 11,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=11].possibleBuild[0]"
+    },
+    {
+      "key": "build_11:level:2",
+      "buildingId": 11,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=11].possibleBuild[1]"
+    },
+    {
+      "key": "build_11:level:3",
+      "buildingId": 11,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=11].possibleBuild[2]"
+    },
+    {
+      "key": "build_11:level:4",
+      "buildingId": 11,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=11].possibleBuild[3]"
+    },
+    {
+      "key": "build_11:level:5",
+      "buildingId": 11,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=11].possibleBuild[4]"
+    },
+    {
+      "key": "build_11:level:6",
+      "buildingId": 11,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=11].possibleBuild[5]"
+    },
+    {
+      "key": "build_11:level:7",
+      "buildingId": 11,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 16,
+      "sourceLocator": "buildings[index=11].possibleBuild[6]"
+    },
+    {
+      "key": "build_11:level:8",
+      "buildingId": 11,
+      "buildingLevel": 8,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=11].possibleBuild[7]"
+    },
+    {
+      "key": "build_12:level:1",
+      "buildingId": 12,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=12].possibleBuild[0]"
+    },
+    {
+      "key": "build_12:level:2",
+      "buildingId": 12,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=12].possibleBuild[1]"
+    },
+    {
+      "key": "build_12:level:3",
+      "buildingId": 12,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=12].possibleBuild[2]"
+    },
+    {
+      "key": "build_12:level:4",
+      "buildingId": 12,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=12].possibleBuild[3]"
+    },
+    {
+      "key": "build_12:level:5",
+      "buildingId": 12,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=12].possibleBuild[4]"
+    },
+    {
+      "key": "build_12:level:6",
+      "buildingId": 12,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=12].possibleBuild[5]"
+    },
+    {
+      "key": "build_12:level:7",
+      "buildingId": 12,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=12].possibleBuild[6]"
+    },
+    {
+      "key": "build_13:level:1",
+      "buildingId": 13,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=13].possibleBuild[0]"
+    },
+    {
+      "key": "build_13:level:2",
+      "buildingId": 13,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=13].possibleBuild[1]"
+    },
+    {
+      "key": "build_13:level:3",
+      "buildingId": 13,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=13].possibleBuild[2]"
+    },
+    {
+      "key": "build_13:level:4",
+      "buildingId": 13,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=13].possibleBuild[3]"
+    },
+    {
+      "key": "build_13:level:5",
+      "buildingId": 13,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=13].possibleBuild[4]"
+    },
+    {
+      "key": "build_13:level:6",
+      "buildingId": 13,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=13].possibleBuild[5]"
+    },
+    {
+      "key": "build_13:level:7",
+      "buildingId": 13,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=13].possibleBuild[6]"
+    },
+    {
+      "key": "build_14:level:1",
+      "buildingId": 14,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=14].possibleBuild[0]"
+    },
+    {
+      "key": "build_14:level:2",
+      "buildingId": 14,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=14].possibleBuild[1]"
+    },
+    {
+      "key": "build_14:level:3",
+      "buildingId": 14,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=14].possibleBuild[2]"
+    },
+    {
+      "key": "build_14:level:4",
+      "buildingId": 14,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=14].possibleBuild[3]"
+    },
+    {
+      "key": "build_14:level:5",
+      "buildingId": 14,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=14].possibleBuild[4]"
+    },
+    {
+      "key": "build_14:level:6",
+      "buildingId": 14,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=14].possibleBuild[5]"
+    },
+    {
+      "key": "build_14:level:7",
+      "buildingId": 14,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 16,
+      "sourceLocator": "buildings[index=14].possibleBuild[6]"
+    },
+    {
+      "key": "build_14:level:8",
+      "buildingId": 14,
+      "buildingLevel": 8,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=14].possibleBuild[7]"
+    },
+    {
+      "key": "build_15:level:1",
+      "buildingId": 15,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=15].possibleBuild[0]"
+    },
+    {
+      "key": "build_15:level:2",
+      "buildingId": 15,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=15].possibleBuild[1]"
+    },
+    {
+      "key": "build_15:level:3",
+      "buildingId": 15,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=15].possibleBuild[2]"
+    },
+    {
+      "key": "build_15:level:4",
+      "buildingId": 15,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=15].possibleBuild[3]"
+    },
+    {
+      "key": "build_15:level:5",
+      "buildingId": 15,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=15].possibleBuild[4]"
+    },
+    {
+      "key": "build_16:level:1",
+      "buildingId": 16,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=16].possibleBuild[0]"
+    },
+    {
+      "key": "build_16:level:2",
+      "buildingId": 16,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=16].possibleBuild[1]"
+    },
+    {
+      "key": "build_16:level:3",
+      "buildingId": 16,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=16].possibleBuild[2]"
+    },
+    {
+      "key": "build_16:level:4",
+      "buildingId": 16,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=16].possibleBuild[3]"
+    },
+    {
+      "key": "build_16:level:5",
+      "buildingId": 16,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=16].possibleBuild[4]"
+    },
+    {
+      "key": "build_16:level:6",
+      "buildingId": 16,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=16].possibleBuild[5]"
+    },
+    {
+      "key": "build_17:level:1",
+      "buildingId": 17,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=17].possibleBuild[0]"
+    },
+    {
+      "key": "build_17:level:2",
+      "buildingId": 17,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=17].possibleBuild[1]"
+    },
+    {
+      "key": "build_18:level:1",
+      "buildingId": 18,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=18].possibleBuild[0]"
+    },
+    {
+      "key": "build_18:level:2",
+      "buildingId": 18,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=18].possibleBuild[1]"
+    },
+    {
+      "key": "build_19:level:1",
+      "buildingId": 19,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=19].possibleBuild[0]"
+    },
+    {
+      "key": "build_19:level:2",
+      "buildingId": 19,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=19].possibleBuild[1]"
+    },
+    {
+      "key": "build_19:level:3",
+      "buildingId": 19,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=19].possibleBuild[2]"
+    },
+    {
+      "key": "build_19:level:4",
+      "buildingId": 19,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=19].possibleBuild[3]"
+    },
+    {
+      "key": "build_19:level:5",
+      "buildingId": 19,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=19].possibleBuild[4]"
+    },
+    {
+      "key": "build_19:level:6",
+      "buildingId": 19,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=19].possibleBuild[5]"
+    },
+    {
+      "key": "build_19:level:7",
+      "buildingId": 19,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=19].possibleBuild[6]"
+    },
+    {
+      "key": "build_20:level:1",
+      "buildingId": 20,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=20].possibleBuild[0]"
+    },
+    {
+      "key": "build_20:level:2",
+      "buildingId": 20,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=20].possibleBuild[1]"
+    },
+    {
+      "key": "build_20:level:3",
+      "buildingId": 20,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=20].possibleBuild[2]"
+    },
+    {
+      "key": "build_20:level:4",
+      "buildingId": 20,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=20].possibleBuild[3]"
+    },
+    {
+      "key": "build_20:level:5",
+      "buildingId": 20,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=20].possibleBuild[4]"
+    },
+    {
+      "key": "build_21:level:1",
+      "buildingId": 21,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=21].possibleBuild[0]"
+    },
+    {
+      "key": "build_21:level:2",
+      "buildingId": 21,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=21].possibleBuild[1]"
+    },
+    {
+      "key": "build_21:level:3",
+      "buildingId": 21,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=21].possibleBuild[2]"
+    },
+    {
+      "key": "build_21:level:4",
+      "buildingId": 21,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=21].possibleBuild[3]"
+    },
+    {
+      "key": "build_21:level:5",
+      "buildingId": 21,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=21].possibleBuild[4]"
+    },
+    {
+      "key": "build_22:level:1",
+      "buildingId": 22,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=22].possibleBuild[0]"
+    },
+    {
+      "key": "build_22:level:2",
+      "buildingId": 22,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=22].possibleBuild[1]"
+    },
+    {
+      "key": "build_22:level:3",
+      "buildingId": 22,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=22].possibleBuild[2]"
+    },
+    {
+      "key": "build_22:level:4",
+      "buildingId": 22,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=22].possibleBuild[3]"
+    },
+    {
+      "key": "build_22:level:5",
+      "buildingId": 22,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=22].possibleBuild[4]"
+    },
+    {
+      "key": "build_22:level:6",
+      "buildingId": 22,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=22].possibleBuild[5]"
+    },
+    {
+      "key": "build_22:level:7",
+      "buildingId": 22,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=22].possibleBuild[6]"
+    },
+    {
+      "key": "build_22:level:8",
+      "buildingId": 22,
+      "buildingLevel": 8,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=22].possibleBuild[7]"
+    },
+    {
+      "key": "build_23:level:1",
+      "buildingId": 23,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=23].possibleBuild[0]"
+    },
+    {
+      "key": "build_23:level:2",
+      "buildingId": 23,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=23].possibleBuild[1]"
+    },
+    {
+      "key": "build_23:level:3",
+      "buildingId": 23,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=23].possibleBuild[2]"
+    },
+    {
+      "key": "build_23:level:4",
+      "buildingId": 23,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=23].possibleBuild[3]"
+    },
+    {
+      "key": "build_23:level:5",
+      "buildingId": 23,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=23].possibleBuild[4]"
+    },
+    {
+      "key": "build_23:level:6",
+      "buildingId": 23,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 16,
+      "sourceLocator": "buildings[index=23].possibleBuild[5]"
+    },
+    {
+      "key": "build_24:level:1",
+      "buildingId": 24,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=24].possibleBuild[0]"
+    },
+    {
+      "key": "build_24:level:2",
+      "buildingId": 24,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=24].possibleBuild[1]"
+    },
+    {
+      "key": "build_24:level:3",
+      "buildingId": 24,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=24].possibleBuild[2]"
+    },
+    {
+      "key": "build_25:level:1",
+      "buildingId": 25,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=25].possibleBuild[0]"
+    },
+    {
+      "key": "build_25:level:2",
+      "buildingId": 25,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=25].possibleBuild[1]"
+    },
+    {
+      "key": "build_25:level:3",
+      "buildingId": 25,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=25].possibleBuild[2]"
+    },
+    {
+      "key": "build_26:level:1",
+      "buildingId": 26,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=26].possibleBuild[0]"
+    },
+    {
+      "key": "build_26:level:2",
+      "buildingId": 26,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=26].possibleBuild[1]"
+    },
+    {
+      "key": "build_26:level:3",
+      "buildingId": 26,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=26].possibleBuild[2]"
+    },
+    {
+      "key": "build_27:level:1",
+      "buildingId": 27,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 11,
+      "sourceLocator": "buildings[index=27].possibleBuild[0]"
+    },
+    {
+      "key": "build_27:level:2",
+      "buildingId": 27,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 13,
+      "sourceLocator": "buildings[index=27].possibleBuild[1]"
+    },
+    {
+      "key": "build_27:level:3",
+      "buildingId": 27,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=27].possibleBuild[2]"
+    },
+    {
+      "key": "build_28:level:1",
+      "buildingId": 28,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=28].possibleBuild[0]"
+    },
+    {
+      "key": "build_28:level:2",
+      "buildingId": 28,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=28].possibleBuild[1]"
+    },
+    {
+      "key": "build_28:level:3",
+      "buildingId": 28,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=28].possibleBuild[2]"
+    },
+    {
+      "key": "build_28:level:4",
+      "buildingId": 28,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=28].possibleBuild[3]"
+    },
+    {
+      "key": "build_28:level:5",
+      "buildingId": 28,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=28].possibleBuild[4]"
+    },
+    {
+      "key": "build_28:level:6",
+      "buildingId": 28,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=28].possibleBuild[5]"
+    },
+    {
+      "key": "build_29:level:1",
+      "buildingId": 29,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=29].possibleBuild[0]"
+    },
+    {
+      "key": "build_30:level:1",
+      "buildingId": 30,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=30].possibleBuild[0]"
+    },
+    {
+      "key": "build_31:level:1",
+      "buildingId": 31,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=31].possibleBuild[0]"
+    },
+    {
+      "key": "build_32:level:1",
+      "buildingId": 32,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=32].possibleBuild[0]"
+    },
+    {
+      "key": "build_33:level:1",
+      "buildingId": 33,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=33].possibleBuild[0]"
+    },
+    {
+      "key": "build_34:level:1",
+      "buildingId": 34,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=34].possibleBuild[0]"
+    },
+    {
+      "key": "build_35:level:1",
+      "buildingId": 35,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=35].possibleBuild[0]"
+    },
+    {
+      "key": "build_36:level:1",
+      "buildingId": 36,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=36].possibleBuild[0]"
+    },
+    {
+      "key": "build_37:level:1",
+      "buildingId": 37,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=37].possibleBuild[0]"
+    },
+    {
+      "key": "build_38:level:1",
+      "buildingId": 38,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=38].possibleBuild[0]"
+    },
+    {
+      "key": "build_39:level:1",
+      "buildingId": 39,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=39].possibleBuild[0]"
+    },
+    {
+      "key": "build_39:level:2",
+      "buildingId": 39,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=39].possibleBuild[1]"
+    },
+    {
+      "key": "build_39:level:3",
+      "buildingId": 39,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=39].possibleBuild[2]"
+    },
+    {
+      "key": "build_39:level:4",
+      "buildingId": 39,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=39].possibleBuild[3]"
+    },
+    {
+      "key": "build_39:level:5",
+      "buildingId": 39,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=39].possibleBuild[4]"
+    },
+    {
+      "key": "build_39:level:6",
+      "buildingId": 39,
+      "buildingLevel": 6,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=39].possibleBuild[5]"
+    },
+    {
+      "key": "build_39:level:7",
+      "buildingId": 39,
+      "buildingLevel": 7,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=39].possibleBuild[6]"
+    },
+    {
+      "key": "build_39:level:8",
+      "buildingId": 39,
+      "buildingLevel": 8,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=39].possibleBuild[7]"
+    },
+    {
+      "key": "build_39:level:9",
+      "buildingId": 39,
+      "buildingLevel": 9,
+      "requiredTownHallLevel": 16,
+      "sourceLocator": "buildings[index=39].possibleBuild[8]"
+    },
+    {
+      "key": "build_39:level:10",
+      "buildingId": 39,
+      "buildingLevel": 10,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=39].possibleBuild[9]"
+    },
+    {
+      "key": "build_40:level:1",
+      "buildingId": 40,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=40].possibleBuild[0]"
+    },
+    {
+      "key": "build_41:level:1",
+      "buildingId": 41,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=41].possibleBuild[0]"
+    },
+    {
+      "key": "build_42:level:1",
+      "buildingId": 42,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=42].possibleBuild[0]"
+    },
+    {
+      "key": "build_43:level:1",
+      "buildingId": 43,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 9,
+      "sourceLocator": "buildings[index=43].possibleBuild[0]"
+    },
+    {
+      "key": "build_44:level:1",
+      "buildingId": 44,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=44].possibleBuild[0]"
+    },
+    {
+      "key": "build_45:level:1",
+      "buildingId": 45,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=45].possibleBuild[0]"
+    },
+    {
+      "key": "build_46:level:1",
+      "buildingId": 46,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 5,
+      "sourceLocator": "buildings[index=46].possibleBuild[0]"
+    },
+    {
+      "key": "build_47:level:1",
+      "buildingId": 47,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 8,
+      "sourceLocator": "buildings[index=47].possibleBuild[0]"
+    },
+    {
+      "key": "build_48:level:1",
+      "buildingId": 48,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 6,
+      "sourceLocator": "buildings[index=48].possibleBuild[0]"
+    },
+    {
+      "key": "build_49:level:1",
+      "buildingId": 49,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 2,
+      "sourceLocator": "buildings[index=49].possibleBuild[0]"
+    },
+    {
+      "key": "build_50:level:1",
+      "buildingId": 50,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 4,
+      "sourceLocator": "buildings[index=50].possibleBuild[0]"
+    },
+    {
+      "key": "build_51:level:1",
+      "buildingId": 51,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=51].possibleBuild[0]"
+    },
+    {
+      "key": "build_52:level:1",
+      "buildingId": 52,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=52].possibleBuild[0]"
+    },
+    {
+      "key": "build_53:level:1",
+      "buildingId": 53,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 3,
+      "sourceLocator": "buildings[index=53].possibleBuild[0]"
+    },
+    {
+      "key": "build_53:level:2",
+      "buildingId": 53,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=53].possibleBuild[1]"
+    },
+    {
+      "key": "build_54:level:1",
+      "buildingId": 54,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=54].possibleBuild[0]"
+    },
+    {
+      "key": "build_55:level:1",
+      "buildingId": 55,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=55].possibleBuild[0]"
+    },
+    {
+      "key": "build_56:level:1",
+      "buildingId": 56,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=56].possibleBuild[0]"
+    },
+    {
+      "key": "build_57:level:1",
+      "buildingId": 57,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=57].possibleBuild[0]"
+    },
+    {
+      "key": "build_58:level:1",
+      "buildingId": 58,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 10,
+      "sourceLocator": "buildings[index=58].possibleBuild[0]"
+    },
+    {
+      "key": "build_59:level:1",
+      "buildingId": 59,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 12,
+      "sourceLocator": "buildings[index=59].possibleBuild[0]"
+    },
+    {
+      "key": "build_60:level:1",
+      "buildingId": 60,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=60].possibleBuild[0]"
+    },
+    {
+      "key": "build_61:level:1",
+      "buildingId": 61,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=61].possibleBuild[0]"
+    },
+    {
+      "key": "build_61:level:2",
+      "buildingId": 61,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=61].possibleBuild[1]"
+    },
+    {
+      "key": "build_61:level:3",
+      "buildingId": 61,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=61].possibleBuild[2]"
+    },
+    {
+      "key": "build_61:level:4",
+      "buildingId": 61,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=61].possibleBuild[3]"
+    },
+    {
+      "key": "build_61:level:5",
+      "buildingId": 61,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=61].possibleBuild[4]"
+    },
+    {
+      "key": "build_62:level:1",
+      "buildingId": 62,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=62].possibleBuild[0]"
+    },
+    {
+      "key": "build_62:level:2",
+      "buildingId": 62,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=62].possibleBuild[1]"
+    },
+    {
+      "key": "build_62:level:3",
+      "buildingId": 62,
+      "buildingLevel": 3,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=62].possibleBuild[2]"
+    },
+    {
+      "key": "build_62:level:4",
+      "buildingId": 62,
+      "buildingLevel": 4,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=62].possibleBuild[3]"
+    },
+    {
+      "key": "build_62:level:5",
+      "buildingId": 62,
+      "buildingLevel": 5,
+      "requiredTownHallLevel": 15,
+      "sourceLocator": "buildings[index=62].possibleBuild[4]"
+    },
+    {
+      "key": "build_63:level:1",
+      "buildingId": 63,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 14,
+      "sourceLocator": "buildings[index=63].possibleBuild[0]"
+    },
+    {
+      "key": "build_64:level:1",
+      "buildingId": 64,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=64].possibleBuild[0]"
+    },
+    {
+      "key": "build_65:level:1",
+      "buildingId": 65,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=65].possibleBuild[0]"
+    },
+    {
+      "key": "build_66:level:1",
+      "buildingId": 66,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=66].possibleBuild[0]"
+    },
+    {
+      "key": "build_67:level:1",
+      "buildingId": 67,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=67].possibleBuild[0]"
+    },
+    {
+      "key": "build_68:level:1",
+      "buildingId": 68,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=68].possibleBuild[0]"
+    },
+    {
+      "key": "build_69:level:1",
+      "buildingId": 69,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=69].possibleBuild[0]"
+    },
+    {
+      "key": "build_70:level:1",
+      "buildingId": 70,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=70].possibleBuild[0]"
+    },
+    {
+      "key": "build_71:level:1",
+      "buildingId": 71,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=71].possibleBuild[0]"
+    },
+    {
+      "key": "build_72:level:1",
+      "buildingId": 72,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 16,
+      "sourceLocator": "buildings[index=72].possibleBuild[0]"
+    },
+    {
+      "key": "build_72:level:2",
+      "buildingId": 72,
+      "buildingLevel": 2,
+      "requiredTownHallLevel": 17,
+      "sourceLocator": "buildings[index=72].possibleBuild[1]"
+    },
+    {
+      "key": "build_73:level:1",
+      "buildingId": 73,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 7,
+      "sourceLocator": "buildings[index=73].possibleBuild[0]"
+    },
+    {
+      "key": "build_74:level:1",
+      "buildingId": 74,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=74].possibleBuild[0]"
+    },
+    {
+      "key": "build_75:level:1",
+      "buildingId": 75,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=75].possibleBuild[0]"
+    },
+    {
+      "key": "build_76:level:1",
+      "buildingId": 76,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=76].possibleBuild[0]"
+    },
+    {
+      "key": "build_77:level:1",
+      "buildingId": 77,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=77].possibleBuild[0]"
+    },
+    {
+      "key": "build_78:level:1",
+      "buildingId": 78,
+      "buildingLevel": 1,
+      "requiredTownHallLevel": 1,
+      "sourceLocator": "buildings[index=78].possibleBuild[0]"
+    }
+  ]
+}

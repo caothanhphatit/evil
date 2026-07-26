@@ -27,6 +27,7 @@ pub fn router(state: AppState) -> Router {
         .route("/health", get(health::health))
         .route("/ready", get(health::ready))
         .route("/session/bootstrap", post(session::bootstrap))
+        .route("/session/demo/hunter-lab", get(session::hunter_lab_demo))
         .route("/ws", get(websocket::upgrade))
         .with_state(state)
         .layer(PropagateRequestIdLayer::new(request_id_header.clone()))

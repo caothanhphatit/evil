@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "level1-scene-evidence-v2.schema.json",
+  "title": "Unity level1 scene evidence v2",
+  "type": "object",
+  "required": ["schemaVersion", "manifestType", "runtimeCompatibility", "source", "objectCounts", "coverage", "gaps", "gameObjects", "components", "diagnostics"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "manifestType": { "const": "unity-scene-evidence" },
+    "runtimeCompatibility": { "const": "not-claimed" },
+    "source": {
+      "type": "object",
+      "required": ["path", "bytes", "sha256", "unityPyVersion"],
+      "properties": {
+        "path": { "type": "string" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "unityPyVersion": { "type": "string" }
+      }
+    },
+    "coverage": { "type": "object" },
+    "gaps": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "gameObjects": { "type": "array" },
+    "components": {
+      "type": "object",
+      "required": ["transforms", "spriteRenderers", "canvases", "cameras", "animators", "colliders", "uiBehaviours", "textMeshes", "canvasGroups"]
+    },
+    "diagnostics": { "type": "array" }
+  },
+  "additionalProperties": true
+}

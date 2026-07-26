@@ -1,0 +1,148 @@
+{
+  "coverage": {
+    "localeKeys": {
+      "en": 3,
+      "ja": 3,
+      "zh": 3,
+      "zh-TW": 3
+    },
+    "locales": 4,
+    "sharedKeys": 3
+  },
+  "gaps": [
+    "Only the recovered IOS_DisplayNameTable is present in these bundles; this is not the complete in-game localization corpus.",
+    "Font fallback, glyph coverage, rich-text behavior, and runtime table selection remain unvalidated."
+  ],
+  "locales": {
+    "en": {
+      "entries": [
+        {
+          "id": 637734477824,
+          "key": "Evil Hunter Tycoon",
+          "localized": "Evil Hunter Tycoon"
+        },
+        {
+          "id": 1725179092992,
+          "key": "The accessed data is secure and used only for Ad targeting.",
+          "localized": "The accessed data is secure and used only for Ad targeting."
+        },
+        {
+          "id": 137974709956370432,
+          "key": "Android Display Name",
+          "localized": "Evil Hunter Tycoon"
+        }
+      ],
+      "localeCode": "en",
+      "source": {
+        "bytes": 2264,
+        "path": "game-assets/extracted/addressables_bundles/localization-string-tables-english(en)_assets_all.bundle",
+        "sha256": "4f7035bb7f7337c9e82ca4f9643de4386a0c0fcbe7a8425fa1d851452bbce532"
+      },
+      "tableName": "IOS_DisplayNameTable_en"
+    },
+    "ja": {
+      "entries": [
+        {
+          "id": 637734477824,
+          "key": "Evil Hunter Tycoon",
+          "localized": "イービルハンタータウン"
+        },
+        {
+          "id": 1725179092992,
+          "key": "The accessed data is secure and used only for Ad targeting.",
+          "localized": "更に良いアプリ開発、カスタムサービスのために権限の許可をお願い致します。"
+        },
+        {
+          "id": 137974709956370432,
+          "key": "Android Display Name",
+          "localized": "イービルハンタータウン"
+        }
+      ],
+      "localeCode": "ja",
+      "source": {
+        "bytes": 2309,
+        "path": "game-assets/extracted/addressables_bundles/localization-string-tables-japanese(ja)_assets_all.bundle",
+        "sha256": "e313406734dc02c9d32fe9c26efaf308f2e6be575f2b44f2f7fffc52c8f6b3c3"
+      },
+      "tableName": "IOS_DisplayNameTable_ja"
+    },
+    "zh": {
+      "entries": [
+        {
+          "id": 637734477824,
+          "key": "Evil Hunter Tycoon",
+          "localized": "猎魔村物语"
+        },
+        {
+          "id": 1725179092992,
+          "key": "The accessed data is secure and used only for Ad targeting.",
+          "localized": "为了进行更好的游戏开发以及定制化的服务，请按下允许使用权限的按钮。"
+        },
+        {
+          "id": 137974709956370432,
+          "key": "Android Display Name",
+          "localized": "猎魔村物语"
+        }
+      ],
+      "localeCode": "zh",
+      "source": {
+        "bytes": 2304,
+        "path": "game-assets/extracted/addressables_bundles/localization-string-tables-chinese(simplified)(zh)_assets_all.bundle",
+        "sha256": "5edccb31d18174dc12827910132f7631716f0c3e147c355eef8a0500e8c3e96d"
+      },
+      "tableName": "IOS_DisplayNameTable_zh"
+    },
+    "zh-TW": {
+      "entries": [
+        {
+          "id": 637734477824,
+          "key": "Evil Hunter Tycoon",
+          "localized": "獵魔村物語"
+        },
+        {
+          "id": 1725179092992,
+          "key": "The accessed data is secure and used only for Ad targeting.",
+          "localized": "為了進行更好的遊戲開發以及客製化的服務，請按下允許使用權限的按鈕。"
+        },
+        {
+          "id": 137974709956370432,
+          "key": "Android Display Name",
+          "localized": "獵魔村物語"
+        }
+      ],
+      "localeCode": "zh-TW",
+      "source": {
+        "bytes": 2309,
+        "path": "game-assets/extracted/addressables_bundles/localization-string-tables-chinese(traditional)(zh-tw)_assets_all.bundle",
+        "sha256": "24727c279a6a274b941ef9ec90d1064899c3c151543fb7c4258eaf0dae8aa720"
+      },
+      "tableName": "IOS_DisplayNameTable_zh-TW"
+    }
+  },
+  "manifestType": "unity-localization-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "schemaVersion": 1,
+  "sharedTable": {
+    "entries": [
+      {
+        "id": 637734477824,
+        "key": "Evil Hunter Tycoon"
+      },
+      {
+        "id": 1725179092992,
+        "key": "The accessed data is secure and used only for Ad targeting."
+      },
+      {
+        "id": 137974709956370432,
+        "key": "Android Display Name"
+      }
+    ],
+    "guid": "054360b3b3711474c9c807f1b62b1301",
+    "source": {
+      "bytes": 2338,
+      "path": "game-assets/extracted/addressables_bundles/localization-assets-shared_assets_all.bundle",
+      "sha256": "e42354b201648ce9c43c405bd6adce6b57040bae641dd344b0bb71dd63d358aa"
+    },
+    "tableName": "IOS_DisplayNameTable"
+  }
+}

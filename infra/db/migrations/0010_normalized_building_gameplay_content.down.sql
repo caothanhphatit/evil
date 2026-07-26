@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS economy_product_random_output;
+DROP TABLE IF EXISTS economy_product_conversion_option;
+DROP TABLE IF EXISTS economy_product_service_completion;
+DROP TABLE IF EXISTS economy_product_service;
+DROP TABLE IF EXISTS economy_product_amount;
+DROP TABLE IF EXISTS economy_product_definition;
+DROP TABLE IF EXISTS economy_item_hunter_tier_price;
+DROP TABLE IF EXISTS economy_item_price_component;
+DROP TABLE IF EXISTS economy_item_localization;
+DROP TABLE IF EXISTS economy_item_definition;
+DROP TABLE IF EXISTS economy_resource_definition;
+DROP TABLE IF EXISTS building_capability_definition;

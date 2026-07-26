@@ -1,0 +1,1794 @@
+{
+  "schemaVersion": 1,
+  "manifestType": "building-route-migration-scope",
+  "generatedFrom": [
+    "packages/content/releases/evil-hunter-1.411/building-registry.json",
+    "reverse-engineering/evidence/building-ui-contract-v1.json",
+    "reverse-engineering/evidence/level1-scene-hierarchy.json",
+    "screenshot/*.jpg"
+  ],
+  "policy": "A route is migration-ready only when popup hierarchy, data contract, asset binding, actions, and building dispatch are all resolved.",
+  "popupTemplates": {
+    "BuildingPop": {
+      "controller": "BuildingPop",
+      "dimensions": {
+        "x": 560.0,
+        "y": 900.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 167,
+      "labelCount": 52,
+      "spriteBindingCount": 83,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "multi-mode-building-management",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      }
+    },
+    "RequestPop": {
+      "controller": "RequestPop",
+      "dimensions": {
+        "x": 480.0,
+        "y": 820.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 36,
+      "labelCount": 20,
+      "spriteBindingCount": 14,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "bounty-request",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      }
+    },
+    "GearCreatePop": {
+      "controller": "GearCreatePop",
+      "dimensions": {
+        "x": 450.0,
+        "y": 950.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 55,
+      "labelCount": 20,
+      "spriteBindingCount": 24,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "gear-crafting",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      }
+    },
+    "ConsumCreatePop": {
+      "controller": "ConsumCreatePop",
+      "dimensions": {
+        "x": 450.0,
+        "y": 830.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 43,
+      "labelCount": 18,
+      "spriteBindingCount": 20,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "potion-crafting",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      }
+    },
+    "ProductCreatePop": {
+      "controller": "ProductCreatePop",
+      "dimensions": {
+        "x": 450.0,
+        "y": 860.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 83,
+      "labelCount": 36,
+      "spriteBindingCount": 37,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "building-product-quantity-and-conversion",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      },
+      "criticalNodes": [
+        {
+          "path": "Background/GridBackground",
+          "pathId": 478,
+          "size": {
+            "x": 446.0,
+            "y": 340.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 289.0000305175781
+          }
+        },
+        {
+          "path": "Background/TwoButtonGroup",
+          "pathId": 1070,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": -2.99993896484375
+          }
+        },
+        {
+          "path": "Background/TwoButtonGroup/CloseButton",
+          "pathId": 947,
+          "size": {
+            "x": 180.0,
+            "y": 76.0
+          },
+          "position": {
+            "x": 99.9997787475586,
+            "y": 60.99993896484375
+          }
+        },
+        {
+          "path": "Background/TwoButtonGroup/UpgradeButton",
+          "pathId": 1497,
+          "size": {
+            "x": 180.0,
+            "y": 76.0
+          },
+          "position": {
+            "x": -100.00033569335938,
+            "y": 60.99993896484375
+          }
+        },
+        {
+          "path": "Background/Border/Icon",
+          "pathId": 661,
+          "size": {
+            "x": 100.0,
+            "y": 100.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "path": "Background/Border/MinusButton",
+          "pathId": 1905,
+          "size": {
+            "x": 60.0,
+            "y": 60.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "path": "Background/Border/PlusButton",
+          "pathId": 2605,
+          "size": {
+            "x": 60.0,
+            "y": 60.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "path": "Background/Title",
+          "pathId": 2208,
+          "size": {
+            "x": 400.0,
+            "y": 50.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": -40.999969482421875
+          }
+        },
+        {
+          "path": "Background/ChangeBorder",
+          "pathId": 6510,
+          "size": {
+            "x": 420.0,
+            "y": 300.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": -235.0
+          }
+        },
+        {
+          "path": "Background/ChangeBorder/ButtonBorder",
+          "pathId": 4717,
+          "size": {
+            "x": 420.0,
+            "y": 60.0
+          },
+          "position": {
+            "x": 210.0,
+            "y": -30.0
+          }
+        },
+        {
+          "path": "Background/ChangeBorder/HaveMetCount",
+          "pathId": 16283,
+          "size": {
+            "x": 420.0,
+            "y": 30.0
+          },
+          "position": {
+            "x": 210.0,
+            "y": -200.0
+          }
+        },
+        {
+          "path": "Background/ChangeBorder/SelectMetBorder",
+          "pathId": 18586,
+          "size": {
+            "x": 320.0,
+            "y": 30.0
+          },
+          "position": {
+            "x": 210.0,
+            "y": -165.0
+          }
+        },
+        {
+          "path": "Background/NewVer",
+          "pathId": 14592,
+          "size": {
+            "x": 400.0,
+            "y": 310.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 289.0
+          }
+        },
+        {
+          "path": "Background/BottomBorder",
+          "pathId": 20624,
+          "size": {
+            "x": 420.0,
+            "y": 340.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 120.0
+          }
+        },
+        {
+          "path": "Background/BottomBorder/GridTitle",
+          "pathId": 397,
+          "size": {
+            "x": 160.0,
+            "y": 26.0
+          },
+          "position": {
+            "x": -114.9997787475586,
+            "y": 309.0000305175781
+          }
+        },
+        {
+          "path": "Background/BottomBorder/GridBorder",
+          "pathId": 1614,
+          "size": {
+            "x": 420.0,
+            "y": 280.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 287.5000305175781
+          }
+        },
+        {
+          "path": "SubPop/Background/TwoButtonGroup",
+          "pathId": 14257,
+          "size": {
+            "x": 20.0,
+            "y": 20.0
+          },
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "path": "SubPop/Background/TwoButtonGroup/CloseButton",
+          "pathId": 4549,
+          "size": {
+            "x": 140.0,
+            "y": 76.0
+          },
+          "position": {
+            "x": 80.0,
+            "y": 60.99993896484375
+          }
+        },
+        {
+          "path": "SubPop/Background/TwoButtonGroup/UpgradeButton",
+          "pathId": 8891,
+          "size": {
+            "x": 140.0,
+            "y": 76.0
+          },
+          "position": {
+            "x": -80.0,
+            "y": 60.99993896484375
+          }
+        }
+      ]
+    },
+    "TradeWagonExchangePop": {
+      "controller": "TradeWagonExchangePop",
+      "dimensions": {
+        "x": 450.0,
+        "y": 710.0
+      },
+      "panelSprite": "popup_bg_9",
+      "hierarchyNodeCount": 29,
+      "labelCount": 10,
+      "spriteBindingCount": 15,
+      "confidence": "confirmed-serialized-scene",
+      "semanticRole": {
+        "value": "trade-wagon-exchange",
+        "confidence": "strongly-inferred",
+        "reason": "Controller class, hierarchy names, and decoded localUI labels agree; this does not identify a building dispatch call-site."
+      }
+    }
+  },
+  "priorityRoutes": [
+    {
+      "routeId": "trading-post-purchase",
+      "buildingIds": [
+        "build_3"
+      ],
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "decodedWidgets": [
+        "TextTab",
+        "ratingTab",
+        "MoneyChange",
+        "CreatePossible",
+        "RequestStateButton",
+        "GridBorder",
+        "GridSecondBorder"
+      ],
+      "dataContract": [
+        "material stock",
+        "hunter stock",
+        "requested quantity",
+        "unit price",
+        "town gold",
+        "upgrade level"
+      ],
+      "status": "layout-and-data-decoded-dispatch-strongly-inferred"
+    },
+    {
+      "routeId": "gear-crafting",
+      "buildingIds": [
+        "build_10"
+      ],
+      "popupChain": [
+        "GearCreatePop"
+      ],
+      "decodedWidgets": [
+        "GearBorder",
+        "GearBackground",
+        "MainPropertyGroup",
+        "SubPropertyGroup",
+        "required materials",
+        "CreateButton",
+        "CloseButton"
+      ],
+      "dataContract": [
+        "gear type",
+        "rating",
+        "properties",
+        "material costs",
+        "quantity",
+        "shop stock",
+        "hunter sale price"
+      ],
+      "status": "template-and-recipe-tables-decoded-native-dispatch-unresolved"
+    },
+    {
+      "routeId": "potion-shop-and-crafting",
+      "buildingIds": [
+        "build_11",
+        "build_14"
+      ],
+      "popupChainByBuilding": {
+        "build_11": [
+          "BuildingPop"
+        ],
+        "build_14": [
+          "ConsumCreatePop"
+        ]
+      },
+      "decodedWidgets": [
+        "potion display grid",
+        "hunter tab",
+        "ConsumCreatePop product frame",
+        "Required Materials",
+        "cooldown",
+        "effect",
+        "CreateButton"
+      ],
+      "dataContract": [
+        "display stock",
+        "sale price",
+        "consumable recipe",
+        "level",
+        "cooldown",
+        "effect",
+        "material costs"
+      ],
+      "status": "route-split-confirmed-native-dispatch-unresolved"
+    },
+    {
+      "routeId": "building-product-service",
+      "buildingIds": [
+        "build_9",
+        "build_12",
+        "build_13",
+        "build_19"
+      ],
+      "popupChain": [
+        "BuildingPop",
+        "ProductCreatePop"
+      ],
+      "decodedWidgets": [
+        "Production/Hunters tabs",
+        "capacity",
+        "product list",
+        "Produce",
+        "quantity -/+",
+        "quantity steps",
+        "conversion material grid",
+        "Produce",
+        "Close"
+      ],
+      "dataContract": [
+        "product unlock level",
+        "capacity by building level",
+        "stock",
+        "service effect",
+        "duration",
+        "fee",
+        "conversion options"
+      ],
+      "statusByBuilding": {
+        "build_9": "serialized-products-and-layout-decoded-runtime-capture-missing",
+        "build_12": "confirmed-by-user-runtime-capture",
+        "build_13": "confirmed-by-user-runtime-capture",
+        "build_19": "serialized-products-and-layout-decoded-runtime-capture-missing"
+      }
+    }
+  ],
+  "screenshotCoverage": {
+    "build_1": [
+      "photo_6275977522440770467_y.jpg",
+      "photo_6275977522440770468_y.jpg"
+    ],
+    "build_3": [
+      "photo_6275977522440770365_y.jpg",
+      "photo_6275977522440770470_y.jpg"
+    ],
+    "build_4": [
+      "photo_6275977522440770472_y.jpg",
+      "photo_6275977522440770473_y.jpg",
+      "photo_6275977522440770474_y.jpg",
+      "photo_6275977522440770475_y.jpg"
+    ],
+    "build_7": [
+      "photo_6275977522440770476_y.jpg"
+    ],
+    "build_8": [
+      "photo_6275977522440770471_y.jpg"
+    ],
+    "build_9": [
+      "photo_6275977522440770466_y.jpg"
+    ],
+    "build_10": [
+      "photo_6275977522440770477_y.jpg",
+      "photo_6275977522440770478_y.jpg",
+      "photo_6275977522440770479_y.jpg",
+      "photo_6275977522440770480_y.jpg"
+    ],
+    "build_12": [
+      "photo_6275977522440770367_y.jpg",
+      "photo_6275977522440770469_y.jpg"
+    ],
+    "build_13": [
+      "photo_6275977522440770366_y.jpg"
+    ],
+    "build_16": [
+      "photo_6275977522440770481_y.jpg"
+    ],
+    "build_19": [
+      "photo_6275977522440770485_y.jpg"
+    ],
+    "build_22": [
+      "photo_6275977522440770483_y.jpg"
+    ],
+    "build_23": [
+      "photo_6275977522440770482_y.jpg"
+    ],
+    "build_53": [
+      "photo_6275977522440770484_y.jpg"
+    ],
+    "product-create": [
+      "photo_6275977522440770368_y.jpg",
+      "photo_6275977522440770369_y.jpg"
+    ],
+    "world-map": [
+      "photo_6275977522440770364_y.jpg"
+    ]
+  },
+  "buildings": [
+    {
+      "buildingId": "build_0",
+      "displayName": "Road",
+      "routeId": "placement-road",
+      "routeConfidence": "confirmed",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_1",
+      "displayName": "Town Hall",
+      "routeId": "town-hall-management",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_2",
+      "displayName": "Sanctuary of Resurrection",
+      "routeId": "automatic-revival",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingReviveCheckPop"
+      ],
+      "capability": {
+        "kind": "automatic-revival",
+        "popupTemplateId": "popup-template:BuildingReviveCheckPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 6,
+      "productIdSample": [
+        "product:23",
+        "product:24",
+        "product:25",
+        "product:26",
+        "product:27",
+        "product:28"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_3",
+      "displayName": "Trading Post",
+      "routeId": "trading-post-purchase",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "capability": {
+        "kind": "loot-purchase-reservations",
+        "popupTemplateId": null,
+        "staticDataReady": false,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "popupTemplateId",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "popupTemplateId",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_4",
+      "displayName": "Bounty Hut",
+      "routeId": "bounty-quest-list",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "QuestPop"
+      ],
+      "capability": {
+        "kind": "bounty-quest-list",
+        "popupTemplateId": "popup-template:QuestPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_5",
+      "displayName": "Ice cream Stand",
+      "routeId": "event-stand",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_6",
+      "displayName": "Hotdog Stand",
+      "routeId": "event-stand",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_7",
+      "displayName": "Weapon Shop",
+      "routeId": "weapon-display-sale",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "capability": {
+        "kind": "weapon-display-and-sale",
+        "popupTemplateId": "popup-template:BuildingPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_8",
+      "displayName": "Armor Shop",
+      "routeId": "armor-display-sale",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "capability": {
+        "kind": "armor-display-and-sale",
+        "popupTemplateId": "popup-template:BuildingPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_9",
+      "displayName": "Inn",
+      "routeId": "inn-product-service",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [
+        "BuildingPop",
+        "ProductCreatePop"
+      ],
+      "capability": null,
+      "productCount": 7,
+      "productIdSample": [
+        "product:0",
+        "product:1",
+        "product:2",
+        "product:3",
+        "product:4",
+        "product:29",
+        "product:48"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "original-runtime-screenshot"
+      ]
+    },
+    {
+      "buildingId": "build_10",
+      "displayName": "Blacksmith",
+      "routeId": "gear-crafting",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "GearCreatePop"
+      ],
+      "capability": {
+        "kind": "weapon-and-armor-crafting",
+        "popupTemplateId": "popup-template:GearCreatePop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 2755,
+      "productIdSample": [
+        "recipe:weapon:0:rating:0",
+        "recipe:weapon:0:rating:1",
+        "recipe:weapon:0:rating:2",
+        "recipe:weapon:0:rating:3",
+        "recipe:weapon:0:rating:4",
+        "recipe:weapon:1:rating:0",
+        "recipe:weapon:1:rating:1",
+        "recipe:weapon:1:rating:2",
+        "recipe:weapon:1:rating:3",
+        "recipe:weapon:1:rating:4",
+        "recipe:weapon:2:rating:0",
+        "recipe:weapon:2:rating:1"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_11",
+      "displayName": "Potion Shop",
+      "routeId": "potion-display-sale",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "capability": {
+        "kind": "potion-display-and-sale",
+        "popupTemplateId": "popup-template:BuildingPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_12",
+      "displayName": "Infirmary",
+      "routeId": "infirmary-product-service",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop",
+        "ProductCreatePop"
+      ],
+      "capability": null,
+      "productCount": 7,
+      "productIdSample": [
+        "product:5",
+        "product:6",
+        "product:7",
+        "product:8",
+        "product:9",
+        "product:30",
+        "product:49"
+      ],
+      "migrationReady": true,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_13",
+      "displayName": "Restaurant",
+      "routeId": "restaurant-product-service",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop",
+        "ProductCreatePop"
+      ],
+      "capability": null,
+      "productCount": 7,
+      "productIdSample": [
+        "product:10",
+        "product:11",
+        "product:12",
+        "product:13",
+        "product:14",
+        "product:31",
+        "product:50"
+      ],
+      "migrationReady": true,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_14",
+      "displayName": "Alchemist's Home",
+      "routeId": "potion-crafting",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "ConsumCreatePop"
+      ],
+      "capability": {
+        "kind": "potion-crafting",
+        "popupTemplateId": "popup-template:ConsumCreatePop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 40,
+      "productIdSample": [
+        "recipe:consumable:0:level:0",
+        "recipe:consumable:0:level:1",
+        "recipe:consumable:0:level:2",
+        "recipe:consumable:0:level:3",
+        "recipe:consumable:0:level:4",
+        "recipe:consumable:0:level:5",
+        "recipe:consumable:0:level:6",
+        "recipe:consumable:0:level:7",
+        "recipe:consumable:1:level:0",
+        "recipe:consumable:1:level:1",
+        "recipe:consumable:1:level:2",
+        "recipe:consumable:1:level:3"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_15",
+      "displayName": "Enhancement Forge",
+      "routeId": "gear-enhancement",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_16",
+      "displayName": "Dungeon Entrance",
+      "routeId": "dungeon-entry",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_17",
+      "displayName": "Conversion Cube",
+      "routeId": "conversion-cube",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_18",
+      "displayName": "Mana Cube",
+      "routeId": "mana-cube",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_19",
+      "displayName": "Tavern",
+      "routeId": "tavern-product-service",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [
+        "BuildingPop",
+        "ProductCreatePop"
+      ],
+      "capability": null,
+      "productCount": 7,
+      "productIdSample": [
+        "product:15",
+        "product:16",
+        "product:17",
+        "product:18",
+        "product:19",
+        "product:32",
+        "product:51"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "original-runtime-screenshot"
+      ]
+    },
+    {
+      "buildingId": "build_20",
+      "displayName": "Accessory Shop",
+      "routeId": "accessory-display-sale",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "BuildingPop"
+      ],
+      "capability": {
+        "kind": "accessory-display-and-sale",
+        "popupTemplateId": "popup-template:BuildingPop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_21",
+      "displayName": "Jeweler",
+      "routeId": "accessory-crafting",
+      "routeConfidence": "confirmed",
+      "popupChain": [
+        "GearCreatePop"
+      ],
+      "capability": {
+        "kind": "accessory-crafting",
+        "popupTemplateId": "popup-template:GearCreatePop",
+        "staticDataReady": true,
+        "runnable": false,
+        "blockingPaths": [
+          "conditions.binding",
+          "popupBinding",
+          "runtimeBinding"
+        ]
+      },
+      "productCount": 600,
+      "productIdSample": [
+        "recipe:belt:0:rating:0",
+        "recipe:belt:0:rating:1",
+        "recipe:belt:0:rating:2",
+        "recipe:belt:0:rating:3",
+        "recipe:belt:0:rating:4",
+        "recipe:belt:1:rating:0",
+        "recipe:belt:1:rating:1",
+        "recipe:belt:1:rating:2",
+        "recipe:belt:1:rating:3",
+        "recipe:belt:1:rating:4",
+        "recipe:belt:2:rating:0",
+        "recipe:belt:2:rating:1"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "conditions.binding",
+        "popupBinding",
+        "runtimeBinding"
+      ]
+    },
+    {
+      "buildingId": "build_22",
+      "displayName": "House",
+      "routeId": "house-management",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_23",
+      "displayName": "Academy",
+      "routeId": "academy",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_24",
+      "displayName": "Bank",
+      "routeId": "bank",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 3,
+      "productIdSample": [
+        "product:36",
+        "product:37",
+        "product:38"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_25",
+      "displayName": "Library of Wisdom",
+      "routeId": "library",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 3,
+      "productIdSample": [
+        "product:39",
+        "product:40",
+        "product:41"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_26",
+      "displayName": "Fountain of life",
+      "routeId": "fountain",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 3,
+      "productIdSample": [
+        "product:42",
+        "product:43",
+        "product:44"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_27",
+      "displayName": "Courage Headstone",
+      "routeId": "courage-headstone",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 3,
+      "productIdSample": [
+        "product:45",
+        "product:46",
+        "product:47"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_28",
+      "displayName": "Training Ground",
+      "routeId": "training-ground",
+      "routeConfidence": "tentative",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 6,
+      "productIdSample": [
+        "product:20",
+        "product:21",
+        "product:22",
+        "product:33",
+        "product:34",
+        "product:35"
+      ],
+      "migrationReady": false,
+      "blockers": [
+        "popup-template-binding"
+      ]
+    },
+    {
+      "buildingId": "build_29",
+      "displayName": "Demolished Building1",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_30",
+      "displayName": "Demolished Building2",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_31",
+      "displayName": "Demolished Building3",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_32",
+      "displayName": "Demolished Building4",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_33",
+      "displayName": "Demolished Building5",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_34",
+      "displayName": "Demolished Building6",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_35",
+      "displayName": "Demolished Building7",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_36",
+      "displayName": "Demolished Building8",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_37",
+      "displayName": "Demolished Building9",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_38",
+      "displayName": "Demolished Building10",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_39",
+      "displayName": "Boss Horn",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_40",
+      "displayName": "Colosseum",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_41",
+      "displayName": "Old Flag",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_42",
+      "displayName": "Hero Statue",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_43",
+      "displayName": "Gargoyle Stone Statue",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_44",
+      "displayName": "Xanthic Flower",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_45",
+      "displayName": "Houseplant",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_46",
+      "displayName": "Small Bush",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_47",
+      "displayName": "Red Flower Bed",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_48",
+      "displayName": "Oak Barrel",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_49",
+      "displayName": "Bare Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_50",
+      "displayName": "Small Garden Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_51",
+      "displayName": "Huge Conifer",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_52",
+      "displayName": "Street Lamp",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_53",
+      "displayName": "Guild HQ",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_54",
+      "displayName": "Christmas Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_55",
+      "displayName": "Snow Man",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_56",
+      "displayName": "Present Box",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_57",
+      "displayName": "Golden Statue",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_58",
+      "displayName": "Red Rose beds",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_59",
+      "displayName": "Yellow Tulip beds",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_60",
+      "displayName": "White flower",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_61",
+      "displayName": "Potion Curing Room",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_62",
+      "displayName": "Medicine storage room",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_63",
+      "displayName": "Apple Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_64",
+      "displayName": "Halloween Street Light",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_65",
+      "displayName": "Candy Basket",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_66",
+      "displayName": "Pumpkin Man",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_67",
+      "displayName": "Big X-Mas Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_68",
+      "displayName": "Santa Sleigh",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_69",
+      "displayName": "Cherry Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_70",
+      "displayName": "Picnic basket",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_71",
+      "displayName": "Flower street lamp",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_72",
+      "displayName": "Cube of Chaos",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_73",
+      "displayName": "Trading Wagon",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_74",
+      "displayName": "Winter Street Light",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_75",
+      "displayName": "Winter Flower Bed",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_76",
+      "displayName": "Xmas Cake",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_77",
+      "displayName": "Snowflake Tree",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    },
+    {
+      "buildingId": "build_78",
+      "displayName": "Poinsettia",
+      "routeId": "decoration-or-event",
+      "routeConfidence": "strongly-inferred",
+      "popupChain": [],
+      "capability": null,
+      "productCount": 0,
+      "productIdSample": [],
+      "migrationReady": false,
+      "blockers": []
+    }
+  ],
+  "summary": {
+    "buildingCount": 79,
+    "priorityBuildingCount": 8,
+    "confirmedRouteCount": 12,
+    "unresolvedPopupBindingCount": 12
+  }
+}

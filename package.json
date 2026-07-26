@@ -19,11 +19,22 @@
     "assets:package:original-flow": "node tools/package-original-flow-content.mjs",
     "assets:extract:village": "python3 tools/extract-village-content.py",
     "assets:package:visible-world": "pnpm assets:extract:village && node tools/package-visible-world-content.mjs",
+    "assets:validate:visible-world": "node tools/validate-visible-world-content.mjs",
+    "assets:extract:localization": "python3 tools/extract-localization-evidence.py",
+    "assets:validate:localization": "node tools/validate-localization-evidence.mjs",
+    "building:validate": "bash tools/validate-building-evidence.sh",
+    "building:routes:generate": "python3 tools/generate-building-route-manifest.py",
+    "building:routes:validate": "node tools/validate-building-route-manifest.mjs",
+    "gear:catalog:generate": "python3 tools/generate-gear-icons.py && node tools/generate-gear-catalog.mjs",
+    "assets:package:town-candidate": "/tmp/evil-town-unitypy/bin/python tools/extract-building-runtime-assets.py && node tools/package-town-candidate.mjs",
     "assets:validate:original-flow": "node tools/validate-original-flow-content.mjs",
     "scene:extract:level1": "python3 tools/extract-level1-scene.py",
+    "scene:test": "python3 -m unittest tools.tests.test_scene_evidence",
+    "scene:validate": "node tools/validate-level1-scene-evidence.mjs",
     "assets:extract:fonts": "python3 tools/extract-unity-fonts.py",
     "test:assets": "node --test tools/tests/*.test.mjs",
     "protocol:generate": "node tools/generate-protocol.mjs",
-    "smoke:fixture": "node tools/smoke-world.mjs"
+    "smoke:fixture": "node tools/smoke-world.mjs",
+    "smoke:primary": "python3 tools/smoke-primary-runtime.py"
   }
 }

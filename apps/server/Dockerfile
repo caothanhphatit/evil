@@ -2,6 +2,7 @@ FROM rust:1.85-bookworm AS builder
 WORKDIR /build
 COPY apps/server/Cargo.toml apps/server/Cargo.lock* ./
 COPY apps/server/src ./src
+COPY packages/content/releases/evil-hunter-1.411/building-registry.json /packages/content/releases/evil-hunter-1.411/building-registry.json
 RUN cargo build --release --locked
 
 FROM debian:bookworm-slim AS runtime
