@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "stage": "normalized-evidence",
   "sourceRoot": "game-assets/source/unity-assets/bin/Data",
   "transformation": {
@@ -14,6 +14,19 @@
       "pathId": 1,
       "sprite": "skin_botton_00",
       "file": "game-assets/normalized/village/foreground/ground.png",
+      "sourceRect": {
+        "width": 1110.0,
+        "height": 650.0
+      },
+      "textureRectOffset": {
+        "x": 22.05131721496582,
+        "y": 60.02689743041992
+      },
+      "anchor": {
+        "x": 0.5008916191588667,
+        "y": 0.532675304110088
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 56904,
       "sha256": "3f67e51bbb88a70b4c5eb43c399d3aa4ee0176f54dd77dbe9054be6403323dab"
     },
@@ -23,6 +36,19 @@
       "pathId": 1,
       "sprite": "skin_gate_00",
       "file": "game-assets/normalized/village/foreground/gate.png",
+      "sourceRect": {
+        "width": 170.0,
+        "height": 280.0
+      },
+      "textureRectOffset": {
+        "x": 28.026750564575195,
+        "y": 23.026750564575195
+      },
+      "anchor": {
+        "x": 0.5226903617928881,
+        "y": 0.5064419855045367
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 10050,
       "sha256": "178b0667414c73c2f55fa9a94f7ce8bb7b25d07d628439d1af08349be66625b2"
     },
@@ -32,6 +58,19 @@
       "pathId": 1,
       "sprite": "skin_wallA_00",
       "file": "game-assets/normalized/village/foreground/wallA.png",
+      "sourceRect": {
+        "width": 550.0,
+        "height": 254.0
+      },
+      "textureRectOffset": {
+        "x": 7.076120376586914,
+        "y": 5.028243541717529
+      },
+      "anchor": {
+        "x": 0.49799977625169717,
+        "y": 0.47425967043843764
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 17722,
       "sha256": "56cffefa6e1e4431cbfb8b870117071d1a05b4e8eccf8d041c70953664a62356"
     },
@@ -41,6 +80,19 @@
       "pathId": 1,
       "sprite": "skin_wallB_00",
       "file": "game-assets/normalized/village/foreground/wallB.png",
+      "sourceRect": {
+        "width": 374.0,
+        "height": 280.0
+      },
+      "textureRectOffset": {
+        "x": 10.076120376586914,
+        "y": 4.0267510414123535
+      },
+      "anchor": {
+        "x": 0.48605461435003594,
+        "y": 0.5073433008746825
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 13756,
       "sha256": "a328c065833432d184df4c04726d56e558bec0549d22c345a3a90d55b316da9a"
     },
@@ -50,6 +102,19 @@
       "pathId": 1,
       "sprite": "skin_wallC_00",
       "file": "game-assets/normalized/village/foreground/wallC.png",
+      "sourceRect": {
+        "width": 226.0,
+        "height": 203.0
+      },
+      "textureRectOffset": {
+        "x": 0.0,
+        "y": 2.0267510414123535
+      },
+      "anchor": {
+        "x": 0.5280373831775701,
+        "y": 0.5051082141363799
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 6687,
       "sha256": "317212f4d9360ee3ad6e9a787beae809d866c96e273ef23a397dd91a8fd6335a"
     },
@@ -59,6 +124,19 @@
       "pathId": 1,
       "sprite": "skin_wallD_00",
       "file": "game-assets/normalized/village/foreground/wallD.png",
+      "sourceRect": {
+        "width": 294.0,
+        "height": 194.0
+      },
+      "textureRectOffset": {
+        "x": 12.026750564575195,
+        "y": 0.0
+      },
+      "anchor": {
+        "x": 0.5272392556071281,
+        "y": 0.4550561797752809
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 3878,
       "sha256": "c29eabf0ff384d0402db9b0cd8e19f6eb4bd990e4865006bed3f8180a64c092c"
     },
@@ -68,6 +146,19 @@
       "pathId": 1,
       "sprite": "skin_wallE_00",
       "file": "game-assets/normalized/village/foreground/wallE.png",
+      "sourceRect": {
+        "width": 809.0,
+        "height": 333.0
+      },
+      "textureRectOffset": {
+        "x": 14.026750564575195,
+        "y": 0.0
+      },
+      "anchor": {
+        "x": 0.4999657483168051,
+        "y": 0.4845201238390093
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 13839,
       "sha256": "7499947307c8a047f38f654c82eb939c3e70a2fb6d3d359eb9c936663bc2d2ba"
     },
@@ -77,6 +168,19 @@
       "pathId": 1,
       "sprite": "skin_bridgeA_00",
       "file": "game-assets/normalized/village/foreground/bridgeA.png",
+      "sourceRect": {
+        "width": 180.0,
+        "height": 130.0
+      },
+      "textureRectOffset": {
+        "x": 0.0,
+        "y": 15.026750564575195
+      },
+      "anchor": {
+        "x": 0.5084745762711864,
+        "y": 0.4900688833119918
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 4708,
       "sha256": "39ffe0d1149e9e8de801043b4d10fdfbb85220b04ec641401c05e37d681245d4"
     },
@@ -86,6 +190,19 @@
       "pathId": 1,
       "sprite": "skin_bridgeB_00",
       "file": "game-assets/normalized/village/foreground/bridgeB.png",
+      "sourceRect": {
+        "width": 180.0,
+        "height": 130.0
+      },
+      "textureRectOffset": {
+        "x": 2.042907953262329,
+        "y": 0.0
+      },
+      "anchor": {
+        "x": 0.5113784421321957,
+        "y": 0.41964285714285715
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 7695,
       "sha256": "ee87afb92dcbdf5a68c6e3c9172cfc18b0aab342561c06891ec2d89917e8563f"
     },
@@ -95,6 +212,19 @@
       "pathId": 1,
       "sprite": "skin_bridgeC_00",
       "file": "game-assets/normalized/village/foreground/bridgeC.png",
+      "sourceRect": {
+        "width": 180.0,
+        "height": 130.0
+      },
+      "textureRectOffset": {
+        "x": 7.076120376586914,
+        "y": 4.076120376586914
+      },
+      "anchor": {
+        "x": 0.48493496855797125,
+        "y": 0.4461465488780629
+      },
+      "pixelsPerUnit": 100.0,
       "bytes": 6193,
       "sha256": "60605d2fe74b64b35d00fce05bcba2a8e6429e8b63f019491bf5f46c2828fd1c"
     }
@@ -230,6 +360,95 @@
         "file": "game-assets/normalized/village/npcs/fallen_pasture_npc/fallen_pasture_npc_5.png",
         "bytes": 8228,
         "sha256": "dcd807cc817ba8b35a169b4a733cea94b1395365feedddbcaaa2b7b064fb63fe"
+      }
+    ]
+  },
+  "signboards": {
+    "map_new01": [
+      {
+        "densityLevel": 1,
+        "name": "area_sign_1_0",
+        "source": "a3915f675ec081c418a8ca3ca9931e8f",
+        "pathId": 1,
+        "file": "game-assets/normalized/village/signboards/map_new01/density-1.png",
+        "bytes": 2165,
+        "sha256": "a8dd23f6ceed4c718327b687238b50cb158870472492464e3e5c7dfa7788d024"
+      },
+      {
+        "densityLevel": 2,
+        "name": "area_sign_1_1",
+        "source": "a3915f675ec081c418a8ca3ca9931e8f",
+        "pathId": 2,
+        "file": "game-assets/normalized/village/signboards/map_new01/density-2.png",
+        "bytes": 2308,
+        "sha256": "309cdfd15f635392f74d1fc282d1e19d85e93c30f8b0f92918872ab5ab85ed9d"
+      },
+      {
+        "densityLevel": 3,
+        "name": "area_sign_1_2",
+        "source": "a3915f675ec081c418a8ca3ca9931e8f",
+        "pathId": 3,
+        "file": "game-assets/normalized/village/signboards/map_new01/density-3.png",
+        "bytes": 2293,
+        "sha256": "80b7e25e8cf320a072d1fcf081f7b584a7ba86db87b2f2f389aa00122963d1e1"
+      }
+    ],
+    "background_08": [
+      {
+        "densityLevel": 1,
+        "name": "area_sign_2_0",
+        "source": "a51b9fd00b7358340a58882091ffc38a",
+        "pathId": 1,
+        "file": "game-assets/normalized/village/signboards/background_08/density-1.png",
+        "bytes": 2931,
+        "sha256": "c5b73b568fcdddbf1a96ae3bf7a121ed9e58c5f7ed54601702c33f93d5821c7b"
+      },
+      {
+        "densityLevel": 2,
+        "name": "area_sign_2_1",
+        "source": "a51b9fd00b7358340a58882091ffc38a",
+        "pathId": 2,
+        "file": "game-assets/normalized/village/signboards/background_08/density-2.png",
+        "bytes": 2885,
+        "sha256": "16da141adc95ddfac88e5c9fba947881938b5aed3c22de40aecaa77913db3fe1"
+      },
+      {
+        "densityLevel": 3,
+        "name": "area_sign_2_2",
+        "source": "a51b9fd00b7358340a58882091ffc38a",
+        "pathId": 3,
+        "file": "game-assets/normalized/village/signboards/background_08/density-3.png",
+        "bytes": 2975,
+        "sha256": "dde6544948a9a3dd7f8537ac1d07e6bad87e707d56be94a59f3f37deaa19d72d"
+      }
+    ],
+    "background_11": [
+      {
+        "densityLevel": 1,
+        "name": "area_sign_3_0",
+        "source": "4eaad883811ba9640b4f0ab70471bf17",
+        "pathId": 1,
+        "file": "game-assets/normalized/village/signboards/background_11/density-1.png",
+        "bytes": 2522,
+        "sha256": "fd58f6a3e48f984cfc5883f148cabea39bbeeea398bd471a684b942343f08288"
+      },
+      {
+        "densityLevel": 2,
+        "name": "area_sign_3_1",
+        "source": "4eaad883811ba9640b4f0ab70471bf17",
+        "pathId": 2,
+        "file": "game-assets/normalized/village/signboards/background_11/density-2.png",
+        "bytes": 2487,
+        "sha256": "1ed3a36da42f38e92eb1b0202146895051977cb6383bf5782c282cc6ed5c84f5"
+      },
+      {
+        "densityLevel": 3,
+        "name": "area_sign_3_2",
+        "source": "4eaad883811ba9640b4f0ab70471bf17",
+        "pathId": 3,
+        "file": "game-assets/normalized/village/signboards/background_11/density-3.png",
+        "bytes": 2513,
+        "sha256": "f241ccc1214fccc6bea20591e247bced25ac447f9cc636ec72548273443619f2"
       }
     ]
   }

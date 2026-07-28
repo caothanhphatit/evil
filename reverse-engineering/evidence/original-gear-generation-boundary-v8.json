@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 8,
+  "contractType": "original-gear-generation-boundary-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-gear-formula-analysis-v1.json",
+      "bytes": 13439,
+      "sha256": "e727b9f582d18daa98b18ad47b3460908894416b566dbb0fc661336d4bb8b3f1"
+    },
+    {
+      "path": "reverse-engineering/evidence/admin-gear-formula-runtime-schema-api35-v1.json",
+      "bytes": 1458,
+      "sha256": "c8c0da07e06f12171a0aebbc9c648149acf98f1ae07a9aaf455c36f5d17e1e98"
+    }
+  ],
+  "confirmedFormulaInputs": [
+    "index",
+    "gearIndex",
+    "quality",
+    "level",
+    "rating"
+  ],
+  "confirmedFormulas": {
+    "armorAndAcc": "roundToEven(base * ratingPercent/100 * (1 + levelPercent/100) * qualityMultiplier)",
+    "damage": "roundToEven(firstValue * ratingValue[rating]/100 * (1 + GetFirstPercent(index, gearIndex, level + adjustment)/100) * qualityMultiplier * secondValue/100)",
+    "ratingSelection": "ratingValue[min(GearData.rating, ratingValue.length - 1)]",
+    "qualityMultipliers": {
+      "0": 0.8,
+      "1": 0.9,
+      "3": 1.1,
+      "4": 1.2,
+      "other": 1.0
+    },
+    "rounding": "round to nearest, ties to even"
+  },
+  "adminOptionSchema": {
+    "ratingValue": 112,
+    "firstValue": 128,
+    "firstPercent": 152,
+    "secondValue": 160,
+    "plusType": 192,
+    "plusValue": 200,
+    "minusType": 208,
+    "minusValue": 216
+  },
+  "directReaderBoundary": {
+    "GetGearDamageArmorAccReadPlusMinusOrRunes": false,
+    "reason": "The three exact bodies read only index, gearIndex, quality, level and rating from GearData."
+  },
+  "unresolved": {
+    "levelAdjustmentWriter": null,
+    "plusTypeEnumMeanings": null,
+    "minusTypeEnumMeanings": null,
+    "plusMinusRollOrder": null,
+    "enhancementWriterAndOrder": null,
+    "runeParticipationAndOrder": null,
+    "generationQualityRatingOrder": null
+  },
+  "implementationBoundary": {
+    "liveIntegrationAllowed": false,
+    "requiredNextEvidence": "Exact GearData creation/enhancement/rune writer bodies and the caller supplying the level adjustment before GetFirstPercent."
+  }
+}

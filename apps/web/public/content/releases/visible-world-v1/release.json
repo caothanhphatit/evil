@@ -222,9 +222,14 @@
         "bytes": 56904,
         "sha256": "3f67e51bbb88a70b4c5eb43c399d3aa4ee0176f54dd77dbe9054be6403323dab",
         "id": "ground",
-        "x": 18.01,
-        "y": 10.53,
-        "z": 489
+        "sceneObject": "Village_Ground",
+        "x": 18.010000228881836,
+        "y": 10.529999732971191,
+        "z": 489,
+        "anchor": {
+          "x": 0.5008916191588667,
+          "y": 0.532675304110088
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -233,9 +238,14 @@
         "bytes": 10050,
         "sha256": "178b0667414c73c2f55fa9a94f7ce8bb7b25d07d628439d1af08349be66625b2",
         "id": "gate",
-        "x": 13.06,
-        "y": 14.26,
-        "z": 493
+        "sceneObject": "Village_Gate",
+        "x": 13.0600004196167,
+        "y": 14.260000228881836,
+        "z": 493,
+        "anchor": {
+          "x": 0.5226903617928881,
+          "y": 0.5064419855045367
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -244,9 +254,14 @@
         "bytes": 17722,
         "sha256": "56cffefa6e1e4431cbfb8b870117071d1a05b4e8eccf8d041c70953664a62356",
         "id": "wallA",
-        "x": 18.73,
-        "y": 8.55,
-        "z": 486
+        "sceneObject": "Village_Wall_A",
+        "x": 18.729999542236328,
+        "y": 8.550000190734863,
+        "z": 486,
+        "anchor": {
+          "x": 0.49799977625169717,
+          "y": 0.47425967043843764
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -255,9 +270,14 @@
         "bytes": 13756,
         "sha256": "a328c065833432d184df4c04726d56e558bec0549d22c345a3a90d55b316da9a",
         "id": "wallB",
-        "x": 14.33,
-        "y": 9.53,
-        "z": 488
+        "sceneObject": "Village_Wall_B",
+        "x": 14.329999923706055,
+        "y": 9.529999732971191,
+        "z": 488,
+        "anchor": {
+          "x": 0.48605461435003594,
+          "y": 0.5073433008746825
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -266,9 +286,14 @@
         "bytes": 6687,
         "sha256": "317212f4d9360ee3ad6e9a787beae809d866c96e273ef23a397dd91a8fd6335a",
         "id": "wallC",
-        "x": 22.43,
-        "y": 9.915,
-        "z": 488
+        "sceneObject": "Village_Wall_C",
+        "x": 22.43000030517578,
+        "y": 9.914999961853027,
+        "z": 488,
+        "anchor": {
+          "x": 0.5280373831775701,
+          "y": 0.5051082141363799
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -277,9 +302,14 @@
         "bytes": 3878,
         "sha256": "c29eabf0ff384d0402db9b0cd8e19f6eb4bd990e4865006bed3f8180a64c092c",
         "id": "wallD",
-        "x": 13.93,
-        "y": 11.42,
-        "z": 490
+        "sceneObject": "Village_Wall_D",
+        "x": 13.930000305175781,
+        "y": 11.420000076293945,
+        "z": 490,
+        "anchor": {
+          "x": 0.5272392556071281,
+          "y": 0.4550561797752809
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -288,9 +318,14 @@
         "bytes": 13839,
         "sha256": "7499947307c8a047f38f654c82eb939c3e70a2fb6d3d359eb9c936663bc2d2ba",
         "id": "wallE",
-        "x": 19.515,
-        "y": 12.115,
-        "z": 492
+        "sceneObject": "Village_Wall_E",
+        "x": 19.514999389648438,
+        "y": 12.114999771118164,
+        "z": 492,
+        "anchor": {
+          "x": 0.4999657483168051,
+          "y": 0.4845201238390093
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -299,9 +334,14 @@
         "bytes": 4708,
         "sha256": "39ffe0d1149e9e8de801043b4d10fdfbb85220b04ec641401c05e37d681245d4",
         "id": "bridgeA",
-        "x": 14.86,
-        "y": 12.49,
-        "z": 491
+        "sceneObject": "Village_Bridge_A",
+        "x": 14.859999656677246,
+        "y": 12.489999771118164,
+        "z": 491,
+        "anchor": {
+          "x": 0.5084745762711864,
+          "y": 0.4900688833119918
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -310,9 +350,14 @@
         "bytes": 7695,
         "sha256": "ee87afb92dcbdf5a68c6e3c9172cfc18b0aab342561c06891ec2d89917e8563f",
         "id": "bridgeB",
-        "x": 22.17,
-        "y": 9.43,
-        "z": 487
+        "sceneObject": "Village_Bridge_B",
+        "x": 22.170000076293945,
+        "y": 9.430000305175781,
+        "z": 487,
+        "anchor": {
+          "x": 0.5113784421321957,
+          "y": 0.41964285714285715
+        }
       },
       {
         "sourceNamespace": "normalized-evidence",
@@ -321,9 +366,14 @@
         "bytes": 6193,
         "sha256": "60605d2fe74b64b35d00fce05bcba2a8e6429e8b63f019491bf5f46c2828fd1c",
         "id": "bridgeC",
-        "x": 15.3,
-        "y": 8.67,
-        "z": 487
+        "sceneObject": "Village_Bridge_C",
+        "x": 15.300000190734863,
+        "y": 8.670000076293945,
+        "z": 487,
+        "anchor": {
+          "x": 0.48493496855797125,
+          "y": 0.4461465488780629
+        }
       }
     ],
     "decorations": [
@@ -512,6 +562,125 @@
         "x": 20.28,
         "y": 6.98,
         "z": 492
+      }
+    ],
+    "signboards": [
+      {
+        "regionId": "map_new01",
+        "sceneObject": "sign_01",
+        "x": 14.069999694824219,
+        "y": 8.8100004196167,
+        "z": 486,
+        "colliderRadius": 0.25999999046325684,
+        "states": [
+          {
+            "densityLevel": 1,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/map_new01/density-1.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/map_new01/density-1.png",
+            "bytes": 2165,
+            "sha256": "a8dd23f6ceed4c718327b687238b50cb158870472492464e3e5c7dfa7788d024"
+          },
+          {
+            "densityLevel": 2,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/map_new01/density-2.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/map_new01/density-2.png",
+            "bytes": 2308,
+            "sha256": "309cdfd15f635392f74d1fc282d1e19d85e93c30f8b0f92918872ab5ab85ed9d"
+          },
+          {
+            "densityLevel": 3,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/map_new01/density-3.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/map_new01/density-3.png",
+            "bytes": 2293,
+            "sha256": "80b7e25e8cf320a072d1fcf081f7b584a7ba86db87b2f2f389aa00122963d1e1"
+          }
+        ],
+        "evidence": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "source": "reverse-engineering/evidence/level1-scene-evidence-v2.json"
+        }
+      },
+      {
+        "regionId": "background_08",
+        "sceneObject": "sign_02",
+        "x": 15.899999618530273,
+        "y": 7.940000057220459,
+        "z": 486,
+        "colliderRadius": 0.25999999046325684,
+        "states": [
+          {
+            "densityLevel": 1,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_08/density-1.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_08/density-1.png",
+            "bytes": 2931,
+            "sha256": "c5b73b568fcdddbf1a96ae3bf7a121ed9e58c5f7ed54601702c33f93d5821c7b"
+          },
+          {
+            "densityLevel": 2,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_08/density-2.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_08/density-2.png",
+            "bytes": 2885,
+            "sha256": "16da141adc95ddfac88e5c9fba947881938b5aed3c22de40aecaa77913db3fe1"
+          },
+          {
+            "densityLevel": 3,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_08/density-3.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_08/density-3.png",
+            "bytes": 2975,
+            "sha256": "dde6544948a9a3dd7f8537ac1d07e6bad87e707d56be94a59f3f37deaa19d72d"
+          }
+        ],
+        "evidence": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "source": "reverse-engineering/evidence/level1-scene-evidence-v2.json"
+        }
+      },
+      {
+        "regionId": "background_11",
+        "sceneObject": "sign_03",
+        "x": 21.309999465942383,
+        "y": 8.579999923706055,
+        "z": 486,
+        "colliderRadius": 0.25999999046325684,
+        "states": [
+          {
+            "densityLevel": 1,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_11/density-1.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_11/density-1.png",
+            "bytes": 2522,
+            "sha256": "fd58f6a3e48f984cfc5883f148cabea39bbeeea398bd471a684b942343f08288"
+          },
+          {
+            "densityLevel": 2,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_11/density-2.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_11/density-2.png",
+            "bytes": 2487,
+            "sha256": "1ed3a36da42f38e92eb1b0202146895051977cb6383bf5782c282cc6ed5c84f5"
+          },
+          {
+            "densityLevel": 3,
+            "sourceNamespace": "normalized-evidence",
+            "sourcePath": "game-assets/normalized/village/signboards/background_11/density-3.png",
+            "publicPath": "/content/releases/visible-world-v1/village/signboards/background_11/density-3.png",
+            "bytes": 2513,
+            "sha256": "f241ccc1214fccc6bea20591e247bced25ac447f9cc636ec72548273443619f2"
+          }
+        ],
+        "evidence": {
+          "resolution": "resolved",
+          "confidence": "confirmed",
+          "source": "reverse-engineering/evidence/level1-scene-evidence-v2.json"
+        }
       }
     ],
     "npcs": {

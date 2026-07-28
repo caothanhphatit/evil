@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-runtime-status-data-static-factor-capture",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T10:25:50.883823Z",
+    "packageId": "com.superplanet.evilhunter",
+    "pid": 28527,
+    "androidApi": "35",
+    "deviceAbi": "arm64-v8a",
+    "action": "Capture StatusData and EvilCtrl.Damaged package literals after exact common combat consumer recovery; no gameplay values read.",
+    "authority": "rooted guest tutorial emulator; static package literal only"
+  },
+  "module": {
+    "name": "libil2cpp.so",
+    "base": "0x73b5608000",
+    "mapLine": "73b5608000-73b76e2000 r--p 00684000 fe:2c 49773                          /data/app/~~aAngF0o0iIDlzeWrV7SdSg==/com.superplanet.evilhunter-z45WFRDGr2eCa2nZ7yDbOQ==/split_config.arm64_v8a.apk"
+  },
+  "calcLevelFactor": {
+    "moduleOffset": "0xd2a96c",
+    "rawHex": "a69b443b",
+    "float32": 0.003000000026077032
+  },
+  "fairyAttackFactors": {
+    "fairy_index_78_418_599_600": {
+      "moduleOffset": "0xd2b4f8",
+      "rawHex": "0ad7a33c",
+      "float32": 0.019999999552965164
+    },
+    "fairy_index_360": {
+      "moduleOffset": "0xd2baec",
+      "rawHex": "0ad7233d",
+      "float32": 0.03999999910593033
+    },
+    "fairy_index_748_773": {
+      "moduleOffset": "0xd2a6a0",
+      "rawHex": "8fc2753d",
+      "float32": 0.05999999865889549
+    }
+  },
+  "polyIndex49Multiplier": {
+    "moduleOffset": "0xd282f8",
+    "rawHex": "000000c0ccccf43f",
+    "float64": 1.2999999523162842
+  },
+  "monsterDamageFactors": {
+    "feel_ratio_80_percent": {
+      "moduleOffset": "0xd2a50c",
+      "rawHex": "cdcc4c3f",
+      "float32": 0.800000011920929
+    },
+    "feel_ratio_60_percent": {
+      "moduleOffset": "0xd2a414",
+      "rawHex": "9a99193f",
+      "float32": 0.6000000238418579
+    },
+    "feel_ratio_40_percent": {
+      "moduleOffset": "0xd2b814",
+      "rawHex": "cdcccc3e",
+      "float32": 0.4000000059604645
+    },
+    "feel_ratio_20_percent": {
+      "moduleOffset": "0xd2aab8",
+      "rawHex": "cdcc4c3e",
+      "float32": 0.20000000298023224
+    },
+    "integer_percent_scale": {
+      "moduleOffset": "0xd2ac8c",
+      "rawHex": "0ad7233c",
+      "float32": 0.009999999776482582
+    }
+  },
+  "limitations": [
+    "No Hunter object, save value, account value, or credential was read.",
+    "The absolute process address is intentionally omitted because it is session-specific."
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-reward-progression-runtime-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-progression-helpers",
+      "path": "reverse-engineering/evidence/original-reward-progression-helpers-api35-v1.json",
+      "bytes": 40825,
+      "sha256": "9e72aa850f4372583c5cbdd01e0e1889e5e5a4c05ec35a370ffde4f732229bf0"
+    },
+    {
+      "id": "reward-material-full",
+      "path": "reverse-engineering/evidence/original-reward-material-full-api35-v1.json",
+      "bytes": 126084,
+      "sha256": "676dd7679138ef8e3bf362e65d2c01d30485154dc35641eb4af126a418ab8368"
+    },
+    {
+      "id": "reward-progression-schema",
+      "path": "reverse-engineering/evidence/original-reward-progression-schema-api35-v1.json",
+      "bytes": 447676,
+      "sha256": "ba3ca98633a127229683fe59e96ccbdce02111e018c045ba830b5f758ad5cb21"
+    },
+    {
+      "id": "experience-runtime-catalog",
+      "path": "packages/content/releases/evil-hunter-1.411/experience-runtime-catalog.json",
+      "bytes": 30021,
+      "sha256": "963445684658ac425deeb8a45b8547ad0a876cdb34b9ee4c6a1985a03e1ffb62"
+    }
+  ],
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "PlusExp",
+      "token": 100687028,
+      "nativeSizeBytes": 5480,
+      "bodySha256": "caa296d09f86352c7dd1ccb051f36902f78d616b192a7004d31b4a041239db06"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "PlusGold",
+      "token": 100686864,
+      "nativeSizeBytes": 444,
+      "bodySha256": "fdf0854838a35be1de62f89fcc20628cdd1dcdd728600fad511383eb6694c0ee"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Reward",
+      "token": 100686803,
+      "nativeSizeBytes": 5904,
+      "bodySha256": "0b6ea9ee35163b4f4bab3bcaa5108e6495373c242de86d25e9551963f7a0bf18"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "GHPHHEFFNKN",
+      "token": 100686954,
+      "nativeSizeBytes": 4236,
+      "bodySha256": "250ef7005be0c2c343ac5571aa80fc79ecd4b38393aff53eead9c0336b956139"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "LDHAEMDJCFF",
+      "token": 100687005,
+      "nativeSizeBytes": 2120,
+      "bodySha256": "9621d392d78324d0c2b3a751c37403873f2544e6011c22401fcb8fb3e13804c7"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetNeedExp",
+      "token": 100690845,
+      "nativeSizeBytes": 404,
+      "bodySha256": "e1c931a52031427215a6050e7f6c10c6e97f8e2d93100c6927c0fb0dd250ca9c"
+    }
+  ],
+  "recoveredExactFacts": {
+    "experienceLookup": {
+      "token": 100690845,
+      "nativeSizeBytes": 404,
+      "bodySha256": "e1c931a52031427215a6050e7f6c10c6e97f8e2d93100c6927c0fb0dd250ca9c",
+      "inputs": [
+        "revive",
+        "currentLevel"
+      ],
+      "rowIndexFormula": "currentLevel + 1",
+      "columnFormula": "experienceByDifficulty[revive] for revive 0..5",
+      "nativeDefaultBranch": "selectors outside 0..4 use the exp6 branch; valid Hunter revive domain still requires runtime-value confirmation"
+    },
+    "levelCarry": {
+      "pseudoCode": "if level >= maxLevel: discard grant; else repeatedly compute remaining = incoming - (GetNeedExp(revive, level) - exp); level only when remaining > 0; on level reset exp=0 and carry remaining; otherwise add incoming to exp",
+      "thresholdComparison": "remaining > 0",
+      "exactThresholdBehavior": "EXP becomes exactly needExp and level is unchanged",
+      "supportsMultipleLevels": true,
+      "maxLevelBehavior": "incoming EXP is discarded",
+      "finalConversion": "incoming EXP modifier result uses ARM64 fcvtzs (truncate toward zero)",
+      "goldenVectors": [
+        {
+          "name": "below-threshold",
+          "input": [
+            4,
+            20,
+            79,
+            10,
+            100
+          ],
+          "expected": [
+            4,
+            99
+          ]
+        },
+        {
+          "name": "exact-threshold",
+          "input": [
+            4,
+            20,
+            80,
+            10,
+            100
+          ],
+          "expected": [
+            4,
+            100
+          ]
+        },
+        {
+          "name": "cross-one-level",
+          "input": [
+            4,
+            20,
+            81,
+            10,
+            100
+          ],
+          "expected": [
+            5,
+            1
+          ]
+        },
+        {
+          "name": "carry-multiple-levels",
+          "input": [
+            4,
+            20,
+            281,
+            10,
+            100
+          ],
+          "expected": [
+            7,
+            1
+          ]
+        },
+        {
+          "name": "max-level-discard",
+          "input": [
+            10,
+            77,
+            999,
+            10,
+            100
+          ],
+          "expected": [
+            10,
+            77
+          ]
+        }
+      ]
+    },
+    "ordinaryMaterialRoll": {
+      "loopOrder": "ascending array slot",
+      "loopBound": "materialIndices.length",
+      "roll": "UnityEngine.Random.Range(1, 10001)",
+      "baseThreshold": "materialPercentValues[slot] * 10",
+      "grantComparison": "effectiveThreshold >= roll",
+      "grantValues": [
+        "materialIndices[slot]",
+        "materialCounts[slot]"
+      ],
+      "fullBodySha256": "fc70ff5be2d1f277145035e70883a2a6ad0426af79fa1757301c7791d187e880"
+    }
+  },
+  "partiallyResolvedModifierInputs": {
+    "experience": [
+      "UserData.mBuildingExpUp (base when positive, otherwise 1.0)",
+      "TimeData.expScroll (+1.0)",
+      "TimeData.BoxExp (+0.5)",
+      "UserData.ExpGemPack_Active (+1.0)",
+      "StatusData.CostumeExpUp",
+      "StatusData.CollectionExpUp",
+      "HunterData.reviveWisdom",
+      "StatusData.GearProperty delta * 0.01"
+    ],
+    "material": [
+      "StatusData.CalcHighValueMet participates in a branch that truncates (CalcHighValueMet + 1.0) * priorThreshold when the material property condition is >= 3"
+    ]
+  },
+  "unresolved": [
+    "Complete ordered EXP modifier chain, unnamed singleton Boolean/static constants, and all event conditions.",
+    "Complete gold modifier and village-tax chain despite exact helper captures.",
+    "Unique-level to unique-gear pool linkage, RNG order, dropRange/dropCut semantics, and gear selection order.",
+    "Semantic names for HunterCtrl.GHPHHEFFNKN and HunterCtrl.LDHAEMDJCFF; their exact bodies are captured but not renamed by guess.",
+    "Complete material threshold modifier order before the confirmed CalcHighValueMet branch."
+  ]
+}

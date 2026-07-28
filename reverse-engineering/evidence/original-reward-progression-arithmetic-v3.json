@@ -1,0 +1,929 @@
+{
+  "schemaVersion": 3,
+  "contractType": "original-reward-progression-arithmetic-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-progression-helpers",
+      "path": "reverse-engineering/evidence/original-reward-progression-helpers-api35-v1.json",
+      "bytes": 40825,
+      "sha256": "9e72aa850f4372583c5cbdd01e0e1889e5e5a4c05ec35a370ffde4f732229bf0"
+    },
+    {
+      "id": "reward-material-full",
+      "path": "reverse-engineering/evidence/original-reward-material-full-api35-v1.json",
+      "bytes": 126084,
+      "sha256": "676dd7679138ef8e3bf362e65d2c01d30485154dc35641eb4af126a418ab8368"
+    },
+    {
+      "id": "reward-progression-schema",
+      "path": "reverse-engineering/evidence/original-reward-progression-schema-api35-v1.json",
+      "bytes": 447676,
+      "sha256": "ba3ca98633a127229683fe59e96ccbdce02111e018c045ba830b5f758ad5cb21"
+    }
+  ],
+  "orderedNativeArithmetic": [
+    {
+      "type": "HunterCtrl",
+      "method": "PlusExp",
+      "token": 100687028,
+      "nativeSizeBytes": 5480,
+      "bodySha256": "caa296d09f86352c7dd1ccb051f36902f78d616b192a7004d31b4a041239db06",
+      "operations": [
+        {
+          "instructionOffset": 424,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 552,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 672,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 776,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 1016,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 1032,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 1036,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 1372,
+          "operation": "scvtf",
+          "operands": "s0, w8"
+        },
+        {
+          "instructionOffset": 1380,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 1384,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 1576,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 1680,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 2012,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 2020,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 2024,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 2864,
+          "operation": "scvtf",
+          "operands": "s1, w21"
+        },
+        {
+          "instructionOffset": 2872,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 2884,
+          "operation": "fcvtzs",
+          "operands": "w21, s0"
+        },
+        {
+          "instructionOffset": 2980,
+          "operation": "scvtf",
+          "operands": "s1, w21"
+        },
+        {
+          "instructionOffset": 2988,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3000,
+          "operation": "fcvtzs",
+          "operands": "w23, s0"
+        },
+        {
+          "instructionOffset": 3120,
+          "operation": "scvtf",
+          "operands": "s1, w21"
+        },
+        {
+          "instructionOffset": 3128,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3140,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3152,
+          "operation": "fcvtzs",
+          "operands": "w21, s0"
+        },
+        {
+          "instructionOffset": 4324,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 4824,
+          "operation": "scvtf",
+          "operands": "s1, w20"
+        },
+        {
+          "instructionOffset": 4836,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 4848,
+          "operation": "fcvtzs",
+          "operands": "w9, s0"
+        },
+        {
+          "instructionOffset": 4956,
+          "operation": "scvtf",
+          "operands": "s1, w20"
+        },
+        {
+          "instructionOffset": 4968,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 4980,
+          "operation": "fcvtzs",
+          "operands": "w9, s0"
+        }
+      ],
+      "operationSignature": "fadd,fadd,fadd,fadd,scvtf,fmul,fadd,scvtf,fmul,fadd,fadd,fadd,scvtf,fmul,fadd,scvtf,fmul,fcvtzs,scvtf,fmul,fcvtzs,scvtf,fmul,fmul,fcvtzs,fadd,scvtf,fmul,fcvtzs,scvtf,fmul,fcvtzs"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Reward",
+      "token": 100686803,
+      "nativeSizeBytes": 5904,
+      "bodySha256": "0b6ea9ee35163b4f4bab3bcaa5108e6495373c242de86d25e9551963f7a0bf18",
+      "operations": [
+        {
+          "instructionOffset": 244,
+          "operation": "fcvtzs",
+          "operands": "x8, d0"
+        },
+        {
+          "instructionOffset": 248,
+          "operation": "fadd",
+          "operands": "d1, d0, d1"
+        },
+        {
+          "instructionOffset": 264,
+          "operation": "fadd",
+          "operands": "d0, d10, d1"
+        },
+        {
+          "instructionOffset": 276,
+          "operation": "fadd",
+          "operands": "d0, d10, d1"
+        },
+        {
+          "instructionOffset": 288,
+          "operation": "fcvtzs",
+          "operands": "w9, d0"
+        },
+        {
+          "instructionOffset": 504,
+          "operation": "fmul",
+          "operands": "s9, s9, s8"
+        },
+        {
+          "instructionOffset": 680,
+          "operation": "fcvtzs",
+          "operands": "x8, d0"
+        },
+        {
+          "instructionOffset": 684,
+          "operation": "fadd",
+          "operands": "d1, d0, d1"
+        },
+        {
+          "instructionOffset": 720,
+          "operation": "fcvtzs",
+          "operands": "x8, d0"
+        },
+        {
+          "instructionOffset": 724,
+          "operation": "fadd",
+          "operands": "d1, d0, d1"
+        },
+        {
+          "instructionOffset": 740,
+          "operation": "fadd",
+          "operands": "d0, d9, d1"
+        },
+        {
+          "instructionOffset": 752,
+          "operation": "fadd",
+          "operands": "d0, d9, d1"
+        },
+        {
+          "instructionOffset": 764,
+          "operation": "fcvtzs",
+          "operands": "w8, d0"
+        },
+        {
+          "instructionOffset": 820,
+          "operation": "fadd",
+          "operands": "d0, d8, d1"
+        },
+        {
+          "instructionOffset": 832,
+          "operation": "fadd",
+          "operands": "d0, d8, d1"
+        },
+        {
+          "instructionOffset": 844,
+          "operation": "fcvtzs",
+          "operands": "w8, d0"
+        },
+        {
+          "instructionOffset": 1088,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 1096,
+          "operation": "scvtf",
+          "operands": "s2, x22"
+        },
+        {
+          "instructionOffset": 1108,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 1120,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 1124,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 1796,
+          "operation": "scvtf",
+          "operands": "s1, w8"
+        },
+        {
+          "instructionOffset": 1804,
+          "operation": "scvtf",
+          "operands": "s2, w8"
+        },
+        {
+          "instructionOffset": 1812,
+          "operation": "fmul",
+          "operands": "s1, s8, s1"
+        },
+        {
+          "instructionOffset": 1816,
+          "operation": "fmul",
+          "operands": "s2, s9, s2"
+        },
+        {
+          "instructionOffset": 1820,
+          "operation": "fadd",
+          "operands": "s1, s1, s3"
+        },
+        {
+          "instructionOffset": 1824,
+          "operation": "scvtf",
+          "operands": "s3, w8"
+        },
+        {
+          "instructionOffset": 1832,
+          "operation": "fadd",
+          "operands": "s1, s1, s2"
+        },
+        {
+          "instructionOffset": 1836,
+          "operation": "fmul",
+          "operands": "s2, s10, s3"
+        },
+        {
+          "instructionOffset": 1840,
+          "operation": "scvtf",
+          "operands": "s3, w29"
+        },
+        {
+          "instructionOffset": 1848,
+          "operation": "fadd",
+          "operands": "s1, s1, s2"
+        },
+        {
+          "instructionOffset": 1852,
+          "operation": "fmul",
+          "operands": "s0, s0, s3"
+        },
+        {
+          "instructionOffset": 1856,
+          "operation": "scvtf",
+          "operands": "s2, x24"
+        },
+        {
+          "instructionOffset": 1860,
+          "operation": "fadd",
+          "operands": "s0, s1, s0"
+        },
+        {
+          "instructionOffset": 1872,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 1876,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 2320,
+          "operation": "scvtf",
+          "operands": "s1, w8"
+        },
+        {
+          "instructionOffset": 2328,
+          "operation": "scvtf",
+          "operands": "s2, w8"
+        },
+        {
+          "instructionOffset": 2336,
+          "operation": "fmul",
+          "operands": "s1, s8, s1"
+        },
+        {
+          "instructionOffset": 2340,
+          "operation": "fmul",
+          "operands": "s2, s9, s2"
+        },
+        {
+          "instructionOffset": 2344,
+          "operation": "fadd",
+          "operands": "s1, s1, s3"
+        },
+        {
+          "instructionOffset": 2348,
+          "operation": "scvtf",
+          "operands": "s3, w27"
+        },
+        {
+          "instructionOffset": 2352,
+          "operation": "fadd",
+          "operands": "s1, s1, s2"
+        },
+        {
+          "instructionOffset": 2356,
+          "operation": "fmul",
+          "operands": "s0, s0, s3"
+        },
+        {
+          "instructionOffset": 2360,
+          "operation": "scvtf",
+          "operands": "s2, x24"
+        },
+        {
+          "instructionOffset": 2364,
+          "operation": "fadd",
+          "operands": "s0, s1, s0"
+        },
+        {
+          "instructionOffset": 2376,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 2380,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 2704,
+          "operation": "scvtf",
+          "operands": "s2, w25"
+        },
+        {
+          "instructionOffset": 2712,
+          "operation": "scvtf",
+          "operands": "s1, w8"
+        },
+        {
+          "instructionOffset": 2716,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 2720,
+          "operation": "scvtf",
+          "operands": "s2, x24"
+        },
+        {
+          "instructionOffset": 2724,
+          "operation": "fmul",
+          "operands": "s1, s8, s1"
+        },
+        {
+          "instructionOffset": 2728,
+          "operation": "fadd",
+          "operands": "s1, s1, s3"
+        },
+        {
+          "instructionOffset": 2732,
+          "operation": "fadd",
+          "operands": "s0, s1, s0"
+        },
+        {
+          "instructionOffset": 2852,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 2860,
+          "operation": "scvtf",
+          "operands": "s2, x24"
+        },
+        {
+          "instructionOffset": 2864,
+          "operation": "fmul",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 2868,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 2872,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 2892,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 3004,
+          "operation": "scvtf",
+          "operands": "s1, x22"
+        },
+        {
+          "instructionOffset": 3020,
+          "operation": "fmul",
+          "operands": "s0, s0, s8"
+        },
+        {
+          "instructionOffset": 3024,
+          "operation": "fadd",
+          "operands": "s0, s0, s9"
+        },
+        {
+          "instructionOffset": 3028,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3040,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 3108,
+          "operation": "scvtf",
+          "operands": "s1, x22"
+        },
+        {
+          "instructionOffset": 3120,
+          "operation": "fmul",
+          "operands": "s0, s0, s8"
+        },
+        {
+          "instructionOffset": 3124,
+          "operation": "fadd",
+          "operands": "s0, s0, s9"
+        },
+        {
+          "instructionOffset": 3128,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3140,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 3232,
+          "operation": "scvtf",
+          "operands": "s2, x22"
+        },
+        {
+          "instructionOffset": 3244,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3256,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 3260,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 3664,
+          "operation": "scvtf",
+          "operands": "s1, x22"
+        },
+        {
+          "instructionOffset": 3676,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3688,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 3932,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 3944,
+          "operation": "scvtf",
+          "operands": "s2, x22"
+        },
+        {
+          "instructionOffset": 3952,
+          "operation": "fmul",
+          "operands": "s0, s0, s8"
+        },
+        {
+          "instructionOffset": 3956,
+          "operation": "fadd",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 3968,
+          "operation": "fmul",
+          "operands": "s0, s0, s2"
+        },
+        {
+          "instructionOffset": 3972,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 4444,
+          "operation": "scvtf",
+          "operands": "s0, w0"
+        },
+        {
+          "instructionOffset": 4448,
+          "operation": "fmul",
+          "operands": "s0, s0, s8"
+        },
+        {
+          "instructionOffset": 4452,
+          "operation": "fadd",
+          "operands": "s9, s9, s0"
+        },
+        {
+          "instructionOffset": 4508,
+          "operation": "scvtf",
+          "operands": "s0, x0"
+        },
+        {
+          "instructionOffset": 4528,
+          "operation": "fmul",
+          "operands": "s0, s9, s0"
+        },
+        {
+          "instructionOffset": 4532,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 4964,
+          "operation": "scvtf",
+          "operands": "s0, x9"
+        },
+        {
+          "instructionOffset": 4968,
+          "operation": "fmul",
+          "operands": "s0, s0, s8"
+        },
+        {
+          "instructionOffset": 4972,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 5136,
+          "operation": "scvtf",
+          "operands": "s0, x21"
+        },
+        {
+          "instructionOffset": 5152,
+          "operation": "fmul",
+          "operands": "s0, s1, s0"
+        },
+        {
+          "instructionOffset": 5164,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 5612,
+          "operation": "scvtf",
+          "operands": "s1, x20"
+        },
+        {
+          "instructionOffset": 5624,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 5636,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        }
+      ],
+      "operationSignature": "fcvtzs,fadd,fadd,fadd,fcvtzs,fmul,fcvtzs,fadd,fcvtzs,fadd,fadd,fadd,fcvtzs,fadd,fadd,fcvtzs,scvtf,scvtf,fmul,fmul,fcvtzs,scvtf,scvtf,fmul,fmul,fadd,scvtf,fadd,fmul,scvtf,fadd,fmul,scvtf,fadd,fmul,fcvtzs,scvtf,scvtf,fmul,fmul,fadd,scvtf,fadd,fmul,scvtf,fadd,fmul,fcvtzs,scvtf,scvtf,fmul,scvtf,fmul,fadd,fadd,scvtf,scvtf,fmul,fadd,fmul,fcvtzs,scvtf,fmul,fadd,fmul,fcvtzs,scvtf,fmul,fadd,fmul,fcvtzs,scvtf,fadd,fmul,fcvtzs,scvtf,fmul,fcvtzs,scvtf,scvtf,fmul,fadd,fmul,fcvtzs,scvtf,fmul,fadd,scvtf,fmul,fcvtzs,scvtf,fmul,fcvtzs,scvtf,fmul,fcvtzs,scvtf,fmul,fcvtzs"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "CalVillTax",
+      "token": 100686990,
+      "nativeSizeBytes": 1544,
+      "bodySha256": "7fc297b6e132aea1b2cc45d729f91ee05f98aefaf3c19a40c67b810239825ddd",
+      "operations": [
+        {
+          "instructionOffset": 280,
+          "operation": "scvtf",
+          "operands": "s1, x20"
+        },
+        {
+          "instructionOffset": 284,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 296,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 516,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 616,
+          "operation": "scvtf",
+          "operands": "s0, x0"
+        },
+        {
+          "instructionOffset": 628,
+          "operation": "fsub",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 840,
+          "operation": "fadd",
+          "operands": "s0, s8, s0"
+        },
+        {
+          "instructionOffset": 1072,
+          "operation": "fcvtzs",
+          "operands": "x9, s0"
+        },
+        {
+          "instructionOffset": 1184,
+          "operation": "scvtf",
+          "operands": "s0, x0"
+        },
+        {
+          "instructionOffset": 1196,
+          "operation": "fsub",
+          "operands": "s0, s8, s0"
+        }
+      ],
+      "operationSignature": "scvtf,fadd,fmul,fcvtzs,scvtf,fsub,fadd,fcvtzs,scvtf,fsub"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "PlusGold",
+      "token": 100686864,
+      "nativeSizeBytes": 444,
+      "bodySha256": "fdf0854838a35be1de62f89fcc20628cdd1dcdd728600fad511383eb6694c0ee",
+      "operations": [
+        {
+          "instructionOffset": 244,
+          "operation": "scvtf",
+          "operands": "s0, x0"
+        },
+        {
+          "instructionOffset": 264,
+          "operation": "fmul",
+          "operands": "s0, s0, s1"
+        },
+        {
+          "instructionOffset": 276,
+          "operation": "fcvtzs",
+          "operands": "w8, s0"
+        }
+      ],
+      "operationSignature": "scvtf,fmul,fcvtzs"
+    }
+  ],
+  "uniqueDropTrace": {
+    "schema": {
+      "AdminEvilData": {
+        "uniqueLevel": 40,
+        "metIdx": 200,
+        "metCount": 208,
+        "metPercent": 216,
+        "exp": 224,
+        "gold": 240
+      },
+      "AdminDropUniqueGearData": {
+        "index": 16,
+        "dropRange": 40,
+        "dropCut": 56,
+        "gearType": 64,
+        "gearIndex": 72,
+        "gearPercent": 80
+      }
+    },
+    "confirmedAdminEvilRowAccesses": [
+      {
+        "instructionOffset": 688,
+        "fieldOffset": 200,
+        "field": "metIdx",
+        "instruction": "ldr x8, [x8, #0xc8]"
+      },
+      {
+        "instructionOffset": 768,
+        "fieldOffset": 200,
+        "field": "metIdx",
+        "instruction": "ldr x8, [x8, #0xc8]"
+      },
+      {
+        "instructionOffset": 1164,
+        "fieldOffset": 200,
+        "field": "metIdx",
+        "instruction": "ldr x8, [x8, #0xc8]"
+      },
+      {
+        "instructionOffset": 1260,
+        "fieldOffset": 216,
+        "field": "metPercent",
+        "instruction": "ldr x8, [x8, #0xd8]"
+      },
+      {
+        "instructionOffset": 3184,
+        "fieldOffset": 200,
+        "field": "metIdx",
+        "instruction": "ldr x8, [x8, #0xc8]"
+      },
+      {
+        "instructionOffset": 3472,
+        "fieldOffset": 208,
+        "field": "metCount",
+        "instruction": "ldr x8, [x8, #0xd0]"
+      },
+      {
+        "instructionOffset": 3564,
+        "fieldOffset": 208,
+        "field": "metCount",
+        "instruction": "ldr x8, [x8, #0xd0]"
+      },
+      {
+        "instructionOffset": 3684,
+        "fieldOffset": 200,
+        "field": "metIdx",
+        "instruction": "ldr x8, [x8, #0xc8]"
+      },
+      {
+        "instructionOffset": 4056,
+        "fieldOffset": 56,
+        "field": "type",
+        "instruction": "ldp x0, x1, [x8, #0x38]"
+      },
+      {
+        "instructionOffset": 4800,
+        "fieldOffset": 56,
+        "field": "type",
+        "instruction": "ldp x0, x1, [x8, #0x38]"
+      },
+      {
+        "instructionOffset": 9132,
+        "fieldOffset": 56,
+        "field": "type",
+        "instruction": "ldp x0, x1, [x8, #0x38]"
+      },
+      {
+        "instructionOffset": 19816,
+        "fieldOffset": 56,
+        "field": "type",
+        "instruction": "ldp x0, x1, [x8, #0x38]"
+      }
+    ],
+    "uniqueLevelDirectRowAccess": null,
+    "adminDropUniqueGearRowAccess": null,
+    "poolLinkage": null,
+    "dropCutOrder": null,
+    "gearPercentDenominator": null,
+    "gearTypeIndexRngOrder": null
+  },
+  "semanticChainStatus": {
+    "experience": {
+      "instructionOrder": "complete for PlusExp",
+      "knownInputs": [
+        "mBuildingExpUp or 1.0 base",
+        "expScroll +1.0",
+        "BoxExp +0.5",
+        "ExpGemPack_Active +1.0",
+        "CostumeExpUp",
+        "CollectionExpUp",
+        "reviveWisdom",
+        "GearProperty delta * 0.01"
+      ],
+      "completeSemanticOperandBinding": false,
+      "finalIntegerConversion": "fcvtzs"
+    },
+    "gold": {
+      "instructionOrder": "complete for Reward, CalVillTax and PlusGold",
+      "mutationOrder": [
+        "Reward arithmetic",
+        "CalVillTax",
+        "PlusGold"
+      ],
+      "plusGoldTerminalOperations": [
+        "scvtf",
+        "fmul",
+        "fcvtzs"
+      ],
+      "completeSemanticOperandBinding": false
+    }
+  },
+  "blockingEvidence": [
+    "RewardMetrial has confirmed AdminEvilData metIdx/metCount/metPercent/type row accesses, but no mechanically bound uniqueLevel row access in the traced sites.",
+    "No traced object register is yet proven to be an AdminDropUniqueGearData row, so dropRange/dropCut/gear arrays cannot be ordered safely.",
+    "The arithmetic instruction sequence is complete, but several singleton/static operands remain unnamed; a complete semantic multiplier formula is not claimed."
+  ]
+}

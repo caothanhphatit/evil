@@ -3,7 +3,7 @@ mod session;
 mod websocket;
 
 use axum::{
-    http::{header, Method},
+    http::{header, HeaderValue, Method},
     routing::{get, post},
     Router,
 };
@@ -17,8 +17,12 @@ use crate::AppState;
 
 pub fn router(state: AppState) -> Router {
     let request_id_header = header::HeaderName::from_static("x-request-id");
+    let configured_origin = state.config.web_origin.clone();
+    let loopback_origin = HeaderValue::from_static("http://127.0.0.1:5173");
     let cors = CorsLayer::new()
-        .allow_origin(state.config.web_origin.clone())
+        .allow_origin(tower_http::cors::AllowOrigin::predicate(
+            move |origin, _| origin == configured_origin || origin == loopback_origin,
+        ))
         .allow_credentials(true)
         .allow_methods([Method::GET, Method::POST])
         .allow_headers([header::CONTENT_TYPE]);

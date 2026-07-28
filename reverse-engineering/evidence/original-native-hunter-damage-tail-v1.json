@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-damage-tail-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    { "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json", "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80" },
+    { "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json", "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8" },
+    { "path": "reverse-engineering/evidence/original-native-evilctrl-all-methods-api35-v1.json", "sha256": "0095758226878134fccced21c97b7cb0432689ac97e6006108cccd382ffdfa71" },
+    { "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json", "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0" },
+    { "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json", "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf" },
+    { "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json", "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678" }
+  ],
+  "methods": [
+    { "type": "HunterCtrl", "method": "Damaged", "token": "0x06005CAA", "moduleOffset": "0x346514c", "nativeSizeBytes": 18964, "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6" },
+    { "type": "HunterCtrl", "method": "HitDamageProcess", "token": "0x06005B94", "moduleOffset": "0x34256c0", "nativeSizeBytes": 920, "bodySha256": "a0632289d593e15dc6584f9a21958ebc5318d142167b27507bf83424ed5c90db" },
+    { "type": "EvilCtrl", "method": "OFEIPNBMNML", "token": "0x06002FBF", "moduleOffset": "0x2f1a8cc", "nativeSizeBytes": 1712, "bodySha256": "140634f14de6f7e1f0d676d04b5fe89dca77c7b28829b8f19a74dfd30737313d" },
+    { "type": "EvilCtrl", "method": "EBNOJHOGEMM", "token": "0x0600300F", "moduleOffset": "0x2f29c74", "nativeSizeBytes": 1160, "bodySha256": "cb04284edf200dacb289ebd8ad5e9c72696e6508be3b5509f10d781219181d01" },
+    { "type": "EvilCtrl", "method": "BuffSetting", "token": "0x06002FE9", "moduleOffset": "0x2f239b4", "nativeSizeBytes": 1296, "bodySha256": "b3524b95e4d63ea885736ed2bd76011e419ce5e6b8c00bbb69085228302c3df4" }
+  ],
+  "hunterDamageAccumulator": {
+    "field": { "owner": "HunterCtrl", "runtimeName": "unresolved", "offset": 1888, "type": "ObscuredLong" },
+    "initialEquation": "accumulator = truncTowardZero(incomingDamage * GameManager.RandDamage())",
+    "initialConversionInstructionOffset": 4240,
+    "preArmorStatus": "Many conditional skill, gear, trait and mode modifiers mutate the accumulator before the common armor tail; their complete semantic order remains unresolved."
+  },
+  "commonArmorTail": {
+    "armorScratch": { "owner": "HunterCtrl", "runtimeName": "OLCMCGJLADG", "offset": 992, "type": "ObscuredLong" },
+    "subtractionEquation": "postArmor = accumulator - armorScratch",
+    "subtractionInstructionOffset": 15252,
+    "branch": [
+      {
+        "condition": "postArmor <= 0",
+        "forwardedDamage": "1",
+        "constructionInstructionOffset": 15792
+      },
+      {
+        "condition": "postArmor > 0",
+        "forwardedDamage": "truncTowardZero(postArmor * selectedFinalFactor)",
+        "conversionInstructionOffset": 15412,
+        "factorStatus": "runtime static ObscuredFloat identity unresolved; there is no second clamp before HitDamageProcess"
+      }
+    ],
+    "sink": "HunterCtrl.HitDamageProcess(ObscuredLong)"
+  },
+  "hpMutation": {
+    "field": { "owner": "HunterData", "runtimeName": "<nowHp>k__BackingField", "offset": 360, "type": "ObscuredLong" },
+    "defaultBranchEquation": "nowHp = max(nowHp - forwardedDamage, 0)",
+    "ordering": [
+      "HitDamageProcess decodes HunterData.nowHp and forwardedDamage.",
+      "It subtracts forwardedDamage from nowHp and writes the result.",
+      "It decodes the new nowHp; if negative, it overwrites nowHp with zero."
+    ],
+    "specialBranchStatus": "An earlier collection-backed branch can split or redirect damage through an auxiliary ObscuredLong pool. Its collection identity is unresolved, so only the default HP branch is normalized."
+  },
+  "callerMap": [
+    {
+      "caller": "EvilCtrl.OFEIPNBMNML",
+      "callInstructionOffsets": [1200, 1348],
+      "callee": "HunterCtrl.Damaged",
+      "preCallRng": "No UnityEngine.Random.Range call exists in the complete caller body.",
+      "damageShape": "truncTowardZero(baseValue * attackScalar * EvilCtrl.GetReduceAttackValue())"
+    },
+    {
+      "caller": "EvilCtrl.EBNOJHOGEMM",
+      "callInstructionOffsets": [1076],
+      "callee": "HunterCtrl.Damaged",
+      "preCallRng": "One Random.Range(0,100) gate exists, but it is sourced by an EvilCtrl effect field rather than Hunter StatusData.CalcDodge.",
+      "damageShape": "truncTowardZero(baseValue * attackScalar * EvilCtrl.GetReduceAttackValue())"
+    }
+  ],
+  "rngIdentityAudit": {
+    "hunterDamagedInternalCalls": [
+      { "instructionOffset": 636, "range": "[0,100)", "sourceFields": ["StatusData.GearSetProperty", "StatusData.GearSetPropertyValue"], "identity": "gear-set proc; rejected as direct CalcDodge/accuracy roll" },
+      { "instructionOffset": 5736, "range": "[0,101)", "sourceFields": ["StatusData.GearProperty"], "identity": "gear-property proc; rejected as direct CalcDodge/accuracy roll" },
+      { "instructionOffset": 17340, "range": "[0,10)", "sourceFields": ["HunterData runtime fields"], "identity": "effect proc; rejected as direct CalcDodge/accuracy roll" },
+      { "instructionOffset": 17488, "range": "[0,100)", "sourceFields": ["StatusData.GearSetProperty", "StatusData.GearSetPropertyValue"], "identity": "gear-set proc; rejected as direct CalcDodge/accuracy roll" }
+    ],
+    "evilCallerCandidate": {
+      "caller": "EvilCtrl.EBNOJHOGEMM",
+      "effectField": { "runtimeName": "OCLFGGEJKMI", "offset": 488, "type": "System.Int32" },
+      "writer": "EvilCtrl.BuffSetting(effectType=54, value, bool) writes value directly to OCLFGGEJKMI; BuffEndSetting clears it.",
+      "equation": "when OCLFGGEJKMI >= 1, proc = Random.Range(0,100) < OCLFGGEJKMI",
+      "controlFlow": "The proc branch returns through effect presentation before the later HunterCtrl.Damaged call.",
+      "semanticConclusion": "This is an attacker-owned effect-54 attack-abort gate. Native evidence does not name effect 54 accuracy, blind, miss, dodge, or evasion, so the gameplay label remains unresolved."
+    },
+    "calcDodgeConclusion": "No captured caller or HunterCtrl.Damaged RNG branch reads StatusData.CalcDodge offset 192. The exact original CalcDodge consumer remains outside the proven call graph."
+  },
+  "goldenVectors": {
+    "commonTail": [
+      { "accumulator": 100, "armorScratch": 30, "selectedFinalFactor": 0.5, "postArmor": 70, "forwardedDamage": 35 },
+      { "accumulator": 30, "armorScratch": 30, "selectedFinalFactor": 0.5, "postArmor": 0, "forwardedDamage": 1 },
+      { "accumulator": 20, "armorScratch": 30, "selectedFinalFactor": 2.0, "postArmor": -10, "forwardedDamage": 1 }
+    ],
+    "defaultHpMutation": [
+      { "nowHp": 100, "forwardedDamage": 35, "expectedNowHp": 65 },
+      { "nowHp": 20, "forwardedDamage": 35, "expectedNowHp": 0 },
+      { "nowHp": 1, "forwardedDamage": 1, "expectedNowHp": 0 }
+    ],
+    "effect54Gate": [
+      { "value": 0, "roll": 0, "enabled": false, "proc": false },
+      { "value": 25, "roll": 24, "enabled": true, "proc": true },
+      { "value": 25, "roll": 25, "enabled": true, "proc": false },
+      { "value": 100, "roll": 99, "enabled": true, "proc": true }
+    ]
+  },
+  "instructionWindows": [
+    { "method": "HunterCtrl.Damaged", "startOffset": 4172, "endOffsetExclusive": 4284, "hex": "bb5d01d07b3743f9600340f908e440b94800003514c9bb97e0031faa2168c99700cd01b4e1031faa7180ca97a102229e08f0af52e1031faa0008211e0101271e0800f0d20900389e0020211e0001899ae80740910841119128c6bf97e017c53de11bc53de00313aa60da813d61de813d", "role": "RandDamage initialization of accumulator" },
+    { "method": "HunterCtrl.Damaged", "startOffset": 15204, "endOffsetExclusive": 15304, "hex": "a00740ade0430c91e1031faae08718adcab6bf9760065fadf50300aae0c30b91e1031faae08717adc4b6bf97e8074091a00200cbe1031faa0841119169bbbf97e017c53de11bc53de0430b91e1031faaa00700ade08716adb8b6bf971f0000f16d0f0054", "role": "accumulator minus armor scratch and sign branch" },
+    { "method": "HunterCtrl.Damaged", "startOffset": 15304, "endOffsetExclusive": 15460, "hex": "a00740ade0430a91e1031faae08714adb1b6bf97080340f9f50300aa09e540b989000035e00308aa30bebb97080340f9085d40f9e0c30991e1031faa09510491082541b92001c03de88302b9e09f803d4ab6bf97a102229e08f0af52e1031faa0008211e0101271e0800f0d20900389e0020211e0001899ae8074091084111913fbbbf97e017c53de11bc53de1430991e00313aae08712ad45f2fe97", "role": "positive post-armor final factor and HitDamageProcess call" },
+    { "method": "HunterCtrl.Damaged", "startOffset": 15792, "endOffsetExclusive": 15836, "hex": "e807409120008052e1031faa08411191e1babf97e017c53de11bc53de1c30a91e00313aae08715ade7f1fe97", "role": "non-positive post-armor clamp to one and HitDamageProcess call" },
+    { "method": "HunterCtrl.HitDamageProcess", "startOffset": 584, "endOffsetExclusive": 764, "hex": "c10240f9e0030791dcd45a94e00313aaf31fff97e00500b416a00591e0030191e1031faac00640ade00702adadc3c097800640adf50300aae0830091e1031faae00701ada7c3c097a00200cbe8430691e1031faa4dc8c097e0874cade00313aac00600adde1fff97400300b408a00591e0030091e1031faa000540ade00700ad98c3c0978001f8b6e00313aad41fff97f30300aae8430691e0031faae1031faa3ac8c097730100b4e0874cad68a20591000500ad", "role": "default nowHp subtraction and zero floor" },
+    { "method": "EvilCtrl.EBNOJHOGEMM", "startOffset": 748, "endOffsetExclusive": 812, "hex": "60da41bd61d241bd68ea41b90108211e1f0500710028211e607e00bd2b040054e0031f2a810c8052e2031faaad30ad9468ea41b91f00086b0a050054e0031faa", "role": "effect-54 Random.Range gate before damage call" },
+    { "method": "EvilCtrl.BuffSetting", "startOffset": 272, "endOffsetExclusive": 304, "hex": "bfe600710c030054bfda007180090054bfde007100120054bfe6007181150054", "role": "effect-type dispatch containing effect 54" },
+    { "method": "EvilCtrl.BuffSetting", "startOffset": 588, "endOffsetExclusive": 608, "hex": "683e473974ea01b9080a003560a240f9600900b5", "role": "effect 54 writer to EvilCtrl offset 488" }
+  ],
+  "unresolved": [
+    "The complete semantic ordering of all pre-armor accumulator modifiers.",
+    "The selectedFinalFactor identity and proof that its positive branch cannot truncate to zero.",
+    "The auxiliary collection/pool branch inside HitDamageProcess.",
+    "The gameplay label of Evil effect type 54.",
+    "The consumer and exact formula for StatusData.CalcDodge."
+  ]
+}

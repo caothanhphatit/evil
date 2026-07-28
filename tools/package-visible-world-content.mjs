@@ -18,6 +18,23 @@ const actorClaims = {
 };
 const assetIndex = JSON.parse(await fs.readFile(path.join(repoRoot, "game-assets/asset-index.json"), "utf8"));
 const byPath = new Map(assetIndex.assets.map((asset) => [asset.path, asset]));
+const level1Scene = JSON.parse(await fs.readFile(path.join(repoRoot, "reverse-engineering/evidence/level1-scene-evidence-v2.json"), "utf8"));
+
+function recoveredSceneTransform(gameObjectName) {
+  const matches = level1Scene.gameObjects.filter((gameObject) => gameObject.name === gameObjectName);
+  if (matches.length !== 1) throw new Error(`Expected one level1 GameObject named ${gameObjectName}, found ${matches.length}`);
+  const gameObject = matches[0];
+  const transformComponent = gameObject.components.find((component) => component.type === "Transform");
+  const transform = level1Scene.components.transforms.find((candidate) => candidate.pathId === transformComponent?.pathId);
+  if (!transform || transform.gameObjectPathId !== gameObject.pathId) throw new Error(`Missing exact level1 transform for ${gameObjectName}`);
+  if (transform.parent?.pathId !== 23531
+    || transform.localScale?.x !== 1 || transform.localScale?.y !== 1 || transform.localScale?.z !== 1
+    || transform.localRotation?.x !== 0 || transform.localRotation?.y !== 0
+    || transform.localRotation?.z !== 0 || transform.localRotation?.w !== 1) {
+    throw new Error(`Unsupported non-default level1 transform hierarchy for ${gameObjectName}`);
+  }
+  return transform.localPosition;
+}
 
 function uniquePath(prefix, suffix) {
   const matches = assetIndex.assets.filter((asset) => asset.path.startsWith(prefix) && asset.path.endsWith(suffix));
@@ -45,7 +62,19 @@ async function publishLocal(sourcePath, outputPath) {
   return { sourceNamespace: "normalized-evidence", sourcePath, publicPath: `/content/releases/visible-world-v1/${outputPath}`, bytes: payload.length, sha256: createHash("sha256").update(payload).digest("hex") };
 }
 
-await fs.rm(outputRoot, { recursive: true, force: true });
+// Building candidates are published by a separate evidence extractor. Rebuilding
+// the scene package must not re-encode or delete those immutable output bytes.
+await Promise.all([
+  "manifest.json",
+  "release.json",
+  "actors",
+  "maps",
+  "village/background",
+  "village/foreground",
+  "village/npcs",
+  "village/decorations",
+  "village/signboards",
+].map((entry) => fs.rm(path.join(outputRoot, entry), { recursive: true, force: true })));
 const actors = [];
 for (const family of families) {
   const skeletonSource = uniquePath(`text/${family}.json__`, ".bin");
@@ -92,13 +121,18 @@ const villageTiles = await Promise.all(tileBindings.map(async ([file, x, y, z]) 
 })));
 const extracted = JSON.parse(await fs.readFile(path.join(villageRoot, "manifest.json"), "utf8"));
 const foregroundBindings = [
-  ["ground", 18.01, 10.53, 489], ["gate", 13.06, 14.26, 493], ["wallA", 18.73, 8.55, 486],
-  ["wallB", 14.33, 9.53, 488], ["wallC", 22.43, 9.915, 488], ["wallD", 13.93, 11.42, 490],
-  ["wallE", 19.515, 12.115, 492], ["bridgeA", 14.86, 12.49, 491], ["bridgeB", 22.17, 9.43, 487], ["bridgeC", 15.30, 8.67, 487],
+  ["ground", "Village_Ground"], ["gate", "Village_Gate"], ["wallA", "Village_Wall_A"],
+  ["wallB", "Village_Wall_B"], ["wallC", "Village_Wall_C"], ["wallD", "Village_Wall_D"],
+  ["wallE", "Village_Wall_E"], ["bridgeA", "Village_Bridge_A"],
+  ["bridgeB", "Village_Bridge_B"], ["bridgeC", "Village_Bridge_C"],
 ];
-const foreground = await Promise.all(foregroundBindings.map(async ([id, x, y, z]) => ({
-  ...await publishLocal(`game-assets/normalized/village/foreground/${id}.png`, `village/foreground/${id}.png`), id, x, y, z,
-})));
+const foreground = await Promise.all(foregroundBindings.map(async ([id, sceneObject]) => {
+  const { x, y, z } = recoveredSceneTransform(sceneObject);
+  return {
+  ...await publishLocal(`game-assets/normalized/village/foreground/${id}.png`, `village/foreground/${id}.png`),
+    id, sceneObject, x, y, z, anchor: extracted.foreground.find((entry) => entry.id === id)?.anchor,
+  };
+}));
 const npcPositions = { farm_npc_1: [20.839, 12.731, 492], farm_npc_2: [21.96, 13.25, 492], fallen_pasture_npc: [19.624, 13.71, 492] };
 const npcs = Object.fromEntries(await Promise.all(Object.entries(extracted.npcs).map(async ([role, frames]) => [role, {
   position: { x: npcPositions[role][0], y: npcPositions[role][1], z: npcPositions[role][2] },
@@ -123,10 +157,37 @@ for (const [id, sourcePath, x, y, z] of [
 ]) {
   decorations.push({ id, ...(await publish(sourcePath, `village/decorations/${id}.png`)), x, y, z });
 }
+const signboardBindings = [
+  ["map_new01", "sign_01", 14.069999694824219, 8.8100004196167, 486],
+  ["background_08", "sign_02", 15.899999618530273, 7.940000057220459, 486],
+  ["background_11", "sign_03", 21.309999465942383, 8.579999923706055, 486],
+];
+const signboards = await Promise.all(signboardBindings.map(async ([regionId, sceneObject, x, y, z]) => {
+  const states = extracted.signboards?.[regionId];
+  if (!Array.isArray(states) || states.length !== 3) throw new Error(`Missing exact density sign states for ${regionId}`);
+  return {
+    regionId,
+    sceneObject,
+    x,
+    y,
+    z,
+    colliderRadius: 0.25999999046325684,
+    states: await Promise.all(states.map(async (state) => ({
+      densityLevel: state.densityLevel,
+      ...await publishLocal(state.file, `village/signboards/${regionId}/density-${state.densityLevel}.png`),
+    }))),
+    evidence: {
+      resolution: "resolved",
+      confidence: "confirmed",
+      source: "reverse-engineering/evidence/level1-scene-evidence-v2.json",
+    },
+  };
+}));
 const village = {
   tiles: villageTiles,
   foreground,
   decorations,
+  signboards,
   npcs,
   bindingState: "partial-scene-derived",
   confidence: "confirmed",
@@ -165,4 +226,4 @@ const bootstrap = {
   releaseSha256: createHash("sha256").update(releasePayload).digest("hex"),
 };
 await fs.writeFile(path.join(outputRoot, "manifest.json"), `${JSON.stringify(bootstrap, null, 2)}\n`);
-console.log(`Packaged ${actors.length} evidence-safe Spine fixtures and one unresolved field-map candidate.`);
+console.log(`Packaged ${actors.length} evidence-safe Spine fixtures, ${signboards.length} exact density signboards, and one unresolved field-map candidate.`);

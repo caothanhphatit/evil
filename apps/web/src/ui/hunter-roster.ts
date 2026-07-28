@@ -1,4 +1,5 @@
 import type { OriginalFlowSnapshot, WorldEntityProjection } from "../generated/protocol";
+import { hunterBaseWeaponSkin } from "./hunter-spine-presentation";
 
 export type HunterRosterState = "active" | "waiting";
 
@@ -48,6 +49,13 @@ export interface HunterView {
   gold: number | null;
   portrait: string | null;
   skills: HunterSkillView[];
+  hunt: {
+    status: "idle" | "hunting" | "returning" | "dead";
+    zoneId: string | null;
+    progressTicks: number;
+    requiredTicks: number;
+    loot: Array<{ itemId: string; quantity: number }>;
+  } | null;
 }
 
 export interface HunterRosterView {
@@ -57,6 +65,13 @@ export interface HunterRosterView {
   selectedId: string | null;
   resolved: boolean;
   constraintViolation: string | null;
+}
+
+export type HunterRarityKey = "normal" | "rare" | "superior" | "heroic" | "legendary";
+
+export interface HunterRarityPresentation {
+  key: HunterRarityKey;
+  letter: "N" | "R" | "S" | "H" | "L";
 }
 
 type UnknownRecord = Record<string, unknown>;
@@ -91,6 +106,37 @@ export function hunterPercent(current: number | null, maximum: number | null): n
   return Math.max(0, Math.min(100, Math.round((current / maximum) * 100)));
 }
 
+export function hunterRarityPresentation(rarityId: string | null, rarityName: string | null): HunterRarityPresentation | null {
+  const rarity = `${rarityId ?? ""} ${rarityName ?? ""}`.trim().toLowerCase();
+  if (!rarity) return null;
+  if (/\blegendary\b|^l$/.test(rarity)) return { key: "legendary", letter: "L" };
+  if (/\bheroic\b|^h$/.test(rarity)) return { key: "heroic", letter: "H" };
+  if (/\bsuperior\b|^s$/.test(rarity)) return { key: "superior", letter: "S" };
+  if (/\brare\b|^r$/.test(rarity)) return { key: "rare", letter: "R" };
+  if (/\bnormal\b|^n$/.test(rarity)) return { key: "normal", letter: "N" };
+  return null;
+}
+
+export function hunterClassTone(classFamily: string | null): string {
+  return classFamily && /^H[1-5]$/.test(classFamily) ? classFamily.toLowerCase() : "unresolved";
+}
+
+export function hunterWorldEntityId(snapshot: OriginalFlowSnapshot | UnknownRecord, hunter: HunterView): string | null {
+  const root = record(snapshot);
+  const world = record(root.world);
+  const entities = array(world.entities).map(record);
+  const direct = entities.find((entity) => entity.descriptor && record(entity.descriptor).entity_id === hunter.id);
+  if (direct && direct.selectable === true) return stringValue(record(direct.descriptor).entity_id);
+  if (hunter.numericId === null) return null;
+  const match = entities.find((entity) => {
+    const descriptor = record(entity.descriptor);
+    return entity.selectable === true
+      && descriptor.source_skeleton_name === "hunter"
+      && stringValue(descriptor.entity_id)?.match(/(\d+)$/)?.[1] === String(hunter.numericId);
+  });
+  return match ? stringValue(record(match.descriptor).entity_id) : null;
+}
+
 function parseHunter(value: unknown, rosterState: HunterRosterState, index: number): HunterView {
   const row = record(value);
   const profile = record(row.profile ?? row.hunter_profile);
@@ -99,6 +145,7 @@ function parseHunter(value: unknown, rosterState: HunterRosterState, index: numb
   const identity = record(row.identity);
   const job = record(row.class ?? row.job ?? profile.class);
   const trait = record(row.trait);
+  const hunt = record(row.hunt);
   const traits = array(row.traits ?? profile.traits).map(parseTrait);
   const idValue = row.hunter_id ?? row.id ?? identity.id;
   const numericId = finiteNumber(idValue);
@@ -134,6 +181,25 @@ function parseHunter(value: unknown, rosterState: HunterRosterState, index: numb
     gold: finiteNumber(row.gold ?? stats.gold),
     portrait: safeAssetPath(row.portrait ?? row.portrait_path ?? row.portrait_asset ?? profile.portrait_asset_id),
     skills: array(row.skills ?? profile.skills).map(parseSkill),
+    hunt: projectHunt(hunt),
+  };
+}
+
+function projectHunt(row: UnknownRecord): HunterView["hunt"] {
+  const status = stringValue(row.status);
+  const progressTicks = finiteNumber(row.progress_ticks);
+  const requiredTicks = finiteNumber(row.required_ticks);
+  if (!status || !["idle", "hunting", "returning", "dead"].includes(status) || progressTicks === null || requiredTicks === null) return null;
+  return {
+    status: status as NonNullable<HunterView["hunt"]>["status"],
+    zoneId: stringValue(row.zone_id),
+    progressTicks,
+    requiredTicks,
+    loot: array(row.loot).map(record).flatMap((loot) => {
+      const itemId = stringValue(loot.item_id);
+      const quantity = finiteNumber(loot.quantity);
+      return itemId && quantity !== null ? [{ itemId, quantity }] : [];
+    }),
   };
 }
 
@@ -227,14 +293,22 @@ function positiveInteger(value: unknown): number | null {
   return number !== null && number > 0 ? Math.floor(number) : null;
 }
 
-const FAMILY_SKINS: Record<string, string[]> = {
-  H1: ["All_h1", "All_h1_duallist"],
-  H2: ["All_h2", "All_h2_executor", "All_h2_templer"],
-  H3: ["All_h3", "All_h3_mistic"],
-  H4: ["All_h4", "All_h4_darkload"],
-  H5: ["All_h5", "All_h5_concentrate"],
+// `All_h*` are hero/demo compositions and include showcase costumes/weapons.
+// The ordinary body and first class outfit are separate, gendered Spine skins.
+const FAMILY_BODY_SKINS: Record<string, [string, string]> = {
+  H1: ["hunter_m_01", "hunter_f_01"],
+  H2: ["hunter_m_01", "hunter_f_01"],
+  H3: ["hunter_m_01", "hunter_f_01"],
+  H4: ["hunter_m_01", "hunter_f_01"],
+  H5: ["hunter_m_01", "hunter_f_01"],
 };
-const DEMO_SKINS = ["All_h1", "All_h1_duallist", "All_h2", "All_h2_executor", "All_h3", "All_h3_mistic", "All_h4", "All_h5"];
+const FAMILY_COSTUME_SKINS: Record<string, [string, string]> = {
+  H1: ["costum_h1_01", "costum_h1_02"],
+  H2: ["costum_h2_01", "costum_h2_02"],
+  H3: ["costum_h3_01", "costum_h3_02"],
+  H4: ["costum_h4_01", "costum_h4_02"],
+  H5: ["costum_h5_01", "costum_h5_02"],
+};
 const HUNTER_TINTS = [0xffffff, 0xfff4dd, 0xe8f5ff, 0xf2e9ff, 0xe8ffe9, 0xffe9ec, 0xfff8cc, 0xe7ffff];
 
 export function hunterActorVisual(entity: WorldEntityProjection | UnknownRecord): { skinNames: string[]; animation: string | null; tint: number; signature: string } {
@@ -244,21 +318,35 @@ export function hunterActorVisual(entity: WorldEntityProjection | UnknownRecord)
   const visual = record(row.hunter_visual ?? row.visual ?? profile.visual ?? descriptor.hunter_visual ?? descriptor.visual);
   const family = normalizeClassFamily(visual.class_family ?? visual.visual_family ?? row.class_family ?? profile.visual_family ?? profile.class_family ?? descriptor.class_family);
   const variant = stableHunterVariant(descriptor.entity_id ?? row.entity_id ?? row.hunter_id ?? row.id);
-  const explicitSkins = array(visual.skin_names).filter((value): value is string => typeof value === "string" && value.length > 0);
-  const weaponSkin = stringValue(visual.weapon_skin ?? profile.weapon_skin);
-  const familySkins = family ? FAMILY_SKINS[family] : null;
-  const skinNames = explicitSkins.length > 0 ? explicitSkins : [familySkins?.[variant % familySkins.length] ?? DEMO_SKINS[variant]];
-  if (weaponSkin) skinNames.push(weaponSkin);
-  const animation = stringValue(visual.animation ?? visual.animation_name ?? profile.animation_name ?? profile.animation ?? row.animation);
+  const rawAnimation = stringValue(visual.animation ?? visual.animation_name ?? profile.animation_name ?? profile.animation ?? row.animation);
+  // Skill activation uses an explicit server marker so it can replay the
+  // class hit clip without being mistaken for a basic Ranger projectile.
+  const animation = rawAnimation?.endsWith("_skill")
+    ? `${family?.toLowerCase() ?? "hunter"}_hit`
+    : rawAnimation;
   const tint = HUNTER_TINTS[variant];
+  const explicitSkins = array(visual.skin_names).filter((value): value is string => typeof value === "string" && value.length > 0);
+  const weaponSkin = stringValue(visual.weapon_skin ?? profile.weapon_skin) ?? hunterBaseWeaponSkin(family);
+  const bodySkins = family ? FAMILY_BODY_SKINS[family] : null;
+  const costumeSkins = family ? FAMILY_COSTUME_SKINS[family] : null;
+  // Per-Hunter gender is unresolved in the mined snapshot. The alternating
+  // pair is a fixture-only visual choice and is deliberately not persisted.
+  const genderIndex = variant % 2;
+  const skinNames = explicitSkins.length > 0
+    ? explicitSkins
+    : bodySkins && costumeSkins
+      ? [bodySkins[genderIndex], costumeSkins[genderIndex]]
+      : [];
+  if (skinNames.length === 0) return { skinNames: [], animation, tint, signature: `unresolved:${tint.toString(16)}` };
+  if (weaponSkin) skinNames.push(weaponSkin);
   return { skinNames, animation, tint, signature: `${skinNames.join("|")}:${tint.toString(16)}` };
 }
 
 function stableHunterVariant(value: unknown): number {
   const text = stringValue(value) ?? "hunter-1";
   const numericSuffix = text.match(/(\d+)$/)?.[1];
-  if (numericSuffix) return Math.max(0, Number(numericSuffix) - 1) % DEMO_SKINS.length;
+  if (numericSuffix) return Math.max(0, Number(numericSuffix) - 1) % HUNTER_TINTS.length;
   let hash = 0;
   for (const character of text) hash = ((hash * 31) + character.charCodeAt(0)) >>> 0;
-  return hash % DEMO_SKINS.length;
+  return hash % HUNTER_TINTS.length;
 }

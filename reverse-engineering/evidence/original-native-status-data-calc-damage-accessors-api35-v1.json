@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T09:40:14.330524Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 26218,
+    "action": "Targeted CalcDamage accessor capture after tutorial town load; no gameplay input.",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "StatusData",
+        "methodName": "set_CalcDamage",
+        "parameterCount": 1
+      },
+      {
+        "className": "StatusData",
+        "methodName": "get_CalcDamage",
+        "parameterCount": 0
+      },
+      {
+        "className": "StatusData",
+        "methodName": "LCENGICKKGP",
+        "parameterCount": 0
+      }
+    ],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 32768,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a8c06000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 32768,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "StatusData",
+          "methodName": "set_CalcDamage",
+          "parameterCount": 1
+        },
+        {
+          "className": "StatusData",
+          "methodName": "get_CalcDamage",
+          "parameterCount": 0
+        },
+        {
+          "className": "StatusData",
+          "methodName": "LCENGICKKGP",
+          "parameterCount": 0
+        }
+      ],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "StatusData",
+          "methodName": "set_CalcDamage",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+          ],
+          "returnType": "System.Void",
+          "token": 100670717,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ab9675cc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d615cc",
+              "codeHex": "210040ad0080833c0180823cc0035fd6",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x2d615dc",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ab9675cc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d615cc",
+              "codeHex": "210040ad0080833c0180823cc0035fd6",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x2d615dc",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "StatusData",
+          "methodName": "LCENGICKKGP",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+          "token": 100670750,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ab9747fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6e7fc",
+              "codeHex": "ff4302d1fe5707a9f44f08a90080c23c0180c33cf30300aae0430191e1031faaf40308aae08702adf19fdb976082c83c689a40b9f50300aae0c30091e1031faae00f803de84300b9929fdb97a102229ee8230091e0031faa2018201e00c0221ecfa3db97e083c03ce183c13ce81740f9fe5747a9800600ad881200f9f44f48a9ff430291c0035fd6",
+              "nativeSizeBytes": 136,
+              "boundaryModuleOffset": "0x2d6e884",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ab9747fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6e7fc",
+              "codeHex": "ff4302d1fe5707a9f44f08a90080c23c0180c33cf30300aae0430191e1031faaf40308aae08702adf19fdb976082c83c689a40b9f50300aae0c30091e1031faae00f803de84300b9929fdb97a102229ee8230091e0031faa2018201e00c0221ecfa3db97e083c03ce183c13ce81740f9fe5747a9800600ad881200f9f44f48a9ff430291c0035fd6",
+              "nativeSizeBytes": 136,
+              "boundaryModuleOffset": "0x2d6e884",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "StatusData",
+          "methodName": "get_CalcDamage",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+          "token": 100670789,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ab975068",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6f068",
+              "codeHex": "0080c23c0180c33c000500adc0035fd6",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x2d6f078",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ab975068",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6f068",
+              "codeHex": "0080c23c0180c33c000500adc0035fd6",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x2d6f078",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

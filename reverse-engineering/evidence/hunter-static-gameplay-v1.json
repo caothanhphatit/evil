@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-static-gameplay-evidence",
+  "source": {
+    "packageVersion": "1.411 (26071501)",
+    "packageId": "com.superplanet.evilhunter",
+    "staticInputs": [
+      "reverse-engineering/evidence/hunter-info-tables-v1.json",
+      "reverse-engineering/evidence/core-economy-tables-v1.json",
+      "reverse-engineering/evidence/hunter-domain-runtime-schema-android-api30-v1.json",
+      "reverse-engineering/evidence/hunter-manager-runtime-schema-android-api30-v1.json",
+      "reverse-engineering/evidence/hunter-info-runtime-schema-android-api30-v1.json",
+      "reverse-engineering/evidence/original-native-combat-runtime-v1.json",
+      "game-assets/manifests/releases/slice-001-combat-v1.json"
+    ],
+    "method": "Deterministic JSON catalog inspection, Android ARM64 IL2CPP reflection, decrypted native-memory capture, and a controlled runtime value-table capture"
+  },
+  "coverage": {
+    "exact_definition_data": [
+      { "domain": "hunter_skills", "rows": 10, "source": "hunter-info-tables-v1.skills" },
+      { "domain": "hunter_sub_job_skills", "rows": 40, "source": "hunter-info-tables-v1.subJobSkills" },
+      { "domain": "hunter_growth_properties", "rows": 15, "source": "hunter-info-tables-v1.growthProperties" },
+      { "domain": "hunter_job_traits", "rows": 69, "source": "hunter-info-tables-v1.jobTraits" },
+      { "domain": "riding_pets", "rows": 21, "source": "hunter-info-tables-v1.ridingPets" },
+      { "domain": "riding_pet_skills", "rows": 3, "source": "hunter-info-tables-v1.ridingPetSkills" },
+      { "domain": "riding_pet_traits", "rows": 6, "source": "hunter-info-tables-v1.ridingPetTraits" },
+      { "domain": "experience", "rows": 100, "source": "hunter-info-tables-v1.experience" },
+      { "domain": "gear_definitions", "rows": 671, "source": "core-economy-tables-v1 gear arrays" },
+      { "domain": "materials", "rows": 369, "source": "core-economy-tables-v1.materials" },
+      { "domain": "consumables", "rows": 5, "source": "core-economy-tables-v1.consumables" },
+      { "domain": "runes", "rows": 61, "source": "core-economy-tables-v1.runes" },
+      { "domain": "rune_crafting", "rows": 10, "source": "core-economy-tables-v1.runeCraft" }
+    ],
+    "schema_confirmed_runtime": [
+      { "type": "HunterData", "fields": 109, "source": "hunter-info-runtime-schema-android-api30-v1" },
+      { "type": "GearData", "fields": 29, "source": "hunter-domain-runtime-schema-android-api30-v1" },
+      { "type": "SkillData", "fields": 4, "source": "hunter-domain-runtime-schema-android-api30-v1" },
+      { "type": "ItemData", "fields": 5, "source": "hunter-domain-runtime-schema-android-api30-v1" },
+      { "type": "RidingPetData", "fields": 11, "source": "hunter-domain-runtime-schema-android-api30-v1" },
+      { "type": "HunterManager", "fields": 5, "source": "hunter-domain-runtime-schema-android-api30-v1" }
+    ],
+    "unresolved": [
+      "Per-Hunter learned skill and growth allocation values",
+      "DPS and derived-stat formula order, rounding, and gear/rune stacking",
+      "Gear equip/unequip/enhance mutation commands and transaction rules",
+      "Crafting service timers as applied to Hunter-owned gear versus town products",
+      "Hunter generation probability distributions, RNG bounds, and pity/tutorial overrides",
+      "Base damage, armor reduction, critical, dodge, and rounding order around the recovered RandDamage multiplier stream",
+      "Remaining skill icon row bindings beyond Fury -> skill_h1_01 and War Cry -> skill_h1_02",
+      "Runtime dictionary-key semantics and save encoding"
+    ]
+  },
+  "runtime_method_evidence": [
+    { "type": "HunterManager", "method": "AddHunter", "token": 100666673, "signature": "HunterData AddHunter(System.Int32, ObscuredInt, System.Boolean)", "claim": "generation entry point exists; argument semantics and RNG body unresolved" },
+    { "type": "HunterManager", "method": "AddWaitHunter", "token": 100666626, "signature": "System.Void AddWaitHunter(System.String)", "claim": "waiting-roster insertion boundary" },
+    { "type": "HunterManager", "method": "FixRangeOverBodyIndex", "token": 100666641, "signature": "ObscuredInt FixRangeOverBodyIndex(ObscuredInt)", "claim": "body-index correction boundary; range/correction unresolved" },
+    { "type": "HunterManager", "method": "GetHunterDefaultMoney", "token": 100666658, "signature": "ObscuredLong GetHunterDefaultMoney(System.Int32)", "claim": "default-money lookup boundary; values not read" },
+    { "type": "GameManager", "method": "GetGearDamage", "token": 100690456, "signature": "ObscuredLong GetGearDamage(GearData, System.Int32)", "claim": "gear damage calculation method exists; formula body unresolved" },
+    { "type": "GameManager", "method": "GetGearArmor", "token": 100690569, "signature": "ObscuredLong GetGearArmor(GearData, System.Int32)", "claim": "gear armor calculation method exists; formula body unresolved" },
+    { "type": "GameManager", "method": "GetGearAcc", "token": 100690559, "signature": "ObscuredLong GetGearAcc(GearData, System.Int32)", "claim": "gear accuracy calculation method exists; formula body unresolved" },
+    { "type": "GameManager", "method": "RandDamage", "token": 100690719, "signature": "System.Single RandDamage()", "claim": "exact wrapping 30-entry multiplier stream recovered in original-native-combat-runtime-v1" },
+    { "type": "GameManager", "method": "GetNeedExp", "token": 100690845, "signature": "ObscuredInt GetNeedExp(System.Int32, System.Int32)", "claim": "job-column lookup into the packaged 100-row experience catalog" },
+    { "type": "GameManager", "method": "GetHunterSkillIcon", "token": 100690769, "signature": "UnityEngine.Sprite GetHunterSkillIcon(System.Int32, System.Int32)", "claim": "skill icon resolver exists; argument mapping unresolved" },
+    { "type": "GameManager", "method": "GetJobSkillDataIndex", "token": 100690962, "signature": "ObscuredInt GetJobSkillDataIndex(ObscuredInt, ObscuredInt, ObscuredInt, ObscuredInt, ObscuredInt)", "claim": "job-skill definition resolver exists; mapping body unresolved" },
+    { "type": "GameManager", "method": "GearAddData", "token": 100690822, "signature": "System.Void GearAddData(GearData)", "claim": "gear insertion boundary; caller/transaction semantics unresolved" },
+    { "type": "GameManager", "method": "CreateRunes", "token": 100690536, "signature": "KeyValuePair<ObscuredInt, ObscuredInt> CreateRunes(ObscuredInt, ObscuredInt)", "claim": "rune creation boundary; RNG selection unresolved" },
+    { "type": "GameManager", "method": "GetNewRunes", "token": 100690490, "signature": "ConsumData GetNewRunes(ObscuredInt, ObscuredInt)", "claim": "new-rune reward boundary; outcome selection unresolved" },
+    { "type": "HunterDetailPop", "method": "GearInventoryClick", "token": 100669624, "signature": "System.Void GearInventoryClick(System.Int32)", "claim": "detail UI gear slot click boundary; not an authoritative mutation" },
+    { "type": "HunterDetailPop", "method": "SkillClick", "token": 100669617, "signature": "System.Void SkillClick(System.Int32)", "claim": "detail UI skill click boundary; not proof of learned-state mapping" }
+  ],
+  "asset_bindings": {
+    "exact": [
+      { "binding": "hunter_spine", "assets": ["actors/hunter/hunter.json", "actors/hunter/hunter.atlas", "actors/hunter/hunter.png"], "source": "slice-001-combat-v1" },
+      { "binding": "hunter_target_icon", "asset": "sprites/ic_target__7095.png", "unityPathId": 7095, "source": "original-flow-v1.selection" }
+    ],
+    "schema_only": [
+      { "binding": "skill_icon_resolver", "method": "GameManager.GetHunterSkillIcon", "note": "resolver signature exists; serialized row-to-icon bindings are not recovered" },
+      { "binding": "gear_icon_resolver", "method": "GameManager.GetGearImage", "note": "resolver signature exists; argument semantics are not recovered" }
+    ]
+  },
+  "policy": {
+    "do_not_implement_as_original": [
+      "RNG probabilities or inclusive/exclusive bounds outside the recovered RandDamage stream",
+      "DPS/stat formulas inferred from table fields",
+      "Equip/upgrade/crafting mutation without a captured authoritative command",
+      "Skill icon binding by array or filename order"
+    ],
+    "safe_be_handoff": "Model definitions and runtime-owned collections now; expose unresolved calculation/mutation values as explicit unavailable evidence until controlled ARM64 value capture."
+  }
+}

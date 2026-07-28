@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 6,
+  "contractType": "original-reward-progression-gold-tax-chain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-progression-schema",
+      "path": "reverse-engineering/evidence/original-reward-progression-schema-api35-v1.json",
+      "bytes": 447676,
+      "sha256": "ba3ca98633a127229683fe59e96ccbdce02111e018c045ba830b5f758ad5cb21"
+    },
+    {
+      "id": "hunter-runtime-schema-api35",
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "bytes": 670307,
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    },
+    {
+      "id": "plus-gold-scaling-literal",
+      "path": "reverse-engineering/evidence/original-plus-gold-scaling-literal-package-v1.json",
+      "bytes": 985,
+      "sha256": "91efa8242824ad7b1b3efd669b60142fccc8a8037ab57efc56e725b21d0e6861"
+    }
+  ],
+  "schemaBindings": {
+    "UserData": {
+      "<tax>k__BackingField": 256,
+      "<taxRemainder>k__BackingField": 288,
+      "<mBuildingGoldUp>k__BackingField": 2420,
+      "<mStageLevel>k__BackingField": 1496
+    },
+    "HunterData": {
+      "<money>k__BackingField": 96,
+      "<revive>k__BackingField": 196
+    },
+    "StatusData": {
+      "FairyGoldUp": 1264,
+      "RamblePetGoldUp": 1324,
+      "RelicCollectionGoldUp": 1500
+    }
+  },
+  "mutationOrder": [
+    "Reward constructs an ObscuredLong gold grant",
+    "CalVillTax mutates the grant by reference and updates UserData tax state",
+    "PlusGold conditionally scales the post-tax grant and adds it to HunterData.money"
+  ],
+  "confirmedRewardGoldOperands": [
+    {
+      "operand": "UserData.mBuildingGoldUp",
+      "rule": "positive value participates before later gold modifiers; its exact surrounding rounding branches are preserved but not reduced to one semantic formula"
+    },
+    {
+      "operand": "StatusData.FairyGoldUp",
+      "rule": "grant = truncateTowardZero((1 + FairyGoldUp * 0.01) * priorGrant)"
+    },
+    {
+      "operand": "StatusData.RamblePetGoldUp",
+      "rule": "grant = truncateTowardZero((1 + RamblePetGoldUp * 0.01) * priorGrant)"
+    },
+    {
+      "operand": "StatusData.RelicCollectionGoldUp",
+      "rule": "when positive, add truncateTowardZero(RelicCollectionGoldUp * priorGrant)"
+    }
+  ],
+  "taxSegment": {
+    "candidate": "float32((unnamed ObscuredFloat at singleton offset 0x554 + unnamed ObscuredFloat at singleton offset 0xE8) * inputGrant)",
+    "mutations": [
+      "whole = truncateTowardZero(candidate)",
+      "inputGrant -= whole",
+      "UserData.tax += whole",
+      "UserData.taxRemainder += candidate - whole",
+      "when remainder >=1, move truncateTowardZero(remainder) into UserData.tax",
+      "clamp UserData.tax to an unnamed static cap"
+    ],
+    "goldenVectors": [
+      {
+        "name": "tax-fraction-carry",
+        "input": [
+          20,
+          10,
+          0.4,
+          2.75,
+          100
+        ],
+        "expected": [
+          18,
+          13,
+          0.15
+        ]
+      },
+      {
+        "name": "tax-at-cap",
+        "input": [
+          20,
+          100,
+          0.4,
+          2.75,
+          100
+        ],
+        "expected": [
+          20,
+          100,
+          0.4
+        ]
+      },
+      {
+        "name": "non-positive-candidate",
+        "input": [
+          20,
+          10,
+          0.4,
+          0.0,
+          100
+        ],
+        "expected": [
+          20,
+          10,
+          0.4
+        ]
+      }
+    ]
+  },
+  "plusGold": {
+    "identityBranch": "post-tax grant is unchanged unless revive > stageLevel and stageLevel <= 3",
+    "scaledBranch": "truncateTowardZero(postTaxGrant * float32(0.3))",
+    "sink": "if resulting grant >=1, HunterData.money += grant",
+    "goldenVectors": [
+      {
+        "name": "identity",
+        "input": [
+          10,
+          5,
+          2,
+          3
+        ],
+        "expected": [
+          10,
+          15
+        ]
+      },
+      {
+        "name": "early-stage-scaling",
+        "input": [
+          10,
+          5,
+          4,
+          3
+        ],
+        "expected": [
+          3,
+          8
+        ]
+      },
+      {
+        "name": "scaled-below-one",
+        "input": [
+          2,
+          5,
+          4,
+          3
+        ],
+        "expected": [
+          0,
+          5
+        ]
+      }
+    ]
+  },
+  "implementationBoundary": {
+    "fullGoldenCallerVectorAvailable": false,
+    "liveIntegrationAllowed": false,
+    "unresolved": [
+      "Tax-rate identities at singleton offsets 0x554 and 0xE8",
+      "Static village-tax cap value/name",
+      "Product meaning of the revive > stageLevel and stageLevel <= 3 scaling branch",
+      "Event/static branches and table operands between RamblePetGoldUp and RelicCollectionGoldUp",
+      "Whether a separate CollectionGoldUp branch exists elsewhere in Reward; no direct 0x588 access is claimed here"
+    ]
+  }
+}

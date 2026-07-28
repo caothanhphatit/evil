@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-runtime-combat-static-factor-capture",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T07:23:06.923856Z",
+    "packageId": "com.superplanet.evilhunter",
+    "pid": 24256,
+    "androidApi": "35",
+    "deviceAbi": "arm64-v8a",
+    "action": "Read ConstantData FEEL_VALUE and DEFALUT_DAMAGE_DECREASE_VALUE from rooted API35 guest tutorial runtime after class initialization; no Hunter/save/account values read.",
+    "authority": "rooted guest tutorial emulator; static GameManager data only"
+  },
+  "module": {
+    "name": "libil2cpp.so",
+    "base": "0x73a6602000",
+    "mapLine": "73a6602000-73a86dc000 r--p 00684000 fe:2c 49773                          /data/app/~~aAngF0o0iIDlzeWrV7SdSg==/com.superplanet.evilhunter-z45WFRDGr2eCa2nZ7yDbOQ==/split_config.arm64_v8a.apk",
+    "constantDataGlobalOffset": "0x601c6e0"
+  },
+  "pointerChain": [
+    {
+      "readOffset": "libil2cpp+0x601c6e0",
+      "rawHex": "10aa7bac73000000",
+      "value": "0x73ac7baa10"
+    },
+    {
+      "readOffset": "global+0x0",
+      "rawHex": "10066d7173000000",
+      "value": "0x73716d0610"
+    },
+    {
+      "readOffset": "class+0xb8",
+      "rawHex": "006034e073000000",
+      "value": "0x73e0346000"
+    },
+    {
+      "readOffset": "runtimeData+0xf8",
+      "rawHex": "806a77df73000000",
+      "value": "0x73df776a80"
+    }
+  ],
+  "armorFactorArray": {
+    "runtimeDataOffset": 248,
+    "managedArrayRawHex": "b0f3ec70730000000000000000000000000000000000000005000000000000009a99993fcdcc8c3f0000803f6666663fcdcc4c3f",
+    "length": 5,
+    "values": [
+      1.2000000476837158,
+      1.100000023841858,
+      1.0,
+      0.8999999761581421,
+      0.800000011920929
+    ]
+  },
+  "selectedFinalFactor": {
+    "runtimeDataOffset": 276,
+    "owner": "ConstantData",
+    "field": "DEFALUT_DAMAGE_DECREASE_VALUE",
+    "obscuredFloatRawHex": "eca48d73eccda44c000000000000000000010000",
+    "decode": "float32(currentCryptoKey XOR ACTkByte4.UnShuffle(hiddenValue))",
+    "decodedValue": 0.75,
+    "semanticStatus": "static initonly field and 0.75 constructor writer confirmed"
+  },
+  "limitations": [
+    "No Hunter object, save value, account value, or service credential was read.",
+    "Absolute pointers and ACTk crypto keys are session-specific runtime evidence.",
+    "The decoded DEFALUT_DAMAGE_DECREASE_VALUE is cross-checked against the ConstantData static-constructor writer."
+  ]
+}

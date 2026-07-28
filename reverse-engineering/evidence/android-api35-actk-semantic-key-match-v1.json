@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "contractType": "actk-playerprefs-semantic-key-match",
+  "capturedAtUtc": "2026-07-26T13:08:22.803854Z",
+  "packageId": "com.superplanet.evilhunter",
+  "candidateCount": 39,
+  "storedEntryCount": 46,
+  "privacyPolicy": "Only matched plaintext candidates are emitted; encrypted keys and values are omitted.",
+  "matches": []
+}

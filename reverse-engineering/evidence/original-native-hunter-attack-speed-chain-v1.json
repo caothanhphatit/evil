@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-attack-speed-chain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-attack-speed-writers-api35-v1.json",
+      "sha256": "f2988a22a24fdcb9dd9dbc83247ce4a43c8237d3b630cbad31f997c072e2efb6"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-attack-speed-target-resolution-api35-v1.json",
+      "sha256": "38af1eb5ae3c3dc5e93eabcf876ddb830b71e7f63b729af316344d3fd9266c0f"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-refresh-animation-api35-v1.json",
+      "sha256": "eb63036e1d739e82b6b6a02b51949f9b6593714b536512d998e453b08367d0d1"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-cadence-stat-chain-v1.json",
+      "sha256": "5c6ac476919fb0939d6e0273af6ded53a8878b029f95ae2b869bbc0e85d62631"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    },
+    {
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    }
+  ],
+  "resolvedBoundaryTarget": {
+    "moduleOffset": "0x33f79bc",
+    "type": "HunterCtrl",
+    "method": "InitHunterHpBar",
+    "token": "0x06005C11",
+    "parameterTypes": [],
+    "returnType": "System.Void",
+    "relationship": "This is the method immediately following getStatusData in the native method table; it is not an attack-speed helper."
+  },
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "SettingProperty",
+      "token": "0x06005BC7",
+      "moduleOffset": "0x343688c",
+      "nativeSizeBytes": 580,
+      "bodySha256": "4aa31244d362125838211465311e9dfdadac9f6ee7b2a385f4b56b8c8bf45c2b"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "getStatusData",
+      "token": "0x06005C23",
+      "moduleOffset": "0x33f7900",
+      "nativeSizeBytes": 188,
+      "bodySha256": "47f5e56937a4c674b7ce3e5ccaf758f16bb63847de435cb46ceebac3acdbfe08"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingAttackAction",
+      "token": "0x06005C28",
+      "moduleOffset": "0x3416a40",
+      "nativeSizeBytes": 8016,
+      "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "RefreshAnimation",
+      "token": "0x06005BDA",
+      "moduleOffset": "0x340cf20",
+      "nativeSizeBytes": 488,
+      "bodySha256": "b41df65ffcabc9e43e3ad17c0e547580ae127ccc598887c050e957d58bc2add4"
+    }
+  ],
+  "fieldChain": {
+    "cadenceInputs": [
+      {
+        "owner": "HunterCtrl",
+        "name": "DANCPPLMKIK",
+        "offset": 984,
+        "type": "System.Single",
+        "access": "read"
+      },
+      {
+        "owner": "HunterCtrl",
+        "name": "BCEBGLKCDHN",
+        "offset": 1708,
+        "type": "ObscuredFloat",
+        "access": "read and decode"
+      }
+    ],
+    "cadenceOutput": {
+      "owner": "HunterCtrl",
+      "name": "AttackAniTime",
+      "offset": 428,
+      "type": "System.Single",
+      "access": "write"
+    },
+    "equation": "composite = DANCPPLMKIK * decode(BCEBGLKCDHN); AttackAniTime = composite > 1.0 ? 0.333 / composite : 0.7",
+    "statusCopy": {
+      "source": {
+        "owner": "StatusData",
+        "name": "CalcAttackSpeed",
+        "offset": 136,
+        "type": "ObscuredFloat"
+      },
+      "destination": {
+        "owner": "HunterCtrl",
+        "name": "mAttackDelay",
+        "offset": 404,
+        "type": "ObscuredFloat"
+      },
+      "copyBytes": 20,
+      "nativeOperations": "ldur q0 [status+0x88] and ldr w8 [status+0x98], then str q0 [hunter+0x194] and str w8 [hunter+0x1A4]",
+      "semanticStatus": "exact raw ObscuredFloat copy confirmed"
+    }
+  },
+  "negativeFindings": [
+    {
+      "method": "HunterCtrl.SettingProperty",
+      "finding": "writes PGDMKPKELMM at 0x698..0x6A8, not BCEBGLKCDHN at 0x6AC",
+      "scope": "captured exact method body"
+    },
+    {
+      "method": "HunterCtrl.RefreshAnimation",
+      "finding": "does not reference mAttackDelay, AttackAniTime, DANCPPLMKIK, or BCEBGLKCDHN offsets",
+      "scope": "captured exact method body"
+    }
+  ],
+  "unresolved": [
+    "The writers and semantic sources of HunterCtrl.DANCPPLMKIK and HunterCtrl.BCEBGLKCDHN are not present in the selected exact method bodies.",
+    "The formula that produces StatusData.CalcAttackSpeed is not recovered by this pass.",
+    "The reader that turns HunterCtrl.mAttackDelay into an attack-FSM wait or gate is not recovered by this pass.",
+    "Gear-index-to-Spine weapon-skin binding and target-axis facing remain governed by the separate weapon-presentation evidence and are not resolved here."
+  ]
+}

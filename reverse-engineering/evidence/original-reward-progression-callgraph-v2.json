@@ -1,0 +1,1170 @@
+{
+  "schemaVersion": 2,
+  "contractType": "original-reward-progression-callgraph-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-progression-helpers",
+      "path": "reverse-engineering/evidence/original-reward-progression-helpers-api35-v1.json",
+      "bytes": 40825,
+      "sha256": "9e72aa850f4372583c5cbdd01e0e1889e5e5a4c05ec35a370ffde4f732229bf0"
+    },
+    {
+      "id": "reward-material-full",
+      "path": "reverse-engineering/evidence/original-reward-material-full-api35-v1.json",
+      "bytes": 126084,
+      "sha256": "676dd7679138ef8e3bf362e65d2c01d30485154dc35641eb4af126a418ab8368"
+    },
+    {
+      "id": "reward-progression-schema",
+      "path": "reverse-engineering/evidence/original-reward-progression-schema-api35-v1.json",
+      "bytes": 447676,
+      "sha256": "ba3ca98633a127229683fe59e96ccbdce02111e018c045ba830b5f758ad5cb21"
+    }
+  ],
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "Reward",
+      "token": 100686803,
+      "moduleOffset": "0x34378e8",
+      "nativeSizeBytes": 5904,
+      "bodySha256": "0b6ea9ee35163b4f4bab3bcaa5108e6495373c242de86d25e9551963f7a0bf18",
+      "directCallCount": 186,
+      "knownDirectCallCounts": {
+        "HunterCtrl.CalVillTax/1": 1,
+        "HunterCtrl.PlusExp/2": 1,
+        "HunterCtrl.PlusGold/1": 1,
+        "UnityEngine.Random.Range(Int32,Int32)": 2
+      },
+      "knownDirectCallSites": [
+        {
+          "instructionOffset": 4076,
+          "targetModuleOffset": "0x3438ff8",
+          "method": "HunterCtrl.PlusExp/2"
+        },
+        {
+          "instructionOffset": 4092,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 5240,
+          "targetModuleOffset": "0x343a560",
+          "method": "HunterCtrl.CalVillTax/1"
+        },
+        {
+          "instructionOffset": 5292,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 5852,
+          "targetModuleOffset": "0x343ab68",
+          "method": "HunterCtrl.PlusGold/1"
+        }
+      ],
+      "randomRangeSites": [
+        {
+          "instructionOffset": 4092,
+          "minimumInclusive": 0,
+          "maximumExclusive": 101,
+          "outcomes": 101,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 5292,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "RewardMetrial",
+      "token": 100686745,
+      "moduleOffset": "0x3425b50",
+      "nativeSizeBytes": 30732,
+      "bodySha256": "fc70ff5be2d1f277145035e70883a2a6ad0426af79fa1757301c7791d187e880",
+      "directCallCount": 1149,
+      "knownDirectCallCounts": {
+        "HunterCtrl.GHPHHEFFNKN/2": 6,
+        "HunterCtrl.LDHAEMDJCFF/5": 17,
+        "UnityEngine.Random.Range(Int32,Int32)": 50
+      },
+      "knownDirectCallSites": [
+        {
+          "instructionOffset": 396,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 712,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 792,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 1196,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3764,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 7544,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 7636,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 7960,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 8052,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 10940,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 11012,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 11400,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 12028,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 12536,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 12600,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 12800,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 13336,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 14012,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 14132,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 14276,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 14356,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 15000,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 15620,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 15852,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 15912,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 15956,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 16136,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16196,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16240,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 16392,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16452,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16496,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 16516,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16560,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 16580,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 16624,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 16696,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 17108,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 17292,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 17364,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 17440,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 17484,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 17504,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 17548,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 17620,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 18032,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 18216,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 18288,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 18392,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 19636,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 19852,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 21880,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 21924,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 22384,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 22836,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 23516,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 23560,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 23604,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 23912,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 23980,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 24052,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 24160,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 24180,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 24224,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 24316,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 24336,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 24380,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 24836,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 25064,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 25576,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 25648,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        },
+        {
+          "instructionOffset": 25804,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 25876,
+          "targetModuleOffset": "0x342d35c",
+          "method": "HunterCtrl.LDHAEMDJCFF/5"
+        }
+      ],
+      "randomRangeSites": [
+        {
+          "instructionOffset": 396,
+          "minimumInclusive": 0,
+          "maximumExclusive": 101,
+          "outcomes": 101,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 712,
+          "minimumInclusive": 0,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 792,
+          "minimumInclusive": 0,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 1196,
+          "minimumInclusive": 1,
+          "maximumExclusive": 10001,
+          "outcomes": 10000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 7544,
+          "minimumInclusive": 1,
+          "maximumExclusive": 1001,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 7960,
+          "minimumInclusive": 1,
+          "maximumExclusive": 1001,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 10940,
+          "minimumInclusive": 1,
+          "maximumExclusive": 10001,
+          "outcomes": 10000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 11400,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 12028,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 12536,
+          "minimumInclusive": 0,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 12800,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 14012,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 14132,
+          "minimumInclusive": 1,
+          "maximumExclusive": 1001,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 14276,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 14356,
+          "minimumInclusive": 1,
+          "maximumExclusive": 1001,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 15000,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 15620,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 15852,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 15912,
+          "minimumInclusive": 348,
+          "maximumExclusive": 351,
+          "outcomes": 3,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16136,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16196,
+          "minimumInclusive": 316,
+          "maximumExclusive": 319,
+          "outcomes": 3,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16392,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16452,
+          "minimumInclusive": 278,
+          "maximumExclusive": 281,
+          "outcomes": 3,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16516,
+          "minimumInclusive": 348,
+          "maximumExclusive": 353,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16580,
+          "minimumInclusive": 348,
+          "maximumExclusive": 352,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 16696,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 17108,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 17292,
+          "minimumInclusive": 0,
+          "maximumExclusive": 5,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 17440,
+          "minimumInclusive": 316,
+          "maximumExclusive": 321,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 17504,
+          "minimumInclusive": 316,
+          "maximumExclusive": 320,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 17620,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 18032,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 18216,
+          "minimumInclusive": 0,
+          "maximumExclusive": 5,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 18392,
+          "minimumInclusive": 1,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 19852,
+          "minimumInclusive": 1,
+          "maximumExclusive": 1500001,
+          "outcomes": 1500000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 21880,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 22384,
+          "minimumInclusive": 1,
+          "maximumExclusive": 100001,
+          "outcomes": 100000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 22836,
+          "minimumInclusive": 1,
+          "maximumExclusive": 100001,
+          "outcomes": 100000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 23516,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 23604,
+          "minimumInclusive": 1,
+          "maximumExclusive": 100001,
+          "outcomes": 100000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 23912,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 23980,
+          "minimumInclusive": 0,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 24160,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 24180,
+          "minimumInclusive": 166,
+          "maximumExclusive": 171,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 24316,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 24336,
+          "minimumInclusive": 171,
+          "maximumExclusive": 176,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 24836,
+          "minimumInclusive": null,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 25064,
+          "minimumInclusive": null,
+          "maximumExclusive": null,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 25576,
+          "minimumInclusive": 0,
+          "maximumExclusive": 5,
+          "outcomes": 5,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 25804,
+          "minimumInclusive": 0,
+          "maximumExclusive": 4,
+          "outcomes": 4,
+          "argumentKind": "constant"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "GHPHHEFFNKN",
+      "token": 100686954,
+      "moduleOffset": "0x342dba4",
+      "nativeSizeBytes": 4236,
+      "bodySha256": "250ef7005be0c2c343ac5571aa80fc79ecd4b38393aff53eead9c0336b956139",
+      "directCallCount": 160,
+      "knownDirectCallCounts": {
+        "UnityEngine.Random.Range(Int32,Int32)": 15
+      },
+      "knownDirectCallSites": [
+        {
+          "instructionOffset": 552,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 760,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 996,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 1152,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 1516,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 1940,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 2168,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 2452,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 2756,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3052,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3160,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3272,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3440,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 3732,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 4080,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        }
+      ],
+      "randomRangeSites": [
+        {
+          "instructionOffset": 552,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 760,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 996,
+          "minimumInclusive": 0,
+          "maximumExclusive": 1000,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 1152,
+          "minimumInclusive": 0,
+          "maximumExclusive": 1000,
+          "outcomes": 1000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 1516,
+          "minimumInclusive": 0,
+          "maximumExclusive": 10000,
+          "outcomes": 10000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 1940,
+          "minimumInclusive": 0,
+          "maximumExclusive": 10000,
+          "outcomes": 10000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 2168,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 2452,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 2756,
+          "minimumInclusive": 0,
+          "maximumExclusive": 10000,
+          "outcomes": 10000,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 3052,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 3160,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 3272,
+          "minimumInclusive": null,
+          "maximumExclusive": 100,
+          "outcomes": null,
+          "argumentKind": "dynamic-or-control-flow-merged"
+        },
+        {
+          "instructionOffset": 3440,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 3732,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 4080,
+          "minimumInclusive": 0,
+          "maximumExclusive": 100,
+          "outcomes": 100,
+          "argumentKind": "constant"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "LDHAEMDJCFF",
+      "token": 100687005,
+      "moduleOffset": "0x342d35c",
+      "nativeSizeBytes": 2120,
+      "bodySha256": "9621d392d78324d0c2b3a751c37403873f2544e6011c22401fcb8fb3e13804c7",
+      "directCallCount": 91,
+      "knownDirectCallCounts": {
+        "HunterCtrl.GHPHHEFFNKN/2": 1,
+        "UnityEngine.Random.Range(Int32,Int32)": 2
+      },
+      "knownDirectCallSites": [
+        {
+          "instructionOffset": 324,
+          "targetModuleOffset": "0x342dba4",
+          "method": "HunterCtrl.GHPHHEFFNKN/2"
+        },
+        {
+          "instructionOffset": 816,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        },
+        {
+          "instructionOffset": 1772,
+          "targetModuleOffset": "0x5a76240",
+          "method": "UnityEngine.Random.Range(Int32,Int32)"
+        }
+      ],
+      "randomRangeSites": [
+        {
+          "instructionOffset": 816,
+          "minimumInclusive": 0,
+          "maximumExclusive": 20,
+          "outcomes": 20,
+          "argumentKind": "constant"
+        },
+        {
+          "instructionOffset": 1772,
+          "minimumInclusive": 0,
+          "maximumExclusive": 3,
+          "outcomes": 3,
+          "argumentKind": "constant"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "PlusExp",
+      "token": 100687028,
+      "moduleOffset": "0x3438ff8",
+      "nativeSizeBytes": 5480,
+      "bodySha256": "caa296d09f86352c7dd1ccb051f36902f78d616b192a7004d31b4a041239db06",
+      "directCallCount": 235,
+      "knownDirectCallCounts": {
+        "GameManager.GetNeedExp/2": 1,
+        "GameManager.IsCostumeExpUp/1": 1
+      },
+      "knownDirectCallSites": [
+        {
+          "instructionOffset": 1492,
+          "targetModuleOffset": "0x26faa60",
+          "method": "GameManager.IsCostumeExpUp/1"
+        },
+        {
+          "instructionOffset": 3448,
+          "targetModuleOffset": "0x271d430",
+          "method": "GameManager.GetNeedExp/2"
+        }
+      ],
+      "randomRangeSites": []
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "CalVillTax",
+      "token": 100686990,
+      "moduleOffset": "0x343a560",
+      "nativeSizeBytes": 1544,
+      "bodySha256": "7fc297b6e132aea1b2cc45d729f91ee05f98aefaf3c19a40c67b810239825ddd",
+      "directCallCount": 56,
+      "knownDirectCallCounts": {},
+      "knownDirectCallSites": [],
+      "randomRangeSites": []
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "PlusGold",
+      "token": 100686864,
+      "moduleOffset": "0x343ab68",
+      "nativeSizeBytes": 444,
+      "bodySha256": "fdf0854838a35be1de62f89fcc20628cdd1dcdd728600fad511383eb6694c0ee",
+      "directCallCount": 17,
+      "knownDirectCallCounts": {},
+      "knownDirectCallSites": [],
+      "randomRangeSites": []
+    }
+  ],
+  "recoveredExactFacts": {
+    "rewardMutationOrder": [
+      "HunterCtrl.PlusExp/2",
+      "HunterCtrl.CalVillTax/1",
+      "HunterCtrl.PlusGold/1"
+    ],
+    "rewardMaterialDispatch": {
+      "LDHAEMDJCFFCalls": 17,
+      "GHPHHEFFNKNCalls": 6,
+      "randomRangeCalls": 50,
+      "ordinaryMaterialEmissionCallOffset": "0xeb4"
+    },
+    "helperRngFamilies": {
+      "GHPHHEFFNKN": {
+        "Range(0,100) constant": 9,
+        "upperBound100WithMergedMinimum": 1,
+        "Range(0,1000)": 2,
+        "Range(0,10000)": 3
+      },
+      "LDHAEMDJCFF": {
+        "Range(0,20)": 1,
+        "Range(0,3)": 1
+      },
+      "Reward": {
+        "Range(0,101)": 1,
+        "Range(0,100)": 1
+      }
+    },
+    "uniqueGearSchema": {
+      "AdminEvilData": {
+        "<uniqueLevel>k__BackingField": 40,
+        "<metIdx>k__BackingField": 200,
+        "<metCount>k__BackingField": 208,
+        "<metPercent>k__BackingField": 216,
+        "<exp>k__BackingField": 224,
+        "<gold>k__BackingField": 240
+      },
+      "AdminDropUniqueGearData": {
+        "<index>k__BackingField": 16,
+        "<dropRange>k__BackingField": 40,
+        "<dropCut>k__BackingField": 56,
+        "<gearType>k__BackingField": 64,
+        "<gearIndex>k__BackingField": 72,
+        "<gearPercent>k__BackingField": 80
+      }
+    }
+  },
+  "interpretationBoundary": [
+    "GHPHHEFFNKN is an exact ObscuredFloat-returning helper with fifteen integer RNG calls, but its obfuscated parameter and branch semantics are not renamed.",
+    "LDHAEMDJCFF is an exact reward-emission helper used by the ordinary material loop and also contains one GHPHHEFFNKN call; it is not labeled unique-gear-only.",
+    "RewardMetrial contains constant and dynamic RNG ranges beyond the ordinary loop. Constant ranges prove denominators/outcome counts, not product meaning by themselves.",
+    "AdminEvilData.uniqueLevel and AdminDropUniqueGearData fields are schema-confirmed, but a direct native uniqueLevel-to-pool lookup and dropCut/gearPercent evaluation order are still unresolved.",
+    "The complete semantic EXP/gold/material modifier names and branch conditions remain incomplete even where arithmetic and call order are exact."
+  ]
+}

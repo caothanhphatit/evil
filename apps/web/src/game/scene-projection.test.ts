@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   projectNormalizedEntityPoint,
   projectScenePoint,
+  projectWorldEntityPoint,
   runtimeScenePieces,
   SCENE_WORLD_HEIGHT,
   SCENE_WORLD_WIDTH,
@@ -30,6 +31,11 @@ describe("recovered level1 scene projection", () => {
   it("uses the surrounding recovered field for field projections", () => {
     expect(projectNormalizedEntityPoint("field", 0, 0)).toEqual({ x: 256, y: 128 });
     expect(projectNormalizedEntityPoint("field", 1000, 1000)).toEqual({ x: 2816, y: 1408 });
+  });
+
+  it("keeps authoritative world entities in the shared scene coordinate space", () => {
+    expect(projectWorldEntityPoint(320, 500)).toEqual({ x: 320, y: 500 });
+    expect(projectWorldEntityPoint(2860, 1030)).toEqual({ x: 2860, y: 1030 });
   });
 
   it("keeps the default building grid compact and excludes the unattached skull gate", () => {

@@ -1,7 +1,7 @@
 import { node, sourceImage, unavailable } from "./dom";
 import type { HunterInfoView } from "./model";
 
-export function renderSkillsTab(info: HunterInfoView): HTMLElement {
+export function renderSkillsTab(info: HunterInfoView, useSkill?: (skillId: string) => void): HTMLElement {
   const root = node("section", "hunter-info-skills-tab");
   if (info.skills === null) return unavailable("Skill data is unavailable for this Hunter.");
   if (!info.skills.length) return unavailable("No skills are assigned to this Hunter.");
@@ -25,6 +25,15 @@ export function renderSkillsTab(info: HunterInfoView): HTMLElement {
       copy.append(title);
       if (skill.description) copy.append(node("p", "", skill.description));
       if (skill.unlocked === false && skill.unlockRequirement) copy.append(node("small", "", skill.unlockRequirement));
+      if (skill.unlocked === true && useSkill) {
+        const use = node("button", "hunter-skill-use", skill.ready === false
+          ? `Cooldown ${formatCooldown(skill.cooldownRemainingMs)}`
+          : "Use");
+        use.type = "button";
+        use.disabled = skill.ready === false;
+        use.addEventListener("click", () => useSkill(skill.id));
+        copy.append(use);
+      }
       card.append(icon, copy);
       grid.append(card);
     }
@@ -32,4 +41,9 @@ export function renderSkillsTab(info: HunterInfoView): HTMLElement {
     root.append(section);
   }
   return root;
+}
+
+function formatCooldown(milliseconds: number | null): string {
+  if (milliseconds === null) return "unavailable";
+  return `${Math.ceil(milliseconds / 100) / 10}s`;
 }

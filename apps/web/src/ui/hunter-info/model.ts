@@ -11,6 +11,8 @@ export interface HunterInfoSkill {
   group: string | null;
   unlocked: boolean | null;
   unlockRequirement: string | null;
+  ready: boolean | null;
+  cooldownRemainingMs: number | null;
 }
 
 export interface HunterInfoGrowthNode {
@@ -31,9 +33,15 @@ export interface HunterInfoMaterial {
 
 export interface HunterInfoEquipmentSlot {
   id: string;
+  catalogKind: string | null;
+  catalogIndex: number | null;
+  name: string | null;
   icon: string | null;
   placeholderIcon: string | null;
+  presentationGender: string | null;
+  requiredClassId: string | null;
   locked: boolean | null;
+  evidenceState: string | null;
 }
 
 export interface HunterInfoView {

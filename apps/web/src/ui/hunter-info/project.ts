@@ -23,12 +23,24 @@ export function projectHunterInfo(rawHunter: unknown, hunter: HunterView): Hunte
     attackSpeed: scaled(status.attack_speed_milli, 1_000) ?? number(status.attack_speed),
     evasion: scaled(status.evasion_rate_bps, 100) ?? number(status.evasion),
     awakening: pair(status.awakening, "current", "maximum"),
-    equipment: rows(info.equipment_slots).map(projectEquipment).filter((entry): entry is HunterInfoEquipmentSlot => entry !== null),
+    equipment: projectEquipmentSlots(info.equipment_slots),
     skills: projectSkills(info),
     growth: projectGrowth(info.growth),
     riding: projectRiding(riding, Object.prototype.hasOwnProperty.call(info, "riding_pet")),
     materials: projectMaterials(info.materials, Object.prototype.hasOwnProperty.call(info, "materials")),
   };
+}
+
+const EQUIPMENT_SLOT_ORDER = ["gloves", "helmet", "necklace", "boots", "ring", "weapon", "armor", "belt"] as const;
+
+function projectEquipmentSlots(value: unknown): HunterInfoEquipmentSlot[] {
+  const projected = rows(value).map(projectEquipment).filter((entry): entry is HunterInfoEquipmentSlot => entry !== null);
+  const byId = new Map(projected.map((entry) => [entry.id, entry]));
+  return EQUIPMENT_SLOT_ORDER.map((id) => byId.get(id) ?? {
+    id, catalogKind: null, catalogIndex: null, name: null, icon: null,
+    placeholderIcon: null, presentationGender: null, requiredClassId: null,
+    locked: null, evidenceState: null,
+  });
 }
 
 function projectSkills(info: UnknownRecord): HunterInfoSkill[] | null {
@@ -47,6 +59,8 @@ function projectSkills(info: UnknownRecord): HunterInfoSkill[] | null {
       group: text(row.group ?? row.tier),
       unlocked: boolean(row.unlocked),
       unlockRequirement: text(row.unlock_requirement),
+      ready: boolean(row.ready),
+      cooldownRemainingMs: number(row.cooldown_remaining_ms),
     };
   }).filter((skill): skill is HunterInfoSkill => skill !== null);
 }
@@ -90,7 +104,18 @@ function projectEquipment(value: unknown): HunterInfoEquipmentSlot | null {
   const row = record(value);
   const id = text(row.slot_id ?? row.id);
   if (!id) return null;
-  return { id, icon: asset(row.icon_path ?? row.icon), placeholderIcon: asset(row.placeholder_icon_path), locked: boolean(row.locked) };
+  return {
+    id,
+    catalogKind: text(row.catalog_kind),
+    catalogIndex: number(row.catalog_index),
+    name: text(row.display_name ?? row.name),
+    icon: asset(row.icon_path ?? row.icon),
+    placeholderIcon: asset(row.placeholder_icon_path),
+    presentationGender: text(row.presentation_gender),
+    requiredClassId: text(row.required_class_id),
+    locked: boolean(row.locked),
+    evidenceState: text(row.evidence_state),
+  };
 }
 
 function pair(value: unknown, currentKey: string, maximumKey: string): { current: number; maximum: number } | null {

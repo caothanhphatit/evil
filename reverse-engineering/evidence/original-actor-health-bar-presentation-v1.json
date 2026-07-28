@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-actor-health-bar-presentation-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501"
+  },
+  "sources": {
+    "actorPrefabAsset": {
+      "path": "game-assets/extracted/joined_unity_files/sharedassets1.assets",
+      "sha256": "609c648883a33bac2290a7802c161c92973c46fc7ad9f5504ba246b586e7d6ab"
+    },
+    "spriteAssetFromOrderedSplits": {
+      "pathPattern": "game-assets/source/unity-assets/bin/Data/sharedassets0.assets.split{0..59}",
+      "joinedSha256": "0880c6e644cefeeeb141024878da0046e0858a7414dfc5b972bad417cdfbdbe2"
+    },
+    "runtimeSchema": {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    }
+  },
+  "runtimeSchemaBindings": {
+    "EvilCtrl": {
+      "hpBar": { "name": "HpBar", "type": "UnityEngine.GameObject", "offset": 48 },
+      "hpBarRenderer": { "name": "HpBarRender", "type": "UnityEngine.SpriteRenderer", "offset": 56 },
+      "initializer": { "name": "InitEvilHpBar", "token": "0x06002FCF" }
+    },
+    "HunterCtrl": {
+      "hpBar": { "name": "HpBar", "type": "UnityEngine.GameObject", "offset": 232 },
+      "hpBarRenderer": { "name": "HpBarRender", "type": "UnityEngine.SpriteRenderer", "offset": 240 },
+      "shieldBar": { "name": "ShieldBar", "type": "UnityEngine.GameObject", "offset": 248 },
+      "initializer": { "name": "InitHunterHpBar", "token": "0x06005C11" }
+    }
+  },
+  "prefabs": {
+    "monster": {
+      "root": { "source": "sharedassets1.assets", "pathId": 1568, "name": "Evil" },
+      "controller": { "pathId": 12760, "scriptPathId": 3892, "scriptName": "EvilCtrl" },
+      "statusGroup": { "pathId": 2175, "localPosition": [0.0, 0.0, 0.0] },
+      "hpGroup": { "pathId": 2123, "name": "HpBar", "active": true, "localPosition": [0.0, -0.06, 0.0] },
+      "innerBackground": { "gameObjectPathId": 1946, "rendererPathId": 6832, "localPosition": [-0.09, 0.0, 0.0], "spritePathId": 5625, "color": [0.28235295, 0.28235295, 0.28235295, 1.0] },
+      "fill": { "gameObjectPathId": 2092, "rendererPathId": 6863, "localPosition": [-0.09, 0.0, 0.0], "spritePathId": 5625, "serializedAsHpBarAndHpBarRender": true },
+      "frame": { "gameObjectPathId": 2193, "rendererPathId": 6771, "localPosition": [0.0, 0.0, 0.0], "spritePathId": 7393 }
+    },
+    "hunter": {
+      "root": { "source": "sharedassets1.assets", "pathId": 1581, "name": "Hunter" },
+      "controller": { "pathId": 12751, "scriptPathId": 207, "scriptName": "HunterCtrl" },
+      "statusGroup": { "pathId": 2166, "localPosition": [0.0, 0.0, 0.0] },
+      "hpGroup": { "pathId": 2171, "name": "HpBar", "active": true, "localPosition": [0.0, -0.06, 0.0] },
+      "innerBackground": { "gameObjectPathId": 1997, "rendererPathId": 6807, "localPosition": [-0.065, 0.0, 0.0], "spritePathId": 5625, "color": [0.2830189, 0.2830189, 0.2830189, 1.0] },
+      "fill": { "gameObjectPathId": 2073, "rendererPathId": 6860, "localPosition": [-0.065, 0.0, 0.0], "spritePathId": 5625, "serializedAsHpBarAndHpBarRender": true },
+      "frame": { "gameObjectPathId": 2164, "rendererPathId": 6760, "localPosition": [0.025, 0.0, 0.0], "spritePathId": 7393 },
+      "levelFrame": { "gameObjectPathId": 2014, "rendererPathId": 6739, "localPosition": [-0.1, 0.0, -0.01], "spritePathId": 3211 },
+      "levelText": { "gameObjectPathId": 1800, "textMeshPathId": 6604, "localPosition": [-0.097, 0.0, -0.02], "serializedText": "99", "fontSize": 28, "characterSize": 0.01, "color": [1.0, 1.0, 1.0, 1.0] }
+    }
+  },
+  "sprites": {
+    "hp_in": { "source": "sharedassets0.assets", "pathId": 5625, "pixelsPerUnit": 100.0, "sizePixels": [18, 2], "pivot": [0.0, 0.5], "sha256": "9a3fbdde08d7ba4f298f62a35d47ab9112f6589f94e7a7e8683d1a4015d6449f" },
+    "hp_bg": { "source": "sharedassets0.assets", "pathId": 7393, "pixelsPerUnit": 100.0, "sizePixels": [20, 4], "pivot": [0.5, 0.5], "sha256": "140e73078b6992fdb912e73f35d539b1c40632fec29f8bb4c059e5a335cf74b4" },
+    "hp_lv_bg_9": { "source": "sharedassets0.assets", "pathId": 3211, "pixelsPerUnit": 100.0, "sizePixels": [7, 4], "pivot": [0.5, 0.5], "sha256": "94296c83ec5038fa29d7324201dab2d1819a797b2129f84b418338834910dfd6" }
+  },
+  "nativeCapture": {
+    "capturedAtUtc": "2026-07-27T02:29:44.673282Z",
+    "device": { "androidApi": 35, "abi": "arm64-v8a", "model": "sdk_gphone64_arm64" },
+    "frida": { "client": "17.16.4", "server": "17.16.4" },
+    "action": "Cold launch tutorial town; bounded native prefixes only; no managed values or account data read.",
+    "methods": [
+      { "type": "EvilCtrl", "name": "InitEvilHpBar", "token": "0x06002FCF", "moduleOffset": "0x2F20414", "capturedPrefixBytes": 4096, "prefixSha256": "3ad82c9a20c38dfd51ce34697c511f9b95c943928f34e023b3d38089ffc21e9c" },
+      { "type": "HunterCtrl", "name": "InitHunterHpBar", "token": "0x06005C11", "moduleOffset": "0x33F79BC", "capturedPrefixBytes": 4096, "prefixSha256": "5fe812c99e7c1f80b982271dda03fe8b7dce5492af98db95023c99236f651b3c" },
+      { "type": "HunterCtrl", "name": "HpFullSetting", "token": "0x06005BC2", "moduleOffset": "0x3435ED4", "capturedPrefixBytes": 4096, "prefixSha256": "9e80cc5d9dca964cf8488b4fb50b69af9bb57fd2d74861429c037e4cd9a04912" }
+    ],
+    "initializerSemantics": {
+      "ratio": "current HP divided by maximum HP",
+      "fillScale": "The serialized HpBar GameObject is the fill Bar child; native code preserves its Y scale and writes the HP ratio to localScale.x.",
+      "thresholds": [
+        { "minimumInclusive": 0.5, "colorRgb": [102, 231, 32] },
+        { "minimumInclusive": 0.2, "maximumExclusive": 0.5, "colorRgb": [231, 102, 32] },
+        { "maximumExclusive": 0.2, "colorRgb": [231, 48, 32] }
+      ],
+      "zeroHp": "ratio 0, red fill color, fill localScale.x 0; the serialized HpBar group is active"
+    }
+  },
+  "implementationBoundary": {
+    "confirmed": [
+      "Hunter and ordinary monster field actors use the same hp_in fill and hp_bg frame sprites.",
+      "Hunter and monster offsets differ because the Hunter prefab reserves space for its level badge.",
+      "Both initializers use the same HP ratio thresholds and colors.",
+      "HP zero produces an empty framed bar rather than requiring a synthetic hidden state."
+    ],
+    "unresolved": [
+      "No complete native death-method audit proves whether a later lifecycle step disables the entire actor or StatusGroup after the death clip.",
+      "The Hunter level badge font asset and runtime level-text refresh path are not part of the web health-bar slice.",
+      "ShieldBar behavior is separate from HP and remains unimplemented."
+    ]
+  }
+}

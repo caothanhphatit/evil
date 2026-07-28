@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "contractType": "admin-gear-formula-runtime-schema",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": "35",
+    "action": "AdminGearData schema reflection only; no player values"
+  },
+  "type": "AdminGearData",
+  "fields": [
+    { "name": "ratingValue", "runtimeName": "<ratingValue>k__BackingField", "type": "ObscuredInt[]", "offset": 112 },
+    { "name": "firstValue", "runtimeName": "<firstValue>k__BackingField", "type": "ObscuredFloat", "offset": 128 },
+    { "name": "firstPercent", "runtimeName": "<firstPercent>k__BackingField", "type": "ObscuredInt[]", "offset": 152 },
+    { "name": "secondValue", "runtimeName": "<secondValue>k__BackingField", "type": "ObscuredInt", "offset": 160 },
+    { "name": "plusType", "runtimeName": "<plusType>k__BackingField", "type": "ObscuredInt[]", "offset": 192 },
+    { "name": "plusValue", "runtimeName": "<plusValue>k__BackingField", "type": "ObscuredInt[][]", "offset": 200 },
+    { "name": "minusType", "runtimeName": "<minusType>k__BackingField", "type": "ObscuredInt[]", "offset": 208 },
+    { "name": "minusValue", "runtimeName": "<minusValue>k__BackingField", "type": "ObscuredInt[][]", "offset": 216 }
+  ],
+  "limitations": [
+    "This is a normalized schema subset used by the formula analyzer.",
+    "Field names do not prove option enum meanings or per-Hunter values."
+  ]
+}

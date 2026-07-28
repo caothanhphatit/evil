@@ -1,0 +1,867 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-damage-contract-pass9",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "bytes": 409504,
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-contract-targets-api35-v1.json",
+      "bytes": 37210,
+      "sha256": "1232470d3c2a82ef71775d69c131c142d2aba8fb548dc02d69d598a01f8ff670"
+    }
+  ],
+  "capturedMethods": {
+    "skillBuilder": {
+      "className": "HunterCtrl",
+      "methodName": "GDBMICDJBOK",
+      "parameterTypes": [
+        "System.Int32",
+        "System.Single",
+        "System.Single",
+        "System.Single"
+      ],
+      "returnType": "System.Void",
+      "token": 100686780,
+      "moduleOffset": "0x34337cc",
+      "nativeSizeBytes": 1800,
+      "bodySha256": "f3ee453060a31c0e3cffdd77e96f2b1da8cf4e1fccb81eed2eed63a6f4e13612"
+    },
+    "skillAction": {
+      "className": "BlizzardCtrl",
+      "methodName": "Action",
+      "parameterTypes": [
+        "System.Int32",
+        "System.String",
+        "System.Int32",
+        "System.Single",
+        "System.Single",
+        "System.Int64",
+        "System.Int32"
+      ],
+      "returnType": "System.Void",
+      "token": 100686345,
+      "moduleOffset": "0x33e9d84",
+      "nativeSizeBytes": 436,
+      "bodySha256": "0d1a765986bb750008a4f253a8adfe3f518988bd7583d4ef8939c3cef80f34cd"
+    },
+    "damageConsumer": {
+      "className": "EvilCtrl",
+      "methodName": "Damaged",
+      "parameterTypes": [
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Boolean",
+        "System.Int32",
+        "System.Boolean"
+      ],
+      "returnType": "System.Int64",
+      "token": 100675604,
+      "moduleOffset": "0x2f2be20",
+      "nativeSizeBytes": 4736,
+      "bodySha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb"
+    },
+    "damagePresentation": {
+      "className": "DamageManager",
+      "methodName": "Show",
+      "parameterTypes": [
+        "System.Int32",
+        "System.Int64",
+        "UnityEngine.Vector3",
+        "System.Int32",
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "token": 100676423,
+      "moduleOffset": "0x2fcba7c",
+      "nativeSizeBytes": 472,
+      "bodySha256": "0b281acf5ee419f4dee589a4b48c5a4791f775ee5cdfdc111ff41bfd47548084"
+    }
+  },
+  "getDamageCallerBoundary": {
+    "directCallerCount": 49,
+    "argumentVectorCounts": {
+      "false,false,false": 2,
+      "true,false,false": 10,
+      "true,false,true": 36,
+      "true,true,false": 1
+    },
+    "basicAttack": {
+      "method": "HuntingAttackAction",
+      "parameterTypes": [],
+      "token": 100686888,
+      "methodOffset": "0x3416a40",
+      "callSiteOffset": "0x34173d4",
+      "arguments": [
+        0,
+        0,
+        0
+      ]
+    },
+    "callers": [
+      {
+        "method": "PIKOCNCIHNO",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686675,
+        "methodOffset": "0x33f4c5c",
+        "callSiteOffset": "0x33f4dd8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BNPIDLCFJED",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686677,
+        "methodOffset": "0x33f8350",
+        "callSiteOffset": "0x33f84c0",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "JHAAACFJNPA",
+        "parameterTypes": [
+          "EvilCtrl",
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100686680,
+        "methodOffset": "0x33fa018",
+        "callSiteOffset": "0x33fa14c",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HNENJHONNPE",
+        "parameterTypes": [
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+        ],
+        "token": 100686681,
+        "methodOffset": "0x33fa7c4",
+        "callSiteOffset": "0x33fab3c",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BPOGPFGALFD",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686694,
+        "methodOffset": "0x3409394",
+        "callSiteOffset": "0x3409504",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "KMFIIOFLHKC",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686695,
+        "methodOffset": "0x34097bc",
+        "callSiteOffset": "0x3409934",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "NJPLFOMCKBI",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686856,
+        "methodOffset": "0x340b6dc",
+        "callSiteOffset": "0x340b898",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BBOCACECAAO",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686702,
+        "methodOffset": "0x340d17c",
+        "callSiteOffset": "0x340d28c",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "PCGIDDENIJL",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686703,
+        "methodOffset": "0x340d464",
+        "callSiteOffset": "0x340d5d8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "NMAIFPMMBHE",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686704,
+        "methodOffset": "0x340d8f8",
+        "callSiteOffset": "0x340d9c0",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "PulverizeAttack",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686708,
+        "methodOffset": "0x340ee20",
+        "callSiteOffset": "0x340f498",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HKDMBCPPIGF",
+        "parameterTypes": [],
+        "token": 100686831,
+        "methodOffset": "0x3411f1c",
+        "callSiteOffset": "0x3412688",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "OHGKDDHLJJM",
+        "parameterTypes": [],
+        "token": 100686730,
+        "methodOffset": "0x3413250",
+        "callSiteOffset": "0x3413838",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HuntingAttackAction",
+        "parameterTypes": [],
+        "token": 100686888,
+        "methodOffset": "0x3416a40",
+        "callSiteOffset": "0x34173d4",
+        "arguments": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "DNPJKKJPHLD",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single"
+        ],
+        "token": 100686717,
+        "methodOffset": "0x341967c",
+        "callSiteOffset": "0x3419804",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "KKHDNNMAOKA",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686947,
+        "methodOffset": "0x3420154",
+        "callSiteOffset": "0x3420264",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "NPIAALIFANE",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686770,
+        "methodOffset": "0x3420404",
+        "callSiteOffset": "0x34205bc",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "BOKBBDIDLJG",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686800,
+        "methodOffset": "0x3420bf8",
+        "callSiteOffset": "0x3420d08",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "CHOGGFICJPL",
+        "parameterTypes": [
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100686932,
+        "methodOffset": "0x3420ebc",
+        "callSiteOffset": "0x3420fcc",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BCLCCDFCHFC",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100687019,
+        "methodOffset": "0x3421198",
+        "callSiteOffset": "0x34212a8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "EHKBOGAOFEN",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686838,
+        "methodOffset": "0x3421480",
+        "callSiteOffset": "0x3421588",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "JDONOEEBDCD",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686893,
+        "methodOffset": "0x34219a0",
+        "callSiteOffset": "0x3421b84",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "CHKMAHCLJBN",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686982,
+        "methodOffset": "0x3421e58",
+        "callSiteOffset": "0x3421f68",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "IABOOKJBHHO",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686943,
+        "methodOffset": "0x3422140",
+        "callSiteOffset": "0x34222b8",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "JKDIMEJGFIH",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single"
+        ],
+        "token": 100687008,
+        "methodOffset": "0x342259c",
+        "callSiteOffset": "0x3422710",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "OMIEHJOENAE",
+        "parameterTypes": [
+          "EvilCtrl",
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100686961,
+        "methodOffset": "0x3422c10",
+        "callSiteOffset": "0x3422de4",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "MLLCFGJDLDA",
+        "parameterTypes": [
+          "EvilCtrl",
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100687053,
+        "methodOffset": "0x3423118",
+        "callSiteOffset": "0x342330c",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "PMFEHNBKEIL",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single",
+          "System.Int32"
+        ],
+        "token": 100686806,
+        "methodOffset": "0x3423694",
+        "callSiteOffset": "0x3423818",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "OADPOFNKAON",
+        "parameterTypes": [],
+        "token": 100686758,
+        "methodOffset": "0x34300d4",
+        "callSiteOffset": "0x34306d0",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "EFFMHBKLAGA",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686767,
+        "methodOffset": "0x34311c4",
+        "callSiteOffset": "0x3431278",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "BGIJEDLALGE",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686777,
+        "methodOffset": "0x3433084",
+        "callSiteOffset": "0x3433268",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "GDBMICDJBOK",
+        "parameterTypes": [
+          "System.Int32",
+          "System.Single",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686780,
+        "methodOffset": "0x34337cc",
+        "callSiteOffset": "0x34338ac",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "LOKDBIKMGII",
+        "parameterTypes": [
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100686783,
+        "methodOffset": "0x343481c",
+        "callSiteOffset": "0x3434908",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HIDAPNPHFCA",
+        "parameterTypes": [
+          "System.Int32",
+          "System.Single",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686790,
+        "methodOffset": "0x34364f4",
+        "callSiteOffset": "0x34365b4",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "MEDDIMPJHDA",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686798,
+        "methodOffset": "0x3437164",
+        "callSiteOffset": "0x3437274",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "GPCAAGIPGEP",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686808,
+        "methodOffset": "0x343ad90",
+        "callSiteOffset": "0x343af00",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HNLMMEKAFHC",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100687004,
+        "methodOffset": "0x34417c0",
+        "callSiteOffset": "0x3441944",
+        "arguments": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "EILPBAHJONF",
+        "parameterTypes": [
+          "System.Int32",
+          "System.Single"
+        ],
+        "token": 100686902,
+        "methodOffset": "0x34420ec",
+        "callSiteOffset": "0x34421a8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BEELMEIGFNF",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686974,
+        "methodOffset": "0x3442610",
+        "callSiteOffset": "0x34426fc",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "MIOECBDOGMO",
+        "parameterTypes": [
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+        ],
+        "token": 100686985,
+        "methodOffset": "0x3442db0",
+        "callSiteOffset": "0x34430cc",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "MHDBGKBGBOB",
+        "parameterTypes": [
+          "System.Single"
+        ],
+        "token": 100686971,
+        "methodOffset": "0x3443860",
+        "callSiteOffset": "0x3443920",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BOJFAPCOBCE",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single"
+        ],
+        "token": 100686999,
+        "methodOffset": "0x34444dc",
+        "callSiteOffset": "0x3444650",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "HolyExplosion",
+        "parameterTypes": [
+          "System.Single"
+        ],
+        "token": 100686824,
+        "methodOffset": "0x3444f2c",
+        "callSiteOffset": "0x34451f8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "MMHPJGHDNMG",
+        "parameterTypes": [
+          "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+        ],
+        "token": 100686969,
+        "methodOffset": "0x3449484",
+        "callSiteOffset": "0x3449898",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "FKONAHKHHFE",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686906,
+        "methodOffset": "0x3455330",
+        "callSiteOffset": "0x34553f0",
+        "arguments": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "method": "MistilteinTickAction",
+        "parameterTypes": [
+          "System.Collections.Generic.List<EvilCtrl>"
+        ],
+        "token": 100686967,
+        "methodOffset": "0x345dc98",
+        "callSiteOffset": "0x345e034",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "GHFOIEIIDDF",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100687021,
+        "methodOffset": "0x3463328",
+        "callSiteOffset": "0x34634fc",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "method": "BGHEAJHAICN",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100687014,
+        "methodOffset": "0x3464a58",
+        "callSiteOffset": "0x3464b68",
+        "arguments": [
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "method": "FPKCPOGHDGF",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single"
+        ],
+        "token": 100687017,
+        "methodOffset": "0x3464d44",
+        "callSiteOffset": "0x3464eb8",
+        "arguments": [
+          1,
+          0,
+          1
+        ]
+      }
+    ],
+    "semanticBoundary": "The three Boolean meanings are not assigned from vector frequency or obfuscated caller names."
+  },
+  "provenSkillCoefficientSegment": {
+    "method": "HunterCtrl.GDBMICDJBOK(Int32, Single, Single, Single)",
+    "getDamageArguments": [
+      true,
+      false,
+      true
+    ],
+    "coefficientInput": "second Single argument (ARM64 s1, preserved in s10)",
+    "equation": "trunc_i64(baseDamage * coefficientPercent * (1 + modifierAggregate) * 0.01)",
+    "forwarding": "The resulting Int64 is passed as BlizzardCtrl.Action parameter 6.",
+    "limits": "modifierAggregate contributors are structurally captured but not all semantically named; this segment is not generalized to other skills."
+  },
+  "evilDamagedParameterRoles": {
+    "parameter3": {
+      "type": "Int32",
+      "provenUses": [
+        "value 2 gates addition of EvilCtrl field 0x1F8 to the pre-armor bonus accumulator",
+        "forwarded as DamageManager.Show parameter 1"
+      ],
+      "semanticName": null
+    },
+    "parameter4": {
+      "type": "Boolean",
+      "provenUses": [
+        "forwarded as a Boolean to a post-damage virtual callback"
+      ],
+      "semanticName": null
+    },
+    "parameter5": {
+      "type": "Int32",
+      "provenUses": [
+        "forwarded as DamageManager.Show parameter 4"
+      ],
+      "semanticName": null
+    },
+    "parameter6": {
+      "type": "Boolean",
+      "provenUses": [
+        "enables the captured RidingPetGearProperty[16] pre-armor bonus branch",
+        "when true bypasses the normal effective-armor calculation path"
+      ],
+      "semanticName": "armorBypassGate (mechanical role only)"
+    }
+  },
+  "unresolved": [
+    "product-facing meanings of getDamage Boolean parameters 1 through 3",
+    "product-facing names of EvilCtrl.Damaged parameters 3 through 5",
+    "virtual projectile/effect call paths that invoke EvilCtrl.Damaged",
+    "all skill coefficient contracts other than the proven GDBMICDJBOK to BlizzardCtrl.Action segment",
+    "target/tag branch semantics inside getDamage and the content rows selecting each obfuscated caller"
+  ],
+  "integrationStatus": "disconnected_until_skill_rows_target_rules_and_complete_caller_vectors_are_semantically_bound"
+}

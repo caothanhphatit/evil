@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-skill-coefficients-pass13",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "bytes": 409504,
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-skill-coefficient-action-targets-api35-v1.json",
+      "bytes": 7783,
+      "sha256": "b8107326aebcec5d0793262d05251a1d64bde75c6f47a4831c366128759db6c9"
+    },
+    {
+      "path": "reverse-engineering/evidence/constant-data-runtime-schema-api35-v1.json",
+      "bytes": 299479,
+      "sha256": "1f381c9d27cc42803a8834a0e4d3379603b72c8639d3ae1ebf6e2c3907081431"
+    }
+  ],
+  "actionTarget": {
+    "className": "FlameExplosionCtrl",
+    "methodName": "Action",
+    "parameterTypes": [
+      "System.String",
+      "System.Int32",
+      "System.String",
+      "System.Int64",
+      "System.Int32",
+      "System.Int32"
+    ],
+    "token": 100664470,
+    "moduleOffset": "0x2c572b0",
+    "nativeSizeBytes": 472,
+    "bodySha256": "295aafedf4dee9c98449c3a4aa4e5c765576ce291d4a68273bf6f898cc53eb52"
+  },
+  "family": {
+    "id": "internal-obscured-int-percent",
+    "equation": "percent = float32(decode(sourceObscuredInt)) * 0.01f; damage = trunc_i64(float32(baseDamage) * percent)",
+    "rounding": "all multiplication is float32; final FCVTZS truncates toward zero",
+    "obscuredRoundTrip": "percent is wrapped as ObscuredFloat and decoded before the final multiplication",
+    "members": [
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "KMFIIOFLHKC",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686695,
+          "moduleOffset": "0x34097bc",
+          "nativeSizeBytes": 908,
+          "bodySha256": "066ad7f67cc69fe85332222d1147c8ebf4c3344f4d0d12d8507d4ef2a36d4787"
+        },
+        "coefficientSource": {
+          "kind": "ConstantData.ObscuredInt",
+          "field": "BLOW_DESTRUCTION_POWER_VALUE",
+          "runtimeDataOffset": "0x338C"
+        },
+        "action": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "actionSelector": {
+          "parameter6": 0
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "BBOCACECAAO",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686702,
+          "moduleOffset": "0x340d17c",
+          "nativeSizeBytes": 744,
+          "bodySha256": "ebba94dcff744d5ea3ac9c346ab0c2be447199ab046224ca0d8abcd35fe96dbc"
+        },
+        "coefficientSource": {
+          "kind": "ConstantData.ObscuredInt",
+          "field": "VENUM_RAIN_POWER_VALUE",
+          "runtimeDataOffset": "0x2830"
+        },
+        "action": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "actionSelector": {
+          "parameter6": 1
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "CHKMAHCLJBN",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686982,
+          "moduleOffset": "0x3421e58",
+          "nativeSizeBytes": 744,
+          "bodySha256": "16abf8c4c8bc91eebd7c8155d7c7f159d147297836ce695a3126222f5569217d"
+        },
+        "coefficientSource": {
+          "kind": "ConstantData.ObscuredInt",
+          "field": "CURSE_CHAIN_POWER_VALUE",
+          "runtimeDataOffset": "0x2C98"
+        },
+        "action": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "actionSelector": {
+          "parameter6": 2
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "BCLCCDFCHFC",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100687019,
+          "moduleOffset": "0x3421198",
+          "nativeSizeBytes": 744,
+          "bodySha256": "10e0bcc560c00e7ca7c5c1a5799c340fc02d02560980a065a99c3b493fc60a18"
+        },
+        "coefficientSource": {
+          "kind": "ConstantData.ObscuredInt",
+          "field": "DARK_RIFT_POWER_VALUE",
+          "runtimeDataOffset": "0x2850"
+        },
+        "action": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "actionSelector": {
+          "parameter6": 0
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "GHFOIEIIDDF",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100687021,
+          "moduleOffset": "0x3463328",
+          "nativeSizeBytes": 1040,
+          "bodySha256": "b7e27d151dc9dd4b421b8b31f16256b77609c1a97edd8c2a49eae92ae7be4ae5"
+        },
+        "coefficientSource": {
+          "kind": "nested ObscuredInt collection lookup",
+          "field": null,
+          "semanticStatus": "collection and index path captured; product name unresolved"
+        },
+        "action": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "actionSelector": {
+          "parameter6": 0
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "IABOOKJBHHO",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686943,
+          "moduleOffset": "0x3422140",
+          "nativeSizeBytes": 992,
+          "bodySha256": "b5f117090c1820f18b836a7dab149f82a698ab611c0cf4bc775a435fba6b831b"
+        },
+        "coefficientSource": {
+          "kind": "ConstantData.ObscuredInt",
+          "field": "POISON_FANG_POWER_VALUE",
+          "runtimeDataOffset": "0x33BC"
+        },
+        "action": "EvilCtrl virtual slot +0x2A8",
+        "managedActionTarget": null,
+        "damageParameter": 2,
+        "damagedVectorTail": {
+          "parameter4": false,
+          "parameter5": "runtime value",
+          "parameter6": false
+        }
+      }
+    ]
+  },
+  "coverage": {
+    "exactGetDamageCallerBodies": 49,
+    "coefficientMembersResolvedPass9And11": 9,
+    "coefficientMembersResolvedThisPass": 6,
+    "remainingCallerBodies": 34
+  },
+  "unresolved": [
+    "public skill-row mappings for all six obfuscated methods",
+    "semantic collection/index identity used by GHFOIEIIDDF",
+    "managed identity of the EvilCtrl vtable +0x2A8 target",
+    "runtime meaning of IABOOKJBHHO parameter 5 forwarded to the virtual target",
+    "coefficient producers for the remaining thirty-four getDamage callers"
+  ],
+  "integrationStatus": "disconnected_no_public_skill_mapping_or_live_combat_use"
+}

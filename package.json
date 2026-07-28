@@ -18,7 +18,7 @@
     "assets:generate:original-flow": "node tools/generate-original-flow-content.mjs",
     "assets:package:original-flow": "node tools/package-original-flow-content.mjs",
     "assets:extract:village": "python3 tools/extract-village-content.py",
-    "assets:package:visible-world": "pnpm assets:extract:village && node tools/package-visible-world-content.mjs",
+    "assets:package:visible-world": "pnpm assets:extract:village && node tools/package-visible-world-content.mjs && node tools/package-town-candidate.mjs",
     "assets:validate:visible-world": "node tools/validate-visible-world-content.mjs",
     "assets:extract:localization": "python3 tools/extract-localization-evidence.py",
     "assets:validate:localization": "node tools/validate-localization-evidence.mjs",

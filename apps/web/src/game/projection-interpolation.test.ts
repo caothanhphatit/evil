@@ -20,13 +20,52 @@ describe("protocol-v5 projection interpolation", () => {
     expect(buffer.sample(1400)?.entities[0]?.x).toBe(100);
   });
 
+  it("advances walking presentation independently between confirmations", () => {
+    const buffer = new ProjectionBuffer();
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(100)], 1100);
+    expect(buffer.sample(1100)?.entities[0]?.x).toBe(100);
+    expect(buffer.sample(1400)?.entities[0]?.x).toBe(400);
+  });
+
+  it("continues walking briefly across a delayed authoritative frame", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 100, maxExtrapolationTicks: 1 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+    expect(buffer.sample(1250)?.entities[0]?.x).toBe(15);
+    expect(buffer.sample(1400)?.entities[0]?.x).toBe(20);
+  });
+
+  it("bounds Hunter dead reckoning when confirmations are delayed", () => {
+    const buffer = new ProjectionBuffer();
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+    expect(buffer.sample(1600)?.entities[0]?.x).toBe(60);
+    expect(buffer.sample(2300)?.entities[0]?.x).toBe(60);
+  });
+
+  it("bounds monster patrol dead reckoning when confirmations are delayed", () => {
+    const buffer = new ProjectionBuffer();
+    const monster = { ...entity(0), descriptor: { ...entity(0).descriptor, kind: "monster" as const } };
+    buffer.push("village", 10, [monster], 1000);
+    buffer.push("village", 11, [{ ...monster, x: 10 }], 1100);
+    expect(buffer.sample(2300)?.entities[0]?.x).toBe(60);
+  });
+
+  it("never predicts idle or combat actors past the server position", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 100 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [{ ...entity(10), action_state: "attacking" }], 1100);
+    expect(buffer.sample(1400)?.entities[0]?.x).toBe(10);
+  });
+
   it("snaps instead of crossing a teleport or visual-tick gap", () => {
     const teleport = new ProjectionBuffer({ teleportDistance: 100 });
     teleport.push("village", 1, [entity(0)], 100);
     expect(teleport.push("village", 2, [entity(400)], 200)).toBe("snapped");
     expect(teleport.sample(200)?.entities[0]?.x).toBe(400);
 
-    const gap = new ProjectionBuffer();
+    const gap = new ProjectionBuffer({ maxTickGap: 1 });
     gap.push("field", 4, [entity(20)], 400);
     expect(gap.push("field", 6, [entity(80)], 800)).toBe("snapped");
     expect(gap.bufferedTicks()).toEqual([6]);
@@ -57,6 +96,12 @@ function entity(x: number): WorldEntityProjection {
     action_state: "walking",
     animation: "hunter_walk",
     class_family: "H1",
+    target_entity_id: null,
+    action_sequence: 0,
+    attack_effect_key: null,
+    skill_presentation_key: null,
+    current_hp: 100,
+    maximum_hp: 100,
     selectable: true,
   };
 }

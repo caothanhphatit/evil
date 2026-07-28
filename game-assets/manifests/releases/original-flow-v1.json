@@ -19,8 +19,8 @@
   "evidenceSources": [
     {
       "path": "game-assets/manifests/original-flow-v1.selection.json",
-      "bytes": 9502,
-      "sha256": "a60914bf6afcf2658a9d46361a777a05d22c40d941ca77a66978824c05110242"
+      "bytes": 22691,
+      "sha256": "308c12f79965d621914fab9180396f78f0475a7badff52c61689f10fa35dfd75"
     },
     {
       "path": "game-assets/asset-index.json",
@@ -113,8 +113,19 @@
         "village.menu.icon-03",
         "village.menu.icon-04",
         "village.menu.icon-05",
+        "village.difficulty.easy",
         "village.resource.gold",
-        "village.resource.gem"
+        "village.resource.gem",
+        "village.resource.element",
+        "village.resource.book",
+        "village.quick.background",
+        "village.quick.book",
+        "village.quick.rank",
+        "village.quick.hunters",
+        "village.quick.hunter-background",
+        "village.quick.quest",
+        "village.quick.setting",
+        "hunter.roster.target-icon"
       ],
       "bindings": [
         {
@@ -216,7 +227,16 @@
         }
       ],
       "assetIds": [
-        "field.hp-frame"
+        "field.hp-fill",
+        "field.hp-background",
+        "field.hp-level-frame",
+        "field.ranger-arrow",
+        "field.damage-font",
+        "field.dodge-frame-00",
+        "field.dodge-frame-01",
+        "field.dodge-frame-02",
+        "field.dodge-frame-03",
+        "field.dodge-label-en"
       ],
       "bindings": [
         {
@@ -433,6 +453,21 @@
       "sha256": "df8d43d2b733770110e2ac3439ecd064c0d2eb0f87db5342e8001c17dff5a9d5"
     },
     {
+      "id": "village.difficulty.easy",
+      "sourcePath": "sprites/top_mon_level_01__1480.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1480,
+        "type": "Sprite",
+        "name": "top_mon_level_01"
+      },
+      "role": "top-difficulty-badge",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 3335,
+      "sha256": "cb0c9270439d756157865a89fe2aac039471ecea39b574d0fc70db03decd57a9"
+    },
+    {
       "id": "village.resource.gold",
       "sourcePath": "sprites/top_ic_01_gold_24__4677.png",
       "unity": {
@@ -461,6 +496,156 @@
       "confidence": "strongly-inferred",
       "bytes": 652,
       "sha256": "23f8d5924a225aba7c4673c4b937c56e63b8e12d38dae477927d1fd84cfd237c"
+    },
+    {
+      "id": "village.resource.element",
+      "sourcePath": "sprites/top_ic_03_element_24__1412.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1412,
+        "type": "Sprite",
+        "name": "top_ic_03_element_24"
+      },
+      "role": "top-resource-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 794,
+      "sha256": "ba14fe44e78086a92ede8bbec47fc2498fe2541391367cdd8c07ff78329e3106"
+    },
+    {
+      "id": "village.resource.book",
+      "sourcePath": "sprites/top_ic_04_book_24__3078.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3078,
+        "type": "Sprite",
+        "name": "top_ic_04_book_24"
+      },
+      "role": "top-resource-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 786,
+      "sha256": "487da5ac99146c33f020b8208ca0f22bbd4fb193e74a0c96159be9dca3bfa271"
+    },
+    {
+      "id": "village.quick.background",
+      "sourcePath": "sprites/top_ic_00_bg_9__3155.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3155,
+        "type": "Sprite",
+        "name": "top_ic_00_bg_9"
+      },
+      "role": "top-quick-action-background",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 94,
+      "sha256": "afe52e37b51db8c80b1acb7400cedd57cfd2f1fe5031f2c6b41b12ec8e40f3fb"
+    },
+    {
+      "id": "village.quick.book",
+      "sourcePath": "sprites/top_ic_book__3217.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3217,
+        "type": "Sprite",
+        "name": "top_ic_book"
+      },
+      "role": "top-quick-action-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1551,
+      "sha256": "c55fbd2a0d47f65ecf401743452d6d653c119dfe4088fec32e59099e98dd23ac"
+    },
+    {
+      "id": "village.quick.rank",
+      "sourcePath": "sprites/top_ic_rank__5074.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5074,
+        "type": "Sprite",
+        "name": "top_ic_rank"
+      },
+      "role": "top-quick-action-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 2182,
+      "sha256": "4ed2a06c1fc709093b0c8e8f189318f2fcf5eb74f376ae4730fa3da87bb26b92"
+    },
+    {
+      "id": "village.quick.hunters",
+      "sourcePath": "sprites/top_ic_man__5368.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5368,
+        "type": "Sprite",
+        "name": "top_ic_man"
+      },
+      "role": "top-quick-action-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 224,
+      "sha256": "1b37efd1b5a36ce63ffa1b70c8fb675bac4ae81e57acff82cd4d3dd3f241348d"
+    },
+    {
+      "id": "village.quick.hunter-background",
+      "sourcePath": "sprites/top_ic_man_bg_9__2450.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2450,
+        "type": "Sprite",
+        "name": "top_ic_man_bg_9"
+      },
+      "role": "top-population-background",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 146,
+      "sha256": "fa7484f7787374d5f3644f3b2dde88d7b42b2c7b979965ccb42a38f95eab51ce"
+    },
+    {
+      "id": "village.quick.quest",
+      "sourcePath": "sprites/top_ic_quest__4944.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4944,
+        "type": "Sprite",
+        "name": "top_ic_quest"
+      },
+      "role": "top-quick-action-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1455,
+      "sha256": "2b4589dc8f622d7c22d64fd7adde55f9a3675ef2d863fbbe16afa1b3000e599c"
+    },
+    {
+      "id": "village.quick.setting",
+      "sourcePath": "sprites/top_ic_setting__4198.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4198,
+        "type": "Sprite",
+        "name": "top_ic_setting"
+      },
+      "role": "top-quick-action-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 1107,
+      "sha256": "249a9e8df106b199cf74091451a763347e10dd1d18ecfac447d9d4efd726ec7f"
+    },
+    {
+      "id": "hunter.roster.target-icon",
+      "sourcePath": "sprites/ic_target__7095.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7095,
+        "type": "Sprite",
+        "name": "ic_target"
+      },
+      "role": "hunter-roster-target-icon",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 158,
+      "sha256": "6cb36d114d6ce928f46d9b72758fa8bff8c3e3bd93f7997893f692d07b978dfa"
     },
     {
       "id": "hunter.skeleton",
@@ -538,7 +723,37 @@
       "sha256": "3d06112c831cae47e4383ba4f9aadfdce47243ebbade2960667b713c00e926ce"
     },
     {
-      "id": "field.hp-frame",
+      "id": "field.hp-fill",
+      "sourcePath": "sprites/hp_in__5625.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5625,
+        "type": "Sprite",
+        "name": "hp_in"
+      },
+      "role": "field-hp-fill",
+      "bindingState": "scene-component-confirmed",
+      "confidence": "confirmed",
+      "bytes": 84,
+      "sha256": "9a3fbdde08d7ba4f298f62a35d47ab9112f6589f94e7a7e8683d1a4015d6449f"
+    },
+    {
+      "id": "field.hp-background",
+      "sourcePath": "sprites/hp_bg__7393.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7393,
+        "type": "Sprite",
+        "name": "hp_bg"
+      },
+      "role": "field-hp-background",
+      "bindingState": "scene-component-confirmed",
+      "confidence": "confirmed",
+      "bytes": 131,
+      "sha256": "140e73078b6992fdb912e73f35d539b1c40632fec29f8bb4c059e5a335cf74b4"
+    },
+    {
+      "id": "field.hp-level-frame",
       "sourcePath": "sprites/hp_lv_bg_9__3211.png",
       "unity": {
         "source": "sharedassets0.assets",
@@ -546,11 +761,461 @@
         "type": "Sprite",
         "name": "hp_lv_bg_9"
       },
-      "role": "field-hp-frame",
-      "bindingState": "screen-candidate",
-      "confidence": "strongly-inferred",
+      "role": "field-hunter-level-frame",
+      "bindingState": "scene-component-confirmed",
+      "confidence": "confirmed",
       "bytes": 107,
       "sha256": "94296c83ec5038fa29d7324201dab2d1819a797b2129f84b418338834910dfd6"
+    },
+    {
+      "id": "field.ranger-arrow",
+      "sourcePath": "sprites/atk_ranger__3599.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3599,
+        "type": "Sprite",
+        "name": "atk_ranger"
+      },
+      "role": "ranger-arrow-projectile",
+      "bindingState": "scene-component-confirmed",
+      "confidence": "confirmed",
+      "bytes": 711,
+      "sha256": "18a668a989bb3d83565c6050fcc88570ccf9dcfca1da7fca1cc8f18f7810d478"
+    },
+    {
+      "id": "field.damage-font",
+      "sourcePath": "fonts/DefaultFont2__197.ttf",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 197,
+        "type": "Font",
+        "name": "DefaultFont2"
+      },
+      "role": "field-damage-font",
+      "bindingState": "damage-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 16622180,
+      "sha256": "f5c3eec9e953edb79037827a000eb6b8bcd6e4f239a0705f1ffbc7967dc3e1cf"
+    },
+    {
+      "id": "field.dodge-frame-00",
+      "sourcePath": "sprites/0007_0__7240.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7240,
+        "type": "Sprite",
+        "name": "0007_0"
+      },
+      "role": "field-dodge-animation-frame",
+      "bindingState": "dodge-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 352,
+      "sha256": "98fd7916ac62751f78a0db98ec2b4350f9dd2572ca456f32cb4f8eb824569666"
+    },
+    {
+      "id": "field.dodge-frame-01",
+      "sourcePath": "sprites/0007_1__7744.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7744,
+        "type": "Sprite",
+        "name": "0007_1"
+      },
+      "role": "field-dodge-animation-frame",
+      "bindingState": "dodge-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 357,
+      "sha256": "d662c24e93b25447665ec90ecd9c5b042e7d9a2cf51cce0a5513dc7a88310252"
+    },
+    {
+      "id": "field.dodge-frame-02",
+      "sourcePath": "sprites/0007_2__7788.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7788,
+        "type": "Sprite",
+        "name": "0007_2"
+      },
+      "role": "field-dodge-animation-frame",
+      "bindingState": "dodge-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 525,
+      "sha256": "52059f510d8008d9fd22e8f73511b4bc6596190b733cbb7a166418b0f5f5776e"
+    },
+    {
+      "id": "field.dodge-frame-03",
+      "sourcePath": "sprites/0007_3__7830.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7830,
+        "type": "Sprite",
+        "name": "0007_3"
+      },
+      "role": "field-dodge-animation-frame",
+      "bindingState": "dodge-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 1146,
+      "sha256": "c7ef4901d6027e65fee1d92be0ed313a2fea36b96acc5c1b77837dc7dbe8e16f"
+    },
+    {
+      "id": "field.dodge-label-en",
+      "sourcePath": "sprites/0007_text_3__7815.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7815,
+        "type": "Sprite",
+        "name": "0007_text_3"
+      },
+      "role": "field-dodge-label",
+      "bindingState": "dodge-ment-prefab-confirmed",
+      "confidence": "confirmed",
+      "bytes": 719,
+      "sha256": "5cb1282a9e636924b8542914c59b51e93f6f69c2e6b5b2f706ef4a9378169ac4"
+    },
+    {
+      "id": "asset.NotoSansThai-Bold-198",
+      "sourcePath": "fonts/NotoSansThai-Bold__198.ttf",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 198,
+        "type": "Font",
+        "name": "NotoSansThai-Bold"
+      },
+      "role": "ui-font",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 37764,
+      "sha256": "46936189b7e24001b391b90e0548c904545aec1a0f1874f6ebe41b8ef7acf92c"
+    },
+    {
+      "id": "asset.alchemist_make_bg_9-7536",
+      "sourcePath": "sprites/alchemist_make_bg_9__7536.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7536,
+        "type": "Sprite",
+        "name": "alchemist_make_bg_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 112,
+      "sha256": "f5debc8e61d88a7e6daa244b20ccbb798bb7b1789b7875452be9532031b4928b"
+    },
+    {
+      "id": "asset.box_building_9-1866",
+      "sourcePath": "sprites/box_building_9__1866.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1866,
+        "type": "Sprite",
+        "name": "box_building_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 165,
+      "sha256": "604ef5c00b3ba5dac4e226b8e8ee2c12a4b1a4f727daa6178553feaa0b043794"
+    },
+    {
+      "id": "asset.box_gear_9-2514",
+      "sourcePath": "sprites/box_gear_9__2514.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2514,
+        "type": "Sprite",
+        "name": "box_gear_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 205,
+      "sha256": "ed6769cc53b29a373698844c17622a8022dac7172c4775bd8a1fd09fa9a81129"
+    },
+    {
+      "id": "asset.box_menu_front_9-4849",
+      "sourcePath": "sprites/box_menu_front_9__4849.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4849,
+        "type": "Sprite",
+        "name": "box_menu_front_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 190,
+      "sha256": "af3c4c991808eb3773224ad9d68fd5e67fa2cd0df8135c879c4d4c8b258f8887"
+    },
+    {
+      "id": "asset.btn_build_one_9-2921",
+      "sourcePath": "sprites/btn_build_one_9__2921.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2921,
+        "type": "Sprite",
+        "name": "btn_build_one_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 267,
+      "sha256": "ec96f837a7d19673ccf52748f8acc5f396b953fdc5802ca6a433bacf5ea742dc"
+    },
+    {
+      "id": "asset.btn_build_top_box_9-7367",
+      "sourcePath": "sprites/btn_build_top_box_9__7367.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7367,
+        "type": "Sprite",
+        "name": "btn_build_top_box_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 326,
+      "sha256": "900f34a8ec69f8c520e7455a5a46dd2296b82579bca615dea6934ff577e3d655"
+    },
+    {
+      "id": "asset.btn_green_01_9-5553",
+      "sourcePath": "sprites/btn_green_01_9__5553.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5553,
+        "type": "Sprite",
+        "name": "btn_green_01_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 483,
+      "sha256": "c2c170498deed91e2ec96082af4dc08e3ebc4ddd05fa35be08a189473521115c"
+    },
+    {
+      "id": "asset.btn_red_01_9-3691",
+      "sourcePath": "sprites/btn_red_01_9__3691.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3691,
+        "type": "Sprite",
+        "name": "btn_red_01_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 459,
+      "sha256": "2f2bcf0920759adb346d9ad9508802684f845ff6dad41807a034e76d03e2ae90"
+    },
+    {
+      "id": "asset.btn_yellow_01_9-5065",
+      "sourcePath": "sprites/btn_yellow_01_9__5065.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5065,
+        "type": "Sprite",
+        "name": "btn_yellow_01_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 329,
+      "sha256": "9294c354fb813cf897b1b5625f28afb9a41a3f62e035c609876c9cf70d4a4b26"
+    },
+    {
+      "id": "asset.list_area_line_9-1576",
+      "sourcePath": "sprites/list_area_line_9__1576.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1576,
+        "type": "Sprite",
+        "name": "list_area_line_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 314,
+      "sha256": "12ec4b19783984a440156ffaea81ec75df0f04599191ba4a59a27743546c632a"
+    },
+    {
+      "id": "asset.popup_bg_9-1928",
+      "sourcePath": "sprites/popup_bg_9__1928.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1928,
+        "type": "Sprite",
+        "name": "popup_bg_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 617,
+      "sha256": "a039a55f5be8fe0dcc33c246ddf50790acb39656988939e688fdbc83949acae1"
+    },
+    {
+      "id": "asset.popup_top_line-3806",
+      "sourcePath": "sprites/popup_top_line__3806.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3806,
+        "type": "Sprite",
+        "name": "popup_top_line"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 80,
+      "sha256": "4156908a8ddb358cfe1a87858d8a4641004f3269f05de8484e86ef485c5ae1e9"
+    },
+    {
+      "id": "asset.product_countbar_ui_0-454",
+      "sourcePath": "sprites/product_countbar_ui_0__454.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 454,
+        "type": "Sprite",
+        "name": "product_countbar_ui_0"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 581,
+      "sha256": "7a599bdd79b76fe8cd1b5dc827769306680778bf65fe2314ca0e81f519d5d7fe"
+    },
+    {
+      "id": "asset.product_countbar_ui_2-8592",
+      "sourcePath": "sprites/product_countbar_ui_2__8592.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 8592,
+        "type": "Sprite",
+        "name": "product_countbar_ui_2"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 488,
+      "sha256": "ecb5def303d76ed0600d19d529edda5927df37af74d7b3940e2842f6e668a023"
+    },
+    {
+      "id": "asset.shop_product_251-3130",
+      "sourcePath": "sprites/shop_product_251__3130.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3130,
+        "type": "Sprite",
+        "name": "shop_product_251"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 9619,
+      "sha256": "5677d4bf5e551df77b361b47cc139220e1bf40f4da0a6c8b74188cad1e30ebf7"
+    },
+    {
+      "id": "asset.shop_product_26-6294",
+      "sourcePath": "sprites/shop_product_26__6294.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6294,
+        "type": "Sprite",
+        "name": "shop_product_26"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 8575,
+      "sha256": "50f0c3bc580d8c6df9b951d7bae377f0ed6eaf519a98fbebd30fef9d08bf71a8"
+    },
+    {
+      "id": "asset.store_bg_pd_g_9-4026",
+      "sourcePath": "sprites/store_bg_pd_g_9__4026.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4026,
+        "type": "Sprite",
+        "name": "store_bg_pd_g_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 13459,
+      "sha256": "c0d26e125eb9f6e008f98f3158c222d3861db302f01cd48956cdcce16808d03f"
+    },
+    {
+      "id": "asset.store_btn_pd_m_9-1833",
+      "sourcePath": "sprites/store_btn_pd_m_9__1833.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1833,
+        "type": "Sprite",
+        "name": "store_btn_pd_m_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 260,
+      "sha256": "20f9758513482a3e401c8429ff7e35b53e1f260844e30c9167d8a1de3c67486d"
+    },
+    {
+      "id": "asset.store_pd_minus_9-6951",
+      "sourcePath": "sprites/store_pd_minus_9__6951.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6951,
+        "type": "Sprite",
+        "name": "store_pd_minus_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 115,
+      "sha256": "800023b6974a2f8ce92d164ed4b05ef53e12a550b6fa2f1d3a869a30a7c245f1"
+    },
+    {
+      "id": "asset.store_pd_plus_9-2266",
+      "sourcePath": "sprites/store_pd_plus_9__2266.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2266,
+        "type": "Sprite",
+        "name": "store_pd_plus_9"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 181,
+      "sha256": "cb8212d31d7724919bfb9f72bd7cd243c1a86e5c1f17ec98e6d92006ca7e5e9b"
+    },
+    {
+      "id": "asset.top_ic_02_gem-6963",
+      "sourcePath": "sprites/top_ic_02_gem__6963.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6963,
+        "type": "Sprite",
+        "name": "top_ic_02_gem"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 525,
+      "sha256": "326c2aa38a2a3661020300d6a6c0319bd72129cab8c07f5ca554f68b6952dd7c"
+    },
+    {
+      "id": "asset.top_ic_03_element-4250",
+      "sourcePath": "sprites/top_ic_03_element__4250.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4250,
+        "type": "Sprite",
+        "name": "top_ic_03_element"
+      },
+      "role": "ui-sprite",
+      "bindingState": "screen-candidate",
+      "confidence": "strongly-inferred",
+      "bytes": 558,
+      "sha256": "6e310bd83da6ba9f4d49abfb14a355169bbc1a19e16ea79b3981431d42f120b7"
     }
   ],
   "releaseGate": {

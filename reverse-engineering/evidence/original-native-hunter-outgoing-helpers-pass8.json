@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-outgoing-helpers-pass8",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sourceSha256": "6fbcf0831e6dfc16d295549fb0b16546b387ff8a36a4b4fedf12fb08b94f8443",
+  "literals": {
+    "percent": {
+      "offset": "0xD2AC8C",
+      "raw": "0ad7233c",
+      "float32": 0.009999999776482582
+    },
+    "riftScale": {
+      "offset": "0xD2B6D0",
+      "raw": "17b7d138",
+      "float32": 9.999999747378752e-05
+    }
+  },
+  "methods": {
+    "getSlayerDamage": {
+      "moduleOffset": "0x33f87a0",
+      "size": 3512,
+      "sha256": "0abc1378e0791d2beacc9543cc2f933aac9f95d04b8383f31aa87b5c52bfa7bc"
+    },
+    "getRiftNpcBuffDamage": {
+      "moduleOffset": "0x33f9558",
+      "size": 592,
+      "sha256": "d51425915d8205f2bb626a3409f0c8915ff0fb6d7e1a2ce86b1b38c31968e189"
+    }
+  },
+  "slayer": {
+    "commonNamedInput": "positive RidingPetSlayerDemUp@StatusData+0x74C is added before race branches",
+    "raceSelector": "DataManager.mAdminEvilData[input].race@+0x100",
+    "raceBranches": {
+      "1": {
+        "gearPropertyIndex": 11,
+        "namedAdds": [
+          "CollectionPrimateDem@0x574",
+          "RelicCollectionPrimateDem@0x5C8"
+        ]
+      },
+      "2": {
+        "gearPropertyIndex": 13,
+        "namedAdds": [
+          "CollectionUndeadDem@0x57C",
+          "RelicCollectionUndeadDem@0x5D0"
+        ]
+      },
+      "3": {
+        "gearPropertyIndex": 12,
+        "namedAdds": [
+          "CollectionEvilDem@0x578",
+          "RelicCollectionEvilDem@0x5CC"
+        ]
+      },
+      "4": {
+        "gearPropertyIndex": 46,
+        "namedAdds": [
+          "CollectionAnimalDem@0x580",
+          "RelicCollectionAnimalDem@0x5D4"
+        ]
+      },
+      "5": {
+        "gearPropertyIndex": 45,
+        "namedAdds": [
+          "CollectionBossDem@0x570",
+          "RelicCollectionBossDem@0x5C4"
+        ]
+      }
+    },
+    "gearPropertyEquation": "accumulator += (element0-element1)*0.01 where the branch-specific array exists",
+    "opaqueExtras": [
+      "job-trait 21 gates and AdminJobTraitData fields",
+      "UserData+0xB78/+0xB80 decoded integer contribution",
+      "helper at 0x2FA2D94 and its field +0xD4"
+    ],
+    "return": "ObscuredFloat accumulator"
+  },
+  "rift": {
+    "initial": "0.0",
+    "inputGate": "decoded input equals either GameManager static int at +0xC10 or +0xC30",
+    "lookupGate": "UserData+0xCF8 exists, contains required keys, and nested value exists",
+    "equation": "result += decoded nested integer * 0.0001f",
+    "unresolved": [
+      "names/types of UserData+0xCF8 nested dictionaries",
+      "meanings of GameManager static ints +0xC10/+0xC30 and lookup keys"
+    ]
+  },
+  "unresolved": [
+    "semantic meaning of method ObscuredInt input",
+    "exact semantics of race enum values despite named stat columns",
+    "opaque Slayer extras and their ordering labels"
+  ]
+}

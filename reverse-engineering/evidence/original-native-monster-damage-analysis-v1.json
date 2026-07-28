@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-monster-damage-analysis",
+  "runtimeCompatibility": "evidence-only",
+  "source": {
+    "capture": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+    "captureSha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80",
+    "schemas": [
+      {
+        "path": "reverse-engineering/evidence/evil-data-runtime-schema-api35-v1.json",
+        "sha256": "ed7895541e98bc2665321ca2c894f8198d76765d5accd3a0d3479bdb6e1560fc"
+      },
+      {
+        "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+        "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+      },
+      {
+        "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+        "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+      }
+    ],
+    "staticFactors": "reverse-engineering/evidence/original-runtime-status-data-static-factors-api35-v1.json",
+    "staticFactorsSha256": "18875029a7b3ab89f0f33b97b847ef02f774bb3299fe16b4cb46c1e26cb9166b"
+  },
+  "method": {
+    "className": "EvilCtrl",
+    "methodName": "Damaged",
+    "token": 100675604,
+    "moduleOffset": "0x2f2be20",
+    "nativeSizeBytes": 4736,
+    "bodySha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb"
+  },
+  "resolvedCommonArithmetic": {
+    "feelScalar": {
+      "source": "HunterData.nowFeel / HunterData.feel",
+      "thresholds": [
+        0.8,
+        0.6,
+        0.4,
+        0.2
+      ],
+      "selectedValues": [
+        1.2,
+        1.1,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "comparison": "descending >= using float32 products"
+    },
+    "initialDamage": "trunc_i64(float32(incomingDamage) * feelScalar * GameManager.RandDamage())",
+    "directBonus": "if float32(field_0x1DC + field_0x1E0) > f32::from_bits(1): damage = trunc_i64(float32(damage) * float32(1 + sum))",
+    "preArmorBonus": "damage += trunc_i64(float32(damage) * preArmorBonusRate)",
+    "effectiveArmor": "parameter6 ? 0 : max(armor - trunc_i64(float32(armor) * armorReductionRate), 0)",
+    "minimumDamage": "max_by_branch(damage - effectiveArmor, 1)",
+    "hpMutation": "EvilData.nowHp = wrapping_i64(EvilData.nowHp - finalDamage)"
+  },
+  "resolvedSelectors": {
+    "preArmorBonusSources": [
+      "StatusData.GearProperty[51][0] under the recovered <=50% monster HP gate",
+      "StatusData.RidingPetGearProperty[12] under its captured runtime gate",
+      "StatusData.RidingPetGearProperty[16] when parameter6 is true",
+      "EvilCtrl.field_0x1F8 when parameter3 equals 2"
+    ],
+    "armorReductionSources": [
+      "StatusData.GearProperty[37][0]",
+      "otherwise StatusData.GearProperty[61][0]",
+      "HunterData.revivePenetrate rows 1..5 through DataManager revive-property data"
+    ],
+    "integerPercentScale": 0.009999999776482582
+  },
+  "unresolvedSemantics": [
+    "Public names for EvilCtrl fields 0x1DC, 0x1E0 and 0x1F8.",
+    "Public names and caller meaning of parameters 3 through 6.",
+    "Product names for GearProperty indices 37, 51 and 61 and RidingPetGearProperty indices 12 and 16.",
+    "All alternate presentation, life-steal and death-event side effects after the common HP mutation."
+  ],
+  "integrationStatus": "common_arithmetic_core_ready_but_live_integration_blocked_by_outgoing_caller_and_skill_contracts"
+}

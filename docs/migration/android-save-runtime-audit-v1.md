@@ -2,6 +2,12 @@
 
 Date: 2026-07-26
 
+> Runtime supersession: `docs/migration/hunter-runtime-schema-capture-v1.md`
+> reflects the live IL2CPP schema and corrects the protected static estimate
+> below. `SaveData` has four fields (`index`, `data`, `action`, `clear`) and 23
+> methods at runtime. The one-field statement is retained here only as the
+> historical static result.
+
 ## Packaged Android/runtime inputs
 
 The repository contains one original distribution package:
@@ -44,12 +50,34 @@ The package contains all of the following generic persistence facilities:
 - GPM MessagePack and LZ4 MessagePack implementation types;
 - Google Play saved-game/cloud-related libraries noted in the prior report.
 
-This is a library inventory, not a proven call graph. There is no player save,
-PlayerPrefs XML, ACTk obscured file, cloud-save response or Android app data
-directory in the repository. Therefore the original filename, key names,
-encryption settings, serializer choice and cloud/local merge rules remain
-unknown. In particular, dependency presence must not be converted into a
-claim that the game saves HunterData with MessagePack, JSON or PlayerPrefs.
+This is a library inventory, not a proven call graph. The original static pass
+did not include a player save, PlayerPrefs XML, ACTk obscured file, cloud-save
+response or Android app data directory. The rooted follow-up below now confirms
+one private PlayerPrefs file, while key semantics, encryption settings,
+serializer choice and cloud/local merge rules remain unresolved. Dependency
+presence must not be converted into a claim that a particular entry contains
+`HunterData` until controlled runtime correlation proves it.
+
+## Rooted API35 follow-up
+
+A rooted Google APIs API35 emulator now confirms a private Unity PlayerPrefs
+file at
+`/data/user/0/com.superplanet.evilhunter/shared_prefs/com.superplanet.evilhunter.v2.playerprefs.xml`.
+The captured version `1.411` file is approximately 1.7 MB and contains 46 XML
+entries: 42 strings and 4 integers. Three string values exceed 65,536
+characters, with the largest exceeding one million characters.
+
+The raw keys and values are intentionally excluded from repository evidence.
+Most non-Unity keys are obfuscated, and an ACTk runtime-schema capture confirms
+`ObscuredPrefs`, `ObscuredFilePrefs`, and `ObscuredFile`, including
+`GetRawValue`, `EncryptKey`, `EncryptData`, and `DecryptData` method surfaces.
+This establishes a concrete private PlayerPrefs + ACTk storage boundary, but it
+does not yet bind a particular encrypted entry to `UserData` or `HunterData`.
+
+Evidence:
+
+- `reverse-engineering/evidence/android-api35-private-playerprefs-inventory-v1.json`
+- `reverse-engineering/evidence/android-api35-actk-storage-schema-v1.json`
 
 ## Static Hunter serialization boundary
 

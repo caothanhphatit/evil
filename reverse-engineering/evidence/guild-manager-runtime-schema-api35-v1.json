@@ -1,0 +1,1708 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T10:10:06.110849Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 28210,
+    "action": "Capture GuildManager schema after resolving CalcDamage singleton owner; no object values read.",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "GuildManager"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "GuildManager"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "GuildManager",
+          "token": 33555013,
+          "fields": [
+            {
+              "name": "KPABKEBKMFE",
+              "type": "GuildManager",
+              "offset": 0,
+              "flags": 17
+            },
+            {
+              "name": "MyGuildData",
+              "type": "GuildManager.KNBHKEBIBHO",
+              "offset": 32,
+              "flags": 6
+            },
+            {
+              "name": "mBattleMMR",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 40,
+              "flags": 6
+            },
+            {
+              "name": "mAvePower",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 56,
+              "flags": 6
+            },
+            {
+              "name": "mDayBattleLimit",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 88,
+              "flags": 6
+            },
+            {
+              "name": "MatchUpRoutine",
+              "type": "UnityEngine.Coroutine",
+              "offset": 104,
+              "flags": 6
+            },
+            {
+              "name": "MatchTeamInfoRoutine",
+              "type": "UnityEngine.Coroutine",
+              "offset": 112,
+              "flags": 6
+            },
+            {
+              "name": "RankEmblemRoutine",
+              "type": "UnityEngine.Coroutine",
+              "offset": 120,
+              "flags": 6
+            },
+            {
+              "name": "PracticeMatchRoutine",
+              "type": "UnityEngine.Coroutine",
+              "offset": 128,
+              "flags": 6
+            },
+            {
+              "name": "mCurrentSeason",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 136,
+              "flags": 6
+            },
+            {
+              "name": "mRankBuffAttack",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 152,
+              "flags": 134
+            },
+            {
+              "name": "mRankBuffHp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 172,
+              "flags": 134
+            },
+            {
+              "name": "mRankBuffGold",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 192,
+              "flags": 134
+            },
+            {
+              "name": "mRankBuffBossDem",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 212,
+              "flags": 134
+            },
+            {
+              "name": "mRankBuffVillTax",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 232,
+              "flags": 134
+            },
+            {
+              "name": "RankEmblemImg",
+              "type": "UnityEngine.Sprite[]",
+              "offset": 256,
+              "flags": 1
+            },
+            {
+              "name": "RankFrameImg",
+              "type": "UnityEngine.Sprite[]",
+              "offset": 264,
+              "flags": 1
+            },
+            {
+              "name": "RankEmblemRender",
+              "type": "UnityEngine.SpriteRenderer[]",
+              "offset": 272,
+              "flags": 1
+            },
+            {
+              "name": "RankFrameRender",
+              "type": "UnityEngine.SpriteRenderer[]",
+              "offset": 280,
+              "flags": 1
+            },
+            {
+              "name": "RankGuildName",
+              "type": "UnityEngine.TextMesh[]",
+              "offset": 288,
+              "flags": 1
+            },
+            {
+              "name": "RankGuildImgObj",
+              "type": "UnityEngine.GameObject[]",
+              "offset": 296,
+              "flags": 1
+            },
+            {
+              "name": "MyGamerIndate",
+              "type": "System.String",
+              "offset": 304,
+              "flags": 6
+            },
+            {
+              "name": "MyGuildPosition",
+              "type": "System.String",
+              "offset": 312,
+              "flags": 6
+            },
+            {
+              "name": "IsSetUp",
+              "type": "System.Boolean",
+              "offset": 320,
+              "flags": 6
+            },
+            {
+              "name": "callstate",
+              "type": "GuildManager.GEGGAJPPBMF",
+              "offset": 324,
+              "flags": 6
+            },
+            {
+              "name": "DonateNow",
+              "type": "System.Boolean",
+              "offset": 328,
+              "flags": 6
+            },
+            {
+              "name": "ABCDSacdule",
+              "type": "GuildManager.PFFIABCAOEI",
+              "offset": 332,
+              "flags": 6
+            },
+            {
+              "name": "MPJKIPHDIMA",
+              "type": "UnityEngine.Coroutine",
+              "offset": 336,
+              "flags": 1
+            },
+            {
+              "name": "PKDPHNFHMMI",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 344,
+              "flags": 33
+            },
+            {
+              "name": "KIKLFDAFOMG",
+              "type": "UnityEngine.WaitForSeconds",
+              "offset": 352,
+              "flags": 1
+            },
+            {
+              "name": "PFCICGKNIOJ",
+              "type": "UnityEngine.WaitForSeconds",
+              "offset": 360,
+              "flags": 1
+            },
+            {
+              "name": "LDLIOLCAKFG",
+              "type": "UnityEngine.WaitForSeconds",
+              "offset": 368,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "CheckApplyGuildBattleTeam",
+              "token": 100675999,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AFDFAKCFDCG",
+                  "type": "System.Action<GuildManager.AEJHODHOFFJ>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckApplyGuildBattleHunter",
+              "token": 100676000,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AFDFAKCFDCG",
+                  "type": "System.Action<GuildManager.AEJHODHOFFJ>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckSeasonState",
+              "token": 100676001,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CKNGMDFOFPC",
+                  "type": "System.Action<GuildManager.FFBCFKBCIMH>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildBattleMMRDownStart",
+              "token": 100676002,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "GEJCANEGHDL",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "AHNLOJCLAPI",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NominateViceMaster",
+              "token": 100676003,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "GBKAJJNOOGJ",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "RemoveVisitHunterData",
+              "token": 100676004,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckGuildApplyDate",
+              "token": 100676005,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AFDFAKCFDCG",
+                  "type": "System.Action<GuildManager.KBLGJMMBPMC>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetLastSeasonGuildRankTop3",
+              "token": 100676006,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Collections.Generic.List<CCOILPIIIMG>,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ILPCANBJGDE",
+              "token": 100676007,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IMEJFHMJAFK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LHDIKAIBNAB",
+              "token": 100676008,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CKNGMDFOFPC",
+                  "type": "GuildManager.FFBCFKBCIMH"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JDENLGPIAFM",
+              "token": 100676009,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CKNGMDFOFPC",
+                  "type": "GuildManager.FFBCFKBCIMH"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JIKDMDJLDCM",
+              "token": 100676010,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IMEJFHMJAFK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetPracticeMatchInfo",
+              "token": 100676011,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean,MHDDADJDDCK>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BGGIKOLMHDF",
+              "token": 100676012,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HPLICNBLJMG",
+                  "type": "UnityEngine.SpriteRenderer"
+                },
+                {
+                  "index": 1,
+                  "name": "NCDNKGGJICJ",
+                  "type": "UnityEngine.SpriteRenderer"
+                },
+                {
+                  "index": 2,
+                  "name": "KKDLFLMEFOH",
+                  "type": "System.Int32[]"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JoinGuild",
+              "token": 100676013,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FMGEKCDGKJN",
+                  "type": "GuildManager.LFNHGGLBEEN"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetLastSeasonGuildRank",
+              "token": 100676014,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Collections.Generic.List<CCOILPIIIMG>,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildBuffSetup",
+              "token": 100676015,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildBattlePlayCountDown",
+              "token": 100676016,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AHNLOJCLAPI",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetMatchInfo",
+              "token": 100676017,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean,System.Collections.Generic.List<MHDDADJDDCK>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AIJAICEPHFA",
+              "token": 100676018,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Collections.Generic.List<CCOILPIIIMG>,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ParseGuildData",
+              "token": 100676019,
+              "returnType": "GuildManager.KNBHKEBIBHO",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OPDINKOGLKP",
+                  "type": "LitJson.JsonData"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DonateGuildExp",
+              "token": 100676020,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NFIJOFCDIHB",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetMyLastGuildBattleRecord",
+              "token": 100676021,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NMMJDMHOPCB",
+                  "type": "System.Action<GuildManager.EPNFGNOIIOB,GKPPJLDKBOI>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PIMBDIFGMNG",
+              "token": 100676022,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EFDNNOLMFCB",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildBattleScadule",
+              "token": 100676023,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HDCAACCKCFD",
+                  "type": "System.Action<GuildManager.PFFIABCAOEI>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FHBFMHCMPJC",
+              "token": 100676024,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SelectGuildInfo",
+              "token": 100676025,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KOOPNOJNOCJ",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<GuildManager.LFNHGGLBEEN>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KHDNBCLLBBA",
+              "token": 100676026,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "PFJLMDKBICA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[]"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EKGFBOKKLGJ",
+              "token": 100676027,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EEJDJFEMKHN",
+                  "type": "CCOILPIIIMG"
+                },
+                {
+                  "index": 1,
+                  "name": "AHNLOJCLAPI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OPMALABNOLA",
+              "token": 100676028,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AHNLOJCLAPI",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CAHMIELBBBN",
+              "token": 100676029,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HPLICNBLJMG",
+                  "type": "UnityEngine.SpriteRenderer"
+                },
+                {
+                  "index": 1,
+                  "name": "NCDNKGGJICJ",
+                  "type": "UnityEngine.SpriteRenderer"
+                },
+                {
+                  "index": 2,
+                  "name": "KKDLFLMEFOH",
+                  "type": "System.Int32[]"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpLoadMyGuildBattleRecord",
+              "token": 100676030,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPGHIAMBHHB",
+                  "type": "GKPPJLDKBOI"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ACONIOKBDKE",
+              "token": 100676031,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Collections.Generic.List<CCOILPIIIMG>,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ChangeGuildMaster",
+              "token": 100676032,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "GBKAJJNOOGJ",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100676033,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckResetGB_COIN",
+              "token": 100676034,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LKJAKCPBJEA",
+                  "type": "System.DateTime"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildInfo",
+              "token": 100676035,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Action<System.Collections.Generic.KeyValuePair<System.Int32,GuildManager.KNBHKEBIBHO>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ExpelMember",
+              "token": 100676036,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "GBKAJJNOOGJ",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GKOMCNNGHIP",
+              "token": 100676037,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NFIJOFCDIHB",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PlusGuildExp",
+              "token": 100676038,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NFIJOFCDIHB",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "JIKKJILNLPK",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpLoadGuildBattleTeam",
+              "token": 100676039,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "PMDIJLCAAGO",
+                  "type": "System.Collections.Generic.List<HunterData>"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJIMCMLDFN",
+                  "type": "System.Collections.Generic.List<System.String>"
+                },
+                {
+                  "index": 2,
+                  "name": "MFIEDMMOCDO",
+                  "type": "System.Collections.Generic.List<System.Int32>"
+                },
+                {
+                  "index": 3,
+                  "name": "FHLEMGEKBMG",
+                  "type": "System.Collections.Generic.List<System.String>"
+                },
+                {
+                  "index": 4,
+                  "name": "BOCHLGDJFGI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                },
+                {
+                  "index": 5,
+                  "name": "BGCKEDEOAAM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                },
+                {
+                  "index": 6,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BOANGIOAJAE",
+              "token": 100676040,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LGICINJODDD",
+              "token": 100676041,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetMyGuildBattleRecord",
+              "token": 100676042,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NMMJDMHOPCB",
+                  "type": "System.Action<GuildManager.EPNFGNOIIOB,GKPPJLDKBOI>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetNowSeasonMyGuildRank",
+              "token": 100676043,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LBBDOCLCENL",
+                  "type": "System.Action<CCOILPIIIMG>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IMLPJJFNDNH",
+              "token": 100676044,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NFIJOFCDIHB",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ResetGuildRankingBuff",
+              "token": 100676045,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetMyGuildBattleTeam",
+              "token": 100676046,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "MLOEKGNKDBJ",
+                  "type": "System.Action<System.Collections.Generic.Dictionary<System.String,EBFMPIMINDL>,System.Int64,System.Int32,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpdateGuildAce",
+              "token": 100676047,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AIJBABHLGCB",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "COHFGBODMFB",
+              "token": 100676048,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LNDFBHJLFDC",
+                  "type": "System.Collections.Generic.List<CCOILPIIIMG>"
+                },
+                {
+                  "index": 1,
+                  "name": "LDIPIHPBBAL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildArmyData",
+              "token": 100676049,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Start",
+              "token": 100676050,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KPPMANGGHEN",
+              "token": 100676051,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CKNGMDFOFPC",
+                  "type": "GuildManager.FFBCFKBCIMH"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetLastSeasonMyGuildRank",
+              "token": 100676052,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LBBDOCLCENL",
+                  "type": "System.Action<CCOILPIIIMG,CodeStage.AntiCheat.ObscuredTypes.ObscuredBool>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildLevelUp",
+              "token": 100676053,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildMemberBattleRecord",
+              "token": 100676054,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NMMJDMHOPCB",
+                  "type": "System.Action<GuildManager.EPNFGNOIIOB,System.Collections.Generic.List<GKPPJLDKBOI>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DGNFBEJONAC",
+              "token": 100676055,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Collections.Generic.KeyValuePair<System.Int32,GuildManager.KNBHKEBIBHO>"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetNowSeasonGuildRank",
+              "token": 100676056,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Collections.Generic.List<CCOILPIIIMG>,System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetSparingList",
+              "token": 100676057,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool,System.Collections.Generic.List<IPABDLEIAAH>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpdateGuildBuff",
+              "token": 100676058,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BuffUpCheck",
+              "token": 100676059,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EFDNNOLMFCB",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MJHCFIDFJAG",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ChechLastSeasonFighting",
+              "token": 100676060,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Action<GuildManager.CHGNJDHODKP>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckGuildExpReset",
+              "token": 100676061,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HDELBHGBDEG",
+              "token": 100676062,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AFDFAKCFDCG",
+                  "type": "System.Action<GuildManager.AEJHODHOFFJ>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildBattleRewardInfo",
+              "token": 100676063,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[],GuildManager.JCMGGNJLAJM>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LEIGMHDCKMH",
+              "token": 100676064,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "BKJOADKGMKO",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AKLAEMHLEFN",
+              "token": 100676065,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LBBDOCLCENL",
+                  "type": "System.Action<CCOILPIIIMG>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckHaveGuild",
+              "token": 100676066,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredInt>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "getInstance",
+              "token": 100676067,
+              "returnType": "GuildManager",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpdateBackUpMMR",
+              "token": 100676068,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AHNLOJCLAPI",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KGIGBCIOIAA",
+              "token": 100676069,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "BKJOADKGMKO",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CreateGuild",
+              "token": 100676070,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AGFLMGOFGMH",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "MANBEHGOOHC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "DDLKDDAKNDM",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 3,
+                  "name": "JDGHCKEMFND",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpLoadGuildBattleHunter",
+              "token": 100676071,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "PFJLMDKBICA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[]"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UpdateBackUpRecord",
+              "token": 100676072,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AHNLOJCLAPI",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckResetListRefrshCount",
+              "token": 100676073,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "BHAJGKOHJAG",
+                  "type": "System.DateTime"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetGuildRankingBuff",
+              "token": 100676074,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "InsertLevelUpBackEndLog",
+              "token": 100676075,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "AGFLMGOFGMH",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetMatchUpList",
+              "token": 100676076,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SendCheckOutResult",
+              "token": 100676077,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CGHGMJNLAOI",
+              "token": 100676078,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FMGEKCDGKJN",
+                  "type": "GuildManager.LFNHGGLBEEN"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LeaveGuild",
+              "token": 100676079,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetGuildRankFieldObj",
+              "token": 100676080,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FGMCJKAAIIP",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OCEHDDLCEKD",
+              "token": 100676081,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Collections.Generic.KeyValuePair<System.Int32,GuildManager.KNBHKEBIBHO>"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AHDEBHHOLLC",
+              "token": 100676082,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OFMPIKKOOIC",
+                  "type": "System.Collections.Generic.KeyValuePair<System.Int32,GuildManager.KNBHKEBIBHO>"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "InsertDonateBackEndLog",
+              "token": 100676083,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LHELPKKLGLI",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "OEDKPBCALMG",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 2,
+                  "name": "HOKEOKKAALB",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 3,
+                  "name": "AGFLMGOFGMH",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckMyGuildBattleRecord",
+              "token": 100676084,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "AFDFAKCFDCG",
+                  "type": "System.Action<GuildManager.EPNFGNOIIOB>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JICCCBGFFLE",
+              "token": 100676085,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NNKDHJPLPMA",
+              "token": 100676086,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetGuildBattleMembers",
+              "token": 100676087,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "MLOEKGNKDBJ",
+                  "type": "System.Action<GuildManager.MEAPDGIHAFC,System.Collections.Generic.Dictionary<System.String,EBFMPIMINDL>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CheckAttendGuildExp",
+              "token": 100676088,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BuffUp",
+              "token": 100676089,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EFDNNOLMFCB",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetExpLimit",
+              "token": 100676090,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OIDEGEHANOO",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LLBAJCBELOA",
+              "token": 100676091,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean,System.Collections.Generic.List<MHDDADJDDCK>>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GDOPIAHIMDH",
+              "token": 100676092,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "BKJOADKGMKO",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReleaseViceMaster",
+              "token": 100676093,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "GBKAJJNOOGJ",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<System.Boolean>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KGELIGPJJMF",
+              "token": 100676094,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "CDDEBOOAIMK",
+                  "type": "System.Action<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool>"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ExpDonate",
+              "token": 100676095,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Awake",
+              "token": 100676096,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

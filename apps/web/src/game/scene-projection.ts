@@ -35,6 +35,10 @@ export function projectNormalizedEntityPoint(
   };
 }
 
+export function projectWorldEntityPoint(x: number, y: number): { x: number; y: number } {
+  return { x, y };
+}
+
 export function runtimeScenePieces<T extends { id?: string }>(pieces: T[]): T[] {
   // The recovered skull gate has no confirmed attachment and otherwise floats over open water.
   return pieces.filter((piece) => piece.id !== "gate");

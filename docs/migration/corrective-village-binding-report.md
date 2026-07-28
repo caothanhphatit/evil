@@ -87,3 +87,21 @@ For the corrective village build, render the following in this order:
 6. Keep monsters in the connected field side (`background_19`/`map_new01`) rather than inside the village. If `mon_a_01_1` is used temporarily, retain the unverified-binding marker in content data and UI diagnostics.
 
 Do not flatten `map_new01` into the village background, invent a first monster ID, or present `All_h1` as a recovered starter skin. The map composition is now strongly evidenced; the runtime entity roster and exact starter bindings are not.
+
+## Web packaging guardrails
+
+The visible-world packager resolves the ten ground, gate, wall, and bridge
+positions directly from `level1-scene-evidence-v2.json`. It requires the exact
+serialized `Background` parent transform, identity rotation, and unit scale;
+unsupported hierarchy changes fail packaging instead of falling back to copied
+coordinates. Trimmed sprite anchors remain sourced from the immutable Unity
+Sprite rect, pivot, and `textureRectOffset` metadata.
+
+Town buildings are dynamic `BuildGroup` instances and therefore do not have
+recoverable per-building positions in the saved `level1` scene. The browser
+renders only authoritative building instances whose visual IDs are present in
+the checksum-pinned visible-world release. Rendering no longer waits for the
+separate 39 MB building UI/economy registry, because that registry does not add
+placement evidence and previously left the town visually empty during load or
+after a registry failure. Exact original saved-town building placement remains
+unresolved.

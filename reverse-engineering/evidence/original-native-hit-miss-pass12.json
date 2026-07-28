@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hit-miss-pass12",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "name": "hunterCallers",
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "name": "combatMethods",
+      "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+      "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+    },
+    {
+      "name": "hunterIntake",
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json",
+      "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8"
+    },
+    {
+      "name": "evilMethods",
+      "path": "reverse-engineering/evidence/original-native-evilctrl-all-methods-api35-v1.json",
+      "sha256": "0095758226878134fccced21c97b7cb0432689ac97e6006108cccd382ffdfa71"
+    },
+    {
+      "name": "statusSchema",
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    },
+    {
+      "name": "evilSchema",
+      "path": "reverse-engineering/evidence/evil-data-runtime-schema-api35-v1.json",
+      "sha256": "ed7895541e98bc2665321ca2c894f8198d76765d5accd3a0d3479bdb6e1560fc"
+    }
+  ],
+  "methods": [
+    {
+      "className": "HunterCtrl",
+      "methodName": "HuntingAttackAction",
+      "token": 100686888,
+      "moduleOffset": "0x3416a40",
+      "nativeSizeBytes": 8016,
+      "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59"
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "getDamage",
+      "token": 100686903,
+      "moduleOffset": "0x33f51c4",
+      "nativeSizeBytes": 9496,
+      "bodySha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3"
+    },
+    {
+      "className": "EvilCtrl",
+      "methodName": "FixedUpdate",
+      "token": 100675582,
+      "moduleOffset": "0x2f290fc",
+      "nativeSizeBytes": 2936,
+      "bodySha256": "fdfcf59b9ff3a4a50f8a4414cc6b01734bb10242581735827794e4af18b814a4"
+    },
+    {
+      "className": "EvilCtrl",
+      "methodName": "EBNOJHOGEMM",
+      "token": 100675599,
+      "moduleOffset": "0x2f29c74",
+      "nativeSizeBytes": 1160,
+      "bodySha256": "cb04284edf200dacb289ebd8ad5e9c72696e6508be3b5509f10d781219181d01"
+    },
+    {
+      "className": "EvilCtrl",
+      "methodName": "OFEIPNBMNML",
+      "token": 100675519,
+      "moduleOffset": "0x2f1a8cc",
+      "nativeSizeBytes": 1712,
+      "bodySha256": "140634f14de6f7e1f0d676d04b5fe89dca77c7b28829b8f19a74dfd30737313d"
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "Damaged",
+      "token": 100687018,
+      "moduleOffset": "0x346514c",
+      "nativeSizeBytes": 18964,
+      "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6"
+    }
+  ],
+  "hunterAttacksEvil": {
+    "basicAttackEntry": "HuntingAttackAction calls getDamage(false,false,false) at 0x34173D4.",
+    "getDamageIntegerRng": {
+      "callSite": "0x33f6c2c",
+      "range": "[0,100)",
+      "threshold": "min(100, StatusData.CalcCritical + gated HunterCtrl field 0x90C)",
+      "comparison": "roll < threshold",
+      "identity": "critical selection, proven by the CalcCritical@0xB0 load and getCriticalDamage call",
+      "notHitMiss": "the selected path changes the result discriminator to 2; it does not abort outgoing damage construction"
+    },
+    "basicActionRngInventory": [
+      {
+        "callSite": "0x3417044",
+        "range": "[0,101)",
+        "sourceRoot": "HunterCtrl fields",
+        "classification": "attacker-owned proc"
+      },
+      {
+        "callSite": "0x3417154",
+        "range": "[0,101)",
+        "sourceRoot": "HunterData+0x2A4 and DataManager table",
+        "classification": "attacker-owned proc"
+      },
+      {
+        "callSite": "0x3417600",
+        "range": "[0,100)",
+        "sourceRoot": "StatusData.GearProperty row 25",
+        "classification": "attacker-owned gear proc"
+      },
+      {
+        "callSite": "0x3417758",
+        "range": "[0,100)",
+        "sourceRoot": "StatusData.GearSetPropertyValue row 64",
+        "classification": "attacker-owned gear-set proc"
+      },
+      {
+        "callSite": "0x3418540",
+        "range": "[0,101)",
+        "sourceRoot": "HunterData+0x294 and DataManager table",
+        "classification": "attacker-owned proc"
+      }
+    ],
+    "schemaBoundary": {
+      "statusAccuracyFields": [],
+      "evilEvasionFields": []
+    },
+    "conclusion": "No accuracy-versus-Evil-evasion RNG is present in the captured basic-action/getDamage construction path. Target delivery remains separately unresolved, so this is not proof that every possible projectile or skill always hits."
+  },
+  "evilAttacksHunter": {
+    "directChain": "EvilCtrl.FixedUpdate -> EvilCtrl.EBNOJHOGEMM -> HunterCtrl.Damaged",
+    "preDamageGate": {
+      "owner": "EvilCtrl",
+      "field": "OCLFGGEJKMI@0x1E8",
+      "enable": "field >= 1",
+      "range": "[0,100)",
+      "comparison": "roll < field",
+      "procOrdering": "proc branches to DamageManager.Show and returns before HunterCtrl.Damaged; non-proc continues to HunterCtrl.Damaged",
+      "semanticBoundary": "BuffSetting effect type 54 writes this field, but native evidence does not name the gameplay effect accuracy, blind, miss, dodge, or evasion."
+    },
+    "alternateDirectCaller": "EvilCtrl.OFEIPNBMNML contains two HunterCtrl.Damaged calls and no integer Random.Range call.",
+    "hunterDamagedRng": {
+      "callSites": [
+        "0x34653c8",
+        "0x34667b4",
+        "0x3469508",
+        "0x346959c"
+      ],
+      "classification": "post-entry Hunter gear/effect procs; none is a direct CalcDodge read"
+    },
+    "calcDodge": {
+      "field": "StatusData.CalcDodge@0xC0",
+      "directReadInCapturedChain": false,
+      "globalConsumerStatus": "unresolved"
+    },
+    "conclusion": "The captured direct Evil attack chain has an attacker-owned effect-54 abort gate, not a proven Hunter CalcDodge roll. A product-facing miss/dodge label would be semantic guessing."
+  },
+  "integrationStatus": "do_not_add_accuracy_or_dodge_formula_until_a_target_delivery_or_CalcDodge_consumer_is_proven",
+  "unresolved": [
+    "global consumer and exact formula for StatusData.CalcDodge",
+    "product-facing name of Evil effect type 54",
+    "all projectile, effect and skill target-delivery paths after getDamage",
+    "whether any indirect or target-specific path outside the captured direct chains performs a hit test"
+  ]
+}

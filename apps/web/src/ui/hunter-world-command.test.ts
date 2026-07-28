@@ -1,0 +1,141 @@
+import { readFile } from "node:fs/promises";
+import { describe, expect, it } from "vitest";
+import {
+  createHunterWorldCommandMenu,
+  HUNTER_COMMAND_CATEGORIES,
+  HUNTER_HUNTING_REGIONS,
+  reduceHunterWorldCommandState,
+  type HunterWorldCommandSelection,
+} from "./hunter-world-command";
+
+const selection: HunterWorldCommandSelection = {
+  entityId: "village-hunter-7",
+  displayName: "Morris",
+  screenPoint: { x: 210, y: 360 },
+};
+
+describe("Hunter world command menu", () => {
+  it("opens the command tooltip immediately and keeps movement in the same layer", () => {
+    const previousDocument = globalThis.document;
+    const fakeDocument = { createElement: () => new FakeElement() };
+    Object.defineProperty(globalThis, "document", { value: fakeDocument, configurable: true, writable: true });
+    try {
+      const host = new FakeElement();
+      const intents: unknown[] = [];
+      const menu = createHunterWorldCommandMenu(host as unknown as HTMLElement, {
+        onInfo: () => undefined,
+        onIntent: (intent) => intents.push(intent),
+        onRelease: () => undefined,
+      });
+      menu.selectHunter(selection);
+      const layer = host.children[0];
+      expect(layer?.hidden).toBe(false);
+      expect(layer?.children.map((child) => child.className)).toEqual([
+        "hunter-world-action-bubble", "hunter-world-command-panel",
+      ]);
+      findByDataValue(layer, "movement")?.click();
+      expect(findByDataValue(layer, "back")).toBeDefined();
+      expect(findByDataValue(layer, "map_new01")).toBeDefined();
+
+      findByDataValue(layer, "background_08")?.click();
+      expect(intents).toEqual([{
+        type: "assign_hunter_hunting_region",
+        hunterEntityId: "village-hunter-7",
+        regionId: "background_08",
+      }]);
+      expect(layer?.hidden).toBe(true);
+    } finally {
+      Object.defineProperty(globalThis, "document", { value: previousDocument, configurable: true, writable: true });
+    }
+  });
+
+  it("moves through the screenshot interaction without replacing the selected Hunter", () => {
+    const categories = reduceHunterWorldCommandState({ mode: "closed" }, { type: "select_hunter", selection });
+    expect(categories).toEqual({ mode: "categories", selection });
+    const movement = reduceHunterWorldCommandState(categories, { type: "open_category", category: "movement" });
+    expect(movement).toEqual({ mode: "movement", selection });
+    expect(reduceHunterWorldCommandState(movement, { type: "back" })).toEqual({ mode: "categories", selection });
+  });
+
+  it("uses X only to close the tooltip and release the selected Hunter", () => {
+    const previousDocument = globalThis.document;
+    const fakeDocument = { createElement: () => new FakeElement() };
+    Object.defineProperty(globalThis, "document", { value: fakeDocument, configurable: true, writable: true });
+    try {
+      const host = new FakeElement();
+      const released: string[] = [];
+      const menu = createHunterWorldCommandMenu(host as unknown as HTMLElement, {
+        onInfo: () => undefined,
+        onIntent: () => undefined,
+        onRelease: (entityId) => released.push(entityId),
+      });
+
+      menu.selectHunter(selection);
+      findByClass(host.children[0], "hunter-world-command")?.click();
+
+      expect(released).toEqual([selection.entityId]);
+      expect(menu.state()).toEqual({ mode: "closed" });
+      expect(menu.selectedEntityId()).toBeNull();
+      expect(host.children[0]?.hidden).toBe(true);
+    } finally {
+      Object.defineProperty(globalThis, "document", { value: previousDocument, configurable: true, writable: true });
+    }
+  });
+
+  it("keeps the recovered five-category and three-region order explicit", () => {
+    expect(HUNTER_COMMAND_CATEGORIES.map((category) => category.id)).toEqual([
+      "items", "movement", "learn", "daily-life", "management",
+    ]);
+    expect(HUNTER_HUNTING_REGIONS.map((region) => region.id)).toEqual([
+      "map_new01", "background_08", "background_11",
+    ]);
+  });
+
+  it("renders menu state inside one persistent layer and emits intent instead of an outcome", async () => {
+    const source = await readFile(new URL("./hunter-world-command.ts", import.meta.url), "utf8");
+    const visibleWorld = await readFile(new URL("../game/visible-world.ts", import.meta.url), "utf8");
+    expect(source).toContain('root.className = "hunter-world-command-layer"');
+    expect(source).toContain("root.replaceChildren()");
+    expect(source).toContain('type: "assign_hunter_hunting_region"');
+    expect(visibleWorld).toContain("event.global.x");
+    expect(visibleWorld).toContain("event.global.y");
+    expect(source).not.toContain("damage");
+    expect(source).not.toContain("experience");
+    expect(source).not.toContain("drop");
+  });
+});
+
+class FakeElement {
+  children: FakeElement[] = [];
+  hidden = false;
+  className = "";
+  textContent = "";
+  title = "";
+  type = "";
+  readonly dataset: Record<string, string> = {};
+  readonly style = { setProperty: () => undefined };
+  readonly classList = { add: (...names: string[]) => { this.className = [this.className, ...names].filter(Boolean).join(" "); } };
+  private readonly listeners = new Map<string, Array<() => void>>();
+
+  append(...children: FakeElement[]): void { this.children.push(...children); }
+  replaceChildren(...children: FakeElement[]): void { this.children = children; }
+  setAttribute(): void { /* The interaction test does not inspect accessibility attributes. */ }
+  addEventListener(type: string, listener: EventListenerOrEventListenerObject): void {
+    const callback = typeof listener === "function" ? () => listener(new Event(type)) : () => listener.handleEvent(new Event(type));
+    this.listeners.set(type, [...(this.listeners.get(type) ?? []), callback]);
+  }
+  click(): void { for (const listener of this.listeners.get("click") ?? []) listener(); }
+  remove(): void { /* Detached ownership is not needed by this isolated fake tree. */ }
+}
+
+function findByClass(root: FakeElement | undefined, className: string): FakeElement | undefined {
+  if (!root) return undefined;
+  if (root.className.split(" ").includes(className)) return root;
+  return root.children.map((child) => findByClass(child, className)).find(Boolean);
+}
+
+function findByDataValue(root: FakeElement | undefined, value: string): FakeElement | undefined {
+  if (!root) return undefined;
+  if (root.dataset.value === value) return root;
+  return root.children.map((child) => findByDataValue(child, value)).find(Boolean);
+}

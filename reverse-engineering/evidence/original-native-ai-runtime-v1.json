@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-ai-runtime-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-26T17:33:53.477156Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 7450,
+    "action": "Game already loaded in tutorial town; schema-only native method capture after adb root",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "EvilCtrl",
+        "methodName": "FixedUpdate",
+        "parameterCount": 0
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "Move",
+        "parameterCount": 3
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "UnitAttack",
+        "parameterCount": 0
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "Dead",
+        "parameterCount": 1
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "FsmMoveEnd",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "Hunting",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HuntingFirst",
+        "parameterCount": 1
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HuntingSecond",
+        "parameterCount": 1
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HuntingAttackSetting",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HuntingAttackAction",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "Reward",
+        "parameterCount": 2
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "RewardMetrial",
+        "parameterCount": 5
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "PlusGold",
+        "parameterCount": 1
+      }
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 4096
+  },
+  "module": {
+    "name": "libil2cpp.so",
+    "base": "0x73a7e00000",
+    "size": 106893312
+  },
+  "methodBoundaryRule": "Each body was read from the live decrypted method pointer through the nearest higher unique Assembly-CSharp method pointer; aliases that share the same pointer share one native body and do not create a boundary. Module offsets are relative to the live libil2cpp mapping base.",
+  "schemaSource": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+  "methods": [
+    {
+      "type": "EvilCtrl",
+      "method": "FixedUpdate",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06002FFE",
+      "moduleOffset": "0x2f290fc",
+      "nativeSizeBytes": 2936,
+      "bodySha256": "fdfcf59b9ff3a4a50f8a4414cc6b01734bb10242581735827794e4af18b814a4",
+      "knownDirectCalls": [
+        {
+          "method": "EvilCtrl.ACCJOBLGLJN",
+          "count": 2
+        },
+        {
+          "method": "EvilCtrl.CheckEvilData",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.EBNOJHOGEMM",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.LAMNNAOEOIE",
+          "count": 2
+        },
+        {
+          "method": "EvilCtrl.UnitAttackEnd",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.getEvilData",
+          "count": 23
+        },
+        {
+          "method": "HunterCtrl.getHunterData",
+          "count": 2
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "AFNMKJOIPPD",
+          "offset": 133,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "AJGEBGMDMJM",
+          "offset": 520,
+          "type": "System.Single"
+        },
+        {
+          "name": "CJGMDHPGAPL",
+          "offset": 184,
+          "type": "UnityEngine.Quaternion"
+        },
+        {
+          "name": "ENJGINDFFDD",
+          "offset": 460,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "EPFLFJHGLKH",
+          "offset": 128,
+          "type": "System.Single"
+        },
+        {
+          "name": "HEGEBLFGCBC",
+          "offset": 584,
+          "type": "System.Single"
+        },
+        {
+          "name": "JLHEBEFNCPL",
+          "offset": 132,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "KKNKEOAABAC",
+          "offset": 136,
+          "type": "System.Int32"
+        },
+        {
+          "name": "LODOLHBMCBD",
+          "offset": 124,
+          "type": "System.Single"
+        },
+        {
+          "name": "MMEIFNIOAAB",
+          "offset": 336,
+          "type": "TargetPosition"
+        },
+        {
+          "name": "OIOFLNGIPKD",
+          "offset": 344,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "ONDLDFIJBID",
+          "offset": 462,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "PBOCIECIFIP",
+          "offset": 168,
+          "type": "UnityEngine.Quaternion"
+        },
+        {
+          "name": "PDKKIPKDNJA",
+          "offset": 463,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "PJEIJLOMDEP",
+          "offset": 461,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "mCharacter",
+          "offset": 216,
+          "type": "UnityEngine.Transform"
+        },
+        {
+          "name": "mTargetUnit",
+          "offset": 160,
+          "type": "HunterCtrl"
+        },
+        {
+          "name": "mTransform",
+          "offset": 152,
+          "type": "UnityEngine.Transform"
+        }
+      ]
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "Move",
+      "parameterCount": 3,
+      "parameterTypes": [
+        "System.Int32",
+        "UnityEngine.Vector2",
+        "System.Int32"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06002FB5",
+      "moduleOffset": "0x2f156d8",
+      "nativeSizeBytes": 356,
+      "bodySha256": "e3ba9c46084c3a11677a76e7c5c6fa0e0d781abc9b2f644cdb034740af1fcbf2",
+      "knownDirectCalls": [
+        {
+          "method": "EvilCtrl.PANFOJGCGDE",
+          "count": 1
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "AIJLHNOBNHD",
+          "offset": 100,
+          "type": "UnityEngine.Vector2"
+        },
+        {
+          "name": "mOpenWoundsDebuff",
+          "offset": 312,
+          "type": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "FsmMoveEnd",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06003003",
+      "moduleOffset": "0x2f2a334",
+      "nativeSizeBytes": 612,
+      "bodySha256": "48646b1b91cf56ac5c56faaf62f36126331726f93aa67f7504a0456a4cb4317d",
+      "knownDirectCalls": [
+        {
+          "method": "EvilCtrl.CheckEvilData",
+          "count": 2
+        },
+        {
+          "method": "EvilCtrl.PINBKNPMMHA",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.getEvilData",
+          "count": 2
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "AHHGGNMACOG",
+          "offset": 96,
+          "type": "System.Int32"
+        },
+        {
+          "name": "AIJLHNOBNHD",
+          "offset": 100,
+          "type": "UnityEngine.Vector2"
+        },
+        {
+          "name": "DHHLBIJJCJN",
+          "offset": 108,
+          "type": "UnityEngine.Vector2"
+        },
+        {
+          "name": "MKLJPAHNJKA",
+          "offset": 88,
+          "type": "System.Collections.Generic.List<FDIEGOLCDBE>"
+        },
+        {
+          "name": "mTransform",
+          "offset": 152,
+          "type": "UnityEngine.Transform"
+        }
+      ]
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "UnitAttack",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x0600300D",
+      "moduleOffset": "0x2f156ac",
+      "nativeSizeBytes": 44,
+      "bodySha256": "ec9f2a92603308602a0d1012f0191e65122fdd91f96b464925bcd86ac1519571",
+      "knownDirectCalls": [],
+      "schemaFieldReferences": []
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "Dead",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06002FE7",
+      "moduleOffset": "0x2f233e8",
+      "nativeSizeBytes": 1484,
+      "bodySha256": "7e3d9c552f1ecea2e14d00fa1f9bfc9a1ba2f447ad29505ea3b3cb570ec7552e",
+      "knownDirectCalls": [
+        {
+          "method": "EvilCtrl.ENFKGEBNIEE",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.PNCPAGGMBML",
+          "count": 1
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "HPINIGEBEJM",
+          "offset": 624,
+          "type": "UnityEngine.Coroutine"
+        },
+        {
+          "name": "mStringIndex",
+          "offset": 144,
+          "type": "System.String"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Hunting",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06005C29",
+      "moduleOffset": "0x34548a4",
+      "nativeSizeBytes": 416,
+      "bodySha256": "12ff4cc111ec7d5cd9e1c7b87d542cb14af5f3be2156fd42d889a748ad0edd92",
+      "knownDirectCalls": [
+        {
+          "method": "HunterCtrl.FsmClearQueue",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FsmInsertQueue",
+          "count": 9
+        }
+      ],
+      "schemaFieldReferences": []
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingFirst",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06005B84",
+      "moduleOffset": "0x341aeb0",
+      "nativeSizeBytes": 1180,
+      "bodySha256": "d142aa7b2d86e18fc7a6307289abf959f626adfd0b918ba94d95b70a71ea4083",
+      "knownDirectCalls": [
+        {
+          "method": "HunterCtrl.ChangePatternIndex",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FsmClearQueue",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FsmInsertQueue",
+          "count": 5
+        },
+        {
+          "method": "HunterCtrl.MOHMBDICLPI",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.OMEEOBPNOGH",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.SpeakClose",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.SpeakTextShow",
+          "count": 2
+        },
+        {
+          "method": "HunterCtrl.getHunterData",
+          "count": 4
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "PDJNFAMMKKL",
+          "offset": 2688,
+          "type": "UnityEngine.Coroutine"
+        },
+        {
+          "name": "mStringIndex",
+          "offset": 512,
+          "type": "System.String"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingSecond",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06005B5F",
+      "moduleOffset": "0x3408264",
+      "nativeSizeBytes": 1180,
+      "bodySha256": "e43b373b42762e3ab0a7fb6bad8791075169e786c29fbb2ca06bb5eed2106171",
+      "knownDirectCalls": [
+        {
+          "method": "HunterCtrl.ChangePatternIndex",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FsmClearQueue",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FsmInsertQueue",
+          "count": 5
+        },
+        {
+          "method": "HunterCtrl.MOHMBDICLPI",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.OMEEOBPNOGH",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.SpeakClose",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.SpeakTextShow",
+          "count": 2
+        },
+        {
+          "method": "HunterCtrl.getHunterData",
+          "count": 4
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "PDJNFAMMKKL",
+          "offset": 2688,
+          "type": "UnityEngine.Coroutine"
+        },
+        {
+          "name": "mStringIndex",
+          "offset": 512,
+          "type": "System.String"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingAttackSetting",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06005BE4",
+      "moduleOffset": "0x34012f8",
+      "nativeSizeBytes": 660,
+      "bodySha256": "6119134928144d1fcc8dd3a24c5d119274bf3fc3010784bd3fb36cc13d63deef",
+      "knownDirectCalls": [
+        {
+          "method": "HunterCtrl.getHunterData",
+          "count": 6
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "mAttackCheck",
+          "offset": 500,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "mTargetEvil",
+          "offset": 888,
+          "type": "EvilCtrl"
+        }
+      ]
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingAttackAction",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06005C28",
+      "moduleOffset": "0x3416a40",
+      "nativeSizeBytes": 8016,
+      "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59",
+      "knownDirectCalls": [
+        {
+          "method": "EvilCtrl.CurseDamage",
+          "count": 1
+        },
+        {
+          "method": "EvilCtrl.WarcryAction",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.ACCJOBLGLJN",
+          "count": 3
+        },
+        {
+          "method": "HunterCtrl.BCKNMNKCDNE",
+          "count": 2
+        },
+        {
+          "method": "HunterCtrl.BJOIOIIDDGD",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.CheckFamiliar",
+          "count": 2
+        },
+        {
+          "method": "HunterCtrl.CheckHandsOfGod",
+          "count": 2
+        },
+        {
+          "method": "HunterCtrl.CheckJobTrait",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.ComebackHome",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.DEJOHOPDNPG",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FDNDFLJHGGH",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FHAANLPPCEH",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.FireDamageAction",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.GetMisticArrow",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.HCHKACAHIPJ",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.HOCDFMHGJDA",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.JIELIFGGFJL",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.LKKDBDJMLCL",
+          "count": 3
+        },
+        {
+          "method": "HunterCtrl.MBBJGCEBJCC",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.MKCPMEDCOCO",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.OADPOFNKAON",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.ODLGBADBJFE",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.PCBCLIHMIMA",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.PLDKAMPEPOG",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.PMPAIIKDPHL",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.PulverizeAttack",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.SpeakTextShow",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.getDamage",
+          "count": 1
+        },
+        {
+          "method": "HunterCtrl.getHunterData",
+          "count": 34
+        },
+        {
+          "method": "HunterCtrl.getStatusData",
+          "count": 18
+        }
+      ],
+      "schemaFieldReferences": [
+        {
+          "name": "AttackAniTime",
+          "offset": 428,
+          "type": "System.Single"
+        },
+        {
+          "name": "BELIMGGBGNN",
+          "offset": 920,
+          "type": "System.Int32"
+        },
+        {
+          "name": "CHKIHPMDOBM",
+          "offset": 2576,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "CLNOCMAGDBD",
+          "offset": 1768,
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+        },
+        {
+          "name": "DANCPPLMKIK",
+          "offset": 984,
+          "type": "System.Single"
+        },
+        {
+          "name": "FAmiliarAni",
+          "offset": 144,
+          "type": "UnityEngine.Animator"
+        },
+        {
+          "name": "FairyAni",
+          "offset": 88,
+          "type": "UnityEngine.Animator"
+        },
+        {
+          "name": "GodHandsAni",
+          "offset": 120,
+          "type": "UnityEngine.Animator"
+        },
+        {
+          "name": "OIOFLNGIPKD",
+          "offset": 976,
+          "type": "System.Boolean"
+        },
+        {
+          "name": "TargetAttackCount",
+          "offset": 896,
+          "type": "System.Int32"
+        },
+        {
+          "name": "mEffect",
+          "offset": 584,
+          "type": "UnityEngine.GameObject[]"
+        },
+        {
+          "name": "mNowAnimation",
+          "offset": 496,
+          "type": "System.Int32"
+        },
+        {
+          "name": "mPumpkinObj",
+          "offset": 48,
+          "type": "UnityEngine.GameObject"
+        },
+        {
+          "name": "mSkillMent",
+          "offset": 600,
+          "type": "SkillMentCtrl[]"
+        },
+        {
+          "name": "mStringIndex",
+          "offset": 512,
+          "type": "System.String"
+        },
+        {
+          "name": "mTargetEvil",
+          "offset": 888,
+          "type": "EvilCtrl"
+        },
+        {
+          "name": "mTransform",
+          "offset": 520,
+          "type": "UnityEngine.Transform"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Direct calls are named only when the live HunterCtrl/EvilCtrl method map resolves the target.",
+    "Indirect calls and external Unity/runtime helpers remain unresolved unless separately captured.",
+    "Field references identify exact offsets and types, but obfuscated field semantics are not invented.",
+    "Raw decrypted native method bytes are not embedded; the record retains bounded size and SHA-256 evidence.",
+    "The state-machine interpretation belongs in the companion migration report, not in this mechanical record."
+  ]
+}

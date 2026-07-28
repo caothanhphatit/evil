@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-gear-formula-analysis",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+      "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-formula-analysis-v1.json",
+      "sha256": "cb6492e5b2d6d82a71440b47b330272118646c6192ffe2aba93117bfb33add15"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-domain-runtime-schema-android-api30-v1.json",
+      "sha256": "9e35b239ab0ccf70cc9182db1d97f1f525f7d7e61b4094f4883821dfdc4ad558"
+    },
+    {
+      "path": "reverse-engineering/evidence/admin-gear-formula-runtime-schema-api35-v1.json",
+      "sha256": "c8c0da07e06f12171a0aebbc9c648149acf98f1ae07a9aaf455c36f5d17e1e98"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-get-first-percent-api35-v1.json",
+      "sha256": "f3b9ab9157f58bad59a0506f9fb12cf6f3a58c387026e99fdecf45e7350fe930"
+    }
+  ],
+  "gearDataInput": {
+    "argumentRegister": "x1",
+    "stableAliasRegister": "x20",
+    "fields": [
+      {
+        "semanticName": "index",
+        "offset": 16,
+        "runtimeName": "<index>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      },
+      {
+        "semanticName": "gearIndex",
+        "offset": 32,
+        "runtimeName": "<gearIndex>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      },
+      {
+        "semanticName": "quality",
+        "offset": 64,
+        "runtimeName": "<quality>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      },
+      {
+        "semanticName": "level",
+        "offset": 92,
+        "runtimeName": "<level>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      },
+      {
+        "semanticName": "rating",
+        "offset": 108,
+        "runtimeName": "<rating>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      }
+    ]
+  },
+  "methods": [
+    {
+      "method": "GetGearDamage",
+      "token": "0x06006A18",
+      "nativeSizeBytes": 1272,
+      "bodySha256": "cba2a0d6ff62f8c36b66d91a50bc2b8c7c14242655dd80e0dfe7e37937f07f97",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 23
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "method": "GetGearAcc",
+      "token": "0x06006A7F",
+      "nativeSizeBytes": 1124,
+      "bodySha256": "701b6ae94e18abf4001b668eb76fd1ea8229ea13fad517702e1a8e6065f4a3fa",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 20
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "method": "GetGearArmor",
+      "token": "0x06006A89",
+      "nativeSizeBytes": 1124,
+      "bodySha256": "32ab56c5a2125e743a1760dbbf78d0e6d77ce88d32d629b5730c4003ebd4d96c",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 20
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "method": "GetSealAttackUp",
+      "token": "0x06006BC8",
+      "nativeSizeBytes": 492,
+      "bodySha256": "05170fcee5a3830b70511c4e319f31f4e98e87887a055586b8768d2b612073dd",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 13
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x246bf08",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5219d84",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "gearArmorAndAcc": {
+    "sharedControlFlow": "The two bodies have the same field, multiplier, percentage-addition, quality, and rounding structure; their table/helper targets differ.",
+    "neutralExpression": "roundToEven(base * ratingPercent/100 * (1 + levelPercent/100) * qualityMultiplier)",
+    "qualityMultipliers": {
+      "0": 0.8,
+      "1": 0.9,
+      "3": 1.1,
+      "4": 1.2,
+      "other": 1.0
+    },
+    "rounding": "nearest integer with midpoint ties to even",
+    "goldenVectors": [
+      {
+        "input": [
+          100,
+          100,
+          0,
+          2
+        ],
+        "result": 100
+      },
+      {
+        "input": [
+          100,
+          80,
+          25,
+          0
+        ],
+        "result": 80
+      },
+      {
+        "input": [
+          100,
+          110,
+          10,
+          4
+        ],
+        "result": 145
+      },
+      {
+        "input": [
+          10.5,
+          100,
+          0,
+          2
+        ],
+        "result": 10
+      },
+      {
+        "input": [
+          11.5,
+          100,
+          0,
+          2
+        ],
+        "result": 12
+      }
+    ],
+    "adminFields": {
+      "base": "firstValue",
+      "rating": "ratingValue",
+      "levelPercent": "firstPercent"
+    }
+  },
+  "gearDamage": {
+    "confirmedFields": [
+      "index",
+      "gearIndex",
+      "quality",
+      "level",
+      "rating"
+    ],
+    "confirmedConstants": [
+      0.01,
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.2
+    ],
+    "rounding": "nearest integer with midpoint ties to even",
+    "helper": {
+      "type": "GameManager",
+      "name": "GetFirstPercent",
+      "token": "0x06006B04",
+      "parameterTypes": [
+        "System.Int32",
+        "System.Int32",
+        "System.Int32"
+      ],
+      "returnType": "System.Int32",
+      "moduleOffset": "0x26bdf7c",
+      "nativeSizeBytes": 1108,
+      "bodySha256": "93763390fa4008b56c5c4a3cb16d085b3005d778fc2a9cb8246490a553cea3b"
+    },
+    "adminFields": {
+      "base": "firstValue",
+      "rating": "ratingValue",
+      "levelPercent": "firstPercent",
+      "finalPercent": "secondValue"
+    },
+    "ratingSelection": "ratingValue[min(GearData.rating, ratingValue.length - 1)]",
+    "expression": "roundToEven(firstValue * ratingValue[rating]/100 * (1 + GetFirstPercent(index, gearIndex, level + adjustment)/100) * qualityMultiplier * secondValue/100)",
+    "getFirstPercent": {
+      "adminField": "AdminGearData.firstPercent",
+      "adminFieldOffset": 152,
+      "negativeLimitResult": 0,
+      "stepToArrayIndex": {
+        "1..5": 0,
+        "6..10": 1,
+        "11..15": 2,
+        "16..20": 3,
+        "21": 4,
+        "22": 5,
+        "23": 6,
+        "24": 7,
+        "25": 8
+      },
+      "stepsOutsideMapping": "add zero",
+      "result": "sum the selected firstPercent values for every integer step from 0 through limit inclusive"
+    },
+    "goldenVectors": [
+      {
+        "input": [
+          100,
+          100,
+          0,
+          2,
+          100
+        ],
+        "result": 100
+      },
+      {
+        "input": [
+          120,
+          80,
+          25,
+          4,
+          150
+        ],
+        "result": 216
+      },
+      {
+        "firstPercentValues": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "limit": 12,
+        "result": 33
+      }
+    ],
+    "status": "exact structural expression recovered; gameplay meaning of the caller adjustment remains unresolved"
+  },
+  "sealAttack": {
+    "acceptedInputIds": [
+      157,
+      158,
+      159,
+      160,
+      161,
+      202,
+      255,
+      320,
+      359,
+      476,
+      489,
+      531,
+      706,
+      758,
+      822
+    ],
+    "acceptedResult": "first integer from the selected nested table row multiplied by 0.01",
+    "rejectedResult": 0.0,
+    "goldenVectors": [
+      {
+        "inputId": 157,
+        "tableFirstValue": 25,
+        "result": 0.25
+      },
+      {
+        "inputId": 161,
+        "tableFirstValue": 125,
+        "result": 1.25
+      },
+      {
+        "inputId": 156,
+        "tableFirstValue": 25,
+        "result": 0.0
+      }
+    ]
+  },
+  "weaponCostumeAttack": {
+    "token": "0x06006B36",
+    "moduleOffset": "0x271fd38",
+    "nativeSizeBytes": 296,
+    "bodySha256": "bcc55d3a563208f7d2011d43abc2f43d9602a41971266b2d40071cd535f53839",
+    "acceptedSelectorEvidence": {
+      "vectorRangeLowerBounds": [
+        182,
+        109,
+        298,
+        311,
+        354,
+        441,
+        478,
+        516,
+        555,
+        651,
+        753,
+        811
+      ],
+      "vectorRangeWidths": [
+        12,
+        8,
+        4,
+        4,
+        4,
+        8,
+        4,
+        8,
+        4,
+        4,
+        4,
+        5
+      ],
+      "scalarRangeLowerBounds": [
+        823,
+        847,
+        874
+      ],
+      "scalarRangeWidths": [
+        5,
+        5,
+        4
+      ]
+    },
+    "acceptedResult": "first integer from the selected nested table row multiplied by 0.01",
+    "rejectedResult": 0.0,
+    "status": "selector arithmetic is normalized, but the second SIMD lane uses a bit-cleared input; its final accepted ID expansion remains unresolved"
+  },
+  "blockers": [
+    "Option type meanings and plus/minus/rune participation are not proven by these three Gear methods.",
+    "The caller adjustment added to GearData.level before GetFirstPercent remains semantically unresolved.",
+    "Weapon-costume selector lanes must be exhaustively emulated before publishing a final accepted ID list."
+  ]
+}

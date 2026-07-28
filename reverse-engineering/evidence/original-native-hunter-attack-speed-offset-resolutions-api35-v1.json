@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T07:12:11.768746Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 23269,
+    "action": "pass-5 pointer-only reverse resolution; no values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [
+      "0x26c0238",
+      "0x2d5e1f8",
+      "0x340fcf8",
+      "0x34195fc"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 0,
+    "exactBoundaries": false
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73c600a000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 0,
+      "exactBoundaries": false,
+      "requested": [],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [
+        "0x26c0238",
+        "0x2d5e1f8",
+        "0x340fcf8",
+        "0x34195fc"
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "StatusData",
+          "methodName": "COJNMPDBOOO",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100670745,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73c8d681f8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d5e1f8",
+              "codeHex": null
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73c8d681f8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d5e1f8",
+              "codeHex": null
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "FixedUpdate",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686709,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73c9419cf8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x340fcf8",
+              "codeHex": null
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73c9419cf8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x340fcf8",
+              "codeHex": null
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "NICAFPDFNPG",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Single",
+          "token": 100686716,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73c94235fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34195fc",
+              "codeHex": null
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73c94235fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34195fc",
+              "codeHex": null
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "GameManager",
+          "methodName": "getInstance",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "GameManager",
+          "token": 100690659,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73c86ca238",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26c0238",
+              "codeHex": null
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73c86ca238",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26c0238",
+              "codeHex": null
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

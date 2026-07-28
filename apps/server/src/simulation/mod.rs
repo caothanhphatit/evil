@@ -1,27 +1,46 @@
+pub(crate) mod combat_core;
 mod hunter_roster;
+mod hunter_runtime;
 mod model;
+mod monster_world;
+mod original_combat;
 mod original_flow;
+mod original_gear;
+mod original_progression;
+mod original_rewards;
 mod product_service;
 mod protocol;
 mod rng;
 mod trading_post;
 
 pub use hunter_roster::{
-    operational_migration_roster, DurableHunterProfile, DurableHunterProgress,
-    DurableHunterRosterState, DurableHunterSkill, DurableHunterState, DurableHunterTrait,
-    DurableWaitingHunter, HunterArrivalDisposition, HunterBanishment, HunterRosterError,
-    MAX_ACTIVE_TOWN_HUNTERS, MIGRATION_HUNTER_RELEASE_ID,
+    operational_migration_roster, upgrade_operational_fixture_roster, DurableHunterEquipmentSlot,
+    DurableHunterProfile, DurableHunterProgress, DurableHunterRosterState, DurableHunterSkill,
+    DurableHunterState, DurableHunterTrait, DurableWaitingHunter, HunterArrivalDisposition,
+    HunterBanishment, HunterRosterError, MAX_ACTIVE_TOWN_HUNTERS, MIGRATION_HUNTER_RELEASE_ID,
+};
+pub use hunter_runtime::{
+    DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable, DurableHunterRuntimeGear,
+    DurableHunterRuntimeGrowth, DurableHunterRuntimeInventory, DurableHunterRuntimeItem,
+    DurableHunterRuntimeRidingPet, DurableHunterRuntimeSkill, DurableHunterRuntimeState,
+    DurableHunterRuntimeStatus, HunterEvidenceState,
 };
 pub use model::{
     CombatEvent, CommandOutcome, DurablePlayerState, EntitySnapshot, FixtureCommand, GroundDrop,
     InventoryStack, PendingOperation, Simulation, WorldSnapshot,
 };
+pub use monster_world::{
+    map_config, CombatPresentation, CombatPresentationKind, HunterActionState, HunterAgentState,
+    MonsterActionState, MonsterDrop, MonsterMapConfig, MonsterState, MonsterWorldState,
+    NavigationObstacle, MAP_CONFIGS, MONSTER_RULESET,
+};
+pub use original_combat::{OriginalDamageMultiplierStream, ORIGINAL_DAMAGE_MULTIPLIER_HUNDREDTHS};
 #[cfg(test)]
 pub(crate) use original_flow::test_authoritative_building_content;
 pub use original_flow::{
     BottomMenuIntent, DurableBuilding, DurableBuildingState, DurableMaterialStock,
-    DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement, Facing,
-    MigrationFixtureCombatProjection, OriginalFlowCommandResult, OriginalFlowPlayerState,
+    DurableMonsterFieldConfig, DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement,
+    Facing, MigrationFixtureCombatProjection, OriginalFlowCommandResult, OriginalFlowPlayerState,
     OriginalFlowSession, OriginalFlowSnapshot, OriginalFlowTickResult, OriginalScreen,
     WorldEntityActionState, WorldEntityDescriptor, WorldEntityKind, WorldEntityProjection,
     WorldMode, WorldProjection, DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_FIXTURE_CONTENT_ID,

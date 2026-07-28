@@ -1,7 +1,8 @@
 import { node, sourceImage } from "./dom";
+import { createHunterInfoActor } from "./actor";
 import { renderGrowthTab } from "./growth-tab";
 import { renderMaterialsTab } from "./materials-tab";
-import type { HunterInfoTabId, HunterInfoView } from "./model";
+import type { HunterInfoEquipmentSlot, HunterInfoTabId, HunterInfoView } from "./model";
 import { renderRidingPetTab } from "./riding-pet-tab";
 import { renderSkillsTab } from "./skills-tab";
 import { renderStatusTab } from "./status-tab";
@@ -9,48 +10,99 @@ import { renderStatusTab } from "./status-tab";
 const TABS: Array<{ id: HunterInfoTabId; label: string }> = [
   { id: "status", label: "Status" },
   { id: "skills", label: "Skills" },
+  { id: "materials", label: "Materials" },
   { id: "growth", label: "Growth" },
   { id: "riding", label: "Riding Pet" },
-  { id: "materials", label: "Materials" },
 ];
+
+const EQUIPMENT_PLACEHOLDERS = [
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_07__6275.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_01__7584.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_03__5688.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_06__1917.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_02__4105.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_05__4925.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_04__5943.png",
+  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_08__5673.png",
+];
+const UTILITY_SLOT_COUNT = 6;
+const LOADOUT_COLUMNS = {
+  // Confirmed owned-data order: Gloves, Helmet, Necklace, Boots, Ring, Weapon, Armor, Belt.
+  left: [7, 4, 6, 3],
+  right: [1, 2, 5, 0],
+} as const;
 
 export interface HunterInfoModalController {
   show(info: HunterInfoView): void;
+  refresh(info: HunterInfoView): void;
   close(): void;
   visible(): boolean;
 }
 
-export function createHunterInfoModal(host: HTMLElement): HunterInfoModalController {
+export interface HunterInfoModalActions {
+  useSkill?(hunterId: number, skillId: string): void;
+}
+
+export function createHunterInfoModal(host: HTMLElement, actions: HunterInfoModalActions = {}): HunterInfoModalController {
   let activeTab: HunterInfoTabId = "status";
   let current: HunterInfoView | null = null;
+  const actor = createHunterInfoActor();
   const overlay = node("section", "hunter-info-overlay");
   overlay.hidden = true;
   overlay.setAttribute("role", "dialog");
   overlay.setAttribute("aria-modal", "true");
   overlay.setAttribute("aria-label", "Hunter information");
   host.append(overlay);
+  let panel: HTMLElement | null = null;
 
-  const close = (): void => { overlay.hidden = true; current = null; };
+  const close = (): void => { overlay.hidden = true; current = null; panel = null; actor.clear(); };
   const render = (): void => {
     if (!current) return;
-    overlay.replaceChildren(buildModal(current, activeTab, (tab) => { activeTab = tab; render(); }, close));
+    const info = current;
+    panel = buildModal(info, activeTab, (tab) => {
+      activeTab = tab;
+      // Keep the frame, equipment, and tab strip mounted while switching content.
+      const body = panel?.querySelector<HTMLElement>(".hunter-info-tab-body");
+      if (body) body.replaceChildren(renderTab(activeTab, info, actions));
+      panel?.querySelectorAll<HTMLButtonElement>(".hunter-info-tabs button").forEach((button, index) => {
+        const selected = TABS[index]?.id === activeTab;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+    }, close, actions);
+    overlay.replaceChildren(panel);
+    panel.focus({ preventScroll: true });
+    const actorHost = panel.querySelector<HTMLElement>(".hunter-paper-doll.actor");
+    if (actorHost) void actor.render(actorHost, info.hunter);
   };
   overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
   return {
     show(info) { current = info; activeTab = "status"; overlay.hidden = false; render(); },
+    refresh(info) {
+      if (!current || !panel) return;
+      current = info;
+      panel.querySelector<HTMLElement>(".hunter-info-tab-body")?.replaceChildren(renderTab(activeTab, info, actions));
+    },
     close,
     visible: () => !overlay.hidden,
   };
 }
 
-function buildModal(info: HunterInfoView, activeTab: HunterInfoTabId, selectTab: (tab: HunterInfoTabId) => void, close: () => void): HTMLElement {
+function buildModal(info: HunterInfoView, activeTab: HunterInfoTabId, selectTab: (tab: HunterInfoTabId) => void, close: () => void, actions: HunterInfoModalActions): HTMLElement {
   const panel = node("article", "hunter-info-modal");
+  panel.tabIndex = -1;
   const header = node("header", "hunter-info-header");
   header.append(node("span", "hunter-info-silhouette", info.hunter.classFamily ?? "H"), node("b", "", info.title));
-  if (info.locked !== null) header.append(node("span", `hunter-info-lock${info.locked ? " locked" : ""}`, info.locked ? "Locked" : "Unlocked"));
+  if (info.locked !== null) {
+    const lock = node("span", `hunter-info-lock${info.locked ? " locked" : ""}`);
+    lock.title = info.locked ? "Hunter locked" : "Hunter unlocked";
+    if (info.locked) lock.append(sourceImage("/content/releases/evil-hunter-1.411/hunter-assets/ui/equipment-hud/ic_hunter_lock__6607.png", "Locked"));
+    else lock.append(node("small", "", "Unlocked"));
+    header.append(lock);
+  }
   panel.append(header, buildHero(info), buildTabs(activeTab, selectTab));
   const body = node("div", "hunter-info-tab-body");
-  body.append(renderTab(activeTab, info));
+  body.append(renderTab(activeTab, info, actions));
   panel.append(body);
   const closeButton = node("button", "source-red-button hunter-info-close", "Close");
   closeButton.type = "button";
@@ -62,39 +114,86 @@ function buildModal(info: HunterInfoView, activeTab: HunterInfoTabId, selectTab:
 function buildHero(info: HunterInfoView): HTMLElement {
   const hero = node("section", "hunter-info-hero");
   const top = node("div", "hunter-info-reincarnation");
-  if (info.reincarnation) {
-    const stars = node("span", "hunter-reincarnation-stars");
-    for (let index = 0; index < info.reincarnation.maximum; index += 1) stars.append(node("i", index < info.reincarnation.current ? "on" : ""));
-    top.append(stars, node("small", "", "Reincarnation"));
+  const stars = node("span", "hunter-reincarnation-stars");
+  const starMaximum = info.reincarnation?.maximum ?? 5;
+  for (let index = 0; index < starMaximum; index += 1) stars.append(node("i", info.reincarnation && index < info.reincarnation.current ? "on" : ""));
+  top.append(stars, node("small", "", "Reincarnation"));
+  if (info.hunter.gold !== null) {
+    const money = node("b", "hunter-info-money");
+    money.append(sourceImage("/content/releases/original-flow-v1/sprites/top_ic_01_gold_24__4677.png", "Gold"), node("span", "", info.hunter.gold.toLocaleString()));
+    top.append(money);
   }
-  if (info.hunter.gold !== null) top.append(node("b", "hunter-info-money", info.hunter.gold.toLocaleString()));
   hero.append(top);
 
   const stage = node("div", "hunter-loadout-stage");
   const leftSlots = node("div", "hunter-equipment-column left");
   const rightSlots = node("div", "hunter-equipment-column right");
-  info.equipment.forEach((slot, index) => (index % 2 === 0 ? leftSlots : rightSlots).append(equipmentSlot(slot.icon, slot.placeholderIcon, slot.locked)));
-  const paperDoll = node("div", "hunter-paper-doll");
+  const leftUtility = node("div", "hunter-utility-column left");
+  const rightUtility = node("div", "hunter-utility-column right");
+  const equipmentDetail = node("section", "hunter-equipment-detail");
+  equipmentDetail.hidden = true;
+  equipmentDetail.setAttribute("aria-live", "polite");
+  const selectEquipment = (equipment: HunterInfoEquipmentSlot): void => {
+    const title = node("b", "", equipment.name ?? equipment.id);
+    const description = node("small", "", equipmentDetailText(equipment));
+    const close = node("button", "source-red-button", "Close");
+    close.type = "button";
+    close.setAttribute("aria-label", "Close equipment details");
+    close.addEventListener("click", () => { equipmentDetail.hidden = true; });
+    equipmentDetail.replaceChildren(title, description, close);
+    equipmentDetail.hidden = false;
+  };
+  for (let index = 0; index < UTILITY_SLOT_COUNT / 2; index += 1) {
+    leftUtility.append(utilitySlot());
+    rightUtility.append(utilitySlot());
+  }
+  const equipment = Array.from({ length: 8 }, (_, index) => info.equipment[index] ?? null);
+  for (const index of LOADOUT_COLUMNS.left) leftSlots.append(equipmentSlot(equipment[index], EQUIPMENT_PLACEHOLDERS[index], selectEquipment));
+  for (const index of LOADOUT_COLUMNS.right) rightSlots.append(equipmentSlot(equipment[index], EQUIPMENT_PLACEHOLDERS[index], selectEquipment));
+  const paperDoll = node("div", `hunter-paper-doll${info.hunter.portrait ? "" : " actor"}`);
   if (info.hunter.portrait) paperDoll.append(sourceImage(info.hunter.portrait, info.hunter.name));
-  else paperDoll.append(node("span", "", "Look unavailable"));
-  stage.append(leftSlots, paperDoll, rightSlots);
-  hero.append(stage);
-  if (info.experience) {
-    const exp = node("div", "hunter-experience");
+  else paperDoll.append(node("span", "sr-only", "Runtime Hunter appearance projection"));
+  stage.append(leftUtility, leftSlots, paperDoll, rightSlots, rightUtility);
+  hero.append(stage, equipmentDetail);
+  {
+    const exp = node("div", `hunter-experience${info.experience ? "" : " unresolved"}`);
     const track = node("i");
     const fill = node("i");
-    fill.style.width = `${percent(info.experience.current, info.experience.maximum)}%`;
+    if (info.experience) fill.style.width = `${percent(info.experience.current, info.experience.maximum)}%`;
     track.append(fill);
-    exp.append(track, node("b", "", `EXP ${info.experience.current}/${info.experience.maximum}`));
+    exp.append(track, node("b", "", info.experience ? `EXP ${info.experience.current}/${info.experience.maximum}` : "EXP unavailable"));
     hero.append(exp);
   }
   return hero;
 }
 
-function equipmentSlot(icon: string | null, placeholder: string | null, locked: boolean | null): HTMLElement {
-  const slot = node("span", `hunter-equipment-slot${locked ? " locked" : ""}`);
+function equipmentSlot(
+  equipment: HunterInfoEquipmentSlot | null,
+  fallbackPlaceholder: string | null,
+  select: (equipment: HunterInfoEquipmentSlot) => void,
+): HTMLElement {
+  const slot = node("button", `hunter-equipment-slot${equipment?.locked ? " locked" : ""}`);
+  slot.type = "button";
+  slot.disabled = equipment === null;
+  slot.setAttribute("aria-label", equipment?.name ? `View ${equipment.name}` : "Equipment slot unavailable");
+  if (equipment) slot.addEventListener("click", () => select(equipment));
+  const icon = equipment?.icon ?? equipment?.placeholderIcon ?? fallbackPlaceholder;
   if (icon) slot.append(sourceImage(icon));
-  else if (placeholder) slot.append(sourceImage(placeholder));
+  return slot;
+}
+
+export function equipmentDetailText(equipment: HunterInfoEquipmentSlot): string {
+  const identity = [equipment.catalogKind, equipment.catalogIndex === null ? null : `#${equipment.catalogIndex}`]
+    .filter((value): value is string => value !== null)
+    .join(" ");
+  const evidence = equipment.evidenceState ? `Evidence: ${equipment.evidenceState}` : "Evidence state unavailable";
+  return identity ? `${identity} · ${evidence}` : evidence;
+}
+
+function utilitySlot(): HTMLElement {
+  const slot = node("span", "hunter-utility-slot");
+  slot.setAttribute("aria-label", "Utility slot unavailable");
+  slot.append(node("i"));
   return slot;
 }
 
@@ -105,15 +204,23 @@ function buildTabs(active: HunterInfoTabId, selectTab: (tab: HunterInfoTabId) =>
     const button = node("button", tab.id === active ? "active" : "", tab.label);
     button.type = "button";
     button.setAttribute("aria-pressed", String(tab.id === active));
-    button.addEventListener("click", () => selectTab(tab.id));
+    button.addEventListener("click", (event) => {
+      selectTab(tab.id);
+      if (event.detail > 0) button.blur();
+    });
     tabs.append(button);
   }
   return tabs;
 }
 
-function renderTab(tab: HunterInfoTabId, info: HunterInfoView): HTMLElement {
+function renderTab(tab: HunterInfoTabId, info: HunterInfoView, actions: HunterInfoModalActions): HTMLElement {
   if (tab === "status") return renderStatusTab(info);
-  if (tab === "skills") return renderSkillsTab(info);
+  if (tab === "skills") {
+    const hunterId = info.hunter.numericId;
+    return renderSkillsTab(info, hunterId === null || !actions.useSkill
+      ? undefined
+      : (skillId) => actions.useSkill?.(hunterId, skillId));
+  }
   if (tab === "growth") return renderGrowthTab(info);
   if (tab === "riding") return renderRidingPetTab(info);
   return renderMaterialsTab(info);

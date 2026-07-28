@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "contractType": "original-native-hunter-d8-d10-pass14",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "method": {
+    "offset": "0x33f51c4",
+    "size": 9496,
+    "sha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3"
+  },
+  "staticDouble": {
+    "offset": "0xD282B0",
+    "raw": "7b14ae47e17a843f",
+    "float64": 0.01
+  },
+  "arg1Tree": {
+    "arg1False": "D8 = decoded StatusData.CalcDamage@0x28 converted Int64->Float64",
+    "arg1True": "D8 = StatusData.LCENGICKKGP = CalcDamage / CalcAttackSpeed",
+    "commonPost": "if HunterCtrl.DJDEHDEKGIO@0x7A0 != 0, D8 *= (1 - DJDEHDEKGIO)"
+  },
+  "jobTrait5Augmentation": {
+    "conditions": [
+      "arg1 is true",
+      "decoded HunterCtrl.HMKFKBCNPDH@0x6C0 > 1.0",
+      "CheckJobTrait(5) decodes true"
+    ],
+    "operands": [
+      "DataManager+0x1B8 array element 5, opaque ObscuredFloat at +0xD0",
+      "same object opaque ObscuredFloat at +0xE4",
+      "decoded integer returned by HunterData.skill@0x5B8 lookup with unresolved static key"
+    ],
+    "float32Stage": "P32 = opaqueFloat0 + opaqueFloat1 * float32(decodedInteger)",
+    "float64Stage": "P64 = float64(P32) * 0.01; D8 = D8 + D8 * P64",
+    "castsRounding": "SCVTF Int32->Float32, FMUL/FADD Float32, FCVT Float32->Float64; no integer rounding instruction in this branch"
+  },
+  "earlyPercent": {
+    "initial": "S9 = StatusData.gearPropertyNeedMoveSpeed@0x930",
+    "adds": [
+      "gated StatusData.DragonProtectionFairyAtkValue@0x518",
+      "positive RidingPetGearProperty[11] * 0.01 while not in meze state"
+    ],
+    "construction": "D10 = D8 * (1 + S9)"
+  },
+  "jobSubJobSelector": {
+    "decodedFields": [
+      "HunterData.job@0x20",
+      "HunterData.subJob@0x30"
+    ],
+    "observedSpecialPairs": [
+      "job=1, subJob=2",
+      "job=1, subJob=3",
+      "job=4, subJob=1",
+      "job=4, subJob=3"
+    ]
+  },
+  "arrays": {
+    "GearProperty": "StatusData+0x210; fixed observed gates 79 and 99 plus dynamic indices",
+    "RunesProperty": "StatusData+0x230; dynamically selected row/elements",
+    "RidingPetGearProperty": "StatusData+0x238; element 11",
+    "AdminRows": "DataManager+0x128/+0x1B8 and GameManager static pairs; class labels unresolved"
+  },
+  "commonJobMultiplier": "selected opaque0 + opaque1*decodedInteger; Float32 arithmetic, *0.01, +1, FCVT to Float64, then D10 *= factor",
+  "unresolved": [
+    "AdminData class/field names",
+    "semantic labels for GearProperty 79/99 and dynamic indices",
+    "caller-facing meaning of arg1",
+    "static dictionary key used by JobTrait(5)",
+    "full dynamic GameManager index values"
+  ]
+}

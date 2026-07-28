@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T15:14:59.566374Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 7567,
+    "action": "Capture exact native dodge consumer variants",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "HunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 0
+      },
+      {
+        "className": "RaidHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 0
+      },
+      {
+        "className": "WorldBossHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 0
+      },
+      {
+        "className": "GuildBattleHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2
+      },
+      {
+        "className": "FallenPastureHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2
+      },
+      {
+        "className": "PvPHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2
+      }
+    ],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 65536,
+    "exactBoundaries": true,
+    "includeMethodIndex": false
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x7110a00000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 65536,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "HunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0
+        },
+        {
+          "className": "RaidHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0
+        },
+        {
+          "className": "WorldBossHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0
+        },
+        {
+          "className": "GuildBattleHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2
+        },
+        {
+          "className": "FallenPastureHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2
+        },
+        {
+          "className": "PvPHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2
+        }
+      ],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "WorldBossHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100669235,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x71136c247c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2cc247c",
+              "codeHex": "ff8301d1e81300fdfe1700f9f85f03a9f65704a9f44f05a9f40300aaaf060094f603002ae0031f2ae1031faa1a53de97f30300aaf50301aa76000036b57e40924b000014884643f9480a00b400054ca9e2031faa97121c919650de9780bec13d880247b9f603002a98e242b9e0030091e1031faae003803de81300b96550de97e00640a9e2031faa0840201e8950de9708f0af520901381e0a03160b0001271e0800b052a10c8052e2031faa0021201e0801891a4901004be0031f2a2801084b167da80a40cfb6941f00166bcb010054e0031f2a017d8052e2031faa3acfb694884643f9680500b408111b91f603002ae2031faa000540a96e50de97df02006bca00005420008052e1031faae252de97f30300aaf50301aab57e4092e00313aae2031faae10315aaf94ede9700020036e0031faa01270c94881240f9a80200b4f40300aae00308aae1031faacf26b794140200b4e00314aa61008052e2031faae3031f2ae4031faacf200c94e00313aae10315aafe1740f9f44f45a9e81340fdf65744a9f85f43a9ff830191c0035fd64958da97",
+              "nativeSizeBytes": 404,
+              "boundaryModuleOffset": "0x2cc2610",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x71136c247c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2cc247c",
+              "codeHex": "ff8301d1e81300fdfe1700f9f85f03a9f65704a9f44f05a9f40300aaaf060094f603002ae0031f2ae1031faa1a53de97f30300aaf50301aa76000036b57e40924b000014884643f9480a00b400054ca9e2031faa97121c919650de9780bec13d880247b9f603002a98e242b9e0030091e1031faae003803de81300b96550de97e00640a9e2031faa0840201e8950de9708f0af520901381e0a03160b0001271e0800b052a10c8052e2031faa0021201e0801891a4901004be0031f2a2801084b167da80a40cfb6941f00166bcb010054e0031f2a017d8052e2031faa3acfb694884643f9680500b408111b91f603002ae2031faa000540a96e50de97df02006bca00005420008052e1031faae252de97f30300aaf50301aab57e4092e00313aae2031faae10315aaf94ede9700020036e0031faa01270c94881240f9a80200b4f40300aae00308aae1031faacf26b794140200b4e00314aa61008052e2031faae3031f2ae4031faacf200c94e00313aae10315aafe1740f9f44f45a9e81340fdf65744a9f85f43a9ff830191c0035fd64958da97",
+              "nativeSizeBytes": 404,
+              "boundaryModuleOffset": "0x2cc2610",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "PvPHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "PvPHunterCtrl",
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100681683,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x7113c1c0bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x321c0bc",
+              "codeHex": "fe0f1bf8fa6701a9f85f02a9f65703a9f44f04a9568d01b0d77001d0f40303aac8867a39f74e45f9f50302aaf80301aaf30300aac8000037c07001d0004c45f9f8f0c49728008052c8863a39e10240f9e00313aaf9df5294f903002ae0031f2ae1031faafcebc897f60300aaf70301aa79000036f77e40926b00001468aa44f9280e00b400854aa9e2031faa79e9c89768f641f961fa41f9f903002a7a9243b9e2031faae00308aa72e9c8974803190be1031faa0001004bfcedc897580c00b408ab44f9080c00b408e940f9c80b00b4091940b93fb90171890b005408c941f9280b00b4091940b9090b0034f90300aafa0301aae2031faa000542a95de9c8971f0400712b030054e00319aae1031aaae2031faa57e9c89708ab44f9480900b408e940f9080900b4091940b93fb90171c908005408c941f9680800b4091940b949080034f803002a000542a9e2031faa48e9c8970003004be1031faad3edc897f90300aafa0301aae0031f2a810c8052e2031faa0468a194f803002ae00319aae1031aaae2031faa3ae9c8971f03006bcb010054e0031f2a017d8052e2031faaf967a19468aa44f9e80400b4f803002a001943f9011d43f9e2031faa2de9c8971f03006bca00005420008052e1031faaa1ebc897f60300aaf70301aaf77e4092e00316aae2031faae10317aab8e7c897a0010036e00315aae10314aae2031faa1ce9c897680240f9e303002ae00313aa61008052e2031faa090544f9040944f920013fd6e00316aae10317aaf44f44a9f65743a9f85f42a9fa6741a9fe0745f8c0035fd60cf1c4970df1c497",
+              "nativeSizeBytes": 588,
+              "boundaryModuleOffset": "0x321c308",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x7113c1c0bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x321c0bc",
+              "codeHex": "fe0f1bf8fa6701a9f85f02a9f65703a9f44f04a9568d01b0d77001d0f40303aac8867a39f74e45f9f50302aaf80301aaf30300aac8000037c07001d0004c45f9f8f0c49728008052c8863a39e10240f9e00313aaf9df5294f903002ae0031f2ae1031faafcebc897f60300aaf70301aa79000036f77e40926b00001468aa44f9280e00b400854aa9e2031faa79e9c89768f641f961fa41f9f903002a7a9243b9e2031faae00308aa72e9c8974803190be1031faa0001004bfcedc897580c00b408ab44f9080c00b408e940f9c80b00b4091940b93fb90171890b005408c941f9280b00b4091940b9090b0034f90300aafa0301aae2031faa000542a95de9c8971f0400712b030054e00319aae1031aaae2031faa57e9c89708ab44f9480900b408e940f9080900b4091940b93fb90171c908005408c941f9680800b4091940b949080034f803002a000542a9e2031faa48e9c8970003004be1031faad3edc897f90300aafa0301aae0031f2a810c8052e2031faa0468a194f803002ae00319aae1031aaae2031faa3ae9c8971f03006bcb010054e0031f2a017d8052e2031faaf967a19468aa44f9e80400b4f803002a001943f9011d43f9e2031faa2de9c8971f03006bca00005420008052e1031faaa1ebc897f60300aaf70301aaf77e4092e00316aae2031faae10317aab8e7c897a0010036e00315aae10314aae2031faa1ce9c897680240f9e303002ae00313aa61008052e2031faa090544f9040944f920013fd6e00316aae10317aaf44f44a9f65743a9f85f42a9fa6741a9fe0745f8c0035fd60cf1c4970df1c497",
+              "nativeSizeBytes": 588,
+              "boundaryModuleOffset": "0x321c308",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100686871,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x7113e4d63c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x344d63c",
+              "codeHex": "fe5fbda9f65701a9f44f02a9f40300aa0c12ff97f603002ae0031f2ae1031faaad26c097f30300aaf50301aa76000036b57e40923f000014e0031f2a810c8052e2031faaf0a29894f603002ae00314aa9da8fe97a00700b408044ca9e2031faae00308aa2324c097889643f9819a43f9f703002ae2031faae00308aa1d24c0970800170bdf02086beb010054e0031f2a017d8052e2031faadba29894f603002ae00314aa88a8fe97000500b408101b91e2031faa000540a90e24c097df02006bca00005420008052e1031faa8226c097f30300aaf50301aab57e4092e00313aae2031faae10315aa9922c09720020036e0031faaa1faed97880641f9680200b4f40300aae00308aae1031faa6ffa9894d40100b4e00314aa61008052e2031faae3031f2a24008052e5031faac5f8ed97e00313aae10315aaf44f42a9f65741a9fe5fc3a8c0035fd6eb2bbc97",
+              "nativeSizeBytes": 332,
+              "boundaryModuleOffset": "0x344d788",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x7113e4d63c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x344d63c",
+              "codeHex": "fe5fbda9f65701a9f44f02a9f40300aa0c12ff97f603002ae0031f2ae1031faaad26c097f30300aaf50301aa76000036b57e40923f000014e0031f2a810c8052e2031faaf0a29894f603002ae00314aa9da8fe97a00700b408044ca9e2031faae00308aa2324c097889643f9819a43f9f703002ae2031faae00308aa1d24c0970800170bdf02086beb010054e0031f2a017d8052e2031faadba29894f603002ae00314aa88a8fe97000500b408101b91e2031faa000540a90e24c097df02006bca00005420008052e1031faa8226c097f30300aaf50301aab57e4092e00313aae2031faae10315aa9922c09720020036e0031faaa1faed97880641f9680200b4f40300aae00308aae1031faa6ffa9894d40100b4e00314aa61008052e2031faae3031f2a24008052e5031faac5f8ed97e00313aae10315aaf44f42a9f65741a9fe5fc3a8c0035fd6eb2bbc97",
+              "nativeSizeBytes": 332,
+              "boundaryModuleOffset": "0x344d788",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "RaidHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100687364,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x7112f076c8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x25076c8",
+              "codeHex": "fe0f1df8f65701a9f44f02a9f40300aa08d01391e2031faa000140f981fe44b9a83afd97f603002ae0031f2ae1031faa863efd97f30300aaf50301aa76000036b57e40923a000014e0031f2a810c8052e2031faac9bad594f603002ae00314aa912aff97000700b408044ca9e2031faae00308aafc3bfd97889a42b90801000bdf02086beb010054e0031f2a017d8052e2031faab9bad594f603002ae00314aa812aff97000500b408101b91e2031faa000540a9ec3bfd97df02006bca00005420008052e1031faa603efd97f30300aaf50301aab57e4092e00313aae2031faae10315aa773afd9720020036e0031faa7f122b94887240f9680200b4f40300aae00308aae1031faa4d12d694d40100b4e00314aa61008052e2031faae3031f2a24008052e5031faad8132b94e00313aae10315aaf44f42a9f65741a9fe0743f8c0035fd6c943f997",
+              "nativeSizeBytes": 328,
+              "boundaryModuleOffset": "0x2507810",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x7112f076c8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x25076c8",
+              "codeHex": "fe0f1df8f65701a9f44f02a9f40300aa08d01391e2031faa000140f981fe44b9a83afd97f603002ae0031f2ae1031faa863efd97f30300aaf50301aa76000036b57e40923a000014e0031f2a810c8052e2031faac9bad594f603002ae00314aa912aff97000700b408044ca9e2031faae00308aafc3bfd97889a42b90801000bdf02086beb010054e0031f2a017d8052e2031faab9bad594f603002ae00314aa812aff97000500b408101b91e2031faa000540a9ec3bfd97df02006bca00005420008052e1031faa603efd97f30300aaf50301aab57e4092e00313aae2031faae10315aa773afd9720020036e0031faa7f122b94887240f9680200b4f40300aae00308aae1031faa4d12d694d40100b4e00314aa61008052e2031faae3031f2a24008052e5031faad8132b94e00313aae10315aaf44f42a9f65741a9fe0743f8c0035fd6c943f997",
+              "nativeSizeBytes": 328,
+              "boundaryModuleOffset": "0x2507810",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "GuildBattleHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "GuildBattleHunterCtrl",
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100689844,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x711306a158",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x266a158",
+              "codeHex": "ea0f1afce9a3006dfe0f00f9fa6702a9f85f03a9f65704a9f44f05a9f40303aaf50302aaf80301aaf60300aac2c8ff97f903002ae0031f2ae1031faadfb3f797f30300aaf70301aa79000036f77e409278000014c81a42f9081000b400854aa9e2031faa5cb1f797c85242f9c15642f9f903002adab242b9e2031faae00308aa55b1f7974803190be1031faa0001004bdfb5f797380e00b4081b42f9e80d00b408e940f9a80d00b4091940b93fb90171690d005408c941f9080d00b4091940b9e90c0034f90300aafa0301aae2031faa000542a940b1f7971f0400712b030054e00319aae1031aaae2031faa3ab1f797081b42f9280b00b408e940f9e80a00b4091940b93fb90171a90a005408c941f9480a00b4091940b9290a0034f803002a000542a9e2031faa2bb1f7970003004be1031faab6b5f797f90300aafa0301aae0031f2a810c8052e2031faae72fd094f803002ae00319aae1031aaae2031faa1db1f7971f03006bcb010054e0031f2a017d8052e2031faadc2fd094c81a42f9c80600b4f803002a001943f9011d43f9e2031faa10b1f7971f03006bca00005420008052e1031faa84b3f797f30300aaf70301aaf77e4092e00313aae2031faae10317aa9baff79740030036e0031faaa3872594c89e40f9080400b4f60300aae00308aae1031faa7187d094e00315aae10314aae2031faa0840201e2940201e4a40201ef4b0f797960200b40041201e2141201ee303002a4241201ee00316aa61008052e2031faae4031faaab8b2594e00313aae10317aafe0f40f9f44f45a9f65744a9f85f43a9fa6742a9e9a3406dea0746fcc0035fd6e0b8f397e1b8f397",
+              "nativeSizeBytes": 608,
+              "boundaryModuleOffset": "0x266a3b8",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x711306a158",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x266a158",
+              "codeHex": "ea0f1afce9a3006dfe0f00f9fa6702a9f85f03a9f65704a9f44f05a9f40303aaf50302aaf80301aaf60300aac2c8ff97f903002ae0031f2ae1031faadfb3f797f30300aaf70301aa79000036f77e409278000014c81a42f9081000b400854aa9e2031faa5cb1f797c85242f9c15642f9f903002adab242b9e2031faae00308aa55b1f7974803190be1031faa0001004bdfb5f797380e00b4081b42f9e80d00b408e940f9a80d00b4091940b93fb90171690d005408c941f9080d00b4091940b9e90c0034f90300aafa0301aae2031faa000542a940b1f7971f0400712b030054e00319aae1031aaae2031faa3ab1f797081b42f9280b00b408e940f9e80a00b4091940b93fb90171a90a005408c941f9480a00b4091940b9290a0034f803002a000542a9e2031faa2bb1f7970003004be1031faab6b5f797f90300aafa0301aae0031f2a810c8052e2031faae72fd094f803002ae00319aae1031aaae2031faa1db1f7971f03006bcb010054e0031f2a017d8052e2031faadc2fd094c81a42f9c80600b4f803002a001943f9011d43f9e2031faa10b1f7971f03006bca00005420008052e1031faa84b3f797f30300aaf70301aaf77e4092e00313aae2031faae10317aa9baff79740030036e0031faaa3872594c89e40f9080400b4f60300aae00308aae1031faa7187d094e00315aae10314aae2031faa0840201e2940201e4a40201ef4b0f797960200b40041201e2141201ee303002a4241201ee00316aa61008052e2031faae4031faaab8b2594e00313aae10317aafe0f40f9f44f45a9f65744a9f85f43a9fa6742a9e9a3406dea0746fcc0035fd6e0b8f397e1b8f397",
+              "nativeSizeBytes": 608,
+              "boundaryModuleOffset": "0x266a3b8",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "FallenPastureHunterCtrl",
+          "methodName": "DGPHLIIAEFL",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "FallenDemonCtrl",
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100697041,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x71133da38c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x29da38c",
+              "codeHex": "fe0f1bf8fa6701a9f85f02a9f65703a9f44f04a956cf01b097b20190f40303aac8c27239f75e45f9f50302aaf30300aac800003780b20190005c45f945f8e59728008052c8c23239e10240f9e00313aa46e77394f803002ae0031f2ae1031faa49f3e997f60300aaf70301aa78000036f77e40924200001468d644f9080900b400054ca9e2031faac6f0e99768f641f961fa41f9f803002a799243b9e2031faae00308aabff0e9972803180be1031faa0001004b49f5e997f80300aaf90301aae0031f2a810c8052e2031faa7a6fc294fa03002ae00318aae10319aae2031faab0f0e9975f03006bcb010054e0031f2a017d8052e2031faa6f6fc29468d644f9e80400b408111b91f803002ae2031faa000540a9a3f0e9971f03006bca00005420008052e1031faa17f3e997f60300aaf70301aaf77e4092e00316aae2031faae10317aa2eefe997a0010036e00315aae10314aae2031faa92f0e997680240f9e303002ae00313aa61008052e2031faa090544f9040944f920013fd6e00316aae10317aaf44f44a9f65743a9f85f42a9fa6741a9fe0745f8c0035fd682f8e597",
+              "nativeSizeBytes": 416,
+              "boundaryModuleOffset": "0x29da52c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x71133da38c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x29da38c",
+              "codeHex": "fe0f1bf8fa6701a9f85f02a9f65703a9f44f04a956cf01b097b20190f40303aac8c27239f75e45f9f50302aaf30300aac800003780b20190005c45f945f8e59728008052c8c23239e10240f9e00313aa46e77394f803002ae0031f2ae1031faa49f3e997f60300aaf70301aa78000036f77e40924200001468d644f9080900b400054ca9e2031faac6f0e99768f641f961fa41f9f803002a799243b9e2031faae00308aabff0e9972803180be1031faa0001004b49f5e997f80300aaf90301aae0031f2a810c8052e2031faa7a6fc294fa03002ae00318aae10319aae2031faab0f0e9975f03006bcb010054e0031f2a017d8052e2031faa6f6fc29468d644f9e80400b408111b91f803002ae2031faa000540a9a3f0e9971f03006bca00005420008052e1031faa17f3e997f60300aaf70301aaf77e4092e00316aae2031faae10317aa2eefe997a0010036e00315aae10314aae2031faa92f0e997680240f9e303002ae00313aa61008052e2031faa090544f9040944f920013fd6e00316aae10317aaf44f44a9f65743a9f85f42a9fa6741a9fe0745f8c0035fd682f8e597",
+              "nativeSizeBytes": 416,
+              "boundaryModuleOffset": "0x29da52c",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

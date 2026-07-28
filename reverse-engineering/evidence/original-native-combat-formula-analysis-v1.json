@@ -1,0 +1,7421 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-combat-formula-analysis",
+  "runtimeCompatibility": "evidence-only",
+  "source": {
+    "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+    "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80",
+    "schemas": [
+      {
+        "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+        "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+      },
+      {
+        "path": "reverse-engineering/evidence/hunter-manager-runtime-schema-android-api30-v1.json",
+        "sha256": "759521d37fba94a69b407087e7c150e83db9778d948279cfe26dade66eee8f4c"
+      }
+    ]
+  },
+  "capture": {
+    "capturedAtUtc": "2026-07-27T04:42:15.198967Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 13257,
+    "action": "exact native combat formula method-boundary capture; no player values",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "GameManager",
+        "methodName": "GetGearDamage"
+      },
+      {
+        "className": "GameManager",
+        "methodName": "GetGearArmor"
+      },
+      {
+        "className": "GameManager",
+        "methodName": "GetGearAcc"
+      },
+      {
+        "className": "GameManager",
+        "methodName": "GetSealAttackUp"
+      },
+      {
+        "className": "GameManager",
+        "methodName": "GetCostumeAttackUp"
+      },
+      {
+        "className": "GameManager",
+        "methodName": "GetCostumeArmorUp"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "getDamage"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HitDamageProcess"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "Damaged"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "getCriticalDamage"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "HuntingAttackSetting"
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "FireDamageAction"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "Damaged"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "FireDamage"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "GetReduceAttackValue"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "ForcedDamaged"
+      }
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 16384,
+    "exactBoundaries": true
+  },
+  "module": {
+    "name": "libil2cpp.so",
+    "base": "0x73a5c0b000",
+    "size": 106893312
+  },
+  "methodBoundaryRule": "Every analyzed boundary ends at the next unique Assembly-CSharp method pointer and has matching methodPointer and virtualMethodPointer bytes. One method body exceeds the capture byte limit; its exact size and prefix are recorded separately.",
+  "normalization": {
+    "bodySha256": "SHA-256 of the complete exact native body, or null for a truncated prefix.",
+    "exactBoundaryDescriptorSha256": "SHA-256 of stable method identity, exact start/end/size, and captured-code hash.",
+    "callTargetNormalizedSha256": "SHA-256 after replacing each direct BL immediate with opcode 0x94000000.",
+    "fieldAccessRule": "Only unsigned-immediate scalar loads/stores whose base is entry register x0 are promoted as direct self-field accesses."
+  },
+  "methods": [
+    {
+      "type": "EvilCtrl",
+      "method": "ForcedDamaged",
+      "parameterCount": 5,
+      "parameterTypes": [
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Boolean",
+        "System.Int32"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06002FAC",
+      "moduleOffset": "0x2f0f050",
+      "boundaryModuleOffset": "0x2f0f6d8",
+      "nativeSizeBytes": 1672,
+      "capturedCodeBytes": 1672,
+      "codeTruncated": false,
+      "bodySha256": "2d29e496437f2c37907b944c22309257b5803c3b025c5b3909128522a2e96465",
+      "capturedCodeSha256": "2d29e496437f2c37907b944c22309257b5803c3b025c5b3909128522a2e96465",
+      "exactBoundaryDescriptorSha256": "33c8ba592fb4146ca9d9c6c1ca282d56936c89da8fa0e99d575f9f28e672f11f",
+      "callTargetNormalizedSha256": "d6b97b046e2b8b400a91b0dc92dc670d1473f99782b8250de71fc10017c1a6e9",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x24567e8",
+          "resolvedMethods": [],
+          "count": 12
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x26c0238",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x2f0eefc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f0ef9c",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x2fc0848",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2fcba7c",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2fcc1b4",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x31afc60",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x32999c4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f7900",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f79bc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3b4aea0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x4891870",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x4891a64",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x48a7ec0",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x48a8134",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a7a608",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5a7df28",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a8c104",
+          "resolvedMethods": [],
+          "count": 2
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 68,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1760,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 80,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1288,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 92,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3752,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 104,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1304,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 116,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2680,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 128,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2720,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 140,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 152,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2064,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 164,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1848,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 176,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 16,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 268,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 304,
+          "schemaFields": [
+            {
+              "name": "mPumpkin",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 272,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 312,
+          "schemaFields": [
+            {
+              "name": "mOpenWoundsDebuff",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 304,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 328,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1392,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 444,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 460,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 508,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 528,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 868,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 892,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 928,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 952,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1008,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1516,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1540,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 552,
+          "register": 0,
+          "value": 1.0
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 1240,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        }
+      ],
+      "floatArithmeticSignature": "fmul",
+      "floatArithmeticSignatureSha256": "afc7cca81730b9aec0b7792a43512160db9de9fd7643b6798c8618cafe6c698e"
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "GetReduceAttackValue",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+      "token": "0x06002FAD",
+      "moduleOffset": "0x2f0f6d8",
+      "boundaryModuleOffset": "0x2f0f730",
+      "nativeSizeBytes": 88,
+      "capturedCodeBytes": 88,
+      "codeTruncated": false,
+      "bodySha256": "dc650c97c453fd9f14901245d118681776e250644a1d965da52c63c85e8e76c2",
+      "capturedCodeSha256": "dc650c97c453fd9f14901245d118681776e250644a1d965da52c63c85e8e76c2",
+      "exactBoundaryDescriptorSha256": "8df10e7293e4d5b01cb54098d429f910e7158976f362828e8c45c2e7d73d9137",
+      "callTargetNormalizedSha256": "cdfd1a913b8d291291e42a78ff5f6169f84107fd6657f9b13f861b76c2774898",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 12,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 484,
+          "schemaFields": [
+            {
+              "name": "PHKJDKANJOA",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 16,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 492,
+          "schemaFields": [
+            {
+              "name": "DBGLOFBIEBL",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 20,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 500,
+          "schemaFields": [
+            {
+              "name": "BOKEIJGPICA",
+              "type": "System.Single"
+            }
+          ]
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 8,
+          "register": 0,
+          "value": 1.0
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 36,
+          "operation": "fsub",
+          "destination": 1,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 40,
+          "operation": "fsub",
+          "destination": 2,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 44,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 0,
+          "right": 3
+        },
+        {
+          "instructionOffset": 48,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 1,
+          "right": 2
+        },
+        {
+          "instructionOffset": 52,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fsub,fsub,fsub,fmul,fmul",
+      "floatArithmeticSignatureSha256": "7facad5cb114b8f51f278789417a522e0c60305f607ce289e4cd5d05480251d0"
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "FireDamage",
+      "parameterCount": 3,
+      "parameterTypes": [
+        "System.Int32",
+        "System.Single",
+        "System.Int32"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06002FBA",
+      "moduleOffset": "0x2f19fe0",
+      "boundaryModuleOffset": "0x2f1a054",
+      "nativeSizeBytes": 116,
+      "capturedCodeBytes": 116,
+      "codeTruncated": false,
+      "bodySha256": "a6ef9228fa7e8e936efe375cd03f93414fa9a5346d19554bb2bb2c81069b010d",
+      "capturedCodeSha256": "a6ef9228fa7e8e936efe375cd03f93414fa9a5346d19554bb2bb2c81069b010d",
+      "exactBoundaryDescriptorSha256": "969ffdc028d5b19577a31c6244db9413536f3a5dffabeb04a9de7e50c28a14d5",
+      "callTargetNormalizedSha256": "5d0222799a1ed762c4419f381698d0dcfd42754cc5628b06b128253f4eca4be3",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2534390",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f0eefc",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [],
+      "floatArithmeticSignature": "",
+      "floatArithmeticSignatureSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "Damaged",
+      "parameterCount": 6,
+      "parameterTypes": [
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Boolean",
+        "System.Int32",
+        "System.Boolean"
+      ],
+      "returnType": "System.Int64",
+      "token": "0x06003014",
+      "moduleOffset": "0x2f2be20",
+      "boundaryModuleOffset": "0x2f2d0a0",
+      "nativeSizeBytes": 4736,
+      "capturedCodeBytes": 4736,
+      "codeTruncated": false,
+      "bodySha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb",
+      "capturedCodeSha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb",
+      "exactBoundaryDescriptorSha256": "35b369dfdc2f94c813600447fef10b3182920e73a87924d19bbaabdd661d3598",
+      "callTargetNormalizedSha256": "7d60e1010ff1ff494ce2e3c204c4d35b938c2457457406f41b9c75d4fc476754",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x20dd820",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x23584f0",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 14
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 13
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 11
+        },
+        {
+          "targetModuleOffset": "0x2358b38",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x244849c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 20
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x24567e8",
+          "resolvedMethods": [],
+          "count": 19
+        },
+        {
+          "targetModuleOffset": "0x2457110",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 8
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x26c0238",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x2706384",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2904520",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f0eefc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f0ef9c",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x2fc0848",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2fcba7c",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x2fcc1b4",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x31afc60",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x32999c4",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f7900",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f79bc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3b4aea0",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x4891870",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x4891a64",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x48a7ec0",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x48a8134",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x50806a4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5a7a608",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a7df28",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a8c104",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5d934c0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d934d0",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5d934e0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d934f0",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 76,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1760,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 88,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1288,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 100,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3752,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 112,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1304,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 124,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2680,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 136,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2720,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 148,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 160,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2064,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 172,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1848,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 184,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 16,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 308,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 304,
+          "schemaFields": [
+            {
+              "name": "mPumpkin",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 312,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 312,
+          "schemaFields": [
+            {
+              "name": "mOpenWoundsDebuff",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 344,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 368,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1392,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 476,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 500,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 536,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 560,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 616,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1000,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1028,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1120,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1144,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1188,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1212,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1260,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1284,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1332,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1364,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 2672,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 104,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3040,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3060,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3108,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3128,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3840,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3872,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1472,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3944,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3992,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4012,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "CJGMDHPGAPL",
+              "type": "UnityEngine.Quaternion"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4548,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1696,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4604,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2304,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4696,
+          "operation": "str_x",
+          "baseRegister": "x0",
+          "offset": 0,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 1552,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 3152,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 4036,
+          "register": 0,
+          "value": 1.0
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 740,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 820,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 900,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 992,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1424,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 8,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1428,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1444,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 2
+        },
+        {
+          "instructionOffset": 1516,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1564,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1572,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 1792,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1800,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1952,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1956,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2076,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2080,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2104,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2136,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2372,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2376,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2544,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2548,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2768,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2772,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2888,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3564,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fmul,fmul,fmul,fmul,fmul,fadd,fadd,fadd,fmul,fmul,fadd,fmul,fadd,fmul,fadd,fadd,fmul,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fmul",
+      "floatArithmeticSignatureSha256": "c3e4578db27384ce1de376680bd6758360c9db2dd46612e7f7bc20b1f7c4a5c0"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HitDamageProcess",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06005B94",
+      "moduleOffset": "0x34256c0",
+      "boundaryModuleOffset": "0x3425a58",
+      "nativeSizeBytes": 920,
+      "capturedCodeBytes": 920,
+      "codeTruncated": false,
+      "bodySha256": "a0632289d593e15dc6584f9a21958ebc5318d142167b27507bf83424ed5c90db",
+      "capturedCodeSha256": "a0632289d593e15dc6584f9a21958ebc5318d142167b27507bf83424ed5c90db",
+      "exactBoundaryDescriptorSha256": "3a2b76884b5a546af0a77a3711bd997218ae1aff3d75f14dfa700f5c38e0b986",
+      "callTargetNormalizedSha256": "1a9e5866c9582542ef729c696eb6d60f15f770fe9bd6def1394300a4ede8c054",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x20dd820",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x20e2038",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x2358720",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x244849c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x24567e8",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 7
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x48a7c58",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x48a835c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x4adab6c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x4adac80",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5d934c0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d934d0",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 44,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2904,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 56,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2912,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 68,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2920,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 80,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2928,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 92,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2936,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 104,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2952,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 144,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1488,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 204,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1488,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 856,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 0,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [],
+      "floatArithmeticSignature": "",
+      "floatArithmeticSignatureSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HuntingAttackSetting",
+      "parameterCount": 0,
+      "parameterTypes": [],
+      "returnType": "System.Void",
+      "token": "0x06005BE4",
+      "moduleOffset": "0x34012f8",
+      "boundaryModuleOffset": "0x340158c",
+      "nativeSizeBytes": 660,
+      "capturedCodeBytes": 660,
+      "codeTruncated": false,
+      "bodySha256": "6119134928144d1fcc8dd3a24c5d119274bf3fc3010784bd3fb36cc13d63deef",
+      "capturedCodeSha256": "6119134928144d1fcc8dd3a24c5d119274bf3fc3010784bd3fb36cc13d63deef",
+      "exactBoundaryDescriptorSha256": "280ead2bbcc28f31b0a8402f88ffbb077f8d462b9fc9a598f547134c27adaf74",
+      "callTargetNormalizedSha256": "f08f6db492a3fc70f75b92a8dd3b9a4ec73941a0f179b4ee03380487a21983a4",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x5a7dca4",
+          "resolvedMethods": [],
+          "count": 2
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 36,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1904,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 212,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 488,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 284,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 560,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 596,
+          "register": 0,
+          "value": 1.5
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 324,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul",
+      "floatArithmeticSignatureSha256": "afc7cca81730b9aec0b7792a43512160db9de9fd7643b6798c8618cafe6c698e"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "getDamage",
+      "parameterCount": 3,
+      "parameterTypes": [
+        "System.Boolean",
+        "System.Boolean",
+        "System.Boolean"
+      ],
+      "returnType": "HunterCtrl.PMPKOIHFNCE",
+      "token": "0x06005C37",
+      "moduleOffset": "0x33f51c4",
+      "boundaryModuleOffset": "0x33f76dc",
+      "nativeSizeBytes": 9496,
+      "capturedCodeBytes": 9496,
+      "codeTruncated": false,
+      "bodySha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3",
+      "capturedCodeSha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3",
+      "exactBoundaryDescriptorSha256": "fb256c54364b87d91353b6f9169bc993e1382258cf7f7e94225391e498b78403",
+      "callTargetNormalizedSha256": "66eb03b573957603c661697286ab5e689af172d21ca7b5aa81ba05036e2600e8",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 13
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 27
+        },
+        {
+          "targetModuleOffset": "0x2358718",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 11
+        },
+        {
+          "targetModuleOffset": "0x24565e0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 38
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 93
+        },
+        {
+          "targetModuleOffset": "0x24567e8",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x2457964",
+          "resolvedMethods": [],
+          "count": 19
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x246bf08",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 12
+        },
+        {
+          "targetModuleOffset": "0x26c0238",
+          "resolvedMethods": [],
+          "count": 6
+        },
+        {
+          "targetModuleOffset": "0x26f1904",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2d6e7fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 27
+        },
+        {
+          "targetModuleOffset": "0x33f7900",
+          "resolvedMethods": [],
+          "count": 66
+        },
+        {
+          "targetModuleOffset": "0x33f87a0",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f9558",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f97a8",
+          "resolvedMethods": [
+            "HunterCtrl.getCriticalDamage"
+          ],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33fa49c",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x3411e7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3419e3c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x34363c8",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3470adc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x48a7ec0",
+          "resolvedMethods": [],
+          "count": 8
+        },
+        {
+          "targetModuleOffset": "0x48a8134",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x48b8440",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x508d8ec",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5a76240",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5a7dca4",
+          "resolvedMethods": [],
+          "count": 2
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 80,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1760,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 92,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2976,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 104,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3248,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 116,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3224,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 128,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3256,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 140,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2984,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 152,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 164,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1904,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 176,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2448,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 188,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3264,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 200,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3112,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 212,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 224,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1568,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 428,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 500,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 572,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 788,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 856,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 928,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 2368,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 992,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1008,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1100,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1320,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1144,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1224,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1384,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1472,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1520,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1572,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1696,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1772,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1788,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1908,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1924,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2024,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2096,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2232,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2320,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2368,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2420,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2544,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2620,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 2636,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2756,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 2772,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2872,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2944,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3080,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3168,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3216,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3268,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3392,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3468,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3484,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3604,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3620,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3720,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3792,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4068,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4120,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4188,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1408,
+          "schemaFields": [
+            {
+              "name": "GHAIAGIDIMC",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4224,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4244,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4504,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4592,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4640,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4692,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4816,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4892,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4908,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5028,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 5044,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5144,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5216,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5616,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5676,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 5692,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5764,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 5780,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5952,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 5968,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6164,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6180,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6784,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6864,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6908,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6932,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6984,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7008,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7144,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7188,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7212,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7264,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7288,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7396,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 7576,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 536,
+          "schemaFields": [
+            {
+              "name": "mCollider",
+              "type": "UnityEngine.Collider2D"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7652,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 544,
+          "schemaFields": [
+            {
+              "name": "mCharacter",
+              "type": "UnityEngine.Transform"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7752,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 544,
+          "schemaFields": [
+            {
+              "name": "mCharacter",
+              "type": "UnityEngine.Transform"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7836,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 536,
+          "schemaFields": [
+            {
+              "name": "mCollider",
+              "type": "UnityEngine.Collider2D"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7892,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 544,
+          "schemaFields": [
+            {
+              "name": "mCharacter",
+              "type": "UnityEngine.Transform"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7976,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8044,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8176,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8264,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8348,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8608,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8836,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1436,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8868,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1436,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8888,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1520,
+          "schemaFields": [
+            {
+              "name": "MCCINHHHADH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8912,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1520,
+          "schemaFields": [
+            {
+              "name": "MCCINHHHADH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8944,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1424,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8976,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1424,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8996,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1508,
+          "schemaFields": [
+            {
+              "name": "KPJLBPKPCCG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9020,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1508,
+          "schemaFields": [
+            {
+              "name": "KPJLBPKPCCG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9040,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1428,
+          "schemaFields": [
+            {
+              "name": "NJLPOMIOABK",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9072,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1428,
+          "schemaFields": [
+            {
+              "name": "NJLPOMIOABK",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9092,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1512,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9116,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1512,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9136,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1432,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9168,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1432,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9188,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1516,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9212,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1516,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9232,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1420,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9264,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1420,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9284,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1504,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9308,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1504,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 352,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 760,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 3892,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 6628,
+          "register": 15,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 6840,
+          "register": 15,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 7608,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 7808,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 7868,
+          "register": 8,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 7956,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 8788,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 8840,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 8864,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 8948,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 8972,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9044,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9068,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9140,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9164,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9236,
+          "register": 9,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 9260,
+          "register": 0,
+          "value": 1.0
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 628,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 10,
+          "right": 0
+        },
+        {
+          "instructionOffset": 632,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 764,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 956,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1128,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1280,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1284,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3872,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3876,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3888,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3896,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5304,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5308,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5312,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5320,
+          "operation": "fadd",
+          "destination": 12,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5380,
+          "operation": "fadd",
+          "destination": 12,
+          "left": 12,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5452,
+          "operation": "fadd",
+          "destination": 12,
+          "left": 12,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5576,
+          "operation": "fadd",
+          "destination": 12,
+          "left": 12,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5728,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5736,
+          "operation": "fadd",
+          "destination": 13,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5924,
+          "operation": "fadd",
+          "destination": 13,
+          "left": 13,
+          "right": 0
+        },
+        {
+          "instructionOffset": 6136,
+          "operation": "fadd",
+          "destination": 13,
+          "left": 13,
+          "right": 0
+        },
+        {
+          "instructionOffset": 6348,
+          "operation": "fadd",
+          "destination": 13,
+          "left": 13,
+          "right": 0
+        },
+        {
+          "instructionOffset": 6432,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6524,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7476,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 7724,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 1,
+          "right": 8
+        },
+        {
+          "instructionOffset": 7812,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 8
+        },
+        {
+          "instructionOffset": 7816,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7952,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7960,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8104,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8108,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8404,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 10,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8432,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8436,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8444,
+          "operation": "fadd",
+          "destination": 1,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8752,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8756,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8872,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 8980,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9076,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9172,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9268,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9312,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fadd,fsub,fadd,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fadd,fadd,fadd,fmul,fadd,fadd,fadd,fadd,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fadd,fadd,fadd,fadd,fadd,fadd,fadd",
+      "floatArithmeticSignatureSha256": "7f4e0f1154e32040c2a56bc27332066a1ddc6a91781345467649fad47dbcb5fb"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "getCriticalDamage",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+      "token": "0x06005C4D",
+      "moduleOffset": "0x33f97a8",
+      "boundaryModuleOffset": "0x33f9f1c",
+      "nativeSizeBytes": 1908,
+      "capturedCodeBytes": 1908,
+      "codeTruncated": false,
+      "bodySha256": "6b63930b2d504f052ae5b56eb8a6136a5ccdc7e4f8372f7ad1ca5dde567104f5",
+      "capturedCodeSha256": "6b63930b2d504f052ae5b56eb8a6136a5ccdc7e4f8372f7ad1ca5dde567104f5",
+      "exactBoundaryDescriptorSha256": "c3d08ecc3280b13b01fbe9be5af43d413fac463fe9c7abc72c0bca46f58d1929",
+      "callTargetNormalizedSha256": "08703b480f59aab7e9761afb0e9e4184e94818ee7196559f50aaab2483eed10c",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 18
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x26c0238",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x33f7900",
+          "resolvedMethods": [],
+          "count": 20
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 64,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 92,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 120,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 180,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 204,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 272,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1368,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 296,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1368,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 324,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1452,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 348,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1452,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 376,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1352,
+          "schemaFields": [
+            {
+              "name": "MGKAAEDKPGE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 400,
+          "operation": "ldr_s",
+          "baseRegister": "x0",
+          "offset": 1352,
+          "schemaFields": [
+            {
+              "name": "MGKAAEDKPGE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 424,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 476,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 548,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 2184,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 600,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 2184,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 648,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1580,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 700,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1580,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 992,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1060,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1164,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1228,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1324,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1392,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 64,
+          "schemaFields": [
+            {
+              "name": "PatternIcon",
+              "type": "UnityEngine.SpriteRenderer"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1504,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1568,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1680,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 164,
+          "register": 9,
+          "value": 1.75
+        },
+        {
+          "instructionOffset": 252,
+          "register": 1,
+          "value": 1.75
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 248,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 256,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 304,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 308,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 356,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 360,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 404,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 504,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 628,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 728,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 800,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 872,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 944,
+          "operation": "fadd",
+          "destination": 9,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1300,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1304,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1640,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1644,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1840,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fadd,fmul,fadd,fmul,fadd,fadd,fadd,fadd,fadd,fadd,fadd,fadd,fmul,fadd,fmul,fadd,fadd",
+      "floatArithmeticSignatureSha256": "f8cfdddff88a85f78036533a7ffe02e2f9818506b918161d13a6067e6bfbb7c2"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Damaged",
+      "parameterCount": 2,
+      "parameterTypes": [
+        "System.Int64",
+        "System.String"
+      ],
+      "returnType": "System.Void",
+      "token": "0x06005CAA",
+      "moduleOffset": "0x346514c",
+      "boundaryModuleOffset": "0x3469b60",
+      "nativeSizeBytes": 18964,
+      "capturedCodeBytes": 16384,
+      "codeTruncated": true,
+      "bodySha256": null,
+      "capturedCodeSha256": "0be75ecf119c051c5fe2db552955f09c17212f1265a31761cfbec49830abdf93",
+      "exactBoundaryDescriptorSha256": "ac9be0c27fed2d2d8005eb4d45b519363f928e4cb30aa896ba3667fa1e389b8a",
+      "callTargetNormalizedSha256": "012a985d9c2ddcde96897a2f322973c3f24861027600f8f9f03f551dfad6bbd6",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 24
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 49
+        },
+        {
+          "targetModuleOffset": "0x2456188",
+          "resolvedMethods": [],
+          "count": 26
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 68
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 73
+        },
+        {
+          "targetModuleOffset": "0x24567e8",
+          "resolvedMethods": [],
+          "count": 84
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2457964",
+          "resolvedMethods": [],
+          "count": 10
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 43
+        },
+        {
+          "targetModuleOffset": "0x246bf08",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2534390",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2534570",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 14
+        },
+        {
+          "targetModuleOffset": "0x26c0238",
+          "resolvedMethods": [],
+          "count": 14
+        },
+        {
+          "targetModuleOffset": "0x26f1904",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2706384",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x29b3034",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f0ef9c",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x2f1a7b4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2f250bc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2fc0848",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2fcba7c",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x2fcc1b4",
+          "resolvedMethods": [],
+          "count": 3
+        },
+        {
+          "targetModuleOffset": "0x31afc60",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x32999c4",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x33ed8e4",
+          "resolvedMethods": [],
+          "count": 42
+        },
+        {
+          "targetModuleOffset": "0x33f7754",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x33f7900",
+          "resolvedMethods": [],
+          "count": 43
+        },
+        {
+          "targetModuleOffset": "0x33fa49c",
+          "resolvedMethods": [],
+          "count": 7
+        },
+        {
+          "targetModuleOffset": "0x3406dec",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x3411e7c",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x34256c0",
+          "resolvedMethods": [
+            "HunterCtrl.HitDamageProcess"
+          ],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x3434f58",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3448144",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3448ca4",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x344d63c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x346395c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x3b4aea0",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x48a7ec0",
+          "resolvedMethods": [],
+          "count": 12
+        },
+        {
+          "targetModuleOffset": "0x48a8134",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x48b8440",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x508d8ec",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5a76240",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a7a608",
+          "resolvedMethods": [],
+          "count": 2
+        },
+        {
+          "targetModuleOffset": "0x5a8c104",
+          "resolvedMethods": [],
+          "count": 3
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 64,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1760,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 76,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3032,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 88,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 4008,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 100,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1504,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 112,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2976,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 124,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3248,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 136,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 4024,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 148,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3224,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 160,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2984,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 172,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1528,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 184,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1640,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 196,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2064,
+          "schemaFields": [
+            {
+              "name": "FBNMALOOBKK",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 208,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 220,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1768,
+          "schemaFields": [
+            {
+              "name": "CLNOCMAGDBD",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 232,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1904,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 244,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1848,
+          "schemaFields": [
+            {
+              "name": "HPBCPGMOMAK",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 256,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 16,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 268,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3112,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 280,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 292,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 24,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 304,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 32,
+          "schemaFields": [
+            {
+              "name": "mSturnObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 316,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "mFearObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 328,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 3712,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 340,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 48,
+          "schemaFields": [
+            {
+              "name": "mPumpkinObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 472,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 812,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 532,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1768,
+          "schemaFields": [
+            {
+              "name": "CLNOCMAGDBD",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 584,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 536,
+          "schemaFields": [
+            {
+              "name": "mCollider",
+              "type": "UnityEngine.Collider2D"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 656,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 544,
+          "schemaFields": [
+            {
+              "name": "mCharacter",
+              "type": "UnityEngine.Transform"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 740,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 544,
+          "schemaFields": [
+            {
+              "name": "mCharacter",
+              "type": "UnityEngine.Transform"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1024,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1040,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1124,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1148,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1184,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1208,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1256,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1280,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1316,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 304,
+          "schemaFields": [
+            {
+              "name": "Touch",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1320,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 312,
+          "schemaFields": [
+            {
+              "name": "ClickSpeak",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1344,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1368,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1444,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1468,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1504,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 56,
+          "schemaFields": [
+            {
+              "name": "PatternGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1548,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1680,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 56,
+          "schemaFields": [
+            {
+              "name": "PatternGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1724,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1852,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 428,
+          "schemaFields": [
+            {
+              "name": "AttackAniTime",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1904,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 408,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 1976,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 428,
+          "schemaFields": [
+            {
+              "name": "AttackAniTime",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2028,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 408,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 2096,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 428,
+          "schemaFields": [
+            {
+              "name": "AttackAniTime",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2148,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 408,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 2212,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 428,
+          "schemaFields": [
+            {
+              "name": "AttackAniTime",
+              "type": "System.Single"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 2264,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 408,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3088,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3148,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3164,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3228,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3244,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3336,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1348,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 3440,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 3524,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4184,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4304,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4320,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 4924,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 612,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 4972,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1140,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 5108,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5232,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5400,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5524,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5668,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5756,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 5820,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6036,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6160,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6336,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6352,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6512,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 6528,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 6696,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 528,
+          "schemaFields": [
+            {
+              "name": "mAnimation",
+              "type": "Spine.Unity.SkeletonAnimation"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7680,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7752,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 7828,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8248,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8300,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8368,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1408,
+          "schemaFields": [
+            {
+              "name": "GHAIAGIDIMC",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8404,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8424,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1416,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8464,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1448,
+          "schemaFields": [
+            {
+              "name": "KKBDBHDJGPG",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8552,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8600,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8652,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8776,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 560,
+          "schemaFields": [
+            {
+              "name": "mAroundHunter",
+              "type": "System.Collections.Generic.List<HunterCtrl>"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8852,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 8868,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 8988,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9004,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9104,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9176,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 296,
+          "schemaFields": [
+            {
+              "name": "SpeakIdx",
+              "type": "System.Int32"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9908,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9932,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 9952,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 9976,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10028,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 10052,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10204,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1544,
+          "schemaFields": [
+            {
+              "name": "JHCBCEJHHNE",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10352,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1680,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 10456,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1680,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 10564,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10704,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10844,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10908,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 10932,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 10968,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 10992,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1496,
+          "schemaFields": [
+            {
+              "name": "JDAILDCLGCH",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 11116,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 568,
+          "schemaFields": [
+            {
+              "name": "mMentGroup",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 11568,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 11584,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 11860,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1600,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 11964,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 1600,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12128,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12200,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12272,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12744,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12816,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 12888,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13344,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13416,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13488,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13732,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13804,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 440,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 13876,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1464,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 14940,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 15472,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 15488,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 15524,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 15548,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 15848,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 15864,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 15900,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 15924,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 16180,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        },
+        {
+          "instructionOffset": 16196,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 184,
+          "schemaFields": [
+            {
+              "name": "TutorialTouchObj",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 16244,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 2980,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 6876,
+          "register": 1,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 15572,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 15948,
+          "register": 0,
+          "value": 1.0
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 1952,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2072,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2188,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2308,
+          "operation": "fmul",
+          "destination": 9,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 2816,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 2996,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3008,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 3192,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3200,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3368,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3420,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3424,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3580,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 3584,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3668,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 3752,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 4004,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 4228,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 4484,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 4492,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 4576,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 4800,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 4812,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5004,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5020,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5032,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5304,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5312,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 5316,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5596,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 5604,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 5608,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 5956,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6240,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6252,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 6632,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6644,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 6872,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6880,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 6892,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 7072,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7084,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7096,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 7280,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7288,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 7292,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 7532,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 7908,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 7912,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 7916,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8040,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 8052,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9272,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 9,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9276,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9280,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 9404,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 9416,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 9688,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 9700,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 9712,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 10276,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 10284,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 2
+        },
+        {
+          "instructionOffset": 10288,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 0
+        },
+        {
+          "instructionOffset": 10496,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 10508,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 10768,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 10780,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 10792,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 11184,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 11196,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 11208,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 11472,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 11484,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 11792,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 11804,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 12004,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12016,
+          "operation": "fsub",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 12328,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 9,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12332,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12404,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 12408,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12420,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 2,
+          "right": 0
+        },
+        {
+          "instructionOffset": 12600,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12944,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 9,
+          "right": 1
+        },
+        {
+          "instructionOffset": 12948,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13012,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 13016,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13204,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13544,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 9,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13548,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13612,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 13616,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13932,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 9,
+          "right": 1
+        },
+        {
+          "instructionOffset": 13936,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14000,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 14004,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14244,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14252,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14492,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14500,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 14732,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 15152,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 15400,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 15772,
+          "operation": "fmul",
+          "destination": 3,
+          "left": 8,
+          "right": 3
+        },
+        {
+          "instructionOffset": 16164,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fmul,fmul,fmul,fmul,fsub,fmul,fmul,fadd,fadd,fmul,fadd,fmul,fadd,fadd,fmul,fmul,fmul,fmul,fadd,fmul,fmul,fsub,fadd,fmul,fsub,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fadd,fmul,fadd,fmul,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fmul,fsub,fmul,fadd,fmul,fmul,fsub,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fsub,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fsub,fmul,fsub,fmul,fsub,fmul,fadd,fmul,fmul,fadd,fmul,fmul,fadd,fmul,fmul,fmul,fmul,fadd,fmul,fmul,fmul,fadd,fmul,fmul,fmul,fmul,fmul,fmul,fmul,fmul,fmul,fmul,fmul",
+      "floatArithmeticSignatureSha256": "263358b43b989f2a9e7615b5531a8999aedaa26c4fe8399f39379b292cd395f9"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "FireDamageAction",
+      "parameterCount": 2,
+      "parameterTypes": [
+        "System.Int64",
+        "System.Int32"
+      ],
+      "returnType": "System.Collections.IEnumerator",
+      "token": "0x06005CAE",
+      "moduleOffset": "0x3433750",
+      "boundaryModuleOffset": "0x34337cc",
+      "nativeSizeBytes": 124,
+      "capturedCodeBytes": 124,
+      "codeTruncated": false,
+      "bodySha256": "308627da7eba79f5edbede06b9ce33735c0629690eec967abf2dca3b226b96fc",
+      "capturedCodeSha256": "308627da7eba79f5edbede06b9ce33735c0629690eec967abf2dca3b226b96fc",
+      "exactBoundaryDescriptorSha256": "896c416cdee9d335983ad7d80590b1e276e931f36aefbb1288c7f1e06266e8d5",
+      "callTargetNormalizedSha256": "3a302b4edec07eeb2c9379ec651a811a7be0a774b9744022f0961ab46fea751b",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358718",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x347a640",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 48,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 2832,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [],
+      "floatArithmeticSignature": "",
+      "floatArithmeticSignatureSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetGearDamage",
+      "parameterCount": 2,
+      "parameterTypes": [
+        "GearData",
+        "System.Int32"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+      "token": "0x06006A18",
+      "moduleOffset": "0x26bda84",
+      "boundaryModuleOffset": "0x26bdf7c",
+      "nativeSizeBytes": 1272,
+      "capturedCodeBytes": 1272,
+      "codeTruncated": false,
+      "bodySha256": "cba2a0d6ff62f8c36b66d91a50bc2b8c7c14242655dd80e0dfe7e37937f07f97",
+      "capturedCodeSha256": "cba2a0d6ff62f8c36b66d91a50bc2b8c7c14242655dd80e0dfe7e37937f07f97",
+      "exactBoundaryDescriptorSha256": "f272aff559c985bf4ca318aa8c7e3f48cd401c096f6b515e371a48c9461f9313",
+      "callTargetNormalizedSha256": "1ca989ca343d0b49f3f1121167916750430f3636b7bf0c0b4d9cf6011294e8dc",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 23
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 5
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 56,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1936,
+          "schemaFields": [
+            {
+              "name": "mConvertPop",
+              "type": "ConvertPop"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 88,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 212,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 344,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 468,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 564,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 916,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1188,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 888,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 1104,
+          "register": 2,
+          "value": -1.0
+        },
+        {
+          "instructionOffset": 1128,
+          "register": 2,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 1156,
+          "register": 0,
+          "value": -0.5
+        },
+        {
+          "instructionOffset": 1172,
+          "register": 0,
+          "value": 0.5
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 1028,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 10
+        },
+        {
+          "instructionOffset": 1032,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 1,
+          "right": 10
+        },
+        {
+          "instructionOffset": 1036,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1040,
+          "operation": "fmul",
+          "destination": 1,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1044,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        },
+        {
+          "instructionOffset": 1048,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 0,
+          "right": 9
+        },
+        {
+          "instructionOffset": 1064,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 10
+        },
+        {
+          "instructionOffset": 1068,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1140,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 2
+        },
+        {
+          "instructionOffset": 1160,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1176,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fmul,fmul,fmul,fadd,fmul,fmul,fmul,fadd,fadd,fadd",
+      "floatArithmeticSignatureSha256": "ebd9bbfe232c5bc263f47cd6f86de0e4bbf1b0cd185aa7db8d2b9b41a639aa1b"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetGearAcc",
+      "parameterCount": 2,
+      "parameterTypes": [
+        "GearData",
+        "System.Int32"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+      "token": "0x06006A7F",
+      "moduleOffset": "0x26e3708",
+      "boundaryModuleOffset": "0x26e3b6c",
+      "nativeSizeBytes": 1124,
+      "capturedCodeBytes": 1124,
+      "codeTruncated": false,
+      "bodySha256": "701b6ae94e18abf4001b668eb76fd1ea8229ea13fad517702e1a8e6065f4a3fa",
+      "capturedCodeSha256": "701b6ae94e18abf4001b668eb76fd1ea8229ea13fad517702e1a8e6065f4a3fa",
+      "exactBoundaryDescriptorSha256": "a87b3e2b455c7292693abed8438be570903de84032745b1e5e36df476ec5a2eb",
+      "callTargetNormalizedSha256": "ac10c9b401c4c2200529429b0490c5f58be848b1f790f8661e16234e2fed63c1",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 20
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 48,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1936,
+          "schemaFields": [
+            {
+              "name": "mConvertPop",
+              "type": "ConvertPop"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 80,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 204,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 336,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 460,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 556,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1048,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 900,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 964,
+          "register": 2,
+          "value": -1.0
+        },
+        {
+          "instructionOffset": 988,
+          "register": 2,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 1016,
+          "register": 0,
+          "value": -0.5
+        },
+        {
+          "instructionOffset": 1032,
+          "register": 0,
+          "value": 0.5
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 704,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 9
+        },
+        {
+          "instructionOffset": 708,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 788,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 9
+        },
+        {
+          "instructionOffset": 792,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 796,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 916,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1000,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 2
+        },
+        {
+          "instructionOffset": 1020,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1036,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fmul,fmul,fmul,fadd,fmul,fadd,fadd,fadd",
+      "floatArithmeticSignatureSha256": "c93dfef4b47459f26b84930708fe538d37ddf2b0dcbf524aa0c4a127b1b3fc7e"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetGearArmor",
+      "parameterCount": 2,
+      "parameterTypes": [
+        "GearData",
+        "System.Int32"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+      "token": "0x06006A89",
+      "moduleOffset": "0x26e4ad0",
+      "boundaryModuleOffset": "0x26e4f34",
+      "nativeSizeBytes": 1124,
+      "capturedCodeBytes": 1124,
+      "codeTruncated": false,
+      "bodySha256": "32ab56c5a2125e743a1760dbbf78d0e6d77ce88d32d629b5730c4003ebd4d96c",
+      "capturedCodeSha256": "32ab56c5a2125e743a1760dbbf78d0e6d77ce88d32d629b5730c4003ebd4d96c",
+      "exactBoundaryDescriptorSha256": "7938d9d93d8c2a20c3e8403337560e99cfc83e96df07663dc605d24b87a8f16f",
+      "callTargetNormalizedSha256": "1c256b52126c4f5621df990440a222e09ac9ff30a92f40bbebe18ab4ea2d11ab",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x23584dc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x23585fc",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245668c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 20
+        },
+        {
+          "targetModuleOffset": "0x2457a90",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 4
+        },
+        {
+          "targetModuleOffset": "0x26bdf7c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x518a974",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5d93520",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 48,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 1936,
+          "schemaFields": [
+            {
+              "name": "mConvertPop",
+              "type": "ConvertPop"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 80,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 204,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 336,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 460,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 556,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 40,
+          "schemaFields": [
+            {
+              "name": "BatterySaveBorder",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        },
+        {
+          "instructionOffset": 1048,
+          "operation": "ldr_w",
+          "baseRegister": "x0",
+          "offset": 228,
+          "schemaFields": []
+        }
+      ],
+      "floatImmediateConstants": [
+        {
+          "instructionOffset": 900,
+          "register": 0,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 964,
+          "register": 2,
+          "value": -1.0
+        },
+        {
+          "instructionOffset": 988,
+          "register": 2,
+          "value": 1.0
+        },
+        {
+          "instructionOffset": 1016,
+          "register": 0,
+          "value": -0.5
+        },
+        {
+          "instructionOffset": 1032,
+          "register": 0,
+          "value": 0.5
+        }
+      ],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 704,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 9
+        },
+        {
+          "instructionOffset": 708,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 788,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 9
+        },
+        {
+          "instructionOffset": 792,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 796,
+          "operation": "fadd",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 916,
+          "operation": "fmul",
+          "destination": 8,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1000,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 1,
+          "right": 2
+        },
+        {
+          "instructionOffset": 1020,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        },
+        {
+          "instructionOffset": 1036,
+          "operation": "fadd",
+          "destination": 0,
+          "left": 8,
+          "right": 0
+        }
+      ],
+      "floatArithmeticSignature": "fmul,fmul,fmul,fmul,fadd,fmul,fadd,fadd,fadd",
+      "floatArithmeticSignatureSha256": "c93dfef4b47459f26b84930708fe538d37ddf2b0dcbf524aa0c4a127b1b3fc7e"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetSealAttackUp",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+      "token": "0x06006BC8",
+      "moduleOffset": "0x27209dc",
+      "boundaryModuleOffset": "0x2720bc8",
+      "nativeSizeBytes": 492,
+      "capturedCodeBytes": 492,
+      "codeTruncated": false,
+      "bodySha256": "05170fcee5a3830b70511c4e319f31f4e98e87887a055586b8768d2b612073dd",
+      "capturedCodeSha256": "05170fcee5a3830b70511c4e319f31f4e98e87887a055586b8768d2b612073dd",
+      "exactBoundaryDescriptorSha256": "ffc8c56617f85a8789a64d3fbcaab0d8d9600e65f79fc5cc5b065dd2eb36966e",
+      "callTargetNormalizedSha256": "5aae9c2ac2f36abf28db7b0e7732290ba487ac4b992b2fd01425d3cd85664d07",
+      "directCalls": [
+        {
+          "targetModuleOffset": "0x2358730",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x2358738",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x245672c",
+          "resolvedMethods": [],
+          "count": 13
+        },
+        {
+          "targetModuleOffset": "0x245787c",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x246bf08",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x25b9f40",
+          "resolvedMethods": [],
+          "count": 1
+        },
+        {
+          "targetModuleOffset": "0x5219d84",
+          "resolvedMethods": [],
+          "count": 1
+        }
+      ],
+      "selfFieldAccesses": [
+        {
+          "instructionOffset": 328,
+          "operation": "ldr_x",
+          "baseRegister": "x0",
+          "offset": 248,
+          "schemaFields": [
+            {
+              "name": "BossBtn",
+              "type": "UnityEngine.GameObject"
+            }
+          ]
+        }
+      ],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [
+        {
+          "instructionOffset": 424,
+          "operation": "fmul",
+          "destination": 0,
+          "left": 0,
+          "right": 1
+        }
+      ],
+      "floatArithmeticSignature": "fmul",
+      "floatArithmeticSignatureSha256": "afc7cca81730b9aec0b7792a43512160db9de9fd7643b6798c8618cafe6c698e"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetCostumeAttackUp",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "System.Int32"
+      ],
+      "returnType": "System.Single",
+      "token": "0x06006BC9",
+      "moduleOffset": "0x2720bc8",
+      "boundaryModuleOffset": "0x2720bd0",
+      "nativeSizeBytes": 8,
+      "capturedCodeBytes": 8,
+      "codeTruncated": false,
+      "bodySha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "capturedCodeSha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "exactBoundaryDescriptorSha256": "5cb7c05469a97af508822063e69a98740559e05a2c7f9303c46072a0b8168d2f",
+      "callTargetNormalizedSha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "directCalls": [],
+      "selfFieldAccesses": [],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [],
+      "floatArithmeticSignature": "",
+      "floatArithmeticSignatureSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "type": "GameManager",
+      "method": "GetCostumeArmorUp",
+      "parameterCount": 1,
+      "parameterTypes": [
+        "System.Int32"
+      ],
+      "returnType": "System.Single",
+      "token": "0x06006BE6",
+      "moduleOffset": "0x27233cc",
+      "boundaryModuleOffset": "0x27233d4",
+      "nativeSizeBytes": 8,
+      "capturedCodeBytes": 8,
+      "codeTruncated": false,
+      "bodySha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "capturedCodeSha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "exactBoundaryDescriptorSha256": "a1ce5af59c6253b33f455886c711a749ccabc5a785ca0c9b85f7fe2c63d58844",
+      "callTargetNormalizedSha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c",
+      "directCalls": [],
+      "selfFieldAccesses": [],
+      "floatImmediateConstants": [],
+      "floatArithmetic": [],
+      "floatArithmeticSignature": "",
+      "floatArithmeticSignatureSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "recoveredExactFacts": {
+    "getReduceAttackValue": {
+      "nativeSizeBytes": 88,
+      "fieldOffsets": [
+        484,
+        492,
+        500
+      ],
+      "schemaFields": [
+        [
+          {
+            "name": "PHKJDKANJOA",
+            "type": "System.Single"
+          }
+        ],
+        [
+          {
+            "name": "DBGLOFBIEBL",
+            "type": "System.Single"
+          }
+        ],
+        [
+          {
+            "name": "BOKEIJGPICA",
+            "type": "System.Single"
+          }
+        ]
+      ],
+      "floatImmediate": 1.0,
+      "arithmeticSignature": "fsub,fsub,fsub,fmul,fmul",
+      "expression": "(1 - field_484) * (1 - field_492) * (1 - field_500)"
+    },
+    "costumeModifiers": {
+      "GetCostumeAttackUp": {
+        "nativeSizeBytes": 8,
+        "returns": 0.0,
+        "bodySha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c"
+      },
+      "GetCostumeArmorUp": {
+        "nativeSizeBytes": 8,
+        "returns": 0.0,
+        "bodySha256": "eb2f99aeafe6fa666d90e46dfe69f2cae11e2bf912999b07d3d262a152ad072c"
+      }
+    },
+    "criticalDamage": {
+      "baseMultiplier": 1.75,
+      "instructionOffsets": [
+        164,
+        252
+      ],
+      "note": "The complete surrounding modifier and rounding chain remains unresolved."
+    }
+  },
+  "limitations": [
+    "Resolved direct-call names cover only the sixteen captured exact method starts; other targets remain module offsets.",
+    "HunterCtrl.Damaged exceeds the 16,384-byte capture limit; its exact boundary is known but arithmetic/call analysis covers only the captured prefix.",
+    "Direct self-field accesses intentionally exclude pointers copied from x0 into other registers.",
+    "Arithmetic signatures describe decoded scalar single-precision instructions, not semantic variable names.",
+    "No formula is authorized for runtime use until all inputs and golden vectors are independently resolved."
+  ]
+}

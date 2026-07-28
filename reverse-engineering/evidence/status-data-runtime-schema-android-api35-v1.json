@@ -1,0 +1,2372 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T05:02:46.354429Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 15274,
+    "action": "capture StatusData field and method schema for combat semantic mapping; no live values",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "StatusData"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "StatusData"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "StatusData",
+          "token": 33554770,
+          "fields": [
+            {
+              "name": "<StringIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "<Index>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 24,
+              "flags": 1
+            },
+            {
+              "name": "<CalcDamage>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 40,
+              "flags": 1
+            },
+            {
+              "name": "<CalcArmor>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 72,
+              "flags": 1
+            },
+            {
+              "name": "<CalcHp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 104,
+              "flags": 1
+            },
+            {
+              "name": "<CalcAttackSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 136,
+              "flags": 1
+            },
+            {
+              "name": "<CalcMoveSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 156,
+              "flags": 1
+            },
+            {
+              "name": "<CalcCritical>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 176,
+              "flags": 1
+            },
+            {
+              "name": "<CalcDodge>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 192,
+              "flags": 1
+            },
+            {
+              "name": "<CalcLifeSteal>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 208,
+              "flags": 1
+            },
+            {
+              "name": "<CalcHighValueMet>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 228,
+              "flags": 1
+            },
+            {
+              "name": "MinusHungry",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 248,
+              "flags": 6
+            },
+            {
+              "name": "MinusFeel",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 268,
+              "flags": 6
+            },
+            {
+              "name": "MinusTire",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 288,
+              "flags": 6
+            },
+            {
+              "name": "<Damage>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 312,
+              "flags": 1
+            },
+            {
+              "name": "<Armor>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 344,
+              "flags": 1
+            },
+            {
+              "name": "<Hp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 376,
+              "flags": 1
+            },
+            {
+              "name": "<AttackSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 408,
+              "flags": 1
+            },
+            {
+              "name": "<WeaponSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 428,
+              "flags": 1
+            },
+            {
+              "name": "<MoveSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 448,
+              "flags": 1
+            },
+            {
+              "name": "<Critical>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 468,
+              "flags": 1
+            },
+            {
+              "name": "<Dodge>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 488,
+              "flags": 1
+            },
+            {
+              "name": "<PotionLucky>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 508,
+              "flags": 1
+            },
+            {
+              "name": "<GearProperty>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 528,
+              "flags": 1
+            },
+            {
+              "name": "<GearSetProperty>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 536,
+              "flags": 1
+            },
+            {
+              "name": "<GearSetPropertyValue>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 544,
+              "flags": 1
+            },
+            {
+              "name": "<RunesProperty>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 552,
+              "flags": 1
+            },
+            {
+              "name": "<SkillRunesProperty>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 560,
+              "flags": 1
+            },
+            {
+              "name": "<RidingPetGearProperty>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]",
+              "offset": 568,
+              "flags": 1
+            },
+            {
+              "name": "LowValues",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 0,
+              "flags": 54
+            },
+            {
+              "name": "HighValues",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 8,
+              "flags": 54
+            },
+            {
+              "name": "MinusHungryValues",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 16,
+              "flags": 54
+            },
+            {
+              "name": "MinusFeelValues",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 24,
+              "flags": 54
+            },
+            {
+              "name": "MinusTireValues",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]",
+              "offset": 32,
+              "flags": 54
+            },
+            {
+              "name": "GearDamageUpgrade",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 576,
+              "flags": 1
+            },
+            {
+              "name": "GearArmorUpgrade",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 596,
+              "flags": 1
+            },
+            {
+              "name": "GearHpUpgrade",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 616,
+              "flags": 1
+            },
+            {
+              "name": "GearDamage",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 636,
+              "flags": 1
+            },
+            {
+              "name": "GearArmor",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 656,
+              "flags": 1
+            },
+            {
+              "name": "GearHp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 676,
+              "flags": 1
+            },
+            {
+              "name": "OptionDamage",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 696,
+              "flags": 1
+            },
+            {
+              "name": "OptionArmor",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 716,
+              "flags": 1
+            },
+            {
+              "name": "OptionHp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 736,
+              "flags": 1
+            },
+            {
+              "name": "OptionAttackSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 756,
+              "flags": 1
+            },
+            {
+              "name": "OptionMoveSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 776,
+              "flags": 1
+            },
+            {
+              "name": "OptionCritical",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 796,
+              "flags": 1
+            },
+            {
+              "name": "OptionDodge",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 812,
+              "flags": 1
+            },
+            {
+              "name": "OptionLifeSteal",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 828,
+              "flags": 1
+            },
+            {
+              "name": "OptionHighValueMet",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 848,
+              "flags": 1
+            },
+            {
+              "name": "PersonalDamage",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 864,
+              "flags": 6
+            },
+            {
+              "name": "PersonalArmor",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 884,
+              "flags": 6
+            },
+            {
+              "name": "PersonalHp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 904,
+              "flags": 6
+            },
+            {
+              "name": "PersonalAttackSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 924,
+              "flags": 6
+            },
+            {
+              "name": "PersonalMoveSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 944,
+              "flags": 6
+            },
+            {
+              "name": "PersonalCritical",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 964,
+              "flags": 6
+            },
+            {
+              "name": "PersonalDodge",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 984,
+              "flags": 6
+            },
+            {
+              "name": "CostumeAttackUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1004,
+              "flags": 6
+            },
+            {
+              "name": "CostumeArmorUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1024,
+              "flags": 6
+            },
+            {
+              "name": "CostumeMoveSpeedUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1044,
+              "flags": 6
+            },
+            {
+              "name": "CostumeExpUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1064,
+              "flags": 6
+            },
+            {
+              "name": "CostumeHungry",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1084,
+              "flags": 6
+            },
+            {
+              "name": "CostumeHpUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1104,
+              "flags": 6
+            },
+            {
+              "name": "CostumeImmuneUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1124,
+              "flags": 6
+            },
+            {
+              "name": "CostumeTire",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1144,
+              "flags": 6
+            },
+            {
+              "name": "CostumeFeel",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1164,
+              "flags": 6
+            },
+            {
+              "name": "SealAttackUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1184,
+              "flags": 6
+            },
+            {
+              "name": "SealMoveSpeedUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1204,
+              "flags": 6
+            },
+            {
+              "name": "FairyAttackUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1224,
+              "flags": 6
+            },
+            {
+              "name": "FairyArmorUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1244,
+              "flags": 6
+            },
+            {
+              "name": "FairyGoldUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1264,
+              "flags": 6
+            },
+            {
+              "name": "FairyHpUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1284,
+              "flags": 6
+            },
+            {
+              "name": "DragonProtectionFairyAtkValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1304,
+              "flags": 6
+            },
+            {
+              "name": "RamblePetGoldUp",
+              "type": "System.Single",
+              "offset": 1324,
+              "flags": 6
+            },
+            {
+              "name": "RamblePetHpUp",
+              "type": "System.Single",
+              "offset": 1328,
+              "flags": 6
+            },
+            {
+              "name": "DragonProtectionRamblePetDefValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1332,
+              "flags": 6
+            },
+            {
+              "name": "VillagePetCriDemUp",
+              "type": "System.Single",
+              "offset": 1352,
+              "flags": 6
+            },
+            {
+              "name": "CollectionAttackUp",
+              "type": "System.Single",
+              "offset": 1356,
+              "flags": 6
+            },
+            {
+              "name": "CollectionArmorUp",
+              "type": "System.Single",
+              "offset": 1360,
+              "flags": 6
+            },
+            {
+              "name": "CollectionCri",
+              "type": "System.Single",
+              "offset": 1364,
+              "flags": 6
+            },
+            {
+              "name": "CollectionCriDem",
+              "type": "System.Single",
+              "offset": 1368,
+              "flags": 6
+            },
+            {
+              "name": "CollectionExpUp",
+              "type": "System.Single",
+              "offset": 1372,
+              "flags": 6
+            },
+            {
+              "name": "CollectionHungry",
+              "type": "System.Single",
+              "offset": 1376,
+              "flags": 6
+            },
+            {
+              "name": "CollectionFeel",
+              "type": "System.Single",
+              "offset": 1380,
+              "flags": 6
+            },
+            {
+              "name": "CollectionTire",
+              "type": "System.Single",
+              "offset": 1384,
+              "flags": 6
+            },
+            {
+              "name": "CollectionHpUp",
+              "type": "System.Single",
+              "offset": 1388,
+              "flags": 6
+            },
+            {
+              "name": "CollectionBossDem",
+              "type": "System.Single",
+              "offset": 1392,
+              "flags": 6
+            },
+            {
+              "name": "CollectionPrimateDem",
+              "type": "System.Single",
+              "offset": 1396,
+              "flags": 6
+            },
+            {
+              "name": "CollectionEvilDem",
+              "type": "System.Single",
+              "offset": 1400,
+              "flags": 6
+            },
+            {
+              "name": "CollectionUndeadDem",
+              "type": "System.Single",
+              "offset": 1404,
+              "flags": 6
+            },
+            {
+              "name": "CollectionAnimalDem",
+              "type": "System.Single",
+              "offset": 1408,
+              "flags": 6
+            },
+            {
+              "name": "CollectionTechBook",
+              "type": "System.Int32",
+              "offset": 1412,
+              "flags": 6
+            },
+            {
+              "name": "CollectionGoldUp",
+              "type": "System.Single",
+              "offset": 1416,
+              "flags": 6
+            },
+            {
+              "name": "CollectionBerserkerDem",
+              "type": "System.Single",
+              "offset": 1420,
+              "flags": 6
+            },
+            {
+              "name": "CollectionPaladinDem",
+              "type": "System.Single",
+              "offset": 1424,
+              "flags": 6
+            },
+            {
+              "name": "CollectionRangerDem",
+              "type": "System.Single",
+              "offset": 1428,
+              "flags": 6
+            },
+            {
+              "name": "CollectionSorcererDem",
+              "type": "System.Single",
+              "offset": 1432,
+              "flags": 6
+            },
+            {
+              "name": "CollectionDarkKnightDem",
+              "type": "System.Single",
+              "offset": 1436,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionAttackUp",
+              "type": "System.Single",
+              "offset": 1440,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionArmorUp",
+              "type": "System.Single",
+              "offset": 1444,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionCri",
+              "type": "System.Single",
+              "offset": 1448,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionCriDem",
+              "type": "System.Single",
+              "offset": 1452,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionExpUp",
+              "type": "System.Single",
+              "offset": 1456,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionHungry",
+              "type": "System.Single",
+              "offset": 1460,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionFeel",
+              "type": "System.Single",
+              "offset": 1464,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionTire",
+              "type": "System.Single",
+              "offset": 1468,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionHpUp",
+              "type": "System.Single",
+              "offset": 1472,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionBossDem",
+              "type": "System.Single",
+              "offset": 1476,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionPrimateDem",
+              "type": "System.Single",
+              "offset": 1480,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionEvilDem",
+              "type": "System.Single",
+              "offset": 1484,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionUndeadDem",
+              "type": "System.Single",
+              "offset": 1488,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionAnimalDem",
+              "type": "System.Single",
+              "offset": 1492,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionTechBook",
+              "type": "System.Int32",
+              "offset": 1496,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionGoldUp",
+              "type": "System.Single",
+              "offset": 1500,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionBerserkerDem",
+              "type": "System.Single",
+              "offset": 1504,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionPaladinDem",
+              "type": "System.Single",
+              "offset": 1508,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionRangerDem",
+              "type": "System.Single",
+              "offset": 1512,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionSorcererDem",
+              "type": "System.Single",
+              "offset": 1516,
+              "flags": 6
+            },
+            {
+              "name": "RelicCollectionDarkKnightDem",
+              "type": "System.Single",
+              "offset": 1520,
+              "flags": 6
+            },
+            {
+              "name": "HeroicJobTraitAttackUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1524,
+              "flags": 6
+            },
+            {
+              "name": "HeroicJobTraitHpUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1544,
+              "flags": 6
+            },
+            {
+              "name": "HeroicJobTraitCriDemUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1564,
+              "flags": 6
+            },
+            {
+              "name": "HeroicJobTraitImmuneUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1584,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetAttackUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1604,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetCriDemUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1624,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetHpUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1644,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetImmuneUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1664,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetLuckyMetPlusUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 1684,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetTraitLuckyMetPlusUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 1700,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetHighValueMetPerUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 1716,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetDodge",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 1732,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetBloodSteal",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1748,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetTickAbilityMinus",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1768,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetSpeedUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1788,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetDefUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1808,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetAttackSpeedUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1828,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetCriPerUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1848,
+              "flags": 6
+            },
+            {
+              "name": "RidingPetSlayerDemUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1868,
+              "flags": 6
+            },
+            {
+              "name": "<GUP_Property>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]",
+              "offset": 1888,
+              "flags": 1
+            },
+            {
+              "name": "RankDamage",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1896,
+              "flags": 1
+            },
+            {
+              "name": "RankArmor",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1916,
+              "flags": 1
+            },
+            {
+              "name": "RankHp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1936,
+              "flags": 1
+            },
+            {
+              "name": "RankAttackSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1956,
+              "flags": 1
+            },
+            {
+              "name": "RankCritical",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1976,
+              "flags": 1
+            },
+            {
+              "name": "RankDodge",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 1996,
+              "flags": 1
+            },
+            {
+              "name": "CalcRevive",
+              "type": "System.Int32",
+              "offset": 2016,
+              "flags": 1
+            },
+            {
+              "name": "CalcLevel",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2020,
+              "flags": 1
+            },
+            {
+              "name": "FuryValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2040,
+              "flags": 1
+            },
+            {
+              "name": "SpeedPotionValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2060,
+              "flags": 1
+            },
+            {
+              "name": "DamagePotionValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2080,
+              "flags": 1
+            },
+            {
+              "name": "ShiledPotionValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2100,
+              "flags": 1
+            },
+            {
+              "name": "<PolyIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2120,
+              "flags": 1
+            },
+            {
+              "name": "<HighPolyIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2136,
+              "flags": 1
+            },
+            {
+              "name": "SylphBlessValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2152,
+              "flags": 6
+            },
+            {
+              "name": "SylphBlessCriDemUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2168,
+              "flags": 6
+            },
+            {
+              "name": "SylphBlessCriPerUp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2188,
+              "flags": 6
+            },
+            {
+              "name": "FrostArcherMove",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2204,
+              "flags": 6
+            },
+            {
+              "name": "AncientPowerCriticalValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2224,
+              "flags": 6
+            },
+            {
+              "name": "CriticalLightningCriticalValue",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2240,
+              "flags": 6
+            },
+            {
+              "name": "Quicken",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2256,
+              "flags": 1
+            },
+            {
+              "name": "StoneSkin",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2276,
+              "flags": 1
+            },
+            {
+              "name": "Vitality",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2296,
+              "flags": 1
+            },
+            {
+              "name": "gearPropertyDecreaseHPPer",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 2320,
+              "flags": 6
+            },
+            {
+              "name": "gearPropertyNeedMoveSpeed",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2352,
+              "flags": 6
+            },
+            {
+              "name": "PolyLifeSteal",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 2372,
+              "flags": 6
+            },
+            {
+              "name": "type",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 2392,
+              "flags": 1
+            },
+            {
+              "name": "RankHunterData",
+              "type": "HunterData",
+              "offset": 2408,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "DABPNOMJIIL",
+              "token": 100670673,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GJJHJBLFNEH",
+              "token": 100670674,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CAHPKCLAOOE",
+              "token": 100670675,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_SkillRunesProperty",
+              "token": 100670676,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IODBBOKDCIG",
+              "token": 100670677,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcArmor",
+              "token": 100670678,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OFFMANAMHJM",
+              "token": 100670679,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_RidingPetGearProperty",
+              "token": 100670680,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FGCEFJCHNCK",
+              "token": 100670681,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Armor",
+              "token": 100670682,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcArmor",
+              "token": 100670683,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KNEPGLELNLM",
+              "token": 100670684,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OEPMJDLOJNA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PFIONPOHHJK",
+              "token": 100670685,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Dodge",
+              "token": 100670686,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Dodge",
+              "token": 100670687,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BHADDBPJDIL",
+              "token": 100670688,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcLifeSteal",
+              "token": 100670689,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Critical",
+              "token": 100670690,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_RidingPetGearProperty",
+              "token": 100670691,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PAPELNLBOFD",
+              "token": 100670692,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_GearSetPropertyValue",
+              "token": 100670693,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_MoveSpeed",
+              "token": 100670694,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcDodge",
+              "token": 100670695,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FKJOMACNDAM",
+              "token": 100670696,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_AttackSpeed",
+              "token": 100670697,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_GearProperty",
+              "token": 100670698,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Critical",
+              "token": 100670699,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ENEHIGJMGKL",
+              "token": 100670700,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_GUP_Property",
+              "token": 100670701,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_GearSetPropertyValue",
+              "token": 100670702,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DBJONKBOJFB",
+              "token": 100670703,
+              "returnType": "HunterData",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_StringIndex",
+              "token": 100670704,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AFEGECDDHEJ",
+              "token": 100670705,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HOFHLOOMPOI",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_GearProperty",
+              "token": 100670706,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcAttackSpeed",
+              "token": 100670707,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_GearSetProperty",
+              "token": 100670708,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HLJJOONINEF",
+              "token": 100670709,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LAHMIADMIPB",
+              "token": 100670710,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NNDMOPKBAJO",
+              "token": 100670711,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcCritical",
+              "token": 100670712,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_AttackSpeed",
+              "token": 100670713,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcHighValueMet",
+              "token": 100670714,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcDodge",
+              "token": 100670715,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OEGAGALNONM",
+              "token": 100670716,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcDamage",
+              "token": 100670717,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AKBDMIJAHHD",
+              "token": 100670718,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PCJKOECDDJO",
+              "token": 100670719,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_HighPolyIndex",
+              "token": 100670720,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Index",
+              "token": 100670721,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_StringIndex",
+              "token": 100670722,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Damage",
+              "token": 100670723,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".cctor",
+              "token": 100670724,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6289,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_WeaponSpeed",
+              "token": 100670725,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_GUP_Property",
+              "token": 100670726,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcMoveSpeed",
+              "token": 100670727,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DNBAFLJLIEM",
+              "token": 100670728,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100670729,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NFGEIMNPBNM",
+              "token": 100670730,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OGJKJDALNFN",
+              "token": 100670731,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_GearSetProperty",
+              "token": 100670732,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OLHJKKDDMHM",
+              "token": 100670733,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GKKHBFFBAPF",
+              "token": 100670734,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CEOBAMNDIIL",
+              "token": 100670735,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CGKBPFBMCHF",
+              "token": 100670736,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcLifeSteal",
+              "token": 100670737,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EBAGLIEEKJL",
+              "token": 100670738,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JGDEJDKBIJJ",
+              "token": 100670739,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_RunesProperty",
+              "token": 100670740,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_HighPolyIndex",
+              "token": 100670741,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PMIPPJPMGEE",
+              "token": 100670742,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OBGJELHELOL",
+              "token": 100670743,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MDCNDJHNOAE",
+              "token": 100670744,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "COJNMPDBOOO",
+              "token": 100670745,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FAGDMBINHBF",
+              "token": 100670746,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BDHPILBLPBP",
+              "token": 100670747,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "PBKACBBPEAO",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OJFGIGFHFDN",
+              "token": 100670748,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ABBOKPECOLI",
+              "token": 100670749,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LCENGICKKGP",
+              "token": 100670750,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PHBKHCEMJBM",
+              "token": 100670751,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcMoveSpeed",
+              "token": 100670752,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FMJMKNBDIEP",
+              "token": 100670753,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HOFHLOOMPOI",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "GKHBKEGNJKB",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_PotionLucky",
+              "token": 100670754,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcCritical",
+              "token": 100670755,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcHp",
+              "token": 100670756,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PODCFIKKJMI",
+              "token": 100670757,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JDNCIGNPHML",
+              "token": 100670758,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NHNFBBNINFE",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IEBHFGJHELH",
+              "token": 100670759,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HOFHLOOMPOI",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "GKHBKEGNJKB",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KCKPLIMMKFP",
+              "token": 100670760,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_CalcAttackSpeed",
+              "token": 100670761,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FMJMKNBDIEP",
+              "token": 100670762,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HOFHLOOMPOI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LAGFDKPBENA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Armor",
+              "token": 100670763,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OJCPJHHEOEJ",
+              "token": 100670764,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JCFGDFINDBH",
+              "token": 100670765,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LLJFJFAKNEG",
+              "token": 100670766,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CNFIEIBEFEJ",
+              "token": 100670767,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Hp",
+              "token": 100670768,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CPLOFANPKOA",
+              "token": 100670769,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AHLIMKENLKL",
+              "token": 100670770,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IOPLIMOJLFA",
+              "token": 100670771,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NHNFBBNINFE",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AGPLCBIDGPD",
+              "token": 100670772,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_PolyIndex",
+              "token": 100670773,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_MoveSpeed",
+              "token": 100670774,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FOMIBDMADNM",
+              "token": 100670775,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OCLCAECAKBI",
+              "token": 100670776,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NEFBCADDNII",
+              "token": 100670777,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_RunesProperty",
+              "token": 100670778,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NDCKCHDGKCC",
+              "token": 100670779,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HNHFNMFMAKE",
+              "token": 100670780,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FKIJMBEFJBO",
+              "token": 100670781,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EBNGMMPBEDA",
+              "token": 100670782,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_PotionLucky",
+              "token": 100670783,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcHighValueMet",
+              "token": 100670784,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MINGOLOHJAM",
+              "token": 100670785,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Hp",
+              "token": 100670786,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_Damage",
+              "token": 100670787,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JNLKCBEMEIE",
+              "token": 100670788,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcDamage",
+              "token": 100670789,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_WeaponSpeed",
+              "token": 100670790,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2177,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_Index",
+              "token": 100670791,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NABPEHCNAAL",
+              "token": 100670792,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HOFHLOOMPOI",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GOEBEJKJJHA",
+              "token": 100670793,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_SkillRunesProperty",
+              "token": 100670794,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_PolyIndex",
+              "token": 100670795,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CalcHp",
+              "token": 100670796,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2534,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GHLJIGIKKDI",
+              "token": 100670797,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FMJMKNBDIEP",
+              "token": 100670798,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "HAKJNHBDKFJ",
+                  "type": "HunterData"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HECIONBFCGJ",
+              "token": 100670799,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MMOOBNIPDAE",
+              "token": 100670800,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

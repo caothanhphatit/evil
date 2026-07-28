@@ -37,15 +37,18 @@ html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 *[hidden] { display: none !important; }
 body { background: radial-gradient(circle at 50% 35%, #25363a, #070b0e 72%); }
 button { color: inherit; font: inherit; }
+/* Mouse/touch activation must not leave a browser selection box on source-style buttons. */
+button:focus { outline: 0; }
 button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
-.game-shell { position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; background: #081016; isolation: isolate; }
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.game-shell { --bottom-menu-bottom: max(13px, env(safe-area-inset-bottom)); --bottom-menu-reserved: 112px; position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; background: #081016; isolation: isolate; }
 
 @media (min-width: 700px) and (min-aspect-ratio: 1/1) {
   .game-shell { width: min(100vw, calc(100vh * .5625)); margin-inline: auto; box-shadow: 0 0 70px #000c; }
 }
 
 .boot-screen, .village-screen { position: absolute; inset: 0; overflow: hidden; }
-.roster-screen { position: absolute; inset: 0; z-index: 15; display: grid; place-items: center; overflow: hidden; padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)); background: #18292a; opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility .35s; }
+.roster-screen { position: absolute; inset: 0; z-index: 15; display: grid; place-items: center; overflow: hidden; padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)); background: #18292a; opacity: 0; visibility: hidden; transition: opacity .12s ease, visibility .12s; will-change: opacity; }
 .roster-screen.visible { opacity: 1; visibility: visible; }
 .roster-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: .62; filter: saturate(.7) brightness(.55) blur(2px); transform: scale(1.02); }
 .hunter-roster-panel { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; width: min(720px, calc(100vw - 24px)); height: min(720px, calc(100vh - 24px)); border: 20px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 20px stretch; filter: drop-shadow(0 12px 28px #000b); image-rendering: pixelated; }
@@ -122,38 +125,76 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .village-world canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
 .village-world::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 90px #17242b5c; }
 
-.resource-bar { position: absolute; z-index: 8; top: max(8px, env(safe-area-inset-top)); left: 8px; display: flex; align-items: flex-start; gap: 6px; pointer-events: none; filter: drop-shadow(0 2px 2px #000b); }
-.difficulty-hud { display: grid; grid-template-columns: 35px 30px; grid-template-rows: 14px 30px; align-items: center; width: 67px; overflow: hidden; border: 2px solid #33281f; border-radius: 4px; background: #161713e8; box-shadow: inset 0 0 0 1px #8a6746; text-align: center; }
-.difficulty-hud small { grid-column: 1 / -1; color: #d66d62; font-size: 6px; letter-spacing: .06em; }
-.difficulty-hud span { display: grid; place-items: center; align-self: stretch; color: #d4d0c2; background: #27211de8; font-size: 21px; line-height: 1; }
-.difficulty-hud b { color: #83b77c; font-size: 8px; text-shadow: 0 1px #000; }
-.resource-ledger { display: grid; min-width: 86px; padding: 1px 6px 2px 4px; border-radius: 3px; background: linear-gradient(90deg, #151612e8, #15161299 78%, transparent); }
-.resource-line { display: grid; grid-template-columns: 18px minmax(52px, auto); align-items: center; min-height: 18px; }
-.resource-line img { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
-.resource-line b { color: #fff5dc; font-size: 9px; line-height: 1; text-shadow: 0 1px 1px #000; }
+.resource-bar { position: absolute; z-index: 8; top: max(7px, env(safe-area-inset-top)); left: 7px; display: flex; align-items: flex-start; gap: 3px; pointer-events: none; filter: drop-shadow(0 3px 3px #000c); }
+.difficulty-hud { width: 66px; height: 64px; }
+.difficulty-hud img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: top left; image-rendering: pixelated; }
+.resource-ledger { display: grid; min-width: 104px; padding: 2px 8px 3px 4px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/top_ic_00_bg_9__3155.png') 5 fill / 5px stretch; background: #10120fbf; }
+.resource-line { display: grid; grid-template-columns: 21px minmax(62px, auto); align-items: center; min-height: 19px; border-bottom: 1px solid #6e665542; }
+.resource-line:last-child { border-bottom: 0; }
+.resource-line img { width: 19px; height: 19px; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(0 1px 1px #000); }
+.resource-line b { color: #fff6dc; font-size: 9px; line-height: 1; text-shadow: 0 2px 1px #000; }
 .resource-line.unresolved b { color: #aaa596; }
-.resource-rune { width: 11px; height: 11px; margin-left: 2px; border: 2px solid #d89b58; border-radius: 50%; background: #78502f; box-shadow: inset 0 0 0 2px #2b1e17; }
+
+.top-quick-actions { position: absolute; z-index: 10; top: max(7px, env(safe-area-inset-top)); right: 6px; display: flex; align-items: start; gap: 2px; filter: drop-shadow(0 3px 3px #000c); }
+.top-quick-actions button { position: relative; display: grid; place-items: center; width: 45px; height: 46px; padding: 5px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/top_ic_00_bg_9__3155.png') 5 fill / 5px stretch; background: #11130fc7; cursor: pointer; image-rendering: pixelated; }
+.top-quick-actions button:hover:not(:disabled), .top-quick-actions button.selected { filter: brightness(1.2); transform: translateY(1px); }
+.top-quick-actions button:disabled { opacity: .8; cursor: default; }
+.top-quick-actions img { width: 34px; height: 34px; object-fit: contain; image-rendering: pixelated; }
+.top-quick-actions button:nth-child(3) { width: 54px; border-image-source: url('/content/releases/original-flow-v1/sprites/top_ic_man_bg_9__2450.png'); }
+.top-quick-actions button:nth-child(3) img { width: 18px; height: 30px; margin-right: 20px; }
+.top-quick-actions b { position: absolute; right: 5px; bottom: 8px; color: #fff1bd; font-size: 8px; text-shadow: 0 1px #000; }
+.quest-shortcut { position: absolute; z-index: 9; top: max(80px, calc(env(safe-area-inset-top) + 80px)); left: 8px; display: grid; place-items: center; width: 48px; height: 44px; padding: 5px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/top_ic_00_bg_9__3155.png') 5 fill / 5px stretch; background: #11130fc7; filter: drop-shadow(0 3px 3px #000b); opacity: .9; }
+.quest-shortcut img { width: 35px; height: 32px; object-fit: contain; image-rendering: pixelated; }
 
 .map-candidate { position: absolute; z-index: 7; top: 84px; left: 18px; display: flex; flex-direction: column; max-width: min(310px, calc(100vw - 36px)); padding: 7px 10px; border-left: 3px solid #e3ac4a; background: #101a1ed9; box-shadow: 0 4px 11px #0006; }
 .map-candidate b { color: #f2cc7c; font: 700 11px "DefaultFont2", "NotoSansThaiGame", sans-serif; }
 .map-candidate span { margin-top: 2px; color: #c6ceca; font-size: 9px; }
 
-.bottom-menu { position: absolute; z-index: 10; left: 50%; bottom: max(13px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(5, minmax(68px, 94px)); gap: 3px; padding: 5px 7px; border: 3px solid #3a281a; border-radius: 12px; background: linear-gradient(#9a6941, #4e3223); box-shadow: inset 0 0 0 2px #c9a270, 0 8px 24px #1a2026a6; transform: translateX(-50%); }
-.guild-chat-bar { position: absolute; z-index: 9; left: 8px; right: 8px; bottom: 96px; display: grid; grid-template-columns: 14px auto 1fr; align-items: center; gap: 5px; height: 22px; padding: 2px 7px; border: 1px solid #2d2a22; border-radius: 2px; background: linear-gradient(90deg, #151713ed, #151713a8 76%, transparent); box-shadow: inset 0 0 0 1px #75664866; pointer-events: none; }
-.guild-chat-bar span { color: #ddd1ac; font-size: 8px; }
-.guild-chat-bar b { color: #eee6d2; font-size: 7px; }
-.guild-chat-bar i { height: 1px; background: linear-gradient(90deg, #8e856c88, transparent); }
+.bottom-menu { position: absolute; z-index: 25; left: 50%; bottom: var(--bottom-menu-bottom); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; width: min(490px, calc(100% - 24px)); padding: 9px 10px 7px; border: 10px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/menu_bg_9__5116.png') 10 fill / 10px stretch; filter: drop-shadow(0 8px 18px #1119); transform: translateX(-50%); pointer-events: auto; isolation: isolate; image-rendering: pixelated; }
+.bottom-menu[hidden] { display: none; }
+.bottom-menu-panel { bottom: calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved)); max-height: calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 8px); }
 .menu-button { position: relative; display: grid; justify-items: center; gap: 1px; min-height: 70px; padding: 4px 4px 3px; border: 0; border-radius: 7px; background: linear-gradient(#7b583b, #442d20); cursor: pointer; text-shadow: 0 2px #22150e; transition: filter .15s, transform .15s; }
-.menu-button:hover, .menu-button.selected { filter: brightness(1.24); transform: translateY(-2px); }
+.menu-button:hover { filter: brightness(1.18); transform: translateY(-2px); }
+.menu-button.selected { background: linear-gradient(#a9763f, #65401f); box-shadow: inset 0 0 12px #f0c66b55; filter: brightness(1.12) saturate(1.18); transform: none; }
 .menu-button:disabled { cursor: not-allowed; filter: grayscale(.9) brightness(.62); opacity: .66; }
 .menu-button:disabled:hover { transform: none; }
-.menu-button.selected::after { content: ""; position: absolute; inset: 1px; border: 2px solid #f5d278; border-radius: 6px; pointer-events: none; }
 .menu-icon { display: grid; place-items: center; width: 46px; height: 45px; background: radial-gradient(circle, #cfaa74 0 41%, transparent 43%); }
 .menu-icon img { width: 40px; height: 40px; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(0 2px 1px #25170c); }
 .menu-button b { font-family: "DefaultFont2", "NotoSansThaiGame", sans-serif; font-size: 10px; }
 .field-back { position: absolute; z-index: 11; right: 16px; bottom: 124px; width: 38px; height: 38px; overflow: hidden; padding: 0; border: 2px solid #3a281a; border-radius: 7px; background: linear-gradient(#8b6644, #4b3223); box-shadow: inset 0 0 0 1px #c9a270, 0 3px 7px #0008; color: transparent; cursor: pointer; }
 .field-back::before { content: "HOME"; position: absolute; inset: 0; display: grid; place-items: center; color: #f1e5c9; font-size: 7px; text-shadow: 0 1px #24170f; }
 .field-back[hidden] { display: none; }
+
+.hunter-world-command-layer { position: absolute; z-index: 13; inset: 0; overflow: hidden; pointer-events: none; }
+.hunter-world-command-layer[hidden] { display: none; }
+.hunter-world-action-bubble { position: absolute; left: clamp(62px, var(--hunter-command-x), calc(100% - 62px)); top: clamp(126px, calc(var(--hunter-command-y) - 34px), calc(100% - 212px)); display: flex; gap: 7px; transform: translate(-50%, -100%); filter: drop-shadow(0 5px 4px #000b); pointer-events: auto; }
+.hunter-world-action-bubble button { position: relative; display: grid; place-items: center; width: 56px; height: 62px; padding: 5px; border: 0; background: #181715; clip-path: polygon(50% 0, 94% 22%, 94% 74%, 50% 100%, 6% 74%, 6% 22%); cursor: pointer; }
+.hunter-world-action-bubble button::before { content: ""; position: absolute; z-index: -1; inset: 3px; background: linear-gradient(#5b5547, #27251f); clip-path: inherit; }
+.hunter-world-action-bubble button:hover { filter: brightness(1.22); }
+.hunter-world-action-bubble span { display: grid; place-items: center; width: 34px; height: 39px; color: #ffe751; font: 900 italic 28px/1 Georgia, serif; text-shadow: 0 2px #1c1808; }
+.hunter-world-action-bubble .hunter-world-command span { color: #ef873c; font: 900 29px/1 "DefaultFont2", sans-serif; transform: scaleX(1.1); }
+
+.hunter-world-command-panel { position: absolute; right: 7px; bottom: calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved) - 9px); left: 7px; display: grid; grid-template-rows: minmax(50px, auto) auto; min-height: 146px; padding: 12px 10px 9px; border: 2px solid #d4ddd7; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #deebe4eb, #b8d0cbed); box-shadow: inset 0 0 0 2px #748f8a99, 0 -3px 12px #0008; color: #293331; pointer-events: auto; }
+.hunter-world-command-line { align-self: center; margin: 0; padding: 0 10px 8px 88px; color: #37413e; font: 700 13px/1.35 "NotoSansThaiGame", "DefaultFont2", sans-serif; text-shadow: 0 1px #fff9; }
+.hunter-world-command-line::before { content: ""; position: absolute; left: 18px; top: 7px; width: 64px; height: 67px; border-radius: 48% 48% 42% 42%; background: radial-gradient(circle at 50% 30%, #ddd0bf 0 18%, #796658 19% 25%, #3c302b 26% 31%, transparent 32%), linear-gradient(150deg, #ad9a84 0 42%, #51463e 43% 62%, #201d1a 63%); box-shadow: 0 3px 0 #5d756f; opacity: .9; }
+.hunter-command-categories, .hunter-region-options { display: grid; align-items: end; gap: 4px; min-height: 62px; padding: 5px 2px 0; border-top: 1px solid #78918d; }
+.hunter-command-categories { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.hunter-region-options { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.hunter-command-categories button, .hunter-region-options button { position: relative; display: grid; justify-items: center; align-content: end; gap: 2px; min-width: 0; min-height: 56px; padding: 2px 1px; border: 0; background: transparent; color: #283431; cursor: pointer; }
+.hunter-command-categories button:hover, .hunter-region-options button:hover { filter: brightness(1.16) saturate(1.15); transform: translateY(-1px); }
+.hunter-command-categories button b, .hunter-region-options button b { overflow: hidden; max-width: 100%; color: #33413d; font-size: 8px; line-height: 1.1; text-overflow: ellipsis; text-shadow: 0 1px #eef8f3; white-space: nowrap; }
+.hunter-command-fixture-icon { position: relative; display: grid; place-items: center; width: 35px; height: 35px; border: 2px solid #4b483d; border-radius: 44% 46% 40% 45%; background: linear-gradient(145deg, #9d815a, #5f4a36); box-shadow: inset 0 0 0 2px #d6c39d, 0 2px #506a65; color: #f8edcf; font-size: 9px; text-shadow: 0 1px #292116; }
+.hunter-command-categories button[data-value="movement"] .hunter-command-fixture-icon { border-radius: 46% 54% 42% 58%; background: linear-gradient(145deg, #504d4a, #262825); }
+.hunter-command-categories button[data-value="learn"] .hunter-command-fixture-icon { background: linear-gradient(145deg, #d7d0aa, #796c50); }
+.hunter-command-categories button[data-value="daily-life"] .hunter-command-fixture-icon { background: linear-gradient(145deg, #779253, #3a5c36); }
+.hunter-command-categories button[data-value="management"] .hunter-command-fixture-icon { background: linear-gradient(145deg, #d49b76, #765042); }
+.hunter-command-categories button[data-evidence="unresolved-icon-fixture"] .hunter-command-fixture-icon::after { content: "?"; position: absolute; right: -4px; top: -4px; display: grid; place-items: center; width: 12px; height: 12px; border: 1px solid #756648; border-radius: 50%; background: #f1d883; color: #3b3120; font-size: 7px; }
+.hunter-region-options .hunter-command-fixture-icon { border-radius: 50%; }
+.hunter-region-options .region-colony .hunter-command-fixture-icon { background: radial-gradient(circle at 55% 62%, #8dca6b 0 32%, #3d7f4d 34% 58%, #274638 60%); }
+.hunter-region-options .region-dead-land .hunter-command-fixture-icon { background: radial-gradient(circle at 50% 48%, #e5dfc7 0 25%, #756f63 27% 42%, #282a27 44%); }
+.hunter-region-options .region-demon-world .hunter-command-fixture-icon { background: radial-gradient(circle at 50% 48%, #f19bc7 0 27%, #9f426f 29% 51%, #34233d 53%); }
+.hunter-region-options button[data-value="back"] .hunter-command-fixture-icon { background: linear-gradient(145deg, #709a94, #35665f); font-size: 17px; }
+
 .evidence-diagnostics { position: absolute; z-index: 9; left: 18px; top: 84px; display: flex; flex-direction: column; max-width: min(360px, calc(100vw - 36px)); padding: 7px 10px; border-left: 3px solid #e3ac4a; background: #101a1ed9; box-shadow: 0 4px 11px #0006; }
 .evidence-diagnostics[hidden] { display: none; }
 .evidence-diagnostics b { color: #f2cc7c; font: 700 11px "DefaultFont2", "NotoSansThaiGame", sans-serif; text-transform: uppercase; }
@@ -664,7 +705,8 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .hunter-detail > footer { gap: 4px; }
   .hunter-detail > footer button { min-height: 34px; padding: 0 2px; font-size: 7px; }
   .map-candidate { top: 67px; left: 8px; }
-  .bottom-menu { bottom: max(7px, env(safe-area-inset-bottom)); grid-template-columns: repeat(5, minmax(54px, 68px)); padding: 4px; }
+  .game-shell { --bottom-menu-bottom: max(7px, env(safe-area-inset-bottom)); --bottom-menu-reserved: 98px; }
+  .bottom-menu { grid-template-columns: repeat(5, minmax(54px, 68px)); padding: 4px; }
   .menu-button { min-height: 63px; }
   .menu-icon { width: 40px; height: 40px; }
   .menu-icon img { width: 36px; height: 36px; }
@@ -676,81 +718,131 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .combat-hud { right: 8px; top: 112px; width: min(300px, calc(100vw - 16px)); }
 }
 
-/* Hunter List and HunterDetailPop follow the recovered portrait-game composition. */
-.roster-screen { place-items: start center; padding: max(52px, 7vh) 7px max(74px, 10vh); background: transparent; }
-.roster-background { opacity: .72; filter: saturate(.82) brightness(.68); }
-.hunter-roster-panel { width: min(94%, 540px); height: min(78%, 760px); border-width: 13px; border-image-width: 13px; }
-.hunter-roster-header { position: relative; min-height: 56px; padding: 0 52px 7px 0; }
-.hunter-roster-heading { position: absolute; top: -38px; right: 2px; display: flex; align-items: center; gap: 7px; padding: 4px 8px; border: 2px solid #3d2e20; border-radius: 4px; background: #171a16e8; }
-.hunter-roster-heading b { font-size: 10px; }
-.hunter-roster-heading span { color: #fff0b1; font-size: 9px; }
-.hunter-roster-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 100%; }
-.hunter-roster-actions button { min-height: 38px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/btn_green_01_9__5553.png') 5 fill / 5px stretch; color: #fff4d0; font-size: 8px; text-shadow: 0 1px #18301a; }
-.hunter-roster-actions button:disabled { filter: grayscale(.35); opacity: .68; }
-.hunter-roster-header > .source-red-button { position: absolute; top: 0; right: 0; min-width: 46px; width: 46px; min-height: 38px; overflow: hidden; font-size: 0; }
-.hunter-roster-header > .source-red-button::after { content: "X"; font-size: 13px; }
-.hunter-roster-body { display: grid; grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: 6px; padding-top: 6px; }
-.hunter-card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 5px; min-height: 0; }
-.hunter-roster-card { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; place-items: center; min-width: 0; min-height: 0; padding: 4px 3px 5px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/hunter_area_bg__6171.png') 5 fill / 5px stretch; color: #f4e7c4; image-rendering: pixelated; }
-.hunter-roster-card > header { display: flex; justify-content: center; align-items: center; gap: 3px; width: 100%; min-width: 0; }
-.hunter-roster-card > header b { overflow: hidden; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-roster-card > header i { flex: 0 0 auto; color: #eccb69; font-size: 6px; font-style: normal; }
-.hunter-roster-card .hunter-avatar { align-self: stretch; width: 100%; height: auto; min-height: 52px; border: 0; background: radial-gradient(ellipse at 50% 76%, #927a5733, transparent 62%); }
-.hunter-roster-card .hunter-avatar img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+/* Hunter List is a source-style bottom sheet above the persistent five-button menu. */
+.roster-screen { display: block; padding: 0; background: transparent; }
+.roster-background { opacity: 0; pointer-events: none; }
+.hunter-roster-panel { position: absolute; right: 6px; left: 6px; width: auto; height: clamp(300px, 46%, 570px); padding: 10px 10px 8px; overflow: hidden; border: 2px solid #c2b694; border-radius: 2px; background: linear-gradient(180deg, #211d18f8, #100e0cf4); box-shadow: inset 0 0 0 3px #17130f, inset 0 0 0 5px #6f6550, 0 -5px 16px #000a; filter: none; image-rendering: pixelated; }
+.hunter-roster-panel::before { content: ""; position: absolute; inset: 7px; border: 1px solid #373126; box-shadow: inset 0 0 0 1px #0b0908; pointer-events: none; }
+.hunter-roster-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#e0d3aa, #e0d3aa) 8px 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) 8px 100% / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 100% / 31px 2px no-repeat; opacity: .72; pointer-events: none; }
+.hunter-roster-header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 40px; gap: 7px; min-height: 43px; padding: 0 2px 6px; border-bottom: 1px solid #b6a982; box-shadow: 0 2px #15110d; }
+.hunter-roster-header > .hunter-roster-heading { display: none; }
+.hunter-roster-actions { display: grid; grid-template-columns: 1.25fr .85fr; gap: 4px; min-width: 0; }
+.hunter-roster-actions button { min-width: 0; min-height: 35px; padding: 2px 5px; border: 1px solid #797467; border-radius: 3px; background: linear-gradient(#686866, #41413f); box-shadow: inset 0 0 0 2px #343432, 0 2px #0b0908; color: #f5edd8; font-size: 7px; text-shadow: 0 1px #000; }
+.hunter-roster-actions button:disabled { opacity: 1; filter: none; }
+.hunter-roster-header > .source-red-button { position: static; width: 40px; min-width: 40px; min-height: 35px; padding: 0; overflow: hidden; border: 1px solid #d58b5c; border-radius: 5px; background: linear-gradient(#b43c25, #842410); box-shadow: inset 0 0 0 2px #7a1f10, 0 2px #090706; font-size: 0; }
+.hunter-roster-header > .source-red-button::after { content: "X"; font-size: 12px; }
+.hunter-roster-body { position: relative; z-index: 1; display: block; min-height: 0; padding-top: 6px; }
+.hunter-card-grid { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 4px; height: 100%; min-height: 0; overflow: hidden; }
+.hunter-roster-actor-canvas { position: absolute; z-index: 2; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; image-rendering: pixelated; }
+/* `item_grade_*` is gear-grade evidence, not a Hunter-card binding. These rarity auras are rebuild derivatives from the supplied roster reference. */
+.hunter-roster-card { --rarity-accent: #a9a58f; --rarity-core: #b7b49a24; --rarity-halo: #85816b18; position: relative; z-index: 1; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; place-items: center; min-width: 0; min-height: 0; padding: 3px 2px 3px; overflow: hidden; border: 2px solid #948668; border-radius: 3px; background: radial-gradient(ellipse at 50% 58%, var(--rarity-core) 0 16%, var(--rarity-halo) 38%, transparent 67%), linear-gradient(180deg, #24221bd9, #12110ef2); color: #f4e7c4; image-rendering: pixelated; }
+.hunter-roster-card::before { content: ""; position: absolute; z-index: 0; inset: 21% 4% 18%; border-radius: 45%; background: radial-gradient(ellipse, var(--rarity-core), transparent 69%); filter: blur(5px); opacity: .92; pointer-events: none; }
+.hunter-roster-card.rarity-normal { --rarity-accent: #d7d7c8; --rarity-core: #b9c0a529; --rarity-halo: #7f8a7130; }
+.hunter-roster-card.rarity-rare { --rarity-accent: #9d8cff; --rarity-core: #8278dd66; --rarity-halo: #5669bf42; }
+.hunter-roster-card.rarity-superior { --rarity-accent: #f0c94e; --rarity-core: #e0be526b; --rarity-halo: #8f7b3448; }
+.hunter-roster-card.rarity-heroic { --rarity-accent: #4fd7e8; --rarity-core: #6ccfe968; --rarity-halo: #d86aa94b; background: radial-gradient(circle at 35% 55%, #58c9e95c, transparent 34%), radial-gradient(circle at 75% 72%, #d75b9e54, transparent 38%), linear-gradient(180deg, #23232ad9, #141117f2); }
+.hunter-roster-card.rarity-legendary { --rarity-accent: #ff9e37; --rarity-core: #f6ba506e; --rarity-halo: #d24c354d; background: radial-gradient(ellipse at 50% 58%, #ffd05f70 0 14%, #d95c3d4b 42%, transparent 68%), linear-gradient(180deg, #2a2118e6, #15100df4); }
+.hunter-roster-card.selected { border-color: #948668; box-shadow: none; }
+.hunter-roster-card > header, .hunter-card-meta, .hunter-roster-card > footer { position: relative; z-index: 3; }
+.hunter-roster-card > header { display: grid; justify-items: center; align-content: start; gap: 1px; width: 100%; min-width: 0; }
+.hunter-card-name { display: flex; justify-content: center; align-items: baseline; gap: 3px; width: 100%; min-width: 0; }
+.hunter-card-name b { overflow: hidden; color: #f5e8ca; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 1px #000; }
+.hunter-card-name i { flex: 0 0 auto; color: var(--rarity-accent); font-size: 7px; font-style: italic; font-weight: 900; text-shadow: 0 0 5px var(--rarity-accent), 0 1px #000; }
+.hunter-card-level-class { display: flex; justify-content: center; gap: 2px; width: 100%; min-width: 0; color: #f1eee5; font-size: 6px; font-weight: 700; white-space: nowrap; }
+.hunter-card-level-class em { overflow: hidden; font-style: normal; text-overflow: ellipsis; }
+.hunter-card-level-class .class-h1 { color: #ef7775; }
+.hunter-card-level-class .class-h2 { color: #e4bd64; }
+.hunter-card-level-class .class-h3 { color: #76c77a; }
+.hunter-card-level-class .class-h4 { color: #68c9d7; }
+.hunter-card-level-class .class-h5 { color: #b081d7; }
+.hunter-card-level-class .class-unresolved { color: #a9a18f; }
+.hunter-roster-card .hunter-avatar { align-self: stretch; width: 100%; height: auto; min-height: 62px; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core) 0 13%, transparent 62%); }
+.hunter-roster-card .hunter-avatar.composed { color: transparent; }
+.hunter-roster-card .hunter-avatar img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
 .hunter-card-meta { display: grid; width: 100%; min-width: 0; text-align: center; }
-.hunter-card-meta b, .hunter-card-meta small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-card-meta b { color: #fff3d2; font-size: 6px; }
-.hunter-card-meta small { color: #aee18c; font-size: 6px; }
-.hunter-card-info { width: 82%; min-height: 25px; margin-top: 3px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/btn_yellow_01_9__5065.png') 5 fill / 5px stretch; color: #3b2a18; font-size: 7px; cursor: pointer; }
-.hunter-roster-card.empty { grid-template-rows: 1fr auto; filter: grayscale(.8); opacity: .42; }
-.hunter-roster-card.empty > b { font-size: 6px; }
-.hunter-waiting-section { max-height: 84px; min-height: 0; overflow: hidden; }
-.hunter-waiting-section h2 { margin: 1px 0 3px; color: #d9caa6; font-size: 7px; }
-.hunter-waiting-list { display: flex; gap: 4px; overflow-x: auto; overflow-y: hidden; }
-.hunter-waiting-list .hunter-roster-card { flex: 0 0 23%; min-height: 64px; }
-.hunter-waiting-list .hunter-avatar { display: none; }
-.hunter-waiting-list .hunter-card-info { min-height: 20px; }
-.hunter-roster-status { min-height: 16px; padding-top: 3px; font-size: 6px; }
+.hunter-card-meta small { overflow: hidden; color: #f0eee5; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px #000; }
+.hunter-card-meta small.positive { color: #a6e578; }
+.hunter-card-meta small.danger { color: #ee7772; }
+.hunter-card-hunt-progress { display: block; width: calc(100% - 8px); height: 4px; margin: 1px auto 0; overflow: hidden; border: 1px solid #241b16; background: #3b3228; }
+.hunter-card-hunt-progress > i { display: block; height: 100%; background: #8d58bd; }
+.hunter-roster-card > footer { display: grid; grid-template-columns: minmax(0, 1fr) 29px; gap: 2px; width: 100%; margin-top: 2px; }
+.hunter-card-info { width: 100%; min-height: 25px; margin: 0; border: 1px solid #77736a; border-radius: 3px; background: linear-gradient(#696967, #424240); box-shadow: inset 0 0 0 2px #343432, 0 1px #0b0908; color: #fff4df; font-size: 8px; cursor: pointer; }
+.hunter-card-info:focus, .hunter-card-info:focus-visible { outline: 0; }
+.hunter-card-target { display: grid; place-items: center; width: 29px; min-height: 25px; padding: 2px; border: 3px solid #6f7440; border-radius: 4px; background: linear-gradient(#849346, #445120); opacity: 1; }
+.hunter-card-target:hover:not(:disabled) { filter: brightness(1.2); }
+.hunter-card-target:disabled { filter: grayscale(.8); opacity: .45; cursor: not-allowed; }
+.hunter-card-target img { width: 20px; height: 20px; object-fit: contain; image-rendering: pixelated; }
+.hunter-roster-card.empty { grid-template-rows: 1fr auto; filter: grayscale(.8); opacity: .28; }
+.hunter-roster-card.empty > b { font-size: 5px; }
+.hunter-roster-status { position: relative; z-index: 1; min-height: 0; padding: 2px 3px 0; color: #bbb39e; font-size: 5px; }
+.hunter-roster-status:empty { display: none; }
 
-.hunter-info-overlay { position: absolute; z-index: 40; inset: 0; display: grid; place-items: center; padding: 3.5vh 4%; background: #07100fb8; }
-.hunter-info-modal { display: grid; grid-template-rows: auto minmax(260px, 42%) auto minmax(0, 1fr) auto; width: min(94%, 550px); height: min(94%, 1080px); padding: 12px 13px 10px; border: 16px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 16 fill / 16px stretch; filter: drop-shadow(0 13px 24px #000c); image-rendering: pixelated; }
-.hunter-info-header { display: grid; grid-template-columns: 35px minmax(0, 1fr) auto; align-items: center; gap: 7px; min-height: 40px; border-bottom: 2px solid #8f7958; }
-.hunter-info-header > b { overflow: hidden; color: #fff0c8; font-size: 14px; text-align: center; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #2d1e13; }
-.hunter-info-silhouette { display: grid; place-items: center; width: 32px; height: 32px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/box_gear_9__2514.png') 5 fill / 5px stretch; color: #d8c9a5; font-size: 8px; }
-.hunter-info-lock { color: #9dd193; font-size: 6px; }
+.hunter-info-overlay { position: absolute; z-index: 40; inset: 0; display: grid; place-items: center; padding: max(10px, 2vh) 3%; background: radial-gradient(circle at 50% 36%, #4a315375, #050807e8 72%); backdrop-filter: blur(2px); }
+/* HunterDetailPop stays content-sized; unresolved data must not inflate an empty paper-doll stage. */
+.hunter-info-modal { position: relative; display: grid; grid-template-rows: auto 43% auto minmax(0, 1fr) auto; width: min(84%, 440px); height: min(84%, 760px); max-height: 84%; padding: 13px 14px 10px; overflow: hidden; border: 2px solid #c2b694; border-radius: 2px; background: linear-gradient(180deg, #211d18f7, #100e0cf7 42%); box-shadow: inset 0 0 0 3px #17130f, inset 0 0 0 5px #6f6550, inset 0 0 28px #000c, 0 13px 24px #000d; outline: 0; image-rendering: pixelated; animation: hunter-panel-arrive .22s cubic-bezier(.18,.85,.28,1) both; }
+.hunter-info-modal::before { content: ""; position: absolute; inset: 7px; border: 1px solid #373126; box-shadow: inset 0 0 0 1px #0b0908; pointer-events: none; }
+.hunter-info-modal::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#e0d3aa, #e0d3aa) 8px 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) 8px 100% / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 100% / 31px 2px no-repeat; opacity: .72; pointer-events: none; }
+.hunter-info-header { display: grid; grid-template-columns: 31px minmax(0, 1fr) 31px; align-items: center; gap: 6px; min-height: 38px; padding: 0 3px 5px; border-bottom: 1px solid #b6a982; box-shadow: 0 2px #15110d; }
+.hunter-info-header > b { overflow: hidden; color: #fff0c8; font-size: 13px; text-align: center; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #2d1e13; }
+.hunter-info-silhouette { display: grid; place-items: center; width: 28px; height: 28px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/box_gear_9__2514.png') 5 fill / 5px stretch; color: #d8c9a5; font-size: 7px; }
+.hunter-info-lock { display: grid; place-items: center; min-width: 31px; color: #9dd193; font-size: 6px; }
+.hunter-info-lock img { width: 27px; height: 27px; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(0 2px 2px #000); }
+
+.hunter-info-lock small { color: #9dd193; font-size: 5px; }
 .hunter-info-lock.locked { color: #e2917d; }
-.hunter-info-hero { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; padding: 5px 2px; }
+.hunter-info-hero { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; margin: 6px 2px; padding: 7px 9px 8px; border: 1px solid #b5aa88; background: radial-gradient(ellipse at 50% 52%, #57415c66 0 20%, #28241d 55%, #17140f 86%); box-shadow: inset 0 0 0 3px #252119, inset 0 0 0 4px #665d49, 0 2px 0 #080706; }
 .hunter-info-reincarnation { display: flex; align-items: center; justify-content: space-between; min-height: 27px; color: #d9c7a0; }
 .hunter-reincarnation-stars { display: flex; gap: 2px; }
 .hunter-reincarnation-stars i { width: 13px; height: 13px; background: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-hud/character_star_off__1668.png') center / contain no-repeat; }
 .hunter-reincarnation-stars i.on { background-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-hud/character_star_on__2860.png'); }
 .hunter-info-reincarnation small { margin-right: auto; margin-left: 5px; font-size: 6px; }
-.hunter-info-money { padding: 4px 8px 4px 20px; border-radius: 8px; background: #15130fcc; color: #f6d777; font-size: 8px; }
-.hunter-loadout-stage { display: grid; grid-template-columns: 46px minmax(90px, 1fr) 46px; justify-content: center; gap: 6px; min-height: 0; }
+.hunter-info-money { display: flex; align-items: center; gap: 3px; padding: 3px 8px 3px 4px; border: 4px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_gold_bg_9__3649.png') 4 fill / 4px stretch; color: #f6d777; font-size: 8px; }
+.hunter-info-money img { width: 18px; height: 18px; object-fit: contain; image-rendering: pixelated; }
+.hunter-loadout-stage { position: relative; display: grid; grid-template-columns: 21px 46px minmax(112px, 1fr) 46px 21px; justify-content: center; gap: 3px; min-height: 0; }
 .hunter-equipment-column { display: grid; align-content: space-evenly; gap: 4px; }
-.hunter-equipment-slot { display: grid; place-items: center; aspect-ratio: 1; border: 6px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_gear_9__2514.png') 6 fill / 6px stretch; }
+.hunter-equipment-slot { position: relative; z-index: 1; display: grid; place-items: center; width: 100%; min-width: 0; padding: 0; aspect-ratio: 1; border: 6px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_gear_9__2514.png') 6 fill / 6px stretch; background: #12100ed9; box-shadow: 0 0 0 1px #b09b744f, 0 3px 5px #0009; cursor: pointer; }
 .hunter-equipment-slot img { width: 100%; height: 100%; object-fit: contain; }
 .hunter-equipment-slot.locked { filter: grayscale(1); opacity: .55; }
-.hunter-paper-doll { display: grid; place-items: end center; min-height: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 82%, #bd9e6842, transparent 63%); }
+.hunter-equipment-slot:disabled { cursor: default; }
+.hunter-equipment-slot:not(:disabled):active { transform: translateY(1px); }
+.hunter-equipment-detail { position: absolute; z-index: 8; inset: 36px 38px 24px; display: grid; grid-template-rows: auto 1fr auto; gap: 6px; align-items: center; padding: 12px; border: 2px solid #c2b694; background: linear-gradient(#29231a, #12100c); box-shadow: inset 0 0 0 3px #574d3a, 0 8px 18px #000d; color: #e8dcc0; text-align: center; }
+.hunter-equipment-detail[hidden] { display: none; }
+.hunter-equipment-detail b { color: #ffe49a; font-size: 10px; }
+.hunter-equipment-detail small { align-self: start; font-size: 7px; line-height: 1.5; }
+.hunter-equipment-detail button { justify-self: center; width: min(70%, 120px); min-height: 30px; }
+.hunter-utility-column { display: grid; grid-template-rows: repeat(3, 21px); align-content: space-around; min-height: 0; padding-block: 14px; }
+.hunter-utility-slot { position: relative; z-index: 2; display: grid; place-items: center; width: 21px; height: 21px; border: 1px solid #d18ce9; border-radius: 2px; background: linear-gradient(#70407d, #42254e); box-shadow: inset 0 0 0 2px #26152d, 0 1px 2px #000b; }
+.hunter-utility-slot i { width: 6px; height: 6px; border: 1px solid #eed5f5; transform: rotate(45deg); }
+.hunter-paper-doll { position: relative; z-index: 1; display: grid; place-items: end center; min-height: 0; overflow: hidden; border-bottom: 2px solid #b59558; background: radial-gradient(ellipse at 50% 74%, #70477b66 0 25%, #bd9e6842 47%, transparent 69%); }
 .hunter-paper-doll img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
 .hunter-paper-doll span { align-self: center; color: #948a75; font-size: 7px; }
+.hunter-info-actor-canvas { display: block; width: 100% !important; height: 100% !important; image-rendering: pixelated; }
 .hunter-experience { position: relative; height: 17px; }
 .hunter-experience > i { position: absolute; inset: 3px 0; overflow: hidden; border: 4px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-experience/exp_gauge_back_9__4014.png') 4 fill / 4px stretch; background: #211725; }
 .hunter-experience > i > i { display: block; height: 100%; background: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-experience/exp_gauge_in_9__6967.png') left center / 100% 100% no-repeat; }
 .hunter-experience b { position: relative; display: block; color: white; font-size: 7px; line-height: 17px; text-align: center; text-shadow: 0 1px #000; }
-.hunter-info-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; border-bottom: 2px solid #a18b65; }
-.hunter-info-tabs button { min-height: 36px; padding: 2px; border: 6px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-tabs/cha_tab_off_9__6739.png') 6 fill / 6px stretch; background: transparent; color: #c9bea5; font-size: 7px; cursor: pointer; }
-.hunter-info-tabs button.active { border-image-source: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-tabs/cha_tab_on_9__3380.png'); color: #fff2c8; }
-.hunter-info-tab-body { min-height: 0; padding: 7px 5px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #9e7548 #261d17; }
-.hunter-info-close { justify-self: center; width: 42%; min-height: 39px; margin-top: 4px; cursor: pointer; }
+.hunter-experience.unresolved b { color: #9c927f; }
+.hunter-info-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; padding: 0 2px 2px; border-bottom: 1px solid #b4a47d; }
+.hunter-info-tabs button { min-width: 0; min-height: 42px; padding: 4px 2px; overflow: hidden; border: 1px solid #514a3b; border-radius: 2px 2px 0 0; background: linear-gradient(#2b2720, #191612); box-shadow: inset 0 0 0 1px #17140f; color: #c9bea5; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.hunter-info-tabs button:focus, .hunter-info-tabs button:focus-visible { outline: 0; }
+.hunter-info-tabs button.active { border-color: #f3d47b; background: linear-gradient(#c6a451, #80632d); box-shadow: inset 0 0 0 2px #e0c16e, inset 0 -4px #ffe08a; color: #fffbe8; text-shadow: 0 1px #32260f; }
+.hunter-info-tab-body { min-height: 0; padding: 7px 5px 5px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #9e7548 #261d17; }
+.hunter-info-close { justify-self: center; width: min(42%, 150px); min-height: 35px; margin-top: 3px; cursor: pointer; }
 .hunter-info-unavailable, .hunter-info-empty { margin: 20px 8px; color: #aaa08d; font-size: 8px; line-height: 1.5; text-align: center; }
-.hunter-status-summary { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; padding-bottom: 6px; }
+.hunter-info-materials-tab, .hunter-info-growth-tab, .hunter-info-riding-tab, .hunter-info-skills-tab { min-height: 100%; padding: 7px; border: 1px solid #554b39; background: linear-gradient(#201c16, #15120e); box-shadow: inset 0 0 0 2px #0e0c09; }
+.hunter-info-status-tab { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); min-height: 100%; padding: 3px 1px; background: #17140f; }
+.hunter-status-primary { min-width: 0; padding: 4px 8px 4px 2px; border-right: 1px solid #574d3d; }
+.hunter-status-summary { display: grid; gap: 1px; padding-bottom: 7px; }
 .hunter-status-summary .hunter-rarity { color: #71b6e0; font-size: 11px; }
 .hunter-status-summary strong { color: #f3e8ce; font-size: 9px; }
-.hunter-dps { grid-row: 1 / 3; grid-column: 2; align-self: stretch; display: grid; place-items: center; padding: 4px 8px; border: 1px solid #765f40; background: #211c17; color: #efd68b; font-size: 9px; }
-.hunter-status-needs { display: grid; gap: 5px; }
-.hunter-info-gauge { display: grid; grid-template-columns: 31px 1fr; align-items: center; gap: 5px; }
-.hunter-info-gauge > img { width: 28px; height: 28px; object-fit: contain; }
+.hunter-status-combat { min-width: 0; padding: 4px 2px 4px 8px; }
+.hunter-dps { display: grid; justify-items: end; gap: 1px; min-height: 39px; padding: 1px 4px 5px; color: #f3e8ce; }
+.hunter-dps span { font-size: 8px; }
+.hunter-dps b { font-size: 13px; }
+.hunter-dps.unresolved b, .hunter-combat-row.unresolved b { color: #8f8777; }
+.hunter-status-needs { display: grid; gap: 3px; }
+.hunter-info-gauge { display: grid; grid-template-columns: 25px 1fr; align-items: center; gap: 5px; }
+.hunter-info-gauge > img { width: 22px; height: 22px; object-fit: contain; }
 .hunter-info-gauge > div > span { display: flex; justify-content: space-between; color: #cfc1a5; font-size: 7px; }
 .hunter-info-gauge > div > span strong { color: #f4ead0; }
 .hunter-info-gauge > div > i { display: block; height: 8px; overflow: hidden; border: 1px solid #17120e; border-radius: 4px; background: #2f2922; }
@@ -758,14 +850,15 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-info-gauge.satiety > div > i > i { background: #e3ad51; }
 .hunter-info-gauge.mood > div > i > i { background: #dc76a6; }
 .hunter-info-gauge.stamina > div > i > i { background: #67adde; }
-.hunter-combat-values { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 7px; }
-.hunter-combat-row { display: grid; grid-template-columns: 25px 1fr auto; align-items: center; gap: 4px; min-height: 30px; padding: 2px 5px; border: 1px solid #574d3d; background: #201d18; }
-.hunter-combat-row img { width: 23px; height: 23px; object-fit: contain; }
+.hunter-combat-values { display: grid; gap: 2px; }
+.hunter-combat-row { display: grid; grid-template-columns: 21px 1fr auto; align-items: center; gap: 4px; min-height: 28px; padding: 2px 4px; background: #1d1914; }
+.hunter-combat-row img { width: 19px; height: 19px; object-fit: contain; }
 .hunter-combat-row span { color: #aaa18f; font-size: 6px; }
 .hunter-combat-row b { color: #eee4cc; font-size: 7px; }
 .hunter-combat-row b.attack { color: #ef7271; }
 .hunter-combat-row b.defense { color: #74b6e6; }
-.hunter-awakening { margin-top: 5px; padding: 7px; border: 1px solid #7b684b; color: #ead8a8; font-size: 8px; text-align: center; }
+.hunter-awakening { margin-top: 7px; padding: 5px 2px; border-top: 1px solid #4f4637; color: #ead8a8; font-size: 7px; }
+.hunter-awakening.unresolved { color: #8f8777; }
 .hunter-skill-group h3, .hunter-info-materials-tab h3 { margin: 2px 0 5px; color: #e9d7ab; font-size: 9px; }
 .hunter-skill-group > div { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
 .hunter-skill-card { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 5px; min-height: 48px; padding: 4px; border: 1px solid #68593f; background: #201c17; }
@@ -781,6 +874,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-growth-node { position: relative; display: grid; place-items: center; aspect-ratio: 1; border: 5px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-growth/growth_btn_off__7413.png') 5 fill / 5px stretch; }
 .hunter-growth-node img { width: 100%; height: 100%; object-fit: contain; }
 .hunter-growth-node b { position: absolute; right: 0; bottom: 0; left: 0; padding: 1px; background: #0d0c0ac9; color: white; font-size: 5px; text-align: center; }
+.hunter-growth-node.empty { filter: grayscale(1); opacity: .38; }
 .hunter-info-riding-tab { display: grid; place-items: center; align-content: center; gap: 8px; min-height: 160px; }
 .hunter-info-riding-tab > img { width: 90px; max-height: 92px; object-fit: contain; }
 .hunter-info-riding-tab p { margin: 0; color: #c7bca5; font-size: 8px; }
@@ -790,14 +884,22 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-material-cell { position: relative; display: grid; place-items: center; aspect-ratio: 1; border: 6px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_item_in_hunter__3566.png') 6 fill / 6px stretch; }
 .hunter-material-cell img { width: 100%; height: 100%; object-fit: contain; }
 .hunter-material-cell b { position: absolute; right: 1px; bottom: 0; color: white; font-size: 7px; text-shadow: 0 1px 2px #000; }
+.hunter-material-grid.unresolved { opacity: .38; }
+.hunter-material-cell.empty::after { content: ""; width: 9px; height: 9px; border: 1px solid #756b58; transform: rotate(45deg); }
 
 @media (max-width: 390px) {
-  .hunter-roster-panel { width: 98%; height: 77%; border-width: 10px; border-image-width: 10px; }
+  .hunter-roster-panel { right: 4px; left: 4px; width: auto; height: 77%; border-width: 2px; }
   .hunter-card-grid { gap: 3px; }
   .hunter-roster-card { padding-inline: 1px; }
-  .hunter-info-modal { width: 98%; border-width: 12px; border-image-width: 12px; }
-  .hunter-info-tabs button { font-size: 6px; }
+  .hunter-info-modal { width: 84%; height: 84%; padding-inline: 10px; }
   .hunter-skill-group > div { grid-template-columns: 1fr; }
+  .resource-ledger { min-width: 90px; padding-right: 4px; }
+  .resource-line { grid-template-columns: 18px minmax(48px, auto); }
+  .top-quick-actions button { width: 38px; height: 40px; padding: 4px; }
+  .top-quick-actions button:nth-child(3) { width: 47px; }
+  .top-quick-actions img { width: 29px; height: 29px; }
+  .top-quick-actions button:nth-child(3) img { width: 16px; height: 27px; margin-right: 16px; }
+  .top-quick-actions b { right: 3px; bottom: 7px; font-size: 7px; }
 }
 
 @media (max-height: 560px) {
@@ -805,7 +907,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .enter-village { bottom: 46px; }
   .boot-status { bottom: 8px; }
   .bottom-menu { bottom: 5px; }
-  .guild-chat-bar { bottom: 76px; }
   .menu-button { min-height: 55px; }
   .menu-icon { width: 34px; height: 34px; }
   .menu-icon img { width: 32px; height: 32px; }
@@ -814,4 +915,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+@keyframes hunter-panel-arrive {
+  from { opacity: 0; transform: translateY(8px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }

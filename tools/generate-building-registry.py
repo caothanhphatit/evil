@@ -638,6 +638,10 @@ def make_economy_catalogs(economy: dict[str, Any]) -> tuple[list[dict[str, Any]]
             for rating, materials in enumerate(row["craftingMaterialsByRating"]):
                 recipe_id = f"recipe:{item_type}:{row['index']}:rating:{rating}"
                 recipe_locator = f"{locator}.craftingMaterialsByRating[{rating}]"
+                material_ids = materials["ids"]
+                quantities = materials["quantities"]
+                if len(material_ids) != len(quantities):
+                    raise ValueError(f"{recipe_locator} has mismatched material IDs and quantities")
                 inputs = [
                     economy_amount(
                         f"input-{index}",
@@ -645,7 +649,7 @@ def make_economy_catalogs(economy: dict[str, Any]) -> tuple[list[dict[str, Any]]
                         quantity,
                         f"{recipe_locator}[{index}]",
                     )
-                    for index, (material_id, quantity) in enumerate(zip(materials["ids"], materials["quantities"], strict=True))
+                    for index, (material_id, quantity) in enumerate(zip(material_ids, quantities))
                     if material_id >= 0 and quantity > 0
                 ]
                 products.append(
@@ -688,9 +692,13 @@ def make_economy_catalogs(economy: dict[str, Any]) -> tuple[list[dict[str, Any]]
         for level, materials in enumerate(row["craftingMaterialsByLevel"]):
             recipe_id = f"recipe:consumable:{row['index']}:level:{level}"
             recipe_locator = f"{locator}.craftingMaterialsByLevel[{level}]"
+            material_ids = materials["ids"]
+            quantities = materials["quantities"]
+            if len(material_ids) != len(quantities):
+                raise ValueError(f"{recipe_locator} has mismatched material IDs and quantities")
             inputs = [
                 economy_amount(f"input-{index}", f"material:{material_id}", quantity, f"{recipe_locator}[{index}]")
-                for index, (material_id, quantity) in enumerate(zip(materials["ids"], materials["quantities"], strict=True))
+                for index, (material_id, quantity) in enumerate(zip(material_ids, quantities))
                 if material_id >= 0 and quantity > 0
             ]
             products.append(
@@ -763,8 +771,10 @@ def make_product(product: dict[str, Any]) -> dict[str, Any]:
     conversion_options = []
     if len(product["completionCounts"]) < len(product["requiredMaterialIds"]):
         raise ValueError(f"completionCounts shorter than material alternatives: {locator}")
+    if len(product["requiredMaterialIds"]) != len(product["requiredMaterialQuantities"]):
+        raise ValueError(f"material IDs and quantities have different lengths: {locator}")
     for index, (material_id, quantity) in enumerate(
-        zip(product["requiredMaterialIds"], product["requiredMaterialQuantities"], strict=True)
+        zip(product["requiredMaterialIds"], product["requiredMaterialQuantities"])
     ):
         completion_count = product["completionCounts"][index]
         if material_id < 0 or quantity <= 0:
@@ -874,8 +884,10 @@ def make_skin(row: dict[str, Any]) -> dict[str, Any]:
                 "quantity": resolved_from(row["requiredGold"], [skin_ref(f"{locator}.requiredGold")]),
             }
         )
+    if len(row["requiredMaterialIds"]) != len(row["requiredMaterialQuantities"]):
+        raise ValueError(f"material IDs and quantities have different lengths: {locator}")
     for index, (material_id, quantity) in enumerate(
-        zip(row["requiredMaterialIds"], row["requiredMaterialQuantities"], strict=True)
+        zip(row["requiredMaterialIds"], row["requiredMaterialQuantities"])
     ):
         if material_id < 0 or quantity <= 0:
             continue

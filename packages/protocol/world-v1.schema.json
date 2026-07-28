@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 15,
+  "schemaVersion": 24,
   "fixtureContracts": [
     {
       "id": "migration-fixture.slice1-combat-v1",
@@ -12,6 +12,15 @@
     "encoding": "json-debug",
     "maxMessageBytes": 1048576,
     "envelopeFields": ["version", "sequence", "session_id", "correlation_id", "payload"]
+  },
+  "projectionContracts": {
+    "hunterRuntimeEvidence": {
+      "memberField": "runtime_evidence",
+      "evidenceStates": ["unresolved", "schema_confirmed", "value_captured"],
+      "sections": ["job", "status", "skills", "appearance", "inventory", "growth", "riding_pet"],
+      "unresolvedValue": null,
+      "compatibility": "additive"
+    }
   },
   "clientCommands": [
     {
@@ -36,6 +45,10 @@
     { "wireName": "select_bottom_menu", "rustName": "SelectBottomMenu", "fields": [{ "wireName": "menu", "rustType": "BottomMenuIntent", "tsType": "BottomMenuIntent" }] },
     { "wireName": "navigate_back", "rustName": "NavigateBack", "fields": [] },
     { "wireName": "enter_field", "rustName": "EnterField", "fields": [] },
+    { "wireName": "enter_monster_map", "rustName": "EnterMonsterMap", "fields": [{ "wireName": "map_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "set_monster_density", "rustName": "SetMonsterDensity", "fields": [{ "wireName": "level", "rustType": "u8", "tsType": "number" }] },
+    { "wireName": "set_monster_region_density", "rustName": "SetMonsterRegionDensity", "fields": [{ "wireName": "region_id", "rustType": "String", "tsType": "string" }, { "wireName": "level", "rustType": "u8", "tsType": "number" }] },
+    { "wireName": "select_monster_target", "rustName": "SelectMonsterTarget", "fields": [{ "wireName": "monster_id", "rustType": "String", "tsType": "string" }, { "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "select_entity", "rustName": "SelectEntity", "fields": [{ "wireName": "entity_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "construct_building", "rustName": "ConstructBuilding", "fields": [{ "wireName": "building_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "construct_building_at", "rustName": "ConstructBuildingAt", "fields": [{ "wireName": "building_id", "rustType": "String", "tsType": "string" }, { "wireName": "grid_x", "rustType": "i32", "tsType": "number" }, { "wireName": "grid_y", "rustType": "i32", "tsType": "number" }] },
@@ -46,6 +59,12 @@
     { "wireName": "cancel_material_request", "rustName": "CancelMaterialRequest", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "material_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "craft_shop_item", "rustName": "CraftShopItem", "fields": [{ "wireName": "instance_id", "rustType": "String", "tsType": "string" }, { "wireName": "recipe_id", "rustType": "String", "tsType": "string" }, { "wireName": "material_id", "rustType": "Option<String>", "tsType": "string | null" }, { "wireName": "quantity", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "open_hunter_progression", "rustName": "OpenHunterProgression", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "assign_hunter_hunt", "rustName": "AssignHunterHunt", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "zone_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "return_hunter_hunt", "rustName": "ReturnHunterHunt", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "sell_hunter_loot", "rustName": "SellHunterLoot", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "revive_hunter", "rustName": "ReviveHunter", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "learn_hunter_skill", "rustName": "LearnHunterSkill", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "skill_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "use_hunter_skill", "rustName": "UseHunterSkill", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "skill_id", "rustType": "String", "tsType": "string" }, { "wireName": "target_entity_id", "rustType": "Option<String>", "tsType": "string | null" }] },
     { "wireName": "banish_hunter", "rustName": "BanishHunter", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "equip_hunter_item", "rustName": "EquipHunterItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "item_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "claim_quest_reward", "rustName": "ClaimQuestReward", "fields": [{ "wireName": "quest_id", "rustType": "String", "tsType": "string" }] },
@@ -61,6 +80,7 @@
     { "wireName": "welcome", "rustName": "Welcome", "fields": ["player_token", "session_id", "snapshot"] },
     { "wireName": "resync", "rustName": "Resync", "fields": ["snapshot"] },
     { "wireName": "world_update", "rustName": "WorldUpdate", "fields": ["snapshot"] },
+    { "wireName": "world_frame", "rustName": "WorldFrame", "fields": ["world"] },
     { "wireName": "intent_result", "rustName": "IntentResult", "fields": ["intent", "accepted", "reason", "snapshot"] },
     { "wireName": "binding_blocked", "rustName": "BindingBlocked", "fields": ["intent", "blockers", "snapshot"] }
   ]

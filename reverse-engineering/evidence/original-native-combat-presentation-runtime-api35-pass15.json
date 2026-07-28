@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-combat-presentation-runtime-capture-pass15",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T09:30:00Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": 35,
+    "architecture": "arm64",
+    "module": "libil2cpp.so",
+    "moduleBase": "0x7112201000",
+    "moduleMemorySha256": "9b5158524e74b85192005d4d05e687f00528d4cd8b6e595c5d2fb7842ed173cf",
+    "metadataInitializerOffset": "0x23584dc",
+    "action": "resolve only static managed strings/localization and nested iterator metadata; no save/player values"
+  },
+  "runtimeStrings": [
+    {
+      "slot": "0x601bbf8",
+      "value": ""
+    },
+    {
+      "slot": "0x601faa0",
+      "value": "status_6"
+    },
+    {
+      "slot": "0x6028c60",
+      "value": "<size=20><color='#FFD228'>{0}</color></size>\n"
+    },
+    {
+      "slot": "0x601d5e8",
+      "value": "<color='#AF70E0'>"
+    },
+    {
+      "slot": "0x601ce78",
+      "value": "</color>"
+    },
+    {
+      "slot": "0x602c660",
+      "value": "damagectrl_5"
+    },
+    {
+      "slot": "0x601ef88",
+      "value": "<color='#D43D3D'>{0}</color>"
+    },
+    {
+      "slot": "0x601fb30",
+      "value": "<color='#ffffff'>+"
+    },
+    {
+      "slot": "0x6034360",
+      "value": "ruschnlocalize_16"
+    },
+    {
+      "slot": "0x6031d20",
+      "value": "</color><size=20><color='#a07be2'>{0}</color></size>"
+    },
+    {
+      "slot": "0x6020fd0",
+      "value": "<color='#997C8A'>"
+    },
+    {
+      "slot": "0x60266f8",
+      "value": "ruschnlocalize_1"
+    },
+    {
+      "slot": "0x6032320",
+      "value": "</color><size=20><color='#9F81F7'>{0}</color></size>"
+    },
+    {
+      "slot": "0x6036640",
+      "value": "<color='#FFFFFF'>+"
+    },
+    {
+      "slot": "0x6036648",
+      "value": "damagectrl_1"
+    },
+    {
+      "slot": "0x6034498",
+      "value": "</color><size=20><color='#9F81F7'>{1}</color></size>\n<color='#C3C3C3'>{0}</color>"
+    },
+    {
+      "slot": "0x6036638",
+      "value": "<color='#ed891c'>{0}</color>\n<size=20>{1}{2}</size>"
+    },
+    {
+      "slot": "0x6036650",
+      "value": "<color='#ed891c'>{0}</color>\n<size=20>{2} {1}</size>"
+    },
+    {
+      "slot": "0x601db50",
+      "value": "<color='#DE3232'>"
+    },
+    {
+      "slot": "0x6029330",
+      "value": "damagectrl_3"
+    },
+    {
+      "slot": "0x6029328",
+      "value": "<color='#8c82fa'>{0}</color>"
+    },
+    {
+      "slot": "0x6028b18",
+      "value": "damagectrl_0"
+    },
+    {
+      "slot": "0x60285f0",
+      "value": "<color='#81F7F3'>{0}</color>"
+    },
+    {
+      "slot": "0x60299a0",
+      "value": "<color='#b41ced'>{0}</color>\n<size=20>{1}{2}</size>"
+    },
+    {
+      "slot": "0x6036630",
+      "value": "<color='#b41ced'>{0}</color>\n<size=20>{2} {1}</size>"
+    },
+    {
+      "slot": "0x6029288",
+      "value": "damagectrl_6"
+    },
+    {
+      "slot": "0x60279f8",
+      "value": "<color='#c3dbc3'>{0}</color>"
+    },
+    {
+      "slot": "0x602d7d0",
+      "value": "<color='#ed1c24'>{0}</color>\n<size=20>{1}{2}</size>"
+    },
+    {
+      "slot": "0x6036658",
+      "value": "<color='#ed1c24'>{0}</color>\n<size=20>{2} {1}</size>"
+    },
+    {
+      "slot": "0x6028e88",
+      "value": "damagectrl_2"
+    },
+    {
+      "slot": "0x6026a18",
+      "value": "</color><size=20><color='#E17366'>{0}</color></size>"
+    },
+    {
+      "slot": "0x6035878",
+      "value": "<color='#43c552'>{0}</color>\n<size=20>{1}{2}</size>"
+    },
+    {
+      "slot": "0x60321b8",
+      "value": "<color='#43c552'>{0}</color>\n<size=20>{2} {1}</size>"
+    },
+    {
+      "slot": "0x60343c8",
+      "value": "ruschnlocalize_17"
+    },
+    {
+      "slot": "0x602c668",
+      "value": "</color><size=20><color='#A7FAEB'>{0}</color></size>"
+    },
+    {
+      "slot": "0x6021670",
+      "value": "<color='#1c7bed'>{0}</color>\n<size=20>{1}{2}</size>"
+    },
+    {
+      "slot": "0x6036628",
+      "value": "<color='#1c7bed'>{0}</color>\n<size=20>{2} {1}</size>"
+    },
+    {
+      "slot": "0x601daf8",
+      "value": "damagectrl_4"
+    },
+    {
+      "slot": "0x601f970",
+      "value": "<color='#8FBC8F'>"
+    },
+    {
+      "slot": "0x60269a0",
+      "value": "<color='#F4A460'>"
+    },
+    {
+      "slot": "0x6028448",
+      "value": "<color='#EEDD82'>"
+    },
+    {
+      "slot": "0x601da48",
+      "value": "<color='#87CEEB'>"
+    }
+  ],
+  "localization": [
+    {
+      "key": "status_6",
+      "english": "CRIT"
+    },
+    {
+      "key": "damagectrl_0",
+      "english": "Evade"
+    },
+    {
+      "key": "damagectrl_1",
+      "english": "Penalty"
+    },
+    {
+      "key": "damagectrl_2",
+      "english": "Lifesteal"
+    },
+    {
+      "key": "damagectrl_3",
+      "english": "Invulnerable"
+    },
+    {
+      "key": "damagectrl_4",
+      "english": "Purchase"
+    },
+    {
+      "key": "damagectrl_5",
+      "english": "Miss"
+    },
+    {
+      "key": "damagectrl_6",
+      "english": "<color='#FFFFFF'>+{0:f2}%</color> Recovery"
+    },
+    {
+      "key": "ruschnlocalize_1",
+      "english": "EXP"
+    },
+    {
+      "key": "ruschnlocalize_16",
+      "english": "SOUL"
+    },
+    {
+      "key": "ruschnlocalize_17",
+      "english": "ELE"
+    }
+  ],
+  "damageCtrlShowJumpTable": {
+    "tableModuleOffset": "0xd5c30a",
+    "branchBaseModuleOffset": "0x31d4034",
+    "targets": {
+      "0": "0x31d438c",
+      "1": "0x31d4034",
+      "2": "0x31d4034",
+      "3": "0x31d4410",
+      "4": "0x31d420c",
+      "5": "0x31d4524",
+      "6": "0x31d45ec",
+      "7": "0x31d4440",
+      "8": "0x31d4710",
+      "9": "0x31d4330",
+      "10": "0x31d4648",
+      "11": "0x31d41f0",
+      "12": "0x31d4280",
+      "13": "0x31d457c",
+      "14": "0x31d417c",
+      "15": "0x31d43e0",
+      "16": "0x31d414c",
+      "17": "0x31d449c"
+    }
+  },
+  "nestedIterator": {
+    "className": "FJCKKCGAOJB",
+    "owner": "DamageManager.CADAGAOCOOA(DamageCtrl)",
+    "fields": [
+      {
+        "name": "<>1__state",
+        "offset": 16,
+        "type": "System.Int32"
+      },
+      {
+        "name": "<>2__current",
+        "offset": 24,
+        "type": "System.Object"
+      },
+      {
+        "name": "ctrl",
+        "offset": 32,
+        "type": "DamageCtrl"
+      },
+      {
+        "name": "<>4__this",
+        "offset": 40,
+        "type": "DamageManager"
+      },
+      {
+        "name": "<enable>5__2",
+        "offset": 48,
+        "type": "System.Boolean"
+      }
+    ],
+    "moveNext": {
+      "token": 100676447,
+      "moduleOffset": "0x2fcda08",
+      "nativeSizeBytes": 1468,
+      "boundaryModuleOffset": "0x2fcdfc4",
+      "codeHex": "ea0f1cfce923016dfe5702a9f44f03a9d49f0190f30300aa8816563908030037608201f0007043f9ab2ace97608201f0003443f9a82ace97a082019000fc40f9a52ace97608201b000b843f9a22ace97608201f0009c43f99f2ace97808201b0000840f99c2ace97a08201b0004044f9992ace972800805288161639681240b9751640f91f05007160020054080e0035948201b008008012940a40f9681200b92800805268c20039800240f909e440b969000035d02ace97800240f9085c40f9e1031faa008140f964880794800000365f00001408008012681200b968c24039741240f9c8060034942600b4e00314aae1031faac3b2aa94002600b4e1031faaf8c1aa94a0010036681240f9682500b4001540f9202500b4083540bde1031faa6ff6aa948841a8520001271e0029201e0020211ee50a00547fc20039681240f9c82300b409f1403969080034748201f0943643f9800240f908e440b948000035a52ace97e0031faab2c9db97602200b4082843f9282200b4000940f9011940b9e2031faa7f21d297800e0037800240f908e440b948000035972ace97e0031faaa4c9db97a02000b4082843f9682000b400c141f8012540b965000014688201b008b943f9000140f908e440b948000035892ace97e00314aae1031faae2031faa2fc0aa9440030036601240f9601e00b4688201f0e1031faa089d43f9080140f9085d40f9130140f97eb2aa94758201f0f40300aab57243f9a80240f909e540b969000035e00308aa732ace97731c00b4a80240f9e00313aae10314aae3031faa085d40f9024d48f9d22c0b94e0031f2a4800001409f9403989050034a882019008fd40f9000140f908e440b948000035612ace97e0031faa5e470394e01900b408c047f8018440b9e00308aa30000014681240f9281900b4001540f9e01800b4083540bde1031faa0df6aa940090261e681240f90029201e0020211e45060054c81700b4141540f9941700b4e00314aae1031faa02f6aa94681240f9e81600b4001540f9a01600b4e1031faa0840201efbf5aa94e0031faa2940201e00ecaa940190261e5a00001409fd4039a9100034688201f0083543f9000140f908e440b948000035342ace97e0031faa41c9db97401400b4084843f9081400b4081d40f9c81300b4000940f9011940b9e2031faa0c21d297400000367fc20039f51200b4a82a40f920008052601200b9680e00f9f44f43a9fe5742a9e923416dea0744fcc0035fd6a81100b4001540f9601100b4083540bde1031faad1f5aa9400d0251e681240f90029201e0020211e65020054481000b4141540f9141000b4e00314aae1031faac6f5aa94681240f9680f00b4001540f9200f00b4e1031faa0840201ebff5aa94e0031faa2940201ec4ebaa940854a8521d000014080e00b4001540f9c00d00b4083540bde1031faab4f5aa940090221e681240f90029201e0020211e05f5ff54a80c00b4141540f9740c00b4e00314aae1031faaa9f5aa94681240f9c80b00b4001540f9800b00b4e1031faa0840201ea2f5aa94e0031faa2940201ea7ebaa94085ea8520101271e0008211e02e4002fe00314aae1031faa2129201e0041201ec7f5aa94681240f9680900b4001540f9200900b4e1031faa7bfaaa94e8eafed0011548bd0020211e8de4ff54681240f9280800b4141540f9f40700b4e00314aae1031faa70faaa94e0031faa0840201e8aebaa94681240f9e80600b4001540f9a00600b4e1031faa0940201e66faaa94e0031faa0a40201e80ebaa940339291e4139201ee00314aa02e4002fe1031faa6040201e92faaa9408ffff1709014139a9010034a88201b0084144f9000140f908e440b948000035ae29ce97e0031faa60d0eb97800300b4089c40f9014041b94dffff1709f54039e9000034e0031faa8e14e297800200b4084047f8017c40b945ffff170805413908efff34688201f0083543f9000140f908e440b9480000359829ce97e0031faaa5c8db97c00000b408fc45f9880000b4006540f901d140b966ffff17dc29ce97"
+    }
+  },
+  "nativeMethodMap": [
+    {
+      "moduleOffset": "0x5a7a608",
+      "managed": "UnityEngine.Component.get_gameObject()"
+    },
+    {
+      "moduleOffset": "0x5a7e2e8",
+      "managed": "UnityEngine.GameObject.get_activeInHierarchy()"
+    },
+    {
+      "moduleOffset": "0x5a7dca4",
+      "managed": "UnityEngine.Object.op_Inequality(Object,Object)"
+    },
+    {
+      "moduleOffset": "0x5a88d04",
+      "managed": "UnityEngine.Time.get_deltaTime()"
+    },
+    {
+      "moduleOffset": "0x5a8b4e4",
+      "managed": "UnityEngine.Transform.get_localPosition()"
+    },
+    {
+      "moduleOffset": "0x5a8b5a8",
+      "managed": "UnityEngine.Transform.set_localPosition(Vector3)"
+    },
+    {
+      "moduleOffset": "0x5a8c890",
+      "managed": "UnityEngine.Transform.get_localScale()"
+    },
+    {
+      "moduleOffset": "0x5a8c968",
+      "managed": "UnityEngine.Transform.set_localScale(Vector3)"
+    },
+    {
+      "moduleOffset": "0x3298f98",
+      "managed": "PoolingSystem.DestroyList(GameObject,GameObject)"
+    }
+  ],
+  "rodataFloats": [
+    {
+      "moduleOffset": "0xd2b814",
+      "value": 0.4000000059604645
+    }
+  ],
+  "prefabAsset": {
+    "name": "Damage Text",
+    "defaultText": "<size=20>\uce58\uba85\ud0c0</size>\n1000",
+    "font": {
+      "name": "DefaultFont2",
+      "source": "sharedassets0.assets",
+      "pathId": 197
+    },
+    "fontSize": 32,
+    "rectSize": {
+      "width": 50.0,
+      "height": 20.0
+    }
+  },
+  "dodgeAsset": {
+    "clip": {
+      "name": "DodgeMent",
+      "source": "sharedassets0.assets",
+      "pathId": 55,
+      "durationSeconds": 1.0166666507720947
+    },
+    "frameSpritePathIds": [
+      7240,
+      7744,
+      7788,
+      7830,
+      7788,
+      7744,
+      7240
+    ],
+    "englishTextSprite": {
+      "pathId": 7815,
+      "name": "0007_text_3"
+    }
+  },
+  "limitations": [
+    "Static strings were explicitly initialized through the same IL2CPP runtime metadata initializer used by generated code.",
+    "Localization values reflect the active English runtime locale.",
+    "The DodgeMent asset is a separate sprite animation contract; native DamageCtrl type 3 also renders localized Evade text."
+  ]
+}

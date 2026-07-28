@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T04:45:12.821029Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 13257,
+    "action": "Schema-only native method boundary capture for monster attack-reduction writers; no player values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "EvilCtrl",
+        "methodName": "DarkWeaponDeBuffAction"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "CheckActiveReduceAttckIcon"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "MistilteinDebuff"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "BuffEndSetting"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "BuffAllEndSetting"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "WarcryAction"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "PheonixDeBuffAction"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "IceArmorAction"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "FireEffectEnd"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "PressureDamage"
+      },
+      {
+        "className": "EvilCtrl",
+        "methodName": "CurseDamage"
+      }
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 16384,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a5c0b000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 16384,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "EvilCtrl",
+          "methodName": "DarkWeaponDeBuffAction"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "CheckActiveReduceAttckIcon"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "MistilteinDebuff"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "BuffEndSetting"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "BuffAllEndSetting"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "WarcryAction"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "PheonixDeBuffAction"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "IceArmorAction"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "FireEffectEnd"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "PressureDamage"
+        },
+        {
+          "className": "EvilCtrl",
+          "methodName": "CurseDamage"
+        }
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "DarkWeaponDeBuffAction",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675505,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b1b12c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1012c",
+              "codeHex": "e80f1efcfe0700f9f44f01a9f303012a0840201ef40300aa6efbff97217c4092e2031faa0e18d597a0010036e0031faa8d90d897c00100b4814a40f9e303132afe0740f9f44f41a9220780520041201ee4031faae80742fcea8bd817f44f41a9fe0740f9e80742fcc0035fd66621d197",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x2f1019c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b1b12c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1012c",
+              "codeHex": "e80f1efcfe0700f9f44f01a9f303012a0840201ef40300aa6efbff97217c4092e2031faa0e18d597a0010036e0031faa8d90d897c00100b4814a40f9e303132afe0740f9f44f41a9220780520041201ee4031faae80742fcea8bd817f44f41a9fe0740f9e80742fcc0035fd66621d197",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x2f1019c",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "CheckActiveReduceAttckIcon",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100675506,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b1b19c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1019c",
+              "codeHex": "00ec41bd0820201e6d000054200080520500001400f441bd280080520820201e00c19f1afe0f1ff8e1031faad21bd597217c4092fe0741f8c0035fd6",
+              "nativeSizeBytes": 60,
+              "boundaryModuleOffset": "0x2f101d8",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b1b19c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1019c",
+              "codeHex": "00ec41bd0820201e6d000054200080520500001400f441bd280080520820201e00c19f1afe0f1ff8e1031faad21bd597217c4092fe0741f8c0035fd6",
+              "nativeSizeBytes": 60,
+              "boundaryModuleOffset": "0x2f101d8",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "MistilteinDebuff",
+          "parameterCount": 3,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675522,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b28244",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1d244",
+              "codeHex": "e80f1dfcfe5701a9f44f02a9f303022a0840201ef403012af50300aa27c7ff97217c4092e2031faac7e3d497a0010036e0031faa465cd897c00100b4a14a40f9e203142ae303132af44f42a90041201efe5741a9e4031faae80743fca357d817f44f42a9fe5741a9e80743fcc0035fd61fedd097",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x2f1d2b8",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b28244",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1d244",
+              "codeHex": "e80f1dfcfe5701a9f44f02a9f303022a0840201ef403012af50300aa27c7ff97217c4092e2031faac7e3d497a0010036e0031faa465cd897c00100b4a14a40f9e203142ae303132af44f42a90041201efe5741a9e4031faae80743fca357d817f44f42a9fe5741a9e80743fcc0035fd61fedd097",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x2f1d2b8",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "BuffEndSetting",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675531,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b29c2c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1ec2c",
+              "codeHex": "ffc301d1fe5705a9f44f06a935a501f0f403012af30300aaa8e24b39c8000037e08701d0007043f922e6d09728008052a8e20b399fd600710c0600549f2a00716c0800549f060071800b00549f1e0071201000549f22007101190054683e47397fe601b948040035e00313aa99c0ff97217c4092e2031faa39ddd49780030036e00313aabbc0ff97601500b4080444a9e2031faae00308aa9aded4978002003568ca41b91f05007121020054e00313aab0c0ff97001400b4080443a9e2031faae00308aa8fded4971f10007100010054607240f9001300b4e1031faa0767919401008012e2031faacaab9194607e40f9e00f00b5900000149fe600718c0300549fda0071200600549fde0071c00f00549fe600712113005400e4002f61e241bde8f30091e0031faa7fde01b92028201ec8e2d497e0c3c33ce84f40b9e0830091e00b803de83300b9350000149f2e0071400400549fca0071000f00549fce0071c11000547f160939750000149fea0071e00300549fee0071a00e00549fae0171c10f0054683e47397f36073908010035607240f9000d00b4e1031faad766919401008012e2031faa9aab9194608640f9e00900b560000014607640f97f320739c00c00b55c00001460a240f97fea01b9400c00b558000014e00313aaf44f46a9fe5745a9ffc30191a400001400e4002f61de41bde8f30091e0031faa7fe201b92028201e93e2d497e0c3c33ce84f40b9e0030091e003803de81300b9e1031faa10ded497280080520101271e0020211e65080054609240f9e00700b4e1031f2ae2031faac07cad94e00313aa1ffaff973b000014683e47397fd201b948040035e00313aa1bc0ff97217c4092e2031faabbdcd49780030036e00313aa3dc0ff97a00500b4080444a9e2031faae00308aa1cded4978002003568ca41b91f05007121020054e00313aa32c0ff97400400b4080443a9e2031faae00308aa11ded4971f10007100010054607240f9400300b4e1031faa8966919401008012e2031faa4cab9194607a40f9600200b4f44f46a9e1031f2afe5745a9e2031faaffc30191917cad1460f641bd7fee01b90820201ee0d79f1ae1031faa73e0d497217c4092e2031faa8edcd497e0010037608a40f9400100b5f4e5d0977f120939f44f46a9fe5745a9ffc30191c0035fd6609640f97f3a073900ffffb4e1031f2ae2031faa797cad94e00313aaf44f46a9fe5745a9ffc30191d5f9ff17f58701d0b57243f9a00240f908e440b96800003591e5d097a00240f9085c40f9e2031faa001d56f9012156f9d7ddd4971f00146bc1000054e00313aaf44f46a9fe5745a9ffc3019145000014a00240f908e440b96800003580e5d097a00240f9085c40f9e2031faa00515bf901555bf9c6ddd4971f00146ba1000054609e40f97ff201b9e0faffb5cdffff17a00240f908e440b96800003570e5d097a00240f9085c40f9e2031faa00795bf9017d5bf9b6ddd4971f00146b8100005460ee41bd7ff601b9b4ffff17a00240f908e440b96800003561e5d097a00240f9085c40f9e2031faa003d5bf901415bf9a7ddd4971f00146b81f6ff547ffa01b9b2ffff17",
+              "nativeSizeBytes": 1144,
+              "boundaryModuleOffset": "0x2f1f0a4",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b29c2c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1ec2c",
+              "codeHex": "ffc301d1fe5705a9f44f06a935a501f0f403012af30300aaa8e24b39c8000037e08701d0007043f922e6d09728008052a8e20b399fd600710c0600549f2a00716c0800549f060071800b00549f1e0071201000549f22007101190054683e47397fe601b948040035e00313aa99c0ff97217c4092e2031faa39ddd49780030036e00313aabbc0ff97601500b4080444a9e2031faae00308aa9aded4978002003568ca41b91f05007121020054e00313aab0c0ff97001400b4080443a9e2031faae00308aa8fded4971f10007100010054607240f9001300b4e1031faa0767919401008012e2031faacaab9194607e40f9e00f00b5900000149fe600718c0300549fda0071200600549fde0071c00f00549fe600712113005400e4002f61e241bde8f30091e0031faa7fde01b92028201ec8e2d497e0c3c33ce84f40b9e0830091e00b803de83300b9350000149f2e0071400400549fca0071000f00549fce0071c11000547f160939750000149fea0071e00300549fee0071a00e00549fae0171c10f0054683e47397f36073908010035607240f9000d00b4e1031faad766919401008012e2031faa9aab9194608640f9e00900b560000014607640f97f320739c00c00b55c00001460a240f97fea01b9400c00b558000014e00313aaf44f46a9fe5745a9ffc30191a400001400e4002f61de41bde8f30091e0031faa7fe201b92028201e93e2d497e0c3c33ce84f40b9e0030091e003803de81300b9e1031faa10ded497280080520101271e0020211e65080054609240f9e00700b4e1031f2ae2031faac07cad94e00313aa1ffaff973b000014683e47397fd201b948040035e00313aa1bc0ff97217c4092e2031faabbdcd49780030036e00313aa3dc0ff97a00500b4080444a9e2031faae00308aa1cded4978002003568ca41b91f05007121020054e00313aa32c0ff97400400b4080443a9e2031faae00308aa11ded4971f10007100010054607240f9400300b4e1031faa8966919401008012e2031faa4cab9194607a40f9600200b4f44f46a9e1031f2afe5745a9e2031faaffc30191917cad1460f641bd7fee01b90820201ee0d79f1ae1031faa73e0d497217c4092e2031faa8edcd497e0010037608a40f9400100b5f4e5d0977f120939f44f46a9fe5745a9ffc30191c0035fd6609640f97f3a073900ffffb4e1031f2ae2031faa797cad94e00313aaf44f46a9fe5745a9ffc30191d5f9ff17f58701d0b57243f9a00240f908e440b96800003591e5d097a00240f9085c40f9e2031faa001d56f9012156f9d7ddd4971f00146bc1000054e00313aaf44f46a9fe5745a9ffc3019145000014a00240f908e440b96800003580e5d097a00240f9085c40f9e2031faa00515bf901555bf9c6ddd4971f00146ba1000054609e40f97ff201b9e0faffb5cdffff17a00240f908e440b96800003570e5d097a00240f9085c40f9e2031faa00795bf9017d5bf9b6ddd4971f00146b8100005460ee41bd7ff601b9b4ffff17a00240f908e440b96800003561e5d097a00240f9085c40f9e2031faa003d5bf901415bf9a7ddd4971f00146b81f6ff547ffa01b9b2ffff17",
+              "nativeSizeBytes": 1144,
+              "boundaryModuleOffset": "0x2f1f0a4",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "BuffAllEndSetting",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100675536,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b24a38",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f19a38",
+              "codeHex": "fe4fbfa9f30300aa007440f9c00b00b4e1031f2ae2031faac891ad94608a40f9200b00b4e1031f2ae2031faac391ad94607a40f9800a00b4e1031f2ae2031faabe91ad94607e40f9e00900b4e1031f2ae2031faab991ad94608240f9400900b4e1031f2ae2031faab491ad94608640f9a00800b4e1031f2ae2031faaaf91ad94609240f9000800b4e1031f2ae2031faaaa91ad94609640f9600700b4e1031f2ae2031faaa591ad94609a40f9c00600b4e1031f2ae2031faaa091ad94609e40f9200600b4e1031f2ae2031faa9b91ad9460a240f9800500b4e1031f2ae2031faa9691ad946832079169920791e00313aa1f0100f9687207913f0100f91f0100f97fee01b9f0d4ff97217c4092e2031faa90f1d49740020036e00313aa12d5ff97200300b4080444a9e2031faae00308aaf1f2d49740010035e00313aa0ad5ff97200200b4080443a9e2031faae00308aae9f2d4971f10007161000054fe4fc1a8c0035fd6607240f9e00000b4e1031faa5f7b919401008012e2031faafe4fc1a821c09114ddfad097",
+              "nativeSizeBytes": 392,
+              "boundaryModuleOffset": "0x2f19bc0",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b24a38",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f19a38",
+              "codeHex": "fe4fbfa9f30300aa007440f9c00b00b4e1031f2ae2031faac891ad94608a40f9200b00b4e1031f2ae2031faac391ad94607a40f9800a00b4e1031f2ae2031faabe91ad94607e40f9e00900b4e1031f2ae2031faab991ad94608240f9400900b4e1031f2ae2031faab491ad94608640f9a00800b4e1031f2ae2031faaaf91ad94609240f9000800b4e1031f2ae2031faaaa91ad94609640f9600700b4e1031f2ae2031faaa591ad94609a40f9c00600b4e1031f2ae2031faaa091ad94609e40f9200600b4e1031f2ae2031faa9b91ad9460a240f9800500b4e1031f2ae2031faa9691ad946832079169920791e00313aa1f0100f9687207913f0100f91f0100f97fee01b9f0d4ff97217c4092e2031faa90f1d49740020036e00313aa12d5ff97200300b4080444a9e2031faae00308aaf1f2d49740010035e00313aa0ad5ff97200200b4080443a9e2031faae00308aae9f2d4971f10007161000054fe4fc1a8c0035fd6607240f9e00000b4e1031faa5f7b919401008012e2031faafe4fc1a821c09114ddfad097",
+              "nativeSizeBytes": 392,
+              "boundaryModuleOffset": "0x2f19bc0",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "WarcryAction",
+          "parameterCount": 3,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675565,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b2f180",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f24180",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa57abff97217c4092e2031faaf7c7d497c0030036a832473988030035e00315aa77abff97e00600b4080442a9e2031faae00308aa56c9d4971f7c017160020054e00315aa6eabff97c00500b4080442a9e2031faae00308aa4dc9d4971f00027140010054e00315aa65abff97a00400b4080442a9e2031faae00308aa44c9d4971f040271c1000054f44f42a9fe0740f9f65741a9e80743fcc0035fd6e00315aa57abff97e00200b4080443a9e2031faae00308aa36c9d497f603002ae0031faa4c40d897e00100b428f0fef0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fca43bd81724d1d097",
+              "nativeSizeBytes": 292,
+              "boundaryModuleOffset": "0x2f242a4",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b2f180",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f24180",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa57abff97217c4092e2031faaf7c7d497c0030036a832473988030035e00315aa77abff97e00600b4080442a9e2031faae00308aa56c9d4971f7c017160020054e00315aa6eabff97c00500b4080442a9e2031faae00308aa4dc9d4971f00027140010054e00315aa65abff97a00400b4080442a9e2031faae00308aa44c9d4971f040271c1000054f44f42a9fe0740f9f65741a9e80743fcc0035fd6e00315aa57abff97e00200b4080443a9e2031faae00308aa36c9d497f603002ae0031faa4c40d897e00100b428f0fef0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fca43bd81724d1d097",
+              "nativeSizeBytes": 292,
+              "boundaryModuleOffset": "0x2f242a4",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "PheonixDeBuffAction",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675568,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b2f2a4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f242a4",
+              "codeHex": "e80f1efcfe0700f9f44f01a9f303012a0840201ef40300aa10abff97217c4092e2031faab0c7d497a0010036e0031faa2f40d897c00100b4814a40f9e303132afe0740f9f44f41a9420780520041201ee4031faae80742fc8c3bd817f44f41a9fe0740f9e80742fcc0035fd608d1d097",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x2f24314",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b2f2a4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f242a4",
+              "codeHex": "e80f1efcfe0700f9f44f01a9f303012a0840201ef40300aa10abff97217c4092e2031faab0c7d497a0010036e0031faa2f40d897c00100b4814a40f9e303132afe0740f9f44f41a9420780520041201ee4031faae80742fc8c3bd817f44f41a9fe0740f9e80742fcc0035fd608d1d097",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x2f24314",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "IceArmorAction",
+          "parameterCount": 3,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675577,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b300bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f250bc",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa88a7ff97217c4092e2031faa28c4d497a0030036a0d241bd0820201e41030054e00315aaa7a7ff97800300b4080443a9e2031faae00308aa86c5d497f603002ae0031faa9c3cd897800200b428f0fed0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fcf437d817f44f42a9fe0740f9f65741a9e80743fcc0035fd66fcdd097",
+              "nativeSizeBytes": 188,
+              "boundaryModuleOffset": "0x2f25178",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b300bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f250bc",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa88a7ff97217c4092e2031faa28c4d497a0030036a0d241bd0820201e41030054e00315aaa7a7ff97800300b4080443a9e2031faae00308aa86c5d497f603002ae0031faa9c3cd897800200b428f0fed0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fcf437d817f44f42a9fe0740f9f65741a9e80743fcc0035fd66fcdd097",
+              "nativeSizeBytes": 188,
+              "boundaryModuleOffset": "0x2f25178",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "FireEffectEnd",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100675584,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b2a0a4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1f0a4",
+              "codeHex": "008040f9800000b4e1031f2ae2031faa2f7cad14fe0f1ff89de5d097",
+              "nativeSizeBytes": 28,
+              "boundaryModuleOffset": "0x2f1f0c0",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b2a0a4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f1f0a4",
+              "codeHex": "008040f9800000b4e1031f2ae2031faa2f7cad14fe0f1ff89de5d097",
+              "nativeSizeBytes": 28,
+              "boundaryModuleOffset": "0x2f1f0c0",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "PressureDamage",
+          "parameterCount": 3,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675595,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b36698",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f2b698",
+              "codeHex": "e80f1dfcfe5701a9f44f02a9f303022a0840201ef403012af50300aa128eff97217c4092e2031faab2aad497a0010036e0031faa3123d897c00100b4a14a40f9e203142ae303132af44f42a90041201efe5741a9e4031faae80743fc8e1ed817f44f42a9fe5741a9e80743fcc0035fd60ab4d097",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x2f2b70c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b36698",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f2b698",
+              "codeHex": "e80f1dfcfe5701a9f44f02a9f303022a0840201ef403012af50300aa128eff97217c4092e2031faab2aad497a0010036e0031faa3123d897c00100b4a14a40f9e203142ae303132af44f42a90041201efe5741a9e4031faae80743fc8e1ed817f44f42a9fe5741a9e80743fcc0035fd60ab4d097",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x2f2b70c",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "EvilCtrl",
+          "methodName": "CurseDamage",
+          "parameterCount": 3,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100675605,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8b380a0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f2d0a0",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa8f87ff97217c4092e2031faa2fa4d497a0030036a0e641bd0820201e41030054e00315aaae87ff97800300b4080443a9e2031faae00308aa8da5d497f603002ae0031faaa31cd897800200b4e8effed0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fcfb17d817f44f42a9fe0740f9f65741a9e80743fcc0035fd676add097",
+              "nativeSizeBytes": 188,
+              "boundaryModuleOffset": "0x2f2d15c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8b380a0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2f2d0a0",
+              "codeHex": "e80f1dfcfe0700f9f65701a9f44f02a9f303022a0840201ef403012af50300aa8f87ff97217c4092e2031faa2fa4d497a0030036a0e641bd0820201e41030054e00315aaae87ff97800300b4080443a9e2031faae00308aa8da5d497f603002ae0031faaa31cd897800200b4e8effed0df0e0071a14a40f9000544bde203142ae303132af44f42a9fe0740f90009201ef65741a9e4031faa000c281ee80743fcfb17d817f44f42a9fe0740f9f65741a9e80743fcc0035fd676add097",
+              "nativeSizeBytes": 188,
+              "boundaryModuleOffset": "0x2f2d15c",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

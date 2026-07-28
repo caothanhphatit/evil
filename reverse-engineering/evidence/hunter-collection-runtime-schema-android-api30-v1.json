@@ -1,0 +1,1172 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-26T10:37:24.073815Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone_arm64",
+    "androidRelease": "11",
+    "androidApi": "30",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 6858,
+    "action": "Cold launch to Unity startup screen; enumerate durable Hunter collection wrapper schemas",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "HunterDataDic",
+      "VisitHunterDataDic",
+      "SaveDataDic",
+      "ItemDataDic",
+      "ConsumDataDic"
+    ]
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "HunterDataDic",
+        "VisitHunterDataDic",
+        "SaveDataDic",
+        "ItemDataDic",
+        "ConsumDataDic"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "SaveDataDic",
+          "token": 33554954,
+          "fields": [
+            {
+              "name": "<data>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "offset": 16,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "LPJCALDPNBO",
+              "token": 100674889,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LHFEOPHBJOJ",
+              "token": 100674890,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GEMLPMFHNMI",
+              "token": 100674891,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DBKDMONPMLI",
+              "token": 100674892,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AIJPDOMEHAG",
+              "token": 100674893,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BDENLOKPKLG",
+              "token": 100674894,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AOGEDBBLBAK",
+              "token": 100674895,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NDMILOJNPKK",
+              "token": 100674896,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FBELALPPHHL",
+              "token": 100674897,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DMMKPOODCMD",
+              "token": 100674898,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100674899,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_data",
+              "token": 100674900,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GINKGBKPKAP",
+              "token": 100674901,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "APGGPPJFBFO",
+              "token": 100674902,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GFEHFJBNIGP",
+              "token": 100674903,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NHAJIHBJAJC",
+              "token": 100674904,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GOBFEEIFAFG",
+              "token": 100674905,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DBIKNJIPHIE",
+              "token": 100674906,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KIPJCDGHPMH",
+              "token": 100674907,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_data",
+              "token": 100674908,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LDHOBMOBMHI",
+              "token": 100674909,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,SaveData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JGADADFFJEI",
+              "token": 100674910,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,SaveData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "VisitHunterDataDic",
+          "token": 33555385,
+          "fields": [
+            {
+              "name": "<visitData>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "offset": 16,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "HFAGBGHEPBM",
+              "token": 100682097,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CELOJBNPJMM",
+              "token": 100682098,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Clone",
+              "token": 100682099,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_visitData",
+              "token": 100682100,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ODNJLDHKFEJ",
+              "token": 100682101,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IHCFICPLOIE",
+              "token": 100682102,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HCKEDEIBGHF",
+              "token": 100682103,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100682104,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BNDNPPCODFA",
+              "token": 100682105,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LIEFOMFPOPJ",
+              "token": 100682106,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KHFLIECLJBK",
+              "token": 100682107,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JPIIJFAFLMN",
+              "token": 100682108,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LHGCJKNEHCG",
+              "token": 100682109,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_visitData",
+              "token": 100682110,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BJKFHHNPHKB",
+              "token": 100682111,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GNGAOPNAIFE",
+              "token": 100682112,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NAJHIPOELJM",
+              "token": 100682113,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "HunterDataDic",
+          "token": 33555810,
+          "fields": [
+            {
+              "name": "<data>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "<ridingPetData>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>",
+              "offset": 24,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "KIPJCDGHPMH",
+              "token": 100689287,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DGMPANONLPH",
+              "token": 100689288,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,RidingPetData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BLIKKKCKNDC",
+              "token": 100689289,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100689290,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GFEHFJBNIGP",
+              "token": 100689291,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FGBKLBJPADI",
+              "token": 100689292,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,RidingPetData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IPKPLPECDPF",
+              "token": 100689293,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_ridingPetData",
+              "token": 100689294,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HEHFLIHJGLL",
+              "token": 100689295,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_data",
+              "token": 100689296,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DBKDMONPMLI",
+              "token": 100689297,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NFMAAECONIO",
+              "token": 100689298,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,RidingPetData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DHBLHGAEJIJ",
+              "token": 100689299,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,RidingPetData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FBELALPPHHL",
+              "token": 100689300,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,HunterData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_ridingPetData",
+              "token": 100689301,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,RidingPetData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Clone",
+              "token": 100689302,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_data",
+              "token": 100689303,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,HunterData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "ItemDataDic",
+          "token": 33556363,
+          "fields": [
+            {
+              "name": "<data>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "offset": 16,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "JGADADFFJEI",
+              "token": 100699640,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OKPFKNNNFON",
+              "token": 100699641,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LDHOBMOBMHI",
+              "token": 100699642,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_data",
+              "token": 100699643,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100699644,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AIJPDOMEHAG",
+              "token": 100699645,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_data",
+              "token": 100699646,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NHAJIHBJAJC",
+              "token": 100699647,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Clone",
+              "token": 100699648,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FGEJKCHKCHP",
+              "token": 100699649,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PNELOGBFIBM",
+              "token": 100699650,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LJIJHDACADG",
+              "token": 100699651,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LPJCALDPNBO",
+              "token": 100699652,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DLJNEDFIDEC",
+              "token": 100699653,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ItemData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KBDGHDOAHIJ",
+              "token": 100699654,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ItemData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NCEJAAMHCDE",
+              "token": 100699655,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "ConsumDataDic",
+          "token": 33556398,
+          "fields": [
+            {
+              "name": "<data>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "<runesData>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>",
+              "offset": 24,
+              "flags": 1
+            },
+            {
+              "name": "<ridingPetGearData>k__BackingField",
+              "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>",
+              "offset": 32,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "get_runesData",
+              "token": 100700234,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,ConsumData>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100700235,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_ridingPetGearData",
+              "token": 100700236,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "APGGPPJFBFO",
+              "token": 100700237,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GFFMMDBKKNE",
+              "token": 100700238,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EKLOBAJMMAK",
+              "token": 100700239,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KIPJCDGHPMH",
+              "token": 100700240,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GIHAIACGIAK",
+              "token": 100700241,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BLBFKCKFPJO",
+              "token": 100700242,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ECMIIONNIIH",
+              "token": 100700243,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KBDGHDOAHIJ",
+              "token": 100700244,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IENDEIEJDND",
+              "token": 100700245,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DBKDMONPMLI",
+              "token": 100700246,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AOGEDBBLBAK",
+              "token": 100700247,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_runesData",
+              "token": 100700248,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Clone",
+              "token": 100700249,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_data",
+              "token": 100700250,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DOBFANOGJHN",
+              "token": 100700251,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GONBPEIPJLG",
+              "token": 100700252,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IKLFHKFNMJM",
+              "token": 100700253,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IBFABOECLOC",
+              "token": 100700254,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,ConsumData>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_ridingPetGearData",
+              "token": 100700255,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_data",
+              "token": 100700256,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,ConsumData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CJCHIGNMAHN",
+              "token": 100700257,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Dictionary<System.String,System.Collections.Generic.Dictionary<System.String,RidingPetGearData>>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

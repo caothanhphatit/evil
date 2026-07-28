@@ -1,0 +1,687 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-weapon-attack-presentation-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "path": "apps/web/public/content/releases/visible-world-v1/actors/hunter/hunter.json",
+      "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689"
+    },
+    {
+      "path": "apps/web/public/content/releases/visible-world-v1/actors/mon_a_01_1/mon_a_01_1.json",
+      "sha256": "9821db8a8dff12694b43c74c88502a752246cbe27bef795ce5f76dc63ad00f7a"
+    },
+    {
+      "path": "packages/content/releases/evil-hunter-1.411/gear-catalog.json",
+      "sha256": "e854e048ffa1e0eafd7a4de34e768140879238e32129a54100b638975c6f3626"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-ai-runtime-v1.json",
+      "sha256": "f06a688207505df505362946d851917a7eaaa05836e9cfa367ccf22df46ed809"
+    }
+  ],
+  "hunterSkeleton": {
+    "spineVersion": "4.2.43",
+    "slotCount": 56,
+    "skinCount": 1937,
+    "animationCount": 70,
+    "weaponBones": [
+      {
+        "name": "weapon",
+        "parent": "L_hand",
+        "length": 10.27,
+        "rotation": -58.35,
+        "x": 8.15,
+        "y": -0.12,
+        "color": "9b0600ff"
+      },
+      {
+        "name": "dummy_wp",
+        "parent": "weapon",
+        "rotation": 216.42,
+        "x": 10.32,
+        "y": -0.06,
+        "color": "ff3c00ff"
+      },
+      {
+        "name": "dummy_wp3",
+        "parent": "weapon",
+        "rotation": 233.77,
+        "x": -2.29,
+        "y": -0.95,
+        "color": "ff3c00ff"
+      },
+      {
+        "name": "sub_weapon",
+        "parent": "R_hand",
+        "length": 9.55,
+        "rotation": -90.11,
+        "x": 8.86,
+        "y": -0.7,
+        "color": "ff0000ff"
+      }
+    ],
+    "weaponSlots": [
+      {
+        "name": "weapon_01",
+        "bone": "dummy_wp",
+        "attachment": "sword"
+      },
+      {
+        "name": "weapon_02",
+        "bone": "dummy_wp"
+      },
+      {
+        "name": "weapon_04",
+        "bone": "dummy_wp"
+      },
+      {
+        "name": "weapon_03",
+        "bone": "dummy_wp3"
+      },
+      {
+        "name": "weapon_05",
+        "bone": "dummy_wp"
+      },
+      {
+        "name": "weapon_03_effect",
+        "bone": "dummy_wp3",
+        "attachment": "bow_effect"
+      },
+      {
+        "name": "s_weapon",
+        "bone": "sub_weapon",
+        "color": "ffffff00",
+        "attachment": "s_weapon"
+      },
+      {
+        "name": "s_weapon_shield",
+        "bone": "sub_weapon",
+        "attachment": "s_weapon_shield"
+      },
+      {
+        "name": "s_weapon_shield_h5",
+        "bone": "sub_weapon",
+        "attachment": "s_weapon_shield"
+      },
+      {
+        "name": "weapon_2_effect",
+        "bone": "dummy_wp",
+        "color": "ffffff00",
+        "attachment": "hammer_effect"
+      }
+    ],
+    "weaponFamilies": [
+      {
+        "family": "h1",
+        "prefix": "weapon_h1_",
+        "slot": "weapon_01",
+        "attachment": "sword",
+        "skinCount": 185,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h1_a_01",
+          "weapon_h1_a_01_1",
+          "weapon_h1_a_01_2",
+          "weapon_h1_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h1_a_01",
+          "weapon/h1_a_01_1",
+          "weapon/h1_a_01_2",
+          "weapon/h1_a_01_3"
+        ]
+      },
+      {
+        "family": "h1a",
+        "prefix": "weapon_h1a_",
+        "slot": "s_weapon",
+        "attachment": "s_weapon",
+        "skinCount": 185,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h1a_a_01",
+          "weapon_h1a_a_01_1",
+          "weapon_h1a_a_01_2",
+          "weapon_h1a_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h1_a_01",
+          "weapon/h1_a_01_1",
+          "weapon/h1_a_01_2",
+          "weapon/h1_a_01_3"
+        ]
+      },
+      {
+        "family": "h2",
+        "prefix": "weapon_h2_",
+        "slot": "weapon_02",
+        "attachment": "hammer",
+        "skinCount": 185,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h2_a_01",
+          "weapon_h2_a_01_1",
+          "weapon_h2_a_01_2",
+          "weapon_h2_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h2_a_01",
+          "weapon/h2_a_01_1",
+          "weapon/h2_a_01_2",
+          "weapon/h2_a_01_3"
+        ]
+      },
+      {
+        "family": "h3",
+        "prefix": "weapon_h3_",
+        "slot": "weapon_03",
+        "attachment": "bow",
+        "skinCount": 185,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h3_a_01",
+          "weapon_h3_a_01_1",
+          "weapon_h3_a_01_2",
+          "weapon_h3_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h3_a_01",
+          "weapon/h3_a_01_1",
+          "weapon/h3_a_01_2",
+          "weapon/h3_a_01_3"
+        ]
+      },
+      {
+        "family": "h4",
+        "prefix": "weapon_h4_",
+        "slot": "weapon_04",
+        "attachment": "wand",
+        "skinCount": 185,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h4_a_01",
+          "weapon_h4_a_01_1",
+          "weapon_h4_a_01_2",
+          "weapon_h4_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h4_a_01",
+          "weapon/h4_a_01_1",
+          "weapon/h4_a_01_2",
+          "weapon/h4_a_01_3"
+        ]
+      },
+      {
+        "family": "h5",
+        "prefix": "weapon_h5_",
+        "slot": "weapon_05",
+        "attachment": "spear",
+        "skinCount": 116,
+        "allUseExpectedSlotAndAttachment": true,
+        "invalidSkinNames": [],
+        "sampleSkinNames": [
+          "weapon_h5_a_01",
+          "weapon_h5_a_01_1",
+          "weapon_h5_a_01_2",
+          "weapon_h5_a_01_3"
+        ],
+        "sampleAtlasPaths": [
+          "weapon/h5_a_01",
+          "weapon/h5_a_01_1",
+          "weapon/h5_a_01_2",
+          "weapon/h5_a_01_3"
+        ]
+      }
+    ],
+    "basicAttackAnimations": [
+      {
+        "name": "h1_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffffff",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h1_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffffff",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h1_a_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffffff",
+          "h1a": "ffffffff",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h1_a_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffffff",
+          "h1a": "ffffffff",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h2_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffffff",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h2_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffffff",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h3_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffffff",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h3_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffffff",
+          "h4": "ffffff00",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h4_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffffff",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h4_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffffff",
+          "h5": "ffffff00"
+        }
+      },
+      {
+        "name": "h5_hit",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffffff"
+        }
+      },
+      {
+        "name": "h5_hit_back",
+        "durationSeconds": 0.3333,
+        "weaponSlotInitialColors": {
+          "h1": "ffffff00",
+          "h1a": "ffffff00",
+          "h2": "ffffff00",
+          "h3": "ffffff00",
+          "h4": "ffffff00",
+          "h5": "ffffffff"
+        }
+      }
+    ],
+    "directionalFamilies": {
+      "walk": [
+        "hunter_walk",
+        "hunter_walk_back"
+      ],
+      "damage": [
+        "hunter_damage",
+        "hunter_damage_back"
+      ],
+      "basicAttackPairs": [
+        [
+          "h1_hit",
+          "h1_hit_back"
+        ],
+        [
+          "h1_a_hit",
+          "h1_a_hit_back"
+        ],
+        [
+          "h2_hit",
+          "h2_hit_back"
+        ],
+        [
+          "h3_hit",
+          "h3_hit_back"
+        ],
+        [
+          "h4_hit",
+          "h4_hit_back"
+        ],
+        [
+          "h5_hit",
+          "h5_hit_back"
+        ]
+      ]
+    }
+  },
+  "monsterSkeleton": {
+    "actor": "mon_a_01_1",
+    "animationDurationsSeconds": {
+      "walk": 1.3333,
+      "walk_b": 1.3333,
+      "atk": 0.8333,
+      "atk_b": 0.8333,
+      "die": 0.8333,
+      "dying": 0.1667
+    },
+    "directionalAttachmentNames": {
+      "walk": {
+        "body": "body",
+        "hand01": "hand01",
+        "hand02": "hand02",
+        "head01": "head",
+        "leg01": "leg01",
+        "leg02": "leg02",
+        "shadow": "shadow",
+        "weapon": "weapon"
+      },
+      "walk_b": {
+        "body": "body_b",
+        "hand01": "hand01_b",
+        "hand02": "hand02_b",
+        "head01": "head_b",
+        "leg01": "leg01_b",
+        "leg02": "leg02_b",
+        "shadow": "shadow",
+        "weapon": "weapon"
+      },
+      "atk": {
+        "body": "body",
+        "hand01": "hand01",
+        "hand02": "hand02",
+        "head01": "head",
+        "leg01": "leg01",
+        "leg02": "leg02",
+        "shadow": "shadow",
+        "weapon": "weapon"
+      },
+      "atk_b": {
+        "body": "body_b",
+        "hand01": "hand01_b",
+        "hand02": "hand02_b",
+        "head01": "head_b",
+        "leg01": "leg01_b",
+        "leg02": "leg02_b",
+        "shadow": "shadow",
+        "weapon": "weapon"
+      }
+    }
+  },
+  "gearCatalog": {
+    "weaponRowCount": 315,
+    "jobs": [
+      {
+        "job": 0,
+        "rowCount": 63,
+        "minIndex": 0,
+        "maxIndex": 233,
+        "sampleNames": [
+          "Junk Sword",
+          "Double-Bladed Axe",
+          "Viking Sword",
+          "Battle Axe"
+        ]
+      },
+      {
+        "job": 1,
+        "rowCount": 63,
+        "minIndex": 9,
+        "maxIndex": 239,
+        "sampleNames": [
+          "Junk Hammer",
+          "Battle Maul",
+          "War Hammer",
+          "Morning Star"
+        ]
+      },
+      {
+        "job": 2,
+        "rowCount": 63,
+        "minIndex": 18,
+        "maxIndex": 245,
+        "sampleNames": [
+          "Junk Bow",
+          "Composite Bow",
+          "Long Bow",
+          "Short Bow"
+        ]
+      },
+      {
+        "job": 3,
+        "rowCount": 63,
+        "minIndex": 27,
+        "maxIndex": 251,
+        "sampleNames": [
+          "Junk Staff",
+          "Battle Staff",
+          "Cross Staff",
+          "Black Staff"
+        ]
+      },
+      {
+        "job": 4,
+        "rowCount": 63,
+        "minIndex": 252,
+        "maxIndex": 314,
+        "sampleNames": [
+          "Rusty Spear",
+          "Short Spear",
+          "Long Spear",
+          "Wedge Spear"
+        ]
+      }
+    ],
+    "visualSkinBinding": "unresolved"
+  },
+  "nativeBoundaries": {
+    "hunterFields": [
+      {
+        "name": "AttackAniTime",
+        "type": "System.Single",
+        "offset": 428,
+        "flags": 6
+      },
+      {
+        "name": "mNowAnimation",
+        "type": "System.Int32",
+        "offset": 496,
+        "flags": 6
+      },
+      {
+        "name": "mAttackCheck",
+        "type": "System.Boolean",
+        "offset": 500,
+        "flags": 6
+      },
+      {
+        "name": "mTransform",
+        "type": "UnityEngine.Transform",
+        "offset": 520,
+        "flags": 6
+      },
+      {
+        "name": "mAnimation",
+        "type": "Spine.Unity.SkeletonAnimation",
+        "offset": 528,
+        "flags": 6
+      },
+      {
+        "name": "mCharacter",
+        "type": "UnityEngine.Transform",
+        "offset": 544,
+        "flags": 6
+      },
+      {
+        "name": "mTargetEvil",
+        "type": "EvilCtrl",
+        "offset": 888,
+        "flags": 6
+      },
+      {
+        "name": "TargetAttackCount",
+        "type": "System.Int32",
+        "offset": 896,
+        "flags": 6
+      }
+    ],
+    "evilFields": [
+      {
+        "name": "mTransform",
+        "type": "UnityEngine.Transform",
+        "offset": 152,
+        "flags": 6
+      },
+      {
+        "name": "mTargetUnit",
+        "type": "HunterCtrl",
+        "offset": 160,
+        "flags": 6
+      },
+      {
+        "name": "PBOCIECIFIP",
+        "type": "UnityEngine.Quaternion",
+        "offset": 168,
+        "flags": 4
+      },
+      {
+        "name": "CJGMDHPGAPL",
+        "type": "UnityEngine.Quaternion",
+        "offset": 184,
+        "flags": 4
+      },
+      {
+        "name": "mCharacter",
+        "type": "UnityEngine.Transform",
+        "offset": 216,
+        "flags": 6
+      },
+      {
+        "name": "mAnimation",
+        "type": "Spine.Unity.SkeletonAnimation",
+        "offset": 224,
+        "flags": 6
+      }
+    ],
+    "methods": [
+      {
+        "type": "HunterCtrl",
+        "method": "HuntingAttackSetting",
+        "token": "0x06005BE4",
+        "moduleOffset": "0x34012f8",
+        "nativeSizeBytes": 660,
+        "bodySha256": "6119134928144d1fcc8dd3a24c5d119274bf3fc3010784bd3fb36cc13d63deef"
+      },
+      {
+        "type": "HunterCtrl",
+        "method": "HuntingAttackAction",
+        "token": "0x06005C28",
+        "moduleOffset": "0x3416a40",
+        "nativeSizeBytes": 8016,
+        "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59"
+      },
+      {
+        "type": "EvilCtrl",
+        "method": "FixedUpdate",
+        "token": "0x06002FFE",
+        "moduleOffset": "0x2f290fc",
+        "nativeSizeBytes": 2936,
+        "bodySha256": "fdfcf59b9ff3a4a50f8a4414cc6b01734bb10242581735827794e4af18b814a4"
+      },
+      {
+        "type": "EvilCtrl",
+        "method": "UnitAttack",
+        "token": "0x0600300D",
+        "moduleOffset": "0x2f156ac",
+        "nativeSizeBytes": 44,
+        "bodySha256": "ec9f2a92603308602a0d1012f0191e65122fdd91f96b464925bcd86ac1519571"
+      }
+    ]
+  },
+  "confirmed": [
+    "Hunter weapons are Spine skin attachments composed into weapon-specific slots, not independent world sprites.",
+    "The packaged h1/h2/h3/h4/h5 weapon slots use attachment labels sword/hammer/bow/wand/spear respectively.",
+    "Basic Hunter attacks expose explicit front/back animation pairs; the selected job family slot is opaque while other base weapon slots are transparent.",
+    "mon_a_01_1 uses explicit walk/walk_b and atk/atk_b clips; back clips switch body attachments to their _b variants while retaining the weapon attachment.",
+    "Native Hunter attack state owns target, attack timing, current-animation integer and attack-check fields.",
+    "Native Evil state owns the target Hunter, character transform, animation, and two stored Quaternion fields used inside FixedUpdate presentation branches."
+  ],
+  "unresolved": [
+    "Exact GearDefinition index to Spine weapon skin name mapping.",
+    "Exact HunterData job/subjob values to h1/h1a/h2/h3/h4/h5 attack selection branches.",
+    "Exact semantic meaning of the two EvilCtrl Quaternion fields and the obfuscated helper that selects/stores facing.",
+    "Exact native moment at which damage lands relative to the Spine clip timeline.",
+    "Whether every monster prefab uses explicit _b clips or some families mirror scale instead."
+  ]
+}

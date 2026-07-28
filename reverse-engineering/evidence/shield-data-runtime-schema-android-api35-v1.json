@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T06:49:16.242319Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 21989,
+    "action": "Capture ShieldData field and method schema from guest tutorial runtime; no managed object values or account data read.",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "ShieldData"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "ShieldData"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "ShieldData",
+          "token": 33554917,
+          "fields": [
+            {
+              "name": "MaxShield",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 16,
+              "flags": 6
+            },
+            {
+              "name": "CurrentShield",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 48,
+              "flags": 6
+            }
+          ],
+          "methods": [
+            {
+              "name": "BNDNPPCODFA",
+              "token": 100674046,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IAODHDOINGO",
+              "token": 100674047,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MLLMCPGLDFK",
+              "token": 100674048,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Clone",
+              "token": 100674049,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EPDOGDDLHEF",
+              "token": 100674050,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DEPKHHPFGCB",
+              "token": 100674051,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AJDOEEHLDON",
+              "token": 100674052,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BNOEIAADOIN",
+              "token": 100674053,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JJEPNJEOEIJ",
+              "token": 100674054,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100674055,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DMNACPIDLMG",
+              "token": 100674056,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HHNCHNLHJEJ",
+              "token": 100674057,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IENDEIEJDND",
+              "token": 100674058,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FGEJKCHKCHP",
+              "token": 100674059,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FAMMBDJAIHP",
+              "token": 100674060,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NHJMNDGMDLA",
+              "token": 100674061,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HBLLGBCBCLI",
+              "token": 100674062,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NCEJAAMHCDE",
+              "token": 100674063,
+              "returnType": "System.Object",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

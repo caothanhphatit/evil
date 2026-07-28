@@ -28,7 +28,26 @@ function releaseFixture(): VisibleWorldRelease {
     runtimeDiagnostics: { fixture: true, unresolved: ["starter-skins"] },
     map: { ...asset("/content/releases/visible-world-v1/maps/map_new01.png"), runtimeUse: "migration-fixture", evidence: { note: "candidate" } },
     fieldMap: asset("/content/releases/visible-world-v1/maps/map_new01.png"),
-    village: { bindingState: "partial-scene-derived", completeness: "partial", tiles: [], foreground: [], decorations: [] },
+    village: {
+      bindingState: "partial-scene-derived",
+      completeness: "partial",
+      tiles: [],
+      foreground: [],
+      decorations: [],
+      signboards: ["sign_01", "sign_02", "sign_03"].map((sceneObject, index) => ({
+        regionId: ["map_new01", "background_08", "background_11"][index]!,
+        sceneObject: sceneObject as "sign_01" | "sign_02" | "sign_03",
+        x: index,
+        y: index,
+        z: 486,
+        colliderRadius: 0.26,
+        states: [1, 2, 3].map((densityLevel) => ({
+          densityLevel,
+          ...asset(`/content/releases/visible-world-v1/village/signboards/${sceneObject}/${densityLevel}.png`),
+        })),
+        evidence: { resolution: "resolved", confidence: "confirmed", source: "scene" },
+      })),
+    },
     actors: families.map((family) => ({
       family,
       runtimeUse: "migration-fixture" as const,

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T10:51:31.190727Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 31965,
+    "action": "Resolve exact action targets for proven Hunter skill coefficient families; no gameplay values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [
+      "0x2c572b0",
+      "0x3024e00"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 12000,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73b5a0c000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 12000,
+      "exactBoundaries": true,
+      "requested": [],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [
+        "0x2c572b0",
+        "0x3024e00"
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "FlameExplosionCtrl",
+          "methodName": "Action",
+          "parameterCount": 6,
+          "parameterTypes": [
+            "System.String",
+            "System.Int32",
+            "System.String",
+            "System.Int64",
+            "System.Int32",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100664470,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73b86632b0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2c572b0",
+              "codeHex": "fe0f1af8fc6f01a9fa6702a9f85f03a9f65704a9f44f05a97cbb01b03b9e01f03a9e01f088a758397be340f95ad740f9f403062af503052af60304aaf70303aaf803022af90301aaf30300aae8010037209e01f000d440f97504dc97209e01f000e040f97204dc97009e01f000b843f96f04dc97609e01b000e844f96c04dc972800805288a71839600340f9792600f978e200b9777e00f9767600f975f200b9f204dc97410340f9f50300aac9844a94601640f9752a00f9e00800b4769e01b0e2031faad6ea44f9c10240f9a900b894601640f9000800b4159e01f0e103142ae2031faab5ba43f9a501b894a00240f9751e40f908e440b9480000359404dc97e00315aae1031faae2031faa3a9ab89460010036601e40f9e00500b4c10240f9e2031faa9300b894601e40f9400500b481060011e2031faa9101b894e00313aae1031faa858cb894600400b421008052e2031faa5b9bb89461aa40f9810000b4e00313aae2031faaa0a4b894e00313aa5ef9ff97e10300aae00313aae2031faa03a4b89461a640f960aa00f9810000b4e00313aae2031faa94a4b894e00313aa85faff97e10300aae00313aae2031faaf7a3b89460a600f9f44f45a9f65744a9f85f43a9fa6742a9fc6f41a9fe0746f8c0035fd6ab04dc97",
+              "nativeSizeBytes": 472,
+              "boundaryModuleOffset": "0x2c57488",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73b86632b0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2c572b0",
+              "codeHex": "fe0f1af8fc6f01a9fa6702a9f85f03a9f65704a9f44f05a97cbb01b03b9e01f03a9e01f088a758397be340f95ad740f9f403062af503052af60304aaf70303aaf803022af90301aaf30300aae8010037209e01f000d440f97504dc97209e01f000e040f97204dc97009e01f000b843f96f04dc97609e01b000e844f96c04dc972800805288a71839600340f9792600f978e200b9777e00f9767600f975f200b9f204dc97410340f9f50300aac9844a94601640f9752a00f9e00800b4769e01b0e2031faad6ea44f9c10240f9a900b894601640f9000800b4159e01f0e103142ae2031faab5ba43f9a501b894a00240f9751e40f908e440b9480000359404dc97e00315aae1031faae2031faa3a9ab89460010036601e40f9e00500b4c10240f9e2031faa9300b894601e40f9400500b481060011e2031faa9101b894e00313aae1031faa858cb894600400b421008052e2031faa5b9bb89461aa40f9810000b4e00313aae2031faaa0a4b894e00313aa5ef9ff97e10300aae00313aae2031faa03a4b89461a640f960aa00f9810000b4e00313aae2031faa94a4b894e00313aa85faff97e10300aae00313aae2031faaf7a3b89460a600f9f44f45a9f65744a9f85f43a9fa6742a9fc6f41a9fe0746f8c0035fd6ab04dc97",
+              "nativeSizeBytes": 472,
+              "boundaryModuleOffset": "0x2c57488",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "AreaCheckDistanceEffectCtrl",
+          "methodName": "Action",
+          "parameterCount": 8,
+          "parameterTypes": [
+            "System.String",
+            "System.Int32",
+            "System.Int64",
+            "System.Int32",
+            "System.Int32",
+            "System.String",
+            "System.Int32",
+            "System.Int32"
+          ],
+          "returnType": "System.Void",
+          "token": 100677479,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73b8a30e00",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3024e00",
+              "codeHex": "ff0302d1fd7b02a9fc6f03a9fa6704a9f85f05a9f65706a9f44f07a91d9d01b0dc7f01d0f38340b99ce340f9a8935c39f503072af60306aaf703052af803042af90303aafa03022afb0301aaf40300aa88010037c07f01d000d440f9a0cdcc97c07f01d000e040f99dcdcc97c07f01b0006043f99acdcc9728008052a8931c39e0031baae1031faa9fa200b9d91bd197809200f9e0031a2ae1031faab2cad09780420af8e8030091e00319aa81c20af8e1031faaf7cad097e00740ade003182ae1031faa80828c3c81828d3ca6cad09780860ea9e003172ae1031faaa2cad09780860fa9e00316aae1031faac11bd197808600f9e003152ae1031faa9acad097880340f9800611a9e00308aa03cecc97c87f01d0f50300aa08d540f9010140f9d84d3b94c87f01b0e1031faa086143f9951a00f9000140f9ae1bd19780b600f9e00314aae103132ae9feff97f44f47a9f65746a9f85f45a9fa6744a9fc6f43a9fd7b42a9ff030291c0035fd6",
+              "nativeSizeBytes": 364,
+              "boundaryModuleOffset": "0x3024f6c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73b8a30e00",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3024e00",
+              "codeHex": "ff0302d1fd7b02a9fc6f03a9fa6704a9f85f05a9f65706a9f44f07a91d9d01b0dc7f01d0f38340b99ce340f9a8935c39f503072af60306aaf703052af803042af90303aafa03022afb0301aaf40300aa88010037c07f01d000d440f9a0cdcc97c07f01d000e040f99dcdcc97c07f01b0006043f99acdcc9728008052a8931c39e0031baae1031faa9fa200b9d91bd197809200f9e0031a2ae1031faab2cad09780420af8e8030091e00319aa81c20af8e1031faaf7cad097e00740ade003182ae1031faa80828c3c81828d3ca6cad09780860ea9e003172ae1031faaa2cad09780860fa9e00316aae1031faac11bd197808600f9e003152ae1031faa9acad097880340f9800611a9e00308aa03cecc97c87f01d0f50300aa08d540f9010140f9d84d3b94c87f01b0e1031faa086143f9951a00f9000140f9ae1bd19780b600f9e00314aae103132ae9feff97f44f47a9f65746a9f85f45a9fa6744a9fc6f43a9fd7b42a9ff030291c0035fd6",
+              "nativeSizeBytes": 364,
+              "boundaryModuleOffset": "0x3024f6c",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

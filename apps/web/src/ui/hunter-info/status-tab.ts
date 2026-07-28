@@ -1,5 +1,5 @@
 import { hunterPercent } from "../hunter-roster";
-import { node, sourceImage, unavailable } from "./dom";
+import { node, sourceImage } from "./dom";
 import type { HunterInfoView } from "./model";
 
 const HUD = "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-status";
@@ -8,12 +8,12 @@ const STAT_ICONS = ["h_detail_ic_05__2429.png", "h_detail_ic_06__6625.png", "h_d
 
 export function renderStatusTab(info: HunterInfoView): HTMLElement {
   const root = node("section", "hunter-info-status-tab");
+  const primary = node("div", "hunter-status-primary");
   const summary = node("header", "hunter-status-summary");
   summary.append(node("b", "hunter-rarity", info.hunter.rarityName ?? "Rarity unavailable"));
   const levelClass = [info.hunter.level === null ? null : `Lv.${info.hunter.level}`, info.hunter.className ?? info.hunter.classFamily].filter(Boolean).join(" ");
   if (levelClass) summary.append(node("strong", "", levelClass));
-  if (info.dps !== null) summary.append(node("span", "hunter-dps", `DPS ${format(info.dps)}`));
-  root.append(summary);
+  primary.append(summary);
 
   const needs = node("div", "hunter-status-needs");
   const rows: Array<[string, number | null, number | null, string, string]> = [
@@ -23,8 +23,17 @@ export function renderStatusTab(info: HunterInfoView): HTMLElement {
     ["Stamina", info.hunter.stamina, info.hunter.maxStamina, "stamina", STATUS_ICONS[3]],
   ];
   for (const [label, current, maximum, kind, icon] of rows) needs.append(gauge(label, current, maximum, kind, `${HUD}/${icon}`));
-  root.append(needs);
+  primary.append(needs);
+  const awakening = info.awakening
+    ? `Awakening ${integer(info.awakening.current)}/${integer(info.awakening.maximum)}`
+    : "Awakening unavailable";
+  primary.append(node("div", `hunter-awakening${info.awakening ? "" : " unresolved"}`, awakening));
+  root.append(primary);
 
+  const combat = node("div", "hunter-status-combat");
+  const dps = node("header", `hunter-dps${info.dps === null ? " unresolved" : ""}`);
+  dps.append(node("span", "", "DPS"), node("b", "", info.dps === null ? "—" : format(info.dps)));
+  combat.append(dps);
   const values = node("div", "hunter-combat-values");
   const stats: Array<[string, number | null, string, (value: number) => string]> = [
     ["ATK", info.hunter.attack, STAT_ICONS[0], integer],
@@ -34,14 +43,12 @@ export function renderStatusTab(info: HunterInfoView): HTMLElement {
     ["Evasion", info.evasion, STAT_ICONS[4], percent],
   ];
   for (const [label, value, icon, formatter] of stats) {
-    if (value === null) continue;
-    const row = node("div", "hunter-combat-row");
-    row.append(sourceImage(`${HUD}/${icon}`), node("span", "", label), node("b", label === "ATK" ? "attack" : label === "DEF" ? "defense" : "", formatter(value)));
+    const row = node("div", `hunter-combat-row${value === null ? " unresolved" : ""}`);
+    row.append(sourceImage(`${HUD}/${icon}`), node("span", "", label), node("b", value === null ? "" : label === "ATK" ? "attack" : label === "DEF" ? "defense" : "", value === null ? "—" : formatter(value)));
     values.append(row);
   }
-  if (!values.childElementCount) values.append(unavailable("Combat values are unavailable for this Hunter."));
-  root.append(values);
-  if (info.awakening) root.append(node("div", "hunter-awakening", `Awakening ${integer(info.awakening.current)}/${integer(info.awakening.maximum)}`));
+  combat.append(values);
+  root.append(combat);
   return root;
 }
 

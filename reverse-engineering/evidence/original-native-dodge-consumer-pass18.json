@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-dodge-consumer-pass18",
+  "runtimeCompatibility": "evidence-backed-core-with-rebuild-total-evasion-projection",
+  "sources": [
+    {
+      "name": "consumers",
+      "path": "reverse-engineering/evidence/original-native-dodge-consumers-api35-pass18.json",
+      "sha256": "9b683797a87b810e582e71653e33cbffcf879b05095367420535de642900570a"
+    },
+    {
+      "name": "callers",
+      "path": "reverse-engineering/evidence/original-native-dodge-callers-api35-pass18.json",
+      "sha256": "0ddc2326bc3d1754889291f588149a84c6132568648c11413eb9a937defaad65"
+    },
+    {
+      "name": "producers",
+      "path": "reverse-engineering/evidence/original-native-dodge-status-producers-api35-pass18.json",
+      "sha256": "1f2a9f20cb1159e57579f2135d247106c68d751768abd6db4e3a106d170a6d05"
+    },
+    {
+      "name": "hunterSchema",
+      "path": "reverse-engineering/evidence/original-native-dodge-hunter-schema-api35-pass18.json",
+      "sha256": "64492ee80126e65ee20e781921ad04dfe706793fb8ac1b2a03c44f2f97ff57d4"
+    },
+    {
+      "name": "modeSchema",
+      "path": "reverse-engineering/evidence/original-native-dodge-mode-schema-api35-pass18.json",
+      "sha256": "068afe5d52b81198b13e641b5aed3ff78ac289e8146d8f55869c0af53c3f1e13"
+    },
+    {
+      "name": "statusSchema",
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    },
+    {
+      "name": "hunterDataSchema",
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    }
+  ],
+  "normalHunter": {
+    "method": {
+      "className": "HunterCtrl",
+      "methodName": "DGPHLIIAEFL",
+      "parameterCount": 0,
+      "token": 100686871,
+      "moduleOffset": "0x344d63c",
+      "nativeSizeBytes": 332,
+      "bodySha256": "e03428d8b9d48266d8ac67c11b1743f7af511aac290d6b639296ef1bc0bbfdbe"
+    },
+    "formula": "if IsMezeState then false; otherwise primaryRoll[0,100) < wrapping_i32(CalcDodge + effectType5Bonus), else petRoll[0,1000) < RidingPetDodge",
+    "comparison": "signed exclusive less-than",
+    "rngConsumption": "meze consumes no roll; primary success skips the pet roll",
+    "thresholdClamping": "none in this method",
+    "presentationOnSuccess": {
+      "nativeType": 3,
+      "identity": "Evade"
+    },
+    "fields": {
+      "calcDodge": "StatusData.<CalcDodge>k__BackingField@0xC0",
+      "effectType5Bonus": "HunterCtrl.EFPJBDACDNH@0x728",
+      "ridingPetDodge": "StatusData.RidingPetDodge@0x6C4"
+    },
+    "callers": [
+      "HunterCtrl.Damaged/2 exits the damage routine when true",
+      "HunterCtrl.EvilDeBuffAction/3 applies this only on the internal value-51 branch and exits that debuff path when true"
+    ]
+  },
+  "producer": {
+    "method": {
+      "className": "StatusData",
+      "methodName": "CEOBAMNDIIL",
+      "parameterCount": 0,
+      "token": 100670735,
+      "moduleOffset": "0x2d67db0",
+      "nativeSizeBytes": 564,
+      "bodySha256": "aa8adf9ff1bc9062ed46b93828c75d87e10d47712cb57b4f0436c08aa3a3dab1"
+    },
+    "rawDodge": "HunterData.dodge + OptionDodge + PersonalDodge + RankDodge + GUP_Property[8]",
+    "storage": "StatusData.Dodge receives rawDodge, is replaced with 0 when Dodge <= 0, then StatusData.CalcDodge receives banker-round-to-i32(Dodge)",
+    "inputFields": {
+      "HunterData.dodge": 612,
+      "StatusData.OptionDodge": 812,
+      "StatusData.PersonalDodge": 984,
+      "StatusData.RankDodge": 1996,
+      "StatusData.GUP_Property": 1888,
+      "StatusData.Dodge": 488,
+      "StatusData.CalcDodge": 192
+    },
+    "commonWrappers": [
+      "PCJKOECDDJO",
+      "NFGEIMNPBNM",
+      "KCKPLIMMKFP",
+      "GHLJIGIKKDI",
+      "FMJMKNBDIEP overloads"
+    ],
+    "alternateProducerBoundary": "PFIONPOHHJK uses GUP_Property[7] and unresolved runtime constants; its only direct wrapper is IEBHFGJHELH(String,Boolean), so it is not treated as the common village formula."
+  },
+  "modeVariants": {
+    "raid": {
+      "method": {
+        "className": "RaidHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 0,
+        "token": 100687364,
+        "moduleOffset": "0x25076c8",
+        "nativeSizeBytes": 328,
+        "bodySha256": "b3ea120ab300e552e40062ee39a8a7f024067def3f8c01f3e3dd4bc87cf1c728"
+      },
+      "formula": "same normal flow with plain RaidHunterCtrl.EFPJBDACDNH@0x298",
+      "caller": "RaidHunterCtrl.Damaged/3"
+    },
+    "worldBoss": {
+      "method": {
+        "className": "WorldBossHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 0,
+        "token": 100669235,
+        "moduleOffset": "0x2cc247c",
+        "nativeSizeBytes": 404,
+        "bodySha256": "24ebf1c627ccf5c0aa47124ba81c8eb4d8b432811018db08d144d67b1a56c01e"
+      },
+      "formula": "threshold=max(EFPJBDACDNH + CalcDodge - decode(NDJAJDFKPFF) - trunc(PANOJKHNLEM), 0); primaryRoll[0,101) < threshold; same pet fallback",
+      "callers": [
+        "WorldBossHunterCtrl.ForcedDamaged/2",
+        "WorldBossHunterCtrl.Damaged/2"
+      ],
+      "unresolvedFields": [
+        "PANOJKHNLEM public semantics/writers",
+        "NDJAJDFKPFF public semantics/writers"
+      ]
+    },
+    "fallenPasture": {
+      "method": {
+        "className": "FallenPastureHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2,
+        "token": 100697041,
+        "moduleOffset": "0x29da38c",
+        "nativeSizeBytes": 416,
+        "bodySha256": "bb63212d6c10068cd54ddfb64d23db9ac1e19d52f6a15e365bd7380769008532"
+      },
+      "formula": "threshold=CalcDodge + plain field@0x390 - decode(field@0x3E8); primary [0,100), same pet fallback",
+      "callerStatus": "no direct BL caller found in the captured Assembly-CSharp method index; likely dispatch remains unresolved"
+    },
+    "guildBattle": {
+      "method": {
+        "className": "GuildBattleHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2,
+        "token": 100689844,
+        "moduleOffset": "0x266a158",
+        "nativeSizeBytes": 608,
+        "bodySha256": "4c13a251c22619929436a454c3fdcc51e781180bf03746c1c4ea8296fee87b35"
+      },
+      "formula": "threshold=PvPStatusData field@0xA8 + EFPJBDACDNH@0x2B0 - HDPCCGIDEIL@0x4A0, with an optional opponent-owned subtraction; primary [0,100), pet fallback uses PvPStatusData@0x630",
+      "callers": [
+        "Damaged/7",
+        "ForcedDamaged/5",
+        "FCFGHENGPME/5"
+      ]
+    },
+    "pvp": {
+      "method": {
+        "className": "PvPHunterCtrl",
+        "methodName": "DGPHLIIAEFL",
+        "parameterCount": 2,
+        "token": 100681683,
+        "moduleOffset": "0x321c0bc",
+        "nativeSizeBytes": 588,
+        "bodySha256": "e55db9328a0ffd630bc20f152ab9e63c7197c0e3ab06a9fe6c6079c208da50b9"
+      },
+      "formula": "same structural PvP threshold using StatusData@0x950, plain field@0x390, own subtraction@0x3E8, optional opponent subtraction, and pet fallback@0x630",
+      "callerStatus": "no direct BL caller found in the captured Assembly-CSharp method index; likely dispatch remains unresolved"
+    }
+  },
+  "effectType5Writer": {
+    "method": {
+      "className": "HunterCtrl",
+      "methodName": "BuffSetting",
+      "parameterCount": 4,
+      "token": 100686983,
+      "moduleOffset": "0x345f700",
+      "nativeSizeBytes": 12656,
+      "bodySha256": "a004d1f071b078d65e38851a2cbbf16ac43b58a2b57bbb7696bb7a36d36f9b85"
+    },
+    "proof": "BuffSetting effectType==5 converts the branch payload at +0x1C to ObscuredInt and stores it in HunterCtrl@0x728",
+    "publicName": null
+  },
+  "callerMethods": [
+    {
+      "className": "HunterCtrl",
+      "methodName": "Damaged",
+      "parameterCount": 2,
+      "token": 100687018,
+      "moduleOffset": "0x346514c",
+      "nativeSizeBytes": 18964,
+      "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6"
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "EvilDeBuffAction",
+      "parameterCount": 3,
+      "token": 100686895,
+      "moduleOffset": "0x3454bbc",
+      "nativeSizeBytes": 640,
+      "bodySha256": "530bd80cb9fcd38966ac5d7388ad5180f017d17caf55dbcab30c5ddf2a8a68a6"
+    },
+    {
+      "className": "RaidHunterCtrl",
+      "methodName": "Damaged",
+      "parameterCount": 3,
+      "token": 100687361,
+      "moduleOffset": "0x250312c",
+      "nativeSizeBytes": 13236,
+      "bodySha256": "5c71cbadd0bf79dec61ac79e990cbaecf9293dbbd86d8bf992efec0fde8001c0"
+    },
+    {
+      "className": "WorldBossHunterCtrl",
+      "methodName": "ForcedDamaged",
+      "parameterCount": 2,
+      "token": 100669176,
+      "moduleOffset": "0x2cc0bbc",
+      "nativeSizeBytes": 2524,
+      "bodySha256": "efd16945b4d8d511bfa3ea607f40d1d9e9136df6a34b0334ae7219449e1b2dd0"
+    },
+    {
+      "className": "WorldBossHunterCtrl",
+      "methodName": "Damaged",
+      "parameterCount": 2,
+      "token": 100669288,
+      "moduleOffset": "0x2cdd414",
+      "nativeSizeBytes": 11752,
+      "bodySha256": "8370461b96b3dbbe5d1e75e6db6112809cde442ff1ff4eaf12a7e3d04b00da6d"
+    },
+    {
+      "className": "GuildBattleHunterCtrl",
+      "methodName": "Damaged",
+      "parameterCount": 7,
+      "token": 100689952,
+      "moduleOffset": "0x2656244",
+      "nativeSizeBytes": 13756,
+      "bodySha256": "5c868a3d016efdaedfbc84a503154e08a464f3b2cc3c5d6a1f769b1ae2b544a7"
+    },
+    {
+      "className": "GuildBattleHunterCtrl",
+      "methodName": "ForcedDamaged",
+      "parameterCount": 5,
+      "token": 100689811,
+      "moduleOffset": "0x26689d4",
+      "nativeSizeBytes": 2804,
+      "bodySha256": "9a5e64b6b3ac4ddea2abca2489e1fb9f585205a2dc1ca17ed1a7e6d830740c5b"
+    },
+    {
+      "className": "GuildBattleHunterCtrl",
+      "methodName": "FCFGHENGPME",
+      "parameterCount": 5,
+      "token": 100689815,
+      "moduleOffset": "0x266c358",
+      "nativeSizeBytes": 2972,
+      "bodySha256": "788557d72f4c676c30062cbdd57fbf80d1e8849075fe6c3821c33e633bdee656"
+    }
+  ],
+  "integrationBoundary": {
+    "coreStatus": "normal Hunter resolver and contribution calculator preserve the recovered threshold arithmetic",
+    "liveStatus": "the rebuild treats profile.evasion_rate_bps as total evasion, rounds it to CalcDodge, and uses a deterministic uniform roll with the recovered bounds; missing named sources, effect type 5, and riding-pet dodge are zero",
+    "unresolved": [
+      "public name of effect type 5",
+      "public name of EvilDeBuffAction internal value 51",
+      "World Boss subtractor writers/semantics",
+      "PvP/Guild opponent nested-field semantics",
+      "Fallen Pasture and PvP indirect caller dispatch",
+      "UnityEngine.Random internal PRNG sequence"
+    ]
+  }
+}

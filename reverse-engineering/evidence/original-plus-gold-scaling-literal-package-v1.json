@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-plus-gold-scaling-literal-package-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "path": "game-assets/source/Evil+Hunter+Tycoon_1.411_APKPure.xapk",
+    "sha256": "69c74073dbe3fc67d7b228a6f9fe5ad34f352f7faa3552a1500fc76b731015c3"
+  },
+  "arm64Split": {
+    "entry": "config.arm64_v8a.apk",
+    "bytes": 135956550,
+    "sha256": "f4aa492ea7be9944c71251e7abbfde14f2dc9cb8e08a2bfe4b3416c46fea1398"
+  },
+  "nativeLibrary": {
+    "entry": "lib/arm64-v8a/libil2cpp.so",
+    "bytes": 104557288,
+    "sha256": "7ca72697375e87703f03867ccfcf8d7ddec1e5cca8b9cd9de4736b666cd8390f"
+  },
+  "literal": {
+    "fileOffset": "0xD2B404",
+    "littleEndianBytes": "9a99993e",
+    "type": "float32",
+    "value": 0.3,
+    "consumer": "HunterCtrl.PlusGold"
+  },
+  "reproduction": "Extract config.arm64_v8a.apk from the XAPK, extract lib/arm64-v8a/libil2cpp.so from the split APK, then read four bytes at file offset 0xD2B404."
+}

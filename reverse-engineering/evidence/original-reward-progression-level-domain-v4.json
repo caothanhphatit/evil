@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 4,
+  "contractType": "original-reward-progression-level-domain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "plus-exp-max-level-static",
+      "path": "reverse-engineering/evidence/original-plus-exp-max-level-static-api35-v1.json",
+      "bytes": 1459,
+      "sha256": "5588c14e628bb2b2b7862989f9a691cc408cb964bf6d70ce446977b4545781ee"
+    },
+    {
+      "id": "hunter-info-runtime-schema-api35",
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "bytes": 670307,
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    }
+  ],
+  "maxLevel": {
+    "decodedValue": 99,
+    "storedLevelSemantics": "HunterData.level is displayed as stored level + 1 by the PlusExp level-up presentation path",
+    "comparison": "current stored HunterData.level >= 99 discards incoming EXP",
+    "maximumDisplayedValueObservedOnThisPath": 100,
+    "validGetNeedExpCurrentLevels": "0..98 before the cap branch",
+    "packagedRowLookup": "currentLevel + 1, therefore rows 1..99",
+    "rowZeroUsage": "not used by this PlusExp/GetNeedExp path"
+  },
+  "secondaryProgressionBranch": {
+    "formula": "revive == 5 && hunterLevel == 99 && stageLevel >= 6 ? (stageLevel == 6 ? 100 : 125) : 75",
+    "schemaBindings": {
+      "UserData": {
+        "<mStageLevel>k__BackingField": 1496,
+        "<mBuildingSoulUp>k__BackingField": 2480
+      },
+      "HunterData": {
+        "<level>k__BackingField": 136,
+        "<revive>k__BackingField": 196
+      }
+    },
+    "vectors": [
+      {
+        "stageLevel": 4,
+        "revive": 5,
+        "hunterLevel": 99,
+        "expected": 75
+      },
+      {
+        "stageLevel": 5,
+        "revive": 5,
+        "hunterLevel": 99,
+        "expected": 75
+      },
+      {
+        "stageLevel": 6,
+        "revive": 4,
+        "hunterLevel": 99,
+        "expected": 75
+      },
+      {
+        "stageLevel": 6,
+        "revive": 5,
+        "hunterLevel": 98,
+        "expected": 75
+      },
+      {
+        "stageLevel": 6,
+        "revive": 5,
+        "hunterLevel": 99,
+        "expected": 100
+      },
+      {
+        "stageLevel": 7,
+        "revive": 5,
+        "hunterLevel": 99,
+        "expected": 125
+      }
+    ],
+    "interpretation": "This 75/100/125 result is separate from the max-level comparison and flows into code that reads mBuildingSoulUp; it is not a Hunter level cap."
+  },
+  "remainingOperandBindings": {
+    "resolved": [
+      "UserData.mStageLevel",
+      "UserData.mBuildingSoulUp",
+      "HunterData.revive",
+      "HunterData.level",
+      "static max-level ObscuredInt = 99"
+    ],
+    "unresolved": [
+      "Product-facing semantic name of the static max-level holder",
+      "Remaining unnamed singleton/static EXP additions",
+      "Remaining fairy/pet/event gold operands and exact semantic order"
+    ]
+  }
+}

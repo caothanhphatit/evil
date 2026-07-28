@@ -1,0 +1,2594 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-skill-use-runtime-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/hunter-info-tables-v1.json",
+      "sha256": "614723e5a080510ca4e39bd6bd3b7c8717f00bcd8d89b7b0b4f0f9001b08c9c7"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-domain-runtime-schema-android-api30-v1.json",
+      "sha256": "9e35b239ab0ccf70cc9182db1d97f1f525f7d7e61b4094f4883821dfdc4ad558"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-ai-runtime-v1.json",
+      "sha256": "f06a688207505df505362946d851917a7eaaa05836e9cfa367ccf22df46ed809"
+    },
+    {
+      "path": "apps/web/public/content/releases/visible-world-v1/actors/hunter/hunter.json",
+      "sha256": "ca33c98ded10d455d6e460b5c3a843906976c00e7de4f062778a4130262e3689"
+    },
+    {
+      "path": "game-assets/manifests/original-flow-v1.selection.json",
+      "sha256": "b245cdb6d5ac403c108db8e885e5148c30f123868189870fb84f8dc5b75c86c6"
+    },
+    {
+      "path": "game-assets/extracted/exported/sprites/atk_ranger__3599.png",
+      "sha256": "18a668a989bb3d83565c6050fcc88570ccf9dcfca1da7fca1cc8f18f7810d478"
+    },
+    {
+      "path": "game-assets/extracted/exported/sprites/atk_sorcerer__4256.png",
+      "sha256": "fea3bb04688bb2907e24461b73607c4cd3782a2d1e76b7ee62a69568b1465e2e"
+    }
+  ],
+  "catalog": {
+    "basicSkills": [
+      {
+        "index": 0,
+        "job": 0,
+        "maxLevel": 10,
+        "coolTime": 15.0,
+        "keepTimeByLevel": [
+          10.0,
+          11.0,
+          11.0,
+          12.0,
+          12.0,
+          13.0,
+          13.0,
+          14.0,
+          14.0,
+          15.0,
+          15.0,
+          16.0,
+          16.0
+        ],
+        "keepValueByLevel": [
+          238,
+          256,
+          274,
+          292,
+          310,
+          328,
+          346,
+          364,
+          382,
+          400,
+          418,
+          436,
+          454
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90,
+          100,
+          110,
+          120,
+          130
+        ],
+        "studyLevel": [
+          1,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "studyMoney": [
+          0,
+          250,
+          500,
+          750,
+          1500,
+          2250,
+          4500,
+          6750,
+          13500,
+          20250
+        ],
+        "nameEn": "Fury",
+        "nameVi": "Cu\u1ed3ng N\u1ed9",
+        "descriptionEn": "Attacks quickly for a certain time and increases Attack Speed.",
+        "detailDescriptionEn": "Attack Speed increases by <color=#46CCFF>keepValueTimes</color> for <color=#46CCFF>keepTImeSecs</color>, and normal attack's damage increases by <color=#46CCFF>valueCount%</color>."
+      },
+      {
+        "index": 1,
+        "job": 0,
+        "maxLevel": 5,
+        "coolTime": 16.0,
+        "keepTimeByLevel": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "keepValueByLevel": [
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "valueTimeByLevel": [
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          20,
+          40,
+          60,
+          80
+        ],
+        "studyMoney": [
+          0,
+          750,
+          2250,
+          6750,
+          20250
+        ],
+        "nameEn": "War Cry",
+        "nameVi": "Th\u00e9t X\u00f4ng Tr\u1eadn",
+        "descriptionEn": "Charge to enemy and Stun it.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTImeSecs</color>, when attacking, Hunter charge towards enemy by <color=#46CCFF>keepValue%</color> chance, and stun enemy for <color=#46CCFF>valueTimeSecs</color>"
+      },
+      {
+        "index": 2,
+        "job": 1,
+        "maxLevel": 10,
+        "coolTime": 8.0,
+        "keepTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "keepValueByLevel": [
+          430,
+          560,
+          690,
+          820,
+          950,
+          1080,
+          1210,
+          1340,
+          1470,
+          1600,
+          1730,
+          1860,
+          1990
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "studyMoney": [
+          0,
+          250,
+          500,
+          750,
+          1500,
+          2250,
+          4500,
+          6750,
+          13500,
+          20250
+        ],
+        "nameEn": "Holy Light",
+        "nameVi": "\u00c1nh S\u00e1ng Th\u1ea7n",
+        "descriptionEn": "Hits and provokes nearby enemies with holy power.",
+        "detailDescriptionEn": "AOE attack that inflicts <color=#46CCFF>keepValue%</color> DPS"
+      },
+      {
+        "index": 3,
+        "job": 1,
+        "maxLevel": 5,
+        "coolTime": 16.0,
+        "keepTimeByLevel": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "keepValueByLevel": [
+          36,
+          42,
+          48,
+          54,
+          60
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          20,
+          40,
+          60,
+          80
+        ],
+        "studyMoney": [
+          0,
+          750,
+          2250,
+          6750,
+          20250
+        ],
+        "nameEn": "Barrier",
+        "nameVi": "L\u00e1 Ch\u1eafn",
+        "descriptionEn": "Defends against enemy attacks by summoning a barrier.",
+        "detailDescriptionEn": "Increases DEF by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTIme secs</color>"
+      },
+      {
+        "index": 4,
+        "job": 2,
+        "maxLevel": 10,
+        "coolTime": 6.0,
+        "keepTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "keepValueByLevel": [
+          143,
+          140,
+          138,
+          137,
+          136,
+          136,
+          135,
+          135,
+          134,
+          134,
+          133,
+          133,
+          132
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "studyLevel": [
+          1,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "studyMoney": [
+          0,
+          250,
+          500,
+          750,
+          1500,
+          2250,
+          4500,
+          6750,
+          13500,
+          20250
+        ],
+        "nameEn": "Multishot",
+        "nameVi": "Li\u00ean Thanh",
+        "descriptionEn": "Rapidly shoots multiple arrows.",
+        "detailDescriptionEn": "Fires <color=#46CCFF>valueCount times</color> and inflicts DPS x<color=#46CCFF>keepValue%</color> damage"
+      },
+      {
+        "index": 5,
+        "job": 2,
+        "maxLevel": 5,
+        "coolTime": 16.0,
+        "keepTimeByLevel": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "keepValueByLevel": [
+          20,
+          23,
+          26,
+          29,
+          32
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          20,
+          40,
+          60,
+          80
+        ],
+        "studyMoney": [
+          0,
+          750,
+          2250,
+          6750,
+          20250
+        ],
+        "nameEn": "Dodge",
+        "nameVi": "Tr\u00e1nh N\u00e9",
+        "descriptionEn": "Increases Evasion for a certain time.",
+        "detailDescriptionEn": "Increases evasion by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTIme secs</color>"
+      },
+      {
+        "index": 6,
+        "job": 3,
+        "maxLevel": 10,
+        "coolTime": 6.0,
+        "keepTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "keepValueByLevel": [
+          300,
+          400,
+          250,
+          300,
+          234,
+          267,
+          225,
+          250,
+          220,
+          240,
+          217,
+          234,
+          215
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7
+        ],
+        "studyLevel": [
+          1,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "studyMoney": [
+          0,
+          250,
+          500,
+          750,
+          1500,
+          2250,
+          4500,
+          6750,
+          13500,
+          20250
+        ],
+        "nameEn": "Thunderbolt",
+        "nameVi": "L\u00f4i Ti\u1ec5n",
+        "descriptionEn": "Lightning inflicts damage to nearby enemies.",
+        "detailDescriptionEn": "AOE attack that inflicts <color=#46CCFF>keepValue%</color> DPS <color=#46CCFF>valueCount time(s)</color>"
+      },
+      {
+        "index": 7,
+        "job": 3,
+        "maxLevel": 5,
+        "coolTime": 16.0,
+        "keepTimeByLevel": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "keepValueByLevel": [
+          30,
+          35,
+          40,
+          45,
+          50
+        ],
+        "valueTimeByLevel": [
+          5.0,
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          20,
+          40,
+          60,
+          80
+        ],
+        "studyMoney": [
+          0,
+          750,
+          2250,
+          6750,
+          20250
+        ],
+        "nameEn": "Ice Armor",
+        "nameVi": "Gi\u00e1p B\u0103ng",
+        "descriptionEn": "Enemy who attacked hunter will lose ATK SPD.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTImeSecs</color> when Hunter is attacked, Enemy's ATK Speed decreases for <color=#46CCFF>valueTimeSecs</color> by <color=#46CCFF>keepValue%</color>."
+      },
+      {
+        "index": 8,
+        "job": 4,
+        "maxLevel": 10,
+        "coolTime": 6.0,
+        "keepTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "keepValueByLevel": [
+          300,
+          400,
+          500,
+          600,
+          700,
+          800,
+          900,
+          1000,
+          1100,
+          1200,
+          1300,
+          1400,
+          1500
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "studyMoney": [
+          0,
+          250,
+          500,
+          750,
+          1500,
+          2250,
+          4500,
+          6750,
+          13500,
+          20250
+        ],
+        "nameEn": "Round Slash",
+        "nameVi": "Ch\u00e9m V\u00f2ng Cung",
+        "descriptionEn": "Swing the spear horizontally to release energy, dealing damage to enemies nearby.",
+        "detailDescriptionEn": "Cast an AoE attack with damage equal to <color=#46CCFF>keepValue%</color> of the caster's DPS"
+      },
+      {
+        "index": 9,
+        "job": 4,
+        "maxLevel": 5,
+        "coolTime": 16.0,
+        "keepTimeByLevel": [
+          7.0,
+          7.0,
+          7.0,
+          7.0,
+          7.0
+        ],
+        "keepValueByLevel": [
+          12,
+          14,
+          16,
+          18,
+          20
+        ],
+        "valueTimeByLevel": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "valueCountByLevel": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "studyLevel": [
+          1,
+          20,
+          40,
+          60,
+          80
+        ],
+        "studyMoney": [
+          0,
+          750,
+          2250,
+          6750,
+          20250
+        ],
+        "nameEn": "Concentrate",
+        "nameVi": "T\u1eadp Trung",
+        "descriptionEn": "Concentrate to increase the chance of dealing a critical strike to the enemy.",
+        "detailDescriptionEn": "The caster's critical hit chance increases by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTIme sec</color>"
+      }
+    ],
+    "subJobSkills": [
+      {
+        "index": 100,
+        "job": 0,
+        "subJob": 1,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 30.700000762939453,
+        "upKeepValue": 1.7000000476837158,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Dual Weapon",
+        "nameVi": "V\u0169 Kh\u00ed \u0110\u00f4i",
+        "descriptionEn": "Can attack with Weapons on both hands.",
+        "detailDescriptionEn": "Attack enemy with additional attack. Additional attack deals <color=#46CCFF>keepValue%</color> of current damage."
+      },
+      {
+        "index": 101,
+        "job": 0,
+        "subJob": 2,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 950.0,
+        "upKeepValue": 50.0,
+        "secondValue": 62.0,
+        "upSecondValue": 2.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Death Coil",
+        "nameVi": "Death Coil",
+        "descriptionEn": "After attacking an enemy, recover own HP.",
+        "detailDescriptionEn": "Attacks enemy with <color=#46CCFF>keepValue%</color> of DPS that ignores dodge, and recovers own HP <color=#46CCFF>secondValue%</color> damage dealt."
+      },
+      {
+        "index": 102,
+        "job": 1,
+        "subJob": 1,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 3.0999999046325684,
+        "upKeepTime": 0.10000000149011612,
+        "keepValue": 6.199999809265137,
+        "upKeepValue": 0.20000000298023224,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 3.0999999046325684,
+        "upValueTime": 0.10000000149011612,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Blessing",
+        "nameVi": "Ban Ph\u01b0\u1edbc",
+        "descriptionEn": "Heal own HP and becomes immune to status effect skills.",
+        "detailDescriptionEn": "Recovers own HP by <color=#46CCFF>keepValue%</color> and becomes immune to status effect skills for <color=#46CCFF>keepTimeSecs</color> seconds"
+      },
+      {
+        "index": 103,
+        "job": 1,
+        "subJob": 2,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 9.699999809265137,
+        "upKeepValue": 0.699999988079071,
+        "secondValue": 25.200000762939453,
+        "upSecondValue": 1.2000000476837158,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Silver Weapon",
+        "nameVi": "V\u0169 Kh\u00ed B\u1ea1c",
+        "descriptionEn": "Gives Weapon Divine attribute, and enhance Holy Light.",
+        "detailDescriptionEn": "Amplify own ATK by <color=#46CCFF>keepValue%</color>, and attack twice after using Holy Light (Additonal attack deals <color=#46CCFF>secondValue%</color> of ATK)"
+      },
+      {
+        "index": 104,
+        "job": 2,
+        "subJob": 1,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 176.0,
+        "upKeepValue": 6.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 5,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Rain Fall",
+        "nameVi": "M\u01b0a Ti\u1ec5n",
+        "descriptionEn": "Attacks enemies within the range with Arrows falling from the sky.",
+        "detailDescriptionEn": "Attacks enemies within the range with <color=#46CCFF>keepValue%</color> of DPS <color=#46CCFF>valueCountTimes</color> times"
+      },
+      {
+        "index": 105,
+        "job": 2,
+        "subJob": 2,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 1055.0,
+        "upKeepValue": 55.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 2.5,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Sniping",
+        "nameVi": "B\u1eafn T\u1ec9a",
+        "descriptionEn": "Attacks enemy with very powerful shot.",
+        "detailDescriptionEn": "Attacks the enemy with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS. The attack ignores the enemy's evasion and stuns them for <color=#46CCFF>valueTime sec</color>."
+      },
+      {
+        "index": 106,
+        "job": 3,
+        "subJob": 1,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 247.0,
+        "upKeepValue": 7.0,
+        "secondValue": 50.0,
+        "upSecondValue": 0.0,
+        "valueTime": 3.0,
+        "upValueTime": 0.0,
+        "valueCount": 3,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Blizzard",
+        "nameVi": "B\u00e3o Tuy\u1ebft",
+        "descriptionEn": "Attacks enemies within the range with Ice falling from the sky.",
+        "detailDescriptionEn": "Attack enemies within the range with <color=#46CCFF>keepValue%</color> DPS <color=#46CCFF>valueCountTimes</color> times. Attacked enemies\u2019 attack speed decreases by <color=#46CCFF> secondValue%</color> for <color=#46CCFF>valueTimeSecs</color> seconds"
+      },
+      {
+        "index": 107,
+        "job": 3,
+        "subJob": 2,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 1.0,
+        "upKeepTime": 0.0,
+        "keepValue": 950.0,
+        "upKeepValue": 50.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 2.0799999237060547,
+        "upValueTime": 0.07999999821186066,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Stone Curse",
+        "nameVi": "\u0110\u00e1 Nguy\u1ec1n R\u1ee7a",
+        "descriptionEn": "Attacks enemy and petrifies enemy for a moment.",
+        "detailDescriptionEn": "Attacks the enemy with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS. The attack ignores the enemy's evasion and petrifies them for <color=#46CCFF>valueTime sec</color>."
+      },
+      {
+        "index": 108,
+        "job": 0,
+        "subJob": 1,
+        "thirdJob": 1,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 10.0,
+        "upKeepTime": 0.0,
+        "keepValue": 13.399999618530273,
+        "upKeepValue": 0.4000000059604645,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 10.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Battle Shout",
+        "nameVi": "Battle Shout",
+        "descriptionEn": "Amplifies the ATK of nearby Allies with a shout.",
+        "detailDescriptionEn": "ATK of nearby Allies is amplified by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTimeSec(s)</color>. (not duplicated)"
+      },
+      {
+        "index": 109,
+        "job": 0,
+        "subJob": 2,
+        "thirdJob": 2,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 15.199999809265137,
+        "upKeepValue": 1.2000000476837158,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Aura Blade",
+        "nameVi": "Aura Blade",
+        "descriptionEn": "Attacks from a distance by giving one's own weapon an aura.",
+        "detailDescriptionEn": "Basic attack changes to a ranged attack and there's a <color=#46CCFF>keepValue%</color> chance of attacking the enemy while ignoring the enemy's DEF and Evasion."
+      },
+      {
+        "index": 110,
+        "job": 1,
+        "subJob": 1,
+        "thirdJob": 1,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 10.0,
+        "upKeepTime": 0.0,
+        "keepValue": 13.399999618530273,
+        "upKeepValue": 0.4000000059604645,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 10.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Defensive Aura",
+        "nameVi": "Defensive Aura",
+        "descriptionEn": "Reduces damage received by nearby allies.",
+        "detailDescriptionEn": "Reduces damage taken by nearby Allies by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTimeSec(s)</color> (not duplicated)"
+      },
+      {
+        "index": 111,
+        "job": 1,
+        "subJob": 2,
+        "thirdJob": 2,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 12.300000190734863,
+        "upKeepValue": 1.2999999523162842,
+        "secondValue": 2.5,
+        "upSecondValue": 0.0,
+        "valueTime": 2.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Hands of God",
+        "nameVi": "Hands of God",
+        "descriptionEn": "Summons the Hands of God to judge enemies.",
+        "detailDescriptionEn": "<color=#46CCFF>keepValue%</color> chance of ignoring the enemy's defense and evasion and attacking nearby enemies every <color=#46CCFF>valueTime</color> seconds with damage equal to <color=#46CCFF>secondValueTimes</color> their ATK per second."
+      },
+      {
+        "index": 112,
+        "job": 2,
+        "subJob": 1,
+        "thirdJob": 1,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 1.649999976158142,
+        "upKeepValue": 0.15000000596046448,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 5.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Song of Peace",
+        "nameVi": "Song of Peace",
+        "descriptionEn": "Helps nearby Allies recover by playing sweet music.",
+        "detailDescriptionEn": "Recovers the HP, Satiety and Mood of nearby allies by <color=#46CCFF>keepValue%</color> every <color=#46CCFF>valueTime</color> seconds (not duplicated)."
+      },
+      {
+        "index": 113,
+        "job": 2,
+        "subJob": 2,
+        "thirdJob": 2,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 10.5,
+        "upKeepValue": 0.5,
+        "secondValue": 84.0,
+        "upSecondValue": 4.0,
+        "valueTime": 7.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Poison Bomb",
+        "nameVi": "Bom \u0111\u1ed9c",
+        "descriptionEn": "Throw a poison gas grenade to poison and confuse enemies.",
+        "detailDescriptionEn": "Attacks all enemies within the range with <color=#46CCFF>secondValue%</color> of DPS every <color=#46CCFF>0.5secs</color> during <color=#46CCFF>valueTimeSecs</color> while ignoring the enemies' Evasion and DEF. The Evasion of the enemies is lowered by <color=#46CCFF>keepValue%</color>. (not duplicated)."
+      },
+      {
+        "index": 114,
+        "job": 3,
+        "subJob": 1,
+        "thirdJob": 1,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 100.0,
+        "upKeepValue": 0.0,
+        "secondValue": 36.5,
+        "upSecondValue": 1.5,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Summon Familiar",
+        "nameVi": "Summon Familiar",
+        "descriptionEn": "Summons a familiar to imitate the skills used by the owner.",
+        "detailDescriptionEn": "When using Thunderbolt, Blizzard, Meteor, or Stone Curse, the familiar has a <color=#46CCFF>keepValue%</color> chance to recast the skill, and the recast skill will deal <color=#46CCFF>secondValue%</color> damage equal to the existing skill's damage."
+      },
+      {
+        "index": 115,
+        "job": 3,
+        "subJob": 2,
+        "thirdJob": 2,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 13.399999618530273,
+        "upKeepValue": 0.4000000059604645,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.800000011920929,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Polymorph",
+        "nameVi": "Polymorph",
+        "descriptionEn": "Transforms into the Dark Lord and destroys enemies.",
+        "detailDescriptionEn": "The basic attack is changed to a close range attack, the Ice Armor duration is doubled and the ATK of nearby enemies is reduced by <color=#46CCFF>keepValue%</color>."
+      },
+      {
+        "index": 116,
+        "job": 0,
+        "subJob": 3,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 15.5,
+        "upKeepValue": 0.5,
+        "secondValue": 42.0,
+        "upSecondValue": 2.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Pulverizer",
+        "nameVi": "Pulverizer",
+        "descriptionEn": "Occasionally, the sword emits a shockwave that will deal damage to the target and nearby enemies.",
+        "detailDescriptionEn": "During a basic attack, there is <color=#46CCFF>keepValue%</color> chance of ignoring DEF and attacking enemies in wide-range, dealing as much damage as <color=#46CCFF>secondValue%</color> of DPS."
+      },
+      {
+        "index": 117,
+        "job": 1,
+        "subJob": 3,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 9.699999809265137,
+        "upKeepValue": 0.699999988079071,
+        "secondValue": 3.299999952316284,
+        "upSecondValue": 0.30000001192092896,
+        "valueTime": 4.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Dark Weapon",
+        "nameVi": "Dark Weapon",
+        "descriptionEn": "Gives the dark attribute to weapons and changes Holy Light.",
+        "detailDescriptionEn": "Amplify own ATK by <color=#46CCFF>keepValue%</color> and, when Holy Light is used, instead of a provoking effect, all damage taken by the target is increased by <color=#46CCFF>secondValue%</color> for <color=#46CCFF>valueTime secs</color>."
+      },
+      {
+        "index": 118,
+        "job": 2,
+        "subJob": 3,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 2.0,
+        "upKeepTime": 0.0,
+        "keepValue": 210.0,
+        "upKeepValue": 10.0,
+        "secondValue": 3.4000000953674316,
+        "upSecondValue": 0.4000000059604645,
+        "valueTime": 3.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Summon Phoenix",
+        "nameVi": "Summon Phoenix",
+        "descriptionEn": "Summons the Phoenix to participate in the battle.",
+        "detailDescriptionEn": "When attacking, there is a <color=#46CCFF>35%</color> chance of attacking the enemy by dealing as much damage as <color=#46CCFF>keepValue%</color> of DPS, and all damage taken by the enemy increases by <color=#46CCFF>secondValue%</color> for <color=#46CCFF>valueTime secs</color> (cannot be activated for <color=#46CCFF>keepTime secs</color> after attacking.)"
+      },
+      {
+        "index": 119,
+        "job": 3,
+        "subJob": 3,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 1017.0,
+        "upKeepValue": 27.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Meteor",
+        "nameVi": "Meteor",
+        "descriptionEn": "Summons a massive meteor from the sky to attack.",
+        "detailDescriptionEn": "Wide area attack by dealing as much damage as <color=#46CCFF>keepValue%</color> of DPS."
+      },
+      {
+        "index": 120,
+        "job": 0,
+        "subJob": 3,
+        "thirdJob": 3,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 3.0,
+        "upKeepTime": 0.0,
+        "keepValue": 134.0,
+        "upKeepValue": 4.0,
+        "secondValue": 40.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.25,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Cyclone",
+        "nameVi": "Cyclone",
+        "descriptionEn": "Rotates at high speed to attack nearby enemies while holding a weapon.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTime secs</color>, deals as much damage as <color=#46CCFF>keepValue%</color> of own DPS, ignoring the enemy's DEF and attacks every <color=#46CCFF>valueTime secs</color>. Reduces damage taken while casting by <color=#46CCFF>secondValue%</color>."
+      },
+      {
+        "index": 121,
+        "job": 1,
+        "subJob": 3,
+        "thirdJob": 3,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 30.0,
+        "upCoolTime": 0.0,
+        "keepTime": 10.0,
+        "upKeepTime": 0.0,
+        "keepValue": 42.0,
+        "upKeepValue": 2.0,
+        "secondValue": 20.5,
+        "upSecondValue": 0.5,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Execution",
+        "nameVi": "Execution",
+        "descriptionEn": "Unleashes the power of Darkness to strengthen oneself.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTime secs</color>, the damage taken is reduced by <color=#46CCFF>25%</color> and ATK is amplified by <color=#46CCFF>keepValue%</color>. When attacking, there is a <color=#46CCFF>secondValue%</color> chance to ignore the enemy's DEF and Evasion, and attack with as much damage as <color=#46CCFF>400%</color> of DPS."
+      },
+      {
+        "index": 122,
+        "job": 2,
+        "subJob": 3,
+        "thirdJob": 3,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 15.199999809265137,
+        "upKeepValue": 1.2000000476837158,
+        "secondValue": 15.199999809265137,
+        "upSecondValue": 1.2000000476837158,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Mystic Arrow",
+        "nameVi": "Mystic Arrow",
+        "descriptionEn": "Uses arrows with mysterious power to enhance attacks.",
+        "detailDescriptionEn": "Amplify own ATK by <color=#46CCFF>keepValue%</color>, ignores enemy's Evasion and DEF with a chance of <color=#46CCFF>secondValue%</color> (applies to basic attacks, multi-shot only)."
+      },
+      {
+        "index": 123,
+        "job": 3,
+        "subJob": 3,
+        "thirdJob": 3,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 315.0,
+        "upKeepValue": 15.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 1.100000023841858,
+        "upValueTime": 0.10000000149011612,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Nightmare",
+        "nameVi": "Nightmare",
+        "descriptionEn": "Summons a terrible nightmare, causing the target and nearby enemies to panic.",
+        "detailDescriptionEn": "Wide area attack with as much damage as <color=#46CCFF>keepValue%</color> of DPS, and makes the target panic for <color=#46CCFF>valueTime secs</color>."
+      },
+      {
+        "index": 124,
+        "job": 0,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 1,
+        "maxLevel": 10,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 3500.0,
+        "upKeepValue": 500.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Blade Finish",
+        "nameVi": "Ho\u00e0n t\u1ea5t L\u01b0\u1ee1i ki\u1ebfm",
+        "descriptionEn": "Summons a sword from the sky to attack enemies.",
+        "detailDescriptionEn": "Deals a single hit with damage equal to <color=#46CCFF>keepValue%</color> of the caster's DPS.\n$(Skill ATK is deamplified by 60% in PvP)$"
+      },
+      {
+        "index": 125,
+        "job": 0,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 2,
+        "maxLevel": 10,
+        "coolTime": 30.0,
+        "upCoolTime": 0.0,
+        "keepTime": 30.0,
+        "upKeepTime": 0.0,
+        "keepValue": 13.0,
+        "upKeepValue": 3.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 30.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Commanding Shout",
+        "nameVi": "Ti\u1ebfng H\u00e9t Ch\u1ec9 Huy",
+        "descriptionEn": "Lets out a shout to raise the spirits of allies.",
+        "detailDescriptionEn": "Critical hit damage of nearby allies is increased by <color=#46CCFF>keepValue%</color> for <color=#46CCFF>keepTime sec</color>"
+      },
+      {
+        "index": 126,
+        "job": 1,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 1,
+        "maxLevel": 10,
+        "coolTime": 30.0,
+        "upCoolTime": 0.0,
+        "keepTime": 30.0,
+        "upKeepTime": 0.0,
+        "keepValue": 2.0,
+        "upKeepValue": 0.0,
+        "secondValue": 16.0,
+        "upSecondValue": 1.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Token of Punishment",
+        "nameVi": "D\u1ea5u Hi\u1ec7u Tr\u1eebng Ph\u1ea1t",
+        "descriptionEn": "Creates the Token of Punishment to enhance the caster during normal attacks.",
+        "detailDescriptionEn": "During normal attacks, there is a <color=#46CCFF>secondValue%</color> chance to obtain a Token of Punishment. The token lasts for <color=#46CCFF>keepTime sec</color> and each token amplifies the caster's ATK by <color=#46CCFF>keepValue%</color>. Up to 5 Tokens of Punishment can be held."
+      },
+      {
+        "index": 127,
+        "job": 1,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 2,
+        "maxLevel": 10,
+        "coolTime": 30.0,
+        "upCoolTime": 0.0,
+        "keepTime": 5.0,
+        "upKeepTime": 0.0,
+        "keepValue": 6.0,
+        "upKeepValue": 1.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 5.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Light's Grace",
+        "nameVi": "\u00c2n S\u1ee7ng c\u1ee7a \u00c1nh S\u00e1ng",
+        "descriptionEn": "Protects allies nearby with Light's Grace.",
+        "detailDescriptionEn": "Allies nearby are protected with a shield that has <color=#46CCFF>keepValue%</color> of the ally's max HP. The shield lasts up to <color=#46CCFF>keepTime sec</color>"
+      },
+      {
+        "index": 128,
+        "job": 2,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 1,
+        "maxLevel": 10,
+        "coolTime": 30.0,
+        "upCoolTime": 0.0,
+        "keepTime": 10.0,
+        "upKeepTime": 0.0,
+        "keepValue": 290.0,
+        "upKeepValue": 40.0,
+        "secondValue": 100.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Vengeance",
+        "nameVi": "B\u00e1o Th\u00f9",
+        "descriptionEn": "Transforms into the spirit of vengeance and uses special arrows.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTime sec</color>, during normal attacks, there is a <color=#46CCFF>secondValue%</color> chance to cast Arrow of Vengeance. Arrow of Vengeance deals a single hit with damage equal to <color=#46CCFF>keepValue%</color> of the caster's DPS\n$(Skill ATK is deamplified by 60% in PvP)$"
+      },
+      {
+        "index": 129,
+        "job": 2,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 2,
+        "maxLevel": 10,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 240.0,
+        "upKeepValue": 40.0,
+        "secondValue": 1.0,
+        "upSecondValue": 0.0,
+        "valueTime": 7.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Falling Star",
+        "nameVi": "Ng\u00f4i Sao R\u01a1i",
+        "descriptionEn": "Pours down stars from the sky to attack enemies.",
+        "detailDescriptionEn": "Deals an AoE attack with damage equal to <color=#46CCFF>keepValue%</color> of the caster's DPS every <color=#46CCFF>secondValue sec</color> for <color=#46CCFF>valueTime sec</color>\n$(Skill ATK is deamplified by 60% in PvP)$"
+      },
+      {
+        "index": 130,
+        "job": 3,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 1,
+        "maxLevel": 10,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 30.0,
+        "upKeepTime": 0.0,
+        "keepValue": 14.0,
+        "upKeepValue": 4.0,
+        "secondValue": 1.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 1,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Mana Charge",
+        "nameVi": "T\u00edch T\u1ee5 Mana",
+        "descriptionEn": "Gathers mana orbs to enhance skills.",
+        "detailDescriptionEn": "When a hunter directly casts Thunderbolt, they obtain <color=#46CCFF>valueCount</color> mana orb(s). A mana orb lasts for <color=#46CCFF>keepTime sec</color>. Up to 5 mana orbs can be held. When casting an orb skill, <color=#46CCFF>secondValue</color> mana orb(s) are used to amplify the skill ATK by <color=#46CCFF>keepValue%</color>.\nOrb skills: Blizzard, Stone Curse, Meteor, Nightmare\nThe Mana Charge effect also applies to orb skills cast by a Familiar.\n$(Amplification is deamplified by 50% in PvP)$"
+      },
+      {
+        "index": 131,
+        "job": 3,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 2,
+        "maxLevel": 10,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 180.0,
+        "upKeepValue": 30.0,
+        "secondValue": 83.0,
+        "upSecondValue": 13.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 25,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Elemental Force",
+        "nameVi": "L\u1ef1c L\u01b0\u1ee3ng Nguy\u00ean T\u1ed1",
+        "descriptionEn": "Uses the power of flame or ice to attack enemies during normal attacks.",
+        "detailDescriptionEn": "During normal attacks, there is a <color=#46CCFF>valueCount%</color> chance to cast Elemental Force to either deal a single flame hit with damage equal to <color=#46CCFF>keepValue%</color> of the DPS, or deal an AoE ice attack with damage equal to <color=#46CCFF>secondValue%</color> of the DPS.\n$(Skill ATK is deamplified by 60% in PvP)$"
+      },
+      {
+        "index": 132,
+        "job": 4,
+        "subJob": 1,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 8.399999618530273,
+        "upKeepValue": 0.4000000059604645,
+        "secondValue": 25.200000762939453,
+        "upSecondValue": 1.2000000476837158,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Equitation",
+        "nameVi": "K\u1ef5 Thu\u1eadt Chi\u1ebfn M\u00e3",
+        "descriptionEn": "Reaches the pinnacle of horsemanship, unleashing great power while mounted.",
+        "detailDescriptionEn": "The damage taken is reduced by <color=#46CCFF>keepValue%</color>, and using Round Slash casts two attacks (additional attack deals <color=#46CCFF>secondValue%</color> damage). Equitation is only applied while mounted, and the dragon of the Dragon Knight also counts as a mount."
+      },
+      {
+        "index": 133,
+        "job": 4,
+        "subJob": 2,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 1.5,
+        "upKeepTime": 0.0,
+        "keepValue": 1050.0,
+        "upKeepValue": 50.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 2.5,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Shadow Strike",
+        "nameVi": "\u0110\u1ed9t K\u00edch B\u00f3ng \u0110\u00eam",
+        "descriptionEn": "Imbues the spear with the power of shadows, driving it into the enemy's body.",
+        "detailDescriptionEn": "Ignore the enemy's evasion and attack them with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS and stun them for <color=#46CCFF>valueTime sec</color>. At the start of a PvP match, the Shadow Lancer will not be selected for the first targeting for <color=#46CCFF>keepTime sec</color>, and will teleport to the furthest enemy."
+      },
+      {
+        "index": 134,
+        "job": 4,
+        "subJob": 3,
+        "thirdJob": 0,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 2.0,
+        "upKeepTime": 0.0,
+        "keepValue": 22.0,
+        "upKeepValue": 2.0,
+        "secondValue": 25.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.4000000059604645,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 100000,
+        "addStudySoul": 220,
+        "nameEn": "Spin Splash",
+        "nameVi": "Xo\u00e1y Tr\u1ea3m",
+        "descriptionEn": "Has a chance to cast Spin Splash during normal attacks.",
+        "detailDescriptionEn": "During normal attacks, Spin Splash is cast at a <color=#46CCFF>secondValue%</color> chance. For <color=#46CCFF>keepTime sec</color>, Spin Splash ignores the DEF and deals AoE attacks with damage equal to <color=#46CCFF>keepValue%</color> of the DPS every <color=#46CCFF>valueTime sec</color>. (Cannot be activated for <color=#46CCFF>2 sec</color> after casting)"
+      },
+      {
+        "index": 135,
+        "job": 4,
+        "subJob": 1,
+        "thirdJob": 1,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 10.0,
+        "upKeepTime": 0.0,
+        "keepValue": 940.0,
+        "upKeepValue": 40.0,
+        "secondValue": 4.199999809265137,
+        "upSecondValue": 0.20000000298023224,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 3,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Piercing Thrust",
+        "nameVi": "\u0110\u00e2m Xuy\u00ean Ph\u00e1",
+        "descriptionEn": "Thrusts the spear deeply, piercing enemies and reinforcing defense with a shield.",
+        "detailDescriptionEn": "Cast an AoE attack with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS. The damage taken by the caster is reduced by <color=#46CCFF>secondValue%</color> for every enemy within range of the skill. (Stacks up to <color=#46CCFF>valueCount</color> times) The damage reduction effect lasts for <color=#46CCFF>keepTime sec</color>."
+      },
+      {
+        "index": 136,
+        "job": 4,
+        "subJob": 2,
+        "thirdJob": 2,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 15.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 970.0,
+        "upKeepValue": 70.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 1.100000023841858,
+        "upValueTime": 0.10000000149011612,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Shade Javelin",
+        "nameVi": "Th\u01b0\u01a1ng B\u00f3ng \u1ea2nh",
+        "descriptionEn": "Throws a spear imbued with the power of wraiths, instilling terror in the enemy.",
+        "detailDescriptionEn": "Attacks the enemy with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS. The attack ignores the enemy's evasion and makes them panic for <color=#46CCFF>valueTime sec</color>."
+      },
+      {
+        "index": 137,
+        "job": 4,
+        "subJob": 3,
+        "thirdJob": 3,
+        "fourthJob": 0,
+        "maxLevel": 30,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 2.0,
+        "upKeepTime": 0.0,
+        "keepValue": 207.0,
+        "upKeepValue": 17.0,
+        "secondValue": 0.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.4000000059604645,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 5,
+        "addStudySoul": 120,
+        "nameEn": "Dragon Breath",
+        "nameVi": "H\u01a1i Th\u1edf R\u1ed3ng",
+        "descriptionEn": "Unleashes a fiery breath from the mounted dragon's mouth to burn enemies.",
+        "detailDescriptionEn": "For <color=#46CCFF>keepTime sec</color>, deal AoE attacks with damage equal to <color=#46CCFF>keepValue%</color> of the hunter's DPS every <color=#46CCFF>valueTime sec</color>. When casting Dragon Breath, become immune to status effects that limit actions."
+      },
+      {
+        "index": 138,
+        "job": 4,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 1,
+        "maxLevel": 10,
+        "coolTime": 0.0,
+        "upCoolTime": 0.0,
+        "keepTime": 0.0,
+        "upKeepTime": 0.0,
+        "keepValue": 37.0,
+        "upKeepValue": 7.0,
+        "secondValue": 25.0,
+        "upSecondValue": 0.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 5,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Hyper Blitz",
+        "nameVi": "T\u1ed1c K\u00edch T\u1ed1i \u0110a",
+        "descriptionEn": "Has a chance to cast Hyper Blitz during normal attacks.",
+        "detailDescriptionEn": "During normal attacks, there is a <color=#46CCFF>secondValue%</color> chance to cast <color=#46CCFF>valueCount</color> AoE attack(s) with damage equal to <color=#46CCFF>keepValue%</color> of the DPS. Hyper Blitz ignores the enemy's DEF.\n$(Skill ATK is deamplified by 60% in PvP)$"
+      },
+      {
+        "index": 139,
+        "job": 4,
+        "subJob": 0,
+        "thirdJob": 0,
+        "fourthJob": 2,
+        "maxLevel": 10,
+        "coolTime": 20.0,
+        "upCoolTime": 0.0,
+        "keepTime": 7.0,
+        "upKeepTime": 0.0,
+        "keepValue": 700.0,
+        "upKeepValue": 200.0,
+        "secondValue": 6.0,
+        "upSecondValue": 1.0,
+        "valueTime": 0.0,
+        "upValueTime": 0.0,
+        "valueCount": 0,
+        "upValueCount": 0,
+        "firstStudySoul": 500,
+        "addStudySoul": 10,
+        "nameEn": "Mistilteinn",
+        "nameVi": "Mistilteinn",
+        "descriptionEn": "Summons the cursed spear Mistilteinn to unleash a powerful curse.",
+        "detailDescriptionEn": "Cast an AoE attack with damage equal to <color=#46CCFF>keepValue%</color> of the DPS. Create a cursed area for <color=#46CCFF>keepTime sec</color> that grants enemies within range a status effect that increases the damage taken from critical hits by <color=#46CCFF>secondValue%</color>.\n$(Skill ATK is deamplified by 60% in PvP)$"
+      }
+    ]
+  },
+  "perHunterSkillSnapshot": {
+    "type": "SkillData",
+    "fields": [
+      {
+        "name": "<index>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "offset": 16,
+        "flags": 1
+      },
+      {
+        "name": "<skillIndex>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "offset": 32,
+        "flags": 1
+      },
+      {
+        "name": "<coolTime>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+        "offset": 48,
+        "flags": 1
+      },
+      {
+        "name": "<level>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "offset": 88,
+        "flags": 1
+      }
+    ],
+    "containerEvidence": "HunterData.skill is Dictionary<String, SkillData> in the captured runtime schema.",
+    "dictionaryKeyMeaning": "unresolved"
+  },
+  "hunterCtrl": {
+    "methods": [
+      {
+        "name": "HuntingAttackEnd",
+        "token": 100686676,
+        "returnType": "System.Void",
+        "parameters": []
+      },
+      {
+        "name": "PulverizeAttack",
+        "token": 100686708,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "KPEGAMOKOHF",
+            "type": "EvilCtrl"
+          }
+        ]
+      },
+      {
+        "name": "CheckManaOrb",
+        "token": 100686731,
+        "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+        "parameters": []
+      },
+      {
+        "name": "HolyBarrierAction",
+        "token": 100686744,
+        "returnType": "System.Collections.IEnumerator",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "OLMFGEFMKDO",
+            "type": "System.Single"
+          },
+          {
+            "index": 1,
+            "name": "DIKACAOJFPA",
+            "type": "System.Single"
+          },
+          {
+            "index": 2,
+            "name": "BINLECIAFEC",
+            "type": "System.Single"
+          }
+        ]
+      },
+      {
+        "name": "RangeFireDamageAction",
+        "token": 100686779,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "EPFFLFFFALL",
+            "type": "System.Int64"
+          },
+          {
+            "index": 1,
+            "name": "DELEPFAGDFM",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "RefreshAnimation",
+        "token": 100686810,
+        "returnType": "System.Void",
+        "parameters": []
+      },
+      {
+        "name": "JobBuffSetting",
+        "token": 100686817,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "FAIICJJLEFI",
+            "type": "System.Int32"
+          },
+          {
+            "index": 1,
+            "name": "KNIAICAKKIM",
+            "type": "System.Single"
+          },
+          {
+            "index": 2,
+            "name": "JCCDFILHFMB",
+            "type": "System.Single"
+          },
+          {
+            "index": 3,
+            "name": "JGAEAFDFFLG",
+            "type": "System.Single"
+          },
+          {
+            "index": 4,
+            "name": "FPMPPOHNBEB",
+            "type": "System.Boolean"
+          },
+          {
+            "index": 5,
+            "name": "FIGAEFDIJEH",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "HuntingAttackSetting",
+        "token": 100686820,
+        "returnType": "System.Void",
+        "parameters": []
+      },
+      {
+        "name": "HolyExplosion",
+        "token": 100686824,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "KNIAICAKKIM",
+            "type": "System.Single"
+          }
+        ]
+      },
+      {
+        "name": "SkillMentEnd",
+        "token": 100686830,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "HOFHLOOMPOI",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "BuffEndSetting",
+        "token": 100686853,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "FAIICJJLEFI",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "JobBuffEndSetting",
+        "token": 100686874,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "FAIICJJLEFI",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "SkillStudy",
+        "token": 100686884,
+        "returnType": "System.Boolean",
+        "parameters": []
+      },
+      {
+        "name": "HuntingAttackAction",
+        "token": 100686888,
+        "returnType": "System.Void",
+        "parameters": []
+      },
+      {
+        "name": "SkillOff",
+        "token": 100686923,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "HOFHLOOMPOI",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "ChangeWalkRange",
+        "token": 100686933,
+        "returnType": "System.Void",
+        "parameters": []
+      },
+      {
+        "name": "GetMisticArrow",
+        "token": 100686939,
+        "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+        "parameters": []
+      },
+      {
+        "name": "SkillOn",
+        "token": 100686960,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "HOFHLOOMPOI",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "GetManaOrbPower",
+        "token": 100686975,
+        "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+        "parameters": []
+      },
+      {
+        "name": "BuffSetting",
+        "token": 100686983,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "FAIICJJLEFI",
+            "type": "System.Int32"
+          },
+          {
+            "index": 1,
+            "name": "KNIAICAKKIM",
+            "type": "System.Int32"
+          },
+          {
+            "index": 2,
+            "name": "FPMPPOHNBEB",
+            "type": "System.Boolean"
+          },
+          {
+            "index": 3,
+            "name": "FIGAEFDIJEH",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "RangedDualAttack",
+        "token": 100687011,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "CLGGGLPNAMG",
+            "type": "System.String"
+          },
+          {
+            "index": 1,
+            "name": "LENLNKGJHDI",
+            "type": "System.Int64"
+          },
+          {
+            "index": 2,
+            "name": "EHAJAEBNFKL",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "FireDamageAction",
+        "token": 100687022,
+        "returnType": "System.Collections.IEnumerator",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "EPFFLFFFALL",
+            "type": "System.Int64"
+          },
+          {
+            "index": 1,
+            "name": "DELEPFAGDFM",
+            "type": "System.Int32"
+          }
+        ]
+      },
+      {
+        "name": "SkillMent",
+        "token": 100687024,
+        "returnType": "System.Void",
+        "parameters": [
+          {
+            "index": 0,
+            "name": "HOFHLOOMPOI",
+            "type": "System.Int32"
+          }
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "name": "mAttackDelay",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+        "offset": 404,
+        "flags": 6
+      },
+      {
+        "name": "AttackAniTime",
+        "type": "System.Single",
+        "offset": 428,
+        "flags": 6
+      },
+      {
+        "name": "mRange",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+        "offset": 436,
+        "flags": 6
+      },
+      {
+        "name": "mWalkRange",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+        "offset": 456,
+        "flags": 6
+      },
+      {
+        "name": "mSkillRange",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+        "offset": 476,
+        "flags": 6
+      },
+      {
+        "name": "mNowAnimation",
+        "type": "System.Int32",
+        "offset": 496,
+        "flags": 6
+      },
+      {
+        "name": "mAttackCheck",
+        "type": "System.Boolean",
+        "offset": 500,
+        "flags": 6
+      },
+      {
+        "name": "mEffectGroup",
+        "type": "UnityEngine.GameObject",
+        "offset": 576,
+        "flags": 6
+      },
+      {
+        "name": "mEffect",
+        "type": "UnityEngine.GameObject[]",
+        "offset": 584,
+        "flags": 6
+      },
+      {
+        "name": "mSkillMent",
+        "type": "SkillMentCtrl[]",
+        "offset": 600,
+        "flags": 6
+      },
+      {
+        "name": "mHolyLightEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 632,
+        "flags": 6
+      },
+      {
+        "name": "mFrenzyBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 720,
+        "flags": 6
+      },
+      {
+        "name": "mFrostArcherBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 728,
+        "flags": 6
+      },
+      {
+        "name": "mAncientPowerBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 736,
+        "flags": 6
+      },
+      {
+        "name": "mDeathCoilArmorBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 744,
+        "flags": 6
+      },
+      {
+        "name": "mCommandBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 752,
+        "flags": 6
+      },
+      {
+        "name": "mGraceOfLightBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 760,
+        "flags": 6
+      },
+      {
+        "name": "mLightOfSanctificationBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 768,
+        "flags": 6
+      },
+      {
+        "name": "mLightOfLifeBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 776,
+        "flags": 6
+      },
+      {
+        "name": "mHolyExplosionEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 792,
+        "flags": 6
+      },
+      {
+        "name": "mRoundForceBuffEffect",
+        "type": "NormalEffectCtrl",
+        "offset": 848,
+        "flags": 6
+      },
+      {
+        "name": "mTargetEvil",
+        "type": "EvilCtrl",
+        "offset": 888,
+        "flags": 6
+      },
+      {
+        "name": "TargetAttackCount",
+        "type": "System.Int32",
+        "offset": 896,
+        "flags": 6
+      },
+      {
+        "name": "mSkillMentOrder",
+        "type": "System.Collections.Generic.List<System.Int32>",
+        "offset": 904,
+        "flags": 6
+      },
+      {
+        "name": "mEffectOrder",
+        "type": "System.Collections.Generic.List<System.Int32>",
+        "offset": 912,
+        "flags": 6
+      }
+    ]
+  },
+  "nativeHuntingAttackAction": {
+    "token": "0x06005C28",
+    "moduleOffset": "0x3416a40",
+    "nativeSizeBytes": 8016,
+    "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59",
+    "knownDirectCalls": [
+      {
+        "method": "EvilCtrl.CurseDamage",
+        "count": 1
+      },
+      {
+        "method": "EvilCtrl.WarcryAction",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.ACCJOBLGLJN",
+        "count": 3
+      },
+      {
+        "method": "HunterCtrl.BCKNMNKCDNE",
+        "count": 2
+      },
+      {
+        "method": "HunterCtrl.BJOIOIIDDGD",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.CheckFamiliar",
+        "count": 2
+      },
+      {
+        "method": "HunterCtrl.CheckHandsOfGod",
+        "count": 2
+      },
+      {
+        "method": "HunterCtrl.CheckJobTrait",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.ComebackHome",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.DEJOHOPDNPG",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.FDNDFLJHGGH",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.FHAANLPPCEH",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.FireDamageAction",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.GetMisticArrow",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.HCHKACAHIPJ",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.HOCDFMHGJDA",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.JIELIFGGFJL",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.LKKDBDJMLCL",
+        "count": 3
+      },
+      {
+        "method": "HunterCtrl.MBBJGCEBJCC",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.MKCPMEDCOCO",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.OADPOFNKAON",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.ODLGBADBJFE",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.PCBCLIHMIMA",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.PLDKAMPEPOG",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.PMPAIIKDPHL",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.PulverizeAttack",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.SpeakTextShow",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.getDamage",
+        "count": 1
+      },
+      {
+        "method": "HunterCtrl.getHunterData",
+        "count": 34
+      },
+      {
+        "method": "HunterCtrl.getStatusData",
+        "count": 18
+      }
+    ],
+    "schemaFieldReferences": [
+      {
+        "name": "AttackAniTime",
+        "offset": 428,
+        "type": "System.Single"
+      },
+      {
+        "name": "BELIMGGBGNN",
+        "offset": 920,
+        "type": "System.Int32"
+      },
+      {
+        "name": "CHKIHPMDOBM",
+        "offset": 2576,
+        "type": "System.Boolean"
+      },
+      {
+        "name": "CLNOCMAGDBD",
+        "offset": 1768,
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+      },
+      {
+        "name": "DANCPPLMKIK",
+        "offset": 984,
+        "type": "System.Single"
+      },
+      {
+        "name": "FAmiliarAni",
+        "offset": 144,
+        "type": "UnityEngine.Animator"
+      },
+      {
+        "name": "FairyAni",
+        "offset": 88,
+        "type": "UnityEngine.Animator"
+      },
+      {
+        "name": "GodHandsAni",
+        "offset": 120,
+        "type": "UnityEngine.Animator"
+      },
+      {
+        "name": "OIOFLNGIPKD",
+        "offset": 976,
+        "type": "System.Boolean"
+      },
+      {
+        "name": "TargetAttackCount",
+        "offset": 896,
+        "type": "System.Int32"
+      },
+      {
+        "name": "mEffect",
+        "offset": 584,
+        "type": "UnityEngine.GameObject[]"
+      },
+      {
+        "name": "mNowAnimation",
+        "offset": 496,
+        "type": "System.Int32"
+      },
+      {
+        "name": "mPumpkinObj",
+        "offset": 48,
+        "type": "UnityEngine.GameObject"
+      },
+      {
+        "name": "mSkillMent",
+        "offset": 600,
+        "type": "SkillMentCtrl[]"
+      },
+      {
+        "name": "mStringIndex",
+        "offset": 512,
+        "type": "System.String"
+      },
+      {
+        "name": "mTargetEvil",
+        "offset": 888,
+        "type": "EvilCtrl"
+      },
+      {
+        "name": "mTransform",
+        "offset": 520,
+        "type": "UnityEngine.Transform"
+      }
+    ]
+  },
+  "presentation": {
+    "specialHunterAnimations": [
+      {
+        "name": "h1_hit_whirlwind",
+        "durationSeconds": 0.5
+      },
+      {
+        "name": "h2_hit_executor",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h2_hit_executor_back",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h3_hit_arcane",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h3_hit_arcane_back",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h4_hit_darkload",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h4_hit_darkload_back",
+        "durationSeconds": 0.3333
+      },
+      {
+        "name": "h5_hit_dragonbreath_back_vehicle",
+        "durationSeconds": 2.0
+      },
+      {
+        "name": "h5_hit_dragonbreath_vehicle",
+        "durationSeconds": 2.0
+      },
+      {
+        "name": "h5_hit_roundslash",
+        "durationSeconds": 0.5
+      },
+      {
+        "name": "h5_hit_roundslash_back",
+        "durationSeconds": 0.5
+      },
+      {
+        "name": "h5_hit_shadejavelin",
+        "durationSeconds": 0.5
+      }
+    ],
+    "confirmedRangerProjectile": {
+      "id": "field.ranger-arrow",
+      "sourcePath": "sprites/atk_ranger__3599.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3599,
+        "type": "Sprite",
+        "name": "atk_ranger"
+      },
+      "role": "ranger-arrow-projectile",
+      "bindingState": "scene-component-confirmed",
+      "confidence": "confirmed"
+    },
+    "sorcererProjectileCandidate": {
+      "path": "game-assets/extracted/exported/sprites/atk_sorcerer__4256.png",
+      "assetNameFromFilename": "atk_sorcerer",
+      "bindingState": "exported-file-only-unresolved"
+    }
+  },
+  "confirmed": [
+    "The package defines 10 basic skills and 40 sub-job skills with job paths, cooldown/effect parameters and localized descriptions.",
+    "Each Hunter can carry a SkillData snapshot containing index, skillIndex, coolTime and level inside HunterData.skill.",
+    "HunterCtrl exposes explicit skill activation, study, cooldown-state, buff/effect and melee/ranged attack boundaries.",
+    "HuntingAttackAction directly reaches FireDamageAction, PulverizeAttack, GetMisticArrow, WarcryAction, CurseDamage and multiple trait/familiar handlers.",
+    "The Hunter Spine actor contains named advanced attack animations, while atk_ranger is a scene-component-confirmed Ranger projectile asset."
+  ],
+  "unresolved": [
+    "Exact basic/sub-job skill row to Spine animation, effect-controller index and icon for mappings not separately confirmed.",
+    "Exact HunterData.skill dictionary key meaning and live learned-skill values for a captured Hunter.",
+    "Exact skill-selection branch inside HuntingAttackAction and exact hit/projectile spawn frames.",
+    "Exact mana-orb resource formula and whether each skill consumes it; no generic mana field is proven in HunterData.",
+    "Exact binding of atk_sorcerer to a HunterCtrl ranged branch.",
+    "Original damage, critical, cooldown validation and effect formulas not already recovered by bounded native evidence."
+  ]
+}

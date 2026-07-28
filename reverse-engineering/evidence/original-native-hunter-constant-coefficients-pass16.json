@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-constant-coefficients-pass16",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "bytes": 409504,
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-skill-coefficient-action-targets-api35-v1.json",
+      "bytes": 7783,
+      "sha256": "b8107326aebcec5d0793262d05251a1d64bde75c6f47a4831c366128759db6c9"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-contract-targets-api35-v1.json",
+      "bytes": 37210,
+      "sha256": "1232470d3c2a82ef71775d69c131c142d2aba8fb548dc02d69d598a01f8ff670"
+    },
+    {
+      "path": "reverse-engineering/evidence/constant-data-runtime-schema-api35-v1.json",
+      "bytes": 299479,
+      "sha256": "1f381c9d27cc42803a8834a0e4d3379603b72c8639d3ae1ebf6e2c3907081431"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-runtime-status-data-static-factors-api35-v1.json",
+      "bytes": 2436,
+      "sha256": "18875029a7b3ab89f0f33b97b847ef02f774bb3299fe16b4cb46c1e26cb9166b"
+    }
+  ],
+  "integerPercentScale": {
+    "moduleOffset": "0xd2ac8c",
+    "rawHex": "0ad7233c",
+    "float32": 0.009999999776482582
+  },
+  "methods": [
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "BPOGPFGALFD",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686694,
+        "moduleOffset": "0x3409394",
+        "nativeSizeBytes": 1064,
+        "bodySha256": "25b5af54d0da2be54eec061e7445d7da05f12023b91bb56c52cb15f77c2f50a3"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        true
+      ],
+      "constantFields": [
+        {
+          "name": "POISON_AURA_POWER_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 10272,
+          "flags": 54,
+          "runtimeDataOffset": "0x2820"
+        }
+      ],
+      "equation": "damage0 = trunc_i64((modifierA + modifierB) * float32(baseDamage) * (float32(decode(POISON_AURA_POWER_VALUE)) * 0.01f))",
+      "postBranch": "when a decoded target-side discriminator equals 2, damage = trunc_i64(float32(damage0) * modifierC)",
+      "route": {
+        "target": "EvilCtrl virtual slot +0x2A8",
+        "damageParameter": 2,
+        "parameter5": 2
+      }
+    },
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "PCGIDDENIJL",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686703,
+        "moduleOffset": "0x340d464",
+        "nativeSizeBytes": 1172,
+        "bodySha256": "a17a6ade90adb4d71fd02d8cb4130d7b9c74efc4dd2a0a44a3c9bfcdf30b160d"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        true
+      ],
+      "constantFields": [
+        {
+          "name": "CURSEAURA_POWER_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 13312,
+          "flags": 54,
+          "runtimeDataOffset": "0x3400"
+        },
+        {
+          "name": "DARK_KNIGHT_DAMAGE_TYPE_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 15184,
+          "flags": 54,
+          "runtimeDataOffset": "0x3B50"
+        }
+      ],
+      "equation": "scaledBase = trunc_i64(float32(baseDamage) * decode(CURSEAURA_POWER_VALUE) * 0.01f); damage0 = trunc_i64(float32(scaledBase) * (modifierA + modifierB))",
+      "postBranch": "when a decoded target-side discriminator equals 2, damage = trunc_i64(float32(damage0) * modifierC)",
+      "route": {
+        "target": "EvilCtrl virtual slot +0x2A8",
+        "damageParameter": 2,
+        "parameter5Source": "DARK_KNIGHT_DAMAGE_TYPE_INDEX"
+      }
+    },
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "NMAIFPMMBHE",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686704,
+        "moduleOffset": "0x340d8f8",
+        "nativeSizeBytes": 1560,
+        "bodySha256": "fe567b73a747912a866d1060b90d7c67b79ec6fbde46d53ac9be612b6749b84f"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        true
+      ],
+      "constantFields": [
+        {
+          "name": "GEAR_PROP_25_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 11040,
+          "flags": 54,
+          "runtimeDataOffset": "0x2B20"
+        },
+        {
+          "name": "GEAR_FROZEN_HEART_PROPERTY_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 13392,
+          "flags": 54,
+          "runtimeDataOffset": "0x3450"
+        },
+        {
+          "name": "FROZEN_HEART_SPIN_SPLASH_SKILL_UP_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 13504,
+          "flags": 54,
+          "runtimeDataOffset": "0x34C0"
+        }
+      ],
+      "equation": "damage = trunc_i64(float32(baseDamageAfterOptionalIntegerScale) * parameter1 * decode(dynamicCoefficient) * 0.01f)",
+      "confirmedCoefficientMutation": "a gated Frozen Heart branch adds FROZEN_HEART_SPIN_SPLASH_SKILL_UP_VALUE to dynamicCoefficient",
+      "integerScaleBranch": "a separate gated branch replaces the decoded getDamage snapshot with baseDamage * decode(GEAR_PROP_25_VALUE) before later float32 arithmetic",
+      "route": {
+        "target": "BlizzardCtrl.Action",
+        "damageParameter": 6
+      }
+    },
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "DNPJKKJPHLD",
+        "parameterTypes": [
+          "EvilCtrl",
+          "System.Single"
+        ],
+        "token": 100686717,
+        "moduleOffset": "0x341967c",
+        "nativeSizeBytes": 1984,
+        "bodySha256": "190de423394cea2ee83b881fd43ff1bfa45f6a6a07c70428d857178533cbd89a"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        false
+      ],
+      "constantFields": [
+        {
+          "name": "GEAR_PROP_25_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 11040,
+          "flags": 54,
+          "runtimeDataOffset": "0x2B20"
+        },
+        {
+          "name": "GEAR_FROZEN_HEART_PROPERTY_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 13392,
+          "flags": 54,
+          "runtimeDataOffset": "0x3450"
+        },
+        {
+          "name": "FROZEN_HEART_SHADOW_STRIKE_SKILL_UP_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 13484,
+          "flags": 54,
+          "runtimeDataOffset": "0x34AC"
+        },
+        {
+          "name": "JOB_TRAIT_BUFF_SHADOW_SKIN_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 14160,
+          "flags": 54,
+          "runtimeDataOffset": "0x3750"
+        },
+        {
+          "name": "DARK_KNIGHT_DAMAGE_TYPE_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 15184,
+          "flags": 54,
+          "runtimeDataOffset": "0x3B50"
+        }
+      ],
+      "equation": "damage = trunc_i64(float32(baseDamageAfterOptionalIntegerScale) * parameter2 * decode(dynamicCoefficient) * 0.01f)",
+      "confirmedCoefficientMutation": "a gated Frozen Heart branch adds FROZEN_HEART_SHADOW_STRIKE_SKILL_UP_VALUE; a separate Shadow Skin indexed branch contributes another decoded float through an unresolved helper path",
+      "integerScaleBranch": "a separate gated branch replaces the decoded getDamage snapshot with baseDamage * decode(GEAR_PROP_25_VALUE) before later float32 arithmetic",
+      "route": {
+        "target": "EvilCtrl virtual slot +0x2A8",
+        "damageParameter": 2,
+        "parameter5Source": "DARK_KNIGHT_DAMAGE_TYPE_INDEX"
+      }
+    },
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "NPIAALIFANE",
+        "parameterTypes": [
+          "System.Single",
+          "System.Single"
+        ],
+        "token": 100686770,
+        "moduleOffset": "0x3420404",
+        "nativeSizeBytes": 2036,
+        "bodySha256": "ff262f7244a8ecefcd0300f0fef6388b34ff793a9ee03a208f3377d7fe1d1055"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        false
+      ],
+      "constantFields": [
+        {
+          "name": "GEAR_PROP_25_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 11040,
+          "flags": 54,
+          "runtimeDataOffset": "0x2B20"
+        },
+        {
+          "name": "FROST_ARCHER_SNIPING_SKILL_UP_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 12288,
+          "flags": 54,
+          "runtimeDataOffset": "0x3000"
+        }
+      ],
+      "equation": "effectiveParameter1 = parameter1 * (1.0f + decode(dynamicCoefficient)); damage = trunc_i64(float32(baseDamage) * effectiveParameter1 * 0.01f)",
+      "confirmedCoefficientMutation": "a gated branch adds FROST_ARCHER_SNIPING_SKILL_UP_VALUE to dynamicCoefficient",
+      "route": {
+        "targetModuleOffset": "0x32ff6cc",
+        "managedIdentity": null,
+        "damageArgumentRegister": "x4"
+      }
+    },
+    {
+      "method": {
+        "className": "HunterCtrl",
+        "methodName": "EHKBOGAOFEN",
+        "parameterTypes": [
+          "EvilCtrl"
+        ],
+        "token": 100686838,
+        "moduleOffset": "0x3421480",
+        "nativeSizeBytes": 1312,
+        "bodySha256": "0ef656fc2337101ef62b35499630b3b20cd5c6d1af07496355716e0780c6c975"
+      },
+      "getDamageVector": [
+        true,
+        false,
+        true
+      ],
+      "constantFields": [
+        {
+          "name": "DARK_LIGHTNING_POWER_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 10336,
+          "flags": 54,
+          "runtimeDataOffset": "0x2860"
+        },
+        {
+          "name": "UNIQUE_GEAR_THUNDER_DRAGON_FURY_PROPERTY_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 11384,
+          "flags": 54,
+          "runtimeDataOffset": "0x2C78"
+        },
+        {
+          "name": "THUNDER_DRAGON_FURY_POWER_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 11400,
+          "flags": 54,
+          "runtimeDataOffset": "0x2C88"
+        },
+        {
+          "name": "UNIQUE_GEAR_TRUTHFUL_THUNDER_DRAGON_FURY_PROPERTY_INDEX",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 13720,
+          "flags": 54,
+          "runtimeDataOffset": "0x3598"
+        },
+        {
+          "name": "TRUTHFUL_THUNDER_DRAGON_FURY_POWER_VALUE",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 13744,
+          "flags": 54,
+          "runtimeDataOffset": "0x35B0"
+        }
+      ],
+      "equation": "combinedPower = basePower + selectedPower + selectedPower * selectedPropertyValue; damage = trunc_i64(float32(baseDamage * combinedPower) * 0.01f)",
+      "selectionBoundary": "native branches select the regular Thunder Dragon Fury or Truthful Thunder Dragon Fury property/power pair; product-facing branch precedence is not inferred beyond the captured control flow",
+      "route": {
+        "target": "FlameExplosionCtrl.Action",
+        "damageParameter": 4,
+        "selectorParameter6": 2
+      }
+    }
+  ],
+  "resolvedActionTargets": {
+    "flameExplosion": {
+      "className": "FlameExplosionCtrl",
+      "methodName": "Action",
+      "parameterTypes": [
+        "System.String",
+        "System.Int32",
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Int32"
+      ],
+      "token": 100664470,
+      "moduleOffset": "0x2c572b0",
+      "nativeSizeBytes": 472,
+      "bodySha256": "295aafedf4dee9c98449c3a4aa4e5c765576ce291d4a68273bf6f898cc53eb52"
+    },
+    "blizzard": {
+      "className": "BlizzardCtrl",
+      "methodName": "Action",
+      "parameterTypes": [
+        "System.Int32",
+        "System.String",
+        "System.Int32",
+        "System.Single",
+        "System.Single",
+        "System.Int64",
+        "System.Int32"
+      ],
+      "token": 100686345,
+      "moduleOffset": "0x33e9d84",
+      "nativeSizeBytes": 436,
+      "bodySha256": "0d1a765986bb750008a4f253a8adfe3f518988bd7583d4ef8939c3cef80f34cd"
+    }
+  },
+  "classification": {
+    "reviewedExactCallerBodies": 6,
+    "status": "constant bindings and final arithmetic classified; several gate/helper meanings remain unresolved",
+    "coveragePolicy": "do not subtract all six from the remaining fully resolved caller count"
+  },
+  "unresolved": [
+    "managed identity and full parameter contract of module target 0x32ff6cc",
+    "managed identity of EvilCtrl virtual slot +0x2A8",
+    "semantic identities of modifierA/modifierB/modifierC and several branch gates",
+    "the helper-fed Shadow Skin coefficient value in DNPJKKJPHLD",
+    "public skill-row mappings for all six obfuscated HunterCtrl methods"
+  ],
+  "integrationStatus": "disconnected_no_live_combat_use"
+}

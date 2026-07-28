@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-evil-attack-reduction-analysis",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-evilctrl-all-methods-api35-v1.json",
+      "sha256": "0095758226878134fccced21c97b7cb0432689ac97e6006108cccd382ffdfa71"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "purpose": "EvilCtrl field names, types and offsets"
+    }
+  ],
+  "runtimeConstants": [
+    {
+      "moduleOffset": "0xd2ac8c",
+      "float32": 0.009999999776482582,
+      "semantic": "whole-percent to fraction multiplier used by BuffSetting"
+    },
+    {
+      "moduleOffset": "0xd2b6d0",
+      "float32": 0.00009999999747378752,
+      "semantic": "basis-point to fraction multiplier used by BuffSetting effect types 57 and 58"
+    }
+  ],
+  "formula": {
+    "method": "EvilCtrl.GetReduceAttackValue",
+    "nativeSizeBytes": 88,
+    "codeSha256": "dc650c97c453fd9f14901245d118681776e250644a1d965da52c63c85e8e76c2",
+    "expression": "(1 - effectSlotA) * (1 - effectSlotB) * (1 - effectSlotC)",
+    "fieldOffsets": [484, 492, 500],
+    "fieldNames": ["PHKJDKANJOA", "DBGLOFBIEBL", "BOKEIJGPICA"],
+    "roundingBoundary": "not claimed from this method"
+  },
+  "writers": [
+    {
+      "effectType": 8,
+      "fieldOffset": 484,
+      "fieldName": "PHKJDKANJOA",
+      "assignment": "value * 0.01"
+    },
+    {
+      "effectType": 55,
+      "fieldOffset": 492,
+      "fieldName": "DBGLOFBIEBL",
+      "assignment": "value * 0.01"
+    },
+    {
+      "effectType": "runtime GameManager constant at static-data offsets 0x36f0/0x36f8",
+      "fieldOffset": 500,
+      "fieldName": "BOKEIJGPICA",
+      "assignment": "value * 0.01"
+    }
+  ],
+  "resetBehavior": {
+    "BuffEndSetting": {
+      "effectType8ClearsOffset": 484,
+      "effectType55ClearsOffset": 492,
+      "dynamicEffectClearsOffset": 500,
+      "codeSha256": "b2960694ee33802cd0fcdf3811aee66b8da9ad69e105a57a772c2faf6aaf0e3c"
+    },
+    "BuffAllEndSetting": {
+      "clearsReductionFields": [484, 492, 500],
+      "codeSha256": "9670ea1a6fdfae53fac840408d5e0fb176c888773ac8b5dc5d19e8d7cf87978e"
+    }
+  },
+  "consumerEvidence": {
+    "method": "EvilCtrl.OFEIPNBMNML",
+    "codeSha256": "140634f14de6f7e1f0d676d04b5fe89dca77c7b28829b8f19a74dfd30737313d",
+    "observedOrder": "integer factors are multiplied, then the three-slot float multiplier is applied, then ARM64 fcvtzs truncates toward zero",
+    "scopeWarning": "The obfuscated consumer's complete gameplay role and all integer factor semantics are not yet named, so it is not a general monster basic-attack golden vector."
+  },
+  "unresolved": [
+    "Human-readable gameplay names for all three reduction slots",
+    "The GameManager static constant name/value selecting the third slot",
+    "Whether every monster outgoing-damage path shares the same final rounding boundary",
+    "Clamping behavior for malformed or out-of-range effect values"
+  ],
+  "implementationPolicy": "Do not connect these slots to authoritative combat until effect identifiers and every consuming damage path are semantically resolved."
+}

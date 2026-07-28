@@ -129,15 +129,31 @@ describe("session bootstrap", () => {
     await settlePromises();
     socket.emit("message", { data: serverEnvelope(1, "welcome") });
     expect(client.constructBuildingAt("build_4", 12, 7)).toBe(true);
+    expect(client.enterMonsterMap("background_08")).toBe(true);
+    expect(client.setMonsterRegionDensity("background_11", 2)).toBe(true);
     expect(client.moveBuilding("building-instance-4", 14, 9)).toBe(true);
     expect(client.startBuildingService("building-instance-13", 7, "product:10")).toBe(true);
     expect(client.banishHunter(7)).toBe(true);
+    expect(client.assignHunterHunt(7, "migration-zone-1")).toBe(true);
+    expect(client.returnHunterHunt(7)).toBe(true);
+    expect(client.sellHunterLoot(7)).toBe(true);
+    expect(client.reviveHunter(7)).toBe(true);
+    expect(client.learnHunterSkill(7, "skill_h1_01")).toBe(true);
+    expect(client.useHunterSkill(7, "skill_h1_01", "monster-background_08-0")).toBe(true);
 
-    expect(socket.sent.slice(-4).map((wire) => JSON.parse(wire).payload)).toEqual([
+    expect(socket.sent.slice(-12).map((wire) => JSON.parse(wire).payload)).toEqual([
       { type: "construct_building_at", building_id: "build_4", grid_x: 12, grid_y: 7 },
+      { type: "enter_monster_map", map_id: "background_08" },
+      { type: "set_monster_region_density", region_id: "background_11", level: 2 },
       { type: "move_building", instance_id: "building-instance-4", grid_x: 14, grid_y: 9 },
       { type: "start_building_service", instance_id: "building-instance-13", hunter_id: 7, product_id: "product:10" },
       { type: "banish_hunter", hunter_id: 7 },
+      { type: "assign_hunter_hunt", hunter_id: 7, zone_id: "migration-zone-1" },
+      { type: "return_hunter_hunt", hunter_id: 7 },
+      { type: "sell_hunter_loot", hunter_id: 7 },
+      { type: "revive_hunter", hunter_id: 7 },
+      { type: "learn_hunter_skill", hunter_id: 7, skill_id: "skill_h1_01" },
+      { type: "use_hunter_skill", hunter_id: 7, skill_id: "skill_h1_01", target_entity_id: "monster-background_08-0" },
     ]);
     client.disconnect();
   });
@@ -170,6 +186,27 @@ describe("session bootstrap", () => {
     expect(secondSocket.listeners.size).toBeGreaterThan(0);
     client.disconnect();
     vi.useRealTimers();
+  });
+
+  it("merges lightweight world frames without discarding domain state", async () => {
+    const socket = new FakeSocket();
+    const snapshots: Array<Record<string, unknown>> = [];
+    const client = new WorldClient((snapshot) => snapshots.push(snapshot as unknown as Record<string, unknown>), () => undefined, undefined, undefined, undefined, {
+      apiBaseUrl: "http://game.test",
+      webSocketUrl: "ws://game.test/ws",
+      fetchFn: vi.fn(async () => new Response(null, { status: 204 })),
+      socketFactory: () => socket as unknown as WebSocket,
+    });
+
+    client.connect();
+    await settlePromises();
+    socket.emit("message", { data: serverEnvelope(1, "welcome") });
+    socket.emit("message", { data: serverEnvelope(2, "world_frame") });
+
+    expect(snapshots).toHaveLength(2);
+    expect(snapshots[1]?.village).toEqual({ marker: "keep-village" });
+    expect((snapshots[1]?.world as { visual_tick: number }).visual_tick).toBe(12);
+    client.disconnect();
   });
 
   it("treats malformed server data as a protocol fault", async () => {
@@ -216,20 +253,22 @@ class FakeSocket {
   }
 }
 
-function serverEnvelope(sequence: number, type: "welcome" | "world_update"): string {
+function serverEnvelope(sequence: number, type: "welcome" | "world_update" | "world_frame"): string {
   const snapshot = {
     screen: "boot",
     content_release_id: "original-flow-v1",
     content_release_runnable: false,
     flow_order: ["boot", "village", "hunter_roster", "field"],
-    village: {},
+    village: { marker: "keep-village" },
     hunter_roster: {},
     field: {},
-    world: { entities: [] },
+    world: { entities: [], combat_presentations: [] },
   };
   const payload = type === "welcome"
     ? { type, player_token: TOKEN, session_id: "00000000-0000-4000-8000-000000000001", snapshot }
-    : { type, snapshot };
+    : type === "world_frame"
+      ? { type, world: { visual_tick: 12, entities: [], combat_presentations: [] } }
+      : { type, snapshot };
   return JSON.stringify({
     version: PROTOCOL_VERSION,
     sequence,

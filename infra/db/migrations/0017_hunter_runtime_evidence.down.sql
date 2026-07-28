@@ -1,0 +1,35 @@
+DROP TABLE IF EXISTS player_hunter_runtime_riding_pet;
+DROP TABLE IF EXISTS player_hunter_runtime_growth;
+DROP TABLE IF EXISTS player_hunter_runtime_consumable;
+DROP TABLE IF EXISTS player_hunter_runtime_gear;
+DROP TABLE IF EXISTS player_hunter_runtime_item;
+DROP TABLE IF EXISTS player_hunter_runtime_skill;
+DROP TABLE IF EXISTS player_hunter_runtime_appearance;
+DROP TABLE IF EXISTS player_hunter_runtime_section;
+
+ALTER TABLE player_hunter
+    DROP CONSTRAINT IF EXISTS player_hunter_source_dictionary_unique,
+    DROP COLUMN IF EXISTS source_dodge,
+    DROP COLUMN IF EXISTS source_attack_speed,
+    DROP COLUMN IF EXISTS source_critical,
+    DROP COLUMN IF EXISTS source_armor,
+    DROP COLUMN IF EXISTS source_damage,
+    DROP COLUMN IF EXISTS source_now_tire,
+    DROP COLUMN IF EXISTS source_tire,
+    DROP COLUMN IF EXISTS source_now_hungry,
+    DROP COLUMN IF EXISTS source_hungry,
+    DROP COLUMN IF EXISTS source_now_feel,
+    DROP COLUMN IF EXISTS source_feel,
+    DROP COLUMN IF EXISTS source_now_hp,
+    DROP COLUMN IF EXISTS source_hp,
+    DROP COLUMN IF EXISTS source_personality,
+    DROP COLUMN IF EXISTS source_used_job_trait,
+    DROP COLUMN IF EXISTS source_used_dark_soul,
+    DROP COLUMN IF EXISTS source_dark_soul,
+    DROP COLUMN IF EXISTS source_grade_rank_up,
+    DROP COLUMN IF EXISTS source_fourth_job,
+    DROP COLUMN IF EXISTS source_third_job,
+    DROP COLUMN IF EXISTS source_sub_job,
+    DROP COLUMN IF EXISTS source_job,
+    DROP COLUMN IF EXISTS source_index,
+    DROP COLUMN IF EXISTS source_dictionary_key;

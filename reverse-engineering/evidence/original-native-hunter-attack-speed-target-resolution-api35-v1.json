@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T06:45:51.239348Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 21047,
+    "action": "pass-4 reverse resolve module offset 0x33f79bc pointer only; no player values",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [],
+    "requestedModuleOffsets": [
+      "0x33f79bc"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 0,
+    "exactBoundaries": false
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a9401000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 0,
+      "exactBoundaries": false,
+      "requested": [],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "InitHunterHpBar",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686865,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ac7f89bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f79bc",
+              "codeHex": null
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ac7f89bc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f79bc",
+              "codeHex": null
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

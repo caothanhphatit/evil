@@ -22,6 +22,7 @@ export interface ProjectionBufferOptions {
   maxFrames?: number;
   maxTickGap?: number;
   teleportDistance?: number;
+  maxExtrapolationTicks?: number;
 }
 
 export class ProjectionBuffer {
@@ -31,13 +32,15 @@ export class ProjectionBuffer {
   private readonly maxFrames: number;
   private readonly maxTickGap: number;
   private readonly teleportDistance: number;
+  private readonly maxExtrapolationTicks: number;
 
   constructor(options: ProjectionBufferOptions = {}) {
-    this.tickDurationMs = options.tickDurationMs ?? 200;
-    this.renderDelayTicks = (options.renderDelayMs ?? 200) / this.tickDurationMs;
+    this.tickDurationMs = options.tickDurationMs ?? 100;
+    this.renderDelayTicks = (options.renderDelayMs ?? 0) / this.tickDurationMs;
     this.maxFrames = options.maxFrames ?? 12;
-    this.maxTickGap = options.maxTickGap ?? 1;
+    this.maxTickGap = options.maxTickGap ?? 5;
     this.teleportDistance = options.teleportDistance ?? 220;
+    this.maxExtrapolationTicks = options.maxExtrapolationTicks ?? 5;
   }
 
   push(mode: ProjectionMode, visualTick: number, entities: WorldEntityProjection[], receivedAtMs: number): ProjectionPushResult {
@@ -70,7 +73,21 @@ export class ProjectionBuffer {
     const targetTick = newest.visualTick - this.renderDelayTicks + elapsedTicks;
     const oldest = this.frames[0];
     if (targetTick <= oldest.visualTick) return sampleFrame(oldest);
-    if (targetTick >= newest.visualTick) return sampleFrame(newest);
+    if (targetTick >= newest.visualTick) {
+      if (this.maxExtrapolationTicks <= 0) return sampleFrame(newest);
+      const previous = this.frames[this.frames.length - 2];
+      const duration = newest.visualTick - previous.visualTick;
+      if (duration <= 0 || duration > this.maxTickGap) return sampleFrame(newest);
+      const extrapolation = Math.min(
+        this.maxExtrapolationTicks,
+        (targetTick - newest.visualTick) / duration,
+      );
+      return {
+        mode: newest.mode,
+        visualTick: newest.visualTick + extrapolation * duration,
+        entities: extrapolateMovingEntities(previous.entities, newest.entities, extrapolation),
+      };
+    }
 
     for (let index = 1; index < this.frames.length; index += 1) {
       const current = this.frames[index];
@@ -105,6 +122,25 @@ function interpolateEntities(previous: WorldEntityProjection[], current: WorldEn
       ...entity,
       x: earlier.x + (entity.x - earlier.x) * alpha,
       y: earlier.y + (entity.y - earlier.y) * alpha,
+    };
+  });
+}
+
+function extrapolateMovingEntities(
+  previous: WorldEntityProjection[],
+  current: WorldEntityProjection[],
+  ticks: number,
+): WorldEntityProjection[] {
+  const previousById = new Map(previous.map((entity) => [entity.descriptor.entity_id, entity]));
+  return current.map((entity) => {
+    const earlier = previousById.get(entity.descriptor.entity_id);
+    if (!earlier || entity.action_state !== "walking" || earlier.action_state !== "walking") {
+      return entity;
+    }
+    return {
+      ...entity,
+      x: entity.x + (entity.x - earlier.x) * ticks,
+      y: entity.y + (entity.y - earlier.y) * ticks,
     };
   });
 }

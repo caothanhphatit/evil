@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-combat-cadence-stat-chain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": { "id": "com.superplanet.evilhunter", "versionName": "1.411", "versionCode": "26071501", "androidApi": 35, "abi": "arm64-v8a" },
+  "sources": [
+    { "path": "reverse-engineering/evidence/original-native-combat-cadence-methods-api35-v1.json", "sha256": "3bbe348636bda2f0821ea6e1a7061f723d2c2519e07e09dd8cfed73037210655" },
+    { "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json", "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80" },
+    { "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json", "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8" },
+    { "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json", "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0" },
+    { "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json", "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf" },
+    { "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json", "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678" }
+  ],
+  "methods": [
+    { "type": "EvilCtrl", "method": "UnitAttack", "token": "0x0600300D", "moduleOffset": "0x2f156ac", "nativeSizeBytes": 44, "bodySha256": "ec9f2a92603308602a0d1012f0191e65122fdd91f96b464925bcd86ac1519571" },
+    { "type": "EvilCtrl", "method": "UnitAttackEnd", "token": "0x06002FC1", "moduleOffset": "0x2f1d1b0", "nativeSizeBytes": 44, "bodySha256": "b14201efbd5cd9700c49f74cfd7e06f73ab9c838451d801802fe9753fda317df" },
+    { "type": "HunterCtrl", "method": "HuntingAttackEnd", "token": "0x06005B54", "moduleOffset": "0x33f8210", "nativeSizeBytes": 216, "bodySha256": "3bd8e7aaca685bbac7a8abaadc686883536a30ad846f22222ef892fedaf81a8b" },
+    { "type": "HunterCtrl", "method": "HuntingAttackAction", "token": "0x06005C28", "moduleOffset": "0x3416a40", "nativeSizeBytes": 8016, "bodySha256": "ba7fd4e42daefba169ded822a4aaef70cee0371609f8eb2804f3b8cecf65bf59" },
+    { "type": "HunterCtrl", "method": "getDamage", "token": "0x06005C37", "moduleOffset": "0x33f51c4", "nativeSizeBytes": 9496, "bodySha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3" },
+    { "type": "HunterCtrl", "method": "getCriticalDamage", "token": "0x06005C4D", "moduleOffset": "0x33f97a8", "nativeSizeBytes": 1908, "bodySha256": "6b63930b2d504f052ae5b56eb8a6136a5ccdc7e4f8372f7ad1ca5dde567104f5" },
+    { "type": "HunterCtrl", "method": "Damaged", "token": "0x06005CAA", "moduleOffset": "0x346514c", "nativeSizeBytes": 18964, "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6" },
+    { "type": "EvilCtrl", "method": "GetReduceAttackValue", "token": "0x06002FAD", "moduleOffset": "0x2f0f6d8", "nativeSizeBytes": 88, "bodySha256": "dc650c97c453fd9f14901245d118681776e250644a1d965da52c63c85e8e76c2" },
+    { "type": "EvilCtrl", "method": "Damaged", "token": "0x06003014", "moduleOffset": "0x2f2be20", "nativeSizeBytes": 4736, "bodySha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb" }
+  ],
+  "runtimeConstants": [
+    { "moduleOffset": "0xd2b040", "float32": 0.07999999821186066, "role": "EvilCtrl.UnitAttack base delay constant" },
+    { "moduleOffset": "0xd2b20c", "float32": 0.3330000042915344, "role": "HunterCtrl.HuntingAttackAction numerator" },
+    { "moduleOffset": "0xd2b7f8", "float32": 0.699999988079071, "role": "HunterCtrl.HuntingAttackAction fallback animation time" },
+    { "moduleOffset": "0xd2ac8c", "float32": 0.009999999776482582, "role": "percent-to-ratio constant used by damage and critical chains" }
+  ],
+  "exactEquations": [
+    {
+      "id": "evil-unit-attack-delay",
+      "equation": "EPFLFJHGLKH = 0.08 * max(EPIMNKLDPCC, 1.0)",
+      "fields": [
+        { "name": "EPFLFJHGLKH", "offset": 128, "type": "System.Single", "semanticStatus": "timer destination unresolved" },
+        { "name": "EPIMNKLDPCC", "offset": 572, "type": "System.Single", "semanticStatus": "attack cadence factor unresolved" },
+        { "name": "JLHEBEFNCPL", "offset": 132, "type": "System.Boolean", "write": true, "semanticStatus": "attack-state flag unresolved" }
+      ]
+    },
+    {
+      "id": "hunter-attack-animation-time",
+      "equation": "composite = DANCPPLMKIK * decode(BCEBGLKCDHN); AttackAniTime = composite > 1.0 ? 0.333 / composite : 0.7",
+      "fields": [
+        { "name": "DANCPPLMKIK", "offset": 984, "type": "System.Single", "semanticStatus": "cadence factor unresolved" },
+        { "name": "BCEBGLKCDHN", "offset": 1708, "type": "ObscuredFloat", "semanticStatus": "cadence factor unresolved" },
+        { "name": "AttackAniTime", "offset": 428, "type": "System.Single", "semanticStatus": "confirmed destination" }
+      ]
+    },
+    {
+      "id": "evil-reduce-attack-stack",
+      "equation": "(1 - field_0x1E4) * (1 - field_0x1EC) * (1 - field_0x1F4)",
+      "semanticStatus": "arithmetic confirmed; modifier sources unresolved"
+    }
+  ],
+  "criticalChain": {
+    "baseMultiplier": 1.75,
+    "operation": "additive runtime modifiers are accumulated onto the 1.75 base before an ObscuredFloat is returned",
+    "percentScale": 0.01,
+    "semanticStatus": "base and additive shape confirmed; modifier identities and gating branches unresolved"
+  },
+  "statusDataFields": [
+    { "name": "CalcDamage", "runtimeName": "<CalcDamage>k__BackingField", "offset": 40, "type": "ObscuredLong" },
+    { "name": "CalcArmor", "runtimeName": "<CalcArmor>k__BackingField", "offset": 72, "type": "ObscuredLong" },
+    { "name": "CalcAttackSpeed", "runtimeName": "<CalcAttackSpeed>k__BackingField", "offset": 136, "type": "ObscuredFloat" },
+    { "name": "CalcCritical", "runtimeName": "<CalcCritical>k__BackingField", "offset": 176, "type": "ObscuredInt" },
+    { "name": "CalcDodge", "runtimeName": "<CalcDodge>k__BackingField", "offset": 192, "type": "ObscuredInt" },
+    { "name": "Damage", "runtimeName": "<Damage>k__BackingField", "offset": 312, "type": "ObscuredLong" },
+    { "name": "Armor", "runtimeName": "<Armor>k__BackingField", "offset": 344, "type": "ObscuredLong" },
+    { "name": "AttackSpeed", "runtimeName": "<AttackSpeed>k__BackingField", "offset": 408, "type": "ObscuredFloat" },
+    { "name": "WeaponSpeed", "runtimeName": "<WeaponSpeed>k__BackingField", "offset": 428, "type": "ObscuredFloat" },
+    { "name": "Critical", "runtimeName": "<Critical>k__BackingField", "offset": 468, "type": "ObscuredFloat" },
+    { "name": "Dodge", "runtimeName": "<Dodge>k__BackingField", "offset": 488, "type": "ObscuredFloat" },
+    { "name": "OptionCritical", "runtimeName": "OptionCritical", "offset": 796, "type": "ObscuredInt" },
+    { "name": "OptionDodge", "runtimeName": "OptionDodge", "offset": 812, "type": "ObscuredInt" },
+    { "name": "PersonalCritical", "runtimeName": "PersonalCritical", "offset": 964, "type": "ObscuredFloat" },
+    { "name": "PersonalDodge", "runtimeName": "PersonalDodge", "offset": 984, "type": "ObscuredFloat" },
+    { "name": "RankCritical", "runtimeName": "RankCritical", "offset": 1976, "type": "ObscuredFloat" },
+    { "name": "RankDodge", "runtimeName": "RankDodge", "offset": 1996, "type": "ObscuredFloat" }
+  ],
+  "criticalChanceCore": {
+    "statusField": { "name": "CalcCritical", "offset": 176, "type": "ObscuredInt" },
+    "optionalBonusField": { "owner": "HunterCtrl", "name": "JOFGKPCLDAI", "offset": 2316, "type": "ObscuredInt" },
+    "thresholdEquation": "threshold = min(100, CalcCritical + (bonusEnabled ? decode(JOFGKPCLDAI) : 0))",
+    "rng": "UnityEngine.Random.Range(0, 100)",
+    "criticalBranch": "roll < threshold",
+    "semanticStatus": "threshold core confirmed; getDamage boolean parameters, bonus gate and target-specific gates unresolved"
+  },
+  "evilIncomingDamagePrefix": {
+    "method": "EvilCtrl.Damaged(string, long, int, bool, int, bool)",
+    "incomingDamageAbiRegister": "x2",
+    "firstStageEquation": "damage = truncTowardZero(incomingDamage * selectedRuntimeFactor * GameManager.RandDamage())",
+    "conditionalFields": [
+      { "name": "DBOHIPNFBJG", "offset": 476, "type": "System.Single" },
+      { "name": "EAEBBPMBEOD", "offset": 480, "type": "System.Single" }
+    ],
+    "conditionalMultiplier": "when DBOHIPNFBJG + EAEBBPMBEOD is greater than float32 bits 0x00000001, multiply the current damage by 1 + DBOHIPNFBJG + EAEBBPMBEOD",
+    "semanticStatus": "prefix arithmetic confirmed; selected factor identity and later armor/reduction/rounding order unresolved"
+  },
+  "stateTransitions": [
+    "EvilCtrl.UnitAttack sets the Boolean at offset 132 and writes the delay at offset 128.",
+    "EvilCtrl.UnitAttackEnd clears offsets 160, 132 and 344 before dispatching its next FSM action.",
+    "HunterCtrl.HuntingAttackEnd clears mTargetEvil at offset 888 and mAttackCheck at offset 500.",
+    "HunterCtrl.HuntingAttackAction writes AttackAniTime at offset 428 and increments TargetAttackCount at offset 896."
+  ],
+  "goldenVectors": {
+    "evilUnitAttackDelay": [
+      { "factor": 0.5, "expected": 0.08 },
+      { "factor": 1.0, "expected": 0.08 },
+      { "factor": 1.5, "expected": 0.12 },
+      { "factor": 2.0, "expected": 0.16 }
+    ],
+    "hunterAttackAnimationTime": [
+      { "composite": 0.5, "expected": 0.7 },
+      { "composite": 1.0, "expected": 0.7 },
+      { "composite": 1.5, "expected": 0.22200000286102295 },
+      { "composite": 3.0, "expected": 0.11100000143051148 }
+    ],
+    "criticalThresholdCore": [
+      { "calcCritical": 0, "bonusEnabled": false, "bonus": 25, "roll": 0, "threshold": 0, "critical": false },
+      { "calcCritical": 25, "bonusEnabled": false, "bonus": 40, "roll": 24, "threshold": 25, "critical": true },
+      { "calcCritical": 25, "bonusEnabled": true, "bonus": 40, "roll": 64, "threshold": 65, "critical": true },
+      { "calcCritical": 90, "bonusEnabled": true, "bonus": 40, "roll": 99, "threshold": 100, "critical": true }
+    ]
+  },
+  "unresolved": [
+    "The semantic writers for EPIMNKLDPCC, DANCPPLMKIK and BCEBGLKCDHN, so they are not yet named attackSpeed in implementation.",
+    "Accuracy versus dodge roll and miss threshold; the observed HunterCtrl.Damaged RNG branches are not yet proven to be dodge checks.",
+    "Armor/reduction order inside HunterCtrl.getDamage and EvilCtrl.Damaged.",
+    "The getDamage boolean-parameter meanings, optional critical-bonus gate, target gates and complete critical-damage modifier identities.",
+    "Rounding and clamp order of the final damage integer."
+  ]
+}

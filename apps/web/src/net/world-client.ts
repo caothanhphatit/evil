@@ -51,6 +51,7 @@ export class WorldClient {
   private readonly webSocketUrl: string;
   private readonly envelopeSequencer = new EnvelopeSequencer();
   private readonly serverSequenceGuard = new ServerSequenceGuard();
+  private latestSnapshot: OriginalFlowSnapshot | null = null;
 
   constructor(
     private readonly onSnapshot: (snapshot: OriginalFlowSnapshot) => void,
@@ -89,6 +90,10 @@ export class WorldClient {
   selectBottomMenu(menu: BottomMenuIntent): boolean { return this.send({ type: "select_bottom_menu", menu }); }
   navigateBack(): boolean { return this.send({ type: "navigate_back" }); }
   enterField(): boolean { return this.send({ type: "enter_field" }); }
+  enterMonsterMap(mapId: string): boolean { return this.send({ type: "enter_monster_map", map_id: mapId }); }
+  setMonsterDensity(level: number): boolean { return this.send({ type: "set_monster_density", level }); }
+  setMonsterRegionDensity(regionId: string, level: number): boolean { return this.send({ type: "set_monster_region_density", region_id: regionId, level }); }
+  selectMonsterTarget(monsterId: string, hunterId: number): boolean { return this.send({ type: "select_monster_target", monster_id: monsterId, hunter_id: hunterId }); }
   selectEntity(entityId: string): boolean { return this.send({ type: "select_entity", entity_id: entityId }); }
   constructBuilding(buildingId: string): boolean { return this.send({ type: "construct_building", building_id: buildingId }); }
   constructBuildingAt(buildingId: string, gridX: number, gridY: number): boolean { return this.send({ type: "construct_building_at", building_id: buildingId, grid_x: gridX, grid_y: gridY }); }
@@ -102,6 +107,14 @@ export class WorldClient {
   purchaseShopItem(shopId: string, productId: string): boolean { return this.send({ type: "purchase_shop_item", shop_id: shopId, product_id: productId }); }
   sellShopItem(shopId: string, productId: string): boolean { return this.send({ type: "sell_shop_item", shop_id: shopId, product_id: productId }); }
   openHunterProgression(hunterId: number): boolean { return this.send({ type: "open_hunter_progression", hunter_id: hunterId }); }
+  assignHunterHunt(hunterId: number, zoneId: string): boolean { return this.send({ type: "assign_hunter_hunt", hunter_id: hunterId, zone_id: zoneId }); }
+  returnHunterHunt(hunterId: number): boolean { return this.send({ type: "return_hunter_hunt", hunter_id: hunterId }); }
+  sellHunterLoot(hunterId: number): boolean { return this.send({ type: "sell_hunter_loot", hunter_id: hunterId }); }
+  reviveHunter(hunterId: number): boolean { return this.send({ type: "revive_hunter", hunter_id: hunterId }); }
+  learnHunterSkill(hunterId: number, skillId: string): boolean { return this.send({ type: "learn_hunter_skill", hunter_id: hunterId, skill_id: skillId }); }
+  useHunterSkill(hunterId: number, skillId: string, targetEntityId: string | null = null): boolean {
+    return this.send({ type: "use_hunter_skill", hunter_id: hunterId, skill_id: skillId, target_entity_id: targetEntityId });
+  }
   banishHunter(hunterId: number): boolean { return this.send({ type: "banish_hunter", hunter_id: hunterId }); }
   equipHunterItem(hunterId: number, itemId: number): boolean { return this.send({ type: "equip_hunter_item", hunter_id: hunterId, item_id: itemId }); }
   requestResync(): boolean { return this.send({ type: "request_resync" }); }
@@ -169,8 +182,16 @@ export class WorldClient {
       }
       if (message.type === "intent_result") this.onIntentFeedback({ intent: message.intent, accepted: message.accepted, reason: message.reason });
       if (message.type === "binding_blocked") this.onBindingBlocked({ intent: message.intent, blockers: message.blockers });
+      if (message.type === "world_frame") {
+        if (this.latestSnapshot) {
+          this.latestSnapshot = { ...this.latestSnapshot, world: message.world };
+          this.onSnapshot(this.latestSnapshot);
+        }
+        return;
+      }
       const snapshot = snapshotFromMessage(message);
       if (snapshot) {
+        this.latestSnapshot = snapshot;
         if (snapshot.screen !== "boot") this.pendingBoot = false;
         this.onSnapshot(snapshot);
       }
@@ -245,8 +266,17 @@ function isServerMessage(value: unknown): value is ServerMessage {
   if (message.type === "welcome") return typeof message.player_token === "string" && typeof message.session_id === "string" && isSnapshot(message.snapshot);
   if (message.type === "resync") return isSnapshot(message.snapshot);
   if (message.type === "world_update") return isSnapshot(message.snapshot);
+  if (message.type === "world_frame") return isWorldProjection(message.world);
   if (message.type === "intent_result") return typeof message.intent === "string" && typeof message.accepted === "boolean" && isSnapshot(message.snapshot);
   return message.type === "binding_blocked" && typeof message.intent === "string" && Array.isArray(message.blockers) && isSnapshot(message.snapshot);
+}
+
+function isWorldProjection(value: unknown): boolean {
+  if (typeof value !== "object" || value === null) return false;
+  const world = value as Record<string, unknown>;
+  return typeof world.visual_tick === "number"
+    && Array.isArray(world.entities)
+    && Array.isArray(world.combat_presentations);
 }
 
 function isServerEnvelope(value: unknown): value is ServerEnvelope {
@@ -265,5 +295,6 @@ function isSnapshot(value: unknown): value is OriginalFlowSnapshot {
     && typeof snapshot.hunter_roster === "object" && snapshot.hunter_roster !== null
     && typeof snapshot.field === "object" && snapshot.field !== null
     && typeof snapshot.world === "object" && snapshot.world !== null
-    && Array.isArray((snapshot.world as Record<string, unknown>).entities);
+    && Array.isArray((snapshot.world as Record<string, unknown>).entities)
+    && Array.isArray((snapshot.world as Record<string, unknown>).combat_presentations);
 }

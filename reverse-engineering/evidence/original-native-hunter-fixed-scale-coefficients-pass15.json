@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-fixed-scale-coefficients-pass15",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "bytes": 409504,
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-skill-coefficient-action-targets-api35-v1.json",
+      "bytes": 7783,
+      "sha256": "b8107326aebcec5d0793262d05251a1d64bde75c6f47a4831c366128759db6c9"
+    },
+    {
+      "path": "reverse-engineering/evidence/constant-data-runtime-schema-api35-v1.json",
+      "bytes": 299479,
+      "sha256": "1f381c9d27cc42803a8834a0e4d3379603b72c8639d3ae1ebf6e2c3907081431"
+    },
+    {
+      "path": "game-assets/source/Evil+Hunter+Tycoon_1.411_APKPure.xapk",
+      "bytes": 346660544,
+      "sha256": "69c74073dbe3fc67d7b228a6f9fe5ad34f352f7faa3552a1500fc76b731015c3"
+    }
+  ],
+  "packageLibrary": {
+    "containerEntry": "config.arm64_v8a.apk",
+    "libraryEntry": "lib/arm64-v8a/libil2cpp.so",
+    "libraryBytes": 104557288,
+    "librarySha256": "7ca72697375e87703f03867ccfcf8d7ddec1e5cca8b9cd9de4736b666cd8390f"
+  },
+  "packageLiterals": {
+    "integerPercentScale": {
+      "moduleOffset": "0xd2ac8c",
+      "rawHex": "0ad7233c",
+      "type": "float32",
+      "value": 0.009999999776482582
+    },
+    "featherShotFixedScale": {
+      "moduleOffset": "0xd2a064",
+      "rawHex": "00209544",
+      "type": "float32",
+      "value": 1193.0
+    },
+    "darkRiftFixedScale": {
+      "moduleOffset": "0xd29eb8",
+      "rawHex": "00a0c744",
+      "type": "float32",
+      "value": 1597.0
+    }
+  },
+  "families": [
+    {
+      "id": "direct-obscured-int-package-scale",
+      "pipeline": "decode ConstantData ObscuredInt; convert to float32; multiply by exact package float32 scale; multiply by float32(baseDamage); FCVTZS",
+      "rounding": "all multiplication is float32; final FCVTZS truncates toward zero",
+      "members": [
+        {
+          "method": {
+            "className": "HunterCtrl",
+            "methodName": "JDONOEEBDCD",
+            "parameterTypes": [
+              "EvilCtrl"
+            ],
+            "token": 100686893,
+            "moduleOffset": "0x34219a0",
+            "nativeSizeBytes": 1208,
+            "bodySha256": "6d6e718d3357837b6510d29e7be2f1599c4621b14fe427298a515018e57dab5b"
+          },
+          "getDamageVector": [
+            true,
+            false,
+            false
+          ],
+          "coefficientSource": {
+            "name": "FEATHER_SHOT_POWER_VALUE",
+            "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+            "offset": 10352,
+            "flags": 54,
+            "runtimeDataOffset": "0x2870"
+          },
+          "packageScale": {
+            "moduleOffset": "0xd2ac8c",
+            "rawHex": "0ad7233c",
+            "type": "float32",
+            "value": 0.009999999776482582
+          },
+          "equation": "damage = trunc_i64(float32(baseDamage) * float32(decode(FEATHER_SHOT_POWER_VALUE)) * 0.01f)",
+          "presentationCall": {
+            "targetModuleOffset": "0x27e8964",
+            "damageForwarded": false,
+            "selectorRegister": "w3=0"
+          },
+          "damageRoute": {
+            "targetModuleOffset": "0x32ff6cc",
+            "managedIdentity": null,
+            "damageArgumentRegister": "x4"
+          }
+        },
+        {
+          "method": {
+            "className": "HunterCtrl",
+            "methodName": "BGIJEDLALGE",
+            "parameterTypes": [
+              "EvilCtrl"
+            ],
+            "token": 100686777,
+            "moduleOffset": "0x3433084",
+            "nativeSizeBytes": 1232,
+            "bodySha256": "d542b9126dc89186b7585799166d24c443823b68a726dab0ad98685c93f9e84b"
+          },
+          "getDamageVector": [
+            true,
+            false,
+            false
+          ],
+          "coefficientSource": {
+            "name": "FEATHER_SHOT_POWER_VALUE",
+            "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+            "offset": 10352,
+            "flags": 54,
+            "runtimeDataOffset": "0x2870"
+          },
+          "packageScale": {
+            "moduleOffset": "0xd2a064",
+            "rawHex": "00209544",
+            "type": "float32",
+            "value": 1193.0
+          },
+          "equation": "damage = trunc_i64(float32(baseDamage) * float32(decode(FEATHER_SHOT_POWER_VALUE)) * 1193.0f)",
+          "presentationCall": {
+            "targetModuleOffset": "0x27e8964",
+            "damageForwarded": false,
+            "selectorRegister": "w3=1"
+          },
+          "damageRoute": {
+            "targetModuleOffset": "0x32ff6cc",
+            "managedIdentity": null,
+            "damageArgumentRegister": "x4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "obscured-int-fixed-scale-obscured-float-roundtrip",
+      "pipeline": "decode ConstantData ObscuredInt; convert to float32; multiply by exact package float32 scale; initialize/decode ObscuredFloat; multiply by float32(baseDamage); FCVTZS",
+      "rounding": "all multiplication is float32; final FCVTZS truncates toward zero",
+      "members": [
+        {
+          "method": {
+            "className": "HunterCtrl",
+            "methodName": "BGHEAJHAICN",
+            "parameterTypes": [
+              "EvilCtrl"
+            ],
+            "token": 100687014,
+            "moduleOffset": "0x3464a58",
+            "nativeSizeBytes": 748,
+            "bodySha256": "ba364ccf29bbe7953c1918332d1b26089f847a6ea7880e6c092a79af876b2e34"
+          },
+          "getDamageVector": [
+            true,
+            true,
+            false
+          ],
+          "coefficientSource": {
+            "name": "DARK_RIFT_POWER_VALUE",
+            "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+            "offset": 10320,
+            "flags": 54,
+            "runtimeDataOffset": "0x2850"
+          },
+          "packageScale": {
+            "moduleOffset": "0xd29eb8",
+            "rawHex": "00a0c744",
+            "type": "float32",
+            "value": 1597.0
+          },
+          "equation": "wrappedCoefficient = ObscuredFloat(float32(decode(DARK_RIFT_POWER_VALUE)) * 1597.0f); damage = trunc_i64(float32(baseDamage) * decode(wrappedCoefficient))",
+          "damageRoute": {
+            "target": "FlameExplosionCtrl.Action",
+            "damageParameter": 4,
+            "selectorParameter6": 1
+          }
+        }
+      ]
+    }
+  ],
+  "resolvedActionTargets": {
+    "flameExplosion": {
+      "className": "FlameExplosionCtrl",
+      "methodName": "Action",
+      "parameterTypes": [
+        "System.String",
+        "System.Int32",
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Int32"
+      ],
+      "token": 100664470,
+      "moduleOffset": "0x2c572b0",
+      "nativeSizeBytes": 472,
+      "bodySha256": "295aafedf4dee9c98449c3a4aa4e5c765576ce291d4a68273bf6f898cc53eb52"
+    }
+  },
+  "coverage": {
+    "exactGetDamageCallerBodies": 49,
+    "coefficientArithmeticResolvedBeforeThisPass": 15,
+    "coefficientArithmeticResolvedThisPass": 3,
+    "remainingCoefficientArithmeticCallerBodies": 31,
+    "semanticCallerResolution": "lower than arithmetic coverage because two native route identities and all three public skill-row mappings remain unresolved"
+  },
+  "unresolved": [
+    "managed identities and parameter contracts of module targets 0x27e8964 and 0x32ff6cc",
+    "public skill-row mappings for JDONOEEBDCD, BGIJEDLALGE, and BGHEAJHAICN",
+    "why the same FEATHER_SHOT_POWER_VALUE field has exact package scales 0.01f and 1193.0f in sibling native callers",
+    "why the DARK_RIFT_POWER_VALUE sibling uses exact package scale 1597.0f while BCLCCDFCHFC uses 0.01f",
+    "coefficient producers and action routes for the remaining thirty-one caller bodies"
+  ],
+  "integrationStatus": "disconnected_no_literal_reinterpretation_or_live_combat_use"
+}

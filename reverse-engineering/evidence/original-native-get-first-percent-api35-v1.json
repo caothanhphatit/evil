@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-get-first-percent-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": "35",
+    "action": "Exact candidate helper identity and body capture; no player values"
+  },
+  "method": {
+    "type": "GameManager",
+    "name": "GetFirstPercent",
+    "token": "0x06006B04",
+    "parameterTypes": ["System.Int32", "System.Int32", "System.Int32"],
+    "returnType": "System.Int32",
+    "moduleOffset": "0x26bdf7c",
+    "nativeSizeBytes": 1108,
+    "bodySha256": "93763390fa4008b56c5c4a3cb16d085b3005d778fc2a9cb8246490a553cea3b"
+  },
+  "recoveredBehavior": {
+    "adminField": "AdminGearData.firstPercent",
+    "adminFieldOffset": 152,
+    "negativeLimitResult": 0,
+    "stepToArrayIndex": {
+      "1..5": 0,
+      "6..10": 1,
+      "11..15": 2,
+      "16..20": 3,
+      "21": 4,
+      "22": 5,
+      "23": 6,
+      "24": 7,
+      "25": 8
+    },
+    "stepsOutsideMapping": "add zero",
+    "result": "sum the selected firstPercent values for every integer step from 0 through limit inclusive"
+  },
+  "limitations": [
+    "The three parameter names remain obfuscated; GetGear* callers prove the two catalog coordinates and the inclusive level limit structurally.",
+    "This method does not assign gameplay meanings to plus/minus option enums."
+  ]
+}

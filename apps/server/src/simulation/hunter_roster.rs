@@ -4,12 +4,34 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use uuid::Uuid;
 
+use super::combat_core::hit_resolution::OriginalEvasionCalculator;
 use super::product_service::HunterServiceGauge;
+use super::DurableHunterRuntimeState;
 
 pub const MAX_ACTIVE_TOWN_HUNTERS: usize = 8;
 pub const MIGRATION_HUNTER_RELEASE_ID: &str = "migration.hunter-demo-v1";
+pub const HUNT_TICKS_TO_RETURN: u32 = 10;
+pub const FIXTURE_HUNT_ZONE_ID: &str = "migration-zone-1";
+pub const ORDINARY_HUNT_REGION_IDS: [&str; 3] = ["map_new01", "background_08", "background_11"];
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableHunterLoot {
+    pub item_id: String,
+    pub quantity: u32,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableHunterHuntState {
+    /// This is an explicit web-rebuild-v1 fixture state, not a recovered legacy rule.
+    pub status: String,
+    pub zone_id: Option<String>,
+    pub progress_ticks: u32,
+    pub loot: Vec<DurableHunterLoot>,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct DurableHunterProfile {
     pub content_release_id: String,
@@ -34,10 +56,44 @@ pub struct DurableHunterProfile {
     pub is_locked: Option<bool>,
     pub characteristic_name: Option<String>,
     pub riding_pet_state_resolved: bool,
+    pub equipment_slots: Vec<DurableHunterEquipmentSlot>,
     pub action_state: String,
     pub animation_name: String,
     pub traits: Vec<DurableHunterTrait>,
     pub skills: Vec<DurableHunterSkill>,
+}
+
+impl DurableHunterProfile {
+    /// `evasion_rate_bps` is the persisted total display value. Until the
+    /// remaining native producer inputs are captured, the total is projected
+    /// as the HunterData dodge component and the other native layers are zero.
+    pub(crate) fn calc_dodge(&self) -> i32 {
+        self.evasion_calculator().calc_dodge().unwrap_or(0)
+    }
+
+    pub(crate) fn evasion_calculator(&self) -> OriginalEvasionCalculator {
+        let mut calculator = OriginalEvasionCalculator::default();
+        if let Some(basis_points) = self.evasion_rate_bps {
+            calculator
+                .set_additive_source("profile_total_evasion", basis_points as f32 / 100.0_f32);
+        }
+        calculator
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableHunterEquipmentSlot {
+    pub slot_id: String,
+    pub catalog_kind: String,
+    pub catalog_index: u32,
+    pub display_name: String,
+    pub icon_path: String,
+    pub presentation_gender: String,
+    pub required_class_id: Option<String>,
+    pub locked: bool,
+    /// Operational test data only; never promoted into runtime evidence.
+    pub evidence_state: String,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -66,26 +122,197 @@ pub struct DurableHunterSkill {
     pub skill_level: u8,
     pub equipped_slot: Option<u8>,
     pub ready: bool,
+    #[serde(default)]
+    pub cooldown_remaining_ms: u64,
 }
 
 impl DurableHunterProfile {
     pub fn migration_default(hunter_id: u32) -> Self {
+        const CLASSES: [(&str, &str, &str); 5] = [
+            ("h1", "Berserker", "H1"),
+            ("h2", "Paladin", "H2"),
+            ("h3", "Ranger", "H3"),
+            ("h4", "Sorcerer", "H4"),
+            ("h5", "DarkKnight", "H5"),
+        ];
+        const RARITIES: [(&str, &str); 5] = [
+            ("normal", "Normal"),
+            ("rare", "Rare"),
+            ("superior", "Superior"),
+            ("heroic", "Heroic"),
+            ("legendary", "Legendary"),
+        ];
+        const PERSONALITIES: [&str; 33] = [
+            "Strong",
+            "Fast Runner",
+            "Swift",
+            "Fragile",
+            "Sluggish",
+            "Thickheaded",
+            "Careless",
+            "Stingy",
+            "Charismatic",
+            "Dead Weight",
+            "Baggy Eyes",
+            "Energetic",
+            "Overweight",
+            "Skinny",
+            "Optimistic",
+            "Pessimistic",
+            "Coward",
+            "Fearless",
+            "Addict",
+            "Scared of Hospital",
+            "Heroic",
+            "Rich",
+            "Gambler",
+            "Man of Steel",
+            "Nimble",
+            "Laggard",
+            "Sharp",
+            "Dull",
+            "Ordinary",
+            "YOLO",
+            "Internet Troll",
+            "Naughty",
+            "Rude",
+        ];
+        let class = CLASSES[(hunter_id.saturating_sub(1) as usize) % CLASSES.len()];
+        let rarity = RARITIES[(fixture_roll(hunter_id, 1) as usize) % RARITIES.len()];
+        let level = 8 + fixture_roll(hunter_id, 2) % 23;
+        let xp_to_next_level = 180 + u64::from(fixture_roll(hunter_id, 3) % 360);
+        let xp = u64::from(fixture_roll(hunter_id, 4)) % xp_to_next_level;
+        let attack = 38 + u64::from(fixture_roll(hunter_id, 5) % 115);
+        let defense = 25 + u64::from(fixture_roll(hunter_id, 6) % 90);
         Self {
             content_release_id: MIGRATION_HUNTER_RELEASE_ID.to_owned(),
             display_name: format!("Hunter {hunter_id}"),
-            class_id: "h1".to_owned(),
-            class_name: "Berserker".to_owned(),
-            visual_family: "H1".to_owned(),
-            rarity_id: "normal".to_owned(),
-            rarity_name: "Normal".to_owned(),
-            level: 1,
-            attack: 10,
-            defense: 10,
+            class_id: class.0.to_owned(),
+            class_name: class.1.to_owned(),
+            visual_family: class.2.to_owned(),
+            rarity_id: rarity.0.to_owned(),
+            rarity_name: rarity.1.to_owned(),
+            level,
+            xp,
+            xp_to_next_level: Some(xp_to_next_level),
+            attack,
+            defense,
+            dps_milli: Some((attack * 1_000) + u64::from(fixture_roll(hunter_id, 7) % 900)),
+            critical_rate_bps: Some(300 + fixture_roll(hunter_id, 8) % 1_200),
+            attack_speed_milli: Some(1_200 + fixture_roll(hunter_id, 9) % 1_500),
+            evasion_rate_bps: Some(100 + fixture_roll(hunter_id, 10) % 900),
+            awakening: Some(DurableHunterProgress {
+                current: fixture_roll(hunter_id, 11) % 3,
+                maximum: 4,
+            }),
+            reincarnation: Some(DurableHunterProgress {
+                current: fixture_roll(hunter_id, 12) % 3,
+                maximum: 5,
+            }),
+            is_locked: Some(hunter_id % 4 == 0),
+            characteristic_name: Some(
+                PERSONALITIES[(fixture_roll(hunter_id, 13) as usize) % PERSONALITIES.len()]
+                    .to_owned(),
+            ),
+            riding_pet_state_resolved: hunter_id % 3 == 0,
+            equipment_slots: fixture_equipment(class.0, hunter_id),
             action_state: "idle".to_owned(),
             animation_name: "hunter_stay".to_owned(),
             ..Self::default()
         }
     }
+}
+
+fn fixture_equipment(class_id: &str, hunter_id: u32) -> Vec<DurableHunterEquipmentSlot> {
+    let gender = if hunter_id % 2 == 0 { "male" } else { "female" };
+    let weapon = match class_id {
+        "h1" => (0, "Junk Sword", "weapon-0.png"),
+        "h2" => (9, "Junk Hammer", "weapon-9.png"),
+        "h3" => (18, "Junk Bow", "weapon-18.png"),
+        "h4" => (27, "Junk Staff", "weapon-27.png"),
+        "h5" => (252, "Rusty Spear", "weapon-252.png"),
+        _ => return Vec::new(),
+    };
+    let row = |slot_id: &str,
+               kind: &str,
+               index: u32,
+               name: &str,
+               icon: &str,
+               required_class_id: Option<&str>| DurableHunterEquipmentSlot {
+        slot_id: slot_id.to_owned(),
+        catalog_kind: kind.to_owned(),
+        catalog_index: index,
+        display_name: name.to_owned(),
+        icon_path: format!("/content/releases/evil-hunter-1.411/gear-icons/{icon}"),
+        presentation_gender: gender.to_owned(),
+        required_class_id: required_class_id.map(str::to_owned),
+        locked: false,
+        evidence_state: "web_rebuild_test_fixture".to_owned(),
+    };
+    vec![
+        row(
+            "gloves",
+            "gloves",
+            0,
+            "Tattered Gloves",
+            "gloves-0.png",
+            None,
+        ),
+        row("boots", "boots", 0, "Tattered Shoes", "boots-0.png", None),
+        row(
+            "weapon",
+            "weapon",
+            weapon.0,
+            weapon.1,
+            weapon.2,
+            Some(class_id),
+        ),
+        row("armor", "armor", 0, "Tattered Armor", "armor-0.png", None),
+    ]
+}
+
+/// Deterministic server-side fixture RNG. It is not a recovered original-game roll.
+fn fixture_roll(hunter_id: u32, stream: u32) -> u32 {
+    let mut value = u64::from(hunter_id) ^ (u64::from(stream) << 32) ^ 0x9e37_79b9_7f4a_7c15;
+    value = (value ^ (value >> 30)).wrapping_mul(0xbf58_476d_1ce4_e5b9);
+    value = (value ^ (value >> 27)).wrapping_mul(0x94d0_49bb_1331_11eb);
+    (value ^ (value >> 31)) as u32
+}
+
+pub fn upgrade_operational_fixture_roster(roster: &mut DurableHunterRosterState) -> bool {
+    let mut upgraded = false;
+    for hunter in roster
+        .hunters
+        .iter_mut()
+        .chain(roster.waiting_queue.iter_mut().map(|row| &mut row.hunter))
+    {
+        let profile = &hunter.profile;
+        let old_fixture = profile.content_release_id == MIGRATION_HUNTER_RELEASE_ID
+            && profile.class_id == "h1"
+            && profile.visual_family == "H1"
+            && profile.level == 1
+            && profile.attack == 10
+            && profile.defense == 10;
+        if !old_fixture {
+            if profile.content_release_id == MIGRATION_HUNTER_RELEASE_ID
+                && hunter.profile.equipment_slots.is_empty()
+            {
+                hunter.profile.equipment_slots =
+                    fixture_equipment(&hunter.profile.class_id, hunter.hunter_id);
+                upgraded = true;
+            }
+            continue;
+        }
+        let skills = profile.skills.clone();
+        let action_state = profile.action_state.clone();
+        let animation_name = profile.animation_name.clone();
+        hunter.profile = DurableHunterProfile::migration_default(hunter.hunter_id);
+        hunter.profile.skills = skills;
+        hunter.profile.action_state = action_state;
+        hunter.profile.animation_name = animation_name;
+        upgraded = true;
+    }
+    upgraded
 }
 
 /// Provides an operational roster while the original starter composition remains unresolved.
@@ -115,6 +342,8 @@ pub fn operational_migration_roster() -> DurableHunterRosterState {
                 maximum: 100,
             },
             profile: DurableHunterProfile::migration_default(hunter_id),
+            runtime: DurableHunterRuntimeState::default(),
+            hunt: DurableHunterHuntState::default(),
         };
         roster
             .arrive(hunter)
@@ -123,7 +352,7 @@ pub fn operational_migration_roster() -> DurableHunterRosterState {
     roster
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct DurableHunterRosterState {
     pub roster_resolved: bool,
@@ -133,9 +362,11 @@ pub struct DurableHunterRosterState {
     pub waiting_queue: Vec<DurableWaitingHunter>,
     pub next_arrival_sequence: u64,
     pub banish_commands: BTreeMap<Uuid, HunterBanishment>,
+    #[serde(default)]
+    pub hunt_commands: BTreeMap<Uuid, String>,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DurableHunterState {
     pub hunter_id: u32,
     pub gold: u64,
@@ -149,9 +380,19 @@ pub struct DurableHunterState {
     pub mood: HunterServiceGauge,
     #[serde(default)]
     pub profile: DurableHunterProfile,
+    #[serde(default)]
+    pub runtime: DurableHunterRuntimeState,
+    #[serde(default)]
+    pub hunt: DurableHunterHuntState,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+impl DurableHunterHuntState {
+    pub fn is_idle(&self) -> bool {
+        self.status.is_empty() || self.status == "idle"
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DurableWaitingHunter {
     pub arrival_sequence: u64,
     pub hunter: DurableHunterState,
@@ -182,6 +423,95 @@ pub enum HunterRosterError {
 }
 
 impl DurableHunterRosterState {
+    pub fn active_mut(
+        &mut self,
+        hunter_id: u32,
+    ) -> Result<&mut DurableHunterState, HunterRosterError> {
+        self.hunters
+            .iter_mut()
+            .find(|hunter| hunter.hunter_id == hunter_id)
+            .ok_or(HunterRosterError::ActiveHunterUnknown)
+    }
+
+    pub fn assign_hunt(&mut self, hunter_id: u32, zone_id: &str) -> Result<(), HunterRosterError> {
+        if zone_id.trim().is_empty() {
+            return Err(HunterRosterError::InvalidState("hunt zone is empty"));
+        }
+        if zone_id != FIXTURE_HUNT_ZONE_ID && !ORDINARY_HUNT_REGION_IDS.contains(&zone_id) {
+            return Err(HunterRosterError::InvalidState("hunt zone is unavailable"));
+        }
+        let hunter = self.active_mut(hunter_id)?;
+        if !hunter.hunt.is_idle() && hunter.hunt.status != "hunting" {
+            return Err(HunterRosterError::InvalidState("hunter is not idle"));
+        }
+        let existing_loot = std::mem::take(&mut hunter.hunt.loot);
+        hunter.hunt = DurableHunterHuntState {
+            status: "hunting".to_owned(),
+            zone_id: Some(zone_id.to_owned()),
+            progress_ticks: 0,
+            loot: existing_loot,
+        };
+        hunter.profile.action_state = "hunting".to_owned();
+        hunter.profile.animation_name = "hunter_walk".to_owned();
+        Ok(())
+    }
+
+    pub fn advance_hunt(&mut self, hunter_id: u32, ticks: u32) -> Result<(), HunterRosterError> {
+        let hunter = self.active_mut(hunter_id)?;
+        if hunter.hunt.status != "hunting" {
+            return Err(HunterRosterError::InvalidState("hunter is not hunting"));
+        }
+        let remaining = HUNT_TICKS_TO_RETURN.saturating_sub(hunter.hunt.progress_ticks);
+        let advanced = ticks.min(remaining);
+        hunter.hunt.progress_ticks = hunter.hunt.progress_ticks.saturating_add(advanced);
+        if hunter.hunt.progress_ticks >= HUNT_TICKS_TO_RETURN {
+            hunter.hunt.status = "returning".to_owned();
+            hunter.hunt.loot.push(DurableHunterLoot {
+                item_id: "material:1".to_owned(),
+                quantity: 1,
+            });
+            hunter.profile.action_state = "returning".to_owned();
+            hunter.profile.animation_name = "hunter_walk".to_owned();
+        }
+        Ok(())
+    }
+
+    pub fn return_from_hunt(&mut self, hunter_id: u32) -> Result<(), HunterRosterError> {
+        let hunter = self.active_mut(hunter_id)?;
+        if hunter.hunt.status != "returning" {
+            return Err(HunterRosterError::InvalidState(
+                "hunt is not ready to return",
+            ));
+        }
+        hunter.hunt.status = "idle".to_owned();
+        hunter.profile.action_state = "idle".to_owned();
+        hunter.profile.animation_name = "hunter_stay".to_owned();
+        Ok(())
+    }
+
+    pub fn defeat_hunter(&mut self, hunter_id: u32) -> Result<(), HunterRosterError> {
+        let hunter = self.active_mut(hunter_id)?;
+        hunter.current_hp = 0;
+        hunter.hunt.status = "dead".to_owned();
+        hunter.profile.action_state = "dead".to_owned();
+        hunter.profile.animation_name = "hunter_die".to_owned();
+        Ok(())
+    }
+
+    pub fn revive_hunter(&mut self, hunter_id: u32) -> Result<(), HunterRosterError> {
+        let hunter = self.active_mut(hunter_id)?;
+        if hunter.hunt.status != "dead" {
+            return Err(HunterRosterError::InvalidState("hunter is not dead"));
+        }
+        hunter.current_hp = hunter.max_hp;
+        hunter.hunt = DurableHunterHuntState {
+            status: "idle".to_owned(),
+            ..DurableHunterHuntState::default()
+        };
+        hunter.profile.action_state = "idle".to_owned();
+        hunter.profile.animation_name = "hunter_stay".to_owned();
+        Ok(())
+    }
     pub fn arrive(
         &mut self,
         hunter: DurableHunterState,
@@ -307,6 +637,35 @@ impl DurableHunterRosterState {
                 "waiting queue is not strict FIFO order",
             ));
         }
+        for hunter in self
+            .hunters
+            .iter()
+            .chain(self.waiting_queue.iter().map(|waiting| &waiting.hunter))
+        {
+            let mut slots = HashSet::new();
+            for equipment in &hunter.profile.equipment_slots {
+                if !slots.insert(equipment.slot_id.as_str()) {
+                    return Err(HunterRosterError::InvalidState(
+                        "equipment slot appears more than once",
+                    ));
+                }
+                if equipment.evidence_state != "web_rebuild_test_fixture"
+                    || !matches!(equipment.presentation_gender.as_str(), "female" | "male")
+                {
+                    return Err(HunterRosterError::InvalidState(
+                        "equipment fixture evidence is invalid",
+                    ));
+                }
+                if equipment.catalog_kind == "weapon"
+                    && equipment.required_class_id.as_deref()
+                        != Some(hunter.profile.class_id.as_str())
+                {
+                    return Err(HunterRosterError::InvalidState(
+                        "fixture weapon does not match hunter class",
+                    ));
+                }
+            }
+        }
         Ok(())
     }
 
@@ -348,6 +707,8 @@ mod tests {
             satiety: HunterServiceGauge::default(),
             mood: HunterServiceGauge::default(),
             profile: DurableHunterProfile::migration_default(hunter_id),
+            runtime: DurableHunterRuntimeState::default(),
+            hunt: DurableHunterHuntState::default(),
         }
     }
 
@@ -386,6 +747,138 @@ mod tests {
         assert_eq!(roster.waiting_queue.len(), 1);
         assert_eq!(roster.waiting_queue[0].hunter.hunter_id, 9);
         roster.validate().unwrap();
+    }
+
+    #[test]
+    fn operational_roster_uses_deterministic_diverse_server_fixture_rolls() {
+        let first = operational_migration_roster();
+        let second = operational_migration_roster();
+        assert_eq!(first, second);
+        let families = first
+            .hunters
+            .iter()
+            .map(|hunter| hunter.profile.visual_family.as_str())
+            .collect::<HashSet<_>>();
+        let personalities = first
+            .hunters
+            .iter()
+            .filter_map(|hunter| hunter.profile.characteristic_name.as_deref())
+            .collect::<HashSet<_>>();
+        assert_eq!(families.len(), 5);
+        assert!(personalities.len() >= 4);
+        assert!(first
+            .hunters
+            .iter()
+            .all(|hunter| hunter.profile.xp_to_next_level.is_some()));
+        for hunter in &first.hunters {
+            assert_eq!(hunter.profile.equipment_slots.len(), 4);
+            let weapon = hunter
+                .profile
+                .equipment_slots
+                .iter()
+                .find(|equipment| equipment.slot_id == "weapon")
+                .unwrap();
+            assert_eq!(
+                weapon.required_class_id.as_deref(),
+                Some(hunter.profile.class_id.as_str())
+            );
+            assert_eq!(weapon.evidence_state, "web_rebuild_test_fixture");
+            assert_eq!(
+                weapon.presentation_gender,
+                if hunter.hunter_id % 2 == 0 {
+                    "male"
+                } else {
+                    "female"
+                }
+            );
+        }
+    }
+
+    #[test]
+    fn fixture_weapons_follow_the_packaged_base_job_catalog() {
+        let expected = [
+            ("h1", 0, "weapon-0.png"),
+            ("h2", 9, "weapon-9.png"),
+            ("h3", 18, "weapon-18.png"),
+            ("h4", 27, "weapon-27.png"),
+            ("h5", 252, "weapon-252.png"),
+        ];
+        for hunter_id in 1..=5 {
+            let profile = DurableHunterProfile::migration_default(hunter_id);
+            let weapon = profile
+                .equipment_slots
+                .iter()
+                .find(|equipment| equipment.slot_id == "weapon")
+                .unwrap();
+            let expected = expected[(hunter_id - 1) as usize];
+            assert_eq!(
+                (profile.class_id.as_str(), weapon.catalog_index),
+                (expected.0, expected.1)
+            );
+            assert!(weapon.icon_path.ends_with(expected.2));
+        }
+    }
+
+    #[test]
+    fn fixture_equipment_references_existing_packaged_catalog_rows() {
+        let catalog: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../../packages/content/releases/evil-hunter-1.411/gear-catalog.json"
+        ))
+        .unwrap();
+        let rows = catalog["rows"].as_array().unwrap();
+
+        for hunter_id in 1..=5 {
+            for equipment in DurableHunterProfile::migration_default(hunter_id).equipment_slots {
+                assert!(rows.iter().any(|row| {
+                    row["kind"] == equipment.catalog_kind
+                        && row["index"] == equipment.catalog_index
+                        && row["name"] == equipment.display_name
+                        && row["iconPath"] == equipment.icon_path
+                }));
+            }
+        }
+    }
+
+    #[test]
+    fn fixture_equipment_validation_rejects_class_mismatches() {
+        let mut roster = operational_migration_roster();
+        let weapon = roster.hunters[0]
+            .profile
+            .equipment_slots
+            .iter_mut()
+            .find(|equipment| equipment.slot_id == "weapon")
+            .unwrap();
+        weapon.required_class_id = Some("h5".to_owned());
+
+        assert_eq!(
+            roster.validate(),
+            Err(HunterRosterError::InvalidState(
+                "fixture weapon does not match hunter class"
+            ))
+        );
+    }
+
+    #[test]
+    fn old_uniform_fixture_profiles_upgrade_once_without_losing_learned_skills() {
+        let mut roster = operational_migration_roster();
+        for hunter in &mut roster.hunters {
+            hunter.profile.class_id = "h1".to_owned();
+            hunter.profile.class_name = "Berserker".to_owned();
+            hunter.profile.visual_family = "H1".to_owned();
+            hunter.profile.level = 1;
+            hunter.profile.attack = 10;
+            hunter.profile.defense = 10;
+        }
+        roster.hunters[0].profile.skills.push(DurableHunterSkill {
+            skill_id: "skill_h1_01".to_owned(),
+            display_name: "Fury".to_owned(),
+            skill_level: 1,
+            ..DurableHunterSkill::default()
+        });
+        assert!(upgrade_operational_fixture_roster(&mut roster));
+        assert_eq!(roster.hunters[0].profile.skills[0].skill_id, "skill_h1_01");
+        assert_eq!(roster.hunters[1].profile.visual_family, "H2");
+        assert!(!upgrade_operational_fixture_roster(&mut roster));
     }
 
     #[test]
@@ -465,5 +958,53 @@ mod tests {
         );
         assert_eq!(roster.next_arrival_sequence, 3);
         roster.validate().unwrap();
+    }
+
+    #[test]
+    fn hunt_flow_is_server_advanced_and_uses_the_fixture_whitelist() {
+        let mut roster = operational_migration_roster();
+        assert!(roster.assign_hunt(1, "arbitrary-zone").is_err());
+        roster.assign_hunt(1, FIXTURE_HUNT_ZONE_ID).unwrap();
+        roster.advance_hunt(1, HUNT_TICKS_TO_RETURN - 1).unwrap();
+        assert_eq!(roster.hunters[0].hunt.status, "hunting");
+        assert!(roster.hunters[0].hunt.loot.is_empty());
+        roster.advance_hunt(1, 1).unwrap();
+        assert_eq!(roster.hunters[0].hunt.status, "returning");
+        assert_eq!(
+            roster.hunters[0].hunt.loot,
+            vec![DurableHunterLoot {
+                item_id: "material:1".to_owned(),
+                quantity: 1
+            }]
+        );
+        roster.return_from_hunt(1).unwrap();
+        assert!(roster.hunters[0].hunt.is_idle());
+    }
+
+    #[test]
+    fn defeat_and_revive_are_authoritative_and_persistable() {
+        let mut roster = operational_migration_roster();
+        roster.defeat_hunter(1).unwrap();
+        assert_eq!(roster.hunters[0].current_hp, 0);
+        assert_eq!(roster.hunters[0].hunt.status, "dead");
+        assert!(roster.revive_hunter(2).is_err());
+        roster.revive_hunter(1).unwrap();
+        assert_eq!(roster.hunters[0].current_hp, roster.hunters[0].max_hp);
+        let encoded = serde_json::to_string(&roster).unwrap();
+        let restored: DurableHunterRosterState = serde_json::from_str(&encoded).unwrap();
+        assert_eq!(restored, roster);
+    }
+
+    #[test]
+    fn profile_total_evasion_drives_calc_dodge_and_dynamic_sources() {
+        let mut profile = DurableHunterProfile::migration_default(1);
+        profile.evasion_rate_bps = Some(760);
+        assert_eq!(profile.calc_dodge(), 8);
+
+        let mut calculator = profile.evasion_calculator();
+        calculator.set_additive_source("temporary_buff", 2.5);
+        assert_eq!(calculator.calc_dodge(), Ok(10));
+        calculator.remove_additive_source("temporary_buff");
+        assert_eq!(calculator.calc_dodge(), Ok(8));
     }
 }

@@ -1,0 +1,624 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-damage-tail-analysis-v3",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json",
+      "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+      "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-runtime-combat-static-factors-api35-v1.json",
+      "sha256": "5ea4955170ab9672648c186a2442ad082e2b719566865b2c7e71acd34d50db00"
+    },
+    {
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    },
+    {
+      "path": "reverse-engineering/evidence/shield-data-runtime-schema-android-api35-v1.json",
+      "sha256": "a5b9d32a8eb0d90dd416786611990df0ca8c0c46f8a830e8fa16af35159d6cd7"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    },
+    {
+      "path": "reverse-engineering/evidence/constant-data-runtime-schema-api35-v1.json",
+      "sha256": "1f381c9d27cc42803a8834a0e4d3379603b72c8639d3ae1ebf6e2c3907081431"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-constant-data-cctor-api35-v1.json",
+      "sha256": "b0fcbb240d93f462ed63d006e2a2d2f1982efcc8587a6bc6edfd766564d331f6"
+    },
+    {
+      "path": "reverse-engineering/evidence/actk-obscured-float-runtime-schema-api35-v1.json",
+      "sha256": "55df2031f864e6407de982de9e16f1934c8a4d36dfaf4d830bbaf51141ec89fb"
+    },
+    {
+      "path": "reverse-engineering/evidence/actk-obscured-float-native-methods-api35-v1.json",
+      "sha256": "4690253d0a204d08a55d88c668f29905d46787751af7cf80ecb95f1747bb15ab"
+    },
+    {
+      "path": "reverse-engineering/evidence/actk-byte4-native-methods-api35-v1.json",
+      "sha256": "28f65e58e45224cb550b7de4aa4977cb67f829a211988b9c6c2020ac3eb7a567"
+    },
+    {
+      "path": "game-assets/source/Evil+Hunter+Tycoon_1.411_APKPure.xapk",
+      "sha256": "69c74073dbe3fc67d7b228a6f9fe5ad34f352f7faa3552a1500fc76b731015c3"
+    }
+  ],
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "Damaged",
+      "token": "0x06005CAA",
+      "moduleOffset": "0x346514c",
+      "nativeSizeBytes": 18964,
+      "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HitDamageProcess",
+      "token": "0x06005B94",
+      "moduleOffset": "0x34256c0",
+      "nativeSizeBytes": 920,
+      "bodySha256": "a0632289d593e15dc6584f9a21958ebc5318d142167b27507bf83424ed5c90db"
+    },
+    {
+      "type": "ConstantData",
+      "method": ".cctor",
+      "token": "0x0600517B",
+      "moduleOffset": "0x330b8bc",
+      "capturedPrefixBytes": 65536,
+      "writerWindow": {
+        "start": "0x330cb14",
+        "endExclusive": "0x330cb84",
+        "sha256": "a7b4c6dcdebc25405e788902c7cbab8aad3f2631d2f78d0f102b0256ee057707"
+      }
+    }
+  ],
+  "preArmorAccumulator": {
+    "owner": "HunterCtrl",
+    "field": "LIEGAADKDHD",
+    "offset": 1888,
+    "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+    "initialization": "A0 = truncTowardZero(float32(incomingDamage) * GameManager.RandDamage())",
+    "stageCount": 32,
+    "stages": [
+      {
+        "order": 1,
+        "nativeStart": "0x3466318",
+        "nativeEndExclusive": "0x3466364",
+        "windowSha256": "24e81179eb56243622427bb10e358c1d67fbd0d634c5c69f307cdac39fa8ea06",
+        "family": "proportional_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(factor * float32(A)))",
+        "operandSource": "HunterCtrl.HKFBHKIJNJG@0x614",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 2,
+        "nativeStart": "0x3466400",
+        "nativeEndExclusive": "0x3466440",
+        "windowSha256": "81f5c4e40b90c267da7351bf0e2f87682fa73131548dea78b71685ea4937aada",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "HunterCtrl.PGDMKPKELMM@0x698",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 3,
+        "nativeStart": "0x34664dc",
+        "nativeEndExclusive": "0x3466528",
+        "windowSha256": "91e0e8913ed54aa33c0075d0d5a35e291a038d9584f8d31511cd218dc77928c0",
+        "family": "summed_proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32((factor1 + factor2) * float32(A)))",
+        "operandSource": "StatusData.GearArmorUpgrade@0x254 + StatusData.CostumeImmuneUp@0x464",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 4,
+        "nativeStart": "0x3466600",
+        "nativeEndExclusive": "0x3466640",
+        "windowSha256": "9daa272ea92453f13086167e108910b95c137a10e8973f538826ae0ddc5bbba1",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "StatusData.GearProperty row 56",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 5,
+        "nativeStart": "0x3466724",
+        "nativeEndExclusive": "0x3466764",
+        "windowSha256": "82ca1a75ddb300cba3f63c16e8247205397b42e62953b121cedd736d6318e9b7",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "StatusData.GearProperty row 57",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 6,
+        "nativeStart": "0x3466880",
+        "nativeEndExclusive": "0x34668c0",
+        "windowSha256": "68e2b58c5687094fb39d9996ac26db20e3a7644a109b739d8165ff57c2d148f0",
+        "family": "fixed_scale",
+        "equation": "A' = truncTowardZero(float32(A) * factor)",
+        "operandSource": "ConstantData.IMMUNE_VALUE@0x100",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 7,
+        "nativeStart": "0x34669a0",
+        "nativeEndExclusive": "0x34669e0",
+        "windowSha256": "7338602347e483893503ced719f47cdb23e2cb443fe3665aae4e4d6d57793bb1",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "runtime collection entry 80",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 8,
+        "nativeStart": "0x3466b28",
+        "nativeEndExclusive": "0x3466b68",
+        "windowSha256": "9f0996695f632f269afb97638effd2242fe5ab8b5af46d10cb88193c8ffef508",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "runtime indexed collection entry",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 9,
+        "nativeStart": "0x3466c20",
+        "nativeEndExclusive": "0x3466c60",
+        "windowSha256": "51c152d6e4237a52a0764ed271bdf6e9de2d6e3c71012c6249f0f85a10c1dac4",
+        "family": "one_minus_percent_scale",
+        "equation": "A' = truncTowardZero(float32(A) * (1.0f + rawPercent * -0.01f))",
+        "operandSource": "ConstantData.SOUL_ABSORPTION_DECREASE_VALUE@0x2894",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 10,
+        "nativeStart": "0x3466cec",
+        "nativeEndExclusive": "0x3466d2c",
+        "windowSha256": "b6ddcd0a3fac7dec6cc4bc553d9b5f335741f1f5df89c06bd9d7e8ff154ed03f",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "HunterCtrl.JECJDDBJAPE@0x628",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 11,
+        "nativeStart": "0x3466db8",
+        "nativeEndExclusive": "0x3466df8",
+        "windowSha256": "42a354e12a8fb1a607365065889ee44b856581b2b208f5d54de121f2a970c214",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "HunterCtrl.FIMICNDLECJ@0x7d4",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 12,
+        "nativeStart": "0x3466ea8",
+        "nativeEndExclusive": "0x3466ee8",
+        "windowSha256": "c8f019ee0ea9ec28fd5a25aaca67abf3ab3f534a6afe6ce1a323a6798cc7553d",
+        "family": "fixed_scale",
+        "equation": "A' = truncTowardZero(float32(A) * factor)",
+        "operandSource": "ConstantData.EXECUTOR_DAMAGE_DECREASE_VALUE@0x13c",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 13,
+        "nativeStart": "0x34670a8",
+        "nativeEndExclusive": "0x34670e8",
+        "windowSha256": "1f572731420f29afb882663ef6b9c239151d62699bbf609799eb83be5b03a0d7",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "runtime effect value captured at stack 0x1570",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 14,
+        "nativeStart": "0x34675fc",
+        "nativeEndExclusive": "0x346763c",
+        "windowSha256": "42759cc3d9b184ca33c9982ee3d0c4d796356c91f1a8a1d0c8dc183ee9e87102",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "runtime effect value captured at stack 0x1550",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 15,
+        "nativeStart": "0x3467724",
+        "nativeEndExclusive": "0x3467764",
+        "windowSha256": "7ba9be0542298a57f62abc57678b15a30a242d35a208d3324e5737d885fd5ae5",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "HunterCtrl runtime factor",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 16,
+        "nativeStart": "0x346796c",
+        "nativeEndExclusive": "0x34679ac",
+        "windowSha256": "92a847da19fe43a435d556c366afb59927ca3d5fba985ad0063b4795aa447626",
+        "family": "negative_basis_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.0001f))",
+        "operandSource": "runtime dictionary value",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 17,
+        "nativeStart": "0x3467a40",
+        "nativeEndExclusive": "0x3467a80",
+        "windowSha256": "1ed304d3b623c2e1765a4f7fb82bca6947868f4d07df9572109b9c24664def0e",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "StatusData.RidingPetImmuneUp@0x680",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 18,
+        "nativeStart": "0x3467b5c",
+        "nativeEndExclusive": "0x3467b9c",
+        "windowSha256": "fe27af782a3714bd04b9f63a988952b45872190eae6faf80f16889dc43e50a3f",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "StatusData.RidingPetGearProperty row 9",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 19,
+        "nativeStart": "0x3467cfc",
+        "nativeEndExclusive": "0x3467d3c",
+        "windowSha256": "1ab9a11718b084eafeb9cf3355f9aed3c22b49a97a29cc1d8fcbb16267731e89",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "runtime array entry 13",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 20,
+        "nativeStart": "0x3467e10",
+        "nativeEndExclusive": "0x3467e50",
+        "windowSha256": "b73d535560e4775a9a27ea47e3e6c5554346532f6010916623c4cfcff7314b3e",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "ConstantData.DRAGON_FURY_BUFF_HANS_OF_GOD_HIT_DECREASE_VALUE@0x2f54",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 21,
+        "nativeStart": "0x3467f50",
+        "nativeEndExclusive": "0x3467f90",
+        "windowSha256": "8713511111e902b80cff77f603716f9fe0b9710d4f5de5fa2490f7c2f299eed2",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "ConstantData.FROZEN_HEART_DAMAGE_DECREASE_VALUE@0x3484",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 22,
+        "nativeStart": "0x3468024",
+        "nativeEndExclusive": "0x3468064",
+        "windowSha256": "43f14ee43d15cebcc71cbfd52a80652730e735aa1d5aeb0cd9b3f49c6e184bca",
+        "family": "proportional_subtract",
+        "equation": "A' = truncTowardZero(float32(A) - float32(factor * float32(A)))",
+        "operandSource": "StatusData.HeroicJobTraitImmuneUp@0x630",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 23,
+        "nativeStart": "0x34681b8",
+        "nativeEndExclusive": "0x34681f8",
+        "windowSha256": "c6dd7457858f7f834b62922e2c64c3f9d5c2cf7a726035909f3bea2907c89a25",
+        "family": "negative_percent_point_add",
+        "equation": "A' = truncTowardZero(float32(A) + float32(rawValue * count * -0.01f))",
+        "operandSource": "conditional class/trait aggregate",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 24,
+        "nativeStart": "0x3468278",
+        "nativeEndExclusive": "0x34682b8",
+        "windowSha256": "5c7aefc049a7f6331f64838942844f5b847a7316a39a59bb70d2654de760b7ee",
+        "family": "direct_product_subtract",
+        "equation": "A' = A - truncTowardZero(factor * float32(A))",
+        "operandSource": "HunterCtrl.FFDOBPJLLFM@0x7e8",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 25,
+        "nativeStart": "0x3468418",
+        "nativeEndExclusive": "0x3468458",
+        "windowSha256": "9e1841ceeea1a691698bd2486b689abea61d18eed51a8e1df36fb260fa20286e",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "conditional class/trait aggregate",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 26,
+        "nativeStart": "0x34684d4",
+        "nativeEndExclusive": "0x3468514",
+        "windowSha256": "6eb453e555b8ad70a3f50832fe6bb26d590d18f136eeb37b78334c9b16424c5c",
+        "family": "direct_product_subtract",
+        "equation": "A' = A - truncTowardZero(factor * float32(A))",
+        "operandSource": "HunterCtrl.AAFECOPNGJA@0x87c",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 27,
+        "nativeStart": "0x3468670",
+        "nativeEndExclusive": "0x34686b0",
+        "windowSha256": "aa0ccc02efedbcfd8052786ddd08aa13b7a2d678021a159264e10631448cf6f2",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "conditional class/trait aggregate",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 28,
+        "nativeStart": "0x34687f4",
+        "nativeEndExclusive": "0x3468834",
+        "windowSha256": "bf9f4633f37c825cd688e74c38cae69e1f5489737eb0f53e71d5ac5aaf4a3dea",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "conditional class/trait aggregate",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 29,
+        "nativeStart": "0x34688ec",
+        "nativeEndExclusive": "0x346892c",
+        "windowSha256": "d0110754be638413d726bcff06f882cb131f843274ab57064d79e85dd8752dd9",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "HunterCtrl.AEJMHHJPCCG@0x9b4",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 30,
+        "nativeStart": "0x34689e4",
+        "nativeEndExclusive": "0x3468a24",
+        "windowSha256": "81b4ecc4a9ca9f929ec8337329d88e32330187c80554530c523792d60e6dc6e7",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "HunterCtrl.GAMLIJMBJIH@0x9c8",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 31,
+        "nativeStart": "0x3468acc",
+        "nativeEndExclusive": "0x3468b0c",
+        "windowSha256": "bea378caa91cc78dc2fce6c2c7f80a8044436b355dc369040af355766b70aa6d",
+        "family": "direct_product_subtract",
+        "equation": "A' = A - truncTowardZero(factor * float32(A))",
+        "operandSource": "HunterCtrl.CMGHCGEGLEN@0x9f0",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      },
+      {
+        "order": 32,
+        "nativeStart": "0x3468c70",
+        "nativeEndExclusive": "0x3468cb0",
+        "windowSha256": "7729f434f1b74444790c8c15fdd249e8a1c9cae585b11674a0fb532332908415",
+        "family": "percent_product_subtract",
+        "equation": "A' = A - truncTowardZero(composite * float32(A) * 0.01f)",
+        "operandSource": "runtime gear/aura count",
+        "gateStatus": "native branch/order exact; product-facing condition remains unresolved where the source name is obfuscated"
+      }
+    ],
+    "nextOperation": "A33 = A32 - armorScratch",
+    "orderingStatus": "all 32 optional mutation checkpoints are preserved in exact native execution order"
+  },
+  "armorSelector": {
+    "ratio": "HunterData.nowFeel / HunterData.feel",
+    "zeroDenominatorStatus": "No explicit zero-denominator branch is isolated in the selected native block; runtime HunterData invariant remains required.",
+    "bands": [
+      {
+        "condition": "nowFeel / feel >= 0.8",
+        "factor": 1.2000000476837158
+      },
+      {
+        "condition": "nowFeel / feel >= 0.6",
+        "factor": 1.100000023841858
+      },
+      {
+        "condition": "nowFeel / feel >= 0.4",
+        "factor": 1.0
+      },
+      {
+        "condition": "nowFeel / feel >= 0.2",
+        "factor": 0.8999999761581421
+      },
+      {
+        "condition": "nowFeel / feel < 0.2",
+        "factor": 0.800000011920929
+      }
+    ],
+    "equation": "armorScratch = truncTowardZero(StatusData.CalcArmor * selectedArmorFactor)",
+    "thresholdFloat32": [
+      0.800000011920929,
+      0.6000000238418579,
+      0.4000000059604645,
+      0.20000000298023224
+    ],
+    "factorRuntimeDataOffset": 248,
+    "factorRawHex": "b0f3ec70730000000000000000000000000000000000000005000000000000009a99993fcdcc8c3f0000803f6666663fcdcc4c3f"
+  },
+  "selectedFinalFactor": {
+    "runtimeDataOffset": 276,
+    "owner": "ConstantData",
+    "field": "DEFALUT_DAMAGE_DECREASE_VALUE",
+    "capturedValue": 0.75,
+    "rawHex": "eca48d73eccda44c000000000000000000010000",
+    "equation": "positiveForwardedDamage = truncTowardZero(postArmor * selectedFinalFactor)",
+    "actkDecode": "swap hiddenValue bytes 1 and 2 via ACTkByte4.UnShuffle, then XOR currentCryptoKey and reinterpret float32",
+    "constructorValue": 0.75,
+    "writer": "ConstantData..cctor -> ObscuredFloat.op_Implicit(0.75f) -> static runtimeData+0x114",
+    "semanticStatus": "field name, exact value, ACTk decode and initonly writer resolved"
+  },
+  "shieldRouting": {
+    "dictionary": {
+      "owner": "HunterData",
+      "field": "mShieldDataDic",
+      "offset": 1488,
+      "type": "System.Collections.Generic.Dictionary<System.String,ShieldData>"
+    },
+    "shieldFields": [
+      {
+        "name": "MaxShield",
+        "offset": 16,
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+      },
+      {
+        "name": "CurrentShield",
+        "offset": 48,
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+      }
+    ],
+    "selection": "HitDamageProcess enumerates the dictionary and uses the first yielded ShieldData entry when Count >= 1.",
+    "equations": [
+      "if CurrentShield < forwardedDamage: forwardedDamage -= CurrentShield; CurrentShield = 0",
+      "else: CurrentShield -= forwardedDamage; forwardedDamage = 0",
+      "nowHp = max(nowHp - forwardedDamage, 0)"
+    ],
+    "ordering": "shield routing occurs before the common nowHp subtraction"
+  },
+  "goldenVectors": {
+    "modifierFamilies": [
+      {
+        "family": "proportional_add",
+        "accumulator": 100,
+        "factor": 0.2,
+        "expected": 120
+      },
+      {
+        "family": "proportional_subtract",
+        "accumulator": 100,
+        "factor": 0.2,
+        "expected": 80
+      },
+      {
+        "family": "summed_proportional_subtract",
+        "accumulator": 100,
+        "factor1": 0.1,
+        "factor2": 0.2,
+        "expected": 70
+      },
+      {
+        "family": "negative_percent_point_add",
+        "accumulator": 100,
+        "rawValue": 10,
+        "count": 2,
+        "expected": 99
+      },
+      {
+        "family": "negative_basis_point_add",
+        "accumulator": 10000,
+        "rawValue": 10,
+        "count": 2,
+        "expected": 9999
+      },
+      {
+        "family": "fixed_scale",
+        "accumulator": 100,
+        "factor": 0.75,
+        "expected": 75
+      },
+      {
+        "family": "one_minus_percent_scale",
+        "accumulator": 100,
+        "rawPercent": 25,
+        "expected": 75
+      },
+      {
+        "family": "direct_product_subtract",
+        "accumulator": 100,
+        "factor": 0.2,
+        "expected": 80
+      },
+      {
+        "family": "percent_product_subtract",
+        "accumulator": 100,
+        "composite": 20,
+        "expected": 80
+      }
+    ],
+    "armorSelector": [
+      {
+        "feel": 100.0,
+        "nowFeel": 100.0,
+        "factor": 1.2
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 80.0,
+        "factor": 1.2
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 79.999,
+        "factor": 1.1
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 60.0,
+        "factor": 1.1
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 40.0,
+        "factor": 1.0
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 20.0,
+        "factor": 0.9
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 19.999,
+        "factor": 0.8
+      }
+    ],
+    "shieldRouting": [
+      {
+        "currentShield": 30,
+        "forwardedDamage": 50,
+        "expectedShield": 0,
+        "expectedHpDamage": 20
+      },
+      {
+        "currentShield": 50,
+        "forwardedDamage": 30,
+        "expectedShield": 20,
+        "expectedHpDamage": 0
+      },
+      {
+        "currentShield": 30,
+        "forwardedDamage": 30,
+        "expectedShield": 0,
+        "expectedHpDamage": 0
+      }
+    ]
+  },
+  "unresolved": [
+    "Dictionary ordering/ownership semantics when mShieldDataDic contains more than one entry.",
+    "Product-facing names and writer semantics for the remaining obfuscated HunterCtrl/effect gates in the 32-stage pre-armor chain.",
+    "Whether every optional stage is reachable in ordinary village combat versus PvP, boss, trait or late-game modes."
+  ]
+}

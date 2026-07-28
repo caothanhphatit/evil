@@ -32,6 +32,11 @@ class Reader:
         self.offset += 4
         return value
 
+    def int64(self) -> int:
+        value = struct.unpack_from("<q", self.data, self.offset)[0]
+        self.offset += 8
+        return value
+
     def float32(self) -> float:
         value = struct.unpack_from("<f", self.data, self.offset)[0]
         self.offset += 4
@@ -185,6 +190,65 @@ def decode_experience(data: bytes) -> tuple[dict[str, object], list[dict[str, ob
     return table, rows
 
 
+def decode_monsters(data: bytes) -> tuple[dict[str, object], list[dict[str, object]]]:
+    table, reader = header(data)
+    rows = []
+    tuning_fields = (
+        "damage",
+        "armor",
+        "hp",
+        "experience",
+        "zoneDamage",
+        "zoneHp",
+        "zoneExperience",
+    )
+    for _ in range(int(table["rowCount"])):
+        index = reader.int32()
+        korean_name = reader.string()
+        row = {
+            "index": index,
+            "uniqueLevel": reader.int32(),
+            "type": reader.int32(),
+            "area": reader.int32(),
+            "createLevel": reader.int32(),
+            "damage": reader.int64(),
+            "armor": reader.int64(),
+            "hp": reader.int64(),
+            "materialIndices": reader.int32_array(),
+            "materialCounts": reader.int32_array(),
+            "materialPercentValues": reader.int32_array(),
+            "experience": reader.int32(),
+            "gold": reader.int32(),
+            "race": reader.int32(),
+            "sourceTuningValues": {
+                field: reader.string() for field in tuning_fields
+            },
+            "localized": {"ko": {"name": korean_name}},
+        }
+        for locale in LOCALES[1:]:
+            row["localized"][locale] = {"name": reader.string()}
+        rows.append(row)
+    finish(data, reader, str(table["worksheetName"]))
+    return table, rows
+
+
+def decode_unique_gear_drops(data: bytes) -> tuple[dict[str, object], list[dict[str, object]]]:
+    table, reader = header(data)
+    rows = []
+    for _ in range(int(table["rowCount"])):
+        rows.append({
+            "index": reader.int32(),
+            "descriptionKo": reader.string(),
+            "dropRange": reader.int32(),
+            "dropCut": reader.int32_array(),
+            "gearTypes": reader.int32_array(),
+            "gearIndices": reader.int32_array(),
+            "gearPercentValues": reader.int32_array(),
+        })
+    finish(data, reader, str(table["worksheetName"]))
+    return table, rows
+
+
 def decode_job_traits(data: bytes) -> tuple[dict[str, object], list[dict[str, object]]]:
     table, reader = header(data)
     rows = []
@@ -286,6 +350,8 @@ def decode_riding_pet_traits(data: bytes) -> tuple[dict[str, object], list[dict[
 
 
 TABLES: dict[str, tuple[int, Callable[[bytes], tuple[dict[str, object], list[dict[str, object]]]]]] = {
+    "monsters": (12577, decode_monsters),
+    "uniqueGearDrops": (12573, decode_unique_gear_drops),
     "skills": (12636, decode_skills),
     "subJobSkills": (12637, decode_sub_job_skills),
     "growthProperties": (12594, decode_growth_properties),
@@ -328,6 +394,8 @@ def main() -> None:
         "catalog": catalog,
         **decoded,
         "limitations": [
+            "Monster materialPercentValues and unique-gear drop fields preserve exact packaged integers, but their RNG denominator and selection order require native drop-handler recovery.",
+            "Monster type, area, createLevel, uniqueLevel, and source tuning values are emitted as raw table dimensions until controller code confirms their gameplay semantics.",
             "These definitions do not reveal which skills or riding pets a particular Hunter owns.",
             "Asset filenames are not bound to rows unless a serialized/runtime reference proves the mapping.",
             "Definitions do not reveal the per-Hunter Secret Point allocation, learned Job Trait ranks, or current experience threshold selection.",

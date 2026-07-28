@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 7,
+  "contractType": "original-reward-progression-unique-gear-boundary-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-callgraph-v2",
+      "path": "reverse-engineering/evidence/original-reward-progression-callgraph-v2.json",
+      "bytes": 35833,
+      "sha256": "099228dce46f52c1131b786c90e9311c0d1f35dca457ca2d6ed3fef50c57d1be"
+    },
+    {
+      "id": "reward-arithmetic-v3",
+      "path": "reverse-engineering/evidence/original-reward-progression-arithmetic-v3.json",
+      "bytes": 24594,
+      "sha256": "5c7ecb559e46fd88e55ff7b4332141a062e59cee9b5582faea794b23672771cc"
+    },
+    {
+      "id": "reward-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-helpers",
+      "path": "reverse-engineering/evidence/original-reward-progression-helpers-api35-v1.json",
+      "bytes": 40825,
+      "sha256": "9e72aa850f4372583c5cbdd01e0e1889e5e5a4c05ec35a370ffde4f732229bf0"
+    },
+    {
+      "id": "reward-material-full",
+      "path": "reverse-engineering/evidence/original-reward-material-full-api35-v1.json",
+      "bytes": 126084,
+      "sha256": "676dd7679138ef8e3bf362e65d2c01d30485154dc35641eb4af126a418ab8368"
+    }
+  ],
+  "capturedMethods": {
+    "RewardMetrial": {
+      "parameterTypes": [
+        "System.Int32",
+        "System.Boolean",
+        "System.Boolean",
+        "UnityEngine.Vector3",
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "nativeSizeBytes": 30732,
+      "codeTruncated": false,
+      "bodySha256": "fc70ff5be2d1f277145035e70883a2a6ad0426af79fa1757301c7791d187e880"
+    },
+    "LDHAEMDJCFF": {
+      "parameterTypes": [
+        "System.Int32",
+        "System.Int32",
+        "UnityEngine.Vector3",
+        "System.Boolean",
+        "System.Boolean"
+      ],
+      "returnType": "System.Void",
+      "nativeSizeBytes": 2120,
+      "codeTruncated": false,
+      "bodySha256": "9621d392d78324d0c2b3a751c37403873f2544e6011c22401fcb8fb3e13804c7"
+    },
+    "GHPHHEFFNKN": {
+      "parameterTypes": [
+        "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+      ],
+      "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+      "nativeSizeBytes": 4236,
+      "codeTruncated": false,
+      "bodySha256": "250ef7005be0c2c343ac5571aa80fc79ecd4b38393aff53eead9c0336b956139"
+    }
+  },
+  "confirmedCallerFacts": {
+    "RewardMetrialNativeBytes": 30732,
+    "knownCalls": {
+      "HunterCtrl.GHPHHEFFNKN/2": 6,
+      "HunterCtrl.LDHAEMDJCFF/5": 17,
+      "UnityEngine.Random.Range(Int32,Int32)": 50
+    },
+    "boundAdminEvilDataFields": [
+      "metIdx",
+      "metIdx",
+      "metIdx",
+      "metPercent",
+      "metIdx",
+      "metCount",
+      "metCount",
+      "metIdx",
+      "type",
+      "type",
+      "type",
+      "type"
+    ],
+    "boundUniqueLevelAccess": null,
+    "boundAdminDropUniqueGearDataAccess": null
+  },
+  "exactBlockingBoundary": [
+    "The complete RewardMetrial object-flow binds AdminEvilData.metIdx, metCount, metPercent and type, but no AdminEvilData.uniqueLevel read.",
+    "All 17 LDHAEMDJCFF calls cross a signature containing only two Int32 values, Vector3 and two Boolean values; no AdminEvilData or AdminDropUniqueGearData object crosses that boundary.",
+    "GHPHHEFFNKN receives only ObscuredInt and ObscuredBool, including its one call from LDHAEMDJCFF; it cannot recover an AdminEvilData row identity from its typed arguments.",
+    "Therefore the captured call chain cannot mechanically bind uniqueLevel to an AdminDropUniqueGearData row without identifying an additional singleton/static lookup and its returned object type."
+  ],
+  "unresolvedOutputs": {
+    "uniqueLevelToPool": null,
+    "dropRangeOrder": null,
+    "dropCutOrder": null,
+    "gearPercentDenominator": null,
+    "gearTypeRngOrder": null,
+    "gearIndexRngOrder": null
+  },
+  "implementationBoundary": {
+    "liveIntegrationAllowed": false,
+    "arrayOrderFallbackAllowed": false,
+    "requiredNextEvidence": "Targeted runtime/native capture of the singleton/static lookup that returns AdminDropUniqueGearData, including input key, returned row pointer/type, and the immediately following RNG comparisons."
+  }
+}

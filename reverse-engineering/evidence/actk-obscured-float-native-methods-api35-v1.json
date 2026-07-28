@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T07:07:39.384504Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 22228,
+    "action": "API35 rooted emulator; exact native ACTk ObscuredFloat decode methods used to validate static combat factor; no player values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "ObscuredFloat",
+        "methodName": "op_Implicit",
+        "parameterCount": 1
+      },
+      {
+        "className": "ObscuredFloat",
+        "methodName": "InternalDecrypt",
+        "parameterCount": 0
+      },
+      {
+        "className": "ObscuredFloat",
+        "methodName": "Encrypt",
+        "parameterCount": 2
+      },
+      {
+        "className": "ObscuredFloat",
+        "methodName": "Decrypt",
+        "parameterCount": 2
+      }
+    ],
+    "requestedModuleOffsets": [],
+    "requestedTargetAssembly": "ACTk.Runtime.dll",
+    "codeByteLimit": 4096,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a8800000",
+        "size": 106893312
+      },
+      "assembly": "ACTk.Runtime.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 4096,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "ObscuredFloat",
+          "methodName": "op_Implicit",
+          "parameterCount": 1
+        },
+        {
+          "className": "ObscuredFloat",
+          "methodName": "InternalDecrypt",
+          "parameterCount": 0
+        },
+        {
+          "className": "ObscuredFloat",
+          "methodName": "Encrypt",
+          "parameterCount": 2
+        },
+        {
+          "className": "ObscuredFloat",
+          "methodName": "Decrypt",
+          "parameterCount": 2
+        }
+      ],
+      "requestedModuleOffsets": [],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "className": "ObscuredFloat",
+          "methodName": "op_Implicit",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "System.Single"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "token": 100664115,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aac5787c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x245787c",
+              "codeHex": "e00308aa1f7d00a91f1100b9c7400014",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x245788c",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aac5787c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x245787c",
+              "codeHex": "e00308aa1f7d00a91f1100b9c7400014",
+              "nativeSizeBytes": 16,
+              "boundaryModuleOffset": "0x245788c",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "className": "ObscuredFloat",
+          "methodName": "op_Implicit",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+          ],
+          "returnType": "System.Single",
+          "token": 100664116,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aac5668c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x245668c",
+              "codeHex": "60450014",
+              "nativeSizeBytes": 4,
+              "boundaryModuleOffset": "0x2456690",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aac5668c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x245668c",
+              "codeHex": "60450014",
+              "nativeSizeBytes": 4,
+              "boundaryModuleOffset": "0x2456690",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "className": "ObscuredFloat",
+          "methodName": "Encrypt",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Single",
+            "System.Int32"
+          ],
+          "returnType": "System.Int32",
+          "token": 100664132,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aac67e98",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2467e98",
+              "codeHex": "fe0f1ff80800261ee1031faa0801004ae0330091e80f00b9587b0094e00f40b9fe0741f8c0035fd6",
+              "nativeSizeBytes": 40,
+              "boundaryModuleOffset": "0x2467ec0",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aac67e98",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2467e98",
+              "codeHex": "fe0f1ff80800261ee1031faa0801004ae0330091e80f00b9587b0094e00f40b9fe0741f8c0035fd6",
+              "nativeSizeBytes": 40,
+              "boundaryModuleOffset": "0x2467ec0",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "className": "ObscuredFloat",
+          "methodName": "Decrypt",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Int32"
+          ],
+          "returnType": "System.Single",
+          "token": 100664133,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aac6820c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x246820c",
+              "codeHex": "ff8300d1fe4f01a9f303012ae00f00b9e0330091e1031faa807a0094e80f40b90801134afe4f41a90001271eff830091c0035fd6",
+              "nativeSizeBytes": 52,
+              "boundaryModuleOffset": "0x2468240",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aac6820c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x246820c",
+              "codeHex": "ff8300d1fe4f01a9f303012ae00f00b9e0330091e1031faa807a0094e80f40b90801134afe4f41a90001271eff830091c0035fd6",
+              "nativeSizeBytes": 52,
+              "boundaryModuleOffset": "0x2468240",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "className": "ObscuredFloat",
+          "methodName": "InternalDecrypt",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Single",
+          "token": 100664142,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aac67c0c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2467c0c",
+              "codeHex": "ff8301d1e81300fdfe5f03a9f65704a9f44f05a9d4fa01f0f30300aa88925e3928010037a0dd0190004040f929c2fb97a0dd019000ec40f926c2fb972800805288921e39684640390808003474224029e0030091e1031faae80300b9ef7b0094e80340b9e0031faa1601144ac802271e500e00940007003668424039c80600340041201e610e40bdb501009440060037a8dd0190084140f9080140f9001140f908d4049108014079480000374ba9fc97086040f9000940f908d40491080140794800003745a9fc97a9dd0190085c40f96002c03d29ed40f96a1240b9e1030091140140f9e003803d200140f9ea1300b942c2fb9797dd01f0f50300aae1b30091f73643f9f62f00b9e03e40f93bc2fb97f60300aa600e40bde03e40f9e1a30091e02b00bd35c2fb97540200b4e30300aae00314aae10315aae20316aae4031faa570f009404000014e00313aabc01009408e4002ff44f45a90041201ef65744a9e81340fdfe5f43a9ff830191c0035fd66dc2fb97",
+              "nativeSizeBytes": 372,
+              "boundaryModuleOffset": "0x2467d80",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aa8df538",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x20df538",
+              "codeHex": "00400091b4210e1400400091c1230e14c0035fd6fe0f1ff80e240e94c0035fd6fe4fbfa9f30300aa680e41b8e00313aa0801014ae1031faa680200b9a79d0e94600240b9fe4fc1a8c0035fd6fe0f1ef8f44f01a9f303012af40300aa00400091e1031faaa29d0e94881240b90001134a801200b9f44f41a9fe0742f8c0035fd6000040fd093040390a344039200000fd080840b92a1000b928240129c0035fd6000040fd200000fd092041290a1040b91f010071290800b9e8079f1a5f01007128300039e8079f1a28340039c0035fd6c0035fd6fe0f1ff800400091ff0f00b916240e94e00f00b9e0330091e1031faa09e9c494fe0741f8c0035fd6fe0f1ff800400091ff0f00b90c240e94e00f00b9e0330091e1031faa01e9c494fe0741f8c0035fd6ff8300d1fe4f01a900400091f30301aaff0f00b900240e94e00f00b9e0330091e10313aae2031faa19e9c494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff0f00b9f2230e94e00f00b9e0330091e10313aae2031faa37e9c494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a900400091f30302aaf40301aaff0f00b9e3230e94e00f00b9e0330091e10314aae20313aae3031faa4de9c494f44f41a9fe0742f8c0035fd600400091b4240e1400400091e6240e14ff8300d1fe4f01a900400091f303012aff0f00b9d0230e94e00f00b9e0330091e103132ae2031faabee8c494fe4f41a900000012ff830091c0035fd600400091fc240e14ff8300d1fe4f01a900400091f303012aff0f00b9bf230e94e00f00b9e0330091e103132ae2031faa96e8c494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff0f00b9b1230e94e00f00b9e0330091e10313aae2031faa61e8c494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a9f303012af40300aa53bb0d940800134a80220229e0031faa732f0e9409000072280080526a129f1a897200398a1a00b988760039f44f41a9fe0742f8c0035fd6fe0f1ef8f44f01a908744039f30300aaf40301aa68000034601240b9060000143dbb0d940820805260fe0229601200b9683a0079800200b9601640b9f44f41a9fe0742f8c0035fd600400091f1240e140040009181230e14fe4fbfa9f30300aa004000917d230e94601600b92abb0d94681640b90801004a60220229fe4fc1a8c0035fd60040009174230e14fe4fbfa9f30300aa20bb0d940820805260fe0229601200b9683a0079fe4fc1a8c0035fd6c0035fd6fe0f1ff839250e94c0035fd60000c03d096040390a6440392000803d080840f929280329280800f9c0035fd6082443290000c03d2000803d1f010071080840f9ea079f1a3f010071e9079f1a2a600039280800f929640039c0035fd6c0035fd6fe7fbfa9004000915a250e94e00700f9e0230091e1031faa66ecc494fe0741f8c0035fd6fe7fbfa90040009151250e94e00700f9e0230091e1031faa60ecc494fe0741f8c0035fd6ff8300d1fe4f01a900400091f30301aaff0700f945250e94e00700f9e0230091e10313aae2031faa69edc494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff0700f937250e94e00700f9e0230091e10313aae2031faa35edc494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a900400091f30302aaf40301aaff0700f928250e94e00700f9e0230091e10314aae20313aae3031faa77edc494f44f41a9fe0742f8c0035fd600400091e2250e14ffc300d1fe1300f9200440ad00400091e1030091e00700ad11260e94fe1340f900000012ffc30091c0035fd6ff8300d1fe4f01a900400091f30301aaff0700f90c250e94e00700f9e0230091e10313aae2031faa13ecc494fe4f41a900000012ff830091c0035fd6ffc300d1fe1300f9200440ad00400091e1030091e00700ad1f260e94fe1340f9ffc30091c0035fd6ff8300d1fe4f01a900400091f30301aaff0700f9f3240e94e00700f9e0230091e10313aae2031faae3ebc494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff0700f9e5240e94e00700f9e0230091e10313aae2031faaaeebc494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a9f30301aaf40300aa93ba0d94080013ca802201a9e0031faa9c2e0e9409000072280080526a129f9a89a200398a1200f988a60039f44f41a9fe0742f8c0035fd6fe0f1ef8f44f01a908a44039f30300aaf40301aa68000034600a40f9060000147dba0d940820805260fe01a9600a00f968520079800200f9600e40f9f44f41a9fe0742f8c0035fd60040009114260e1400400091b5240e14fe0f1ef8f44f01a9f30300aa00400091b0240e94f40300aa69ba0d94080014ca602201a9f44f41a9fe0742f8c0035fd600400091a7240e14fe4fbfa9f30300aa5fba0d940820805260fe01a9600a00f968520079fe4fc1a8c0035fd6c0035fd6fe0f1ff85c260e94c0035fd6080040b9280000b90040c03c2040803c0040c13c2040813c089040390994403928a40429c0035fd6080040b9280000b90040c03c2040803c0040c13c2040813c08a444291f010071e8079f1a3f01007128900039e8079f1a28940039c0035fd6c0035fd6004000910b270e14ff0301d1fe1b00f9200440ad00400091281040f9e1030091e00700ade81300f94d270e94fe1b40f900000012ff030191c0035fd60040009197270e1400400091e0270e14004000910e280e14004000912c280e14004000914d280e140040009192280e140040009134260e140040009120290e14004000912a2a0e1400400091f3280e1400400091662a0e1400400091792a0e14004000915f260e14004000913d2a0e14c0035fd6fe0f1ff8b72a0e94c0035fd6081040b91f01016ba101005428fc60d3091440b93f01086b21010054081840b91f01026bc100005448fc60d3091c40b93f01086be0179f1ac0035fd6e0031f2ac0035fd600400091d12a0e1408284229a9318052087d091b08010a4a087d091b0a2c432908010a4a087d091b00010b4ac0035fd608004039280000390810407828100078080c40390910403928a40029c0035fd60800403928000039081040782810007808a440291f010071e8079f1a3f010071280c0039e8079f1a28100039c0035fd6c0035fd6fe0f1ff800400091ff330039f52a0e94e0330039e0330091e1031faaf03ac594fe0741f8c0035fd6fe0f1ff800400091ff330039eb2a0e94e0330039e0330091e1031faae93ac594fe0741f8c0035fd6ff8300d1fe4f01a900400091f30301aaff330039df2a0e94e0330039e0330091e10313aae2031faa293bc594fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff330039d12a0e94e0330039e0330091e10313aae2031faaf43ac594fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a900400091f30302aaf40301aaff330039c22a0e94e0330039e0330091e10314aae20313aae3031faa0d3bc594f44f41a9fe0742f8c0035fd6004000916f2b0e1400400091219c4092a22b0e14ff8300d1fe4f01a900400091f303012aff330039ae2a0e94e0330039e0330091e103132ae2031faaa43ac594fe4f41a900000012ff830091c0035fd600400091219c4092b92b0e14ff8300d1fe4f01a900400091f303012aff3300399c2a0e94e0330039e0330091e103132ae2031faa7d3ac594fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff3300398e2a0e94e0330039e0330091e10313aae2031faa4c3ac594fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a9f303012af40300aaf4b80d94804200390800134ae0031faa884600396b2d0e9409000072280080526a129f1a894e00398a4a003988520039f44f41a9fe0742f8c0035fd6fe0f1ef8f44f01a908504039f30300aaf40301aa680000346042403907000014ddb80d94280080527f2600796042003960460039685200398002003960464039f44f41a9fe0742f8c0035fd600400091af2b0e14004000915c2a0e14fe0f1ef8f44f01a9f30300aa00400091572a0e94f403002ac8b80d940800144a6042003968460039f44f41a9fe0742f8c0035fd6004000914d2a0e14fe4fbfa9f30300aabdb80d94280080527f260079604200396046003968520039fe4fc1a8c0035fd6c0035fd6fe0f1ff8ed2b0e94c0035fd60800407928000079082040b8282000b808184039091c403928240129c0035fd60800407928000079082040b8282000b8082441291f010071e8079f1a3f01007128180039e8079f1a281c0039c0035fd6c0035fd6fe0f1ff800400091ff1b0079a32c0e94e01b0079e0330091e1031faa6fdec494fe0741f8c0035fd6fe0f1ff800400091ff1b0079992c0e94e01b0079e0330091e1031faa68dec494fe0741f8c0035fd6ff8300d1fe4f01a900400091f30301aaff1b00798d2c0e94e01b0079e0330091e10313aae2031faa72dfc494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff1b00797f2c0e94e01b0079e0330091e10313aae2031faa3edfc494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a900400091f30302aaf40301aaff1b0079702c0e94e01b0079e0330091e10314aae20313aae3031faa56dfc494f44f41a9fe0742f8c0035fd6fe0f1ff8000100b4080040f9292040f9082140f91f0109eb81000054fe0741f8e3e009142ce109940be20994004000913d2d0e14004000916f2d0e14ff8300d1fe4f01a900400091f303012aff1b0079522c0e94e01b0079e0330091e103132ae2031faa19dec494fe4f41a900000012ff830091c0035fd600400091842d0e14ff8300d1fe4f01a900400091f303012aff1b0079412c0e94e01b0079e0330091e103132ae2031faaf3ddc494fe4f41a9ff830091c0035fd6ff8300d1fe4f01a900400091f30301aaff1b0079332c0e94e01b0079e0330091e10313aae2031faac2ddc494fe4f41a9ff830091c0035fd6fe0f1ef8f44f01a9f40300aae0031faaf303012a47b80d940800134a8022007988260079932c0e9409000072280080526a129f1a895a00398a2a0079885e0039f44f41a9fe0742f8c0035fd6fe0f1ef8f44f01a9085c4039f30300aaf40301aa680000346022407907000014e0031faa30b80d940820a0526022007960260079681600b98002007960264079f44f41a9fe0742f8c0035fd600400091742d0e1400400091012c0e14fe0f1ef8f44f01a9f30300aa00400091fc2b0e94f403002ae0031faa1bb80d940800144a6022007968260079f44f41a9fe0742f8c0035fd6400000b4c0035fd6fe0f1ff8bee0099400400091ed2b0e14fe4fbfa9f30300aae0031faa0bb80d940820a0526022007960260079681600b9fe4fc1a8c0035fd6c0035fd6fe0f1ff8d42d0e94c0035fd6000040fd093040390a344039200000fd080840b92a1000b928240129c0035fd6000040fd200000fd092041290a1040b91f010071290800b9e8079f1a5f01007128300039e8079f1a28340039c0035fd6c0035fd6fe0f1ff800400091ff0f00b95b320e94e00f00b9e0330091e1031faafc67c594fe0741f8c0035fd6fe0f1ff800400091ff0f00b951320e94e00f00b9e0330091e1031faaf467c594fe0741f8c0035fd6ff8300d1fe4f01a900400091f30301aaff0f00b945320e94",
+              "nativeSizeBytes": 2103028,
+              "boundaryModuleOffset": "0x22e0c2c",
+              "codeTruncated": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

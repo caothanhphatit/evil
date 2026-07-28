@@ -1,0 +1,1783 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T11:25:08.552323Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 3336,
+    "action": "Pass 15 combat presentation schema only; no managed values read",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "DamageManager",
+      "DamageCtrl",
+      "DamageEffectCtrl",
+      "DodgeMent"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "DamageManager",
+        "DamageCtrl",
+        "DamageEffectCtrl",
+        "DodgeMent"
+      ],
+      "missing": [
+        "DodgeMent"
+      ],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "DamageEffectCtrl",
+          "token": 33555089,
+          "fields": [
+            {
+              "name": "Particle",
+              "type": "UnityEngine.ParticleSystem",
+              "offset": 32,
+              "flags": 6
+            }
+          ],
+          "methods": [
+            {
+              "name": "OPCMPEPKIAP",
+              "token": 100676296,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LBEMGHMJAFD",
+              "token": 100676297,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100676298,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LJPGAOOJNLL",
+              "token": 100676299,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BOEGPOFHCON",
+              "token": 100676300,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FixedUpdate",
+              "token": 100676301,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MAADPLKDAAJ",
+              "token": 100676302,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AHOHIEBFLHK",
+              "token": 100676303,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PBNHOGEIJKH",
+              "token": 100676304,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FKGEKPBNOAI",
+              "token": 100676305,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KDFJLBDIMDD",
+              "token": 100676306,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Show",
+              "token": 100676307,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EAFDBEOOIBP",
+              "token": 100676308,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HLHILHDFBDF",
+              "token": 100676309,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ODNNENJOIEE",
+              "token": 100676310,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "DamageManager",
+          "token": 33555096,
+          "fields": [
+            {
+              "name": "mParent",
+              "type": "UnityEngine.GameObject",
+              "offset": 32,
+              "flags": 6
+            },
+            {
+              "name": "mRaidParent",
+              "type": "UnityEngine.GameObject",
+              "offset": 40,
+              "flags": 6
+            },
+            {
+              "name": "mPvPParent",
+              "type": "UnityEngine.GameObject",
+              "offset": 48,
+              "flags": 6
+            },
+            {
+              "name": "mAdventureParent",
+              "type": "UnityEngine.GameObject",
+              "offset": 56,
+              "flags": 6
+            },
+            {
+              "name": "mCanvas",
+              "type": "UnityEngine.RectTransform",
+              "offset": 64,
+              "flags": 6
+            },
+            {
+              "name": "KPABKEBKMFE",
+              "type": "DamageManager",
+              "offset": 0,
+              "flags": 17
+            },
+            {
+              "name": "IsSimpleDemage",
+              "type": "System.Boolean",
+              "offset": 72,
+              "flags": 6
+            },
+            {
+              "name": "NJPPNDLJOPC",
+              "type": "UnityEngine.WaitForFixedUpdate",
+              "offset": 80,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "WorldBossShow",
+              "token": 100676412,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NBIJINOKDPO",
+              "token": 100676413,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AOKEEMNLMHO",
+              "token": 100676414,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OLDADCAPMAH",
+              "token": 100676415,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OCCHPKAHNGM",
+              "token": 100676416,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OEDFIHACBMA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                },
+                {
+                  "index": 1,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Boolean"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OAFJIMNNIJN",
+              "token": 100676417,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CLPBGJCMHML",
+              "token": 100676418,
+              "returnType": "DamageManager",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DamageTestShow",
+              "token": 100676419,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FallenPastureShow",
+              "token": 100676420,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100676421,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FDCMOHGLPEC",
+              "token": 100676422,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Show",
+              "token": 100676423,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ENFOGEDNANJ",
+              "token": 100676424,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LALHEHEJEDM",
+              "token": 100676425,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Awake",
+              "token": 100676426,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PPIEDGLDLFC",
+              "token": 100676427,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "getInstance",
+              "token": 100676428,
+              "returnType": "DamageManager",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DKENEIPNCCD",
+              "token": 100676429,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EGGEBBKMFEC",
+              "token": 100676430,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OGNGNHICGBP",
+              "token": 100676431,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "RaidShow",
+              "token": 100676432,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AdventureShow",
+              "token": 100676433,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CustomShow",
+              "token": 100676434,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "BKBFAFDJBNC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "BBEBIELIKLC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 3,
+                  "name": "LJHFEEHLAGM",
+                  "type": "System.String"
+                },
+                {
+                  "index": 4,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DDAKOLLLPGB",
+              "token": 100676435,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "BKBFAFDJBNC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "BBEBIELIKLC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 3,
+                  "name": "LJHFEEHLAGM",
+                  "type": "System.String"
+                },
+                {
+                  "index": 4,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CGEHDANPLAE",
+              "token": 100676436,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ABBDLAONBEL",
+              "token": 100676437,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "BKBFAFDJBNC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "BBEBIELIKLC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 3,
+                  "name": "LJHFEEHLAGM",
+                  "type": "System.String"
+                },
+                {
+                  "index": 4,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CAJFGHJNPFG",
+              "token": 100676438,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildBattleShow",
+              "token": 100676439,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GoldShow",
+              "token": 100676440,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OEDFIHACBMA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                },
+                {
+                  "index": 1,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Boolean"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PvPShow",
+              "token": 100676441,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JBAFOCINDEF",
+              "token": 100676442,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CADAGAOCOOA",
+              "token": 100676443,
+              "returnType": "System.Collections.IEnumerator",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DNLJMDAPFNB",
+                  "type": "DamageCtrl"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JDEFFLNIEPK",
+              "token": 100676444,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "DamageCtrl",
+          "token": 33555333,
+          "fields": [
+            {
+              "name": "DamageText",
+              "type": "UnityEngine.UI.Text",
+              "offset": 32,
+              "flags": 6
+            },
+            {
+              "name": "Rect",
+              "type": "UnityEngine.RectTransform",
+              "offset": 40,
+              "flags": 6
+            },
+            {
+              "name": "NowPos",
+              "type": "UnityEngine.Vector2",
+              "offset": 48,
+              "flags": 6
+            },
+            {
+              "name": "Type",
+              "type": "System.Int32",
+              "offset": 56,
+              "flags": 6
+            },
+            {
+              "name": "IsPvPShow",
+              "type": "System.Boolean",
+              "offset": 60,
+              "flags": 6
+            },
+            {
+              "name": "IsAdventureShow",
+              "type": "System.Boolean",
+              "offset": 61,
+              "flags": 6
+            },
+            {
+              "name": "IsGuildBattleShow",
+              "type": "System.Boolean",
+              "offset": 62,
+              "flags": 6
+            },
+            {
+              "name": "IsDamageTestShow",
+              "type": "System.Boolean",
+              "offset": 63,
+              "flags": 6
+            },
+            {
+              "name": "IsWorldBossShow",
+              "type": "System.Boolean",
+              "offset": 64,
+              "flags": 6
+            },
+            {
+              "name": "IsFallenPastureShow",
+              "type": "System.Boolean",
+              "offset": 65,
+              "flags": 6
+            }
+          ],
+          "methods": [
+            {
+              "name": "NPIPKFBNLIG",
+              "token": 100681294,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FNAOIENHEKJ",
+              "token": 100681295,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OJANCJEDBAN",
+              "token": 100681296,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Int64"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Show",
+              "token": 100681297,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GuildBattleShow",
+              "token": 100681298,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FallenPastureShow",
+              "token": 100681299,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100681300,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DamageTestShow",
+              "token": 100681301,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NJMGBLMICFB",
+              "token": 100681302,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GoldShow",
+              "token": 100681303,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OEDFIHACBMA",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                },
+                {
+                  "index": 1,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Boolean"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CustomShow",
+              "token": 100681304,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "BKBFAFDJBNC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "BBEBIELIKLC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 3,
+                  "name": "LJHFEEHLAGM",
+                  "type": "System.String"
+                },
+                {
+                  "index": 4,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JAEOFEAJJAJ",
+              "token": 100681305,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NKOMAINKIKH",
+              "token": 100681306,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WorldBossShow",
+              "token": 100681307,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LCCCCOELKPP",
+              "token": 100681308,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "RaidShow",
+              "token": 100681309,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 4,
+                  "name": "FKGKNAOFEKL",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PvPShow",
+              "token": 100681310,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ElementalShow",
+              "token": 100681311,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CNGMINAHGII",
+              "token": 100681312,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "BKBFAFDJBNC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "BBEBIELIKLC",
+                  "type": "System.String"
+                },
+                {
+                  "index": 3,
+                  "name": "LJHFEEHLAGM",
+                  "type": "System.String"
+                },
+                {
+                  "index": 4,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EHCPLMLKMNP",
+              "token": 100681313,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CDPPPAECAED",
+              "token": 100681314,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AdventureShow",
+              "token": 100681315,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GEGCJKGHIKM",
+              "token": 100681316,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NEOOEHKBNFH",
+              "token": 100681317,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "EHAJAEBNFKL",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.Int64"
+                },
+                {
+                  "index": 2,
+                  "name": "NNJHCMOAEPP",
+                  "type": "UnityEngine.Vector3"
+                },
+                {
+                  "index": 3,
+                  "name": "CPNAGKMNPIK",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

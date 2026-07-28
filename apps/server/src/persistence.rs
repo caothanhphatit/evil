@@ -4,7 +4,10 @@ use std::{
 };
 
 use async_trait::async_trait;
-use sqlx::{postgres::PgPoolOptions, PgPool, Postgres, Row, Transaction};
+use sqlx::{
+    postgres::{PgPoolOptions, PgRow},
+    PgPool, Postgres, Row, Transaction,
+};
 use thiserror::Error;
 use tokio::sync::RwLock;
 use uuid::Uuid;
@@ -17,12 +20,16 @@ use crate::{
     },
     identity::SessionTokenHash,
     simulation::{
-        operational_migration_roster, DurableBuilding, DurableBuildingState, DurableHunterProfile,
-        DurableHunterProgress, DurableHunterRosterState, DurableHunterSkill, DurableHunterState,
-        DurableHunterTrait, DurableMaterialStock, DurablePlayerAggregate, DurableProductStock,
-        DurableTradeSettlement, DurableWaitingHunter, HunterBanishment, HunterServiceGauge,
-        OriginalFlowPlayerState, PendingOperation, DURABLE_PLAYER_SCHEMA_VERSION,
-        MIGRATION_HUNTER_RELEASE_ID,
+        operational_migration_roster, upgrade_operational_fixture_roster, DurableBuilding,
+        DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterProfile,
+        DurableHunterProgress, DurableHunterRosterState, DurableHunterRuntimeAppearance,
+        DurableHunterRuntimeConsumable, DurableHunterRuntimeGear, DurableHunterRuntimeGrowth,
+        DurableHunterRuntimeInventory, DurableHunterRuntimeItem, DurableHunterRuntimeRidingPet,
+        DurableHunterRuntimeSkill, DurableHunterRuntimeState, DurableHunterRuntimeStatus,
+        DurableHunterSkill, DurableHunterState, DurableHunterTrait, DurableMaterialStock,
+        DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement, DurableWaitingHunter,
+        HunterBanishment, HunterServiceGauge, OriginalFlowPlayerState, PendingOperation,
+        DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_HUNTER_RELEASE_ID,
     },
 };
 
@@ -288,6 +295,8 @@ impl PlayerRepository for PostgresPlayerRepository {
         if !roster.roster_resolved && roster.hunters.is_empty() && roster.waiting_queue.is_empty() {
             roster = operational_migration_roster();
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
+        } else if upgrade_operational_fixture_roster(&mut roster) {
+            save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
         }
         state.hunter_roster = roster;
         state.buildings = durable_buildings_from_town(town.state)?;
@@ -440,7 +449,15 @@ async fn load_hunter_roster_in(
                ph.reincarnation_current, ph.reincarnation_maximum, ph.is_locked,
                ph.riding_pet_state_resolved,
                hcd.display_name AS characteristic_name,
-               ph.action_state, ph.animation_name
+               ph.action_state, ph.animation_name, ph.hunt_state,
+               ph.source_dictionary_key, ph.source_index, ph.source_job, ph.source_sub_job,
+               ph.source_third_job, ph.source_fourth_job, ph.source_personality,
+               ph.source_grade_rank_up, ph.source_dark_soul, ph.source_used_dark_soul,
+               ph.source_used_job_trait,
+               ph.source_hp, ph.source_now_hp, ph.source_feel, ph.source_now_feel,
+               ph.source_hungry, ph.source_now_hungry, ph.source_tire, ph.source_now_tire,
+               ph.source_damage, ph.source_armor, ph.source_critical,
+               ph.source_attack_speed, ph.source_dodge
         FROM player_hunter ph
         JOIN hunter_class_definition hc
           ON hc.release_id = ph.content_release_id AND hc.class_id = ph.class_id
@@ -529,11 +546,56 @@ async fn load_hunter_roster_in(
                     .transpose()
                     .map_err(|_| RepositoryError::InvalidOperation)?,
                 ready: row.try_get("ready")?,
+                cooldown_remaining_ms: 0,
             });
     }
+    let equipment_rows = sqlx::query(
+        r#"SELECT hunter_id, slot_id, catalog_kind, catalog_index, display_name, icon_path,
+                  presentation_gender, required_class_id, locked, evidence_state
+           FROM player_hunter_fixture_equipment
+           WHERE player_token = $1
+           ORDER BY hunter_id, slot_order"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    let mut equipment_by_hunter: HashMap<u32, Vec<DurableHunterEquipmentSlot>> = HashMap::new();
+    for row in equipment_rows {
+        let hunter_id = u32::try_from(row.try_get::<i64, _>("hunter_id")?)
+            .map_err(|_| RepositoryError::InvalidOperation)?;
+        equipment_by_hunter
+            .entry(hunter_id)
+            .or_default()
+            .push(DurableHunterEquipmentSlot {
+                slot_id: row.try_get("slot_id")?,
+                catalog_kind: row.try_get("catalog_kind")?,
+                catalog_index: u32::try_from(row.try_get::<i32, _>("catalog_index")?)
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                display_name: row.try_get("display_name")?,
+                icon_path: row.try_get("icon_path")?,
+                presentation_gender: row.try_get("presentation_gender")?,
+                required_class_id: row.try_get("required_class_id")?,
+                locked: row.try_get("locked")?,
+                evidence_state: row.try_get("evidence_state")?,
+            });
+    }
+    let mut runtime_by_hunter = load_hunter_runtime_in(transaction, player_token).await?;
     for row in rows {
         let hunter_id = u32::try_from(row.try_get::<i64, _>("hunter_id")?)
             .map_err(|_| RepositoryError::InvalidOperation)?;
+        let mut runtime = runtime_by_hunter.remove(&hunter_id).unwrap_or_default();
+        runtime.source_dictionary_key = row.try_get("source_dictionary_key")?;
+        runtime.source_index = row.try_get("source_index")?;
+        runtime.source_job = row.try_get("source_job")?;
+        runtime.source_sub_job = row.try_get("source_sub_job")?;
+        runtime.source_third_job = row.try_get("source_third_job")?;
+        runtime.source_fourth_job = row.try_get("source_fourth_job")?;
+        runtime.source_personality = row.try_get("source_personality")?;
+        runtime.source_grade_rank_up = row.try_get("source_grade_rank_up")?;
+        runtime.source_dark_soul = row.try_get("source_dark_soul")?;
+        runtime.source_used_dark_soul = row.try_get("source_used_dark_soul")?;
+        runtime.source_used_job_trait = row.try_get("source_used_job_trait")?;
+        runtime.status = runtime_status_from_row(&row)?;
         let hunter = DurableHunterState {
             hunter_id,
             gold: db_u64(&row, "gold")?,
@@ -551,6 +613,7 @@ async fn load_hunter_roster_in(
                 current: db_u64(&row, "mood_current")?,
                 maximum: db_u64(&row, "mood_maximum")?,
             },
+            hunt: serde_json::from_value(row.try_get("hunt_state")?)?,
             profile: DurableHunterProfile {
                 content_release_id: row.try_get("content_release_id")?,
                 display_name: row.try_get("display_name")?,
@@ -579,11 +642,13 @@ async fn load_hunter_roster_in(
                 is_locked: row.try_get("is_locked")?,
                 characteristic_name: row.try_get("characteristic_name")?,
                 riding_pet_state_resolved: row.try_get("riding_pet_state_resolved")?,
+                equipment_slots: equipment_by_hunter.remove(&hunter_id).unwrap_or_default(),
                 action_state: row.try_get("action_state")?,
                 animation_name: row.try_get("animation_name")?,
                 traits: traits_by_hunter.remove(&hunter_id).unwrap_or_default(),
                 skills: skills_by_hunter.remove(&hunter_id).unwrap_or_default(),
             },
+            runtime,
         };
         match row.try_get::<String, _>("roster_state")?.as_str() {
             "active" => roster.hunters.push(hunter),
@@ -626,10 +691,310 @@ async fn load_hunter_roster_in(
             ))
         })
         .collect::<Result<BTreeMap<_, _>, RepositoryError>>()?;
+    let action_rows = sqlx::query(
+        "SELECT command_id, command_key FROM player_hunter_action_command WHERE player_token = $1 ORDER BY created_at, command_id",
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    roster.hunt_commands = action_rows
+        .into_iter()
+        .map(|row| Ok((row.try_get("command_id")?, row.try_get("command_key")?)))
+        .collect::<Result<BTreeMap<_, _>, RepositoryError>>()?;
     roster
         .validate()
         .map_err(|_| RepositoryError::InvalidOperation)?;
     Ok(Some(roster))
+}
+
+fn runtime_status_from_row(
+    row: &PgRow,
+) -> Result<Option<DurableHunterRuntimeStatus>, RepositoryError> {
+    let values = (
+        row.try_get::<Option<i64>, _>("source_hp")?,
+        row.try_get::<Option<i64>, _>("source_now_hp")?,
+        row.try_get::<Option<f32>, _>("source_feel")?,
+        row.try_get::<Option<f32>, _>("source_now_feel")?,
+        row.try_get::<Option<f32>, _>("source_hungry")?,
+        row.try_get::<Option<f32>, _>("source_now_hungry")?,
+        row.try_get::<Option<f32>, _>("source_tire")?,
+        row.try_get::<Option<f32>, _>("source_now_tire")?,
+        row.try_get::<Option<i64>, _>("source_damage")?,
+        row.try_get::<Option<i64>, _>("source_armor")?,
+        row.try_get::<Option<i32>, _>("source_critical")?,
+        row.try_get::<Option<f32>, _>("source_attack_speed")?,
+        row.try_get::<Option<i32>, _>("source_dodge")?,
+    );
+    match values {
+        (None, None, None, None, None, None, None, None, None, None, None, None, None) => Ok(None),
+        (
+            Some(hp),
+            Some(now_hp),
+            Some(feel),
+            Some(now_feel),
+            Some(hungry),
+            Some(now_hungry),
+            Some(tire),
+            Some(now_tire),
+            Some(damage),
+            Some(armor),
+            Some(critical),
+            Some(attack_speed),
+            Some(dodge),
+        ) => Ok(Some(DurableHunterRuntimeStatus {
+            hp,
+            now_hp,
+            feel,
+            now_feel,
+            hungry,
+            now_hungry,
+            tire,
+            now_tire,
+            damage,
+            armor,
+            critical,
+            attack_speed,
+            dodge,
+        })),
+        _ => Err(RepositoryError::InvalidOperation),
+    }
+}
+
+async fn load_hunter_runtime_in(
+    transaction: &mut Transaction<'_, Postgres>,
+    player_token: Uuid,
+) -> Result<HashMap<u32, DurableHunterRuntimeState>, RepositoryError> {
+    let mut runtime = HashMap::<u32, DurableHunterRuntimeState>::new();
+    let section_rows = sqlx::query(
+        "SELECT hunter_id, section, value_captured FROM player_hunter_runtime_section WHERE player_token = $1",
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in section_rows {
+        if !row.try_get::<bool, _>("value_captured")? {
+            continue;
+        }
+        let hunter_id = runtime_hunter_id(&row)?;
+        let state = runtime.entry(hunter_id).or_default();
+        match row.try_get::<String, _>("section")?.as_str() {
+            "skills" => state.skills = Some(Vec::new()),
+            "inventory" => state.inventory = Some(DurableHunterRuntimeInventory::default()),
+            "growth" => state.growth = Some(Vec::new()),
+            "riding_pet" | "status" => {}
+            _ => return Err(RepositoryError::InvalidOperation),
+        }
+    }
+
+    let appearance_rows = sqlx::query(
+        r#"SELECT hunter_id, body_index, costume_index, costume_hidden, fairy_index,
+                  fairy_hidden, weapon_costume_index, weapon_costume_hidden,
+                  wing_costume_index, wing_costume_hidden, seal_costume_index,
+                  seal_costume_hidden, ramble_pet_index, ramble_pet_hidden,
+                  hat_hidden, costume_hat_hidden
+           FROM player_hunter_runtime_appearance WHERE player_token = $1"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in appearance_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime.entry(hunter_id).or_default().appearance = Some(DurableHunterRuntimeAppearance {
+            body_index: row.try_get("body_index")?,
+            costume_index: row.try_get("costume_index")?,
+            costume_hidden: row.try_get("costume_hidden")?,
+            fairy_index: row.try_get("fairy_index")?,
+            fairy_hidden: row.try_get("fairy_hidden")?,
+            weapon_costume_index: row.try_get("weapon_costume_index")?,
+            weapon_costume_hidden: row.try_get("weapon_costume_hidden")?,
+            wing_costume_index: row.try_get("wing_costume_index")?,
+            wing_costume_hidden: row.try_get("wing_costume_hidden")?,
+            seal_costume_index: row.try_get("seal_costume_index")?,
+            seal_costume_hidden: row.try_get("seal_costume_hidden")?,
+            ramble_pet_index: row.try_get("ramble_pet_index")?,
+            ramble_pet_hidden: row.try_get("ramble_pet_hidden")?,
+            hat_hidden: row.try_get("hat_hidden")?,
+            costume_hat_hidden: row.try_get("costume_hat_hidden")?,
+        });
+    }
+
+    let skill_rows = sqlx::query(
+        r#"SELECT hunter_id, dictionary_key, source_index, skill_index, cool_time, skill_level
+           FROM player_hunter_runtime_skill WHERE player_token = $1
+           ORDER BY hunter_id, dictionary_key"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in skill_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime
+            .entry(hunter_id)
+            .or_default()
+            .skills
+            .get_or_insert_with(Vec::new)
+            .push(DurableHunterRuntimeSkill {
+                dictionary_key: row.try_get("dictionary_key")?,
+                source_index: row.try_get("source_index")?,
+                skill_index: row.try_get("skill_index")?,
+                cool_time: row.try_get("cool_time")?,
+                level: row.try_get("skill_level")?,
+            });
+    }
+
+    let item_rows = sqlx::query(
+        r#"SELECT hunter_id, dictionary_key, new_check, source_index, item_count, reservation, infinity_check
+           FROM player_hunter_runtime_item WHERE player_token = $1
+           ORDER BY hunter_id, dictionary_key"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in item_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime_inventory(&mut runtime, hunter_id)
+            .items
+            .push(DurableHunterRuntimeItem {
+                dictionary_key: row.try_get("dictionary_key")?,
+                new_check: row.try_get("new_check")?,
+                source_index: row.try_get("source_index")?,
+                count: row.try_get("item_count")?,
+                reservation: row.try_get("reservation")?,
+                infinity_check: row.try_get("infinity_check")?,
+            });
+    }
+
+    let gear_rows = sqlx::query(
+        r#"SELECT hunter_id, dictionary_key, source_index, gear_index, inventory_index,
+                  quality, new_check, gear_level, rating, gear_group, plus_type, plus_value,
+                  minus_type, minus_value, additional_plus_type, additional_plus_value,
+                  additional_minus_type, additional_minus_value, buy_gold, buy_date,
+                  buy_date_value, quality_count, option_count, lock_count, potential,
+                  runes_index, runes_value, skill_runes_index, skill_runes_value,
+                  delete_count, unidentified_option_count
+           FROM player_hunter_runtime_gear WHERE player_token = $1
+           ORDER BY hunter_id, dictionary_key"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in gear_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime_inventory(&mut runtime, hunter_id)
+            .gear
+            .push(DurableHunterRuntimeGear {
+                dictionary_key: row.try_get("dictionary_key")?,
+                source_index: row.try_get("source_index")?,
+                gear_index: row.try_get("gear_index")?,
+                inventory_index: row.try_get("inventory_index")?,
+                quality: row.try_get("quality")?,
+                new_check: row.try_get("new_check")?,
+                level: row.try_get("gear_level")?,
+                rating: row.try_get("rating")?,
+                group: row.try_get("gear_group")?,
+                plus_type: row.try_get("plus_type")?,
+                plus_value: row.try_get("plus_value")?,
+                minus_type: row.try_get("minus_type")?,
+                minus_value: row.try_get("minus_value")?,
+                additional_plus_type: row.try_get("additional_plus_type")?,
+                additional_plus_value: row.try_get("additional_plus_value")?,
+                additional_minus_type: row.try_get("additional_minus_type")?,
+                additional_minus_value: row.try_get("additional_minus_value")?,
+                buy_gold: row.try_get("buy_gold")?,
+                buy_date: row.try_get("buy_date")?,
+                buy_date_value: row.try_get("buy_date_value")?,
+                quality_count: row.try_get("quality_count")?,
+                option_count: row.try_get("option_count")?,
+                lock_count: row.try_get("lock_count")?,
+                potential: row.try_get("potential")?,
+                runes_index: row.try_get("runes_index")?,
+                runes_value: row.try_get("runes_value")?,
+                skill_runes_index: row.try_get("skill_runes_index")?,
+                skill_runes_value: row.try_get("skill_runes_value")?,
+                delete_count: row.try_get("delete_count")?,
+                unidentified_option_count: row.try_get("unidentified_option_count")?,
+            });
+    }
+
+    let consumable_rows = sqlx::query(
+        r#"SELECT hunter_id, dictionary_key, total_count
+           FROM player_hunter_runtime_consumable WHERE player_token = $1
+           ORDER BY hunter_id, dictionary_key"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in consumable_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime_inventory(&mut runtime, hunter_id).consumables.push(
+            DurableHunterRuntimeConsumable {
+                dictionary_key: row.try_get("dictionary_key")?,
+                total_count: row.try_get("total_count")?,
+            },
+        );
+    }
+
+    let growth_rows = sqlx::query(
+        r#"SELECT hunter_id, source_order, property_level
+           FROM player_hunter_runtime_growth WHERE player_token = $1
+           ORDER BY hunter_id, source_order"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in growth_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime
+            .entry(hunter_id)
+            .or_default()
+            .growth
+            .get_or_insert_with(Vec::new)
+            .push(DurableHunterRuntimeGrowth {
+                source_order: row.try_get("source_order")?,
+                property_level: row.try_get("property_level")?,
+            });
+    }
+
+    let pet_rows = sqlx::query(
+        r#"SELECT hunter_id, pasture_index, source_index, master_index, rating, skill_index,
+                  trait_index, trait_level, use_soul, use_growth_stone, locked
+           FROM player_hunter_runtime_riding_pet WHERE player_token = $1"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in pet_rows {
+        let hunter_id = runtime_hunter_id(&row)?;
+        runtime.entry(hunter_id).or_default().riding_pet = Some(DurableHunterRuntimeRidingPet {
+            pasture_index: row.try_get("pasture_index")?,
+            source_index: row.try_get("source_index")?,
+            master_index: row.try_get("master_index")?,
+            rating: row.try_get("rating")?,
+            skill_index: row.try_get("skill_index")?,
+            trait_index: row.try_get("trait_index")?,
+            trait_level: row.try_get("trait_level")?,
+            use_soul: row.try_get("use_soul")?,
+            use_growth_stone: row.try_get("use_growth_stone")?,
+            locked: row.try_get("locked")?,
+        });
+    }
+    Ok(runtime)
+}
+
+fn runtime_hunter_id(row: &PgRow) -> Result<u32, RepositoryError> {
+    u32::try_from(row.try_get::<i64, _>("hunter_id")?)
+        .map_err(|_| RepositoryError::InvalidOperation)
+}
+
+fn runtime_inventory(
+    runtime: &mut HashMap<u32, DurableHunterRuntimeState>,
+    hunter_id: u32,
+) -> &mut DurableHunterRuntimeInventory {
+    runtime
+        .entry(hunter_id)
+        .or_default()
+        .inventory
+        .get_or_insert_with(DurableHunterRuntimeInventory::default)
 }
 
 async fn save_hunter_roster_in(
@@ -675,6 +1040,10 @@ async fn save_hunter_roster_in(
         .bind(player_token)
         .execute(&mut **transaction)
         .await?;
+    sqlx::query("DELETE FROM player_hunter_action_command WHERE player_token = $1")
+        .bind(player_token)
+        .execute(&mut **transaction)
+        .await?;
 
     for (position, hunter) in roster.hunters.iter().enumerate() {
         insert_hunter_row(transaction, player_token, hunter, "active", position, None).await?;
@@ -704,6 +1073,14 @@ async fn save_hunter_roster_in(
         .bind(result.promoted_hunter_id.map(i64::from))
         .execute(&mut **transaction)
         .await?;
+    }
+    for (command_id, command_key) in &roster.hunt_commands {
+        sqlx::query("INSERT INTO player_hunter_action_command (player_token, command_id, command_key) VALUES ($1, $2, $3)")
+            .bind(player_token)
+            .bind(command_id)
+            .bind(command_key)
+            .execute(&mut **transaction)
+            .await?;
     }
     Ok(())
 }
@@ -735,10 +1112,10 @@ async fn insert_hunter_row(
              critical_rate_bps, attack_speed_milli, evasion_rate_bps,
              awakening_current, awakening_maximum, reincarnation_current,
              reincarnation_maximum, is_locked, riding_pet_state_resolved,
-             action_state, animation_name)
+             action_state, animation_name, hunt_state)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
                 $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26,
-                $27, $28, $29, $30, $31, $32, $33, $34, $35, $36)
+                $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37)
         ON CONFLICT (player_token, hunter_id) DO UPDATE
         SET roster_state = EXCLUDED.roster_state,
             roster_position = EXCLUDED.roster_position,
@@ -774,6 +1151,7 @@ async fn insert_hunter_row(
             riding_pet_state_resolved = EXCLUDED.riding_pet_state_resolved,
             action_state = EXCLUDED.action_state,
             animation_name = EXCLUDED.animation_name,
+            hunt_state = EXCLUDED.hunt_state,
             state_revision = player_hunter.state_revision + 1
         "#,
     )
@@ -860,6 +1238,7 @@ async fn insert_hunter_row(
     .bind(profile.riding_pet_state_resolved)
     .bind(action_state)
     .bind(animation_name)
+    .bind(serde_json::to_value(&hunter.hunt)?)
     .execute(&mut **transaction)
     .await?;
     sqlx::query("DELETE FROM player_hunter_trait WHERE player_token = $1 AND hunter_id = $2")
@@ -872,6 +1251,13 @@ async fn insert_hunter_row(
         .bind(i64::from(hunter.hunter_id))
         .execute(&mut **transaction)
         .await?;
+    sqlx::query(
+        "DELETE FROM player_hunter_fixture_equipment WHERE player_token = $1 AND hunter_id = $2",
+    )
+    .bind(player_token)
+    .bind(i64::from(hunter.hunter_id))
+    .execute(&mut **transaction)
+    .await?;
     for hunter_trait in &profile.traits {
         sqlx::query(
             r#"
@@ -909,6 +1295,294 @@ async fn insert_hunter_row(
         .execute(&mut **transaction)
         .await?;
     }
+    for equipment in &profile.equipment_slots {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_fixture_equipment
+               (player_token, hunter_id, slot_id, slot_order, catalog_kind, catalog_index,
+                display_name, icon_path, presentation_gender, required_class_id, locked,
+                evidence_state)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)"#,
+        )
+        .bind(player_token)
+        .bind(i64::from(hunter.hunter_id))
+        .bind(&equipment.slot_id)
+        .bind(fixture_equipment_slot_order(&equipment.slot_id)?)
+        .bind(&equipment.catalog_kind)
+        .bind(
+            i32::try_from(equipment.catalog_index)
+                .map_err(|_| RepositoryError::InvalidOperation)?,
+        )
+        .bind(&equipment.display_name)
+        .bind(&equipment.icon_path)
+        .bind(&equipment.presentation_gender)
+        .bind(&equipment.required_class_id)
+        .bind(equipment.locked)
+        .bind(&equipment.evidence_state)
+        .execute(&mut **transaction)
+        .await?;
+    }
+    save_hunter_runtime_in(transaction, player_token, hunter).await?;
+    Ok(())
+}
+
+async fn save_hunter_runtime_in(
+    transaction: &mut Transaction<'_, Postgres>,
+    player_token: Uuid,
+    hunter: &DurableHunterState,
+) -> Result<(), RepositoryError> {
+    let hunter_id = i64::from(hunter.hunter_id);
+    let runtime = &hunter.runtime;
+    let status = runtime.status.as_ref();
+    sqlx::query(
+        r#"UPDATE player_hunter
+           SET source_dictionary_key = $3, source_index = $4, source_job = $5,
+               source_sub_job = $6, source_third_job = $7, source_fourth_job = $8,
+               source_personality = $9, source_grade_rank_up = $10, source_dark_soul = $11,
+               source_used_dark_soul = $12, source_used_job_trait = $13,
+               source_hp = $14, source_now_hp = $15, source_feel = $16,
+               source_now_feel = $17, source_hungry = $18, source_now_hungry = $19,
+               source_tire = $20, source_now_tire = $21, source_damage = $22,
+               source_armor = $23, source_critical = $24, source_attack_speed = $25,
+               source_dodge = $26
+           WHERE player_token = $1 AND hunter_id = $2"#,
+    )
+    .bind(player_token)
+    .bind(hunter_id)
+    .bind(&runtime.source_dictionary_key)
+    .bind(runtime.source_index)
+    .bind(runtime.source_job)
+    .bind(runtime.source_sub_job)
+    .bind(runtime.source_third_job)
+    .bind(runtime.source_fourth_job)
+    .bind(runtime.source_personality)
+    .bind(runtime.source_grade_rank_up)
+    .bind(runtime.source_dark_soul)
+    .bind(runtime.source_used_dark_soul)
+    .bind(runtime.source_used_job_trait)
+    .bind(status.map(|value| value.hp))
+    .bind(status.map(|value| value.now_hp))
+    .bind(status.map(|value| value.feel))
+    .bind(status.map(|value| value.now_feel))
+    .bind(status.map(|value| value.hungry))
+    .bind(status.map(|value| value.now_hungry))
+    .bind(status.map(|value| value.tire))
+    .bind(status.map(|value| value.now_tire))
+    .bind(status.map(|value| value.damage))
+    .bind(status.map(|value| value.armor))
+    .bind(status.map(|value| value.critical))
+    .bind(status.map(|value| value.attack_speed))
+    .bind(status.map(|value| value.dodge))
+    .execute(&mut **transaction)
+    .await?;
+
+    for statement in [
+        "DELETE FROM player_hunter_runtime_section WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_appearance WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_skill WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_item WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_gear WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_consumable WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_growth WHERE player_token = $1 AND hunter_id = $2",
+        "DELETE FROM player_hunter_runtime_riding_pet WHERE player_token = $1 AND hunter_id = $2",
+    ] {
+        sqlx::query(statement)
+            .bind(player_token)
+            .bind(hunter_id)
+            .execute(&mut **transaction)
+            .await?;
+    }
+
+    for (section, captured) in [
+        ("status", runtime.status.is_some()),
+        ("skills", runtime.skills.is_some()),
+        ("inventory", runtime.inventory.is_some()),
+        ("growth", runtime.growth.is_some()),
+        ("riding_pet", runtime.riding_pet.is_some()),
+    ] {
+        if captured {
+            sqlx::query(
+                "INSERT INTO player_hunter_runtime_section (player_token, hunter_id, section, value_captured) VALUES ($1, $2, $3, TRUE)",
+            )
+            .bind(player_token)
+            .bind(hunter_id)
+            .bind(section)
+            .execute(&mut **transaction)
+            .await?;
+        }
+    }
+
+    if let Some(appearance) = runtime.appearance.as_ref() {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_appearance
+               (player_token, hunter_id, body_index, costume_index, costume_hidden,
+                fairy_index, fairy_hidden, weapon_costume_index, weapon_costume_hidden,
+                wing_costume_index, wing_costume_hidden, seal_costume_index,
+                seal_costume_hidden, ramble_pet_index, ramble_pet_hidden,
+                hat_hidden, costume_hat_hidden)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(appearance.body_index)
+        .bind(appearance.costume_index)
+        .bind(appearance.costume_hidden)
+        .bind(appearance.fairy_index)
+        .bind(appearance.fairy_hidden)
+        .bind(appearance.weapon_costume_index)
+        .bind(appearance.weapon_costume_hidden)
+        .bind(appearance.wing_costume_index)
+        .bind(appearance.wing_costume_hidden)
+        .bind(appearance.seal_costume_index)
+        .bind(appearance.seal_costume_hidden)
+        .bind(appearance.ramble_pet_index)
+        .bind(appearance.ramble_pet_hidden)
+        .bind(appearance.hat_hidden)
+        .bind(appearance.costume_hat_hidden)
+        .execute(&mut **transaction)
+        .await?;
+    }
+
+    for skill in runtime.skills.iter().flatten() {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_skill
+               (player_token, hunter_id, dictionary_key, source_index, skill_index, cool_time, skill_level)
+               VALUES ($1,$2,$3,$4,$5,$6,$7)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(&skill.dictionary_key)
+        .bind(skill.source_index)
+        .bind(skill.skill_index)
+        .bind(skill.cool_time)
+        .bind(skill.level)
+        .execute(&mut **transaction)
+        .await?;
+    }
+
+    if let Some(inventory) = runtime.inventory.as_ref() {
+        save_hunter_runtime_inventory(transaction, player_token, hunter_id, inventory).await?;
+    }
+    for growth in runtime.growth.iter().flatten() {
+        sqlx::query(
+            "INSERT INTO player_hunter_runtime_growth (player_token, hunter_id, source_order, property_level) VALUES ($1,$2,$3,$4)",
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(growth.source_order)
+        .bind(growth.property_level)
+        .execute(&mut **transaction)
+        .await?;
+    }
+    if let Some(pet) = runtime.riding_pet.as_ref() {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_riding_pet
+               (player_token, hunter_id, pasture_index, source_index, master_index, rating,
+                skill_index, trait_index, trait_level, use_soul, use_growth_stone, locked)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(pet.pasture_index)
+        .bind(pet.source_index)
+        .bind(&pet.master_index)
+        .bind(pet.rating)
+        .bind(pet.skill_index)
+        .bind(pet.trait_index)
+        .bind(pet.trait_level)
+        .bind(pet.use_soul)
+        .bind(pet.use_growth_stone)
+        .bind(pet.locked)
+        .execute(&mut **transaction)
+        .await?;
+    }
+    Ok(())
+}
+
+async fn save_hunter_runtime_inventory(
+    transaction: &mut Transaction<'_, Postgres>,
+    player_token: Uuid,
+    hunter_id: i64,
+    inventory: &DurableHunterRuntimeInventory,
+) -> Result<(), RepositoryError> {
+    for item in &inventory.items {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_item
+               (player_token, hunter_id, dictionary_key, new_check, source_index,
+                item_count, reservation, infinity_check)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(&item.dictionary_key)
+        .bind(item.new_check)
+        .bind(item.source_index)
+        .bind(item.count)
+        .bind(item.reservation)
+        .bind(item.infinity_check)
+        .execute(&mut **transaction)
+        .await?;
+    }
+    for gear in &inventory.gear {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_gear
+               (player_token, hunter_id, dictionary_key, source_index, gear_index,
+                inventory_index, quality, new_check, gear_level, rating, gear_group,
+                plus_type, plus_value, minus_type, minus_value, additional_plus_type,
+                additional_plus_value, additional_minus_type, additional_minus_value,
+                buy_gold, buy_date, buy_date_value, quality_count, option_count,
+                lock_count, potential, runes_index, runes_value, skill_runes_index,
+                skill_runes_value, delete_count, unidentified_option_count)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,
+                       $17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(&gear.dictionary_key)
+        .bind(gear.source_index)
+        .bind(gear.gear_index)
+        .bind(gear.inventory_index)
+        .bind(gear.quality)
+        .bind(gear.new_check)
+        .bind(gear.level)
+        .bind(gear.rating)
+        .bind(gear.group)
+        .bind(&gear.plus_type)
+        .bind(&gear.plus_value)
+        .bind(&gear.minus_type)
+        .bind(&gear.minus_value)
+        .bind(&gear.additional_plus_type)
+        .bind(&gear.additional_plus_value)
+        .bind(&gear.additional_minus_type)
+        .bind(&gear.additional_minus_value)
+        .bind(gear.buy_gold)
+        .bind(&gear.buy_date)
+        .bind(gear.buy_date_value)
+        .bind(gear.quality_count)
+        .bind(gear.option_count)
+        .bind(gear.lock_count)
+        .bind(gear.potential)
+        .bind(gear.runes_index)
+        .bind(gear.runes_value)
+        .bind(gear.skill_runes_index)
+        .bind(gear.skill_runes_value)
+        .bind(gear.delete_count)
+        .bind(gear.unidentified_option_count)
+        .execute(&mut **transaction)
+        .await?;
+    }
+    for consumable in &inventory.consumables {
+        sqlx::query(
+            r#"INSERT INTO player_hunter_runtime_consumable
+               (player_token, hunter_id, dictionary_key, total_count, nested_values_resolved)
+               VALUES ($1,$2,$3,$4,FALSE)"#,
+        )
+        .bind(player_token)
+        .bind(hunter_id)
+        .bind(&consumable.dictionary_key)
+        .bind(consumable.total_count)
+        .execute(&mut **transaction)
+        .await?;
+    }
     Ok(())
 }
 
@@ -917,6 +1591,20 @@ fn nonempty_or<'a>(value: &'a str, fallback: &'a str) -> &'a str {
         fallback
     } else {
         value
+    }
+}
+
+fn fixture_equipment_slot_order(slot_id: &str) -> Result<i16, RepositoryError> {
+    match slot_id {
+        "gloves" => Ok(0),
+        "helmet" => Ok(1),
+        "necklace" => Ok(2),
+        "boots" => Ok(3),
+        "ring" => Ok(4),
+        "weapon" => Ok(5),
+        "armor" => Ok(6),
+        "belt" => Ok(7),
+        _ => Err(RepositoryError::InvalidOperation),
     }
 }
 
@@ -1254,6 +1942,64 @@ mod tests {
         assert!(!migration.contains("skill_h1_01"));
     }
 
+    #[test]
+    fn operational_equipment_fixture_is_separate_from_runtime_evidence() {
+        let migration =
+            include_str!("../../../infra/db/migrations/0022_hunter_test_fixture_equipment.sql");
+
+        assert!(migration.contains("CREATE TABLE player_hunter_fixture_equipment"));
+        assert!(migration.contains("web_rebuild_test_fixture"));
+        assert!(migration.contains("never runtime_evidence/source_* data"));
+        assert!(!migration.contains("INSERT INTO player_hunter_runtime_gear"));
+        assert!(migration.contains("('h5', 252, 'Rusty Spear', 'weapon-252.png')"));
+        assert_eq!(fixture_equipment_slot_order("gloves").unwrap(), 0);
+        assert_eq!(fixture_equipment_slot_order("boots").unwrap(), 3);
+        assert_eq!(fixture_equipment_slot_order("weapon").unwrap(), 5);
+        assert_eq!(fixture_equipment_slot_order("armor").unwrap(), 6);
+    }
+
+    #[test]
+    fn hunter_runtime_schema_normalizes_full_capture_objects_without_claiming_nested_values() {
+        let migration =
+            include_str!("../../../infra/db/migrations/0017_hunter_runtime_evidence.sql");
+        let persistence = include_str!("persistence.rs");
+
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_section"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_appearance"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_skill"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_item"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_gear"));
+        assert!(migration.contains("additional_plus_type INTEGER[] NOT NULL"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_growth"));
+        assert!(migration.contains("CREATE TABLE player_hunter_runtime_riding_pet"));
+        assert!(migration.contains("CHECK (NOT nested_values_resolved)"));
+        assert!(migration.contains("CHECK (NOT pet_gear_values_resolved)"));
+        assert!(!migration.contains("JSONB"));
+        assert!(persistence.contains("save_hunter_runtime_in(transaction, player_token, hunter)"));
+        assert!(persistence.contains("UPDATE player_hunter\n           SET source_dictionary_key"));
+        for table in [
+            "player_hunter_runtime_section",
+            "player_hunter_runtime_appearance",
+            "player_hunter_runtime_skill",
+            "player_hunter_runtime_item",
+            "player_hunter_runtime_gear",
+            "player_hunter_runtime_consumable",
+            "player_hunter_runtime_growth",
+            "player_hunter_runtime_riding_pet",
+        ] {
+            assert!(persistence.contains(&format!("INSERT INTO {table}")));
+        }
+    }
+
+    #[test]
+    fn hunter_flow_schema_persists_hunt_state_and_command_keys() {
+        let migration = include_str!("../../../infra/db/migrations/0018_hunter_flow_v1.sql");
+        assert!(migration.contains("ADD COLUMN hunt_state JSONB"));
+        assert!(migration.contains("CREATE TABLE player_hunter_action_command"));
+        assert!(migration.contains("command_key TEXT NOT NULL"));
+        assert!(include_str!("persistence.rs").contains("hunt_state"));
+    }
+
     #[tokio::test]
     async fn postgres_loads_only_the_pinned_active_building_release_when_configured() {
         let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
@@ -1337,6 +2083,140 @@ mod tests {
                 .len(),
             5
         );
+    }
+
+    #[tokio::test]
+    async fn postgres_hunter_runtime_evidence_round_trips_when_test_database_is_configured() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let repository = PostgresPlayerRepository::connect_lazy(&database_url).unwrap();
+        let player = Uuid::new_v4();
+        let loaded = repository.load_or_create(player).await.unwrap();
+        let mut state = loaded.state;
+        let hunter = state.hunter_roster.hunters.first_mut().unwrap();
+        hunter.runtime = DurableHunterRuntimeState {
+            source_dictionary_key: Some("opaque-hunter-key".into()),
+            source_index: Some(41),
+            source_job: Some(2),
+            source_sub_job: Some(1),
+            source_third_job: Some(0),
+            source_fourth_job: Some(0),
+            source_personality: Some(8),
+            source_grade_rank_up: Some(3),
+            source_dark_soul: Some(500),
+            source_used_dark_soul: Some(120),
+            source_used_job_trait: Some(7),
+            appearance: Some(DurableHunterRuntimeAppearance {
+                body_index: 4,
+                costume_index: 5,
+                costume_hidden: false,
+                fairy_index: 6,
+                fairy_hidden: true,
+                weapon_costume_index: 7,
+                weapon_costume_hidden: false,
+                wing_costume_index: 8,
+                wing_costume_hidden: false,
+                seal_costume_index: 9,
+                seal_costume_hidden: true,
+                ramble_pet_index: 10,
+                ramble_pet_hidden: false,
+                hat_hidden: true,
+                costume_hat_hidden: false,
+            }),
+            status: Some(DurableHunterRuntimeStatus {
+                hp: 1000,
+                now_hp: 750,
+                feel: 90.5,
+                now_feel: 45.25,
+                hungry: 80.5,
+                now_hungry: 40.25,
+                tire: 70.5,
+                now_tire: 35.25,
+                damage: 101,
+                armor: 55,
+                critical: 12,
+                attack_speed: 1.25,
+                dodge: 9,
+            }),
+            skills: Some(Vec::new()),
+            inventory: Some(DurableHunterRuntimeInventory {
+                items: vec![DurableHunterRuntimeItem {
+                    dictionary_key: "item-key".into(),
+                    new_check: true,
+                    source_index: 12,
+                    count: 99,
+                    reservation: 4,
+                    infinity_check: false,
+                }],
+                gear: vec![DurableHunterRuntimeGear {
+                    dictionary_key: "gear-key".into(),
+                    source_index: 1,
+                    gear_index: 2,
+                    inventory_index: 3,
+                    quality: 4,
+                    new_check: true,
+                    level: 5,
+                    rating: 6,
+                    group: 7,
+                    plus_type: vec![8],
+                    plus_value: vec![9],
+                    minus_type: vec![10],
+                    minus_value: vec![11],
+                    additional_plus_type: vec![12],
+                    additional_plus_value: vec![13],
+                    additional_minus_type: vec![14],
+                    additional_minus_value: vec![15],
+                    buy_gold: 16,
+                    buy_date: "capture-date".into(),
+                    buy_date_value: 17,
+                    quality_count: 18,
+                    option_count: 19,
+                    lock_count: 20,
+                    potential: 21,
+                    runes_index: 22,
+                    runes_value: 23,
+                    skill_runes_index: 24,
+                    skill_runes_value: 25,
+                    delete_count: 26,
+                    unidentified_option_count: 27,
+                }],
+                consumables: vec![DurableHunterRuntimeConsumable {
+                    dictionary_key: "consumable-key".into(),
+                    total_count: 28,
+                }],
+            }),
+            growth: Some(vec![DurableHunterRuntimeGrowth {
+                source_order: 0,
+                property_level: 3,
+            }]),
+            riding_pet: Some(DurableHunterRuntimeRidingPet {
+                pasture_index: 1,
+                source_index: 2,
+                master_index: "opaque-hunter-key".into(),
+                rating: 3,
+                skill_index: 4,
+                trait_index: 5,
+                trait_level: 6,
+                use_soul: 7,
+                use_growth_stone: 8,
+                locked: true,
+            }),
+        };
+        let expected = hunter.runtime.clone();
+
+        repository
+            .persist(player, &state, loaded.revision, 1, &[])
+            .await
+            .unwrap();
+        let reloaded = repository.load_or_create(player).await.unwrap();
+        assert_eq!(reloaded.state.hunter_roster.hunters[0].runtime, expected);
+
+        sqlx::query("DELETE FROM player_world_state WHERE player_token = $1")
+            .bind(player)
+            .execute(&repository.pool)
+            .await
+            .unwrap();
     }
 
     #[tokio::test]

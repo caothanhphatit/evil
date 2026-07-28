@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-literal-multipliers-pass17",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-getdamage-callers-api35-v1.json",
+      "bytes": 409504,
+      "sha256": "0ed043c4aa358d50ef237133c700abe10935e23bf0cb159690bea26957a67170"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-skill-coefficient-action-targets-api35-v1.json",
+      "bytes": 7783,
+      "sha256": "b8107326aebcec5d0793262d05251a1d64bde75c6f47a4831c366128759db6c9"
+    },
+    {
+      "path": "reverse-engineering/evidence/constant-data-runtime-schema-api35-v1.json",
+      "bytes": 299479,
+      "sha256": "1f381c9d27cc42803a8834a0e4d3379603b72c8639d3ae1ebf6e2c3907081431"
+    }
+  ],
+  "family": {
+    "id": "literal-obscured-float-roundtrip-multiplier",
+    "pipeline": "initialize ObscuredFloat from exact inline float32 literal; decode getDamage result member at +0x10; decode multiplier; multiply as float32; FCVTZS",
+    "rounding": "final FCVTZS truncates toward zero",
+    "members": [
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "MEDDIMPJHDA",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686798,
+          "moduleOffset": "0x3437164",
+          "nativeSizeBytes": 716,
+          "bodySha256": "5db3362126b3b21c616bdb92b6876ba6a8dcdb2b03d4fffe057c107f0da98327"
+        },
+        "getDamageVector": [
+          true,
+          false,
+          true
+        ],
+        "literalMultiplier": {
+          "instructionBits": "0x438f0000",
+          "float32": 286.0
+        },
+        "equation": "damage = trunc_i64(float32(baseDamage) * 286.0f)",
+        "action": {
+          "target": "FlameExplosionCtrl.Action",
+          "objectNameSource": {
+            "name": "FLAMEEXPLOSION_OBJ_NAME",
+            "type": "System.String",
+            "offset": 4448,
+            "flags": 54,
+            "runtimeDataOffset": "0x1160"
+          },
+          "damageParameter": 4,
+          "selectorParameter6": 1
+        },
+        "resultPayload": {
+          "sourceOffset": "getDamage result +0x30",
+          "operation": "decoded and forwarded unchanged",
+          "actionParameter": 5,
+          "semanticStatus": "unresolved discriminator; no normal/critical enum label assigned"
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "BOKBBDIDLJG",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686800,
+          "moduleOffset": "0x3420bf8",
+          "nativeSizeBytes": 708,
+          "bodySha256": "87ea1ea0ebe322cc5df737f721db38cbb755357b51f0aa57c1d9b88e0e2ac79f"
+        },
+        "getDamageVector": [
+          true,
+          false,
+          true
+        ],
+        "literalMultiplier": {
+          "encoding": "ARM64 immediate",
+          "float32": 5.0
+        },
+        "equation": "damage = trunc_i64(float32(baseDamage) * 5.0f)",
+        "action": {
+          "target": "FlameExplosionCtrl.Action",
+          "objectNameSource": {
+            "name": "FLAMEEXPLOSION_OBJ_NAME",
+            "type": "System.String",
+            "offset": 4448,
+            "flags": 54,
+            "runtimeDataOffset": "0x1160"
+          },
+          "damageParameter": 4,
+          "selectorParameter6": 0
+        },
+        "resultPayload": {
+          "sourceOffset": "getDamage result +0x30",
+          "operation": "decoded and forwarded unchanged",
+          "actionParameter": 5,
+          "semanticStatus": "unresolved discriminator; no normal/critical enum label assigned"
+        }
+      },
+      {
+        "method": {
+          "className": "HunterCtrl",
+          "methodName": "KKHDNNMAOKA",
+          "parameterTypes": [
+            "EvilCtrl"
+          ],
+          "token": 100686947,
+          "moduleOffset": "0x3420154",
+          "nativeSizeBytes": 688,
+          "bodySha256": "28b677658695738a593f022cc0143653f11758454177488e7a6b8f3f8c57a0af"
+        },
+        "getDamageVector": [
+          true,
+          false,
+          true
+        ],
+        "literalMultiplier": {
+          "encoding": "ARM64 immediate",
+          "float32": 3.0
+        },
+        "equation": "damage = trunc_i64(float32(baseDamage) * 3.0f)",
+        "action": {
+          "targetModuleOffset": "0x2b2b734",
+          "managedIdentity": null,
+          "objectNameSource": {
+            "name": "DIVINEATTACK_OBJ_NAME",
+            "type": "System.String",
+            "offset": 4440,
+            "flags": 54,
+            "runtimeDataOffset": "0x1158"
+          },
+          "damageArgumentRegister": "x3"
+        },
+        "resultPayload": {
+          "sourceOffset": "getDamage result +0x30",
+          "operation": "decoded and forwarded unchanged",
+          "actionArgumentRegister": "w4",
+          "semanticStatus": "unresolved discriminator; no normal/critical enum label assigned"
+        }
+      }
+    ]
+  },
+  "resolvedActionTargets": {
+    "flameExplosion": {
+      "className": "FlameExplosionCtrl",
+      "methodName": "Action",
+      "parameterTypes": [
+        "System.String",
+        "System.Int32",
+        "System.String",
+        "System.Int64",
+        "System.Int32",
+        "System.Int32"
+      ],
+      "token": 100664470,
+      "moduleOffset": "0x2c572b0",
+      "nativeSizeBytes": 472,
+      "bodySha256": "295aafedf4dee9c98449c3a4aa4e5c765576ce291d4a68273bf6f898cc53eb52"
+    }
+  },
+  "classification": {
+    "arithmeticClassifiedThisPass": 3,
+    "fullyClosedCallersThisPass": 0,
+    "reasonNotFullyClosed": "public skill mappings are unresolved and target 0x2b2b734 lacks a managed identity; the +0x30 result discriminator has no proven enum meaning"
+  },
+  "unresolved": [
+    "managed identity and parameter contract of native target 0x2b2b734",
+    "field names and enum values of HunterCtrl.PMPKOIHFNCE result members at +0x10 and +0x30",
+    "whether any +0x30 discriminator value corresponds to normal, critical, or another presentation category",
+    "public skill-row mappings for all three obfuscated methods"
+  ],
+  "integrationStatus": "disconnected_no_result_enum_guess_or_live_combat_use"
+}

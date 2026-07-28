@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T09:54:34.705551Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 27381,
+    "action": "AdminHunterData schema reflection for CalcDamage producer binding; no values read.",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "AdminHunterData"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "AdminHunterData"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "AdminHunterData",
+          "token": 33554634,
+          "fields": [
+            {
+              "name": "<index>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "<title>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[][]",
+              "offset": 32,
+              "flags": 1
+            },
+            {
+              "name": "<hp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 40,
+              "flags": 1
+            },
+            {
+              "name": "<damage>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 48,
+              "flags": 1
+            },
+            {
+              "name": "<armor>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 56,
+              "flags": 1
+            },
+            {
+              "name": "<dodge>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 64,
+              "flags": 1
+            },
+            {
+              "name": "<critical>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "offset": 72,
+              "flags": 1
+            },
+            {
+              "name": "<revivePercent>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "offset": 80,
+              "flags": 1
+            },
+            {
+              "name": "<armorPercent>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 88,
+              "flags": 1
+            },
+            {
+              "name": "<hpPercent>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 104,
+              "flags": 1
+            },
+            {
+              "name": "<damagePercent>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 120,
+              "flags": 1
+            },
+            {
+              "name": "<attackSpeed>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 136,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "get_damagePercent",
+              "token": 100668037,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "COFCIHCGGPK",
+              "token": 100668038,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_armor",
+              "token": 100668039,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HAGLJFLFBOK",
+              "token": 100668040,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_damage",
+              "token": 100668041,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KJGNCHFMOOO",
+              "token": 100668042,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BINCNDLHLOD",
+              "token": 100668043,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_critical",
+              "token": 100668044,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_damagePercent",
+              "token": 100668045,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_hp",
+              "token": 100668046,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EMGHEHDCABI",
+              "token": 100668047,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_revivePercent",
+              "token": 100668048,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_hpPercent",
+              "token": 100668049,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OCJGFMKLGDC",
+              "token": 100668050,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_title",
+              "token": 100668051,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HBGMFAJGLBC",
+              "token": 100668052,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_attackSpeed",
+              "token": 100668053,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_revivePercent",
+              "token": 100668054,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NLEELABILJK",
+              "token": 100668055,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_critical",
+              "token": 100668056,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_title",
+              "token": 100668057,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_damage",
+              "token": 100668058,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PJKELLLJBEC",
+              "token": 100668059,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_armorPercent",
+              "token": 100668060,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IAIFKOCKJBN",
+              "token": 100668061,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ODIDOHKPKKF",
+              "token": 100668062,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_dodge",
+              "token": 100668063,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_dodge",
+              "token": 100668064,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ELJKNILNKHE",
+              "token": 100668065,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_attackSpeed",
+              "token": 100668066,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_armor",
+              "token": 100668067,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_index",
+              "token": 100668068,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EPGFPFMHFKG",
+              "token": 100668069,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_hp",
+              "token": 100668070,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt[][]"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_index",
+              "token": 100668071,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100668072,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_hpPercent",
+              "token": 100668073,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_armorPercent",
+              "token": 100668074,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LPAAEMFFKCB",
+              "token": 100668075,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DCKENJJJLBA",
+              "token": 100668076,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString[][]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

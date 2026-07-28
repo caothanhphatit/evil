@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-damage-tail-analysis-v2",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json",
+      "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+      "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-runtime-combat-static-factors-api35-v1.json",
+      "sha256": "00fde64ddc7b0f006902e5ded28f4bff9ea27125fc837cd03db1ae94219aa9b6"
+    },
+    {
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    },
+    {
+      "path": "reverse-engineering/evidence/shield-data-runtime-schema-android-api35-v1.json",
+      "sha256": "a5b9d32a8eb0d90dd416786611990df0ca8c0c46f8a830e8fa16af35159d6cd7"
+    },
+    {
+      "path": "game-assets/source/Evil+Hunter+Tycoon_1.411_APKPure.xapk",
+      "sha256": "69c74073dbe3fc67d7b228a6f9fe5ad34f352f7faa3552a1500fc76b731015c3"
+    }
+  ],
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "Damaged",
+      "token": "0x06005CAA",
+      "moduleOffset": "0x346514c",
+      "nativeSizeBytes": 18964,
+      "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "HitDamageProcess",
+      "token": "0x06005B94",
+      "moduleOffset": "0x34256c0",
+      "nativeSizeBytes": 920,
+      "bodySha256": "a0632289d593e15dc6584f9a21958ebc5318d142167b27507bf83424ed5c90db"
+    }
+  ],
+  "armorSelector": {
+    "ratio": "HunterData.nowFeel / HunterData.feel",
+    "zeroDenominatorStatus": "No explicit zero-denominator branch is isolated in the selected native block; runtime HunterData invariant remains required.",
+    "bands": [
+      {
+        "condition": "nowFeel / feel >= 0.8",
+        "factor": 1.2000000476837158
+      },
+      {
+        "condition": "nowFeel / feel >= 0.6",
+        "factor": 1.100000023841858
+      },
+      {
+        "condition": "nowFeel / feel >= 0.4",
+        "factor": 1.0
+      },
+      {
+        "condition": "nowFeel / feel >= 0.2",
+        "factor": 0.8999999761581421
+      },
+      {
+        "condition": "nowFeel / feel < 0.2",
+        "factor": 0.800000011920929
+      }
+    ],
+    "equation": "armorScratch = truncTowardZero(StatusData.CalcArmor * selectedArmorFactor)",
+    "thresholdFloat32": [
+      0.800000011920929,
+      0.6000000238418579,
+      0.4000000059604645,
+      0.20000000298023224
+    ],
+    "factorRuntimeDataOffset": 248,
+    "factorRawHex": "b0f3ec70730000000000000000000000000000000000000005000000000000009a99993fcdcc8c3f0000803f6666663fcdcc4c3f"
+  },
+  "selectedFinalFactor": {
+    "runtimeDataOffset": 276,
+    "capturedValue": 1.264678955078125,
+    "rawHex": "fba7067efb46a741000000000000000000010000",
+    "equation": "positiveForwardedDamage = truncTowardZero(postArmor * selectedFinalFactor)",
+    "stability": "stable on repeated reads in the captured process; a prior process produced a different value",
+    "semanticStatus": "runtime source/value resolved; writer and gameplay identity unresolved, therefore not a package constant"
+  },
+  "shieldRouting": {
+    "dictionary": {
+      "owner": "HunterData",
+      "field": "mShieldDataDic",
+      "offset": 1488,
+      "type": "System.Collections.Generic.Dictionary<System.String,ShieldData>"
+    },
+    "shieldFields": [
+      {
+        "name": "MaxShield",
+        "offset": 16,
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+      },
+      {
+        "name": "CurrentShield",
+        "offset": 48,
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+      }
+    ],
+    "selection": "HitDamageProcess enumerates the dictionary and uses the first yielded ShieldData entry when Count >= 1.",
+    "equations": [
+      "if CurrentShield < forwardedDamage: forwardedDamage -= CurrentShield; CurrentShield = 0",
+      "else: CurrentShield -= forwardedDamage; forwardedDamage = 0",
+      "nowHp = max(nowHp - forwardedDamage, 0)"
+    ],
+    "ordering": "shield routing occurs before the common nowHp subtraction"
+  },
+  "goldenVectors": {
+    "armorSelector": [
+      {
+        "feel": 100.0,
+        "nowFeel": 100.0,
+        "factor": 1.2
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 80.0,
+        "factor": 1.2
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 79.999,
+        "factor": 1.1
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 60.0,
+        "factor": 1.1
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 40.0,
+        "factor": 1.0
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 20.0,
+        "factor": 0.9
+      },
+      {
+        "feel": 100.0,
+        "nowFeel": 19.999,
+        "factor": 0.8
+      }
+    ],
+    "shieldRouting": [
+      {
+        "currentShield": 30,
+        "forwardedDamage": 50,
+        "expectedShield": 0,
+        "expectedHpDamage": 20
+      },
+      {
+        "currentShield": 50,
+        "forwardedDamage": 30,
+        "expectedShield": 20,
+        "expectedHpDamage": 0
+      },
+      {
+        "currentShield": 30,
+        "forwardedDamage": 30,
+        "expectedShield": 0,
+        "expectedHpDamage": 0
+      }
+    ]
+  },
+  "unresolved": [
+    "The writer and gameplay identity of selectedFinalFactor at runtimeData+0x114.",
+    "Dictionary ordering/ownership semantics when mShieldDataDic contains more than one entry.",
+    "The full pre-armor modifier chain before the common tail."
+  ]
+}

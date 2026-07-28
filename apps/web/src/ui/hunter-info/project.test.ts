@@ -10,6 +10,7 @@ const hunter: HunterView = {
   satiety: 100, maxSatiety: 140, mood: 57, maxMood: 120, attack: 639, defense: 444,
   gold: 6684, portrait: "/content/hunter.png",
   skills: [{ id: "legacy", name: "Legacy", level: 1, icon: null, ready: true }],
+  hunt: null,
 };
 
 describe("projectHunterInfo", () => {
@@ -18,6 +19,10 @@ describe("projectHunterInfo", () => {
       hunter_info: {
         characteristic_name: "Charismatic",
         status: { dps_milli: 245770, critical_rate_bps: 700, attack_speed_milli: 2600, evasion_rate_bps: 300, awakening: { current: 0, maximum: 4 } },
+        equipment_slots: [
+          { slot_id: "weapon", catalog_kind: "weapon", catalog_index: 0, display_name: "Junk Sword", icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png", presentation_gender: "female", required_class_id: "h1", locked: false, evidence_state: "web_rebuild_test_fixture" },
+          { slot_id: "armor", icon_path: "/content/releases/evil-hunter-1.411/gear-icons/armor-0.png", locked: false },
+        ],
         skills: [{ skill_id: "fury", display_name: "Fury", level: 1, group: "Basic Skill", description: "Attack quickly." }],
         growth: { secret_points: 0, nodes: [{ node_id: "node-1", icon_path: "/content/node.png", points: 0, max_points: 100, order: 1 }] },
         riding_pet: { mounted: false, can_move_to_ranch: true },
@@ -26,6 +31,9 @@ describe("projectHunterInfo", () => {
     }, hunter);
     expect(view.title).toBe("Charismatic Ocos");
     expect(view.dps).toBe(245.77);
+    expect(view.equipment).toHaveLength(8);
+    expect(view.equipment[5]).toMatchObject({ id: "weapon", catalogKind: "weapon", catalogIndex: 0, name: "Junk Sword", presentationGender: "female", requiredClassId: "h1", evidenceState: "web_rebuild_test_fixture", icon: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png" });
+    expect(view.equipment[6]).toMatchObject({ id: "armor", icon: "/content/releases/evil-hunter-1.411/gear-icons/armor-0.png" });
     expect(view.skills?.[0]).toMatchObject({ id: "fury", group: "Basic Skill", description: "Attack quickly." });
     expect(view.growth?.nodes[0]).toMatchObject({ id: "node-1", maxPoints: 100 });
     expect(view.riding).toEqual({ mounted: false, canMoveToRanch: true });

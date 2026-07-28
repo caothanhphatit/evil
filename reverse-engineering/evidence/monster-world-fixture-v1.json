@@ -1,0 +1,30 @@
+{
+  "evidence_state": "fixture_only",
+  "ruleset": "web-rebuild-v1-fixture",
+  "source_runtime": "android-api35",
+  "schema_only_keys": [
+    "MonsterCountType01..04",
+    "MonsterZoneRespawnCount01..04",
+    "MonsterZoneRespawnSecond01..04",
+    "MonsterMiddleBossCount01..04",
+    "MonsterRespawnTime01..04"
+  ],
+  "assets": [
+    { "family": "mon_a_01_1", "path": "apps/web/public/content/releases/visible-world-v1/actors/mon_a_01_1/", "role": "spine_monster" },
+    { "family": "mon_goldblin", "path": "apps/web/public/content/releases/visible-world-v1/actors/mon_goldblin/", "role": "spine_monster" }
+  ],
+  "tier_semantics": "Town and three hunting regions share one village world instance; all region runtimes remain alive concurrently; each region's wooden board controls only that region's density I/II/III; camera focus is ephemeral and world difficulty is global.",
+  "signboard_scene_evidence": {
+    "source": "reverse-engineering/evidence/level1-scene-evidence-v2.json",
+    "objects": ["sign_01", "sign_02", "sign_03"],
+    "sprite_states": "area_sign_*_0..2",
+    "interaction": "Each exact world-object sprite cycles its fixture-bound region I -> II -> III -> I."
+  },
+  "screenshot_observation": { "gate_signboard": "three Roman density choices I/II/III", "cluster_banner": "Quái vật đang tập trung tại Tử Địa" },
+  "tiers": [
+    { "tier": 1, "map_id": "map_new01", "asset": "/content/releases/visible-world-v1/maps/map_new01.png", "fixture_density_counts": [1, 4, 8], "status": "fixture" },
+    { "tier": 2, "map_id": "background_08", "asset": "/content/releases/visible-world-v1/village/background/background_08__1530.png", "fixture_density_counts": [2, 6, 10], "status": "fixture" },
+    { "tier": 3, "map_id": "background_11", "asset": "/content/releases/visible-world-v1/village/background/background_11__1508.png", "fixture_density_counts": [3, 7, 12], "status": "fixture" }
+  ],
+  "unresolved": ["original_map_binding", "original_spawn_rates", "original_drop_tables", "original_damage_values"]
+}

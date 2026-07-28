@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-get-damage-producers-pass10",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "method": {
+    "moduleOffset": "0x33f51c4",
+    "size": 9496,
+    "sha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3"
+  },
+  "booleanArguments": {
+    "arg1_w1_saved_w23": "selects an early base-augmentation path before D10 construction; exact product meaning unresolved",
+    "arg2_w2_saved_w22": "when true bypasses the Random.Range critical-roll block; S15 remains 1.0 and critical result marker is not installed by that block",
+    "arg3_w3_saved_w21": "when true bypasses target-object gated critical-damage, Slayer, and Rift helper additions while leaving the earlier roll block mechanically separate"
+  },
+  "producers": {
+    "D10": {
+      "core": "D10 = D8 * (1 + S9_early)",
+      "later": "can be multiplied by an additional `(1 + percent expression)` branch before final use",
+      "source": "D8 originates from StatusData.LCENGICKKGP and earlier argument/job/subJob branches; full branch labels unresolved"
+    },
+    "S12": {
+      "initial": "opaque AdminData values and an indexed integer form a percent-scaled initial value",
+      "adds": [
+        "decoded HunterCtrl.JDOLJMAJNOA@0x868 when CheckPunishmentToken passes",
+        "positive HunterCtrl.GBFJMCNABAB@0x8C4",
+        "positive HunterCtrl.ABFAMEMOPHC@0x9DC behind CheckJobTrait(67)"
+      ],
+      "role": "final multiplicative `(1+S12)` term"
+    },
+    "S13": {
+      "initial": "0",
+      "adds": [
+        "GameManager static obscured int +0x28A4 scaled by 0.01 behind HunterCtrl bool + GearProperty[71] gates",
+        "positive HunterCtrl.HJPECDGAGJL@0x560 behind indexed GearProperty gate",
+        "positive HunterCtrl.GHAIAGIDIMC@0x580 behind HunterCtrl bool + indexed GearProperty gate",
+        "positive HunterCtrl.GAIAOFHHOKC@0x520 behind indexed GearProperty gate"
+      ],
+      "role": "final multiplicative `(1+S13)` term"
+    },
+    "D14": {
+      "initial": "0",
+      "adds": [
+        "positive HunterCtrl.BAOEMNEFFEO@0x7C0 * 0.01",
+        "positive HunterCtrl.LMBHBKLCNNJ@0x824 * 0.01",
+        "positive HunterCtrl.LLADOJCOOOP@0x65C (unscaled)"
+      ],
+      "role": "final multiplicative `(1+D14)` term"
+    },
+    "D11": {
+      "default": "1.0",
+      "targetGated": "getSlayerDamage(input) + getRiftNpcBuffDamage(input)",
+      "role": "direct final multiplier"
+    },
+    "stackFloat@0xC": {
+      "default": "1.0",
+      "source": "StatusData.GearSetProperty and GearSetPropertyValue",
+      "mechanics": "requires GearSetProperty[4] threshold and two positive decoded HunterData long values; ratio comparison may replace factor with `1 + GearSetPropertyValue[4][1]*0.01`",
+      "role": "direct final multiplier"
+    },
+    "S8": {
+      "default": "1.0",
+      "sources": [
+        "GearSetPropertyValue[2][0] scaled by 0.01 when GearSetProperty[2] threshold passes",
+        "GearProperty[67][0] scaled by 0.01 when enabled",
+        "CheckJobTrait(21) branch combines two opaque AdminJobTraitData floats and an indexed HunterData skill-derived integer, then scales by 0.01"
+      ],
+      "role": "direct final multiplier"
+    },
+    "S9_final": {
+      "selector": "HunterData.job@0x20",
+      "cases": {
+        "0": "1 + positive CollectionBerserkerDem, then add positive RelicCollectionBerserkerDem",
+        "1": "1 + positive CollectionPaladinDem, then add positive RelicCollectionPaladinDem",
+        "2": "1 + positive CollectionRangerDem, then add positive RelicCollectionRangerDem",
+        "3": "1 + positive CollectionSorcererDem, then add positive RelicCollectionSorcererDem",
+        "4": "1 + positive CollectionDarkKnightDem, then add positive RelicCollectionDarkKnightDem"
+      },
+      "role": "direct final multiplier"
+    },
+    "S15": {
+      "default": "1.0",
+      "criticalPath": "getCriticalDamage(input) only behind arg2 roll success plus target/tag and arg3 gates",
+      "role": "direct final multiplier"
+    }
+  },
+  "unresolved": [
+    "semantic labels/writers for all obfuscated HunterCtrl fields",
+    "AdminData class/field labels in S12 and job-trait-21 branch",
+    "exact semantic labels of Boolean parameters",
+    "full D8/D10 early branch tree and caller vectors",
+    "skill coefficient boundary if hidden in an unresolved D10 branch"
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T06:48:41.453724Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 21769,
+    "action": "pass-4 RefreshAnimation writer audit; no player values",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "HunterCtrl",
+        "methodName": "RefreshAnimation",
+        "parameterCount": 0
+      }
+    ],
+    "requestedModuleOffsets": [],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 4096,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a960a000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 4096,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "HunterCtrl",
+          "methodName": "RefreshAnimation",
+          "parameterCount": 0
+        }
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "RefreshAnimation",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686810,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73aca16f20",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x340cf20",
+              "codeHex": "fe0f1ef8f44f01a9d47d01d0f30300aa88aa623948020037806001b000d045f9672dbd97806001b000d445f9642dbd97806001b000c846f9612dbd9780600190001446f95e2dbd97806001b000cc46f95b2dbd972800805288aa2239605645f9e1031faa5a02729480000036f44f41a9fe0742f8c0035fd6e00313aa5282ff97200b00b4080442a9e2031faae00308aadf25c1971f10007101050054e00313aa4982ff97000a00b4080444a9e2031faae00308aad625c1971f0c0071e1030054e00313aa4082ff97e00800b400d442f9a00800b494600190886001b0941646f99718a614810240f9020140f94a6c529440020036e00313aa3382ff97400700b400d442f9000700b48860019008d545f9810240f9020140f9a26b5294400600b4088445a9e2031faae00308aab825c1971f0400710a020054e00313aa2282ff97200500b408c442f9880300b4e00313aa1d82ff97800400b408c442f9480400b4000542a9e2031faaa925c1971f0400714b020054680a41f9680300b4896001908a600190e3031faa29c946f94acd46f9615645f9148940f9200140f9420140f9bf077294140200b463826a39e20300aae00314aa07000014680a41f9480100b4008940f9000100b463826a39625645f9f44f41a9e1031f2ae4031faafe0742f8209e7c148b2dbd97",
+              "nativeSizeBytes": 488,
+              "boundaryModuleOffset": "0x340d108",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73aca16f20",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x340cf20",
+              "codeHex": "fe0f1ef8f44f01a9d47d01d0f30300aa88aa623948020037806001b000d045f9672dbd97806001b000d445f9642dbd97806001b000c846f9612dbd9780600190001446f95e2dbd97806001b000cc46f95b2dbd972800805288aa2239605645f9e1031faa5a02729480000036f44f41a9fe0742f8c0035fd6e00313aa5282ff97200b00b4080442a9e2031faae00308aadf25c1971f10007101050054e00313aa4982ff97000a00b4080444a9e2031faae00308aad625c1971f0c0071e1030054e00313aa4082ff97e00800b400d442f9a00800b494600190886001b0941646f99718a614810240f9020140f94a6c529440020036e00313aa3382ff97400700b400d442f9000700b48860019008d545f9810240f9020140f9a26b5294400600b4088445a9e2031faae00308aab825c1971f0400710a020054e00313aa2282ff97200500b408c442f9880300b4e00313aa1d82ff97800400b408c442f9480400b4000542a9e2031faaa925c1971f0400714b020054680a41f9680300b4896001908a600190e3031faa29c946f94acd46f9615645f9148940f9200140f9420140f9bf077294140200b463826a39e20300aae00314aa07000014680a41f9480100b4008940f9000100b463826a39625645f9f44f41a9e1031f2ae4031faafe0742f8209e7c148b2dbd97",
+              "nativeSizeBytes": 488,
+              "boundaryModuleOffset": "0x340d108",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

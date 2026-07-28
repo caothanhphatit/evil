@@ -5,19 +5,27 @@
  * This script does not inspect managed object instances or application saves.
  */
 
-const TARGET_ASSEMBLY = 'Assembly-CSharp.dll';
-const TARGET_TYPES = new Set([
+const TARGET_ASSEMBLY = globalThis.HUNTER_SCHEMA_TARGET_ASSEMBLY || 'Assembly-CSharp.dll';
+const DEFAULT_TARGET_TYPES = [
   'HunterData',
   'HunterLookData',
   'UserData',
   'SaveData',
   'HunterDetailPop',
-]);
+];
+const configuredTargetTypes = globalThis.HUNTER_SCHEMA_TARGET_TYPES;
+const TARGET_TYPES = new Set(
+  Array.isArray(configuredTargetTypes) && configuredTargetTypes.length > 0
+    ? configuredTargetTypes
+    : DEFAULT_TARGET_TYPES
+);
 const MAX_ASSEMBLIES = 4096;
 const MAX_CLASSES = 200000;
+const MAX_READY_ATTEMPTS = 80;
 const POLL_MS = 250;
 
 let started = false;
+let readyAttempts = 0;
 
 function emit(kind, payload) {
   send({ kind: kind, payload: payload });
@@ -170,7 +178,8 @@ function findAssemblyImage(api, domain) {
     const assembly = assemblies.add(index * Process.pointerSize).readPointer();
     const image = api.assemblyGetImage(assembly);
     const name = readCString(api.imageGetName(image));
-    if (name === TARGET_ASSEMBLY || name === 'Assembly-CSharp') {
+    const assemblyWithoutExtension = TARGET_ASSEMBLY.replace(/\.dll$/, '');
+    if (name === TARGET_ASSEMBLY || name === assemblyWithoutExtension) {
       return image;
     }
   }
@@ -229,13 +238,19 @@ const timer = setInterval(function () {
   if (module === null) {
     return;
   }
-  started = true;
-  clearInterval(timer);
   try {
     run(module);
+    started = true;
+    clearInterval(timer);
   } catch (error) {
-    emit('hunter-info-schema-error', {
-      message: String(error && error.stack ? error.stack : error),
-    });
+    readyAttempts += 1;
+    if (readyAttempts >= MAX_READY_ATTEMPTS) {
+      started = true;
+      clearInterval(timer);
+      emit('hunter-info-schema-error', {
+        message: String(error && error.stack ? error.stack : error),
+        attempts: readyAttempts,
+      });
+    }
   }
 }, POLL_MS);

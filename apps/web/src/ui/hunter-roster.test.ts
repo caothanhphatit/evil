@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { hunterActorVisual, hunterPercent, projectHunterRoster } from "./hunter-roster";
+import { hunterActorVisual, hunterClassTone, hunterPercent, hunterRarityPresentation, hunterWorldEntityId, projectHunterRoster } from "./hunter-roster";
+import { hunterWeaponAttachment } from "./hunter-spine-presentation";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 describe("projectHunterRoster", () => {
   it("projects active slots, waiting order, class, traits, skills and action data", () => {
@@ -62,23 +65,78 @@ describe("projectHunterRoster", () => {
     expect(view.active[0].traits[0]).toMatchObject({ id: "swift", name: "Swift", rank: 2, equipped: true });
     expect(view.active[0].skills[0]).toMatchObject({ id: "arcane", name: "Arcane", level: 3, ready: true });
   });
+
+  it("projects authoritative hunt progress and loot without calculating outcomes", () => {
+    const view = projectHunterRoster({
+      hunter_roster: { active_hunters: [{ hunter_id: 2, hunt: { status: "returning", zone_id: "migration-zone-1", progress_ticks: 10, required_ticks: 10, loot: [{ item_id: "young_lycan_fur", quantity: 1 }] } }] },
+      world: { entities: [] },
+    });
+    expect(view.active[0].hunt).toEqual({ status: "returning", zoneId: "migration-zone-1", progressTicks: 10, requiredTicks: 10, loot: [{ itemId: "young_lycan_fur", quantity: 1 }] });
+  });
 });
 
 describe("hunter helpers", () => {
+  it("locate closes the roster and reuses normal world Hunter selection", async () => {
+    const source = await readFile(resolve(import.meta.dirname, "../main.ts"), "utf8");
+    expect(source).toContain("setHunterRosterVisibility(false);");
+    expect(source).toContain("hunterWorldCommandMenu.selectHunter({");
+    expect(source).toContain("world?.focusEntity(worldEntityId)");
+  });
+
+  it("resolves a roster Hunter to its selectable world actor for locate", () => {
+    const roster = projectHunterRoster({ hunter_roster: { active_hunters: [{ hunter_id: 3 }] }, world: { entities: [] } });
+    expect(hunterWorldEntityId({ world: { entities: [{ descriptor: { entity_id: "village-hunter-3", source_skeleton_name: "hunter" }, selectable: true }] } }, roster.active[0])).toBe("village-hunter-3");
+  });
   it("clamps gauges and resolves class-family Spine composition", () => {
     expect(hunterPercent(150, 100)).toBe(100);
     expect(hunterPercent(null, 100)).toBeNull();
     expect(hunterActorVisual({ hunter_id: 1, class_family: "h4", hunter_visual: { weapon_skin: "weapon_h4_a_01" } })).toEqual({
-      skinNames: ["All_h4", "weapon_h4_a_01"],
+      skinNames: ["hunter_m_01", "costum_h4_01", "weapon_h4_a_01"],
       animation: null,
       tint: 0xffffff,
-      signature: "All_h4|weapon_h4_a_01:ffffff",
+      signature: "hunter_m_01|costum_h4_01|weapon_h4_a_01:ffffff",
     });
   });
 
+  it("maps the server skill presentation marker to the recovered class hit clip", () => {
+    expect(hunterActorVisual({ hunter_id: 1, class_family: "H3", animation: "h3_skill" }).animation).toBe("h3_hit");
+  });
+
+  it("maps the five authoritative rarity names to source-style roster letters", () => {
+    expect(["normal", "rare", "superior", "heroic", "legendary"].map((rarity) => hunterRarityPresentation(rarity, null))).toEqual([
+      { key: "normal", letter: "N" },
+      { key: "rare", letter: "R" },
+      { key: "superior", letter: "S" },
+      { key: "heroic", letter: "H" },
+      { key: "legendary", letter: "L" },
+    ]);
+    expect(hunterRarityPresentation("unknown", "Unresolved")).toBeNull();
+    expect(hunterClassTone("H4")).toBe("h4");
+    expect(hunterClassTone(null)).toBe("unresolved");
+  });
+
   it("gives the eight demo Hunters distinct confirmed aggregate compositions", () => {
-    const visuals = Array.from({ length: 8 }, (_, index) => hunterActorVisual({ descriptor: { entity_id: `hunter-${index + 1}` }, animation: "hunter_stay" }));
-    expect(new Set(visuals.map((visual) => visual.skinNames[0])).size).toBe(8);
+    const visuals = Array.from({ length: 8 }, (_, index) => hunterActorVisual({ descriptor: { entity_id: `hunter-${index + 1}` }, class_family: "H1", animation: "hunter_stay" }));
+    expect(new Set(visuals.map((visual) => visual.skinNames[0])).size).toBe(2);
+    expect(visuals[0].skinNames).toEqual(["hunter_m_01", "costum_h1_01", "weapon_h1_a_01"]);
+    expect(visuals[1].skinNames).toEqual(["hunter_f_01", "costum_h1_02", "weapon_h1_a_01"]);
     expect(new Set(visuals.map((visual) => visual.signature)).size).toBe(8);
+  });
+
+  it("uses the gendered first outfit for every known job family", () => {
+    expect(["H1", "H2", "H3", "H4", "H5"].map((family) => hunterActorVisual({ hunter_id: 1, class_family: family }).skinNames)).toEqual([
+      ["hunter_m_01", "costum_h1_01", "weapon_h1_a_01"],
+      ["hunter_m_01", "costum_h2_01", "weapon_h2_a_01"],
+      ["hunter_m_01", "costum_h3_01", "weapon_h3_a_01"],
+      ["hunter_m_01", "costum_h4_01", "weapon_h4_a_01"],
+      ["hunter_m_01", "costum_h5_01", "weapon_h5_a_01"],
+    ]);
+    expect(["H1", "H2", "H3", "H4", "H5"].map(hunterWeaponAttachment)).toEqual([
+      { slot: "weapon_01", attachment: "sword" },
+      { slot: "weapon_02", attachment: "hammer" },
+      { slot: "weapon_03", attachment: "bow" },
+      { slot: "weapon_04", attachment: "wand" },
+      { slot: "weapon_05", attachment: "spear" },
+    ]);
   });
 });

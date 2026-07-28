@@ -1,0 +1,1205 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-class-field-access-scan",
+  "runtimeCompatibility": "evidence-only",
+  "sources": {
+    "inventory": {
+      "path": "original-native-hunter-attack-speed-class-pointers-api35-v1.json",
+      "sha256": "55f708b5ae6cdec0cb1a26520f0e17dca5db1bf2b5bcd5bbf539a3d2b09b12d9"
+    },
+    "memoryImage": {
+      "committed": false,
+      "size": 106893312,
+      "sha256": "9b5158524e74b85192005d4d05e687f00528d4cd8b6e595c5d2fb7842ed173cf",
+      "moduleBaseAtDump": "0x73a8800000",
+      "inventoryModuleBase": "0x73a9006000"
+    }
+  },
+  "targets": {
+    "HunterCtrl": [
+      {
+        "name": "mAttackDelay",
+        "offset": 404
+      },
+      {
+        "name": "AttackAniTime",
+        "offset": 428
+      },
+      {
+        "name": "DANCPPLMKIK",
+        "offset": 984
+      },
+      {
+        "name": "BCEBGLKCDHN",
+        "offset": 1708
+      }
+    ],
+    "StatusData": [
+      {
+        "name": "CalcAttackSpeed",
+        "offset": 136
+      },
+      {
+        "name": "AttackSpeed",
+        "offset": 408
+      },
+      {
+        "name": "WeaponSpeed",
+        "offset": 428
+      },
+      {
+        "name": "OptionAttackSpeed",
+        "offset": 756
+      },
+      {
+        "name": "PersonalAttackSpeed",
+        "offset": 924
+      },
+      {
+        "name": "RidingPetAttackSpeedUp",
+        "offset": 1828
+      },
+      {
+        "name": "GUP_Property",
+        "offset": 1888
+      },
+      {
+        "name": "RankAttackSpeed",
+        "offset": 1956
+      },
+      {
+        "name": "FuryValue",
+        "offset": 2040
+      },
+      {
+        "name": "SpeedPotionValue",
+        "offset": 2060
+      },
+      {
+        "name": "Quicken",
+        "offset": 2256
+      }
+    ]
+  },
+  "methodsScanned": {
+    "StatusData": 128,
+    "HunterCtrl": 391
+  },
+  "runtimeConstants": [
+    {
+      "moduleOffset": "0xd2aab8",
+      "float32": 0.20000000298023224
+    },
+    {
+      "moduleOffset": "0xd2ac8c",
+      "float32": 0.009999999776482582
+    },
+    {
+      "moduleOffset": "0xd2b834",
+      "float32": 535.0
+    }
+  ],
+  "findings": [
+    {
+      "className": "StatusData",
+      "methodName": "GJJHJBLFNEH",
+      "parameterCount": 0,
+      "token": "0x06001CD2",
+      "moduleOffset": "0x2d5c00c",
+      "nativeSizeBytes": 2720,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1208,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "CAHPKCLAOOE",
+      "parameterCount": 0,
+      "token": "0x06001CD3",
+      "moduleOffset": "0x2d5caac",
+      "nativeSizeBytes": 1956,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1316,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "OFFMANAMHJM",
+      "parameterCount": 0,
+      "token": "0x06001CD7",
+      "moduleOffset": "0x2d5de54",
+      "nativeSizeBytes": 848,
+      "accesses": [
+        {
+          "field": "RankAttackSpeed",
+          "fieldOffset": 1956,
+          "instructionOffset": 744,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "FGCEFJCHNCK",
+      "parameterCount": 1,
+      "token": "0x06001CD9",
+      "moduleOffset": "0x2d5e1ac",
+      "nativeSizeBytes": 76,
+      "accesses": [
+        {
+          "field": "FuryValue",
+          "fieldOffset": 2040,
+          "instructionOffset": 52,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "PFIONPOHHJK",
+      "parameterCount": 0,
+      "token": "0x06001CDD",
+      "moduleOffset": "0x2d5e594",
+      "nativeSizeBytes": 576,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 140,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "BHADDBPJDIL",
+      "parameterCount": 0,
+      "token": "0x06001CE0",
+      "moduleOffset": "0x2d5e804",
+      "nativeSizeBytes": 3916,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 288,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "SpeedPotionValue",
+          "fieldOffset": 2060,
+          "instructionOffset": 432,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "PAPELNLBOFD",
+      "parameterCount": 0,
+      "token": "0x06001CE4",
+      "moduleOffset": "0x2d5f784",
+      "nativeSizeBytes": 444,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 120,
+          "access": "write",
+          "instruction": "str x0, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 204,
+          "access": "read",
+          "instruction": "ldr x25, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "set_AttackSpeed",
+      "parameterCount": 1,
+      "token": "0x06001CE9",
+      "moduleOffset": "0x2d60324",
+      "nativeSizeBytes": 24,
+      "accesses": [
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 16,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "get_GUP_Property",
+      "parameterCount": 0,
+      "token": "0x06001CED",
+      "moduleOffset": "0x2d60374",
+      "nativeSizeBytes": 8,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 0,
+          "access": "read",
+          "instruction": "ldr x0, [x0, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "get_CalcAttackSpeed",
+      "parameterCount": 0,
+      "token": "0x06001CF3",
+      "moduleOffset": "0x2d60584",
+      "nativeSizeBytes": 20,
+      "accesses": [
+        {
+          "field": "CalcAttackSpeed",
+          "fieldOffset": 136,
+          "instructionOffset": 0,
+          "access": "read",
+          "instruction": "ldur q0, [x0, #0x88]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "get_AttackSpeed",
+      "parameterCount": 0,
+      "token": "0x06001CF9",
+      "moduleOffset": "0x2d60bb4",
+      "nativeSizeBytes": 24,
+      "accesses": [
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 8,
+          "access": "read",
+          "instruction": "ldr q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "OEGAGALNONM",
+      "parameterCount": 0,
+      "token": "0x06001CFC",
+      "moduleOffset": "0x2d60be8",
+      "nativeSizeBytes": 2532,
+      "accesses": [
+        {
+          "field": "PersonalAttackSpeed",
+          "fieldOffset": 924,
+          "instructionOffset": 120,
+          "access": "write",
+          "instruction": "str q0, [x24]"
+        },
+        {
+          "field": "PersonalAttackSpeed",
+          "fieldOffset": 924,
+          "instructionOffset": 976,
+          "access": "write",
+          "instruction": "str q0, [x24]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "set_WeaponSpeed",
+      "parameterCount": 1,
+      "token": "0x06001D05",
+      "moduleOffset": "0x2d6a380",
+      "nativeSizeBytes": 24,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 16,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "set_GUP_Property",
+      "parameterCount": 1,
+      "token": "0x06001D06",
+      "moduleOffset": "0x2d6a398",
+      "nativeSizeBytes": 8,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 0,
+          "access": "write",
+          "instruction": "str x1, [x0, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": ".ctor",
+      "parameterCount": 0,
+      "token": "0x06001D09",
+      "moduleOffset": "0x2d6a404",
+      "nativeSizeBytes": 2836,
+      "accesses": [
+        {
+          "field": "OptionAttackSpeed",
+          "fieldOffset": 756,
+          "instructionOffset": 424,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "PersonalAttackSpeed",
+          "fieldOffset": 924,
+          "instructionOffset": 688,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "RidingPetAttackSpeedUp",
+          "fieldOffset": 1828,
+          "instructionOffset": 1940,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "RankAttackSpeed",
+          "fieldOffset": 1956,
+          "instructionOffset": 2160,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "FuryValue",
+          "fieldOffset": 2040,
+          "instructionOffset": 2316,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "SpeedPotionValue",
+          "fieldOffset": 2060,
+          "instructionOffset": 2352,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "Quicken",
+          "fieldOffset": 2256,
+          "instructionOffset": 2600,
+          "access": "write",
+          "instruction": "str q0, [x19, #0x8d0]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "CEOBAMNDIIL",
+      "parameterCount": 0,
+      "token": "0x06001D0F",
+      "moduleOffset": "0x2d67db0",
+      "nativeSizeBytes": 564,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 140,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "CGKBPFBMCHF",
+      "parameterCount": 0,
+      "token": "0x06001D10",
+      "moduleOffset": "0x2d64a50",
+      "nativeSizeBytes": 13152,
+      "accesses": [
+        {
+          "field": "RidingPetAttackSpeedUp",
+          "fieldOffset": 1828,
+          "instructionOffset": 620,
+          "access": "write",
+          "instruction": "str q0, [x22]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "JGDEJDKBIJJ",
+      "parameterCount": 1,
+      "token": "0x06001D13",
+      "moduleOffset": "0x2d6b034",
+      "nativeSizeBytes": 84,
+      "accesses": [
+        {
+          "field": "SpeedPotionValue",
+          "fieldOffset": 2060,
+          "instructionOffset": 52,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "PMIPPJPMGEE",
+      "parameterCount": 0,
+      "token": "0x06001D16",
+      "moduleOffset": "0x2d689c8",
+      "nativeSizeBytes": 2476,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 348,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 588,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1584,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "COJNMPDBOOO",
+      "parameterCount": 0,
+      "token": "0x06001D19",
+      "moduleOffset": "0x2d5e1f8",
+      "nativeSizeBytes": 880,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 88,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "PersonalAttackSpeed",
+          "fieldOffset": 924,
+          "instructionOffset": 120,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "OptionAttackSpeed",
+          "fieldOffset": 756,
+          "instructionOffset": 156,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "RankAttackSpeed",
+          "fieldOffset": 1956,
+          "instructionOffset": 192,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 288,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "RidingPetAttackSpeedUp",
+          "fieldOffset": 1828,
+          "instructionOffset": 352,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "FuryValue",
+          "fieldOffset": 2040,
+          "instructionOffset": 452,
+          "access": "read",
+          "instruction": "ldr q1, [x22]"
+        },
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 468,
+          "access": "write",
+          "instruction": "str q0, [x21]"
+        },
+        {
+          "field": "Quicken",
+          "fieldOffset": 2256,
+          "instructionOffset": 508,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "FuryValue",
+          "fieldOffset": 2040,
+          "instructionOffset": 540,
+          "access": "read",
+          "instruction": "ldr q0, [x22]"
+        },
+        {
+          "field": "SpeedPotionValue",
+          "fieldOffset": 2060,
+          "instructionOffset": 580,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "SpeedPotionValue",
+          "fieldOffset": 2060,
+          "instructionOffset": 660,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 716,
+          "access": "read",
+          "instruction": "ldr q0, [x21]"
+        },
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 760,
+          "access": "write",
+          "instruction": "str q0, [x21]"
+        },
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 816,
+          "access": "write",
+          "instruction": "str q0, [x21]"
+        },
+        {
+          "field": "AttackSpeed",
+          "fieldOffset": 408,
+          "instructionOffset": 824,
+          "access": "read",
+          "instruction": "ldr q0, [x21]"
+        },
+        {
+          "field": "CalcAttackSpeed",
+          "fieldOffset": 136,
+          "instructionOffset": 832,
+          "access": "write",
+          "instruction": "stur q0, [x19, #0x88]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "FAGDMBINHBF",
+      "parameterCount": 0,
+      "token": "0x06001D1A",
+      "moduleOffset": "0x2d61694",
+      "nativeSizeBytes": 13244,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 412,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        },
+        {
+          "field": "OptionAttackSpeed",
+          "fieldOffset": 756,
+          "instructionOffset": 10452,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "OJFGIGFHFDN",
+      "parameterCount": 0,
+      "token": "0x06001D1C",
+      "moduleOffset": "0x2d6b12c",
+      "nativeSizeBytes": 268,
+      "accesses": [
+        {
+          "field": "Quicken",
+          "fieldOffset": 2256,
+          "instructionOffset": 44,
+          "access": "write",
+          "instruction": "str q0, [x19, #0x8d0]"
+        },
+        {
+          "field": "Quicken",
+          "fieldOffset": 2256,
+          "instructionOffset": 228,
+          "access": "write",
+          "instruction": "str q0, [x20]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "ABBOKPECOLI",
+      "parameterCount": 0,
+      "token": "0x06001D1D",
+      "moduleOffset": "0x2d6b238",
+      "nativeSizeBytes": 13764,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 424,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        },
+        {
+          "field": "OptionAttackSpeed",
+          "fieldOffset": 756,
+          "instructionOffset": 12776,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "LCENGICKKGP",
+      "parameterCount": 0,
+      "token": "0x06001D1E",
+      "moduleOffset": "0x2d6e7fc",
+      "nativeSizeBytes": 136,
+      "accesses": [
+        {
+          "field": "CalcAttackSpeed",
+          "fieldOffset": 136,
+          "instructionOffset": 44,
+          "access": "read",
+          "instruction": "ldur q0, [x19, #0x88]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "set_CalcAttackSpeed",
+      "parameterCount": 1,
+      "token": "0x06001D29",
+      "moduleOffset": "0x2d6ed80",
+      "nativeSizeBytes": 20,
+      "accesses": [
+        {
+          "field": "CalcAttackSpeed",
+          "fieldOffset": 136,
+          "instructionOffset": 12,
+          "access": "write",
+          "instruction": "stur q0, [x0, #0x88]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "FOMIBDMADNM",
+      "parameterCount": 0,
+      "token": "0x06001D37",
+      "moduleOffset": "0x2d5f9fc",
+      "nativeSizeBytes": 2344,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1200,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "EBNGMMPBEDA",
+      "parameterCount": 0,
+      "token": "0x06001D3E",
+      "moduleOffset": "0x2d5d2a4",
+      "nativeSizeBytes": 2976,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 188,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 744,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "JNLKCBEMEIE",
+      "parameterCount": 0,
+      "token": "0x06001D44",
+      "moduleOffset": "0x2d69374",
+      "nativeSizeBytes": 2556,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 384,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 648,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1664,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "get_WeaponSpeed",
+      "parameterCount": 0,
+      "token": "0x06001D46",
+      "moduleOffset": "0x2d6f078",
+      "nativeSizeBytes": 24,
+      "accesses": [
+        {
+          "field": "WeaponSpeed",
+          "fieldOffset": 428,
+          "instructionOffset": 8,
+          "access": "read",
+          "instruction": "ldr q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "StatusData",
+      "methodName": "HECIONBFCGJ",
+      "parameterCount": 0,
+      "token": "0x06001D4F",
+      "moduleOffset": "0x2d67fe4",
+      "nativeSizeBytes": 2532,
+      "accesses": [
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 380,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 644,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        },
+        {
+          "field": "GUP_Property",
+          "fieldOffset": 1888,
+          "instructionOffset": 1636,
+          "access": "read",
+          "instruction": "ldr x8, [x19, #0x760]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "FixedUpdate",
+      "parameterCount": 0,
+      "token": "0x06005B75",
+      "moduleOffset": "0x340fcf8",
+      "nativeSizeBytes": 6800,
+      "accesses": [
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 380,
+          "access": "read",
+          "instruction": "ldr s8, [x19, #0x1ac]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 408,
+          "access": "write",
+          "instruction": "str s0, [x19, #0x1ac]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 416,
+          "access": "write",
+          "instruction": "str wzr, [x19, #0x1ac]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 436,
+          "access": "read",
+          "instruction": "ldr q0, [x24]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 472,
+          "access": "read",
+          "instruction": "ldr q0, [x24]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 508,
+          "access": "read",
+          "instruction": "ldr q0, [x24]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 572,
+          "access": "write",
+          "instruction": "str q0, [x24]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "NICAFPDFNPG",
+      "parameterCount": 0,
+      "token": "0x06005B7C",
+      "moduleOffset": "0x34195fc",
+      "nativeSizeBytes": 128,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 24,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "DANCPPLMKIK",
+          "fieldOffset": 984,
+          "instructionOffset": 28,
+          "access": "read",
+          "instruction": "ldr s8, [x0, #0x3d8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 112,
+          "access": "write",
+          "instruction": "str s1, [x19, #0x1ac]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "JobBuffSetting",
+      "parameterCount": 6,
+      "token": "0x06005BE1",
+      "moduleOffset": "0x343bb00",
+      "nativeSizeBytes": 23744,
+      "accesses": [
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 13924,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "BuffEndSetting",
+      "parameterCount": 1,
+      "token": "0x06005C05",
+      "moduleOffset": "0x344a120",
+      "nativeSizeBytes": 3288,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 1596,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "HuntingAttackAction",
+      "parameterCount": 0,
+      "token": "0x06005C28",
+      "moduleOffset": "0x3416a40",
+      "nativeSizeBytes": 8016,
+      "accesses": [
+        {
+          "field": "DANCPPLMKIK",
+          "fieldOffset": 984,
+          "instructionOffset": 6680,
+          "access": "read",
+          "instruction": "ldr s8, [x19, #0x3d8]"
+        },
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 6684,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 6768,
+          "access": "write",
+          "instruction": "str s0, [x19, #0x1ac]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 7952,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "CKKBPHNBKLC",
+      "parameterCount": 3,
+      "token": "0x06005C4F",
+      "moduleOffset": "0x3459f20",
+      "nativeSizeBytes": 1896,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 264,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 576,
+          "access": "write",
+          "instruction": "str w8, [x19, #0x1ac]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "Init",
+      "parameterCount": 3,
+      "token": "0x06005C66",
+      "moduleOffset": "0x345d294",
+      "nativeSizeBytes": 1856,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 256,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 544,
+          "access": "write",
+          "instruction": "str wzr, [x19, #0x1ac]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "BuffSetting",
+      "parameterCount": 4,
+      "token": "0x06005C87",
+      "moduleOffset": "0x345f700",
+      "nativeSizeBytes": 12656,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 5908,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 10920,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 11016,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "Init",
+      "parameterCount": 2,
+      "token": "0x06005C99",
+      "moduleOffset": "0x3456e6c",
+      "nativeSizeBytes": 1808,
+      "accesses": [
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 232,
+          "access": "write",
+          "instruction": "str q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 520,
+          "access": "write",
+          "instruction": "str wzr, [x19, #0x1ac]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "CGAHEABLJMF",
+      "parameterCount": 0,
+      "token": "0x06005C9E",
+      "moduleOffset": "0x3441f04",
+      "nativeSizeBytes": 488,
+      "accesses": [
+        {
+          "field": "DANCPPLMKIK",
+          "fieldOffset": 984,
+          "instructionOffset": 120,
+          "access": "read",
+          "instruction": "ldr s8, [x19, #0x3d8]"
+        },
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 124,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 208,
+          "access": "write",
+          "instruction": "str s0, [x19, #0x1ac]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 460,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    },
+    {
+      "className": "HunterCtrl",
+      "methodName": "NBOMDKMCGND",
+      "parameterCount": 1,
+      "token": "0x06005CAC",
+      "moduleOffset": "0x3462870",
+      "nativeSizeBytes": 2448,
+      "accesses": [
+        {
+          "field": "DANCPPLMKIK",
+          "fieldOffset": 984,
+          "instructionOffset": 2136,
+          "access": "read",
+          "instruction": "ldr s8, [x19, #0x3d8]"
+        },
+        {
+          "field": "BCEBGLKCDHN",
+          "fieldOffset": 1708,
+          "instructionOffset": 2140,
+          "access": "read",
+          "instruction": "ldr q0, [x8]"
+        },
+        {
+          "field": "AttackAniTime",
+          "fieldOffset": 428,
+          "instructionOffset": 2224,
+          "access": "write",
+          "instruction": "str s0, [x19, #0x1ac]"
+        },
+        {
+          "field": "mAttackDelay",
+          "fieldOffset": 404,
+          "instructionOffset": 2400,
+          "access": "write",
+          "instruction": "str q0, [x9]"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "The scan follows direct ARM64 register aliases rooted at the managed this pointer.",
+    "It does not claim indirect native-engine serialization writes or aliases reloaded from arbitrary memory.",
+    "The decrypted memory image is intentionally not committed; its size and SHA-256 pin the runtime input."
+  ]
+}

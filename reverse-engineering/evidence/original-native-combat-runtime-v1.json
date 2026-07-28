@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-combat-runtime-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-26T17:20:36Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "androidApi": "35",
+    "action": "Launch without root or Frida, enter the town, restart adbd as root, then read decrypted method pages and resident managed arrays through /proc/PID/mem.",
+    "xapkSha256": "69c74073dbe3fc67d7b228a6f9fe5ad34f352f7faa3552a1500fc76b731015c3",
+    "metadataSha256": "ebbadaf6d94d838037b33bd77d60d861d84cc309b1a148383b3800d5e294b63e",
+    "libil2cppSha256": "7ca72697375e87703f03867ccfcf8d7ddec1e5cca8b9cd9de4736b666cd8390f"
+  },
+  "registration": {
+    "codeRegistrationVirtualAddress": "0x5D99D98",
+    "assemblyCSharpCodeGenModuleVirtualAddress": "0x5DDB1A8",
+    "assemblyCSharpMethodPointerCount": 38247,
+    "assemblyCSharpMethodPointerArrayVirtualAddress": "0x60CAE30",
+    "mappingRule": "method pointer index = (method token & 0x00FFFFFF) - 1"
+  },
+  "methods": [
+    {
+      "type": "GameManager",
+      "method": "RandDamage",
+      "token": "0x06006B1F",
+      "virtualAddress": "0x2706384",
+      "nativeSizeBytes": 68,
+      "nativePrefixHex": "fe0f1ff809e04db9280500111f79007108f446f9e9a7891a09e00db9080100b40a1940b93f010a6bc200005408c9298b002140bdfe0741f8c0035fd6dc48f197dd48f197",
+      "recoveredBehavior": {
+        "indexField": { "name": "JPLPBMHEALD", "offset": 3552 },
+        "valuesField": { "name": "JJNKFPHDBPL", "offset": 3560 },
+        "length": 30,
+        "indexTransition": "next = current + 1; if next >= 30 then next = 0; store next; return values[next]",
+        "values": [
+          0.91, 1.0, 1.1, 0.92, 0.91, 1.1, 1.03, 1.06, 1.13, 0.95,
+          1.0, 0.92, 1.06, 0.98, 1.13, 0.95, 1.1, 1.1, 0.92, 1.05,
+          1.03, 0.99, 1.1, 1.1, 0.9, 0.9, 1.1, 0.9, 1.0, 1.1
+        ],
+        "serverRepresentation": "integer hundredths: [91,100,110,92,91,110,103,106,113,95,100,92,106,98,113,95,110,110,92,105,103,99,110,110,90,90,110,90,100,110]"
+      }
+    },
+    {
+      "type": "GameManager",
+      "method": "GetNeedExp",
+      "token": "0x06006B9D",
+      "virtualAddress": "0x271D430",
+      "nativeSizeBytes": 404,
+      "recoveredBehavior": {
+        "rowIndex": "level + 1",
+        "jobColumnOffsets": {
+          "0": [32, 40],
+          "1": [48, 56],
+          "2": [64, 72],
+          "3": [80, 88],
+          "4": [96, 104],
+          "default": [112, 120]
+        },
+        "result": "Returns the selected ObscuredInt value from the packaged 100-row experience catalog; it does not calculate an exponential formula."
+      }
+    },
+    {
+      "type": "GameManager",
+      "method": "GetGearDamage",
+      "token": "0x06006A18",
+      "virtualAddress": "0x26BDA84",
+      "nativeSizeBytes": 1272,
+      "status": "decrypted body captured; dependency calls and GearData field semantics still require correlation before porting"
+    }
+  ],
+  "limitations": [
+    "RandDamage is recovered exactly, but the caller-side base damage, armor reduction, critical, dodge, and rounding order remain unresolved.",
+    "The runtime addresses are ASLR-specific; virtual addresses and method tokens are the stable identifiers.",
+    "GetGearDamage must not be translated from partial disassembly until its called helpers and GearData fields are identified.",
+    "The current rebuild fixture combat is not upgraded by this evidence alone."
+  ]
+}

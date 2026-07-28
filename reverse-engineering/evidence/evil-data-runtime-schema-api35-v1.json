@@ -1,0 +1,2465 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T10:19:06.238980Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 28527,
+    "action": "Capture EvilData and DataManager schemas for exact monster damage consumer analysis; no object values read.",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "EvilData",
+      "DataManager"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "Assembly-CSharp.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "EvilData",
+        "DataManager"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "",
+          "name": "EvilData",
+          "token": 33554977,
+          "fields": [
+            {
+              "name": "<index>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "<evilIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 32,
+              "flags": 1
+            },
+            {
+              "name": "<evilType>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 48,
+              "flags": 1
+            },
+            {
+              "name": "<specialType>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 64,
+              "flags": 1
+            },
+            {
+              "name": "<exp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 80,
+              "flags": 1
+            },
+            {
+              "name": "<gold>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 96,
+              "flags": 1
+            },
+            {
+              "name": "<position>k__BackingField",
+              "type": "UnityEngine.Vector3",
+              "offset": 112,
+              "flags": 1
+            },
+            {
+              "name": "<state>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 124,
+              "flags": 1
+            },
+            {
+              "name": "<damage>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 144,
+              "flags": 1
+            },
+            {
+              "name": "<hp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 176,
+              "flags": 1
+            },
+            {
+              "name": "<armor>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 208,
+              "flags": 1
+            },
+            {
+              "name": "<nowHp>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "offset": 240,
+              "flags": 1
+            },
+            {
+              "name": "<areaIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 272,
+              "flags": 1
+            },
+            {
+              "name": "<raidIndex>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 288,
+              "flags": 1
+            },
+            {
+              "name": "<dead>k__BackingField",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+              "offset": 304,
+              "flags": 1
+            },
+            {
+              "name": "<mTarget>k__BackingField",
+              "type": "UnityEngine.Vector2",
+              "offset": 316,
+              "flags": 1
+            },
+            {
+              "name": "<mRespawn>k__BackingField",
+              "type": "UnityEngine.Vector2",
+              "offset": 324,
+              "flags": 1
+            },
+            {
+              "name": "<mFsmQueue>k__BackingField",
+              "type": "System.Collections.Generic.Queue<System.Int32>",
+              "offset": 336,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "JCJCDAIFMPD",
+              "token": 100675249,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ABLAOONMAGN",
+              "token": 100675250,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_evilIndex",
+              "token": 100675251,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_mTarget",
+              "token": 100675252,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KCJNBOLIKLC",
+              "token": 100675253,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_mFsmQueue",
+              "token": 100675254,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "System.Collections.Generic.Queue<System.Int32>"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_exp",
+              "token": 100675255,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_areaIndex",
+              "token": 100675256,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_areaIndex",
+              "token": 100675257,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_raidIndex",
+              "token": 100675258,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_position",
+              "token": 100675259,
+              "returnType": "UnityEngine.Vector3",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_mTarget",
+              "token": 100675260,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "UnityEngine.Vector2"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "AINAAFOBOMN",
+              "token": 100675261,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EJOMMLAEENJ",
+              "token": 100675262,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KJIDLLFKBBD",
+              "token": 100675263,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ABLEDIJKHCI",
+              "token": 100675264,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_mRespawn",
+              "token": 100675265,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "UnityEngine.Vector2"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_nowHp",
+              "token": 100675266,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LEINHEDNACJ",
+              "token": 100675267,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HALACFONIHM",
+              "token": 100675268,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_evilType",
+              "token": 100675269,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_damage",
+              "token": 100675270,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_index",
+              "token": 100675271,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100675272,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FEEOMMBDKAM",
+              "token": 100675273,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_armor",
+              "token": 100675274,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_index",
+              "token": 100675275,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FMLNKOFOCLL",
+              "token": 100675276,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_mFsmQueue",
+              "token": 100675277,
+              "returnType": "System.Collections.Generic.Queue<System.Int32>",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_dead",
+              "token": 100675278,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_specialType",
+              "token": 100675279,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_mRespawn",
+              "token": 100675280,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_evilType",
+              "token": 100675281,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "BPJCBLCKHBL",
+              "token": 100675282,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_damage",
+              "token": 100675283,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_armor",
+              "token": 100675284,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_state",
+              "token": 100675285,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GKJKIEJLBIC",
+              "token": 100675286,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_position",
+              "token": 100675287,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_hp",
+              "token": 100675288,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "IGGHLOGOJCC",
+              "token": 100675289,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_gold",
+              "token": 100675290,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_state",
+              "token": 100675291,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_specialType",
+              "token": 100675292,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_dead",
+              "token": 100675293,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ICINJMPCBPE",
+              "token": 100675294,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_exp",
+              "token": 100675295,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_nowHp",
+              "token": 100675296,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_evilIndex",
+              "token": 100675297,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_raidIndex",
+              "token": 100675298,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_hp",
+              "token": 100675299,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_gold",
+              "token": 100675300,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KNIAICAKKIM",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "name": "DataManager",
+          "token": 33555777,
+          "fields": [
+            {
+              "name": "KPABKEBKMFE",
+              "type": "DataManager",
+              "offset": 0,
+              "flags": 17
+            },
+            {
+              "name": "mAdminPropertyData",
+              "type": "AdminPropertyData[]",
+              "offset": 32,
+              "flags": 6
+            },
+            {
+              "name": "mAdminGearData",
+              "type": "AdminGearData[][]",
+              "offset": 40,
+              "flags": 6
+            },
+            {
+              "name": "mAdminItemData",
+              "type": "AdminItemData[]",
+              "offset": 48,
+              "flags": 6
+            },
+            {
+              "name": "mAdminSkillData",
+              "type": "AdminSkillData[]",
+              "offset": 56,
+              "flags": 6
+            },
+            {
+              "name": "mAdminEvilData",
+              "type": "AdminEvilData[]",
+              "offset": 64,
+              "flags": 6
+            },
+            {
+              "name": "mAdminConsumData",
+              "type": "AdminConsumData[]",
+              "offset": 72,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRaidData",
+              "type": "AdminRaidData[]",
+              "offset": 80,
+              "flags": 6
+            },
+            {
+              "name": "mAdminNewRaidData",
+              "type": "AdminNewRaidData[]",
+              "offset": 88,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHunterData",
+              "type": "AdminHunterData[]",
+              "offset": 96,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRevivePropertyData",
+              "type": "AdminRevivePropertyData[]",
+              "offset": 104,
+              "flags": 6
+            },
+            {
+              "name": "mAdminPersonality",
+              "type": "AdminPersonalityData[]",
+              "offset": 112,
+              "flags": 6
+            },
+            {
+              "name": "mAdminBuffData",
+              "type": "AdminBuffData[]",
+              "offset": 120,
+              "flags": 6
+            },
+            {
+              "name": "mAdminGearPropertyData",
+              "type": "AdminGearPropertyData[]",
+              "offset": 128,
+              "flags": 6
+            },
+            {
+              "name": "mAdminBuildData",
+              "type": "AdminBuildData[]",
+              "offset": 136,
+              "flags": 6
+            },
+            {
+              "name": "mAdminBuildSkinData",
+              "type": "AdminBuildSkinData[]",
+              "offset": 144,
+              "flags": 6
+            },
+            {
+              "name": "mAdminVillSkinData",
+              "type": "AdminVillSkinData[]",
+              "offset": 152,
+              "flags": 6
+            },
+            {
+              "name": "mAdminOrganizeData",
+              "type": "AdminOrganizeData[]",
+              "offset": 160,
+              "flags": 6
+            },
+            {
+              "name": "mAdminProductData",
+              "type": "AdminProductData[]",
+              "offset": 168,
+              "flags": 6
+            },
+            {
+              "name": "mAdminExpData",
+              "type": "AdminExpData[]",
+              "offset": 176,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHunterSpeachData",
+              "type": "AdminHunterSpeachData[]",
+              "offset": 184,
+              "flags": 6
+            },
+            {
+              "name": "mAdminEvilSpeachData",
+              "type": "AdminEvilSpeachData[]",
+              "offset": 192,
+              "flags": 6
+            },
+            {
+              "name": "mAdminReviveBuilding",
+              "type": "AdminReviveBuildingData[]",
+              "offset": 200,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHunterNameMData",
+              "type": "AdminHunterNameMData[]",
+              "offset": 208,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHunterNameWData",
+              "type": "AdminHunterNameWData[]",
+              "offset": 216,
+              "flags": 6
+            },
+            {
+              "name": "mAdminNpcSpeachData",
+              "type": "AdminNpcSpeachData[]",
+              "offset": 224,
+              "flags": 6
+            },
+            {
+              "name": "mAdminAchieveData",
+              "type": "AdminAchieveData[]",
+              "offset": 232,
+              "flags": 6
+            },
+            {
+              "name": "mAdminQuestData",
+              "type": "AdminQuestData[]",
+              "offset": 240,
+              "flags": 6
+            },
+            {
+              "name": "mAdminShopData",
+              "type": "AdminShopData[]",
+              "offset": 248,
+              "flags": 6
+            },
+            {
+              "name": "mAdminMissionData",
+              "type": "AdminMissionData[]",
+              "offset": 256,
+              "flags": 6
+            },
+            {
+              "name": "mAdminPatternData",
+              "type": "AdminPatternSpeach[]",
+              "offset": 264,
+              "flags": 6
+            },
+            {
+              "name": "mAdminGearSetPropertyData",
+              "type": "AdminGearSetPropertyData[]",
+              "offset": 272,
+              "flags": 6
+            },
+            {
+              "name": "mAdminInAppRewardData",
+              "type": "AdminInAppRewardData[]",
+              "offset": 280,
+              "flags": 6
+            },
+            {
+              "name": "mAdminGrowUpData",
+              "type": "AdminGrowUpData[]",
+              "offset": 288,
+              "flags": 6
+            },
+            {
+              "name": "mAdminSubJobSkillData",
+              "type": "AdminSubJobSkillData[]",
+              "offset": 296,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHelpData",
+              "type": "AdminHelpData[]",
+              "offset": 304,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRunesData",
+              "type": "AdminRunesData[]",
+              "offset": 312,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRiftRewardData",
+              "type": "AdminRiftRewardData[]",
+              "offset": 320,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRiftRaidRewardData",
+              "type": "AdminRiftRaidRewardData[]",
+              "offset": 328,
+              "flags": 6
+            },
+            {
+              "name": "mAdminInnerCastleRewardData",
+              "type": "AdminInnerCastleRewardData[]",
+              "offset": 336,
+              "flags": 6
+            },
+            {
+              "name": "mAdminAdventureData",
+              "type": "AdminAdventureData[]",
+              "offset": 344,
+              "flags": 6
+            },
+            {
+              "name": "mAdminChestData",
+              "type": "AdminChestData[]",
+              "offset": 352,
+              "flags": 6
+            },
+            {
+              "name": "mAdminCostumeData",
+              "type": "HOKAKNPJDFE[]",
+              "offset": 360,
+              "flags": 6
+            },
+            {
+              "name": "mAdminCollectSetData",
+              "type": "LHLPKABAMKC[]",
+              "offset": 368,
+              "flags": 6
+            },
+            {
+              "name": "mAdminTraderInfomationData",
+              "type": "AdminTraderInfomationData[]",
+              "offset": 376,
+              "flags": 6
+            },
+            {
+              "name": "mAdminMagicCubeData",
+              "type": "AdminMagicCubeData[]",
+              "offset": 384,
+              "flags": 6
+            },
+            {
+              "name": "mAdminCombinedInfomationData",
+              "type": "AdminCombinedInfomationData[]",
+              "offset": 392,
+              "flags": 6
+            },
+            {
+              "name": "mAdminHonorRewardData",
+              "type": "AdminHonorRewardData[]",
+              "offset": 400,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRiftNpcData",
+              "type": "AdminRiftNpcData[]",
+              "offset": 408,
+              "flags": 6
+            },
+            {
+              "name": "mAdminChiefSkillData",
+              "type": "AdminChiefSkillData[]",
+              "offset": 416,
+              "flags": 6
+            },
+            {
+              "name": "mAdminWorldBossSkillData",
+              "type": "AdminWorldBossSkillData[]",
+              "offset": 424,
+              "flags": 6
+            },
+            {
+              "name": "mAdminGearSkillData",
+              "type": "FCMDNMEJDHM[]",
+              "offset": 432,
+              "flags": 6
+            },
+            {
+              "name": "mAdminJobTraitData",
+              "type": "AdminJobTraitData[]",
+              "offset": 440,
+              "flags": 6
+            },
+            {
+              "name": "mAdminShinyCostumeBoxData",
+              "type": "AdminShinyCostumeBoxData[]",
+              "offset": 448,
+              "flags": 6
+            },
+            {
+              "name": "mAdminShinyCostumeBoxTwoData",
+              "type": "AdminShinyCostumeBoxData[]",
+              "offset": 456,
+              "flags": 6
+            },
+            {
+              "name": "mAdminCostumeBoxOneData",
+              "type": "AdminCostumeBoxOneData[]",
+              "offset": 464,
+              "flags": 6
+            },
+            {
+              "name": "mAdminAdventureNpcData",
+              "type": "AdminAdventureNpcData[]",
+              "offset": 472,
+              "flags": 6
+            },
+            {
+              "name": "mAdminAdventureNpcAbilityData",
+              "type": "AdminAdventureNpcAbilityData[]",
+              "offset": 480,
+              "flags": 6
+            },
+            {
+              "name": "mAdminMoleTimeRewardData",
+              "type": "AdminMoleTimeRewardData[]",
+              "offset": 488,
+              "flags": 6
+            },
+            {
+              "name": "mAdminChiefSecretBoxData",
+              "type": "AdminChiefSecretBoxData[]",
+              "offset": 496,
+              "flags": 6
+            },
+            {
+              "name": "mAdminDarknessPrinceData",
+              "type": "AdminDarknessPrinceData[]",
+              "offset": 504,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRuneCraftData",
+              "type": "AdminRuneCraftData[]",
+              "offset": 512,
+              "flags": 6
+            },
+            {
+              "name": "mAdminTradeWagonData",
+              "type": "AdminTradeWagonData[]",
+              "offset": 520,
+              "flags": 6
+            },
+            {
+              "name": "mAdminDropUniqueGearData",
+              "type": "AdminDropUniqueGearData[]",
+              "offset": 528,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetData",
+              "type": "AdminRidingPetData[]",
+              "offset": 536,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetSkillData",
+              "type": "AdminRidingPetSkillData[]",
+              "offset": 544,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetTraitData",
+              "type": "AdminRidingPatTraitData[]",
+              "offset": 552,
+              "flags": 6
+            },
+            {
+              "name": "mAdminWorldBossBoxData",
+              "type": "AdminWorldBossBoxData[]",
+              "offset": 560,
+              "flags": 6
+            },
+            {
+              "name": "mAdminLimitBreakData",
+              "type": "AdminLimitBreakData[]",
+              "offset": 568,
+              "flags": 6
+            },
+            {
+              "name": "mAdminFallenRanchStageData",
+              "type": "AdminFallenRanchStageData[]",
+              "offset": 576,
+              "flags": 6
+            },
+            {
+              "name": "mAdminFallenRanchRewardData",
+              "type": "AdminFallenRanchRewardData[]",
+              "offset": 584,
+              "flags": 6
+            },
+            {
+              "name": "mAdminDemonData",
+              "type": "AdminDemonData[]",
+              "offset": 592,
+              "flags": 6
+            },
+            {
+              "name": "mAdminDemonSkillData",
+              "type": "AdminDemonSkillData[]",
+              "offset": 600,
+              "flags": 6
+            },
+            {
+              "name": "mAdminDemonTeamData",
+              "type": "AdminDemonTeamData[]",
+              "offset": 608,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetGearData",
+              "type": "AdminRidingPetGearData[]",
+              "offset": 616,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetGearBoxData",
+              "type": "AdminRidingPetGearBoxData[]",
+              "offset": 624,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRidingPetGearOptionData",
+              "type": "AdminRidingPetGearOptionData[]",
+              "offset": 632,
+              "flags": 6
+            },
+            {
+              "name": "mAdminEngravingData",
+              "type": "AdminEngravingData[]",
+              "offset": 640,
+              "flags": 6
+            },
+            {
+              "name": "mAdminEngravingDropData",
+              "type": "AdminEngravingDropData[]",
+              "offset": 648,
+              "flags": 6
+            },
+            {
+              "name": "mAdminExchangeShowData",
+              "type": "AdminExchangeShowData[]",
+              "offset": 656,
+              "flags": 6
+            },
+            {
+              "name": "mAdminChiefCostumeData",
+              "type": "AdminChiefCostumeData[]",
+              "offset": 664,
+              "flags": 6
+            },
+            {
+              "name": "mAdminFieldBossData",
+              "type": "AdminFieldBossData[]",
+              "offset": 672,
+              "flags": 6
+            },
+            {
+              "name": "mAdminChiefBlessingData",
+              "type": "BIEBAPGFPJE[]",
+              "offset": 680,
+              "flags": 6
+            },
+            {
+              "name": "mAdminRelicInfoData",
+              "type": "AFKJBPLJCDM[]",
+              "offset": 688,
+              "flags": 6
+            },
+            {
+              "name": "mAdminLuxuryShopContentsData",
+              "type": "NMNMKGEGIFF[]",
+              "offset": 696,
+              "flags": 6
+            },
+            {
+              "name": "googlePropertyData",
+              "type": "property",
+              "offset": 704,
+              "flags": 6
+            },
+            {
+              "name": "googleMetData",
+              "type": "met",
+              "offset": 712,
+              "flags": 6
+            },
+            {
+              "name": "googleSkillData",
+              "type": "skill",
+              "offset": 720,
+              "flags": 6
+            },
+            {
+              "name": "googleEvilData",
+              "type": "evil",
+              "offset": 728,
+              "flags": 6
+            },
+            {
+              "name": "googleConsumData",
+              "type": "consum",
+              "offset": 736,
+              "flags": 6
+            },
+            {
+              "name": "googleNewRaidData",
+              "type": "newRaid",
+              "offset": 744,
+              "flags": 6
+            },
+            {
+              "name": "googleRaidData",
+              "type": "raid",
+              "offset": 752,
+              "flags": 6
+            },
+            {
+              "name": "googleHunterData",
+              "type": "hunter",
+              "offset": 760,
+              "flags": 6
+            },
+            {
+              "name": "googleRevivePropertyData",
+              "type": "reviveProperty",
+              "offset": 768,
+              "flags": 6
+            },
+            {
+              "name": "googlePersonalityData",
+              "type": "personality",
+              "offset": 776,
+              "flags": 6
+            },
+            {
+              "name": "googleBuffData",
+              "type": "buff",
+              "offset": 784,
+              "flags": 6
+            },
+            {
+              "name": "googleGearPropertyData",
+              "type": "gearProperty",
+              "offset": 792,
+              "flags": 6
+            },
+            {
+              "name": "googleGearWeaponData",
+              "type": "gearWeapon",
+              "offset": 800,
+              "flags": 6
+            },
+            {
+              "name": "googleGearNeckData",
+              "type": "gearNeck",
+              "offset": 808,
+              "flags": 6
+            },
+            {
+              "name": "googleGearRingData",
+              "type": "gearRing",
+              "offset": 816,
+              "flags": 6
+            },
+            {
+              "name": "googleGearHelmetData",
+              "type": "gearHelmet",
+              "offset": 824,
+              "flags": 6
+            },
+            {
+              "name": "googleGearArmorData",
+              "type": "gearArmor",
+              "offset": 832,
+              "flags": 6
+            },
+            {
+              "name": "googleGearGolveData",
+              "type": "gearGlove",
+              "offset": 840,
+              "flags": 6
+            },
+            {
+              "name": "googleGearBootsData",
+              "type": "gearBoots",
+              "offset": 848,
+              "flags": 6
+            },
+            {
+              "name": "googleGearBeltData",
+              "type": "gearBelt",
+              "offset": 856,
+              "flags": 6
+            },
+            {
+              "name": "googleBuildData",
+              "type": "build",
+              "offset": 864,
+              "flags": 6
+            },
+            {
+              "name": "googleBuildSkinData",
+              "type": "buildSkin",
+              "offset": 872,
+              "flags": 6
+            },
+            {
+              "name": "googleVillSkinData",
+              "type": "villSkin",
+              "offset": 880,
+              "flags": 6
+            },
+            {
+              "name": "googleOrganizeData",
+              "type": "organize",
+              "offset": 888,
+              "flags": 6
+            },
+            {
+              "name": "googleProductData",
+              "type": "product",
+              "offset": 896,
+              "flags": 6
+            },
+            {
+              "name": "googleExpData",
+              "type": "exp",
+              "offset": 904,
+              "flags": 6
+            },
+            {
+              "name": "goolgleHunterspeachData",
+              "type": "hunterSpeach",
+              "offset": 912,
+              "flags": 6
+            },
+            {
+              "name": "goolgleEvilspeachData",
+              "type": "evilSpeach",
+              "offset": 920,
+              "flags": 6
+            },
+            {
+              "name": "googleReviveBuldingData",
+              "type": "rebonBulding",
+              "offset": 928,
+              "flags": 6
+            },
+            {
+              "name": "googleHunterNameMData",
+              "type": "hunterNameM",
+              "offset": 936,
+              "flags": 6
+            },
+            {
+              "name": "googleHunterNameWData",
+              "type": "hunterNameW",
+              "offset": 944,
+              "flags": 6
+            },
+            {
+              "name": "googleNpcSpeachData",
+              "type": "npcSpeach",
+              "offset": 952,
+              "flags": 6
+            },
+            {
+              "name": "googleAchieveData",
+              "type": "achieve",
+              "offset": 960,
+              "flags": 6
+            },
+            {
+              "name": "googleQuestData",
+              "type": "quest",
+              "offset": 968,
+              "flags": 6
+            },
+            {
+              "name": "googleShopData",
+              "type": "shop",
+              "offset": 976,
+              "flags": 6
+            },
+            {
+              "name": "googleMissionData",
+              "type": "mission",
+              "offset": 984,
+              "flags": 6
+            },
+            {
+              "name": "googlePatternSpeachData",
+              "type": "patternSpeach",
+              "offset": 992,
+              "flags": 6
+            },
+            {
+              "name": "googleHelpData",
+              "type": "help",
+              "offset": 1000,
+              "flags": 6
+            },
+            {
+              "name": "googlePrivacyData",
+              "type": "privacy",
+              "offset": 1008,
+              "flags": 6
+            },
+            {
+              "name": "googleGearSetPropertyData",
+              "type": "gearSetProperty",
+              "offset": 1016,
+              "flags": 6
+            },
+            {
+              "name": "googleInAppRewardData",
+              "type": "inAppReward",
+              "offset": 1024,
+              "flags": 6
+            },
+            {
+              "name": "googleGrowUpProperty",
+              "type": "growupProperty",
+              "offset": 1032,
+              "flags": 6
+            },
+            {
+              "name": "googleSubJobSkillData",
+              "type": "subJobSkill",
+              "offset": 1040,
+              "flags": 6
+            },
+            {
+              "name": "googleRunesData",
+              "type": "runes",
+              "offset": 1048,
+              "flags": 6
+            },
+            {
+              "name": "googleRiftRewardData",
+              "type": "riftReward",
+              "offset": 1056,
+              "flags": 6
+            },
+            {
+              "name": "googleRiftRaidRewardData",
+              "type": "riftRaidReward",
+              "offset": 1064,
+              "flags": 6
+            },
+            {
+              "name": "googleInnerCastleRewardData",
+              "type": "innerCastleReward",
+              "offset": 1072,
+              "flags": 6
+            },
+            {
+              "name": "googleAdventureData",
+              "type": "adventure",
+              "offset": 1080,
+              "flags": 6
+            },
+            {
+              "name": "googleChestData",
+              "type": "chest",
+              "offset": 1088,
+              "flags": 6
+            },
+            {
+              "name": "googleCostumeData",
+              "type": "costume",
+              "offset": 1096,
+              "flags": 6
+            },
+            {
+              "name": "googleCollectSetData",
+              "type": "collectset",
+              "offset": 1104,
+              "flags": 6
+            },
+            {
+              "name": "googleTraderInfomationData",
+              "type": "traderInfomation",
+              "offset": 1112,
+              "flags": 6
+            },
+            {
+              "name": "googleMagicCubeData",
+              "type": "magiccube",
+              "offset": 1120,
+              "flags": 6
+            },
+            {
+              "name": "googleCombinedInfomationData",
+              "type": "combinedInfomation",
+              "offset": 1128,
+              "flags": 6
+            },
+            {
+              "name": "googleHonorRewardData",
+              "type": "honorReward",
+              "offset": 1136,
+              "flags": 6
+            },
+            {
+              "name": "googleRiftNpcData",
+              "type": "riftNpc",
+              "offset": 1144,
+              "flags": 6
+            },
+            {
+              "name": "googleChiefSkillData",
+              "type": "chiefSkill",
+              "offset": 1152,
+              "flags": 6
+            },
+            {
+              "name": "googleWorldBossSkillData",
+              "type": "worldBossSkill",
+              "offset": 1160,
+              "flags": 6
+            },
+            {
+              "name": "googleGearSkillData",
+              "type": "gearSkill",
+              "offset": 1168,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetData",
+              "type": "ridingPet",
+              "offset": 1176,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetSkillData",
+              "type": "ridingPetSkill",
+              "offset": 1184,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetTraitData",
+              "type": "ridingPetTrait",
+              "offset": 1192,
+              "flags": 6
+            },
+            {
+              "name": "googleJobTraitData",
+              "type": "jobTrait",
+              "offset": 1200,
+              "flags": 6
+            },
+            {
+              "name": "googleShinyCostumeBoxData",
+              "type": "shinyCostumeBox",
+              "offset": 1208,
+              "flags": 6
+            },
+            {
+              "name": "googleShinyCostumeBoxTwoData",
+              "type": "shinyCostumeBoxTwo",
+              "offset": 1216,
+              "flags": 6
+            },
+            {
+              "name": "googleCostumeBoxOneData",
+              "type": "costumeBoxOne",
+              "offset": 1224,
+              "flags": 6
+            },
+            {
+              "name": "googleAdventureNpcData",
+              "type": "adventureNpc",
+              "offset": 1232,
+              "flags": 6
+            },
+            {
+              "name": "googleAdventureNpcAbilityData",
+              "type": "adventureNpcAbility",
+              "offset": 1240,
+              "flags": 6
+            },
+            {
+              "name": "googleMoleTimeRewardData",
+              "type": "moleTimeReward",
+              "offset": 1248,
+              "flags": 6
+            },
+            {
+              "name": "googleChiefSecretBoxData",
+              "type": "chiefSecretBox",
+              "offset": 1256,
+              "flags": 6
+            },
+            {
+              "name": "googleDarknessPrinceData",
+              "type": "darknessPrince",
+              "offset": 1264,
+              "flags": 6
+            },
+            {
+              "name": "googleRuneCraftData",
+              "type": "runeCraft",
+              "offset": 1272,
+              "flags": 6
+            },
+            {
+              "name": "googleTradeWagonData",
+              "type": "tradeWagon",
+              "offset": 1280,
+              "flags": 6
+            },
+            {
+              "name": "googleDropUniqueGearData",
+              "type": "dropUniqueGear",
+              "offset": 1288,
+              "flags": 6
+            },
+            {
+              "name": "googleWorldBossBoxData",
+              "type": "worldBossBox",
+              "offset": 1296,
+              "flags": 6
+            },
+            {
+              "name": "googleLimitBreakData",
+              "type": "limitBreak",
+              "offset": 1304,
+              "flags": 6
+            },
+            {
+              "name": "googleFallenRanchStageData",
+              "type": "fallenRanchStage",
+              "offset": 1312,
+              "flags": 6
+            },
+            {
+              "name": "googleFallenRanchRewardData",
+              "type": "fallenRanchReward",
+              "offset": 1320,
+              "flags": 6
+            },
+            {
+              "name": "googleDemonData",
+              "type": "demon",
+              "offset": 1328,
+              "flags": 6
+            },
+            {
+              "name": "googleDemonSkillData",
+              "type": "demonSkill",
+              "offset": 1336,
+              "flags": 6
+            },
+            {
+              "name": "googleDemonTeamData",
+              "type": "demonTeam",
+              "offset": 1344,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetGearData",
+              "type": "ridingPetGear",
+              "offset": 1352,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetGearBoxData",
+              "type": "ridingPetGearBox",
+              "offset": 1360,
+              "flags": 6
+            },
+            {
+              "name": "googleRidingPetGearOptionData",
+              "type": "ridingPetGearOption",
+              "offset": 1368,
+              "flags": 6
+            },
+            {
+              "name": "googleEngraving",
+              "type": "engraving",
+              "offset": 1376,
+              "flags": 6
+            },
+            {
+              "name": "googleEngravingDrop",
+              "type": "engravingDrop",
+              "offset": 1384,
+              "flags": 6
+            },
+            {
+              "name": "googleExchangeShow",
+              "type": "exchangeShow",
+              "offset": 1392,
+              "flags": 6
+            },
+            {
+              "name": "googleChiefCostume",
+              "type": "chiefCostume",
+              "offset": 1400,
+              "flags": 6
+            },
+            {
+              "name": "googleFieldBossData",
+              "type": "fieldBoss",
+              "offset": 1408,
+              "flags": 6
+            },
+            {
+              "name": "googleChiefBlessingData",
+              "type": "chiefBlessing",
+              "offset": 1416,
+              "flags": 6
+            },
+            {
+              "name": "googleRelicInfoData",
+              "type": "relicInfo",
+              "offset": 1424,
+              "flags": 6
+            },
+            {
+              "name": "googleLuxuryShopContentsData",
+              "type": "luxuryShopContents",
+              "offset": 1432,
+              "flags": 6
+            },
+            {
+              "name": "mConvertData",
+              "type": "System.Collections.Generic.Dictionary<System.Int32,System.Collections.Generic.Dictionary<System.Int32,System.Int32>>",
+              "offset": 1440,
+              "flags": 6
+            },
+            {
+              "name": "mEvilSpineData",
+              "type": "Spine.Unity.SkeletonDataAsset[]",
+              "offset": 1448,
+              "flags": 6
+            },
+            {
+              "name": "mDungeonEvilSpineData",
+              "type": "Spine.Unity.SkeletonDataAsset[]",
+              "offset": 1456,
+              "flags": 6
+            },
+            {
+              "name": "FieldNpcSpineData",
+              "type": "Spine.Unity.SkeletonDataAsset[]",
+              "offset": 1464,
+              "flags": 6
+            },
+            {
+              "name": "mWorldBossSpineData",
+              "type": "Spine.Unity.SkeletonDataAsset[]",
+              "offset": 1472,
+              "flags": 6
+            },
+            {
+              "name": "mDarknessPrinceSpineData",
+              "type": "Spine.Unity.SkeletonDataAsset[]",
+              "offset": 1480,
+              "flags": 6
+            },
+            {
+              "name": "ODNEJGLACGK",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong[]",
+              "offset": 1488,
+              "flags": 1
+            },
+            {
+              "name": "LAOICKNHDLL",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong[]",
+              "offset": 1496,
+              "flags": 1
+            }
+          ],
+          "methods": [
+            {
+              "name": "GJKNLILPIMO",
+              "token": 100688640,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NPOMEBAKHBG",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "AJANFEJDCOF",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "getInstance",
+              "token": 100688641,
+              "returnType": "DataManager",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "NEECJHGLADL",
+              "token": 100688642,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LABNLDLKEEF",
+              "token": 100688643,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JNKNNDIFJLF",
+              "token": 100688644,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CEIKBKKBFKP",
+              "token": 100688645,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GEBBINGJLEF",
+              "token": 100688646,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NPOMEBAKHBG",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "AJANFEJDCOF",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Awake",
+              "token": 100688647,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetTraitRangeDetailDesc",
+              "token": 100688648,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FCFDMGBJHEK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MICEJMAOHNK",
+              "token": 100688649,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FCFDMGBJHEK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HEIIJCIEKAP",
+              "token": 100688650,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FHGAPMCGLGE",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetSkillLevelText",
+              "token": 100688651,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetCollectionOptionString",
+              "token": 100688652,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "NPOMEBAKHBG",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "AJANFEJDCOF",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "JLHLEPLHGFB",
+              "token": 100688653,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OBCBIJHOJKO",
+              "token": 100688654,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LAFICLKMBAO",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "AAFACPGJGPK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_AdventurePowerArray",
+              "token": 100688655,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CEKEOIOLMOM",
+              "token": 100688656,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DEMDDDFLLPI",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetSkillDetailDesc",
+              "token": 100688657,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "OJGOKKKKDEN",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "DCLIEABJMEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 2,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetJobTraitDetail",
+              "token": 100688658,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FHGAPMCGLGE",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GOKPLKGFLNM",
+              "token": 100688659,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DEMDDDFLLPI",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GoogleDataBool",
+              "token": 100688660,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "JPKFPKPLPOC",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KJDOLLEOKPA",
+              "token": 100688661,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FCFDMGBJHEK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_AdventureNeedExpArray",
+              "token": 100688662,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong[]",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetReviveDetailDesc",
+              "token": 100688663,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LAFICLKMBAO",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "AAFACPGJGPK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "KJBIDFNLDNO",
+              "token": 100688664,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CNLGJNKFECG",
+              "token": 100688665,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DEMDDDFLLPI",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetTraitLevelTextSimple",
+              "token": 100688666,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetJobTraitRangeDetail",
+              "token": 100688667,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FHGAPMCGLGE",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100688668,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetSubJobSkillRangeDetail",
+              "token": 100688669,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DEMDDDFLLPI",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetSkillLevelTextSimple",
+              "token": 100688670,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetReviveRangeDetailDesc",
+              "token": 100688671,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "LAFICLKMBAO",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetTraitDetailDesc",
+              "token": 100688672,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "FCFDMGBJHEK",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PIJIHBPHDNM",
+              "token": 100688673,
+              "returnType": "DataManager",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CPHHAAIGCGG",
+              "token": 100688674,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRidingPetTraitLevelText",
+              "token": 100688675,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "KPKFGOOCGEP",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetSubJobSkillDetail",
+              "token": 100688676,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "DEMDDDFLLPI",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "MNJBLPJALME",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FIMHGNGBJPI",
+              "token": 100688677,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "IGBEPJJFMLI",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                },
+                {
+                  "index": 1,
+                  "name": "LIPFPEMEOFE",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

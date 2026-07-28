@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "contractType": "actk-playerprefs-key-trace",
+  "capturedAtUtc": "2026-07-26T13:10:05.214190Z",
+  "packageId": "com.superplanet.evilhunter",
+  "pid": 4705,
+  "durationSeconds": 10.0,
+  "valuePolicy": "Plaintext key names and value lengths only; stored values omitted.",
+  "records": [],
+  "errors": []
+}

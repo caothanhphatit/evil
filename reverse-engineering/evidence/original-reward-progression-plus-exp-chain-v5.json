@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 5,
+  "contractType": "original-reward-progression-plus-exp-chain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "id": "reward-progression-methods",
+      "path": "reverse-engineering/evidence/original-reward-progression-methods-api35-v1.json",
+      "bytes": 142651,
+      "sha256": "14c2ece691ae92712db686257caae632ab967e46c404ac73de41f5ecbad64e63"
+    },
+    {
+      "id": "reward-progression-schema",
+      "path": "reverse-engineering/evidence/original-reward-progression-schema-api35-v1.json",
+      "bytes": 447676,
+      "sha256": "ba3ca98633a127229683fe59e96ccbdce02111e018c045ba830b5f758ad5cb21"
+    },
+    {
+      "id": "hunter-runtime-schema-api35",
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "bytes": 670307,
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    },
+    {
+      "id": "reward-progression-level-domain-v4",
+      "path": "reverse-engineering/evidence/original-reward-progression-level-domain-v4.json",
+      "bytes": 3154,
+      "sha256": "59fe71a546bcae106822d3fc8dd3efc51dcec689be94814a36696dee965558fb"
+    },
+    {
+      "id": "hunter-damage-tail-v2-package-literals",
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-tail-v2.json",
+      "bytes": 6110,
+      "sha256": "4b5870f2882c4e6dec60420b68bf82c24054ae72d045aaf5fb94e2811ebf1106"
+    }
+  ],
+  "schemaBindings": {
+    "UserData": {
+      "timeData": 152,
+      "<currentMissionIdx>k__BackingField": 1912,
+      "<mBuildingExpUp>k__BackingField": 2400,
+      "ExpGemPack_Active": 8776
+    },
+    "TimeData": {
+      "<expScroll>k__BackingField": 424,
+      "<BoxExp>k__BackingField": 536
+    },
+    "StatusData": {
+      "<GearProperty>k__BackingField": 528,
+      "CostumeExpUp": 1064,
+      "CollectionExpUp": 1372
+    },
+    "HunterData": {
+      "<job>k__BackingField": 32,
+      "<subJob>k__BackingField": 48,
+      "<thirdJob>k__BackingField": 64,
+      "<fourthJob>k__BackingField": 80,
+      "<level>k__BackingField": 136,
+      "<exp>k__BackingField": 152,
+      "<areaIndex>k__BackingField": 260,
+      "<reviveWisdom>k__BackingField": 788,
+      "<costumeIndex>k__BackingField": 1216,
+      "<DSoul>k__BackingField": 1600
+    }
+  },
+  "orderedKnownAccumulatorOperands": [
+    {
+      "order": 1,
+      "operand": "UserData.mBuildingExpUp",
+      "rule": "use when > 0; otherwise initialize accumulator to 1.0"
+    },
+    {
+      "order": 2,
+      "operand": "TimeData.expScroll",
+      "rule": "when true, add 1.0"
+    },
+    {
+      "order": 3,
+      "operand": "TimeData.BoxExp",
+      "rule": "when true, add 0.5"
+    },
+    {
+      "order": 4,
+      "operand": "UserData.ExpGemPack_Active",
+      "rule": "when true, add 1.0"
+    },
+    {
+      "order": 5,
+      "operand": "unnamed singleton ObscuredBool at object offset 0x2C",
+      "rule": "when true, add float32 0.2 loaded from module address 0xD2AAB8; product meaning unresolved"
+    },
+    {
+      "order": 6,
+      "operand": "HunterData.reviveWisdom",
+      "rule": "only values 1..5 index an unnamed five-entry ObscuredInt table; add decoded entry multiplied by the confirmed hundredths scalar"
+    },
+    {
+      "order": 7,
+      "operand": "StatusData.GearProperty[40]",
+      "rule": "when row 0 <= 0 and row 1 >= 1, add (row0 - row1) multiplied by the confirmed hundredths scalar"
+    },
+    {
+      "order": 8,
+      "operand": "StatusData.CostumeExpUp",
+      "rule": "add only when GameManager.IsCostumeExpUp(HunterData.costumeIndex) returns true"
+    },
+    {
+      "order": 9,
+      "operand": "StatusData.CollectionExpUp",
+      "rule": "add only when > 0"
+    },
+    {
+      "order": 10,
+      "operand": "area-dependent unnamed static pair",
+      "rule": "after excluding two unnamed static area IDs, an unnamed lookup can add a decoded integer multiplied by the confirmed hundredths scalar"
+    },
+    {
+      "order": 11,
+      "operand": "accumulator clamp",
+      "rule": "replace a negative accumulator with 0"
+    }
+  ],
+  "incomingGrantApplication": {
+    "confirmedSites": [
+      {
+        "offset": "0x0B2C",
+        "formula": "truncateTowardZero(accumulator * incomingGrant)",
+        "notificationCode": 4
+      },
+      {
+        "offset": "0x0BA0",
+        "formula": "truncateTowardZero(accumulator * incomingGrant)",
+        "notificationCode": 4
+      },
+      {
+        "offset": "0x0C2C",
+        "formula": "truncateTowardZero(accumulator * incomingGrant * float32(0.2))",
+        "notificationCode": 12
+      }
+    ],
+    "completeBranchSemanticBinding": false,
+    "reason": "Stage/revive/area comparisons and the reused float32 0.2 literal are exact, but three static area IDs and branch product meanings remain unresolved."
+  },
+  "storedAndDisplayedLevelDomain": {
+    "storedCap": 99,
+    "displayExpression": "HunterData.level + 1",
+    "maximumDisplayedValueOnThisPath": 100,
+    "needExpCurrentStoredLevels": "0..98",
+    "catalogRows": "1..99"
+  },
+  "levelMutationAndSideEffects": {
+    "alwaysOnGrantPath": [
+      "If positive overflow crosses a threshold, increment the stored ObscuredInt level and reset stored EXP to zero.",
+      "Repeat while positive overflow remains and stored level is below the static cap.",
+      "After the loop, add the non-leveling or carried remainder to HunterData.exp."
+    ],
+    "onlyWhenDidLevelAndBooleanParameterIsTrue": [
+      "Invoke presentation/status calls at exact native sites 0x0E40..0x0F00; unresolved callees are not renamed.",
+      "Build level text from HunterData.level + 1.",
+      "Check UserData.currentMissionIdx against an unnamed static mission ID and compare HunterData.level + 1 with 100 before invoking unresolved mission calls.",
+      "Evaluate the separate stage/revive/stored-level branch producing 75/100/125 and mBuildingSoulUp.",
+      "When that secondary value is positive, read job/subJob/thirdJob/fourthJob data, mutate HunterData.DSoul, and emit notification code 14; exact table semantics remain unresolved."
+    ]
+  },
+  "implementationBoundary": {
+    "fullGoldenCallerVectorAvailable": false,
+    "liveIntegrationAllowed": false,
+    "unresolved": [
+      "Product meaning of the float32 0.2 branch using module literal 0xD2AAB8.",
+      "Identity of the singleton Boolean at offset 0x2C and its getter at 0x2ACF0C4.",
+      "Names/content of the revive-wisdom table and area-dependent static IDs/table.",
+      "Exact branch product meanings for notification codes 4, 12, and 14.",
+      "Semantic names of presentation, mission, and DSoul table helper calls."
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-defense-damage-order-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "package": {
+    "id": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "androidApi": 35,
+    "abi": "arm64-v8a"
+  },
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-combat-formula-exact-boundaries-api35-v1.json",
+      "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-damage-intake-api35-v1.json",
+      "sha256": "9c48d4c82a61f2549ec7bd1b4cb6b7ae7ab45f98273fe1c03a81d053c28591e8"
+    },
+    {
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    }
+  ],
+  "methods": [
+    {
+      "type": "HunterCtrl",
+      "method": "Damaged",
+      "token": "0x06005CAA",
+      "moduleOffset": "0x346514c",
+      "nativeSizeBytes": 18964,
+      "bodySha256": "5be5aa13cc8593c863421e6fb16d267473dc7fbdcf2d71b6e27e16496ce540f6"
+    },
+    {
+      "type": "EvilCtrl",
+      "method": "Damaged",
+      "token": "0x06003014",
+      "moduleOffset": "0x2f2be20",
+      "nativeSizeBytes": 4736,
+      "bodySha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb"
+    }
+  ],
+  "statusDataBoundary": {
+    "calcArmor": {
+      "runtimeName": "<CalcArmor>k__BackingField",
+      "offset": 72,
+      "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+    },
+    "calcDodge": {
+      "runtimeName": "<CalcDodge>k__BackingField",
+      "offset": 192,
+      "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+    },
+    "accuracyFieldStatus": "No StatusData field whose runtime name contains Acc, Accuracy, or Hit exists in the captured schema. GameManager.GetGearAcc is a separate gear helper and is not proof of the hit-roll source."
+  },
+  "hunterArmorIntermediate": {
+    "statusSource": "StatusData.CalcArmor",
+    "statusOffset": 72,
+    "decodeCallModuleOffset": "0x24567e8",
+    "decodedRegister": "x22",
+    "scratchField": {
+      "owner": "HunterCtrl",
+      "runtimeName": "OLCMCGJLADG",
+      "offset": 992,
+      "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+      "gameplayMeaning": "unresolved"
+    },
+    "firstStageEquation": "scratch = truncTowardZero(CalcArmor * selectedArmorFactor)",
+    "factorSelectionStatus": "The factor is selected from a runtime float table by earlier branches; the selector inputs and table semantics remain unresolved.",
+    "postArmorField": {
+      "owner": "HunterCtrl",
+      "runtimeName": "DJDEHDEKGIO",
+      "offset": 1952,
+      "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+      "gameplayMeaning": "unresolved"
+    },
+    "secondStageEquation": "scratch = truncTowardZero(scratch * (1 - decode(DJDEHDEKGIO)))",
+    "rounding": "Both accepted float-to-int64 conversions use ARM64 FCVTZS and therefore truncate toward zero for finite in-range values.",
+    "implementationStatus": "evidence only; the scratch value is not connected to authoritative damage until the later subtraction/clamp chain is resolved"
+  },
+  "evilDamagePrefix": {
+    "incomingDamageAbiRegister": "x2",
+    "firstStageEquation": "damage = truncTowardZero(incomingDamage * selectedRuntimeFactor * GameManager.RandDamage())",
+    "firstStageConversionInstructionOffset": 1436,
+    "conditionalFields": [
+      { "runtimeName": "DBOHIPNFBJG", "offset": 476, "type": "System.Single" },
+      { "runtimeName": "EAEBBPMBEOD", "offset": 480, "type": "System.Single" }
+    ],
+    "branchThreshold": {
+      "float32Bits": "0x00000001",
+      "decimal": 1.401298464324817e-45,
+      "comparison": "fieldSum > threshold"
+    },
+    "conditionalEquation": "damage = truncTowardZero(damage * (1 + fieldSum))",
+    "conditionalConversionInstructionOffset": 1576,
+    "implementationStatus": "prefix only; later modifier, subtraction and clamp order remains unresolved"
+  },
+  "dodgeAccuracyAudit": {
+    "hunterDamagedRandomRangeCalls": [
+      { "instructionOffset": 636, "range": "[0,100)", "resultComparison": "nested StatusData array value" },
+      { "instructionOffset": 5736, "range": "[0,101)", "resultComparison": "nested StatusData array value" },
+      { "instructionOffset": 17340, "range": "[0,10)", "resultComparison": "zero-only proc branch" },
+      { "instructionOffset": 17488, "range": "[0,100)", "resultComparison": "nested StatusData array value" }
+    ],
+    "calcDodgeDirectReadStatus": "No getStatusData return is followed by a direct read/decode of StatusData offset 192 in HunterCtrl.Damaged.",
+    "conclusion": "None of these RNG branches is labeled dodge, evasion, accuracy, or miss without a proven array-index/caller binding."
+  },
+  "instructionWindows": [
+    {
+      "method": "HunterCtrl.Damaged",
+      "startOffset": 2312,
+      "endOffsetExclusive": 2364,
+      "hex": "ab47fe970021291e8a0c0054c00702b40080c43c0180c53ce007409100400c91e1031faae0c7843de1cb843d5ac3bf97080340f9",
+      "role": "getStatusData, CalcArmor load and ObscuredLong decode"
+    },
+    {
+      "method": "HunterCtrl.Damaged",
+      "startOffset": 2808,
+      "endOffsetExclusive": 2860,
+      "hex": "012d40bdc002229e2008201e08f0af52e1031faa0101271e0800f0d20900389e0020211e0001899ae80740910841119187c7bf97",
+      "role": "CalcArmor times selected factor, FCVTZS and scratch construction"
+    },
+    {
+      "method": "HunterCtrl.Damaged",
+      "startOffset": 2904,
+      "endOffsetExclusive": 3048,
+      "hex": "0820201e6004005460065fade007409100400b91e1031faa77821e91e0b7843de1bb843dc8c2bf97f60300aae002c03de81240b9e0074091e1031faa00c00a91e0af843de8c312b968c2bf9701102e1ec202229e08f0af52e1031faa2038201e0101271e0800f0d20008221e0900389e0020211e0001899ae8074091084111915bc7bf97e017c53de11bc53d60061fad",
+      "role": "scratch times one-minus decoded field, FCVTZS and scratch writeback"
+    },
+    {
+      "method": "EvilCtrl.Damaged",
+      "startOffset": 1392,
+      "endOffsetExclusive": 1452,
+      "hex": "fd67df976103229e08f0af52a2e241bd0301271e1b00f0d2e8c30b91e0031faa0109211e2008201ea1de41bd0900389e0020231e2028221e7c03899a",
+      "role": "RandDamage prefix and first FCVTZS"
+    },
+    {
+      "method": "EvilCtrl.Damaged",
+      "startOffset": 1484,
+      "endOffsetExclusive": 1588,
+      "hex": "280080520101271e0020211eed020054a0de41bda1e241bde8c30b91e0031faa0028211e1badd497e0bfc03de80343b9e0430f91e1031faae0f7803de8e303b998a8d49701102e1e8203229e08f0af520028211e0101271e0008221e0900389e0020211e7c03899a",
+      "role": "smallest-positive-subnormal compare and one-plus-sum multiplier"
+    }
+  ],
+  "unresolved": [
+    "The Hunter armor-factor table identity, selector inputs and table row meanings.",
+    "The semantic writer for HunterCtrl.DJDEHDEKGIO and the gameplay name of HunterCtrl.OLCMCGJLADG.",
+    "Where the Hunter armor intermediate is subtracted from or combined with the incoming hit, including minimum-damage clamps.",
+    "The exact dodge/evasion/accuracy source, compare direction and RNG call.",
+    "The complete Evil damage modifier, armor/reduction, final rounding and clamp order."
+  ]
+}

@@ -6,10 +6,14 @@ import type { TownBuilding } from "./assets/visible-world-release";
 import { findBuildingInstanceById } from "./game/building-placement";
 import { TOWN_CAMERA_CLEAR_COLOR } from "./game/scene-projection";
 import { projectCombatHud, type CombatHudState } from "./ui/combat-hud";
+import { nextHunterRosterOpen } from "./ui/bottom-menu-state";
 import { projectResourceBar } from "./ui/resource-projection";
 import { setPanelMessage } from "./ui/panel-message";
-import { projectHunterRoster, type HunterView } from "./ui/hunter-roster";
+import { hunterClassTone, hunterPercent, hunterRarityPresentation, hunterWorldEntityId, projectHunterRoster, type HunterView } from "./ui/hunter-roster";
+import { createHunterRosterActors } from "./ui/hunter-roster-actors";
 import { createHunterInfoModal } from "./ui/hunter-info/modal";
+import { createHunterWorldCommandMenu, type HunterWorldCommandIntent } from "./ui/hunter-world-command";
+import { projectAuthoritativeMonsterField } from "./ui/monster-field";
 import { projectHunterInfo } from "./ui/hunter-info/project";
 import { formatLevelCosts, listBuildingEvidence, projectBuildingEvidence } from "./content/building-evidence";
 import { loadVerifiedBuildingEvidenceRegistry, type EvidenceBuildingRegistry } from "./content/building-registry";
@@ -49,13 +53,22 @@ mount.innerHTML = `
     <section id="village-screen" class="village-screen" aria-label="Village" aria-hidden="true">
       <div id="world-viewport" class="village-world" aria-label="Authoritative entity world"></div>
       <header class="resource-bar" aria-label="Village resources">
-        <div class="difficulty-hud"><small>DIFFICULTY</small><span aria-hidden="true">&#9760;</span><b id="world-mode-label">Easy</b></div>
+        <div class="difficulty-hud"><img src="${originalAsset("sprites/top_mon_level_01__1480.png")}" alt="Easy difficulty" /><b id="world-mode-label" class="sr-only">Easy</b></div>
         <div class="resource-ledger">
           <div class="resource-line"><img src="${originalAsset("sprites/top_ic_01_gold_24__4677.png")}" alt="Gold" /><b id="gold-amount">0</b></div>
           <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_02_gem_24__4214.png")}" alt="Gem" /><b>--</b></div>
-          <div class="resource-line unresolved"><i class="resource-rune" aria-hidden="true"></i><b>--</b></div>
+          <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_03_element_24__1412.png")}" alt="Elemental" /><b>--</b></div>
+          <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_04_book_24__3078.png")}" alt="Book" /><b>--</b></div>
         </div>
       </header>
+      <nav class="top-quick-actions" aria-label="Village shortcuts">
+        <button type="button" disabled title="Book data unavailable"><img src="${originalAsset("sprites/top_ic_book__3217.png")}" alt="Book" /></button>
+        <button type="button" disabled title="Rank data unavailable"><img src="${originalAsset("sprites/top_ic_rank__5074.png")}" alt="Rank" /></button>
+        <button type="button" data-action="character" title="Hunters"><img src="${originalAsset("sprites/top_ic_man__5368.png")}" alt="Hunters" /><b id="hunter-population">0/8</b></button>
+        <button type="button" data-action="build" title="Construct"><img src="${originalAsset("sprites/menu_ic_01__6756.png")}" alt="Construct" /></button>
+        <button type="button" disabled title="Settings unavailable"><img src="${originalAsset("sprites/top_ic_setting__4198.png")}" alt="Settings" /></button>
+      </nav>
+      <button class="quest-shortcut" type="button" disabled title="Quest data unavailable"><img src="${originalAsset("sprites/top_ic_quest__4944.png")}" alt="Quests" /></button>
       <button id="field-back" class="field-back" type="button">Return to village</button>
       <aside id="evidence-diagnostics" class="evidence-diagnostics" aria-live="polite" hidden><b></b><span></span></aside>
       <section id="combat-hud" class="combat-hud" aria-label="Authoritative migration fixture combat" hidden>
@@ -106,18 +119,17 @@ mount.innerHTML = `
         <div id="consum-material-grid" class="consum-material-grid"></div>
         <div class="source-popup-actions"><button id="consum-create-submit" class="source-green-button" type="button">Produce</button><button id="consum-create-close" class="source-red-button" type="button">Close</button></div>
       </section>
-      <div class="guild-chat-bar" aria-label="Guild chat"><span aria-hidden="true">&#9670;</span><b>Guild Chat</b><i></i></div>
-      <nav class="bottom-menu" aria-label="Village menu">${menuItems.map((item) => `<button class="menu-button" type="button" data-action="${item.action}" ${item.enabled ? "" : 'disabled title="Feature in development"'}><span class="menu-icon"><img src="${originalAsset(item.icon)}" alt="" /></span><b>${item.label}</b></button>`).join("")}</nav>
       <button id="connection-status" class="connection-status connecting" type="button" aria-label="Server connection status"><i></i><span>Connecting</span></button>
     </section>
     <section id="roster-screen" class="roster-screen" aria-label="Hunter roster" aria-hidden="true">
       <img class="roster-background" src="/content/releases/visible-world-v1/maps/map_new01.png" alt="" />
-      <section class="hunter-roster-panel" aria-label="Hunter management">
+      <section class="hunter-roster-panel bottom-menu-panel" aria-label="Hunter management">
         <header class="hunter-roster-header"><div class="hunter-roster-actions"><button type="button" disabled>Place the Hunting Grounds</button><button type="button" disabled>Sort Hunters</button></div><div class="hunter-roster-heading"><b>Hunter List</b><span id="hunter-capacity">0 / 8</span></div><button id="roster-back" class="source-red-button" type="button" aria-label="Close Hunter List">Close</button></header>
-        <div class="hunter-roster-body"><div id="hunter-active-list" class="hunter-card-grid"></div><section class="hunter-waiting-section"><h2>Waiting</h2><div id="hunter-waiting-list" class="hunter-waiting-list"></div></section></div>
+        <div class="hunter-roster-body"><div id="hunter-active-list" class="hunter-card-grid"></div></div>
         <footer id="hunter-roster-status" class="hunter-roster-status"></footer>
       </section>
     </section>
+    <nav id="bottom-menu" class="bottom-menu persistent-bottom-menu" aria-label="Village menu" hidden>${menuItems.map((item) => `<button class="menu-button" type="button" data-action="${item.action}" ${item.enabled ? "" : 'disabled title="Feature in development"'}><span class="menu-icon"><img src="${originalAsset(item.icon)}" alt="" /></span><b>${item.label}</b></button>`).join("")}</nav>
     <div id="loading-transition" class="loading-transition" hidden><img src="${originalAsset("sprites/cloud_loading_btn__4266.png")}" alt="" /><span>Loading...</span></div>
   </main>`;
 
@@ -125,10 +137,9 @@ function element<T extends HTMLElement>(selector: string): T { const value = doc
 const bootScreen = element<HTMLElement>("#boot-screen");
 const villageScreen = element<HTMLElement>("#village-screen");
 const rosterScreen = element<HTMLElement>("#roster-screen");
+const bottomMenu = element<HTMLElement>("#bottom-menu");
 const hunterCapacity = element<HTMLElement>("#hunter-capacity");
 const hunterActiveList = element<HTMLElement>("#hunter-active-list");
-const hunterWaitingList = element<HTMLElement>("#hunter-waiting-list");
-const hunterWaitingSection = element<HTMLElement>(".hunter-waiting-section");
 const hunterRosterStatus = element<HTMLElement>("#hunter-roster-status");
 const transition = element<HTMLElement>("#loading-transition");
 const panelMessage = element<HTMLElement>("#panel-message");
@@ -137,6 +148,7 @@ const worldViewport = element<HTMLElement>("#world-viewport");
 const fieldBack = element<HTMLButtonElement>("#field-back");
 const worldModeLabel = element<HTMLElement>("#world-mode-label");
 const goldAmount = element<HTMLElement>("#gold-amount");
+const hunterPopulation = element<HTMLElement>("#hunter-population");
 const enterVillage = element<HTMLButtonElement>("#enter-village");
 const bootStatus = element<HTMLElement>("#boot-status");
 const mapLoading = element<HTMLElement>(".map-loading");
@@ -192,6 +204,11 @@ const evidenceDiagnostics = element<HTMLElement>("#evidence-diagnostics");
 const combatHud = element<HTMLElement>("#combat-hud");
 const equipFixtureItem = element<HTMLButtonElement>("#equip-fixture-item");
 let latestSnapshot: OriginalFlowSnapshot | null = null;
+let selectedMenuAction: MenuAction | null = null;
+let hunterRosterOpen = false;
+let hunterRosterPrimed = false;
+let nextHunterRosterRefreshAt = 0;
+let normalizingLegacyRosterScreen = false;
 let world: VisibleEntityWorld | null = null;
 let connectionState: ConnectionStatus = "connecting";
 let bootRequested = false;
@@ -221,7 +238,16 @@ let popupInteractionActive = false;
 let popupInteractionReleaseTimer: number | undefined;
 let popupSnapshotSignature = "";
 let selectedHunterId: string | null = null;
-const hunterInfoModal = createHunterInfoModal(rosterScreen);
+let releasedWorldHunterEntityId: string | null = null;
+const hunterRosterActors = createHunterRosterActors(hunterActiveList);
+
+function setHunterRosterVisibility(open: boolean): void {
+  hunterRosterOpen = open;
+  selectedMenuAction = open ? "character" : selectedMenuAction === "character" ? null : selectedMenuAction;
+  rosterScreen.classList.toggle("visible", open);
+  rosterScreen.setAttribute("aria-hidden", String(!open));
+  bottomMenu.querySelector('[data-action="character"]')?.classList.toggle("selected", open);
+}
 
 const holdPopupRender = (): void => {
   if (popupInteractionReleaseTimer !== undefined) window.clearTimeout(popupInteractionReleaseTimer);
@@ -261,6 +287,19 @@ buildingPanelClose.textContent = originalUiLabel("btn_0");
 gearCreateClose.textContent = originalUiLabel("btn_0");
 
 const client = new WorldClient(renderSnapshot, updateConnectionStatus, showIntentResult, showBindingBlocked);
+const hunterInfoActions = { useSkill: useHunterSkillFromInfo };
+const hunterInfoModal = createHunterInfoModal(rosterScreen, hunterInfoActions);
+const worldHunterInfoModal = createHunterInfoModal(villageScreen, hunterInfoActions);
+const hunterWorldCommandMenu = createHunterWorldCommandMenu(villageScreen, {
+  onInfo: showWorldHunterInfo,
+  onIntent: handleHunterWorldCommandIntent,
+  onRelease: (entityId) => {
+    releasedWorldHunterEntityId = entityId;
+    world?.setSelectedEntity(null);
+    worldHunterInfoModal.close();
+  },
+  onUnavailable: (category) => showPanelMessage("Lệnh chưa được bind", category),
+});
 document.addEventListener("contextmenu", (event) => {
   const target = event.target as HTMLElement | null;
   if (target?.closest("input, textarea, [contenteditable=\"true\"]")) return;
@@ -285,10 +324,36 @@ enterVillage.addEventListener("click", () => {
   bootRequested = true;
   updateBootState();
 });
-document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) => button.addEventListener("click", () => {
-  document.querySelectorAll("[data-action]").forEach((item) => item.classList.remove("selected"));
-  button.classList.add("selected");
+function handleMenuAction(button: HTMLButtonElement): void {
+  hunterWorldCommandMenu.close();
+  worldHunterInfoModal.close();
   const action = button.dataset.action as MenuAction;
+  const triggerIsBottomMenu = button.closest(".bottom-menu") !== null;
+  if (action === "character") {
+    const open = nextHunterRosterOpen(triggerIsBottomMenu, hunterRosterOpen);
+    setHunterRosterVisibility(open);
+    if (open && latestSnapshot && !hunterRosterPrimed) {
+      renderHunterRoster(latestSnapshot);
+      hunterRosterPrimed = true;
+    }
+    if (!open && latestSnapshot?.screen === "hunter_roster") client.navigateBack();
+    return;
+  }
+  const togglesActiveBottomTab = triggerIsBottomMenu && selectedMenuAction === action;
+  if (togglesActiveBottomTab) {
+    selectedMenuAction = null;
+    document.querySelectorAll(`.bottom-menu [data-action="${action}"]`).forEach((item) => item.classList.remove("selected"));
+    if (action === "build") {
+      buildingPanel.hidden = true;
+    } else if (action === "field" && latestSnapshot?.screen === "field") {
+      client.navigateBack();
+    }
+    return;
+  }
+  document.querySelectorAll(".bottom-menu [data-action]").forEach((item) => item.classList.remove("selected"));
+  document.querySelectorAll(`.bottom-menu [data-action="${button.dataset.action}"]`).forEach((item) => item.classList.add("selected"));
+  selectedMenuAction = action;
+  if (hunterRosterOpen || rosterScreen.classList.contains("visible")) setHunterRosterVisibility(false);
   if (action === "build") {
     buildingPanelMode = "construct";
     buildingPanel.hidden = false;
@@ -296,8 +361,23 @@ document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) =
     renderBuildingSystem(latestSnapshot);
   } else if (action === "field") client.enterField();
   else client.selectBottomMenu(action);
-}));
-buildingPanelClose.addEventListener("click", () => { buildingPanel.hidden = true; });
+}
+
+// Delegate the persistent bar so its controls survive DOM refreshes/HMR without stale listeners.
+bottomMenu.addEventListener("click", (event) => {
+  const target = event.target as HTMLElement | null;
+  const button = target?.closest<HTMLButtonElement>("button[data-action]");
+  if (!button || !bottomMenu.contains(button) || button.disabled) return;
+  handleMenuAction(button);
+});
+document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) => {
+  if (!button.closest(".bottom-menu")) button.addEventListener("click", () => handleMenuAction(button));
+});
+buildingPanelClose.addEventListener("click", () => {
+  buildingPanel.hidden = true;
+  if (selectedMenuAction === "build") selectedMenuAction = null;
+  bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
+});
 buildingConstruct.addEventListener("click", () => { if (selectedBuildingId) client.constructBuilding(selectedBuildingId); });
 buildingUpgrade.addEventListener("click", () => { if (selectedBuildingInstanceId) client.upgradeBuilding(selectedBuildingInstanceId); });
 buildingUse.addEventListener("click", () => {
@@ -360,8 +440,15 @@ consumCreateSubmit.addEventListener("click", () => {
   }
 });
 consumCreateClose.addEventListener("click", () => { consumCreatePop.hidden = true; });
-element<HTMLButtonElement>("#roster-back").addEventListener("click", () => client.navigateBack());
-fieldBack.addEventListener("click", () => client.navigateBack());
+element<HTMLButtonElement>("#roster-back").addEventListener("click", () => {
+  setHunterRosterVisibility(false);
+  if (latestSnapshot?.screen === "hunter_roster") client.navigateBack();
+});
+fieldBack.addEventListener("click", () => {
+  hunterWorldCommandMenu.close();
+  worldHunterInfoModal.close();
+  client.navigateBack();
+});
 equipFixtureItem.addEventListener("click", () => {
   if (latestCombatHud?.equipEligible) client.equipHunterItem(1, 2001);
 });
@@ -406,10 +493,25 @@ async function initializeWorld(): Promise<void> {
   const app = new Application();
   await app.init({ resizeTo: worldViewport, backgroundColor: TOWN_CAMERA_CLEAR_COLOR, backgroundAlpha: 1, antialias: false, autoDensity: true, resolution: Math.min(devicePixelRatio, 2) });
   worldViewport.appendChild(app.canvas);
-  const visibleWorld = new VisibleEntityWorld((entityId) => {
+  const visibleWorld = new VisibleEntityWorld((entityId, screenPoint) => {
+    releasedWorldHunterEntityId = null;
     if (!client.selectEntity(entityId)) return;
+    const entity = latestSnapshot?.world.entities.find((candidate) => candidate.descriptor.entity_id === entityId);
+    if (entity?.descriptor.kind === "hunter") {
+      const hunter = hunterForWorldEntity(latestSnapshot, entityId);
+      hunterWorldCommandMenu.selectHunter({
+        entityId,
+        displayName: hunter?.name ?? entityId,
+        screenPoint: screenPoint ?? { x: worldViewport.clientWidth / 2, y: worldViewport.clientHeight / 2 },
+      });
+      return;
+    }
+    hunterWorldCommandMenu.close();
+    worldHunterInfoModal.close();
     showPanelMessage("Entity selected", entityId);
   }, (instance, visual) => {
+    hunterWorldCommandMenu.close();
+    worldHunterInfoModal.close();
     selectedBuildingId = instance.building_id;
     selectedBuildingInstanceId = instance.instance_id;
     selectedBuildingVisual = visual;
@@ -422,6 +524,9 @@ async function initializeWorld(): Promise<void> {
     }
     buildingPanel.hidden = false;
     renderBuildingSystem(latestSnapshot);
+  }, (regionId, nextLevel) => {
+    if (!client.setMonsterRegionDensity(regionId, nextLevel)) return;
+    showPanelMessage("Monster density", `${regionId}: ${["I", "II", "III"][nextLevel - 1] ?? nextLevel}`);
   });
   const diagnostics = await visibleWorld.initialize((loaded, total) => {
     const percent = total ? Math.round((loaded / total) * 100) : 0;
@@ -477,10 +582,16 @@ async function initializeWorld(): Promise<void> {
   world = visibleWorld;
   if (latestSnapshot) syncBuildingPresentation(visibleWorld, latestSnapshot);
   mapReady = true;
+  void hunterRosterActors.preload();
   updateBootState();
   if (latestSnapshot) {
     visibleWorld.setMode(latestSnapshot.screen === "field" ? "field" : "village");
-    visibleWorld.update(latestSnapshot.world.entities, latestSnapshot.world.visual_tick);
+    visibleWorld.setMonsterDensityLevels(projectAuthoritativeMonsterField(latestSnapshot.monster_world).farms);
+    visibleWorld.update(
+      latestSnapshot.world.entities,
+      latestSnapshot.world.visual_tick,
+      latestSnapshot.world.combat_presentations,
+    );
   }
   window.addEventListener("beforeunload", () => {
     resizeObserver.disconnect();
@@ -492,20 +603,54 @@ async function initializeWorld(): Promise<void> {
 function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   latestSnapshot = snapshot;
   world?.setMode(snapshot.screen === "field" ? "field" : "village");
+  world?.setMonsterDensityLevels(projectAuthoritativeMonsterField(snapshot.monster_world).farms);
   if (world) syncBuildingPresentation(world, snapshot);
-  world?.update(snapshot.world.entities, snapshot.world.visual_tick);
+  world?.update(snapshot.world.entities, snapshot.world.visual_tick, snapshot.world.combat_presentations);
+  if (snapshot.world.selected_entity_id !== releasedWorldHunterEntityId) releasedWorldHunterEntityId = null;
+  world?.setSelectedEntity(snapshot.world.selected_entity_id === releasedWorldHunterEntityId
+    ? null
+    : snapshot.world.selected_entity_id);
   if (snapshot.screen !== "boot") bootRequested = false;
   updateBootState();
-  const village = snapshot.screen === "village" || snapshot.screen === "field";
-  const roster = snapshot.screen === "hunter_roster";
+  if (snapshot.screen === "hunter_roster" && !normalizingLegacyRosterScreen) {
+    normalizingLegacyRosterScreen = client.navigateBack();
+  } else if (snapshot.screen !== "hunter_roster") {
+    normalizingLegacyRosterScreen = false;
+  }
+  const village = snapshot.screen === "village" || snapshot.screen === "field" || snapshot.screen === "hunter_roster";
+  const roster = hunterRosterOpen;
+  const commandHunterEntityId = hunterWorldCommandMenu.selectedEntityId();
+  const commandHunter = commandHunterEntityId ? hunterForWorldEntity(snapshot, commandHunterEntityId) : null;
+  const commandHunterVisible = commandHunterEntityId === null || snapshot.world.entities.some((entity) => (
+    entity.descriptor.entity_id === commandHunterEntityId && entity.descriptor.kind === "hunter"
+  ));
+  if (!village || roster || !commandHunterVisible) {
+    hunterWorldCommandMenu.close();
+    worldHunterInfoModal.close();
+  } else if (worldHunterInfoModal.visible() && commandHunter) {
+    worldHunterInfoModal.refresh(projectHunterInfo(rawHunterFor(snapshot, commandHunter), commandHunter));
+  }
+  bottomMenu.hidden = snapshot.screen === "boot";
+  const activeMenuAction = roster ? "character" : selectedMenuAction;
+  bottomMenu.querySelectorAll<HTMLElement>("[data-action]").forEach((item) => {
+    item.classList.toggle("selected", item.dataset.action === activeMenuAction);
+  });
   bootScreen.classList.toggle("leaving", !snapshot.screen || snapshot.screen !== "boot");
-  villageScreen.classList.toggle("visible", village);
+  villageScreen.classList.toggle("visible", village || roster);
   villageScreen.classList.toggle("field-mode", snapshot.screen === "field");
-  villageScreen.setAttribute("aria-hidden", String(!village));
+  villageScreen.setAttribute("aria-hidden", String(!village && !roster));
   rosterScreen.classList.toggle("visible", roster);
   rosterScreen.setAttribute("aria-hidden", String(!roster));
-  if (roster) renderHunterRoster(snapshot);
-  else if (hunterInfoModal.visible()) hunterInfoModal.close();
+  const now = performance.now();
+  if (!hunterRosterPrimed && snapshot.screen === "village") {
+    renderHunterRoster(snapshot);
+    hunterRosterPrimed = true;
+    nextHunterRosterRefreshAt = now + 500;
+  } else if (roster && now >= nextHunterRosterRefreshAt) {
+    renderHunterRoster(snapshot);
+    hunterRosterPrimed = true;
+    nextHunterRosterRefreshAt = now + 500;
+  } else if (!roster && hunterInfoModal.visible()) hunterInfoModal.close();
   worldModeLabel.textContent = snapshot.screen === "field" ? "Hunt" : "Easy";
   const nextPopupSignature = popupDataSignature(snapshot);
   if (!popupInteractionActive && nextPopupSignature !== popupSnapshotSignature) {
@@ -520,6 +665,8 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   const displayedGold = snapshot.screen === "village" ? snapshot.village.building_system.town_gold : resources.gold;
   goldAmount.textContent = displayedGold === null ? "--" : String(displayedGold);
   goldAmount.parentElement?.classList.toggle("unresolved", !resources.evidenceBacked);
+  const population = projectHunterRoster(snapshot, null);
+  hunterPopulation.textContent = `${population.active.length}/${population.capacity}`;
   fieldBack.hidden = snapshot.screen !== "field";
   renderCombatHud(projectCombatHud(snapshot.screen, snapshot.migration_fixture_combat));
 }
@@ -533,28 +680,44 @@ function renderHunterRoster(snapshot: OriginalFlowSnapshot): void {
     const hunter = roster.active[index];
     return hunter ? hunterRosterCard(hunter, snapshot) : emptyHunterSlot(index + 1);
   }));
-  hunterWaitingList.replaceChildren(...(roster.waiting.length > 0
-    ? roster.waiting.map((hunter) => hunterRosterCard(hunter, snapshot))
-    : [emptyWaitingRow()]));
-  hunterWaitingSection.hidden = roster.waiting.length === 0;
+  void hunterRosterActors.render(roster.active.slice(0, roster.capacity));
   hunterRosterStatus.textContent = roster.constraintViolation
-    ?? (!roster.resolved ? "Waiting for the authoritative Hunter roster from the server." : roster.waiting.length > 0 ? `${roster.waiting.length} Hunter(s) will enter after an active slot is released.` : "All arriving Hunters can enter town.");
+    ?? (!roster.resolved ? "Waiting for the authoritative Hunter roster from the server." : "");
   hunterRosterStatus.classList.toggle("error", roster.constraintViolation !== null);
+  if (hunterInfoModal.visible()) {
+    const selected = [...roster.active, ...roster.waiting].find((hunter) => hunter.id === selectedHunterId);
+    if (selected) hunterInfoModal.refresh(projectHunterInfo(rawHunterFor(snapshot, selected), selected));
+  }
 }
 
 function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): HTMLElement {
+  const rarity = hunterRarityPresentation(hunter.rarityId, hunter.rarityName);
   const card = document.createElement("article");
-  card.className = `hunter-roster-card${hunter.id === selectedHunterId ? " selected" : ""}`;
+  card.className = `hunter-roster-card${rarity ? ` rarity-${rarity.key}` : " rarity-unresolved"}${hunter.id === selectedHunterId ? " selected" : ""}`;
   card.dataset.hunterId = hunter.id;
+  card.setAttribute("aria-selected", String(hunter.id === selectedHunterId));
   const heading = document.createElement("header");
+  const nameRow = document.createElement("span");
+  nameRow.className = "hunter-card-name";
   const name = document.createElement("b");
   name.textContent = hunter.name;
-  heading.append(name);
-  if (hunter.rarityName) {
-    const rarity = document.createElement("i");
-    rarity.textContent = hunter.rarityName;
-    heading.append(rarity);
+  nameRow.append(name);
+  if (rarity) {
+    const badge = document.createElement("i");
+    badge.textContent = rarity.letter;
+    badge.title = hunter.rarityName ?? rarity.key;
+    badge.setAttribute("aria-label", hunter.rarityName ?? rarity.key);
+    nameRow.append(badge);
   }
+  const levelClass = document.createElement("small");
+  levelClass.className = "hunter-card-level-class";
+  const level = document.createElement("span");
+  level.textContent = hunter.level === null ? "Lv.-" : `Lv.${hunter.level}`;
+  const className = document.createElement("em");
+  className.className = `class-${hunterClassTone(hunter.classFamily)}`;
+  className.textContent = hunter.className ?? hunter.classFamily ?? "Class unavailable";
+  levelClass.append(level, className);
+  heading.append(nameRow, levelClass);
   const avatar = document.createElement("span");
   avatar.className = "hunter-avatar";
   if (hunter.portrait) {
@@ -562,25 +725,117 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
     image.src = hunter.portrait;
     image.alt = "";
     avatar.append(image);
-  } else avatar.textContent = hunter.classFamily ?? "H";
+  } else avatar.classList.add("composed");
   const meta = document.createElement("span");
   meta.className = "hunter-card-meta";
-  const levelClass = document.createElement("b");
-  levelClass.textContent = [hunter.level === null ? null : `Lv.${hunter.level}`, hunter.className ?? hunter.classFamily].filter(Boolean).join(" ") || "Class unavailable";
   const activity = document.createElement("small");
-  activity.textContent = hunter.rosterState === "waiting" ? `Waiting #${hunter.queuePosition ?? "-"}` : hunter.action ?? "Activity unavailable";
-  meta.append(levelClass, activity);
+  activity.textContent = hunter.rosterState === "waiting"
+    ? `Waiting #${hunter.queuePosition ?? "-"}`
+    : hunter.hunt ? `${hunter.hunt.status}${hunter.hunt.zoneId ? ` · ${hunter.hunt.zoneId}` : ""}` : hunter.action ?? "Activity unavailable";
+  if (hunter.action?.toLowerCase() === "dead") activity.className = "danger";
+  else if (hunter.action?.toLowerCase() === "idle") activity.className = "positive";
+  meta.append(activity);
+  if (hunter.hunt && hunter.hunt.requiredTicks > 0) {
+    const progress = document.createElement("i");
+    progress.className = "hunter-card-hunt-progress";
+    const fill = document.createElement("i");
+    fill.style.width = `${hunterPercent(hunter.hunt.progressTicks, hunter.hunt.requiredTicks) ?? 0}%`;
+    progress.append(fill);
+    meta.append(progress);
+  }
   const info = document.createElement("button");
   info.type = "button";
   info.className = "hunter-card-info";
   info.textContent = "Info";
+  info.setAttribute("aria-label", `${hunter.name} information`);
   info.addEventListener("click", () => {
-    selectedHunterId = hunter.id;
+    info.blur();
+    selectHunterCard(hunter.id);
     const raw = rawHunterFor(snapshot, hunter);
     hunterInfoModal.show(projectHunterInfo(raw, hunter));
   });
-  card.append(heading, avatar, meta, info);
+  const target = document.createElement("button");
+  target.type = "button";
+  target.className = "hunter-card-target";
+  const worldEntityId = hunterWorldEntityId(snapshot, hunter);
+  target.disabled = worldEntityId === null;
+  target.title = worldEntityId ? "Locate Hunter" : "Hunter is not currently visible in town";
+  target.setAttribute("aria-label", worldEntityId ? `Locate ${hunter.name} on map` : `${hunter.name} is not visible on map`);
+  const targetIcon = document.createElement("img");
+  targetIcon.src = originalAsset("sprites/ic_target__7095.png");
+  targetIcon.alt = "";
+  target.append(targetIcon);
+  target.addEventListener("click", () => {
+    if (!worldEntityId) return;
+    selectHunterCard(hunter.id);
+    setHunterRosterVisibility(false);
+    hunterInfoModal.close();
+    if (latestSnapshot?.screen === "hunter_roster") client.navigateBack();
+    if (!client.selectEntity(worldEntityId)) return;
+    if (!world?.focusEntity(worldEntityId)) return;
+    // Locate uses the same post-click command bubble as selecting the actor in
+    // the world; after camera focus the actor is centered in the viewport.
+    hunterWorldCommandMenu.selectHunter({
+      entityId: worldEntityId,
+      displayName: hunter.name,
+      screenPoint: { x: worldViewport.clientWidth / 2, y: worldViewport.clientHeight / 2 },
+    });
+  });
+  const actions = document.createElement("footer");
+  actions.append(info, target);
+  card.append(heading, avatar, meta, actions);
   return card;
+}
+
+function selectHunterCard(id: string): void {
+  selectedHunterId = id;
+  document.querySelectorAll<HTMLElement>(".hunter-roster-card[data-hunter-id]").forEach((card) => {
+    const selected = card.dataset.hunterId === id;
+    card.classList.toggle("selected", selected);
+    card.setAttribute("aria-selected", String(selected));
+  });
+}
+
+function hunterForWorldEntity(snapshot: OriginalFlowSnapshot | null, entityId: string): HunterView | null {
+  if (!snapshot) return null;
+  const roster = projectHunterRoster(snapshot, selectedHunterId);
+  return roster.active.find((hunter) => hunterWorldEntityId(snapshot, hunter) === entityId) ?? null;
+}
+
+function showWorldHunterInfo(entityId: string): void {
+  const hunter = hunterForWorldEntity(latestSnapshot, entityId);
+  if (!hunter || !latestSnapshot) {
+    showPanelMessage("Hunter binding unresolved", entityId);
+    return;
+  }
+  selectedHunterId = hunter.id;
+  worldHunterInfoModal.show(projectHunterInfo(rawHunterFor(latestSnapshot, hunter), hunter));
+}
+
+function useHunterSkillFromInfo(hunterId: number, skillId: string): void {
+  if (client.useHunterSkill(hunterId, skillId, null)) {
+    showPanelMessage("Đã gửi lệnh dùng kỹ năng", "Server đang kiểm tra mục tiêu, tầm đánh và hồi chiêu");
+  } else {
+    showPanelMessage("Không thể dùng kỹ năng", "Kết nối server chưa sẵn sàng");
+  }
+}
+
+function handleHunterWorldCommandIntent(intent: HunterWorldCommandIntent): void {
+  worldViewport.dispatchEvent(new CustomEvent<HunterWorldCommandIntent>("hunter-world-command-intent", {
+    detail: intent,
+    bubbles: true,
+  }));
+  const region = { map_new01: "Thuộc Địa", background_08: "Tử Địa", background_11: "Ma Giới" }[intent.regionId];
+  const hunter = hunterForWorldEntity(latestSnapshot, intent.hunterEntityId);
+  if (hunter?.numericId === null || hunter?.numericId === undefined) {
+    showPanelMessage("Không thể ra lệnh", "Hunter ID chưa được bind");
+    return;
+  }
+  if (client.assignHunterHunt(hunter.numericId, intent.regionId)) {
+    showPanelMessage("Đã gửi lệnh thợ săn", `${region} · đang chờ server xác nhận`);
+  } else {
+    showPanelMessage("Không thể ra lệnh", "Kết nối server chưa sẵn sàng");
+  }
 }
 
 function emptyHunterSlot(slot: number): HTMLElement {
@@ -590,12 +845,7 @@ function emptyHunterSlot(slot: number): HTMLElement {
   return card;
 }
 
-function emptyWaitingRow(): HTMLElement {
-  const row = document.createElement("p");
-  row.className = "hunter-waiting-empty";
-  row.textContent = "No Hunters waiting outside town.";
-  return row;
-}
+
 
 function rawHunterFor(snapshot: OriginalFlowSnapshot, hunter: HunterView): unknown {
   const roster = snapshot.hunter_roster as unknown as { active_hunters?: unknown[]; waiting_hunters?: unknown[]; waiting_queue?: unknown[] };
@@ -1426,14 +1676,8 @@ function resourceIconPath(resourceId: string): string | null {
   return paths[resourceId] ?? null;
 }
 
-function resolvedBuildingSpriteIds(): string[] {
-  return listBuildingEvidence(buildingEvidenceRegistry)
-    .filter((building) => building.spriteAssetId !== null)
-    .map((building) => building.id);
-}
-
 function syncBuildingPresentation(target: VisibleEntityWorld, snapshot: OriginalFlowSnapshot): void {
-  target.setBuildingPresentation(snapshot.village.building_system.instances, resolvedBuildingSpriteIds());
+  target.setBuildingPresentation(snapshot.village.building_system.instances);
 }
 
 function renderGearCreatePop(): void {
@@ -1609,7 +1853,13 @@ function showIntentResult(result: IntentFeedback): void {
       product_stock_empty: "Shop đã hết món này.",
       sale_price_unresolved: "Giá bán của món này chưa được bind từ source.",
     };
-    showPanelMessage("Không thể craft", reasons[result.reason ?? ""] ?? result.reason ?? "Please try again.");
+    const titles: Record<string, string> = {
+      select_bottom_menu: "Không thể mở menu",
+      navigate_back: "Không thể quay lại",
+      enter_field: "Không thể vào bãi quái",
+      select_entity: "Không thể chọn đối tượng",
+    };
+    showPanelMessage(titles[result.intent] ?? "Không thể craft", reasons[result.reason ?? ""] ?? result.reason ?? "Please try again.");
   }
 }
 function showBindingBlocked(result: BindingBlockedFeedback): void {
@@ -1642,4 +1892,7 @@ function updateBootState(): void {
   transition.hidden = !dispatching;
   bootStatus.textContent = dispatching ? "Entering village..." : "Waiting for server...";
 }
-window.addEventListener("beforeunload", () => client.disconnect(), { once: true });
+window.addEventListener("beforeunload", () => {
+  hunterWorldCommandMenu.destroy();
+  client.disconnect();
+}, { once: true });

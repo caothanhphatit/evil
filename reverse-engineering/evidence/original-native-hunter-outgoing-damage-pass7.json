@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-outgoing-damage-pass7",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "source": {
+    "path": "original-native-combat-formula-exact-boundaries-api35-v1.json",
+    "sha256": "0bdf88cfc1874aea8c45b7adcfbf789c602d577b79cf9b62ecd85c67346f5c80"
+  },
+  "methods": {
+    "getDamage": {
+      "moduleOffset": "0x33f51c4",
+      "sha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3"
+    },
+    "getCriticalDamage": {
+      "moduleOffset": "0x33f97a8",
+      "sha256": "6b63930b2d504f052ae5b56eb8a6136a5ccdc7e4f8372f7ad1ca5dde567104f5"
+    }
+  },
+  "getDamageFinalSsa": [
+    "A = D10 * (1 + float64(S12))",
+    "B = A * (1 + float64(S13))",
+    "C = B * (1 + D14)",
+    "D = C * D11",
+    "E = D * float64(S15)",
+    "F = E * float64(stackFloat@0xC)",
+    "G = F * float64(S8)",
+    "H = G * float64(S9)",
+    "result = truncTowardZero(H)"
+  ],
+  "getCriticalDamageSsa": {
+    "initial": "C0 = 1.75 + positive(UserData+0xA14)*0.01",
+    "namedAdds": [
+      "positive(CollectionCriDem@0x558)*0.01",
+      "positive(RelicCollectionCriDem@0x5AC)*0.01",
+      "positive(VillagePetCriDemUp@0x548)",
+      "positive(RidingPetCriDemUp@0x658)",
+      "gated positive(SylphBlessCriDemUp@0x878)",
+      "positive(HeroicJobTraitCriDemUp@0x61C)"
+    ],
+    "opaqueHunterAdds": [
+      "positive(BDDEONCMGHK@0x7FC)",
+      "positive(FBNMALOOBKK@0x810)",
+      "positive(AKBENLLFPCC@0x854)"
+    ],
+    "gearPropertyTemporary": [
+      "GearProperty[43]: when element0>0 OR element1>=1, T = current + (element0-element1)*0.01",
+      "GearProperty[59]: when element0>=1 AND DataManager.mAdminEvilData[input].race==1, T = current + (element0-element1)*0.01",
+      "GearProperty[14]: when element0>=1 AND T>1.8f, T=1.8f"
+    ],
+    "return": "criticalFactor = C + T",
+    "capLiteral": {
+      "moduleOffset": "0xD2ABAC",
+      "rawHex": "6666e63f",
+      "float32": 1.7999999523162842
+    }
+  },
+  "gates": {
+    "sylph": "HunterCtrl.KPJLBPKPCCG@0x5E4",
+    "gearProperty": "StatusData.GearProperty@0x210",
+    "raceArray": "DataManager.mAdminEvilData@0x40; AdminEvilData.race@0x100",
+    "input": "method ObscuredInt argument; semantic meaning unresolved"
+  },
+  "unresolved": [
+    "semantic name/writers of UserData+0xA14",
+    "writers/meaning of three opaque HunterCtrl float fields",
+    "producer meanings of getDamage D10/S12/S13/D14/D11/S15/stack+0xC/S8/S9",
+    "skill coefficient boundary and complete caller vectors",
+    "monster armor/minimum-damage consumer"
+  ]
+}

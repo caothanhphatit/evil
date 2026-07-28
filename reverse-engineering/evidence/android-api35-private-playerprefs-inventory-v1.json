@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "contractType": "android-private-playerprefs-inventory",
+  "capturedAtUtc": "2026-07-26T13:01:56.204726Z",
+  "capture": {
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "androidApi": "35",
+    "deviceAbi": "arm64-v8a",
+    "rootUid": "0",
+    "sourcePath": "/data/user/0/com.superplanet.evilhunter/shared_prefs/com.superplanet.evilhunter.v2.playerprefs.xml",
+    "bytes": 1768359,
+    "sha256": "83df436cd7a58d98f15f7e0a8a031e243da63f0f8fe449046144756468f5b865"
+  },
+  "inventory": {
+    "entryCount": 46,
+    "entryTypes": {
+      "int": 4,
+      "string": 42
+    },
+    "valueLengthBuckets": {
+      "0-31": 25,
+      "1024-65535": 7,
+      "32-1023": 11,
+      "65536+": 3
+    },
+    "largestValueLength": 1039812
+  },
+  "privacy": {
+    "rawKeysIncluded": false,
+    "rawValuesIncluded": false,
+    "accountIdentifiersIncluded": false
+  },
+  "findings": [
+    "The rooted API35 emulator exposes a large private Unity PlayerPrefs XML unavailable through run-as.",
+    "ACTk storage schema is present; encrypted key/value semantics require runtime correlation.",
+    "This artifact deliberately omits raw keys, values, account identifiers, and credentials."
+  ]
+}

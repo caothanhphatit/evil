@@ -1,0 +1,586 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T07:07:12.496404Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 22228,
+    "action": "API35 rooted emulator; inspect ACTk ObscuredFloat schema/method tokens for exact damage-factor decode; no player values read",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "ObscuredFloat"
+    ],
+    "requestedTargetAssembly": "ACTk.Runtime.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "ACTk.Runtime.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "ObscuredFloat"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "CodeStage.AntiCheat.ObscuredTypes",
+          "name": "ObscuredFloat",
+          "token": 33554501,
+          "fields": [
+            {
+              "name": "currentCryptoKey",
+              "type": "System.Int32",
+              "offset": 16,
+              "flags": 3
+            },
+            {
+              "name": "hiddenValue",
+              "type": "System.Int32",
+              "offset": 20,
+              "flags": 3
+            },
+            {
+              "name": "hiddenValueOldByte4",
+              "type": "CodeStage.AntiCheat.Common.ACTkByte4",
+              "offset": 24,
+              "flags": 1
+            },
+            {
+              "name": "fakeValue",
+              "type": "System.Single",
+              "offset": 28,
+              "flags": 3
+            },
+            {
+              "name": "fakeValueActive",
+              "type": "System.Boolean",
+              "offset": 32,
+              "flags": 3
+            },
+            {
+              "name": "inited",
+              "type": "System.Boolean",
+              "offset": 33,
+              "flags": 3
+            }
+          ],
+          "methods": [
+            {
+              "name": "op_Implicit",
+              "token": 100664115,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "op_Implicit",
+              "token": 100664116,
+              "returnType": "System.Single",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "op_Increment",
+              "token": 100664117,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "input",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "op_Decrement",
+              "token": 100664118,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "input",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Increment",
+              "token": 100664119,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "input",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                },
+                {
+                  "index": 1,
+                  "name": "increment",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetHashCode",
+              "token": 100664120,
+              "returnType": "System.Int32",
+              "parameters": [],
+              "flags": 198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ToString",
+              "token": 100664121,
+              "returnType": "System.String",
+              "parameters": [],
+              "flags": 198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ToString",
+              "token": 100664122,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "format",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ToString",
+              "token": 100664123,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "provider",
+                  "type": "System.IFormatProvider"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ToString",
+              "token": 100664124,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "format",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "provider",
+                  "type": "System.IFormatProvider"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Equals",
+              "token": 100664125,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "other",
+                  "type": "System.Object"
+                }
+              ],
+              "flags": 198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Equals",
+              "token": 100664126,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "other",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Equals",
+              "token": 100664127,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "other",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CompareTo",
+              "token": 100664128,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "other",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CompareTo",
+              "token": 100664129,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "other",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "CompareTo",
+              "token": 100664130,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "obj",
+                  "type": "System.Object"
+                }
+              ],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100664131,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 6273,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Encrypt",
+              "token": 100664132,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Single"
+                },
+                {
+                  "index": 1,
+                  "name": "key",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Decrypt",
+              "token": 100664133,
+              "returnType": "System.Single",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "key",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MigrateEncrypted",
+              "token": 100664134,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encrypted",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "fromVersion",
+                  "type": "System.Byte"
+                },
+                {
+                  "index": 2,
+                  "name": "toVersion",
+                  "type": "System.Byte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FromEncrypted",
+              "token": 100664135,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encrypted",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "key",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GenerateKey",
+              "token": 100664136,
+              "returnType": "System.Int32",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Compare",
+              "token": 100664137,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "f1",
+                  "type": "System.Single"
+                },
+                {
+                  "index": 1,
+                  "name": "f2",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetEncrypted",
+              "token": 100664138,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.Int32&"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetEncrypted",
+              "token": 100664139,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encrypted",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 1,
+                  "name": "key",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetDecrypted",
+              "token": 100664140,
+              "returnType": "System.Single",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "RandomizeCryptoKey",
+              "token": 100664141,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 486,
+              "implementationFlags": 0
+            },
+            {
+              "name": "InternalDecrypt",
+              "token": 100664142,
+              "returnType": "System.Single",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Init",
+              "token": 100664143,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetNewCryptoKey",
+              "token": 100664144,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "newKey",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ApplyNewCryptoKey",
+              "token": 100664145,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Encrypt",
+              "token": 100664146,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Decrypt",
+              "token": 100664147,
+              "returnType": "System.Single",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "FromEncrypted",
+              "token": 100664148,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encrypted",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetEncrypted",
+              "token": 100664149,
+              "returnType": "System.Int32",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetEncrypted",
+              "token": 100664150,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encrypted",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

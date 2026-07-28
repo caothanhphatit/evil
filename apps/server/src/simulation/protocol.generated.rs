@@ -3,9 +3,9 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use super::{BottomMenuIntent, OriginalFlowSnapshot};
+use super::{BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 15;
+pub const PROTOCOL_VERSION: u16 = 24;
 pub const MAX_MESSAGE_BYTES: usize = 1048576;
 
 #[derive(Debug, Deserialize)]
@@ -17,6 +17,10 @@ pub enum ClientCommand {
     SelectBottomMenu { menu: BottomMenuIntent },
     NavigateBack,
     EnterField,
+    EnterMonsterMap { map_id: String },
+    SetMonsterDensity { level: u8 },
+    SetMonsterRegionDensity { region_id: String, level: u8 },
+    SelectMonsterTarget { monster_id: String, hunter_id: u32 },
     SelectEntity { entity_id: String },
     ConstructBuilding { building_id: String },
     ConstructBuildingAt { building_id: String, grid_x: i32, grid_y: i32 },
@@ -27,6 +31,12 @@ pub enum ClientCommand {
     CancelMaterialRequest { instance_id: String, material_id: String },
     CraftShopItem { instance_id: String, recipe_id: String, material_id: Option<String>, quantity: u32 },
     OpenHunterProgression { hunter_id: u32 },
+    AssignHunterHunt { hunter_id: u32, zone_id: String },
+    ReturnHunterHunt { hunter_id: u32 },
+    SellHunterLoot { hunter_id: u32 },
+    ReviveHunter { hunter_id: u32 },
+    LearnHunterSkill { hunter_id: u32, skill_id: String },
+    UseHunterSkill { hunter_id: u32, skill_id: String, target_entity_id: Option<String> },
     BanishHunter { hunter_id: u32 },
     EquipHunterItem { hunter_id: u32, item_id: u32 },
     ClaimQuestReward { quest_id: String },
@@ -45,6 +55,7 @@ pub enum ServerMessage {
     Welcome { player_token: Uuid, session_id: Uuid, snapshot: OriginalFlowSnapshot },
     Resync { snapshot: OriginalFlowSnapshot },
     WorldUpdate { snapshot: OriginalFlowSnapshot },
+    WorldFrame { world: WorldProjection },
     IntentResult { intent: String, accepted: bool, reason: Option<String>, snapshot: OriginalFlowSnapshot },
     BindingBlocked { intent: String, blockers: Vec<String>, snapshot: OriginalFlowSnapshot },
 }

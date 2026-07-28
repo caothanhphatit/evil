@@ -1,0 +1,4112 @@
+{
+  "schemaVersion": 1,
+  "contractType": "hunter-info-runtime-schema-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-26T13:00:46.498389Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 4149,
+    "action": "API35 rooted emulator; ACTk storage schema only; no private values read",
+    "script": "tools/runtime/hunter-info-runtime-dump.js",
+    "requestedTargetTypes": [
+      "ObscuredPrefs",
+      "ObscuredFilePrefs",
+      "ObscuredFile"
+    ],
+    "requestedTargetAssembly": "ACTk.Runtime.dll"
+  },
+  "record": {
+    "kind": "hunter-info-schema",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API",
+      "module": "libil2cpp.so",
+      "assembly": "ACTk.Runtime.dll",
+      "pointerSize": 8,
+      "architecture": "arm64",
+      "targets": [
+        "ObscuredPrefs",
+        "ObscuredFilePrefs",
+        "ObscuredFile"
+      ],
+      "missing": [],
+      "classes": [
+        {
+          "namespace": "CodeStage.AntiCheat.Storage",
+          "name": "ObscuredFile",
+          "token": 33554468,
+          "fields": [
+            {
+              "name": "LogPrefix",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32849
+            },
+            {
+              "name": "DefaultFileName",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32854
+            },
+            {
+              "name": "DeviceIdHolder",
+              "type": "CodeStage.AntiCheat.Storage.DeviceIdHolder",
+              "offset": 0,
+              "flags": 49
+            },
+            {
+              "name": "NotGenuineDataDetected",
+              "type": "System.Action",
+              "offset": 16,
+              "flags": 1
+            },
+            {
+              "name": "DataFromAnotherDeviceDetected",
+              "type": "System.Action",
+              "offset": 24,
+              "flags": 1
+            },
+            {
+              "name": "<CurrentSettings>k__BackingField",
+              "type": "CodeStage.AntiCheat.Storage.IObscuredFileSettings",
+              "offset": 32,
+              "flags": 33
+            },
+            {
+              "name": "<FilePath>k__BackingField",
+              "type": "System.String",
+              "offset": 40,
+              "flags": 33
+            }
+          ],
+          "methods": [
+            {
+              "name": "add_NotGenuineDataDetected",
+              "token": 100663430,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_NotGenuineDataDetected",
+              "token": 100663431,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_DataFromAnotherDeviceDetected",
+              "token": 100663432,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_DataFromAnotherDeviceDetected",
+              "token": 100663433,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CurrentSettings",
+              "token": 100663434,
+              "returnType": "CodeStage.AntiCheat.Storage.IObscuredFileSettings",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_FileExists",
+              "token": 100663435,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_FilePath",
+              "token": 100663436,
+              "returnType": "System.String",
+              "parameters": [],
+              "flags": 2182,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DevLog",
+              "token": 100663437,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "log",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100663438,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100663439,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "fileName",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100663440,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "settings",
+                  "type": "CodeStage.AntiCheat.Storage.ObscuredFileSettings"
+                }
+              ],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".ctor",
+              "token": 100663441,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "fileNameOrPath",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "settings",
+                  "type": "CodeStage.AntiCheat.Storage.IObscuredFileSettings"
+                }
+              ],
+              "flags": 6278,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Delete",
+              "token": 100663442,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WriteAllBytes",
+              "token": 100663443,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "data",
+                  "type": "System.Byte[]"
+                }
+              ],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadAllBytes",
+              "token": 100663444,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult",
+              "parameters": [],
+              "flags": 134,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadAllBytesInternal",
+              "token": 100663445,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult",
+              "parameters": [],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadHeader",
+              "token": 100663446,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileHeader",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "output",
+                  "type": "System.IO.Stream"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WriteAllBytesInternal",
+              "token": 100663447,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "data",
+                  "type": "System.Byte[]"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WriteHeader",
+              "token": 100663448,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "memory",
+                  "type": "System.IO.Stream"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ApplyDeviceLockIfNeeded",
+              "token": 100663449,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "writer",
+                  "type": "System.IO.Stream"
+                },
+                {
+                  "index": 1,
+                  "name": "deviceLockLevel",
+                  "type": "CodeStage.AntiCheat.Storage.DeviceLockLevel"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ConstructFilePath",
+              "token": 100663450,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "path",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 129,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".cctor",
+              "token": 100663451,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6289,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.Storage",
+          "name": "ObscuredFilePrefs",
+          "token": 33554475,
+          "fields": [
+            {
+              "name": "DefaultFileName",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32854
+            },
+            {
+              "name": "LogPrefix",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32849
+            },
+            {
+              "name": "NotGenuineDataDetected",
+              "type": "System.Action",
+              "offset": 0,
+              "flags": 17
+            },
+            {
+              "name": "DataFromAnotherDeviceDetected",
+              "type": "System.Action",
+              "offset": 8,
+              "flags": 17
+            },
+            {
+              "name": "prefsFile",
+              "type": "CodeStage.AntiCheat.Storage.ObscuredFile",
+              "offset": 16,
+              "flags": 17
+            },
+            {
+              "name": "prefsCache",
+              "type": "System.Collections.Generic.Dictionary<System.String,CodeStage.AntiCheat.Storage.ObscuredPrefsData>",
+              "offset": 24,
+              "flags": 17
+            },
+            {
+              "name": "BusyLock",
+              "type": "System.Object",
+              "offset": 32,
+              "flags": 49
+            },
+            {
+              "name": "<IsInited>k__BackingField",
+              "type": "System.Boolean",
+              "offset": 40,
+              "flags": 17
+            },
+            {
+              "name": "<IsSaved>k__BackingField",
+              "type": "System.Boolean",
+              "offset": 41,
+              "flags": 17
+            },
+            {
+              "name": "<IsBusy>k__BackingField",
+              "type": "System.Boolean",
+              "offset": 42,
+              "flags": 17
+            },
+            {
+              "name": "<LastFileReadResult>k__BackingField",
+              "type": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult",
+              "offset": 48,
+              "flags": 17
+            },
+            {
+              "name": "<LastFileWriteResult>k__BackingField",
+              "type": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "offset": 88,
+              "flags": 17
+            },
+            {
+              "name": "<SerializationSettings>k__BackingField",
+              "type": "CodeStage.AntiCheat.Storage.SerializationSettings",
+              "offset": 112,
+              "flags": 17
+            }
+          ],
+          "methods": [
+            {
+              "name": "add_NotGenuineDataDetected",
+              "token": 100663502,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_NotGenuineDataDetected",
+              "token": 100663503,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_DataFromAnotherDeviceDetected",
+              "token": 100663504,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_DataFromAnotherDeviceDetected",
+              "token": 100663505,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CurrentSettings",
+              "token": 100663506,
+              "returnType": "CodeStage.AntiCheat.Storage.IObscuredFileSettings",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_IsInited",
+              "token": 100663507,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_IsInited",
+              "token": 100663508,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_IsLoaded",
+              "token": 100663509,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_IsExists",
+              "token": 100663510,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_IsSaved",
+              "token": 100663511,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_IsSaved",
+              "token": 100663512,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_IsBusy",
+              "token": 100663513,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_IsBusy",
+              "token": 100663514,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_FilePath",
+              "token": 100663515,
+              "returnType": "System.String",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_LastFileReadResult",
+              "token": 100663516,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_LastFileReadResult",
+              "token": 100663517,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_LastFileWriteResult",
+              "token": 100663518,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_LastFileWriteResult",
+              "token": 100663519,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_SerializationSettings",
+              "token": 100663520,
+              "returnType": "CodeStage.AntiCheat.Storage.SerializationSettings",
+              "parameters": [],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_SerializationSettings",
+              "token": 100663521,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.Storage.SerializationSettings"
+                }
+              ],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_PrefsFile",
+              "token": 100663522,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFile",
+              "parameters": [],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Init",
+              "token": 100663523,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "loadPrefs",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Init",
+              "token": 100663524,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "fileName",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "loadPrefs",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Init",
+              "token": 100663525,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "settings",
+                  "type": "CodeStage.AntiCheat.Storage.IObscuredFileSettings"
+                },
+                {
+                  "index": 1,
+                  "name": "loadPrefs",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Init",
+              "token": 100663526,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "fileNameOrPath",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "settings",
+                  "type": "CodeStage.AntiCheat.Storage.IObscuredFileSettings"
+                },
+                {
+                  "index": 2,
+                  "name": "loadPrefs",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UnInit",
+              "token": 100663527,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LoadPrefs",
+              "token": 100663528,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "UnloadPrefs",
+              "token": 100663529,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "saveBeforeUnloading",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HasKey",
+              "token": 100663530,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetKeys",
+              "token": 100663531,
+              "returnType": "System.Collections.Generic.ICollection<System.String>",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeleteKey",
+              "token": 100663532,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeleteAll",
+              "token": 100663533,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Save",
+              "token": 100663534,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663535,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "T"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663536,
+              "returnType": "T",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "T"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "InitPrefsFile",
+              "token": 100663537,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFile",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "fileNameOrPath",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "settings",
+                  "type": "CodeStage.AntiCheat.Storage.IObscuredFileSettings"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OnNotGenuineDataDetected",
+              "token": 100663538,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "OnDataFromAnotherDeviceDetected",
+              "token": 100663539,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "LoadAndDeserializePrefs",
+              "token": 100663540,
+              "returnType": "System.Collections.Generic.Dictionary<System.String,CodeStage.AntiCheat.Storage.ObscuredPrefsData>",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SerializeAndSavePrefs",
+              "token": 100663541,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadPref",
+              "token": 100663542,
+              "returnType": "T",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "T"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WritePref",
+              "token": 100663543,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "T"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadAllBytesInternal",
+              "token": 100663544,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileReadResult",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "WriteAllBytesInternal",
+              "token": 100663545,
+              "returnType": "CodeStage.AntiCheat.Storage.ObscuredFileWriteResult",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "data",
+                  "type": "System.Byte[]"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663546,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663547,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663548,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663549,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663550,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663551,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663552,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663553,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663554,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663555,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663556,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663557,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663558,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663559,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663560,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663561,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663562,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663563,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663564,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663565,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663566,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663567,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663568,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663569,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663570,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663571,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663572,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663573,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663574,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663575,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663576,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663577,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663578,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663579,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663580,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663581,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663582,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663583,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663584,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663585,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663586,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663587,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".cctor",
+              "token": 100663588,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6289,
+              "implementationFlags": 0
+            }
+          ]
+        },
+        {
+          "namespace": "CodeStage.AntiCheat.Storage",
+          "name": "ObscuredPrefs",
+          "token": 33554488,
+          "fields": [
+            {
+              "name": "PrefsKey",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32851
+            },
+            {
+              "name": "RawNotFound",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32849
+            },
+            {
+              "name": "LogPrefix",
+              "type": "System.String",
+              "offset": 0,
+              "flags": 32849
+            },
+            {
+              "name": "Version",
+              "type": "System.Byte",
+              "offset": 0,
+              "flags": 32849
+            },
+            {
+              "name": "alterationReported",
+              "type": "System.Boolean",
+              "offset": 0,
+              "flags": 17
+            },
+            {
+              "name": "foreignSavesReported",
+              "type": "System.Boolean",
+              "offset": 1,
+              "flags": 17
+            },
+            {
+              "name": "cryptoKeyObsolete",
+              "type": "System.String",
+              "offset": 8,
+              "flags": 17
+            },
+            {
+              "name": "cryptoKeyObsoleteForMigration",
+              "type": "System.String",
+              "offset": 16,
+              "flags": 17
+            },
+            {
+              "name": "deviceIdHolder",
+              "type": "CodeStage.AntiCheat.Storage.DeviceIdHolder",
+              "offset": 24,
+              "flags": 17
+            },
+            {
+              "name": "OnAlterationDetected",
+              "type": "System.Action",
+              "offset": 32,
+              "flags": 17
+            },
+            {
+              "name": "OnPossibleForeignSavesDetected",
+              "type": "System.Action",
+              "offset": 40,
+              "flags": 17
+            },
+            {
+              "name": "NotGenuineDataDetected",
+              "type": "System.Action",
+              "offset": 48,
+              "flags": 17
+            },
+            {
+              "name": "DataFromAnotherDeviceDetected",
+              "type": "System.Action",
+              "offset": 56,
+              "flags": 17
+            },
+            {
+              "name": "preservePlayerPrefs",
+              "type": "System.Boolean",
+              "offset": 64,
+              "flags": 22
+            },
+            {
+              "name": "<DeviceLockSettings>k__BackingField",
+              "type": "CodeStage.AntiCheat.Storage.DeviceLockSettings",
+              "offset": 72,
+              "flags": 49
+            },
+            {
+              "name": "generatedCryptoKey",
+              "type": "System.Char[]",
+              "offset": 80,
+              "flags": 17
+            }
+          ],
+          "methods": [
+            {
+              "name": "set_CryptoKey",
+              "token": 100663643,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_CryptoKey",
+              "token": 100663644,
+              "returnType": "System.String",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_DeviceId",
+              "token": 100663645,
+              "returnType": "System.String",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_DeviceId",
+              "token": 100663646,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_DeviceIdHolder",
+              "token": 100663647,
+              "returnType": "CodeStage.AntiCheat.Storage.DeviceIdHolder",
+              "parameters": [],
+              "flags": 2193,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_OnAlterationDetected",
+              "token": 100663648,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_OnAlterationDetected",
+              "token": 100663649,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_OnPossibleForeignSavesDetected",
+              "token": 100663650,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_OnPossibleForeignSavesDetected",
+              "token": 100663651,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_NotGenuineDataDetected",
+              "token": 100663652,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_NotGenuineDataDetected",
+              "token": 100663653,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "add_DataFromAnotherDeviceDetected",
+              "token": 100663654,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "remove_DataFromAnotherDeviceDetected",
+              "token": 100663655,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Action"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_DeviceLockSettings",
+              "token": 100663656,
+              "returnType": "CodeStage.AntiCheat.Storage.DeviceLockSettings",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_lockToDevice",
+              "token": 100663657,
+              "returnType": "CodeStage.AntiCheat.Storage.DeviceLockLevel",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_lockToDevice",
+              "token": 100663658,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.Storage.DeviceLockLevel"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_readForeignSaves",
+              "token": 100663659,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_readForeignSaves",
+              "token": 100663660,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "get_emergencyMode",
+              "token": 100663661,
+              "returnType": "System.Boolean",
+              "parameters": [],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "set_emergencyMode",
+              "token": 100663662,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 2198,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ForceLockToDeviceInit",
+              "token": 100663663,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetRawValue",
+              "token": 100663664,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encryptedKey",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedValue",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRawValue",
+              "token": 100663665,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedKey",
+                  "type": "System.String&"
+                },
+                {
+                  "index": 2,
+                  "name": "encryptedValue",
+                  "type": "System.String&"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "HasKey",
+              "token": 100663666,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeleteKey",
+              "token": 100663667,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeleteCryptoKey",
+              "token": 100663668,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeleteAll",
+              "token": 100663669,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Save",
+              "token": 100663670,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663671,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "T"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663672,
+              "returnType": "T",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "T"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ReadFromRegularPrefs",
+              "token": 100663673,
+              "returnType": "T",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "T"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetStringPref",
+              "token": 100663674,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "encryptedKey",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedValue",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MigrateFromACTkV1",
+              "token": 100663675,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "cryptoKey",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptKeyWithACTkV1Algorithm",
+              "token": 100663676,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "cryptoKey",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SavesTampered",
+              "token": 100663677,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "PossibleForeignSavesDetected",
+              "token": 100663678,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetInt",
+              "token": 100663679,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetInt",
+              "token": 100663680,
+              "returnType": "System.Int32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetUInt",
+              "token": 100663681,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.UInt32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetUInt",
+              "token": 100663682,
+              "returnType": "System.UInt32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.UInt32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetString",
+              "token": 100663683,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetString",
+              "token": 100663684,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetFloat",
+              "token": 100663685,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetFloat",
+              "token": 100663686,
+              "returnType": "System.Single",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Single"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetDouble",
+              "token": 100663687,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Double"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetDouble",
+              "token": 100663688,
+              "returnType": "System.Double",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Double"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetDecimal",
+              "token": 100663689,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Decimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetDecimal",
+              "token": 100663690,
+              "returnType": "System.Decimal",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Decimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetLong",
+              "token": 100663691,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Int64"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetLong",
+              "token": 100663692,
+              "returnType": "System.Int64",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Int64"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetULong",
+              "token": 100663693,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.UInt64"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetULong",
+              "token": 100663694,
+              "returnType": "System.UInt64",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.UInt64"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetBool",
+              "token": 100663695,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetBool",
+              "token": 100663696,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Boolean"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetByteArray",
+              "token": 100663697,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "System.Byte[]"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetByteArray",
+              "token": 100663698,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "System.Byte"
+                },
+                {
+                  "index": 2,
+                  "name": "defaultLength",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "ConstructByteArray",
+              "token": 100663699,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.Byte"
+                },
+                {
+                  "index": 1,
+                  "name": "length",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetVector2",
+              "token": 100663700,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "UnityEngine.Vector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetVector2",
+              "token": 100663701,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetVector2",
+              "token": 100663702,
+              "returnType": "UnityEngine.Vector2",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "UnityEngine.Vector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetVector3",
+              "token": 100663703,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetVector3",
+              "token": 100663704,
+              "returnType": "UnityEngine.Vector3",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetVector3",
+              "token": 100663705,
+              "returnType": "UnityEngine.Vector3",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "UnityEngine.Vector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetQuaternion",
+              "token": 100663706,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "UnityEngine.Quaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetQuaternion",
+              "token": 100663707,
+              "returnType": "UnityEngine.Quaternion",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetQuaternion",
+              "token": 100663708,
+              "returnType": "UnityEngine.Quaternion",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "UnityEngine.Quaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetColor",
+              "token": 100663709,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "UnityEngine.Color32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetColor",
+              "token": 100663710,
+              "returnType": "UnityEngine.Color32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetColor",
+              "token": 100663711,
+              "returnType": "UnityEngine.Color32",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "UnityEngine.Color32"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "SetRect",
+              "token": 100663712,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "UnityEngine.Rect"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRect",
+              "token": 100663713,
+              "returnType": "UnityEngine.Rect",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRect",
+              "token": 100663714,
+              "returnType": "UnityEngine.Rect",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "UnityEngine.Rect"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663715,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663716,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663717,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663718,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663719,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663720,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663721,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663722,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663723,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663724,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663725,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663726,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663727,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663728,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663729,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663730,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663731,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663732,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663733,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663734,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Set",
+              "token": 100663735,
+              "returnType": "System.Void",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663736,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663737,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663738,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredChar"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663739,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDateTime"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663740,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDecimal"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663741,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBigInteger"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663742,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663743,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663744,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663745,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredLong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663746,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredQuaternion"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663747,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredSByte"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663748,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663749,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredString"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663750,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUInt"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663751,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredULong"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663752,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredUShort"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663753,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663754,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector2Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663755,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "Get",
+              "token": 100663756,
+              "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "defaultValue",
+                  "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredVector3Int"
+                }
+              ],
+              "flags": 150,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetCryptoKey",
+              "token": 100663757,
+              "returnType": "System.Char[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "dynamicSuffix",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "prefsKey",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 147,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptKey",
+              "token": 100663758,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 147,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetRawValueType",
+              "token": 100663759,
+              "returnType": "CodeStage.AntiCheat.Storage.StorageDataType",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "value",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 147,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptValue",
+              "token": 100663760,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "value",
+                  "type": "T"
+                }
+              ],
+              "flags": 147,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DecryptValue",
+              "token": 100663761,
+              "returnType": "T",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedKey",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "defaultValue",
+                  "type": "T"
+                },
+                {
+                  "index": 3,
+                  "name": "encryptedInput",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 147,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DecryptByteArrayValue",
+              "token": 100663762,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedInput",
+                  "type": "System.String"
+                },
+                {
+                  "index": 2,
+                  "name": "defaultValue",
+                  "type": "System.Byte"
+                },
+                {
+                  "index": 3,
+                  "name": "defaultLength",
+                  "type": "System.Int32"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptData",
+              "token": 100663763,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "cleanBytes",
+                  "type": "System.Byte[]"
+                },
+                {
+                  "index": 2,
+                  "name": "type",
+                  "type": "CodeStage.AntiCheat.Storage.StorageDataType"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DecryptData",
+              "token": 100663764,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedInput",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptDecryptBytes",
+              "token": 100663765,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "bytes",
+                  "type": "System.Byte[]"
+                },
+                {
+                  "index": 1,
+                  "name": "dataLength",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 2,
+                  "name": "key",
+                  "type": "System.Char[]"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "GetEncryptedPrefsString",
+              "token": 100663766,
+              "returnType": "System.String",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "encryptedKey",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "MigrateFromACTkV1Internal",
+              "token": 100663767,
+              "returnType": "System.Boolean",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "key",
+                  "type": "System.String"
+                },
+                {
+                  "index": 1,
+                  "name": "cryptoKey",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "EncryptDecryptBytesObsolete",
+              "token": 100663768,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "bytes",
+                  "type": "System.Byte[]"
+                },
+                {
+                  "index": 1,
+                  "name": "dataLength",
+                  "type": "System.Int32"
+                },
+                {
+                  "index": 2,
+                  "name": "key",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": "DeviceIdHashModifier",
+              "token": 100663769,
+              "returnType": "System.Byte[]",
+              "parameters": [
+                {
+                  "index": 0,
+                  "name": "input",
+                  "type": "System.String"
+                }
+              ],
+              "flags": 145,
+              "implementationFlags": 0
+            },
+            {
+              "name": ".cctor",
+              "token": 100663770,
+              "returnType": "System.Void",
+              "parameters": [],
+              "flags": 6289,
+              "implementationFlags": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "This capture enumerates IL2CPP schema metadata and does not read live Hunter object values.",
+    "Field-name resemblance alone does not prove a UI, save, or gameplay binding.",
+    "A value binding requires controlled typed before/after captures for one action at a time."
+  ]
+}

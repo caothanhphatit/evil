@@ -20,6 +20,8 @@ use crate::{
 
 use super::session::{resolve_player, session_token};
 
+const ACTIVE_WORLD_CHECKPOINT_SECONDS: u64 = 5;
+
 pub async fn upgrade(
     ws: WebSocketUpgrade,
     State(state): State<AppState>,
@@ -108,7 +110,9 @@ async fn handle_socket(
 
     let mut lease_interval = tokio::time::interval(lease_ttl / 3);
     lease_interval.tick().await;
-    let mut visual_interval = tokio::time::interval(Duration::from_millis(200));
+    // Domain/UI projections are comparatively large. World motion is published
+    // separately at the simulation cadence so these snapshots cannot stall it.
+    let mut visual_interval = tokio::time::interval(Duration::from_secs(1));
     visual_interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
     visual_interval.tick().await;
     let simulation_step =
@@ -123,9 +127,11 @@ async fn handle_socket(
                 let Some(result) = flow.advance_simulation_tick() else { continue };
                 durable_state_dirty = true;
                 pending_operations.extend(result.operations);
-                let combat_tick = result.snapshot.migration_fixture_combat.world.tick;
+                let checkpoint_ticks = u64::from(state.config.simulation.tick_rate)
+                    .saturating_mul(ACTIVE_WORLD_CHECKPOINT_SECONDS)
+                    .max(1);
                 let should_checkpoint = !pending_operations.is_empty()
-                    || combat_tick % u64::from(state.config.simulation.tick_rate) == 0;
+                    || result.simulation_tick % checkpoint_ticks == 0;
                 if should_checkpoint {
                     match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
                         Ok(true) => {}
@@ -148,7 +154,7 @@ async fn handle_socket(
                             pending_operations.clear();
                         }
                         Err(error) => {
-                            error!(%session_id, %player_token, %error, "failed to persist simulation state");
+                            error!(%session_id, %player_token, error = ?error, "failed to persist simulation state");
                             break;
                         }
                     }
@@ -158,18 +164,14 @@ async fn handle_socket(
                     session_id,
                     &mut server_sequence,
                     None,
-                    &ServerMessage::WorldUpdate { snapshot: result.snapshot },
+                    &ServerMessage::WorldFrame { world: result.world },
                 ).await { break; }
             }
             _ = visual_interval.tick() => {
-                let Some(snapshot) = flow.advance_visual_tick() else { continue };
-                if !send_message(
-                    &mut socket,
-                    session_id,
-                    &mut server_sequence,
-                    None,
-                    &ServerMessage::WorldUpdate { snapshot },
-                ).await { break; }
+                // Advance long-running town services without serializing a full
+                // aggregate into the latency-sensitive movement loop. Commands
+                // and explicit resyncs still publish complete domain snapshots.
+                flow.advance_visual_clock_by(1_000);
             }
             _ = lease_interval.tick() => {
                 match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
@@ -292,7 +294,7 @@ async fn handle_socket(
                     )
                     .await
                 {
-                    warn!(%session_id, %player_token, %error, "failed final player checkpoint");
+                    warn!(%session_id, %player_token, error = ?error, "failed final player checkpoint");
                 }
             }
             Ok(false) | Err(_) => {

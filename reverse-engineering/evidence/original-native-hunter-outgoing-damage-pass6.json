@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-outgoing-damage-pass6",
+  "runtimeCompatibility": "evidence-only-disconnected",
+  "methods": {
+    "StatusData.LCENGICKKGP": {
+      "moduleOffset": "0x2d6e7fc",
+      "nativeSizeBytes": 136,
+      "sha256": "aadea4373130ba9e56b1179ef1967bd5d2ba15b6cdda244bb35769a08062cfdd"
+    },
+    "HunterCtrl.getDamage": {
+      "moduleOffset": "0x33f51c4",
+      "nativeSizeBytes": 9496,
+      "sha256": "1148eee3709b41e6836e29f00f1ce01fd0c964725247c7e91027d0a671e35ea3"
+    },
+    "HunterCtrl.getCriticalDamage": {
+      "moduleOffset": "0x33f97a8",
+      "nativeSizeBytes": 1908,
+      "sha256": "6b63930b2d504f052ae5b56eb8a6136a5ccdc7e4f8372f7ad1ca5dde567104f5"
+    },
+    "EvilCtrl.Damaged": {
+      "moduleOffset": "0x2f2be20",
+      "nativeSizeBytes": 4736,
+      "sha256": "d0661a06bfa893df9f1c3b6c8d7fb4e9b8e25e9b6d667c4ac319263d90829cbb"
+    }
+  },
+  "invariants": {
+    "baseHasFloatDivision": true,
+    "criticalHasBase175": true,
+    "finalConversionTruncatesTowardZero": true,
+    "getDamageDoesNotDirectlyCallRandDamage": true
+  },
+  "proven": {
+    "base": {
+      "equation": "ObscuredDouble(float(CalcDamage) / CalcAttackSpeed)",
+      "fields": {
+        "CalcDamage": "StatusData+0x28",
+        "CalcAttackSpeed": "StatusData+0x88"
+      }
+    },
+    "criticalThreshold": {
+      "equation": "min(100, CalcCritical + gatedOptionalBonus); Random.Range(0,100) < threshold",
+      "fields": {
+        "CalcCritical": "StatusData+0xB0",
+        "gatedOptionalBonus": "HunterCtrl.JOFGKPCLDAI+0x90C",
+        "bonusGate": "HunterCtrl+0x924"
+      },
+      "outerGate": "getDamage second Boolean argument bypasses the roll when true"
+    },
+    "criticalMultiplier": {
+      "base": 1.75,
+      "namedStatusInputs": [
+        "VillagePetCriDemUp+0x548",
+        "CollectionCriDem+0x558",
+        "RelicCollectionCriDem+0x5AC",
+        "HeroicJobTraitCriDemUp+0x61C",
+        "RidingPetCriDemUp+0x658",
+        "SylphBlessCriDemUp+0x878"
+      ],
+      "warning": "additional HunterCtrl values and managed-array gates remain obfuscated"
+    },
+    "rounding": "getDamage performs chained double arithmetic then FCVTZS x9,d0 (toward zero)",
+    "variance": "RandDamage is absent from getDamage direct calls and is consumed downstream by EvilCtrl.Damaged"
+  },
+  "unresolved": [
+    "full CalcDamage producer and GetGearDamage caller adjustment",
+    "all opaque modifier semantics and target/tag gates",
+    "caller-provided skill coefficient boundary",
+    "monster armor and minimum-damage consumer after outgoing construction",
+    "complete normal/critical/skill/type caller vectors"
+  ]
+}

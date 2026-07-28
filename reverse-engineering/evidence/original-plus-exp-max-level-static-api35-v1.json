@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-plus-exp-max-level-static-capture",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T06:47:30Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "androidApi": "35",
+    "action": "Town loaded; initialize the exact PlusExp-referenced IL2CPP class and read only its static ObscuredInt cap field; no Hunter/account object values read"
+  },
+  "nativeBinding": {
+    "method": "HunterCtrl.PlusExp/2",
+    "methodModuleOffset": "0x3438ff8",
+    "typeInfoGlobalModuleOffset": "0x601c6e0",
+    "classStaticFieldsPointerOffset": "0xb8",
+    "obscuredIntFieldOffset": "0xe8",
+    "decodeHelperModuleOffset": "0x245672c"
+  },
+  "obscuredInt": {
+    "littleEndianBytes": "2b6e6e44486e6e440000000000010000",
+    "currentCryptoKey": 1148087851,
+    "hiddenValue": 1148087880,
+    "fakeValue": 0,
+    "initialized": true,
+    "decodeFormula": "hiddenValue XOR currentCryptoKey",
+    "decodedValue": 99
+  },
+  "limitations": [
+    "The class/type semantic name behind the PlusExp static holder is not guessed from its native global address.",
+    "This capture proves the live 1.411 cap value consumed by PlusExp; it does not claim future-version or event overrides.",
+    "The 75/100/125 constants elsewhere in PlusExp are a separate branch and are not used by the cap comparison."
+  ]
+}

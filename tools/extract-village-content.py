@@ -34,6 +34,14 @@ NPC_BUNDLES = {
     "fallen_pasture_npc": ("91499e849527b97488223e41557f71c5", "fallen_pasture_npc_"),
 }
 
+# These three scene-bound bundles are referenced by sign_01, sign_02, and
+# sign_03 in level1. Each bundle contains the exact I/II/III visual states.
+SIGNBOARD_BUNDLES = {
+    "map_new01": ("a3915f675ec081c418a8ca3ca9931e8f", "area_sign_1_"),
+    "background_08": ("a51b9fd00b7358340a58882091ffc38a", "area_sign_2_"),
+    "background_11": ("4eaad883811ba9640b4f0ab70471bf17", "area_sign_3_"),
+}
+
 
 def digest(path: Path) -> dict:
     data = path.read_bytes()
@@ -52,7 +60,7 @@ def save_with_transparent_matte(image: Image.Image, output: Path) -> None:
     rgba.save(output, format="PNG", optimize=False)
 
 
-def extract_sprite(bundle: str, path_id: int, name: str, output: Path) -> None:
+def extract_sprite(bundle: str, path_id: int, name: str, output: Path) -> dict:
     env = UnityPy.load(str(DATA / bundle))
     obj = next((item for item in env.objects if item.path_id == path_id), None)
     if obj is None or obj.type.name != "Sprite":
@@ -60,13 +68,27 @@ def extract_sprite(bundle: str, path_id: int, name: str, output: Path) -> None:
     sprite = obj.read()
     if getattr(sprite, "m_Name", None) != name:
         raise RuntimeError(f"Sprite name mismatch: expected {name}, got {getattr(sprite, 'm_Name', None)}")
+    image = sprite.image
     output.parent.mkdir(parents=True, exist_ok=True)
-    save_with_transparent_matte(sprite.image, output)
+    save_with_transparent_matte(image, output)
+    rect = sprite.m_Rect
+    texture_offset = sprite.m_RD.textureRectOffset
+    pivot_x = rect.width * sprite.m_Pivot.x - texture_offset.x
+    pivot_y_from_bottom = rect.height * sprite.m_Pivot.y - texture_offset.y
+    return {
+        "sourceRect": {"width": float(rect.width), "height": float(rect.height)},
+        "textureRectOffset": {"x": float(texture_offset.x), "y": float(texture_offset.y)},
+        "anchor": {
+            "x": pivot_x / image.width,
+            "y": (image.height - pivot_y_from_bottom) / image.height,
+        },
+        "pixelsPerUnit": float(sprite.m_PixelsToUnits),
+    }
 
 
 OUT.mkdir(parents=True, exist_ok=True)
 metadata = {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "stage": "normalized-evidence",
     "sourceRoot": "game-assets/source/unity-assets/bin/Data",
     "transformation": {
@@ -76,11 +98,12 @@ metadata = {
     },
     "foreground": [],
     "npcs": {},
+    "signboards": {},
 }
 for key, (bundle, path_id, name) in FOREGROUND.items():
     target = OUT / "foreground" / f"{key}.png"
-    extract_sprite(bundle, path_id, name, target)
-    metadata["foreground"].append({"id": key, "source": bundle, "pathId": path_id, "sprite": name, "file": target.relative_to(ROOT).as_posix(), **digest(target)})
+    render = extract_sprite(bundle, path_id, name, target)
+    metadata["foreground"].append({"id": key, "source": bundle, "pathId": path_id, "sprite": name, "file": target.relative_to(ROOT).as_posix(), **render, **digest(target)})
 
 for role, (bundle, prefix) in NPC_BUNDLES.items():
     env = UnityPy.load(str(DATA / bundle))
@@ -103,5 +126,39 @@ for role, (bundle, prefix) in NPC_BUNDLES.items():
         raise RuntimeError(f"No sprites with prefix {prefix} in {bundle}")
     metadata["npcs"][role] = sorted(frames, key=lambda frame: frame["frame"])
 
+for region_id, (bundle, prefix) in SIGNBOARD_BUNDLES.items():
+    env = UnityPy.load(str(DATA / bundle))
+    states = []
+    for obj in env.objects:
+        if obj.type.name != "Sprite":
+            continue
+        sprite = obj.read()
+        name = getattr(sprite, "m_Name", "")
+        if not name.startswith(prefix):
+            continue
+        suffix = name[len(prefix):]
+        if not suffix.isdigit():
+            continue
+        density_level = int(suffix) + 1
+        target = OUT / "signboards" / region_id / f"density-{density_level}.png"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        save_with_transparent_matte(sprite.image, target)
+        states.append({
+            "densityLevel": density_level,
+            "name": name,
+            "source": bundle,
+            "pathId": obj.path_id,
+            "file": target.relative_to(ROOT).as_posix(),
+            **digest(target),
+        })
+    states.sort(key=lambda state: state["densityLevel"])
+    if [state["densityLevel"] for state in states] != [1, 2, 3]:
+        raise RuntimeError(f"Density sign states are incomplete for {region_id}")
+    metadata["signboards"][region_id] = states
+
 (OUT / "manifest.json").write_text(json.dumps(metadata, indent=2) + "\n")
-print(f"Extracted {len(metadata['foreground'])} foreground sprites and {sum(len(v) for v in metadata['npcs'].values())} NPC frames")
+print(
+    f"Extracted {len(metadata['foreground'])} foreground sprites, "
+    f"{sum(len(v) for v in metadata['npcs'].values())} NPC frames, and "
+    f"{sum(len(v) for v in metadata['signboards'].values())} signboard states"
+)

@@ -29,6 +29,17 @@ export interface ScenePiece extends Partial<VisibleWorldAsset> {
   anchor?: { x?: number; y?: number };
 }
 
+export interface MonsterDensitySignboard {
+  regionId: string;
+  sceneObject: "sign_01" | "sign_02" | "sign_03";
+  x: number;
+  y: number;
+  z: number;
+  colliderRadius: number;
+  states: Array<VisibleWorldAsset & { densityLevel: number }>;
+  evidence: { resolution: "resolved"; confidence: "confirmed"; source: string };
+}
+
 export interface TownBuilding extends VisibleWorldAsset {
   id: string;
   sourceSprite: string;
@@ -58,6 +69,7 @@ export interface VisibleWorldRelease {
     tiles: ScenePiece[];
     foreground: ScenePiece[];
     decorations: ScenePiece[];
+    signboards: MonsterDensitySignboard[];
     buildings?: TownBuilding[];
   };
   actors: ActorBundle[];
@@ -105,6 +117,13 @@ export function validateVisibleWorldRelease(value: unknown): VisibleWorldRelease
   if (!isRecord(value.runtimeDiagnostics) || value.runtimeDiagnostics.fixture !== true || !isStringArray(value.runtimeDiagnostics.unresolved) || value.runtimeDiagnostics.unresolved.length === 0) throw new Error("Visible-world runtime diagnostics are missing");
   if (!isRecord(value.village) || value.village.bindingState !== "partial-scene-derived" || value.village.completeness !== "partial") throw new Error("Visible-world village evidence state is invalid");
   if (!Array.isArray(value.village.tiles) || !Array.isArray(value.village.foreground) || !Array.isArray(value.village.decorations)) throw new Error("Visible-world village scene arrays are invalid");
+  if (!Array.isArray(value.village.signboards) || value.village.signboards.length !== 3) throw new Error("Visible-world density signboards are invalid");
+  for (const signboard of value.village.signboards) {
+    if (!isRecord(signboard) || typeof signboard.regionId !== "string" || !Array.isArray(signboard.states)
+      || signboard.states.map((state) => isRecord(state) ? state.densityLevel : null).join("|") !== "1|2|3") {
+      throw new Error("Visible-world density signboard states are invalid");
+    }
+  }
   if (value.village.buildings !== undefined && !Array.isArray(value.village.buildings)) throw new Error("Visible-world town building candidates are invalid");
   if (!Array.isArray(value.actors) || value.actors.map(actorFamily).join("|") !== EXPECTED_FAMILIES.join("|")) throw new Error("Visible-world actor family set is invalid");
   if (!isRecord(value.map) || value.map.runtimeUse !== "migration-fixture" || !isRecord(value.map.evidence) || typeof value.map.evidence.note !== "string") throw new Error("Visible-world field map fixture metadata is invalid");

@@ -36,11 +36,12 @@ if (normalizedManifest.stage !== "normalized-evidence" || normalizedManifest.tra
 }
 const normalizedByPath = new Map([
   ...normalizedManifest.foreground,
-  ...Object.values(normalizedManifest.npcs).flat()
+  ...Object.values(normalizedManifest.npcs).flat(),
+  ...Object.values(normalizedManifest.signboards).flat(),
 ].map((asset) => [asset.file, asset]));
 
 const assets = collectVisibleWorldAssets(manifest);
-if (assets.length !== 93) throw new Error(`Expected 93 unique visible-world assets, found ${assets.length}`);
+if (assets.length !== 102) throw new Error(`Expected 102 unique visible-world assets, found ${assets.length}`);
 if (manifest.village.buildings?.length !== 28) throw new Error("Expected 28 source-confirmed core town candidates");
 for (const sourcePath of ["sprites/back_anim_a_01__1529.png", "sprites/back_anim_b_01__1546.png"]) {
   if (!manifest.village.tiles.some((piece) => piece.sourcePath === sourcePath && piece.z === 494)) {

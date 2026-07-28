@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T10:09:42.861364Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 27974,
+    "action": "Resolve the singleton getter used by StatusData CalcDamage torment/static layer; no gameplay values read.",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [
+      "0x2fa2d94"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 512,
+    "exactBoundaries": true
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a700f000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 512,
+      "exactBoundaries": true,
+      "requested": [],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [
+        "0x2fa2d94"
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "GuildManager",
+          "methodName": "getInstance",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "GuildManager",
+          "token": 100676067,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a9fb1d94",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2fa2d94",
+              "codeHex": "fe57bea9f44f01a913a101f0948401b0d5830190686a523994da42f9b5ba43f988010037808401b000dc42f9c7d5ce97808401b000d842f9c4d5ce97c083019000b843f9c1d5ce9728008052686a1239880240f9a00240f9085d40f909e440b9130140f94900003500d6ce97e00313aae1031faa9981ab9440060037c8830190083543f9007140f9888401b008dd42f909e440b9130140f949000035f3d5ce97e00313aae1031faacd248a94a80240f9f30300aa09e540b969000035e00308aaead5ce97e00313aae1031faa1088ab94810240f9200300b4080040f929c044390ac144395f01096b63020054086540f9080d098b08815ff81f0101ebc1010054285c40f9000100f9810240f9080040f90ac1443929c044395f01096bc3000054086540f9080d098b08815ff81f0101eb80000054fad6ce97285c40f91f0100f9880240f9f44f41a9085d40f9000140f9fe57c2a8c0035fd6",
+              "nativeSizeBytes": 344,
+              "boundaryModuleOffset": "0x2fa2eec",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a9fb1d94",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2fa2d94",
+              "codeHex": "fe57bea9f44f01a913a101f0948401b0d5830190686a523994da42f9b5ba43f988010037808401b000dc42f9c7d5ce97808401b000d842f9c4d5ce97c083019000b843f9c1d5ce9728008052686a1239880240f9a00240f9085d40f909e440b9130140f94900003500d6ce97e00313aae1031faa9981ab9440060037c8830190083543f9007140f9888401b008dd42f909e440b9130140f949000035f3d5ce97e00313aae1031faacd248a94a80240f9f30300aa09e540b969000035e00308aaead5ce97e00313aae1031faa1088ab94810240f9200300b4080040f929c044390ac144395f01096b63020054086540f9080d098b08815ff81f0101ebc1010054285c40f9000100f9810240f9080040f90ac1443929c044395f01096bc3000054086540f9080d098b08815ff81f0101eb80000054fad6ce97285c40f91f0100f9880240f9f44f41a9085d40f9000140f9fe57c2a8c0035fd6",
+              "nativeSizeBytes": 344,
+              "boundaryModuleOffset": "0x2fa2eec",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

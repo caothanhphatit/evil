@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-26T17:41:11.174816Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 7450,
+    "action": "Resolve UnityEngine.Random.Range overload pointers for HunterCtrl reward control-flow correlation; no managed object values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "Random",
+        "methodName": "Range",
+        "parameterCount": 2
+      }
+    ],
+    "requestedTargetAssembly": "UnityEngine.CoreModule.dll",
+    "codeByteLimit": 64
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a7e00000",
+        "size": 106893312
+      },
+      "assembly": "UnityEngine.CoreModule.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 64,
+      "requested": [
+        {
+          "className": "Random",
+          "methodName": "Range",
+          "parameterCount": 2
+        }
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "UnityEngine",
+          "className": "Random",
+          "methodName": "Range",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Single",
+            "System.Single"
+          ],
+          "returnType": "System.Single",
+          "token": 100665477,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ad876200",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x5a76200",
+              "codeHex": "e923be6dfe4f01a92840201e0940201ef34a00d0607a46f9a00000b5e095fd90005005919d882397607a06f9fe4f41a92041201e0141201ee923c26c00001fd6"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ad876200",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x5a76200",
+              "codeHex": "e923be6dfe4f01a92840201e0940201ef34a00d0607a46f9a00000b5e095fd90005005919d882397607a06f9fe4f41a92041201e0141201ee923c26c00001fd6"
+            }
+          ]
+        },
+        {
+          "namespace": "UnityEngine",
+          "className": "Random",
+          "methodName": "Range",
+          "parameterCount": 2,
+          "parameterTypes": [
+            "System.Int32",
+            "System.Int32"
+          ],
+          "returnType": "System.Int32",
+          "token": 100665478,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73ad876240",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x5a76240",
+              "codeHex": "fe57bea9f44f01a9f54a00d0f303012af403002aa27e46f9c20000b5a096fdd0009000918d882397e20300aaa07e06f9e003142ae103132af44f41a9fe57c2a8"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73ad876240",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x5a76240",
+              "codeHex": "fe57bea9f44f01a9f54a00d0f303012af403002aa27e46f9c20000b5a096fdd0009000918d882397e20300aaa07e06f9e003142ae103132af44f41a9fe57c2a8"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "A bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

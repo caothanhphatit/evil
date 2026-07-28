@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "contractType": "android-api35-runtime-resource-inventory",
+  "capturedAt": "2026-07-26T11:53:00Z",
+  "environment": {
+    "avd": "evil_hunter_api35",
+    "androidApi": 35,
+    "abi": "arm64-v8a",
+    "packageId": "com.superplanet.evilhunter",
+    "packageVersion": "1.411",
+    "versionCode": 26071501,
+    "source": "authorized local emulator APK/split inspection"
+  },
+  "installedSplits": [
+    {
+      "name": "base.apk",
+      "sha256": "5f9c3ac8b5373edcf4d61cae3dff7c4aea23aee173f6977ad392fd809bc0053b",
+      "bytes": 16842564
+    },
+    {
+      "name": "split_base_assets.apk",
+      "sha256": "01d6f3784b81609d27bc647ed1a9763cdeaa85168cb186a02e7607343e426de5",
+      "bytes": 193856915
+    },
+    {
+      "name": "split_config.arm64_v8a.apk",
+      "sha256": "f4aa492ea7be9944c71251e7abbfde14f2dc9cb8e08a2bfe4b3416c46fea1398",
+      "bytes": 136314880
+    }
+  ],
+  "runtimeGeneratedFiles": {
+    "externalDataRoot": "/sdcard/Android/data/com.superplanet.evilhunter/files",
+    "confirmed": [
+      {
+        "path": "il2cpp/Metadata/global-metadata.dat",
+        "bytes": 15315640,
+        "sha256": "ebbadaf6d94d838037b33bd77d60d861d84cc309b1a148383b3800d5e294b63e",
+        "comparison": "byte-identical to game-assets/source/unity-assets/bin/Data/Managed/Metadata/global-metadata.dat and APK copy"
+      },
+      {
+        "path": "il2cpp/unity.ver",
+        "bytes": 36,
+        "sha256": "79cf816658435b3faab23daab65b5f2ffe9e3113e2bce69f9c81e73446bf31c5",
+        "value": "acb8402e-4024-4fbf-943e-31081e553394"
+      },
+      {
+        "path": "cache/UnityShaderCache",
+        "kind": "shader-cache",
+        "count": 14,
+        "note": "Opaque compiled shader cache; no new game content catalog or Hunter data observed."
+      }
+    ],
+    "not_observed": [
+      "No UnityFS game-content bundle was written under external files during this session.",
+      "No new StreamingAssets directory was created outside the installed split.",
+      "No live Hunter save/value object was read."
+    ]
+  },
+  "addressables": {
+    "catalogPath": "assets/aa/catalog.bin",
+    "catalogSha256": "c4beb1db314c861ad80048c22c27ac3ff7dbc4bf8a15a13ca127f6776784c7a4",
+    "catalogHashFile": "0253f762da92efb9003c6b34f3dda2cc",
+    "settingsSha256": "ddc6bbfe3ab6e1f20aff5ea0ac86ba9c39f4e2bfa73fab4ae3c0f7512811f5c3",
+    "version": "2.8.1",
+    "localEntries": [
+      "142ca6ea60082da68f86b080c24f13c2_monoscripts_71e9b5fdbdbe12e69882869cf176d576.bundle",
+      "localization-assets-shared_assets_all.bundle",
+      "localization-locales_assets_all.bundle",
+      "localization-string-tables-english(en)_assets_all.bundle",
+      "localization-string-tables-japanese(ja)_assets_all.bundle",
+      "localization-string-tables-chinese(simplified)(zh)_assets_all.bundle",
+      "localization-string-tables-chinese(traditional)(zh-tw)_assets_all.bundle"
+    ],
+    "finding": "Addressables catalog is packaged locally in split_base_assets.apk; runtime did not reveal additional remote content URLs."
+  },
+  "conclusion": {
+    "new_mine": [
+      "Runtime external storage exposes the same global-metadata.dat already present in the supplied source, with identical SHA-256.",
+      "Unity version GUID and shader cache are now recorded.",
+      "Addressables catalog/settings and local localization bundle names are confirmed from API35 installed artifacts."
+    ],
+    "unresolved": [
+      "No new compressed gameplay/asset payload beyond the installed APK split was observed.",
+      "Catalog.bin binary object-to-asset bindings require a reviewed Addressables parser; strings alone are not semantic binding proof."
+    ]
+  },
+  "policy": {
+    "excluded": [
+      "production backend traffic",
+      "credentials, account secrets, cookies, or arbitrary user data",
+      "live managed object values"
+    ]
+  }
+}

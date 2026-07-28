@@ -57,26 +57,64 @@ adb shell pm list packages | rg -i 'evil|hunter'
 
 ## Capture
 
+Prefer the host wrapper because it writes a clean JSON evidence envelope with
+package, device, Frida, timestamp, action, script, and target metadata:
+
+```sh
+python3 tools/runtime/capture-hunter-info-schema.py \
+  --adb "$HOME/Library/Android/sdk/platform-tools/adb" \
+  --launch \
+  --action "Cold launch; no Hunter UI interaction" \
+  --output reverse-engineering/evidence/hunter-info-runtime-schema.json
+```
+
+The wrapper requires the Python environment containing the matching `frida`
+package. Use repeated `--target-type TYPE_NAME` arguments for a reviewed nested
+schema pass. Supplying target types replaces the five default targets.
+
+Use `--target-assembly ACTk.Runtime.dll` with reviewed ACTk type names when
+auditing the on-device obscured PlayerPrefs boundary. This still captures schema
+only; it does not decrypt or export private values.
+
+The script retries for up to 20 seconds while the IL2CPP domain and
+`Assembly-CSharp.dll` initialize. On protected builds, attaching a few seconds
+after a normal launch can be more reliable than spawn-time injection.
+
+For an Android Emulator Google APIs image that supports `adb root`, run the
+server in a dedicated terminal instead of using `su`:
+
+```sh
+adb root
+adb wait-for-device
+adb push /path/to/frida-server /data/local/tmp/frida-server
+adb shell chmod 755 /data/local/tmp/frida-server
+adb shell /data/local/tmp/frida-server
+```
+
+The physical-device workflow remains preferred for stable interactive Hunter
+value capture.
+
 Spawn the app so the script can wait for `libil2cpp.so`, then save Frida's
 message stream:
 
 ```sh
 frida -U -f PACKAGE.ID \
   -l tools/runtime/hunter-info-runtime-dump.js \
-  --no-pause > hunter-info-schema.jsonl
+  > hunter-info-schema.log
 ```
 
-On Frida releases without `--no-pause`, omit that flag and enter `%resume` in
-the Frida prompt. For an already-running authorized process:
+For an already-running authorized process:
 
 ```sh
 frida -U -n PROCESS_NAME \
   -l tools/runtime/hunter-info-runtime-dump.js \
-  > hunter-info-schema.jsonl
+  > hunter-info-schema.log
 ```
 
-The useful record has `kind: "hunter-info-schema"`. Preserve `missing` entries
-as unresolved evidence; do not fill them from filename order or assumptions.
+The raw CLI stream is a log, not guaranteed JSONL. The useful record has
+`kind: "hunter-info-schema"`. Prefer the host wrapper for machine-readable
+evidence. Preserve `missing` entries as unresolved evidence; do not fill them
+from filename order or assumptions.
 
 ## Controlled before/after save capture
 

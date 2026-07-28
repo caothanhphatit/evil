@@ -1,0 +1,512 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-27T07:42:53.754797Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 24256,
+    "action": "dump",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [
+      "0x23584dc",
+      "0x23585fc",
+      "0x2358718",
+      "0x2358730",
+      "0x2358738",
+      "0x2456188",
+      "0x24565e0",
+      "0x245668c",
+      "0x245672c",
+      "0x24567e8",
+      "0x2457964",
+      "0x2457a90",
+      "0x246bf08",
+      "0x25b9f40",
+      "0x26c0238",
+      "0x26f1904",
+      "0x2d6e7fc",
+      "0x33ed8e4",
+      "0x33f7900",
+      "0x33f87a0",
+      "0x33f9558",
+      "0x33f97a8",
+      "0x33fa49c",
+      "0x3411e7c",
+      "0x3419e3c",
+      "0x34363c8",
+      "0x3470adc",
+      "0x48a7ec0",
+      "0x48a8134",
+      "0x48b8440",
+      "0x508d8ec",
+      "0x5a76240",
+      "0x5a7dca4"
+    ],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 192,
+    "exactBoundaries": false
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x73a6602000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 192,
+      "exactBoundaries": false,
+      "requested": [],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [
+        "0x23584dc",
+        "0x23585fc",
+        "0x2358718",
+        "0x2358730",
+        "0x2358738",
+        "0x2456188",
+        "0x24565e0",
+        "0x245668c",
+        "0x245672c",
+        "0x24567e8",
+        "0x2457964",
+        "0x2457a90",
+        "0x246bf08",
+        "0x25b9f40",
+        "0x26c0238",
+        "0x26f1904",
+        "0x2d6e7fc",
+        "0x33ed8e4",
+        "0x33f7900",
+        "0x33f87a0",
+        "0x33f9558",
+        "0x33f97a8",
+        "0x33fa49c",
+        "0x3411e7c",
+        "0x3419e3c",
+        "0x34363c8",
+        "0x3470adc",
+        "0x48a7ec0",
+        "0x48a8134",
+        "0x48b8440",
+        "0x508d8ec",
+        "0x5a76240",
+        "0x5a7dca4"
+      ],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "StatusData",
+          "methodName": "LCENGICKKGP",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredDouble",
+          "token": 100670750,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a93707fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6e7fc",
+              "codeHex": "ff4302d1fe5707a9f44f08a90080c23c0180c33cf30300aae0430191e1031faaf40308aae08702adf19fdb976082c83c689a40b9f50300aae0c30091e1031faae00f803de84300b9929fdb97a102229ee8230091e0031faa2018201e00c0221ecfa3db97e083c03ce183c13ce81740f9fe5747a9800600ad881200f9f44f48a9ff430291c0035fd6010801f9c0035fd600c0c93c09ac40b90001803d091100b9c0035fd6fe57bea9f44f01a9f50301aaf30300aae00301aae1031faaf403022a"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a93707fc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x2d6e7fc",
+              "codeHex": "ff4302d1fe5707a9f44f08a90080c23c0180c33cf30300aae0430191e1031faaf40308aae08702adf19fdb976082c83c689a40b9f50300aae0c30091e1031faae00f803de84300b9929fdb97a102229ee8230091e0031faa2018201e00c0221ecfa3db97e083c03ce183c13ce81740f9fe5747a9800600ad881200f9f44f48a9ff430291c0035fd6010801f9c0035fd600c0c93c09ac40b90001803d091100b9c0035fd6fe57bea9f44f01a9f50301aaf30300aae00301aae1031faaf403022a"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "PMPKOIHFNCE",
+          "methodName": ".ctor",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100687060,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a9a72adc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3470adc",
+              "codeHex": "e1031faaf9ba7714fe0f1ef8f44f01a9b37a01d0545e01b0684e6739942a47f9c8000037405e01b0002847f9759ebb9728008052684e2739800240f9009fbb97e1031faaf30300aae8ba7794880240f9085d40f9130100f9f44f41a9fe0742f8c0035fd6e1031faae0ba7714c0035fd6c0035fd6c0035fd6091440b9280080520840003929050011091400b9c0035fd6e1031faad5ba771400404039c0035fd6e1031faad1ba7714080c40f92900805209400039680000b409410039c0035fd6"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a9a72adc",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3470adc",
+              "codeHex": "e1031faaf9ba7714fe0f1ef8f44f01a9b37a01d0545e01b0684e6739942a47f9c8000037405e01b0002847f9759ebb9728008052684e2739800240f9009fbb97e1031faaf30300aae8ba7794880240f9085d40f9130100f9f44f41a9fe0742f8c0035fd6e1031faae0ba7714c0035fd6c0035fd6c0035fd6091440b9280080520840003929050011091400b9c0035fd6e1031faad5ba771400404039c0035fd6e1031faad1ba7714080c40f92900805209400039680000b409410039c0035fd6"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "getSlayerDamage",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "token": 100686736,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99fa7a0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f87a0",
+              "codeHex": "ea0f1afce923016dfd7b02a9f85f03a9f65704a9f44f05a9ff0310d1787e01d0f30308aaf50302aa08ab6139f60301aaf40300aaf783029188010037206101b0004c46f93e7fbd9720610190003443f93b7fbd97206101b0006046f9387fbd972800805208ab213900102e1ee8330f91e0031faa1a7cc197e8370b91e00314aa00f1cf3ce8df43b9e0d2803de8f303b934fcff97e06800b408301d91095c47b9e0c30e910001c03de1031faae9c303b9e0c6803d8e77c1970820201e0d030054"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99fa7a0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f87a0",
+              "codeHex": "ea0f1afce923016dfd7b02a9f85f03a9f65704a9f44f05a9ff0310d1787e01d0f30308aaf50302aa08ab6139f60301aaf40300aaf783029188010037206101b0004c46f93e7fbd9720610190003443f93b7fbd97206101b0006046f9387fbd972800805208ab213900102e1ee8330f91e0031faa1a7cc197e8370b91e00314aa00f1cf3ce8df43b9e0d2803de8f303b934fcff97e06800b408301d91095c47b9e0c30e910001c03de1031faae9c303b9e0c6803d8e77c1970820201e0d030054"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "IsMezeState",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Boolean",
+          "token": 100686833,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a9a13e7c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3411e7c",
+              "codeHex": "fe4fbfa9f30300aa08d01e91e2031faa000140f961be47b9bd10c1978000003620008052fe4fc1a8c0035fd66832179161d645b9e2031faa000140f9fe4fc1a8b310c117ffc300d1fe4f02a9f30300aae0031f2ae1031faa8f14c19700e4002f603e02f9e8330091e0031faa618204b96416c197e0c3c03ce91f40b968121291e00313aae1031f2a0001803d699604b95d210094fe4f42a9ffc30091c0035fd6eb2bb86de923016dfd7b02a9fc6f03a9fa6704a9f85f05a9f65706a9f44f07a9"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a9a13e7c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3411e7c",
+              "codeHex": "fe4fbfa9f30300aa08d01e91e2031faa000140f961be47b9bd10c1978000003620008052fe4fc1a8c0035fd66832179161d645b9e2031faa000140f9fe4fc1a8b310c117ffc300d1fe4f02a9f30300aae0031f2ae1031faa8f14c19700e4002f603e02f9e8330091e0031faa618204b96416c197e0c3c03ce91f40b968121291e00313aae1031f2a0001803d699604b95d210094fe4f42a9ffc30091c0035fd6eb2bb86de923016dfd7b02a9fc6f03a9fa6704a9f85f05a9f65706a9f44f07a9"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "getStatusData",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "StatusData",
+          "token": 100686883,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99f9900",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f7900",
+              "codeHex": "fe57bea9f44f01a9757e01f0346101b0f30300aaa8a26339943643f928010037206101d000e445f9ed82bd97206101b0003443f9ea82bd9728008052a8a22339601e45f961424ab9e2031faa0f7ac197e803002a800240f909e440b928010036490000352683bd97e0031faa3322cb97400200b400e842f9200100b50f000014490000351e83bd97e0031faa2b22cb97400100b400e442f9000100b4286101d008e545f9610241f9f44f41a9020140f9fe57c2a843c152145e83bd97e80f1afc"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99f9900",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f7900",
+              "codeHex": "fe57bea9f44f01a9757e01f0346101b0f30300aaa8a26339943643f928010037206101d000e445f9ed82bd97206101b0003443f9ea82bd9728008052a8a22339601e45f961424ab9e2031faa0f7ac197e803002a800240f909e440b928010036490000352683bd97e0031faa3322cb97400200b400e842f9200100b50f000014490000351e83bd97e0031faa2b22cb97400100b400e442f9000100b4286101d008e545f9610241f9f44f41a9020140f9fe57c2a843c152145e83bd97e80f1afc"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "getRiftNpcBuffDamage",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "token": 100686901,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99fb558",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f9558",
+              "codeHex": "ff4302d1e82b00fdfe5f06a9f65707a9f44f08a9767e01b0176101f0f40302aac9ea6339f77243f9f50301aaf30308aa49020037006101f0007043f9d27bbd97206101d000d447f9cf7bbd97206101d000dc47f9cc7bbd97006101f0003443f9c97bbd9720610190000841f9c67bbd9728008052c8ea233900e4002fe8730091e0031faaa878c197e0c3c13ce82f40b9e00315aae10314aae2031faae00f803de84300b94c74c197e80240f9f603002a09e540b989000035e00308aafa7bbd97"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99fb558",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f9558",
+              "codeHex": "ff4302d1e82b00fdfe5f06a9f65707a9f44f08a9767e01b0176101f0f40302aac9ea6339f77243f9f50301aaf30308aa49020037006101f0007043f9d27bbd97206101d000d447f9cf7bbd97206101d000dc47f9cc7bbd97006101f0003443f9c97bbd9720610190000841f9c67bbd9728008052c8ea233900e4002fe8730091e0031faaa878c197e0c3c13ce82f40b9e00315aae10314aae2031faae00f803de84300b94c74c197e80240f9f603002a09e540b989000035e00308aafa7bbd97"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "getCriticalDamage",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "token": 100686925,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99fb7a8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f97a8",
+              "codeHex": "e923bb6dfd7b01a9f85f02a9f65703a9f44f04a9ffc309d1787e01b0176101f0f50302aa09376439f73643f9f60301aaf40300aaf30308aac9000037006101f0003443f93c7bbd972800805208372439e00240f9ff2f01f9ff2b01f908e440b9ff6302b9480000357b7bbd97e0031faa881acb97c03700b4080443f9883700b40951289108254ab9e0c308912001c03de1031faae84302b9e08f803d9273c1970820201e09902f1e98c9feb0cd020054e00240f908e440b948000035667bbd97"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99fb7a8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33f97a8",
+              "codeHex": "e923bb6dfd7b01a9f85f02a9f65703a9f44f04a9ffc309d1787e01b0176101f0f50302aa09376439f73643f9f60301aaf40300aaf30308aac9000037006101f0003443f93c7bbd972800805208372439e00240f9ff2f01f9ff2b01f908e440b9ff6302b9480000357b7bbd97e0031faa881acb97c03700b4080443f9883700b40951289108254ab9e0c308912001c03de1031faae84302b9e08f803d9273c1970820201e09902f1e98c9feb0cd020054e00240f908e440b948000035667bbd97"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "CheckPunishmentToken",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100686968,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a9a383c8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34363c8",
+              "codeHex": "fe0f1ef8f44f01a9947c0190f30300aa88d2643988010037205f01f000d045f93d88bc97205f01f000d445f93a88bc97205f01d000c047f93788bc972800805288d22439e00313aa35ddfe97e00600b4080442a9e2031faae00308aac280c0971f04007141050054e00313aa2cddfe97c00500b4080445a9e2031faae00308aab980c0971f04007121040054e00313aa23ddfe97a00400b400d442f9600400b4345f01d0285f01f094c247f908d145f9810240f9020140f92dc7519480020036"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a9a383c8",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34363c8",
+              "codeHex": "fe0f1ef8f44f01a9947c0190f30300aa88d2643988010037205f01f000d045f93d88bc97205f01f000d445f93a88bc97205f01d000c047f93788bc972800805288d22439e00313aa35ddfe97e00600b4080442a9e2031faae00308aac280c0971f04007141050054e00313aa2cddfe97c00500b4080445a9e2031faae00308aab980c0971f04007121040054e00313aa23ddfe97a00400b400d442f9600400b4345f01d0285f01f094c247f908d145f9810240f9020140f92dc7519480020036"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "GetJobTraitValue",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "System.ValueTuple<CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat,CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat,CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat>",
+          "token": 100686978,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a9a1be3c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3419e3c",
+              "codeHex": "e923bb6dfd7b01a9f85f02a9f65703a9f44f04a9ff4309d1777d01b0f30308aaf50302aae8fa6439f60301aaf40300aae10b1ea92801003720600190004c46f998f9bc9720600190000847f995f9bc9728008052e8fa2439e0031faaff7f1ca9ffd301b9ff7f1aa9ffb301b9ff7f18a9ff9301b9ff7f16a9ff7301b9ff7f14a9ff5301b92080c697e01e00b417dc40f9e00316aae10315aae2031faa15f2c097371e00b4e81a40b91f00086be21d0054e8ce208b171140f9771d00b4e036c03d"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a9a1be3c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3419e3c",
+              "codeHex": "e923bb6dfd7b01a9f85f02a9f65703a9f44f04a9ff4309d1777d01b0f30308aaf50302aae8fa6439f60301aaf40300aae10b1ea92801003720600190004c46f998f9bc9720600190000847f995f9bc9728008052e8fa2439e0031faaff7f1ca9ffd301b9ff7f1aa9ffb301b9ff7f18a9ff9301b9ff7f16a9ff7301b9ff7f14a9ff5301b92080c697e01e00b417dc40f9e00316aae10315aae2031faa15f2c097371e00b4e81a40b91f00086be21d0054e8ce208b171140f9771d00b4e036c03d"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "CheckJobTrait",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "CodeStage.AntiCheat.ObscuredTypes.ObscuredBool",
+          "token": 100686993,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99fc49c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33fa49c",
+              "codeHex": "ff0301d1fe5702a9f44f03a9747e0190f30300aae10b01a98836653928010037006101f0006446f90678bd97006101f0004c46f90378bd972800805288362539ff0b00b9e0031faa97fec697a00b00b414dc40f9940b00b4e00741a9e2031faa8c70c197881a40b91f00086baa090054e0031faa8cfec697800a00b414dc40f9e00741a9e2031faa8270c197140a00b4881a40b91f00086bc209005488ce208b081140f9880900b4000543a9e2031faa7870c197f403002ae00313aae3ccff97"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99fc49c",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33fa49c",
+              "codeHex": "ff0301d1fe5702a9f44f03a9747e0190f30300aae10b01a98836653928010037006101f0006446f90678bd97006101f0004c46f90378bd972800805288362539ff0b00b9e0031faa97fec697a00b00b414dc40f9940b00b4e00741a9e2031faa8c70c197881a40b91f00086baa090054e0031faa8cfec697800a00b414dc40f9e00741a9e2031faa8270c197140a00b4881a40b91f00086bc209005488ce208b081140f9880900b4000543a9e2031faa7870c197f403002ae00313aae3ccff97"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "getHunterData",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "HunterData",
+          "token": 100687009,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a99ef8e4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33ed8e4",
+              "codeHex": "fe57bea9f44f01a9d57e01b0746101f0f30300aaa86e6539943643f928010037606101f0006846f9f4aabd97606101f0003443f9f1aabd9728008052a86e2539601e45f961424ab9e2031faa16a2c197e803002a800240f909e440b928010036490000352dabbd97e0031faa3a4acb97800200b408c042f9280100b5110000144900003525abbd97e0031faa324acb97800100b408b842f9480100b4000940f9000100b4686101f0086946f9610241f9f44f41a9020140f9fe57c2a848e95214"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a99ef8e4",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x33ed8e4",
+              "codeHex": "fe57bea9f44f01a9d57e01b0746101f0f30300aaa86e6539943643f928010037606101f0006846f9f4aabd97606101f0003443f9f1aabd9728008052a86e2539601e45f961424ab9e2031faa16a2c197e803002a800240f909e440b928010036490000352dabbd97e0031faa3a4acb97800200b408c042f9280100b5110000144900003525abbd97e0031faa324acb97800100b408b842f9480100b4000940f9000100b4686101f0086946f9610241f9f44f41a9020140f9fe57c2a848e95214"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "DataManager",
+          "methodName": "getInstance",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "DataManager",
+          "token": 100688641,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8bbbf40",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x25b9f40",
+              "codeHex": "fe57bea9f44f01a953f001b034d301d015d301b068fa7539943e41f9b5ba43f98801003720d301d0007444f95c79f69720d301d0003c41f95979f69700d301b000b843f95679f6972800805268fa3539880240f9a00240f9085d40f909e440b9130140f9490000359579f697e00313aae1031faa2e25d3944006003708d301b0083543f9007140f928d301d0087544f909e440b9130140f9490000358879f697e00313aae1031faa62c8b194a80240f9f30300aa09e540b969000035e00308aa"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8bbbf40",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x25b9f40",
+              "codeHex": "fe57bea9f44f01a953f001b034d301d015d301b068fa7539943e41f9b5ba43f98801003720d301d0007444f95c79f69720d301d0003c41f95979f69700d301b000b843f95679f6972800805268fa3539880240f9a00240f9085d40f909e440b9130140f9490000359579f697e00313aae1031faa2e25d3944006003708d301b0083543f9007140f928d301d0087544f909e440b9130140f9490000358879f697e00313aae1031faa62c8b194a80240f9f30300aa09e540b969000035e00308aa"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "GameManager",
+          "methodName": "GetChiefBlessingBuff",
+          "parameterCount": 1,
+          "parameterTypes": [
+            "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+          ],
+          "returnType": "System.ValueTuple<CodeStage.AntiCheat.ObscuredTypes.ObscuredBool,CodeStage.AntiCheat.ObscuredTypes.ObscuredInt>",
+          "token": 100690594,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8cf3904",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26f1904",
+              "codeHex": "ff4301d1fe5f02a9f65703a9f44f04a997e601d0f50302aaf60301aae98e4339f40300aaf30308aa2901003740c901b0004443f9e99af19780c901b000e046f9e69af19728008052e88e0339880643f9281100b4002552f9012952f9e2031faa7293f597f703002ae00316aae10315aae2031faa6d93f597ff02006ba109005448c901b0084543f9000140f908e440b948000035199bf19780e20791e1031faa2727ac94880643f9680e00b409858452f50300aae00300910801098be1031faa"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8cf3904",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26f1904",
+              "codeHex": "ff4301d1fe5f02a9f65703a9f44f04a997e601d0f50302aaf60301aae98e4339f40300aaf30308aa2901003740c901b0004443f9e99af19780c901b000e046f9e69af19728008052e88e0339880643f9281100b4002552f9012952f9e2031faa7293f597f703002ae00316aae10315aae2031faa6d93f597ff02006ba109005448c901b0084543f9000140f908e440b948000035199bf19780e20791e1031faa2727ac94880643f9680e00b409858452f50300aae00300910801098be1031faa"
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "GameManager",
+          "methodName": "getInstance",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "GameManager",
+          "token": 100690659,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x73a8cc2238",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26c0238",
+              "codeHex": "fe57bea9f44f01a913e801f0f4ca019068524439943643f98801003700cb01b000bc45f9a060f297e0ca0190003443f99d60f297c0ca01d000b843f99a60f2972800805268520439800240f9d5ca01d008e440b9b5ba43f968000035da60f297800240f9a80240f9095c40f90ae540b9330d40f96a000035e00308aad260f297e00313aae1031faa6b0ccf9460000036810240f938000014c8ca01d0083543f9007140f908cb01b008bd45f909e440b9130140f949000035c360f297e00313aa"
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x73a8cc2238",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x26c0238",
+              "codeHex": "fe57bea9f44f01a913e801f0f4ca019068524439943643f98801003700cb01b000bc45f9a060f297e0ca0190003443f99d60f297c0ca01d000b843f99a60f2972800805268520439800240f9d5ca01d008e440b9b5ba43f968000035da60f297800240f9a80240f9095c40f90ae540b9330d40f96a000035e00308aad260f297e00313aae1031faa6b0ccf9460000036810240f938000014c8ca01d0083543f9007140f908cb01b008bd45f909e440b9130140f949000035c360f297e00313aa"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

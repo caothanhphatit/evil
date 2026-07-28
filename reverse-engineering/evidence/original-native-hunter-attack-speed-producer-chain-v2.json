@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-native-hunter-attack-speed-producer-chain-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "sources": [
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-attack-speed-producers-api35-v1.json",
+      "sha256": "dd757b9ac8a5d445992e49844e07e380cf9b0d0ec05cdc6aab581da5f681bdd7"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-attack-speed-field-scan-api35-v1.json",
+      "sha256": "5316e8a42ae15496f2aa66954db09c942738f19a81aaabc0c49c65d6b5b5d2ac"
+    },
+    {
+      "path": "reverse-engineering/evidence/original-native-hunter-attack-speed-offset-resolutions-api35-v1.json",
+      "sha256": "d407303f0afe9b62996389f0ebd22e4b86f4cc40e515d22059645b7731a1351a"
+    },
+    {
+      "path": "reverse-engineering/evidence/status-data-runtime-schema-android-api35-v1.json",
+      "sha256": "6f6c2394ffaffb5a85fca0239c459434ad98ac7e70a54d1b27f54fe6ae0adda0"
+    },
+    {
+      "path": "reverse-engineering/evidence/evil-ai-drop-runtime-schema-android-api35-v1.json",
+      "sha256": "b25c7798ada699b2e762adfa74d00ba87c3367ced3e612c4280a162bee4fc5cf"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-manager-runtime-schema-android-api30-v1.json",
+      "sha256": "759521d37fba94a69b407087e7c150e83db9778d948279cfe26dade66eee8f4c"
+    },
+    {
+      "path": "reverse-engineering/evidence/hunter-info-runtime-schema-android-api35-v1.json",
+      "sha256": "6cc2faa575ed87567ed2262f2910a372596421d5d3b92264288639faa47da678"
+    }
+  ],
+  "methods": [
+    {
+      "type": "StatusData",
+      "method": "FGCEFJCHNCK",
+      "parameterCount": 1,
+      "token": "0x06001CD9",
+      "moduleOffset": "0x2d5e1ac",
+      "nativeSizeBytes": 76,
+      "bodySha256": "9299ad4f8cd32011c83f16e984e398e8184bc5f15a2d3777643647faddd5c4b5"
+    },
+    {
+      "type": "StatusData",
+      "method": "COJNMPDBOOO",
+      "parameterCount": 0,
+      "token": "0x06001D19",
+      "moduleOffset": "0x2d5e1f8",
+      "nativeSizeBytes": 880,
+      "bodySha256": "b1cbbd43036964410342e93b5430eb8ea0c04d470677f17133c6d28ad63e15bf"
+    },
+    {
+      "type": "StatusData",
+      "method": "set_CalcAttackSpeed",
+      "parameterCount": 1,
+      "token": "0x06001D29",
+      "moduleOffset": "0x2d6ed80",
+      "nativeSizeBytes": 20,
+      "bodySha256": "cc9f69233a2af6545e31df43b5512df6d9a7ee7f9816190aca43bdfe14f90a86"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "FixedUpdate",
+      "parameterCount": 0,
+      "token": "0x06005B75",
+      "moduleOffset": "0x340fcf8",
+      "nativeSizeBytes": 6800,
+      "bodySha256": "7a4fa9eba8a2aaeb25c7202263bd9a79e1f7d794db1a80432829277d818ca15a"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "NICAFPDFNPG",
+      "parameterCount": 0,
+      "token": "0x06005B7C",
+      "moduleOffset": "0x34195fc",
+      "nativeSizeBytes": 128,
+      "bodySha256": "23659cb02bf57f4296e89befb069feeaaca91e002409125e869a7d210b7cc624"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "BuffEndSetting",
+      "parameterCount": 1,
+      "token": "0x06005C05",
+      "moduleOffset": "0x344a120",
+      "nativeSizeBytes": 3288,
+      "bodySha256": "282f6a2786aca8675999540ccf2b249312b5d069f919d102ab6eba8d708f9359"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "CKKBPHNBKLC",
+      "parameterCount": 3,
+      "token": "0x06005C4F",
+      "moduleOffset": "0x3459f20",
+      "nativeSizeBytes": 1896,
+      "bodySha256": "655e87b90a59040708b72fe2a1f48583f2cd148f396e54eb7a15affbb83a7248"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Init",
+      "parameterCount": 3,
+      "token": "0x06005C66",
+      "moduleOffset": "0x345d294",
+      "nativeSizeBytes": 1856,
+      "bodySha256": "4e37b26b951ad0bf9768737325e0cb7337aa281c36f247784e61ab4c1165fb7c"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "BuffSetting",
+      "parameterCount": 4,
+      "token": "0x06005C87",
+      "moduleOffset": "0x345f700",
+      "nativeSizeBytes": 12656,
+      "bodySha256": "a004d1f071b078d65e38851a2cbbf16ac43b58a2b57bbb7696bb7a36d36f9b85"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": "Init",
+      "parameterCount": 2,
+      "token": "0x06005C99",
+      "moduleOffset": "0x3456e6c",
+      "nativeSizeBytes": 1808,
+      "bodySha256": "88f8b44fa413a666e4ae5517592df17dde956e3d4ebab78dad55dd11267bf706"
+    },
+    {
+      "type": "HunterCtrl",
+      "method": ".ctor",
+      "parameterCount": 0,
+      "token": "0x06005C9F",
+      "moduleOffset": "0x3463e68",
+      "nativeSizeBytes": 2056,
+      "bodySha256": "f3f5d270b6464305a7c6e22ec0b56f8e2806df09a0bca80f8a203c952f253f80"
+    }
+  ],
+  "statusDataProducer": {
+    "method": "StatusData.COJNMPDBOOO()",
+    "attackSpeedEquation": "AttackSpeed = WeaponSpeed * (1 + 0.01 * (PersonalAttackSpeed + OptionAttackSpeed + RankAttackSpeed - UserData.mGuildAttackSpeedUp - GUP_Property[7] - RidingPetAttackSpeedUp))",
+    "denominatorBranch": "denominator = FuryValue > 1 ? Quicken + FuryValue + SpeedPotionValue : Quicken + SpeedPotionValue + PersonalAttackSpeed",
+    "calcAttackSpeedEquation": "CalcAttackSpeed = max(0.25, AttackSpeed / denominator)",
+    "gupArrayIndex": 7,
+    "guildChain": "GameManager.getInstance().mUserData.mGuildAttackSpeedUp",
+    "goldenVectors": [
+      {
+        "input": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "attackSpeed": 1.0
+      },
+      {
+        "input": [
+          0.8,
+          10.0,
+          20.0,
+          5.0,
+          3.0,
+          2.0,
+          1.0
+        ],
+        "attackSpeed": 1.032
+      },
+      {
+        "input": [
+          0.5,
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "calcAttackSpeed": 0.5
+      },
+      {
+        "input": [
+          0.5,
+          4.0,
+          1.0,
+          2.0,
+          1.0
+        ],
+        "calcAttackSpeed": 0.25
+      }
+    ]
+  },
+  "furyAndBceChain": {
+    "statusMethod": "StatusData.FGCEFJCHNCK(float)",
+    "statusOperation": "FuryValue = input * 0.01; then call COJNMPDBOOO()",
+    "buffSettingTypeZero": "BuffSetting(type=0, secondArgument, ...) writes FuryValue = secondArgument * 0.01 and BCEBGLKCDHN = secondArgument * 0.01",
+    "buffEndTypeZero": "BuffEndSetting(0) writes FuryValue = 0, recomputes status, and resets BCEBGLKCDHN = 1.0",
+    "otherExactWriters": [
+      "Init(ObscuredInt, ObscuredString, Boolean) writes BCEBGLKCDHN = 1.0",
+      "Init(Int32, Boolean) writes BCEBGLKCDHN = 1.0",
+      "CKKBPHNBKLC(...) writes BCEBGLKCDHN from runtime float constant 535.0"
+    ]
+  },
+  "attackDelayFsm": {
+    "writerMethods": [
+      "HuntingAttackAction",
+      "CGAHEABLJMF",
+      "NBOMDKMCGND"
+    ],
+    "writerOperation": "raw-copy StatusData.CalcAttackSpeed into HunterCtrl.mAttackDelay",
+    "readerMethod": "HunterCtrl.FixedUpdate()",
+    "readerOperation": "decode mAttackDelay; if positive, subtract UnityEngine.Time.deltaTime and re-encode/store; if the decoded value is non-positive, use zero",
+    "semanticStatus": "exact countdown timer confirmed; no separate direct managed reader exists in the class-wide scan"
+  },
+  "danFactor": {
+    "field": "HunterCtrl.DANCPPLMKIK",
+    "classMethodsScanned": 391,
+    "directManagedWriters": [],
+    "constructorWriter": false,
+    "sourceStatus": "not resolved: likely populated outside direct managed method code, but Unity serialization/default injection is not claimed without decoding the opaque HunterCtrl prefab payload"
+  },
+  "classWideScan": {
+    "statusDataMethods": 128,
+    "hunterCtrlMethods": 391,
+    "memoryImage": {
+      "committed": false,
+      "size": 106893312,
+      "sha256": "9b5158524e74b85192005d4d05e687f00528d4cd8b6e595c5d2fb7842ed173cf",
+      "moduleBaseAtDump": "0x73a8800000",
+      "inventoryModuleBase": "0x73a9006000"
+    },
+    "bceWriterSet": [
+      {
+        "method": "BuffEndSetting",
+        "token": "0x06005C05"
+      },
+      {
+        "method": "CKKBPHNBKLC",
+        "token": "0x06005C4F"
+      },
+      {
+        "method": "Init",
+        "token": "0x06005C66"
+      },
+      {
+        "method": "BuffSetting",
+        "token": "0x06005C87"
+      },
+      {
+        "method": "Init",
+        "token": "0x06005C99"
+      }
+    ]
+  },
+  "unresolved": [
+    "The engine-side or serialized source of HunterCtrl.DANCPPLMKIK; no direct writer exists in all 391 captured HunterCtrl managed bodies, including the constructor.",
+    "The product-facing name and design meaning of BuffSetting type 0 and CKKBPHNBKLC's 535.0 initialization path.",
+    "Exact gear-index-to-Spine weapon-skin binding remains separate and fail-closed."
+  ]
+}
