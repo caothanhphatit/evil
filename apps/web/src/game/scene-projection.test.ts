@@ -39,7 +39,7 @@ describe("recovered level1 scene projection", () => {
   });
 
   it("keeps the default building grid compact and excludes the unattached skull gate", () => {
-    expect(TOWN_BUILDING_GRID).toEqual({ cellWidth: 24, cellHeight: 24, originX: 1627, originY: 600 });
+    expect(TOWN_BUILDING_GRID).toEqual({ cellWidth: 24, cellHeight: 18, originX: 1627, originY: 600 });
     expect(runtimeScenePieces([{ id: "ground" }, { id: "gate" }, { id: "bridgeA" }])).toEqual([
       { id: "ground" },
       { id: "bridgeA" },
@@ -48,7 +48,7 @@ describe("recovered level1 scene projection", () => {
 
   it("uses the close original-game town framing instead of fitting the whole scene", () => {
     expect(TOWN_CAMERA_CENTER).toEqual({ x: 1627, y: 700 });
-    expect(TOWN_CAMERA_ZOOM).toBe(1.45);
+    expect(TOWN_CAMERA_ZOOM).toBe(1.92);
     expect(TOWN_CAMERA_CLEAR_COLOR).toBe(0x314d79);
   });
 });

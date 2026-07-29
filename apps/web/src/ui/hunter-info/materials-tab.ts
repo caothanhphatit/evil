@@ -1,15 +1,16 @@
 import { node, sourceImage, unavailable } from "./dom";
 import type { HunterInfoView } from "./model";
+import { t } from "../../i18n";
 
 const UNRESOLVED_PLACEHOLDER_COUNT = 12;
 
 export function renderMaterialsTab(info: HunterInfoView): HTMLElement {
   const root = node("section", "hunter-info-materials-tab");
-  root.append(node("h3", "", "Material"));
+  root.append(node("h3", "", t("hunter.materials.title")));
   const grid = node("div", `hunter-material-grid${info.materials === null ? " unresolved" : ""}`);
   if (info.materials === null) {
     appendEmptySlots(grid, UNRESOLVED_PLACEHOLDER_COUNT);
-    root.append(grid, unavailable("This Hunter's material inventory has not been synchronized."));
+    root.append(grid, unavailable(t("hunter.materials.unsynchronized")));
     return root;
   }
   for (const item of info.materials) {

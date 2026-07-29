@@ -8,13 +8,13 @@ describe("decoded building route contracts", () => {
     const view = tradingPostView({ level: 1, townGold: 10000, difficulty: 0, stocks: [{ id: "material:1", displayName: "Linen Cloth", icon: null, townQuantity: 0, hunterQuantity: 2, requested: 50, unitPrice: 10, difficulty: 0 }] });
     expect(view.requestCount).toBe(1);
     expect(view.stocks[0].remainingRequest).toBe("50");
-    expect(view.stocks[0].requestLabel).toBe("Cancel");
+    expect(view.stocks[0].requestLabel).toBe("Hủy đặt mua");
   });
 
   it("uses QuestPop for Bounty Hut with screenshot tiers", () => {
     expect(BOUNTY_HUT_ROUTE.popup).toEqual({ template: "QuestPop", width: 480, height: 820 });
     expect(BOUNTY_TIERS.map((tier) => tier.kills)).toEqual([15, 45, 135, 405]);
-    expect(bountyHutView({ level: 1, tier: 2, quests: [] }).tierLabel).toBe("Large");
+    expect(bountyHutView({ level: 1, tier: 2, quests: [] }).tierLabel).toBe("Lớn");
   });
 
   it("never fabricates unresolved item icons", () => {

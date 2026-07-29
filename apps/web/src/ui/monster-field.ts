@@ -1,4 +1,5 @@
 import type { FixtureCombatWorldSnapshot, MonsterWorldSnapshot, WorldEntityProjection } from "../generated/protocol";
+import { t } from "../i18n";
 
 /**
  * Map and spawn rows are presentation fixtures until a server projection binds
@@ -6,9 +7,9 @@ import type { FixtureCombatWorldSnapshot, MonsterWorldSnapshot, WorldEntityProje
  * presenting guessed legacy balance as authoritative data.
  */
 export const MONSTER_MAP_FIXTURES = [
-  { id: "map_new01", label: "Monster Tier I", assetPath: "/content/releases/visible-world-v1/maps/map_new01.png" },
-  { id: "background_08", label: "Monster Tier II · fixture", assetPath: "/content/releases/visible-world-v1/village/background/background_08__1530.png" },
-  { id: "background_11", label: "Monster Tier III · fixture", assetPath: "/content/releases/visible-world-v1/village/background/background_11__1508.png" },
+  { id: "map_new01", label: t("world.monster_tier", { tier: "I" }), assetPath: "/content/releases/visible-world-v1/maps/map_new01.png" },
+  { id: "background_08", label: t("world.monster_tier_fixture", { tier: "II" }), assetPath: "/content/releases/visible-world-v1/village/background/background_08__1530.png" },
+  { id: "background_11", label: t("world.monster_tier_fixture", { tier: "III" }), assetPath: "/content/releases/visible-world-v1/village/background/background_11__1508.png" },
 ] as const;
 
 export type MonsterMapId = (typeof MONSTER_MAP_FIXTURES)[number]["id"];
@@ -95,7 +96,7 @@ export function projectMonsterField(
     });
   }
   return {
-    fixtureLabel: "visible-world monster presentation fixture; spawn semantics unresolved",
+    fixtureLabel: t("diagnostics.monster_fixture"),
     selectedMap,
     maps: MONSTER_MAP_FIXTURES,
     farms: MONSTER_MAP_FIXTURES.map((map) => ({ ...map, densityLevel: 1, spawnCount: 0 })),
@@ -119,7 +120,7 @@ export function projectAuthoritativeMonsterField(world: MonsterWorldSnapshot): M
   ] as const;
   const farms = world.maps.map((map, index) => ({
     id: map.map_id as MonsterMapId,
-    label: `Farm ${romanNumber(map.monster_tier)}`,
+    label: t("world.farm", { tier: romanNumber(map.monster_tier) }),
     assetPath: map.map_asset_id,
     densityLevel: map.density_level,
     spawnCount: densityCounts[index]?.[map.density_level - 1] ?? 0,

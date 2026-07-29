@@ -48,20 +48,26 @@ const MONSTER_PATROL_RADIUS_PX: i32 = 64;
 // in the town while preserving server-owned positions and obstacle routing.
 const TOWN_ROAM_CYCLE_TICKS: u64 = 80;
 const TOWN_ROAM_MOVE_TICKS: u64 = 56;
-const TOWN_ROAM_BOUNDS: RegionBounds = RegionBounds {
-    min_x: 1320,
-    max_x: 1990,
-    min_y: 500,
-    max_y: 920,
+pub(super) const TOWN_ROAM_BOUNDS: RegionBounds = RegionBounds {
+    min_x: 1400,
+    max_x: 1850,
+    min_y: 560,
+    max_y: 740,
 };
-const TOWN_ROAM_ANCHORS: [(i32, i32); 6] = [
-    (1450, 610),
-    (1580, 540),
-    (1780, 570),
-    (1900, 700),
-    (1760, 840),
-    (1480, 820),
+pub(super) const TOWN_ROAM_ANCHORS: [(i32, i32); 8] = [
+    (1410, 618),
+    (1410, 690),
+    (1505, 618),
+    (1505, 690),
+    (1600, 618),
+    (1600, 690),
+    (1695, 618),
+    (1695, 690),
 ];
+// Bridge C is the recovered tunnel route used for newly arriving town Hunters.
+// The exact original arrival FSM coordinates remain unresolved.
+const TOWN_ARRIVAL_OUTSIDE: (i32, i32) = (1356, 800);
+const TOWN_ARRIVAL_INSIDE: (i32, i32) = TOWN_ROAM_ANCHORS[0];
 // The native Evil-to-Hunter caller multiplies catalog damage by a selected
 // runtime factor whose writer is still unresolved. Keep the existing rebuild
 // projection isolated here; everything after this boundary uses recovered
@@ -420,7 +426,7 @@ impl MonsterWorldState {
             .into_iter()
             .filter(|agent| seen.insert(agent.hunter_id))
             .collect();
-        self.reconcile_hunters(roster);
+        self.reconcile_hunters(roster, &[]);
 
         let live_monsters = self
             .fields
@@ -810,28 +816,34 @@ impl MonsterWorldState {
     }
 
     pub fn tick(&mut self, roster: &mut DurableHunterRosterState) -> Vec<PendingOperation> {
-        self.tick_with_obstacles(roster, &[])
+        self.tick_with_obstacles(roster, &[], None)
     }
 
     pub fn tick_with_obstacles(
         &mut self,
         roster: &mut DurableHunterRosterState,
         obstacles: &[NavigationObstacle],
+        revival_point: Option<(i32, i32)>,
     ) -> Vec<PendingOperation> {
         self.tick = self.tick.saturating_add(1);
         self.combat_presentations.clear();
-        self.reconcile_hunters(roster);
+        self.reconcile_hunters(roster, obstacles);
         self.tick_monsters(roster);
-        self.tick_hunters(roster, obstacles)
+        self.tick_hunters(roster, obstacles, revival_point)
     }
 
-    fn reconcile_hunters(&mut self, roster: &DurableHunterRosterState) {
+    fn reconcile_hunters(
+        &mut self,
+        roster: &DurableHunterRosterState,
+        obstacles: &[NavigationObstacle],
+    ) {
         self.hunters.retain(|agent| {
             roster
                 .hunters
                 .iter()
                 .any(|hunter| hunter.hunter_id == agent.hunter_id)
         });
+        let initializing_world = self.hunters.is_empty();
         for (slot, hunter) in roster.hunters.iter().enumerate() {
             if self
                 .hunters
@@ -840,15 +852,25 @@ impl MonsterWorldState {
             {
                 continue;
             }
+            let region_id = hunter
+                .hunt
+                .zone_id
+                .clone()
+                .filter(|id| map_config(id).is_some());
+            let arriving_in_town =
+                !initializing_world && region_id.is_none() && hunter.current_hp > 0;
+            let spawn = if region_id.is_some() {
+                TOWN_RESPAWN_POINT
+            } else if arriving_in_town {
+                TOWN_ARRIVAL_OUTSIDE
+            } else {
+                TOWN_ROAM_ANCHORS[slot % TOWN_ROAM_ANCHORS.len()]
+            };
             self.hunters.push(HunterAgentState {
                 hunter_id: hunter.hunter_id,
-                region_id: hunter
-                    .hunt
-                    .zone_id
-                    .clone()
-                    .filter(|id| map_config(id).is_some()),
-                x: TOWN_RESPAWN_POINT.0 + i32::try_from(slot % 4).unwrap_or(0) * 24,
-                y: TOWN_RESPAWN_POINT.1 + i32::try_from(slot / 4).unwrap_or(0) * 28,
+                region_id,
+                x: spawn.0,
+                y: spawn.1,
                 facing_left: false,
                 action_state: if hunter.current_hp == 0 {
                     HunterActionState::Dead
@@ -876,15 +898,21 @@ impl MonsterWorldState {
                 skill_critical_percent: 0,
                 skill_attack_speed_milli: 0,
                 ice_armor_active: false,
-                entry_stage: 0,
+                entry_stage: if arriving_in_town { 3 } else { 0 },
             });
         }
         for agent in &mut self.hunters {
+            let mut has_town_destination = false;
             if let Some(hunter) = roster
                 .hunters
                 .iter()
                 .find(|hunter| hunter.hunter_id == agent.hunter_id)
             {
+                has_town_destination = hunter
+                    .hunt
+                    .gear_enhancement
+                    .as_ref()
+                    .is_some_and(|task| task.status == GearEnhancementTaskStatus::Traveling);
                 let assigned = hunter
                     .hunt
                     .zone_id
@@ -900,6 +928,19 @@ impl MonsterWorldState {
                         HunterActionState::TownIdle
                     };
                     agent.entry_stage = 0;
+                }
+            }
+            if agent.region_id.is_none()
+                && agent.entry_stage == 0
+                && !has_town_destination
+                && (!TOWN_ROAM_BOUNDS.contains(agent.x, agent.y)
+                    || obstacles
+                        .iter()
+                        .any(|obstacle| obstacle.expanded(14).contains(agent.x, agent.y)))
+            {
+                if let Some((x, y)) = nearest_clear_town_anchor(agent.x, agent.y, obstacles) {
+                    agent.x = x;
+                    agent.y = y;
                 }
             }
         }
@@ -1098,6 +1139,7 @@ impl MonsterWorldState {
         &mut self,
         roster: &mut DurableHunterRosterState,
         obstacles: &[NavigationObstacle],
+        revival_point: Option<(i32, i32)>,
     ) -> Vec<PendingOperation> {
         let mut operations = Vec::new();
         for agent_index in 0..self.hunters.len() {
@@ -1113,10 +1155,37 @@ impl MonsterWorldState {
                 self.hunters[agent_index].ice_armor_active = false;
             }
             let move_step = hunter_move_step(self.tick);
-            if self.tick_dead_hunter(agent_index, roster) {
+            if self.tick_dead_hunter(agent_index, roster, revival_point) {
                 continue;
             }
             let Some(region_id) = self.hunters[agent_index].region_id.clone() else {
+                if self.hunters[agent_index].entry_stage >= 3 {
+                    let target = if self.hunters[agent_index].entry_stage == 3 {
+                        TOWN_ARRIVAL_OUTSIDE
+                    } else {
+                        TOWN_ARRIVAL_INSIDE
+                    };
+                    let agent = &mut self.hunters[agent_index];
+                    if squared_distance(agent.x, agent.y, target.0, target.1)
+                        <= i64::from(HUNTER_MOVE_MAX_PX_PER_TICK).pow(2)
+                    {
+                        agent.x = target.0;
+                        agent.y = target.1;
+                        agent.entry_stage = if agent.entry_stage == 3 { 4 } else { 0 };
+                    } else {
+                        set_hunter_presentation(agent, HunterActionState::TownIdle, "hunter_walk");
+                        move_toward_avoiding(
+                            &mut agent.x,
+                            &mut agent.y,
+                            target.0,
+                            target.1,
+                            move_step,
+                            &mut agent.facing_left,
+                            obstacles,
+                        );
+                    }
+                    continue;
+                }
                 let enhancement_destination = roster
                     .hunters
                     .iter()
@@ -1384,6 +1453,7 @@ impl MonsterWorldState {
         &mut self,
         agent_index: usize,
         roster: &mut DurableHunterRosterState,
+        revival_point: Option<(i32, i32)>,
     ) -> bool {
         let Some(respawn) = self.hunters[agent_index].respawn_ticks.as_mut() else {
             return false;
@@ -1404,8 +1474,9 @@ impl MonsterWorldState {
             hunter.profile.animation_name = "hunter_walk".to_owned();
         }
         let agent = &mut self.hunters[agent_index];
-        agent.x = TOWN_RESPAWN_POINT.0;
-        agent.y = TOWN_RESPAWN_POINT.1;
+        let (revival_x, revival_y) = revival_point.unwrap_or(TOWN_RESPAWN_POINT);
+        agent.x = revival_x;
+        agent.y = revival_y;
         agent.action_state = if agent.region_id.is_some() {
             HunterActionState::EnteringRegion
         } else {
@@ -2084,7 +2155,15 @@ fn move_toward_avoiding(
     let bottom = expanded.max_y.saturating_add(1);
     let left = expanded.min_x.saturating_sub(1);
     let right = expanded.max_x.saturating_add(1);
-    let (waypoint_x, waypoint_y) = if *y <= expanded.min_y {
+    let (waypoint_x, waypoint_y) = if *x == left && *y == top && target_y > expanded.max_y {
+        (left, bottom)
+    } else if *x == right && *y == top && target_y > expanded.max_y {
+        (right, bottom)
+    } else if *x == left && *y == bottom && target_y < expanded.min_y {
+        (left, top)
+    } else if *x == right && *y == bottom && target_y < expanded.min_y {
+        (right, top)
+    } else if *y <= expanded.min_y {
         (
             if target_x >= expanded.max_x {
                 right
@@ -2131,6 +2210,21 @@ fn next_step(x: i32, y: i32, target_x: i32, target_y: i32, step: i32) -> (i32, i
         &mut ignored_facing,
     );
     (next_x, next_y)
+}
+
+fn nearest_clear_town_anchor(
+    x: i32,
+    y: i32,
+    obstacles: &[NavigationObstacle],
+) -> Option<(i32, i32)> {
+    TOWN_ROAM_ANCHORS
+        .into_iter()
+        .filter(|(anchor_x, anchor_y)| {
+            obstacles
+                .iter()
+                .all(|obstacle| !obstacle.expanded(14).contains(*anchor_x, *anchor_y))
+        })
+        .min_by_key(|(anchor_x, anchor_y)| squared_distance(x, y, *anchor_x, *anchor_y))
 }
 
 impl NavigationObstacle {
@@ -2282,7 +2376,7 @@ mod tests {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, "map_new01").unwrap();
-        world.reconcile_hunters(&roster);
+        world.reconcile_hunters(&roster, &[]);
         let monster = world.fields[0].monsters[0].clone();
         world.hunters[0].x = monster.x;
         world.hunters[0].y = monster.y;
@@ -2437,6 +2531,59 @@ mod tests {
     }
 
     #[test]
+    fn town_roam_anchors_stay_inside_the_confirmed_rebuild_floor() {
+        for (x, y) in TOWN_ROAM_ANCHORS {
+            assert!(TOWN_ROAM_BOUNDS.contains(x, y));
+        }
+    }
+
+    #[test]
+    fn newly_added_town_hunter_walks_in_through_the_tunnel() {
+        let mut world = MonsterWorldState::default();
+        let mut roster = operational_migration_roster();
+        let arriving = roster.hunters.pop().expect("fixture arrival hunter");
+        let arriving_id = arriving.hunter_id;
+        world.tick(&mut roster);
+
+        roster.hunters.push(arriving);
+        world.tick(&mut roster);
+        let at_gate = world
+            .hunters
+            .iter()
+            .find(|hunter| hunter.hunter_id == arriving_id)
+            .unwrap();
+        assert_eq!((at_gate.x, at_gate.y), TOWN_ARRIVAL_OUTSIDE);
+        assert_eq!(at_gate.entry_stage, 4);
+
+        for _ in 0..40 {
+            world.tick(&mut roster);
+        }
+        let inside = world
+            .hunters
+            .iter()
+            .find(|hunter| hunter.hunter_id == arriving_id)
+            .unwrap();
+        assert_eq!(inside.entry_stage, 0);
+        assert!(TOWN_ROAM_BOUNDS.contains(inside.x, inside.y));
+    }
+
+    #[test]
+    fn completed_revival_uses_the_authoritative_sanctuary_point() {
+        let mut world = MonsterWorldState::default();
+        let mut roster = operational_migration_roster();
+        world.tick(&mut roster);
+        roster.hunters[0].current_hp = 0;
+        world.hunters[0].respawn_ticks = Some(1);
+        let sanctuary_point = (1498, 510);
+
+        world.tick_with_obstacles(&mut roster, &[], Some(sanctuary_point));
+
+        assert_eq!((world.hunters[0].x, world.hunters[0].y), sanctuary_point);
+        assert_eq!(world.hunters[0].respawn_ticks, None);
+        assert_eq!(roster.hunters[0].current_hp, roster.hunters[0].max_hp);
+    }
+
+    #[test]
     fn field_target_acquisition_searches_the_entire_assigned_region() {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
@@ -2525,7 +2672,7 @@ mod tests {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, "map_new01").unwrap();
-        world.reconcile_hunters(&roster);
+        world.reconcile_hunters(&roster, &[]);
         let (x, y) = {
             let monster = &world.fields[0].monsters[0];
             (monster.x, monster.y)
@@ -2555,7 +2702,7 @@ mod tests {
             });
         }
 
-        world.tick_hunters(&mut roster, &[]);
+        world.tick_hunters(&mut roster, &[], None);
 
         let agent = world
             .hunters
@@ -2573,7 +2720,7 @@ mod tests {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, "map_new01").unwrap();
-        world.reconcile_hunters(&roster);
+        world.reconcile_hunters(&roster, &[]);
 
         let (x, y) = {
             let monster = &world.fields[0].monsters[0];
@@ -2622,7 +2769,7 @@ mod tests {
             },
         ]);
 
-        world.tick_hunters(&mut roster, &[]);
+        world.tick_hunters(&mut roster, &[], None);
         let agent = world
             .hunters
             .iter()
@@ -2640,7 +2787,7 @@ mod tests {
         }
 
         for _ in 0..8 {
-            world.tick_hunters(&mut roster, &[]);
+            world.tick_hunters(&mut roster, &[], None);
         }
 
         let hunter = roster
@@ -3032,7 +3179,7 @@ mod tests {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, "map_new01").unwrap();
-        world.reconcile_hunters(&roster);
+        world.reconcile_hunters(&roster, &[]);
         let monster = world.fields[0].monsters[0].clone();
         let agent = world
             .hunters
@@ -3058,7 +3205,7 @@ mod tests {
             experience: 0,
         });
 
-        let operations = world.tick_hunters(&mut roster, &[]);
+        let operations = world.tick_hunters(&mut roster, &[], None);
 
         assert!(world.fields[0].drops.is_empty());
         assert_eq!(world.hunters[0].target_drop_id, None);
@@ -3073,7 +3220,7 @@ mod tests {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, "map_new01").unwrap();
-        world.reconcile_hunters(&roster);
+        world.reconcile_hunters(&roster, &[]);
         let monster = &mut world.fields[0].monsters[0];
         let agent = world
             .hunters
@@ -3114,6 +3261,23 @@ mod tests {
             assert!(!obstacle.expanded(12).contains(x, y));
         }
         assert!(x > obstacle.max_x);
+    }
+
+    #[test]
+    fn hunter_navigation_advances_from_an_obstacle_corner() {
+        let obstacle = NavigationObstacle {
+            min_x: 40,
+            max_x: 60,
+            min_y: 40,
+            max_y: 60,
+        };
+        let expanded = obstacle.expanded(14);
+        let (mut x, mut y, mut facing_left) = (expanded.min_x - 1, expanded.min_y - 1, false);
+
+        move_toward_avoiding(&mut x, &mut y, 50, 100, 8, &mut facing_left, &[obstacle]);
+
+        assert!(y > expanded.min_y - 1);
+        assert!(!expanded.contains(x, y));
     }
 
     #[test]

@@ -1,5 +1,6 @@
 import type { OriginalFlowSnapshot, WorldEntityProjection } from "../generated/protocol";
 import { hunterBaseWeaponSkin } from "./hunter-spine-presentation";
+import { t } from "../i18n";
 
 export type HunterRosterState = "active" | "waiting";
 
@@ -81,23 +82,27 @@ const DEFAULT_TOWN_CAPACITY = 8;
 export function projectHunterRoster(snapshot: OriginalFlowSnapshot | UnknownRecord, selectedId: string | null = null): HunterRosterView {
   const root = record(snapshot);
   const roster = record(root.hunter_roster);
-  const world = record(root.world);
-  const capacity = positiveInteger(roster.active_capacity ?? roster.capacity ?? roster.max_active_hunters) ?? DEFAULT_TOWN_CAPACITY;
-  const activeRows = array(roster.active_hunters ?? roster.hunters ?? roster.active ?? roster.roster);
-  const waitingRows = array(roster.waiting_queue ?? roster.waiting_hunters ?? roster.waiting ?? roster.queue);
-  const fallbackRows = activeRows.length === 0 ? fallbackHunterRows(roster, array(world.entities)) : [];
-  const active = uniqueHunters([...activeRows, ...fallbackRows].map((row, index) => parseHunter(row, "active", index)));
-  const waiting = uniqueHunters(waitingRows.map((row, index) => parseHunter(row, "waiting", index)));
+  const capacity = positiveInteger(roster.active_capacity) ?? DEFAULT_TOWN_CAPACITY;
+  const activeRows = array(roster.active_hunters);
+  const waitingRows = array(roster.waiting_hunters);
+  const active = activeRows.flatMap((row, index) => {
+    const hunter = parseHunter(row, "active", index);
+    return hunter ? [hunter] : [];
+  });
+  const waiting = waitingRows.flatMap((row, index) => {
+    const hunter = parseHunter(row, "waiting", index);
+    return hunter ? [hunter] : [];
+  });
   const activeIds = new Set(active.map((hunter) => hunter.id));
   const deDuplicatedWaiting = waiting.filter((hunter) => !activeIds.has(hunter.id));
-  const resolved = activeRows.length > 0 || waitingRows.length > 0 || roster.roster_resolved === true;
+  const resolved = activeRows.length > 0 || waitingRows.length > 0;
   return {
     capacity,
     active,
     waiting: deDuplicatedWaiting,
     selectedId: selectAvailableHunter(selectedId, active, deDuplicatedWaiting),
     resolved,
-    constraintViolation: active.length > capacity ? `Town capacity exceeded: ${active.length}/${capacity}` : null,
+    constraintViolation: active.length > capacity ? t("roster.capacity_exceeded", { active: active.length, capacity }) : null,
   };
 }
 
@@ -137,50 +142,51 @@ export function hunterWorldEntityId(snapshot: OriginalFlowSnapshot | UnknownReco
   return match ? stringValue(record(match.descriptor).entity_id) : null;
 }
 
-function parseHunter(value: unknown, rosterState: HunterRosterState, index: number): HunterView {
+function parseHunter(value: unknown, rosterState: HunterRosterState, index: number): HunterView | null {
   const row = record(value);
-  const profile = record(row.profile ?? row.hunter_profile);
-  const stats = record(row.stats ?? row.attributes ?? row.vitals ?? profile.stats);
-  const action = record(row.action ?? row.action_state ?? profile.action);
-  const identity = record(row.identity);
-  const job = record(row.class ?? row.job ?? profile.class);
-  const trait = record(row.trait);
   const hunt = record(row.hunt);
-  const traits = array(row.traits ?? profile.traits).map(parseTrait);
-  const idValue = row.hunter_id ?? row.id ?? identity.id;
-  const numericId = finiteNumber(idValue);
-  const id = stringValue(row.entity_id) ?? (numericId === null ? `hunter-${rosterState}-${index + 1}` : `hunter-${numericId}`);
+  const traits = array(row.traits).flatMap((trait, traitIndex) => {
+    const parsed = parseTrait(trait, traitIndex);
+    return parsed ? [parsed] : [];
+  });
+  const numericId = finiteNumber(row.hunter_id);
+  const displayName = stringValue(row.display_name);
+  if (numericId === null || displayName === null) return null;
+  const id = `hunter-${numericId}`;
   return {
     id,
     numericId,
-    name: stringValue(row.display_name ?? row.name ?? profile.display_name ?? identity.name) ?? `Hunter ${numericId ?? index + 1}`,
+    name: displayName,
     rosterState,
-    queuePosition: rosterState === "waiting" ? positiveInteger(row.queue_position) ?? index + 1 : null,
-    level: finiteNumber(row.level ?? profile.level ?? stats.level),
-    xp: finiteNumber(row.xp ?? profile.xp),
-    classId: stringValue(row.class_id ?? row.job_id ?? profile.class_id ?? job.id),
-    className: stringValue(row.class_name ?? row.job_name ?? profile.class_name ?? job.name),
-    classFamily: normalizeClassFamily(row.class_family ?? row.job_family ?? profile.visual_family ?? profile.class_family ?? job.family),
-    rarityId: stringValue(row.rarity_id ?? profile.rarity_id),
-    rarityName: stringValue(row.rarity_name ?? profile.rarity_name),
-    traitName: stringValue(row.trait_name ?? trait.name ?? (typeof row.trait === "string" ? row.trait : null))
+    queuePosition: rosterState === "waiting" ? index + 1 : null,
+    level: finiteNumber(row.level),
+    xp: finiteNumber(row.xp),
+    classId: stringValue(row.class_id),
+    className: stringValue(row.class_name),
+    classFamily: normalizeClassFamily(row.class_family),
+    rarityId: stringValue(row.rarity_id),
+    rarityName: stringValue(row.rarity_name),
+    traitName: stringValue(row.trait_name)
       ?? (traits.filter((candidate) => candidate.equipped !== false).map((candidate) => candidate.name).join(", ") || null),
     traits,
-    action: stringValue(action.kind ?? action.state ?? row.action_state ?? profile.action_state ?? row.state),
-    animation: stringValue(action.animation ?? row.animation ?? profile.animation_name ?? profile.animation),
-    hp: finiteNumber(stats.hp ?? stats.current_hp ?? row.hp ?? row.current_hp),
-    maxHp: finiteNumber(stats.max_hp ?? row.max_hp),
-    stamina: finiteNumber(stats.stamina ?? stats.current_stamina ?? row.stamina),
-    maxStamina: finiteNumber(stats.max_stamina ?? row.max_stamina),
-    satiety: finiteNumber(stats.satiety ?? stats.current_satiety ?? row.satiety),
-    maxSatiety: finiteNumber(stats.max_satiety ?? row.max_satiety),
-    mood: finiteNumber(stats.mood ?? stats.current_mood ?? row.mood),
-    maxMood: finiteNumber(stats.max_mood ?? row.max_mood),
-    attack: finiteNumber(stats.attack ?? stats.attack_power ?? row.attack ?? profile.attack),
-    defense: finiteNumber(stats.defense ?? row.defense ?? profile.defense),
-    gold: finiteNumber(row.gold ?? stats.gold),
-    portrait: safeAssetPath(row.portrait ?? row.portrait_path ?? row.portrait_asset ?? profile.portrait_asset_id),
-    skills: array(row.skills ?? profile.skills).map(parseSkill),
+    action: stringValue(row.action_state),
+    animation: stringValue(row.animation),
+    hp: finiteNumber(row.current_hp),
+    maxHp: finiteNumber(row.max_hp),
+    stamina: finiteNumber(row.stamina),
+    maxStamina: finiteNumber(row.max_stamina),
+    satiety: finiteNumber(row.satiety),
+    maxSatiety: finiteNumber(row.max_satiety),
+    mood: finiteNumber(row.mood),
+    maxMood: finiteNumber(row.max_mood),
+    attack: finiteNumber(row.attack),
+    defense: finiteNumber(row.defense),
+    gold: finiteNumber(row.gold),
+    portrait: safeAssetPath(row.portrait_asset_id),
+    skills: array(row.skills).flatMap((skill, skillIndex) => {
+      const parsed = parseSkill(skill, skillIndex);
+      return parsed ? [parsed] : [];
+    }),
     hunt: projectHunt(hunt),
   };
 }
@@ -203,63 +209,32 @@ function projectHunt(row: UnknownRecord): HunterView["hunt"] {
   };
 }
 
-function parseSkill(value: unknown, index: number): HunterSkillView {
+function parseSkill(value: unknown, _index: number): HunterSkillView | null {
   const row = record(value);
+  const id = stringValue(row.skill_id);
+  const name = stringValue(row.display_name);
+  if (!id || !name) return null;
   return {
-    id: stringValue(row.id ?? row.skill_id) ?? `skill-${index + 1}`,
-    name: stringValue(row.display_name ?? row.name) ?? `Skill ${index + 1}`,
-    level: finiteNumber(row.level ?? row.skill_level),
-    icon: safeAssetPath(row.icon ?? row.icon_path),
+    id,
+    name,
+    level: finiteNumber(row.level),
+    icon: safeAssetPath(row.icon_path),
     ready: typeof row.ready === "boolean" ? row.ready : null,
   };
 }
 
-function parseTrait(value: unknown, index: number): HunterTraitView {
+function parseTrait(value: unknown, _index: number): HunterTraitView | null {
   const row = record(value);
+  const id = stringValue(row.trait_id);
+  const name = stringValue(row.display_name);
+  if (!id || !name) return null;
   return {
-    id: stringValue(row.id ?? row.trait_id) ?? `trait-${index + 1}`,
-    name: stringValue(row.display_name ?? row.name) ?? `Trait ${index + 1}`,
-    icon: safeAssetPath(row.icon ?? row.icon_path),
-    rank: finiteNumber(row.rank ?? row.unlocked_rank),
+    id,
+    name,
+    icon: safeAssetPath(row.icon_path),
+    rank: finiteNumber(row.unlocked_rank),
     equipped: typeof row.equipped === "boolean" ? row.equipped : null,
   };
-}
-
-function fallbackHunterRows(roster: UnknownRecord, worldEntities: unknown[]): unknown[] {
-  const candidates: unknown[] = [];
-  const infirmary = record(roster.infirmary);
-  candidates.push(...array(infirmary.hunters));
-  for (const service of array(roster.product_services)) candidates.push(...array(record(service).hunters));
-  for (const entity of worldEntities) {
-    const row = record(entity);
-    if (record(row.descriptor).kind === "hunter") candidates.push(entityRow(row));
-  }
-  return candidates;
-}
-
-function entityRow(row: UnknownRecord): UnknownRecord {
-  const descriptor = record(row.descriptor);
-  const entityId = stringValue(descriptor.entity_id);
-  const numericId = entityId?.match(/(\d+)$/)?.[1];
-  return { ...row, entity_id: entityId, hunter_id: numericId ? Number(numericId) : undefined };
-}
-
-function uniqueHunters(hunters: HunterView[]): HunterView[] {
-  const result = new Map<string, HunterView>();
-  for (const hunter of hunters) {
-    const previous = result.get(hunter.id);
-    result.set(hunter.id, previous ? mergeHunter(previous, hunter) : hunter);
-  }
-  return [...result.values()];
-}
-
-function mergeHunter(first: HunterView, second: HunterView): HunterView {
-  const merged = { ...first };
-  for (const key of Object.keys(second) as Array<keyof HunterView>) {
-    const value = second[key];
-    if (value !== null && value !== "" && (!(Array.isArray(value)) || value.length > 0)) (merged as UnknownRecord)[key] = value;
-  }
-  return merged;
 }
 
 function selectAvailableHunter(selectedId: string | null, active: HunterView[], waiting: HunterView[]): string | null {

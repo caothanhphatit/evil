@@ -1,18 +1,19 @@
 import { node, sourceImage, unavailable } from "./dom";
 import type { HunterInfoView } from "./model";
+import { t } from "../../i18n";
 
 export function renderGrowthTab(info: HunterInfoView): HTMLElement {
   const root = node("section", "hunter-info-growth-tab");
   if (!info.growth) {
-    root.append(node("header", "", "Total Secret Points —"));
+    root.append(node("header", "", t("hunter.growth.total_points", { points: "—" })));
     const grid = node("div", "hunter-growth-grid unresolved");
     for (let index = 0; index < 15; index += 1) grid.append(node("div", "hunter-growth-node empty"));
-    root.append(grid, unavailable("Secret Point data has not been synchronized for this Hunter."));
+    root.append(grid, unavailable(t("hunter.growth.unsynchronized")));
     return root;
   }
-  root.append(node("header", "", `Total Secret Points ${info.growth.secretPoints}`));
+  root.append(node("header", "", t("hunter.growth.total_points", { points: info.growth.secretPoints })));
   if (!info.growth.nodes.length) {
-    root.append(unavailable("Growth node definitions are unavailable."));
+    root.append(unavailable(t("hunter.growth.nodes_unavailable")));
     return root;
   }
   const grid = node("div", "hunter-growth-grid");

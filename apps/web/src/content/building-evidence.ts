@@ -1,4 +1,5 @@
 import type { EvidenceBuildingRegistry, EvidenceField } from "./building-registry";
+import { currentLocale, t } from "../i18n";
 
 export type BuildingPopupRoute = "building" | "request" | "production" | "service" | "gear-enhancement";
 
@@ -20,7 +21,7 @@ export interface BuildingEvidenceView {
 export function projectBuildingEvidence(
   registry: EvidenceBuildingRegistry | null,
   buildingId: string,
-  locale = navigatorLanguage(),
+  locale: string = currentLocale(),
 ): BuildingEvidenceView | null {
   if (!registry) return null;
   const building = registry.buildings.rows.find((row) => resolvedString(row.buildId) === buildingId);
@@ -54,12 +55,12 @@ export function projectBuildingEvidence(
   const targetTimer = collectionRows(building.buildRows)[0]?.durationMs;
   const unresolvedReason = requiredEvidence(popupField)
     ?? requiredEvidence(capabilityBinding)
-    ?? "No decoded popup or capability is bound to this building.";
+    ?? t("building.popup_unresolved");
 
   return {
     id: buildingId,
     name: localizedValue(building.displayName, locale) ?? buildingId,
-    description: capabilityDescription ?? localizedValue(building.description, locale) ?? "Original description is not yet present in the evidence contract.",
+    description: capabilityDescription ?? localizedValue(building.description, locale) ?? t("building.evidence_unavailable"),
     maxLevel: levels.length ? Math.max(...levels.map((entry) => entry.level)) : null,
     levels,
     maxBuild: resolvedNumber(record(building.sourceData)?.maxBuild),
@@ -74,7 +75,7 @@ export function projectBuildingEvidence(
   };
 }
 
-export function listBuildingEvidence(registry: EvidenceBuildingRegistry | null, locale = navigatorLanguage()): BuildingEvidenceView[] {
+export function listBuildingEvidence(registry: EvidenceBuildingRegistry | null, locale: string = currentLocale()): BuildingEvidenceView[] {
   if (!registry) return [];
   return registry.buildings.rows.flatMap((row) => {
     const id = resolvedString(row.buildId);
@@ -84,7 +85,7 @@ export function listBuildingEvidence(registry: EvidenceBuildingRegistry | null, 
 
 export function formatLevelCosts(view: BuildingEvidenceView, level: number): string {
   const costs = view.levels.find((entry) => entry.level === level)?.costs ?? [];
-  return costs.length ? costs.join(" · ") : "Cost unresolved";
+  return costs.length ? costs.join(" · ") : t("bounty.cost_unresolved");
 }
 
 function resolvePopupRoute(buildingId: string, building: Record<string, unknown>, capabilityKinds: string[], hasProducts: boolean): BuildingPopupRoute | null {
@@ -127,7 +128,7 @@ function formatAmount(row: Record<string, unknown>, registry: EvidenceBuildingRe
 }
 
 function itemDisplayName(registry: EvidenceBuildingRegistry, itemId: string, locale: string): string {
-  if (itemId === "currency:gold") return "Gold";
+  if (itemId === "currency:gold") return t("common.gold");
   const item = registry.catalogs.items.rows.find((row) => resolvedString(row.itemId) === itemId);
   const displayName = localizedValue(item?.displayName, locale);
   if (displayName) return displayName;
@@ -185,8 +186,4 @@ function collectionRows(value: unknown): Array<Record<string, unknown>> {
 
 function record(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
-}
-
-function navigatorLanguage(): string {
-  return typeof navigator === "undefined" ? "en" : navigator.language;
 }

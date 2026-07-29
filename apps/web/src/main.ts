@@ -24,157 +24,163 @@ import { originalUiLabel } from "./content/original-ui-labels";
 import { BOUNTY_HUT_ROUTE, BOUNTY_TIERS } from "./routes/bounty-hut";
 import { TRADING_POST_ROUTE, tradingPostDifficultyOptions, tradingPostStocksForDifficulty } from "./routes/trading-post";
 import { projectProductService, productServiceRoute, type ProductServiceInput } from "./content/product-service-routes";
+import { installShellViewportController } from "./ui/viewport-controller";
+import { BROWSER_ACCOUNTS_STORAGE_KEY, parseBrowserAccounts, serializeBrowserAccounts, type BrowserAccount } from "./ui/browser-accounts";
+import { projectEntryPresentation, type EntryPhase } from "./ui/entry-flow";
 import { ACCESSORY_SHOP_BUILDING_IDS, ALL_GEAR_KINDS, ARMOR_SHOP_BUILDING_IDS, BLACKSMITH_BUILDING_IDS, BLACKSMITH_GEAR_TABS, ENHANCEMENT_FORGE_BUILDING_IDS, JEWELER_BUILDING_IDS, JEWELER_GEAR_TABS, WEAPON_SHOP_BUILDING_IDS, decodeGearCatalog, loadGearCatalog, type GearCatalogRecipe, type GearKind } from "./content/blacksmith-route";
 import { ALCHEMIST_BUILDING_ID, POTION_SHOP_BUILDING_ID, isPotionBuilding } from "./content/potion-shop-routes";
+import { formatNumber, t, type MessageKey } from "./i18n";
 import "./styles.css";
 
 const mount = document.querySelector<HTMLDivElement>("#app");
-if (!mount) throw new Error("Missing #app mount point");
+if (!mount) throw new Error(t("error.missing_mount"));
 
 const releaseRoot = "/content/releases/original-flow-v1";
 const originalAsset = (sourcePath: string): string => `${releaseRoot}/${sourcePath}`;
 const debugUi = new URLSearchParams(window.location.search).has("debug");
 type MenuAction = BottomMenuIntent | "field";
-const menuItems: Array<{ action: MenuAction; label: string; icon: string; enabled: boolean }> = [
-  { action: "build", label: "Construct", icon: "sprites/menu_ic_01__6756.png", enabled: true },
-  { action: "field", label: "Dungeon", icon: "sprites/menu_ic_02__2060.png", enabled: true },
-  { action: "character", label: "Hunters", icon: "sprites/menu_ic_03__6410.png", enabled: true },
-  { action: "archive", label: "Storage", icon: "sprites/menu_ic_04__5070.png", enabled: false },
-  { action: "store", label: "Shop", icon: "sprites/menu_ic_05__6398.png", enabled: true },
+const menuItems: Array<{ action: MenuAction; label: MessageKey; icon: string; enabled: boolean }> = [
+  { action: "build", label: "menu.build", icon: "sprites/menu_ic_01__6756.png", enabled: true },
+  { action: "field", label: "menu.field", icon: "sprites/menu_ic_02__2060.png", enabled: true },
+  { action: "character", label: "menu.hunters", icon: "sprites/menu_ic_03__6410.png", enabled: true },
+  { action: "archive", label: "menu.storage", icon: "sprites/menu_ic_04__5070.png", enabled: false },
+  { action: "store", label: "menu.shop", icon: "sprites/menu_ic_05__6398.png", enabled: true },
 ];
 
 mount.innerHTML = `
-  <main class="game-shell">
-    <section id="boot-screen" class="boot-screen" aria-label="Game intro">
-      <img class="boot-background" src="${originalAsset("sprites/intro_bg_new__1695.png")}" alt="" />
-      <div class="boot-vignette"></div>
-      <img class="boot-logo" src="${originalAsset("sprites/intro_img_glo_new__2141.png")}" alt="Evil Hunter Tycoon" />
-      <div class="map-loading" aria-live="polite"><div class="map-loading-track"><i id="map-loading-fill"></i></div><span id="map-loading-label">Loading map 0%</span></div>
-      <button id="enter-village" class="enter-village" type="button"><img src="${originalAsset("sprites/intro_glo_touchtostart__7172.png")}" alt="Touch to start" /></button>
-      <span id="boot-status" class="boot-status" role="status">Connecting to server...</span>
+  <main class="game-shell entry-login">
+    <section id="login-screen" class="login-screen" aria-label="${t("login.aria")}">
+      <section class="basic-login-card">
+        <span class="basic-login-brand">${t("app.brand")}</span>
+        <h1>${t("login.title")}</h1>
+        <p>${t("login.subtitle")}</p>
+        <label for="account-select">${t("login.profile")}</label>
+        <select id="account-select"></select>
+        <button id="remove-account" class="account-remove-button" type="button">${t("login.remove_profile")}</button>
+        <button id="enter-village" class="enter-village" type="button">${t("login.sign_in")}</button>
+        <button id="register-account-toggle" class="basic-login-link" type="button">${t("login.register_profile")}</button>
+        <form id="register-account-form" class="register-account-form" hidden>
+          <label for="register-account-name">${t("login.display_name")}</label><input id="register-account-name" maxlength="24" autocomplete="nickname" required />
+          <label for="register-account-email">${t("login.email")}</label><input id="register-account-email" type="email" maxlength="120" autocomplete="email" required />
+          <div class="boot-auth-actions"><button id="register-account-submit" class="boot-primary-button" type="submit">${t("login.create_profile")}</button><button id="register-account-cancel" class="boot-secondary-button" type="button">${t("common.cancel")}</button></div>
+        </form>
+        <small class="boot-account-note">${t("login.browser_only_note")}</small>
+        <div class="login-readiness" hidden aria-live="polite"><i id="map-loading-fill"></i><span id="map-loading-label">${t("login.waiting_to_load")}</span></div>
+      </section>
+      <span id="boot-status" class="boot-status" role="status">${t("login.ready")}</span>
     </section>
-    <section id="village-screen" class="village-screen" aria-label="Village" aria-hidden="true">
-      <div id="world-viewport" class="village-world" aria-label="Authoritative entity world"></div>
-      <div id="hunter-enhancement-interactions" class="hunter-enhancement-interactions" aria-label="Hunter enhancement interactions"></div>
-      <header class="resource-bar" aria-label="Village resources">
-        <div class="difficulty-hud"><img src="${originalAsset("sprites/top_mon_level_01__1480.png")}" alt="Easy difficulty" /><b id="world-mode-label" class="sr-only">Easy</b></div>
+    <section id="game-loading-screen" class="game-loading-screen" hidden aria-live="polite" aria-label="${t("loading.aria")}">
+      <div class="game-loading-content"><span class="game-loading-kicker">${t("app.brand")}</span><h1>${t("loading.title")}</h1><p id="game-loading-status">${t("loading.sync_profile")}</p><div class="game-loading-track"><i id="game-loading-fill"></i></div><b id="game-loading-percent">0%</b><button id="game-loading-retry" type="button" hidden>${t("loading.reload")}</button></div>
+    </section>
+    <section id="village-screen" class="village-screen" aria-label="${t("world.village")}" aria-hidden="true">
+      <div id="world-viewport" class="village-world" aria-label="${t("world.entity_world")}"></div>
+      <div id="hunter-enhancement-interactions" class="hunter-enhancement-interactions" aria-label="${t("world.enhancement_interactions")}"></div>
+      <header class="resource-bar" aria-label="${t("world.resources")}">
+        <div class="difficulty-hud"><img data-game-src="${originalAsset("sprites/top_mon_level_01__1480.png")}" alt="${t("world.easy_difficulty")}" /><b id="world-mode-label" class="sr-only">${t("world.easy")}</b></div>
         <div class="resource-ledger">
-          <div class="resource-line"><img src="${originalAsset("sprites/top_ic_01_gold_24__4677.png")}" alt="Gold" /><b id="gold-amount">0</b></div>
-          <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_02_gem_24__4214.png")}" alt="Gem" /><b>--</b></div>
-          <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_03_element_24__1412.png")}" alt="Elemental" /><b>--</b></div>
-          <div class="resource-line unresolved"><img src="${originalAsset("sprites/top_ic_04_book_24__3078.png")}" alt="Book" /><b>--</b></div>
+          <div class="resource-line"><img data-game-src="${originalAsset("sprites/top_ic_01_gold_24__4677.png")}" alt="${t("world.gold")}" /><b id="gold-amount">0</b></div>
+          <div class="resource-line unresolved"><img data-game-src="${originalAsset("sprites/top_ic_02_gem_24__4214.png")}" alt="${t("world.gem")}" /><b>--</b></div>
+          <div class="resource-line unresolved"><img data-game-src="${originalAsset("sprites/top_ic_03_element_24__1412.png")}" alt="${t("world.elemental")}" /><b>--</b></div>
+          <div class="resource-line unresolved"><img data-game-src="${originalAsset("sprites/top_ic_04_book_24__3078.png")}" alt="${t("world.book")}" /><b>--</b></div>
         </div>
       </header>
-      <nav class="top-quick-actions" aria-label="Village shortcuts">
-        <button type="button" disabled title="Book data unavailable"><img src="${originalAsset("sprites/top_ic_book__3217.png")}" alt="Book" /></button>
-        <button type="button" disabled title="Rank data unavailable"><img src="${originalAsset("sprites/top_ic_rank__5074.png")}" alt="Rank" /></button>
-        <button type="button" data-action="character" title="Hunters"><img src="${originalAsset("sprites/top_ic_man__5368.png")}" alt="Hunters" /><b id="hunter-population">0/8</b></button>
-        <button type="button" data-action="build" title="Construct"><img src="${originalAsset("sprites/menu_ic_01__6756.png")}" alt="Construct" /></button>
-        <button type="button" disabled title="Settings unavailable"><img src="${originalAsset("sprites/top_ic_setting__4198.png")}" alt="Settings" /></button>
+      <nav class="top-quick-actions" aria-label="${t("world.shortcuts")}">
+        <button type="button" disabled title="${t("world.book_unavailable")}"><img data-game-src="${originalAsset("sprites/top_ic_book__3217.png")}" alt="${t("world.book")}" /></button>
+        <button type="button" disabled title="${t("world.rank_unavailable")}"><img data-game-src="${originalAsset("sprites/top_ic_rank__5074.png")}" alt="${t("world.rank")}" /></button>
+        <button type="button" data-action="character" title="${t("world.hunters")}"><img data-game-src="${originalAsset("sprites/top_ic_man__5368.png")}" alt="${t("world.hunters")}" /><b id="hunter-population">0/8</b></button>
+        <button type="button" data-action="build" title="${t("world.construct")}"><img data-game-src="${originalAsset("sprites/menu_ic_01__6756.png")}" alt="${t("world.construct")}" /></button>
+        <button type="button" disabled title="${t("world.settings_unavailable")}"><img data-game-src="${originalAsset("sprites/top_ic_setting__4198.png")}" alt="${t("world.settings")}" /></button>
       </nav>
-      <button class="quest-shortcut" type="button" disabled title="Quest data unavailable"><img src="${originalAsset("sprites/top_ic_quest__4944.png")}" alt="Quests" /></button>
-      <button id="field-back" class="field-back" type="button">Return to village</button>
+      <button class="quest-shortcut" type="button" disabled title="${t("world.quest_unavailable")}"><img data-game-src="${originalAsset("sprites/top_ic_quest__4944.png")}" alt="${t("world.quests")}" /></button>
+      <button id="field-back" class="field-back" type="button">${t("world.return_village")}</button>
       <aside id="evidence-diagnostics" class="evidence-diagnostics" aria-live="polite" hidden><b></b><span></span></aside>
-      <section id="combat-hud" class="combat-hud" aria-label="Authoritative migration fixture combat" hidden>
-        <header><b>Migration fixture combat</b><span id="combat-evidence"></span></header>
-        <div class="combatant"><span>Hunter #1 · <i id="hunter-state"></i> · <i id="hunter-position"></i></span><div class="hp-track"><i id="hunter-hp-fill"></i></div><small id="hunter-hp"></small></div>
-        <div class="combatant"><span>Monster #1001 · <i id="monster-state"></i> · <i id="monster-position"></i></span><div class="hp-track monster"><i id="monster-hp-fill"></i></div><small id="monster-hp"></small></div>
+      <section id="combat-hud" class="combat-hud" aria-label="${t("combat.aria")}" hidden>
+        <header><b>${t("combat.title")}</b><span id="combat-evidence"></span></header>
+        <div class="combatant"><span>${t("combat.hunter", { id: 1 })} · <i id="hunter-state"></i> · <i id="hunter-position"></i></span><div class="hp-track"><i id="hunter-hp-fill"></i></div><small id="hunter-hp"></small></div>
+        <div class="combatant"><span>${t("combat.monster", { id: 1001 })} · <i id="monster-state"></i> · <i id="monster-position"></i></span><div class="hp-track monster"><i id="monster-hp-fill"></i></div><small id="monster-hp"></small></div>
         <div class="combat-ledger"><span id="combat-gold"></span><span id="combat-inventory"></span><span id="combat-drops"></span></div>
-        <button id="equip-fixture-item" type="button">Equip item 2001</button>
+        <button id="equip-fixture-item" type="button">${t("combat.equip_item", { id: 2001 })}</button>
       </section>
       <div id="panel-message" class="panel-message" aria-live="polite" hidden><b></b><span></span></div>
-      <section id="building-panel" class="building-panel source-popup" hidden aria-label="BuildingPop">
-        <button id="building-panel-close" class="source-red-button" type="button">Close</button>
-        <b id="building-name">Building</b>
+      <section id="building-panel" class="building-panel source-popup" hidden aria-label="${t("building.aria")}">
+        <button id="building-panel-close" class="source-red-button" type="button">${t("common.close")}</button>
+        <b id="building-name">${t("building.default_name")}</b>
         <div class="building-source-header"><img id="building-preview" alt="" hidden /><div><span id="building-level"></span><small id="building-feature"></small><small id="building-condition"></small></div></div>
         <div id="building-level-contract" class="building-level-contract"></div>
         <div id="building-catalog" class="building-catalog"></div>
-        <div class="building-actions"><button id="building-construct" class="source-green-button" type="button" disabled>Construct</button><button id="building-upgrade" class="source-green-button" type="button" disabled>Upgrade</button><button id="building-use" class="source-green-button" type="button" disabled>Open</button><button id="building-sell" type="button" hidden>Sell</button></div>
+        <div class="building-actions"><button id="building-construct" class="source-green-button" type="button" disabled>${t("building.construct")}</button><button id="building-upgrade" class="source-green-button" type="button" disabled>${t("common.upgrade")}</button><button id="building-use" class="source-green-button" type="button" disabled>${t("common.open")}</button><button id="building-sell" type="button" hidden>${t("common.sell")}</button></div>
       </section>
-      <section id="trading-request-pop" class="trading-request-pop source-popup" hidden aria-label="Trading Post request quantity">
-        <b>Request</b><i class="source-popup-line"></i>
-        <div class="trading-request-product">
-          <div class="trading-request-frame"><img id="trading-request-icon" alt="" /><output id="trading-request-frame-count">1</output></div>
-          <div class="trading-request-controls">
-            <span>Quantity</span>
-            <div class="quantity-stepper">
-              <button id="trading-request-minus" class="consum-round-button minus" type="button" aria-label="Decrease quantity"></button>
-              <input id="trading-request-quantity-input" type="number" min="1" max="10000" step="1" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="Request quantity" />
-              <button id="trading-request-plus" class="consum-round-button plus" type="button" aria-label="Increase quantity"></button>
-            </div>
-            <div class="quantity-step-buttons"><button type="button" data-trading-delta="1">+1</button><button type="button" data-trading-delta="10">+10</button><button type="button" data-trading-delta="100">+100</button><button type="button" data-trading-delta="1000">+1000</button><button type="button" data-trading-max>∞</button></div>
-          </div>
-        </div>
-        <strong id="trading-request-name"></strong>
-        <p>Request quantity: <b id="trading-request-quantity">1</b><br />Estimated total<br /><span id="trading-request-total"></span></p>
-        <div class="source-popup-actions"><button id="trading-request-submit" class="source-green-button" type="button">Request</button><button id="trading-request-close" class="source-red-button" type="button">Close</button></div>
-      </section>
-      <section id="bounty-quest-pop" class="bounty-quest-pop source-popup" hidden aria-label="QuestPop">
-        <button id="bounty-close" class="source-red-button" type="button">Close</button>
-        <b id="bounty-title">Lv.1 Bounty Hut</b><i class="source-popup-line"></i>
-        <p class="bounty-description">Provides bounty quests to help hunters level up fast</p>
+      <section id="bounty-quest-pop" class="bounty-quest-pop source-popup" hidden aria-label="${t("bounty.popup_aria")}">
+        <button id="bounty-close" class="source-red-button" type="button">${t("common.close")}</button>
+        <b id="bounty-title">${t("common.level_short", { level: 1 })} ${t("bounty.title")}</b><i class="source-popup-line"></i>
+        <p class="bounty-description">${t("bounty.description")}</p>
         <div id="bounty-tier-tabs" class="bounty-tier-tabs"></div>
-        <div id="bounty-quest-list" class="bounty-quest-list"><p class="bounty-unresolved">Quest rows are waiting for the authoritative QuestPop data binding.</p></div>
-        <div class="bounty-upgrade-hint">When Upgraded to Lv.2 Adds bounty quest list of [Normal] difficulty<br /><em>Town Hall Lv.5 or higher required.</em></div>
-        <div class="source-popup-actions"><button id="bounty-upgrade" class="source-green-button" type="button">Upgrade</button><button id="bounty-close-bottom" class="source-red-button" type="button">Close</button></div>
+        <div id="bounty-quest-list" class="bounty-quest-list"><p class="bounty-unresolved">${t("bounty.rows_unavailable")}</p></div>
+        <div class="bounty-upgrade-hint">${t("bounty.upgrade_hint")}<br /><em>${originalUiLabel("buildpop_9", "vi", [5])}</em></div>
+        <div class="source-popup-actions"><button id="bounty-upgrade" class="source-green-button" type="button">${t("common.upgrade")}</button><button id="bounty-close-bottom" class="source-red-button" type="button">${t("common.close")}</button></div>
       </section>
-      <section id="gear-create-pop" class="gear-create-pop source-popup" hidden aria-label="GearCreatePop">
-        <b id="gear-create-title">Gear Create</b><i class="source-popup-line"></i>
+      <section id="gear-create-pop" class="gear-create-pop source-popup" hidden aria-label="${t("craft.gear_popup_aria")}">
+        <b id="gear-create-title">${t("craft.gear_create")}</b><i class="source-popup-line"></i>
         <div class="gear-create-product">
           <div class="gear-frame"><img id="gear-create-icon" alt="" /><i aria-hidden="true"></i><output id="gear-frame-quantity">1</output></div>
           <div class="gear-product-side">
             <div class="gear-create-meta"><strong id="gear-create-name"></strong><span id="gear-create-price"></span></div>
             <div id="gear-quantity-row" class="gear-quantity-controls">
               <div class="quantity-stepper">
-                <button id="gear-quantity-minus" class="gear-round-button minus" type="button" aria-label="Decrease quantity"></button>
-                <input id="gear-create-quantity" type="number" min="1" max="1000" step="1" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="Production quantity" />
-                <button id="gear-quantity-plus" class="gear-round-button plus" type="button" aria-label="Increase quantity"></button>
+                <button id="gear-quantity-minus" class="gear-round-button minus" type="button" aria-label="${t("craft.decrease_quantity")}"></button>
+                <input id="gear-create-quantity" type="number" min="1" max="1000" step="1" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="${t("craft.production_quantity")}" />
+                <button id="gear-quantity-plus" class="gear-round-button plus" type="button" aria-label="${t("craft.increase_quantity")}"></button>
               </div>
               <div class="quantity-step-buttons"><button type="button" data-gear-delta="1">+1</button><button type="button" data-gear-delta="10">+10</button><button type="button" data-gear-delta="100">+100</button><button type="button" data-gear-delta="1000">+1000</button></div>
             </div>
           </div>
         </div>
-        <div id="gear-create-description" class="gear-create-description"><button id="gear-lock" type="button" disabled>Lock</button></div>
-        <h3 id="gear-material-title">Required materials</h3>
+        <div id="gear-create-description" class="gear-create-description"><button id="gear-lock" type="button" disabled>${t("common.lock")}</button></div>
+        <h3 id="gear-material-title">${t("craft.required_materials")}</h3>
         <div id="gear-material-costs" class="gear-material-costs"></div>
         <strong id="gear-storage-label" class="gear-storage-label"></strong>
-        <div class="source-popup-actions"><button id="gear-create-submit" class="source-green-button" type="button">Craft</button><button id="gear-create-sell" class="source-green-button" type="button">Dismantle</button><button id="gear-create-close" class="source-red-button" type="button">Close</button></div>
+        <div class="source-popup-actions"><button id="gear-create-submit" class="source-green-button" type="button">${t("common.create")}</button><button id="gear-create-sell" class="source-green-button" type="button">${t("common.dismantle")}</button><button id="gear-create-close" class="source-red-button" type="button">${t("common.close")}</button></div>
       </section>
-      <section id="consum-create-pop" class="consum-create-pop source-popup" hidden aria-label="ConsumCreatePop">
-        <b id="consum-create-title">Quantity</b><i class="source-popup-line"></i>
+      <section id="consum-create-pop" class="consum-create-pop source-popup" hidden aria-label="${t("craft.consumable_popup_aria")}">
+        <b id="consum-create-title">${t("craft.quantity_title")}</b><i class="source-popup-line"></i>
         <div class="consum-quantity-panel">
-          <div class="consum-product-frame"><img id="consum-create-icon" alt="" /><span id="consum-create-icon-placeholder" class="product-icon-unresolved" aria-label="Product image unavailable">?</span><output id="consum-create-quantity">1</output></div>
+          <div class="consum-product-frame"><img id="consum-create-icon" alt="" /><span id="consum-create-icon-placeholder" class="product-icon-unresolved" aria-label="${t("craft.product_image_unavailable")}">?</span><output id="consum-create-quantity">1</output></div>
           <div class="consum-quantity-controls">
-            <span>Quantity</span>
+            <span>${t("common.quantity")}</span>
             <div class="quantity-stepper">
-              <button id="consum-minus" class="consum-round-button minus" type="button" aria-label="Decrease quantity"></button>
-              <input id="consum-create-quantity-input" type="number" min="1" max="1000" step="1" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="Production quantity" />
-              <button id="consum-plus" class="consum-round-button plus" type="button" aria-label="Increase quantity"></button>
+              <button id="consum-minus" class="consum-round-button minus" type="button" aria-label="${t("craft.decrease_quantity")}"></button>
+              <input id="consum-create-quantity-input" type="number" min="1" max="1000" step="1" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="${t("craft.production_quantity")}" />
+              <button id="consum-plus" class="consum-round-button plus" type="button" aria-label="${t("craft.increase_quantity")}"></button>
             </div>
             <div class="quantity-step-buttons"><button type="button" data-consum-delta="1">+1</button><button type="button" data-consum-delta="10">+10</button><button type="button" data-consum-delta="100">+100</button><button type="button" data-consum-delta="1000">+1000</button></div>
           </div>
           <p id="consum-conversion"></p>
         </div>
-        <h3 id="consum-material-title">Select material</h3>
+        <h3 id="consum-material-title">${t("craft.select_material")}</h3>
         <div id="consum-material-grid" class="consum-material-grid"></div>
-        <div class="source-popup-actions"><button id="consum-create-submit" class="source-green-button" type="button">Produce</button><button id="consum-create-close" class="source-red-button" type="button">Close</button></div>
+        <div class="source-popup-actions"><button id="consum-create-submit" class="source-green-button" type="button">${t("common.produce")}</button><button id="consum-create-close" class="source-red-button" type="button">${t("common.close")}</button></div>
       </section>
-      <button id="connection-status" class="connection-status connecting" type="button" aria-label="Server connection status"><i></i><span>Connecting</span></button>
+      <button id="connection-status" class="connection-status connecting" type="button" aria-label="${t("world.server_status")}"><i></i><span>${t("world.connecting")}</span></button>
+      <span id="fps-counter" class="fps-counter" aria-live="off">FPS --</span>
     </section>
-    <section id="roster-screen" class="roster-screen" aria-label="Hunter roster" aria-hidden="true">
-      <img class="roster-background" src="/content/releases/visible-world-v1/maps/map_new01.png" alt="" />
-      <section class="hunter-roster-panel bottom-menu-panel" aria-label="Hunter management">
-        <header class="hunter-roster-header"><div class="hunter-roster-actions"><button type="button" disabled>Place the Hunting Grounds</button><button type="button" disabled>Sort Hunters</button></div><div class="hunter-roster-heading"><b>Hunter List</b><span id="hunter-capacity">0 / 8</span></div><button id="roster-back" class="source-red-button" type="button" aria-label="Close Hunter List">Close</button></header>
+    <section id="roster-screen" class="roster-screen" aria-label="${t("roster.aria")}" aria-hidden="true">
+      <img class="roster-background" data-game-src="/content/releases/visible-world-v1/maps/map_new01.png" alt="" />
+      <section class="hunter-roster-panel bottom-menu-panel" aria-label="${t("roster.management")}">
+        <header class="hunter-roster-header"><div class="hunter-roster-actions"><button type="button" disabled>${t("roster.place_hunting_grounds")}</button><button type="button" disabled>${t("roster.sort")}</button></div><div class="hunter-roster-heading"><b>${t("roster.title")}</b><span id="hunter-capacity">0 / 8</span></div><button id="roster-back" class="source-red-button" type="button" aria-label="${t("roster.close_aria")}">${t("common.close")}</button></header>
         <div class="hunter-roster-body"><div id="hunter-active-list" class="hunter-card-grid"></div></div>
         <footer id="hunter-roster-status" class="hunter-roster-status"></footer>
       </section>
     </section>
-    <nav id="bottom-menu" class="bottom-menu persistent-bottom-menu" aria-label="Village menu" hidden>${menuItems.map((item) => `<button class="menu-button" type="button" data-action="${item.action}" ${item.enabled ? "" : 'disabled title="Feature in development"'}><span class="menu-icon"><img src="${originalAsset(item.icon)}" alt="" /></span><b>${item.label}</b></button>`).join("")}</nav>
-    <div id="loading-transition" class="loading-transition" hidden><img src="${originalAsset("sprites/cloud_loading_btn__4266.png")}" alt="" /><span>Loading...</span></div>
+    <nav id="bottom-menu" class="bottom-menu persistent-bottom-menu" aria-label="${t("menu.aria")}" hidden>${menuItems.map((item) => `<button class="menu-button" type="button" data-action="${item.action}" ${item.enabled ? "" : `disabled title="${t("common.feature_in_development")}"`}><span class="menu-icon"><img data-game-src="${originalAsset(item.icon)}" alt="" /></span><b>${t(item.label)}</b></button>`).join("")}</nav>
+    <div id="loading-transition" class="loading-transition" hidden><img data-game-src="${originalAsset("sprites/cloud_loading_btn__4266.png")}" alt="" /><span>${t("loading.loading")}</span></div>
   </main>`;
 
-function element<T extends HTMLElement>(selector: string): T { const value = document.querySelector<T>(selector); if (!value) throw new Error(`Missing UI element ${selector}`); return value; }
-const bootScreen = element<HTMLElement>("#boot-screen");
+const gameShell = mount.querySelector<HTMLElement>(".game-shell");
+if (!gameShell) throw new Error(t("error.missing_shell"));
+installShellViewportController(gameShell);
+
+function element<T extends HTMLElement>(selector: string): T { const value = document.querySelector<T>(selector); if (!value) throw new Error(t("error.missing_element", { selector })); return value; }
+const loginScreen = element<HTMLElement>("#login-screen");
 const villageScreen = element<HTMLElement>("#village-screen");
 const rosterScreen = element<HTMLElement>("#roster-screen");
 const bottomMenu = element<HTMLElement>("#bottom-menu");
@@ -184,6 +190,7 @@ const hunterRosterStatus = element<HTMLElement>("#hunter-roster-status");
 const transition = element<HTMLElement>("#loading-transition");
 const panelMessage = element<HTMLElement>("#panel-message");
 const connectionStatus = element<HTMLButtonElement>("#connection-status");
+const fpsCounter = element<HTMLElement>("#fps-counter");
 const worldViewport = element<HTMLElement>("#world-viewport");
 const hunterEnhancementInteractions = element<HTMLElement>("#hunter-enhancement-interactions");
 const fieldBack = element<HTMLButtonElement>("#field-back");
@@ -191,8 +198,20 @@ const worldModeLabel = element<HTMLElement>("#world-mode-label");
 const goldAmount = element<HTMLElement>("#gold-amount");
 const hunterPopulation = element<HTMLElement>("#hunter-population");
 const enterVillage = element<HTMLButtonElement>("#enter-village");
+const accountSelect = element<HTMLSelectElement>("#account-select");
+const removeAccountButton = element<HTMLButtonElement>("#remove-account");
+const registerAccountToggle = element<HTMLButtonElement>("#register-account-toggle");
+const registerAccountForm = element<HTMLFormElement>("#register-account-form");
+const registerAccountName = element<HTMLInputElement>("#register-account-name");
+const registerAccountEmail = element<HTMLInputElement>("#register-account-email");
+const registerAccountCancel = element<HTMLButtonElement>("#register-account-cancel");
+const gameLoadingScreen = element<HTMLElement>("#game-loading-screen");
+const gameLoadingStatus = element<HTMLElement>("#game-loading-status");
+const gameLoadingFill = element<HTMLElement>("#game-loading-fill");
+const gameLoadingPercent = element<HTMLElement>("#game-loading-percent");
+const gameLoadingRetry = element<HTMLButtonElement>("#game-loading-retry");
 const bootStatus = element<HTMLElement>("#boot-status");
-const mapLoading = element<HTMLElement>(".map-loading");
+const loginReadiness = element<HTMLElement>(".login-readiness");
 const mapLoadingFill = element<HTMLElement>("#map-loading-fill");
 const mapLoadingLabel = element<HTMLElement>("#map-loading-label");
 const buildingPanel = element<HTMLElement>("#building-panel");
@@ -207,13 +226,6 @@ const buildingConstruct = element<HTMLButtonElement>("#building-construct");
 const buildingUpgrade = element<HTMLButtonElement>("#building-upgrade");
 const buildingUse = element<HTMLButtonElement>("#building-use");
 const buildingPanelClose = element<HTMLButtonElement>("#building-panel-close");
-const tradingRequestPop = element<HTMLElement>("#trading-request-pop");
-const tradingRequestIcon = element<HTMLImageElement>("#trading-request-icon");
-const tradingRequestFrameCount = element<HTMLOutputElement>("#trading-request-frame-count");
-const tradingRequestQuantityInput = element<HTMLInputElement>("#trading-request-quantity-input");
-const tradingRequestName = element<HTMLElement>("#trading-request-name");
-const tradingRequestQuantity = element<HTMLElement>("#trading-request-quantity");
-const tradingRequestTotal = element<HTMLElement>("#trading-request-total");
 const bountyPop = element<HTMLElement>("#bounty-quest-pop");
 const bountyTitle = element<HTMLElement>("#bounty-title");
 const bountyTierTabs = element<HTMLElement>("#bounty-tier-tabs");
@@ -261,10 +273,13 @@ let selectedMenuAction: MenuAction | null = null;
 let hunterRosterOpen = false;
 let hunterRosterPrimed = false;
 let nextHunterRosterRefreshAt = 0;
-let normalizingLegacyRosterScreen = false;
 let world: VisibleEntityWorld | null = null;
 let connectionState: ConnectionStatus = "connecting";
 let bootRequested = false;
+let entryPhase: EntryPhase = "login";
+let runtimeStarted = false;
+let gameLoadingHideTimer: number | undefined;
+let gameLoadingTimeoutTimer: number | undefined;
 let latestCombatHud: CombatHudState | null = null;
 let panelMessageTimer: number | undefined;
 let mapReady = false;
@@ -292,6 +307,7 @@ let selectedBountyTier = 0;
 let selectedTradingPostDifficulty = 0;
 let selectedTradingRequest: MaterialStockSnapshot | null = null;
 let selectedTradingRequestQuantity = 1;
+let tradingRequestPending = false;
 let buildingEvidenceRegistry: EvidenceBuildingRegistry | null = null;
 let buildingEvidenceError: string | null = null;
 let popupInteractionActive = false;
@@ -300,6 +316,14 @@ let popupSnapshotSignature = "";
 let selectedHunterId: string | null = null;
 let releasedWorldHunterEntityId: string | null = null;
 const hunterRosterActors = createHunterRosterActors(hunterActiveList);
+let hunterRosterScrollFrame: number | null = null;
+hunterActiveList.addEventListener("scroll", () => {
+  if (hunterRosterScrollFrame !== null) cancelAnimationFrame(hunterRosterScrollFrame);
+  hunterRosterScrollFrame = requestAnimationFrame(() => {
+    hunterRosterScrollFrame = null;
+    hunterRosterActors.refresh();
+  });
+}, { passive: true });
 
 function setHunterRosterVisibility(open: boolean): void {
   hunterRosterOpen = open;
@@ -366,7 +390,7 @@ const hunterWorldCommandMenu = createHunterWorldCommandMenu(villageScreen, {
     world?.setSelectedEntity(null);
     worldHunterInfoModal.close();
   },
-  onUnavailable: (category) => showPanelMessage("Lệnh chưa được bind", category),
+  onUnavailable: (category) => showPanelMessage(t("error.command_unbound"), category),
 });
 document.addEventListener("contextmenu", (event) => {
   const target = event.target as HTMLElement | null;
@@ -385,13 +409,106 @@ document.addEventListener("cut", (event) => {
   const target = event.target as HTMLElement | null;
   if (!target?.closest("input, textarea, [contenteditable=\"true\"]")) event.preventDefault();
 });
-enterVillage.disabled = true;
-enterVillage.addEventListener("click", () => {
-  if (!mapReady || mapLoadFailed) return;
-  if (!client.completeBoot()) return;
-  bootRequested = true;
-  updateBootState();
+let browserAccounts: BrowserAccount[] = parseBrowserAccounts(window.localStorage.getItem(BROWSER_ACCOUNTS_STORAGE_KEY));
+function renderBrowserAccounts(): void {
+  accountSelect.replaceChildren(...browserAccounts.map((account) => {
+    const option = document.createElement("option");
+    option.value = account.id;
+    option.textContent = account.kind === "demo"
+      ? t("login.profile_option", { name: account.displayName, email: t("login.demo_kind") })
+      : t("login.profile_option", { name: account.displayName, email: account.email });
+    return option;
+  }));
+  const saved = window.localStorage.getItem("evil.browser.selected-account.v1");
+  accountSelect.value = browserAccounts.some((account) => account.id === saved) ? saved! : browserAccounts[0]!.id;
+}
+renderBrowserAccounts();
+accountSelect.addEventListener("change", () => window.localStorage.setItem("evil.browser.selected-account.v1", accountSelect.value));
+removeAccountButton.addEventListener("click", () => {
+  if (accountSelect.value === "demo-hunter-lab") return;
+  browserAccounts = browserAccounts.filter((account) => account.id !== accountSelect.value);
+  window.localStorage.setItem(BROWSER_ACCOUNTS_STORAGE_KEY, serializeBrowserAccounts(browserAccounts));
+  renderBrowserAccounts();
 });
+registerAccountToggle.addEventListener("click", () => {
+  registerAccountForm.hidden = !registerAccountForm.hidden;
+  if (!registerAccountForm.hidden) registerAccountName.focus();
+});
+registerAccountCancel.addEventListener("click", () => { registerAccountForm.hidden = true; });
+registerAccountForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const displayName = registerAccountName.value.trim();
+  const email = registerAccountEmail.value.trim().toLowerCase();
+  if (displayName.length < 2 || !email.includes("@")) return;
+  const account: BrowserAccount = { id: crypto.randomUUID(), displayName, email, kind: "browser", createdAt: new Date().toISOString() };
+  browserAccounts = [...browserAccounts, account];
+  window.localStorage.setItem(BROWSER_ACCOUNTS_STORAGE_KEY, serializeBrowserAccounts(browserAccounts));
+  window.localStorage.setItem("evil.browser.selected-account.v1", account.id);
+  renderBrowserAccounts();
+  registerAccountForm.reset();
+  registerAccountForm.hidden = true;
+});
+enterVillage.disabled = false;
+enterVillage.addEventListener("click", () => {
+  if (mapLoadFailed || entryPhase !== "login") return;
+  window.localStorage.setItem("evil.browser.selected-account.v1", accountSelect.value);
+  entryPhase = "loading";
+  gameLoadingScreen.hidden = false;
+  gameLoadingStatus.textContent = t("loading.account", { account: accountSelect.selectedOptions[0]?.textContent ?? t("loading.profile_fallback") });
+  gameLoadingFill.style.width = "3%";
+  gameLoadingPercent.textContent = "3%";
+  bootRequested = true;
+  gameLoadingRetry.hidden = true;
+  if (gameLoadingTimeoutTimer !== undefined) window.clearTimeout(gameLoadingTimeoutTimer);
+  gameLoadingTimeoutTimer = window.setTimeout(() => {
+    if (entryPhase === "loading") failGameLoading(t("loading.server_timeout"));
+  }, 30_000);
+  updateBootState();
+  startGameRuntime();
+  client.completeBoot();
+});
+
+function startGameRuntime(): void {
+  if (runtimeStarted) return;
+  runtimeStarted = true;
+  document.querySelectorAll<HTMLImageElement>("img[data-game-src]").forEach((image) => {
+    image.src = image.dataset.gameSrc ?? "";
+    delete image.dataset.gameSrc;
+  });
+  client.connect();
+  void initializeBuildingEvidence();
+  void initializeWorld().catch((error: unknown) => {
+    console.error("Failed to initialize the visible world.", error);
+    transition.hidden = true;
+    failGameLoading(t("loading.world_failure"));
+  });
+}
+
+function failGameLoading(message: string): void {
+  mapLoadFailed = true;
+  if (gameLoadingTimeoutTimer !== undefined) window.clearTimeout(gameLoadingTimeoutTimer);
+  gameLoadingTimeoutTimer = undefined;
+  gameLoadingStatus.textContent = message;
+  gameLoadingPercent.textContent = t("loading.error_title");
+  gameLoadingFill.style.width = "100%";
+  gameLoadingRetry.hidden = false;
+  updateBootState();
+}
+
+gameLoadingRetry.addEventListener("click", () => window.location.reload());
+
+async function preloadUiAssets(): Promise<void> {
+  const images = [...document.images].map((image) => {
+    if (image.complete) return Promise.resolve();
+    return new Promise<void>((resolve) => {
+      image.addEventListener("load", () => resolve(), { once: true });
+      image.addEventListener("error", () => resolve(), { once: true });
+    });
+  });
+  await Promise.allSettled(images);
+  await document.fonts.ready;
+}
+
 function handleMenuAction(button: HTMLButtonElement): void {
   hunterWorldCommandMenu.close();
   worldHunterInfoModal.close();
@@ -404,7 +521,6 @@ function handleMenuAction(button: HTMLButtonElement): void {
       renderHunterRoster(latestSnapshot);
       hunterRosterPrimed = true;
     }
-    if (!open && latestSnapshot?.screen === "hunter_roster") client.navigateBack();
     return;
   }
   const togglesActiveBottomTab = triggerIsBottomMenu && selectedMenuAction === action;
@@ -443,6 +559,8 @@ document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) =
 });
 buildingPanelClose.addEventListener("click", () => {
   buildingPanel.hidden = true;
+  selectedTradingRequest = null;
+  tradingRequestPending = false;
   enhancementView = "select";
   selectedEnhancementGearKey = null;
   enhancementHunterId = null;
@@ -465,7 +583,7 @@ buildingUse.addEventListener("click", () => {
       hunter.gear_enhancements.map((gear) => ({ hunter, gear, key: gear.instance_id ?? `${hunter.hunter_id}:${gear.product_id}` }))
     )).find((row) => row.key === selectedEnhancementGearKey);
     if (!selected) {
-      showPanelMessage("Chưa chọn trang bị", "Chọn một trang bị thuộc sở hữu của Hunter trước khi cường hóa.");
+      showPanelMessage(t("enhancement.no_selection_title"), t("enhancement.no_selection_detail"));
       return;
     }
     if (enhancementView === "select") {
@@ -475,11 +593,11 @@ buildingUse.addEventListener("click", () => {
     }
     const preview = projectGearEnhancement(selected.gear, selectedEnhancementMode);
     if (!canSubmitGearEnhancement(preview)) {
-      showPanelMessage("Chưa thể cường hóa", "Chi phí, nguyên liệu và tỷ lệ thành công chưa được xác minh từ game gốc.");
+      showPanelMessage(t("enhancement.unavailable_title"), t("enhancement.evidence_unverified"));
       return;
     }
     if (!selected.gear.instance_id) {
-      showPanelMessage("Chưa thể cường hóa", "Trang bị này chưa có instance ownership authoritative.");
+      showPanelMessage(t("enhancement.unavailable_title"), t("enhancement.instance_unavailable"));
       return;
     }
     client.enhanceHunterGear(selected.hunter.hunter_id, selected.gear.instance_id, selectedEnhancementMode, selectedEnhancementOptionalMaterialIds);
@@ -493,45 +611,123 @@ buildingUse.addEventListener("click", () => {
 bountyClose.addEventListener("click", () => { bountyPop.hidden = true; });
 bountyCloseBottom.addEventListener("click", () => { bountyPop.hidden = true; });
 bountyUpgrade.addEventListener("click", () => { if (selectedBuildingInstanceId) client.upgradeBuilding(selectedBuildingInstanceId); });
-function renderTradingRequestPop(): void {
+function renderTradingRequestEditor(): void {
   const stock = selectedTradingRequest;
   if (!stock) return;
-  tradingRequestIcon.src = stock.icon || resourceIconPath(stock.id) || "";
-  tradingRequestIcon.hidden = !tradingRequestIcon.src;
-  tradingRequestFrameCount.value = String(selectedTradingRequestQuantity);
-  tradingRequestQuantityInput.value = String(selectedTradingRequestQuantity);
-  tradingRequestName.textContent = stock.display_name;
-  tradingRequestQuantity.textContent = String(selectedTradingRequestQuantity);
-  tradingRequestTotal.textContent = `${(stock.unit_price * selectedTradingRequestQuantity).toLocaleString()} Gold`;
+  const editor = document.createElement("section");
+  editor.id = "trading-request-editor";
+  editor.className = "trading-request-editor";
+  editor.setAttribute("aria-label", t("trading.request_editor_aria"));
+
+  const product = document.createElement("div");
+  product.className = "trading-request-product";
+  const frame = document.createElement("div");
+  frame.className = "trading-request-frame";
+  const icon = document.createElement("img");
+  icon.alt = "";
+  icon.src = stock.icon || resourceIconPath(stock.id) || "";
+  icon.hidden = !icon.src;
+  const count = document.createElement("output");
+  count.textContent = String(selectedTradingRequestQuantity);
+  frame.append(icon, count);
+
+  const controls = document.createElement("div");
+  controls.className = "trading-request-controls";
+  const label = document.createElement("span");
+  label.textContent = t("common.quantity");
+  const stepper = document.createElement("div");
+  stepper.className = "quantity-stepper";
+  const minus = document.createElement("button");
+  minus.id = "trading-request-minus";
+  minus.className = "consum-round-button minus";
+  minus.type = "button";
+  minus.setAttribute("aria-label", t("craft.decrease_quantity"));
+  const input = document.createElement("input");
+  input.id = "trading-request-quantity-input";
+  input.type = "number";
+  input.min = "1";
+  input.max = "10000";
+  input.step = "1";
+  input.inputMode = "numeric";
+  input.value = String(selectedTradingRequestQuantity);
+  input.setAttribute("aria-label", t("trading.quantity_aria"));
+  const plus = document.createElement("button");
+  plus.id = "trading-request-plus";
+  plus.className = "consum-round-button plus";
+  plus.type = "button";
+  plus.setAttribute("aria-label", t("craft.increase_quantity"));
+  stepper.append(minus, input, plus);
+
+  const quickSteps = document.createElement("div");
+  quickSteps.className = "quantity-step-buttons";
+  [1, 10, 100, 1000].forEach((delta) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `+${delta}`;
+    button.addEventListener("click", () => {
+      selectedTradingRequestQuantity = clampQuantity(selectedTradingRequestQuantity + delta, 1, 10_000);
+      renderTradingRequestEditor();
+    });
+    quickSteps.append(button);
+  });
+  const max = document.createElement("button");
+  max.type = "button";
+  max.textContent = "∞";
+  max.addEventListener("click", () => {
+    selectedTradingRequestQuantity = 10_000;
+    renderTradingRequestEditor();
+  });
+  quickSteps.append(max);
+  controls.append(label, stepper, quickSteps);
+  product.append(frame, controls);
+
+  const name = document.createElement("strong");
+  name.id = "trading-request-name";
+  name.textContent = stock.display_name;
+  const total = document.createElement("p");
+  total.innerHTML = `${t("trading.request_quantity", { quantity: selectedTradingRequestQuantity })}<br />${t("trading.estimated_total")}<br /><span>${formatNumber(stock.unit_price * selectedTradingRequestQuantity)} ${t("common.gold")}</span>`;
+  const actions = document.createElement("div");
+  actions.className = "source-popup-actions";
+  const submit = document.createElement("button");
+  submit.id = "trading-request-submit";
+  submit.className = "source-green-button";
+  submit.type = "button";
+  submit.disabled = tradingRequestPending || !selectedBuildingInstanceId;
+  submit.textContent = tradingRequestPending ? t("common.requesting") : t("common.request");
+  const back = document.createElement("button");
+  back.id = "trading-request-close";
+  back.className = "source-red-button";
+  back.type = "button";
+  back.textContent = t("common.back");
+
+  const updateQuantity = (value: string | number): void => {
+    selectedTradingRequestQuantity = clampQuantity(value, 1, 10_000);
+    renderTradingRequestEditor();
+  };
+  minus.addEventListener("click", () => updateQuantity(selectedTradingRequestQuantity - 1));
+  plus.addEventListener("click", () => updateQuantity(selectedTradingRequestQuantity + 1));
+  input.addEventListener("change", () => updateQuantity(input.value));
+  submit.addEventListener("click", () => {
+    if (!selectedBuildingInstanceId || !selectedTradingRequest) {
+      showPanelMessage(t("error.cannot_request"), t("error.trading_unavailable"));
+      return;
+    }
+    if (!client.setMaterialRequest(selectedBuildingInstanceId, selectedTradingRequest.id, selectedTradingRequestQuantity)) {
+      showPanelMessage(t("error.request_send_failed"), t("error.connection_not_ready"));
+      return;
+    }
+    tradingRequestPending = true;
+    renderTradingRequestEditor();
+  });
+  back.addEventListener("click", () => {
+    selectedTradingRequest = null;
+    tradingRequestPending = false;
+    renderBuildingSystem(latestSnapshot);
+  });
+  actions.append(submit, back);
+  editor.append(product, name, total, actions);
+  buildingCatalog.replaceChildren(editor);
 }
-function changeTradingRequestQuantity(delta: number): void {
-  selectedTradingRequestQuantity = clampQuantity(selectedTradingRequestQuantity + delta, 1, 10_000);
-  renderTradingRequestPop();
-}
-element<HTMLButtonElement>("#trading-request-minus").addEventListener("click", () => changeTradingRequestQuantity(-1));
-element<HTMLButtonElement>("#trading-request-plus").addEventListener("click", () => changeTradingRequestQuantity(1));
-document.querySelectorAll<HTMLButtonElement>("[data-trading-delta]").forEach((button) => {
-  button.addEventListener("click", () => changeTradingRequestQuantity(Number(button.dataset.tradingDelta)));
-});
-element<HTMLButtonElement>("[data-trading-max]").addEventListener("click", () => {
-  selectedTradingRequestQuantity = 10_000;
-  renderTradingRequestPop();
-});
-tradingRequestQuantityInput.addEventListener("input", () => {
-  if (tradingRequestQuantityInput.value === "") return;
-  selectedTradingRequestQuantity = clampQuantity(tradingRequestQuantityInput.value, 1, 10_000);
-  renderTradingRequestPop();
-});
-tradingRequestQuantityInput.addEventListener("change", () => {
-  selectedTradingRequestQuantity = clampQuantity(tradingRequestQuantityInput.value, 1, 10_000);
-  renderTradingRequestPop();
-});
-element<HTMLButtonElement>("#trading-request-submit").addEventListener("click", () => {
-  if (!selectedBuildingInstanceId || !selectedTradingRequest) return;
-  client.setMaterialRequest(selectedBuildingInstanceId, selectedTradingRequest.id, selectedTradingRequestQuantity);
-  tradingRequestPop.hidden = true;
-});
-element<HTMLButtonElement>("#trading-request-close").addEventListener("click", () => { tradingRequestPop.hidden = true; });
 gearCreateQuantity.addEventListener("input", () => {
   if (gearCreateQuantity.value === "") return;
   gearCreateQuantity.value = String(clampQuantity(gearCreateQuantity.value, 1, 1000));
@@ -590,7 +786,6 @@ consumCreateSubmit.addEventListener("click", () => {
 consumCreateClose.addEventListener("click", () => { consumCreatePop.hidden = true; });
 element<HTMLButtonElement>("#roster-back").addEventListener("click", () => {
   setHunterRosterVisibility(false);
-  if (latestSnapshot?.screen === "hunter_roster") client.navigateBack();
 });
 fieldBack.addEventListener("click", () => {
   hunterWorldCommandMenu.close();
@@ -601,16 +796,6 @@ equipFixtureItem.addEventListener("click", () => {
   if (latestCombatHud?.equipEligible) client.equipHunterItem(1, 2001);
 });
 connectionStatus.addEventListener("click", () => client.requestResync());
-client.connect();
-void initializeBuildingEvidence();
-void initializeWorld().catch((error: unknown) => {
-  console.error("Failed to initialize the visible world.", error);
-  mapLoadFailed = true;
-  transition.hidden = true;
-  showPanelMessage("Content unavailable", "The visible-world release could not be loaded.");
-  updateBootState();
-});
-
 async function initializeBuildingEvidence(): Promise<void> {
   try {
     const [registry, decodedCatalog] = await Promise.all([
@@ -632,7 +817,7 @@ async function initializeBuildingEvidence(): Promise<void> {
     if (world && latestSnapshot) syncBuildingPresentation(world, latestSnapshot);
     renderBuildingSystem(latestSnapshot);
   } catch (error) {
-    buildingEvidenceError = error instanceof Error ? error.message : "Building evidence failed to load";
+    buildingEvidenceError = debugUi && error instanceof Error ? error.message : t("diagnostics.building_load_failed");
     console.error("Failed to load verified building evidence.", error);
   }
 }
@@ -657,12 +842,12 @@ async function initializeWorld(): Promise<void> {
     }
     hunterWorldCommandMenu.close();
     worldHunterInfoModal.close();
-    showPanelMessage("Entity selected", entityId);
+    showPanelMessage(t("error.entity_selected"), entityId);
   }, (instance, visual) => {
     hunterWorldCommandMenu.close();
     worldHunterInfoModal.close();
     if (ENHANCEMENT_FORGE_BUILDING_IDS.includes(instance.building_id as typeof ENHANCEMENT_FORGE_BUILDING_IDS[number])) {
-      showPanelMessage("Lò Rèn Cường Hóa", "Chọn Hunter, ra lệnh Cường Hóa Trang Bị rồi chạm icon trên đầu Hunter khi tới nơi.");
+      showPanelMessage(t("enhancement.forge_title"), t("enhancement.forge_instruction"));
       return;
     }
     selectedBuildingId = instance.building_id;
@@ -672,24 +857,33 @@ async function initializeWorld(): Promise<void> {
     const evidence = projectBuildingEvidence(buildingEvidenceRegistry, instance.building_id);
     if (!evidence) {
       buildingPanel.hidden = true;
-      showPanelMessage("Building binding unresolved", instance.building_id);
+      showPanelMessage(t("error.building_binding_unresolved"), instance.building_id);
       return;
     }
     buildingPanel.hidden = false;
     renderBuildingSystem(latestSnapshot);
   }, (regionId, nextLevel) => {
     if (!client.setMonsterRegionDensity(regionId, nextLevel)) return;
-    showPanelMessage("Monster density", `${regionId}: ${["I", "II", "III"][nextLevel - 1] ?? nextLevel}`);
+    showPanelMessage(t("error.monster_density"), `${regionId}: ${["I", "II", "III"][nextLevel - 1] ?? nextLevel}`);
   });
   const diagnostics = await visibleWorld.initialize((loaded, total) => {
     const percent = total ? Math.round((loaded / total) * 100) : 0;
+    const gamePercent = Math.min(88, Math.max(5, Math.round(5 + percent * .83)));
     mapLoadingFill.style.width = `${percent}%`;
-    mapLoadingLabel.textContent = `Loading map ${percent}%`;
+    mapLoadingLabel.textContent = t("loading.map_progress", { percent });
+    gameLoadingFill.style.width = `${gamePercent}%`;
+    gameLoadingPercent.textContent = `${gamePercent}%`;
+    gameLoadingStatus.textContent = t("loading.world_assets");
   });
-  mapLoading.hidden = true;
+  mapLoadingLabel.textContent = t("loading.preparing_game");
+  mapLoadingFill.style.width = "100%";
+  gameLoadingFill.style.width = "92%";
+  gameLoadingPercent.textContent = "92%";
+  gameLoadingStatus.textContent = t("loading.preparing_hunters");
+  await Promise.all([hunterRosterActors.preload(), preloadUiAssets()]);
   if (debugUi) {
     evidenceDiagnostics.hidden = false;
-    setPanelMessage(evidenceDiagnostics, diagnostics.fixture ? "Migration fixture" : "Runtime content", `Unresolved evidence: ${diagnostics.unresolved.join(", ")}`);
+    setPanelMessage(evidenceDiagnostics, diagnostics.fixture ? t("diagnostics.fixture") : t("diagnostics.runtime"), t("diagnostics.unresolved", { items: diagnostics.unresolved.join(", ") }));
   }
   app.stage.addChild(visibleWorld.root);
   const resize = (): void => visibleWorld.resize(worldViewport.clientWidth, worldViewport.clientHeight);
@@ -733,13 +927,17 @@ async function initializeWorld(): Promise<void> {
     visibleWorld.zoomBy(event.deltaY > 0 ? -0.1 : 0.1);
     if (latestSnapshot) renderHunterEnhancementInteractions(latestSnapshot);
   }, { passive: false });
-  app.ticker.add(() => visibleWorld.tick());
+  let fpsUpdatedAt = performance.now();
+  app.ticker.add(() => {
+    visibleWorld.tick();
+    const now = performance.now();
+    if (now - fpsUpdatedAt < 500) return;
+    fpsUpdatedAt = now;
+    fpsCounter.textContent = t("world.fps", { value: Math.round(app.ticker.FPS) });
+  });
   world = visibleWorld;
-  if (latestSnapshot) syncBuildingPresentation(visibleWorld, latestSnapshot);
-  mapReady = true;
-  void hunterRosterActors.preload();
-  updateBootState();
   if (latestSnapshot) {
+    syncBuildingPresentation(visibleWorld, latestSnapshot);
     visibleWorld.setMode(latestSnapshot.screen === "field" ? "field" : "village");
     visibleWorld.setMonsterDensityLevels(projectAuthoritativeMonsterField(latestSnapshot.monster_world).farms);
     visibleWorld.update(
@@ -749,6 +947,15 @@ async function initializeWorld(): Promise<void> {
       latestSnapshot.world.drops,
     );
   }
+  // Generate the static render cache and paint the initial authoritative frame
+  // while the boot screen still covers the world canvas.
+  app.render();
+  await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+  app.render();
+  loginReadiness.hidden = true;
+  mapReady = true;
+  if (entryPhase === "loading" && latestSnapshot) scheduleGameReveal(latestSnapshot);
+  updateBootState();
   window.addEventListener("beforeunload", () => {
     resizeObserver.disconnect();
     visibleWorld.destroy();
@@ -758,6 +965,7 @@ async function initializeWorld(): Promise<void> {
 
 function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   latestSnapshot = snapshot;
+  scheduleGameReveal(snapshot);
   world?.setMode(snapshot.screen === "field" ? "field" : "village");
   world?.setMonsterDensityLevels(projectAuthoritativeMonsterField(snapshot.monster_world).farms);
   if (world) syncBuildingPresentation(world, snapshot);
@@ -767,14 +975,8 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   world?.setSelectedEntity(snapshot.world.selected_entity_id === releasedWorldHunterEntityId
     ? null
     : snapshot.world.selected_entity_id);
-  if (snapshot.screen !== "boot") bootRequested = false;
   updateBootState();
-  if (snapshot.screen === "hunter_roster" && !normalizingLegacyRosterScreen) {
-    normalizingLegacyRosterScreen = client.navigateBack();
-  } else if (snapshot.screen !== "hunter_roster") {
-    normalizingLegacyRosterScreen = false;
-  }
-  const village = snapshot.screen === "village" || snapshot.screen === "field" || snapshot.screen === "hunter_roster";
+  const village = syncEntryScreens(snapshot);
   const roster = hunterRosterOpen;
   const commandHunterEntityId = hunterWorldCommandMenu.selectedEntityId();
   const commandHunter = commandHunterEntityId ? hunterForWorldEntity(snapshot, commandHunterEntityId) : null;
@@ -787,17 +989,10 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   } else if (worldHunterInfoModal.visible() && commandHunter) {
     worldHunterInfoModal.refresh(projectHunterInfo(rawHunterFor(snapshot, commandHunter), commandHunter));
   }
-  bottomMenu.hidden = snapshot.screen === "boot";
   const activeMenuAction = roster ? "character" : selectedMenuAction;
   bottomMenu.querySelectorAll<HTMLElement>("[data-action]").forEach((item) => {
     item.classList.toggle("selected", item.dataset.action === activeMenuAction);
   });
-  bootScreen.classList.toggle("leaving", !snapshot.screen || snapshot.screen !== "boot");
-  villageScreen.classList.toggle("visible", village || roster);
-  villageScreen.classList.toggle("field-mode", snapshot.screen === "field");
-  villageScreen.setAttribute("aria-hidden", String(!village && !roster));
-  rosterScreen.classList.toggle("visible", roster);
-  rosterScreen.setAttribute("aria-hidden", String(!roster));
   const now = performance.now();
   if (!hunterRosterPrimed && snapshot.screen === "village") {
     renderHunterRoster(snapshot);
@@ -809,7 +1004,7 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
     nextHunterRosterRefreshAt = now + 500;
   } else if (!roster && hunterInfoModal.visible()) hunterInfoModal.close();
   syncEnhancementTaskView(snapshot);
-  worldModeLabel.textContent = snapshot.screen === "field" ? "Hunt" : "Easy";
+  worldModeLabel.textContent = snapshot.screen === "field" ? t("world.hunt") : t("world.easy");
   const nextPopupSignature = popupDataSignature(snapshot);
   if (!popupInteractionActive && nextPopupSignature !== popupSnapshotSignature) {
     popupSnapshotSignature = nextPopupSignature;
@@ -827,6 +1022,37 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
   hunterPopulation.textContent = `${population.active.length}/${population.capacity}`;
   fieldBack.hidden = snapshot.screen !== "field";
   renderCombatHud(projectCombatHud(snapshot.screen, snapshot.migration_fixture_combat));
+}
+
+function scheduleGameReveal(snapshot: OriginalFlowSnapshot): void {
+  if (!mapReady || entryPhase !== "loading" || snapshot.screen === "boot") return;
+  bootRequested = false;
+  gameLoadingFill.style.width = "100%";
+  gameLoadingPercent.textContent = "100%";
+  gameLoadingStatus.textContent = t("loading.settlement_ready");
+  if (gameLoadingTimeoutTimer !== undefined) window.clearTimeout(gameLoadingTimeoutTimer);
+  gameLoadingTimeoutTimer = undefined;
+  if (gameLoadingHideTimer !== undefined) return;
+  gameLoadingHideTimer = window.setTimeout(() => {
+    entryPhase = "game";
+    gameLoadingHideTimer = undefined;
+    updateBootState();
+    syncEntryScreens(latestSnapshot ?? snapshot);
+  }, 850);
+}
+
+function syncEntryScreens(snapshot: OriginalFlowSnapshot): boolean {
+  const entry = projectEntryPresentation(entryPhase);
+  const village = entry.renderWorld && (snapshot.screen === "village" || snapshot.screen === "field");
+  const roster = hunterRosterOpen;
+  bottomMenu.hidden = !entry.enableGameUi || snapshot.screen === "boot";
+  loginScreen.classList.toggle("leaving", !entry.showLogin);
+  villageScreen.classList.toggle("visible", village || roster);
+  villageScreen.classList.toggle("field-mode", snapshot.screen === "field");
+  villageScreen.setAttribute("aria-hidden", String(!village && !roster));
+  rosterScreen.classList.toggle("visible", roster);
+  rosterScreen.setAttribute("aria-hidden", String(!roster));
+  return village;
 }
 
 function syncEnhancementTaskView(snapshot: OriginalFlowSnapshot): void {
@@ -886,8 +1112,8 @@ function renderHunterEnhancementInteractions(snapshot: OriginalFlowSnapshot): vo
       indicator.className = "hunter-enhancement-travel-indicator";
       indicator.style.setProperty("--interaction-x", `${point.x}px`);
       indicator.style.setProperty("--interaction-y", `${point.y}px`);
-      indicator.setAttribute("aria-label", `${hunter.display_name} đang đi cường hóa trang bị`);
-      indicator.textContent = "CH";
+      indicator.setAttribute("aria-label", t("enhancement.traveling_aria", { name: hunter.display_name }));
+      indicator.textContent = t("world.hunter_initials");
       hunterEnhancementInteractions.append(indicator);
       continue;
     }
@@ -897,16 +1123,16 @@ function renderHunterEnhancementInteractions(snapshot: OriginalFlowSnapshot): vo
     button.className = "hunter-enhancement-interaction";
     button.style.setProperty("--interaction-x", `${point.x}px`);
     button.style.setProperty("--interaction-y", `${point.y}px`);
-    button.setAttribute("aria-label", `Cường hóa trang bị cho ${hunter.display_name}`);
+    button.setAttribute("aria-label", t("enhancement.interact_aria", { name: hunter.display_name }));
     const icon = document.createElement("span");
-    icon.textContent = "CH";
+    icon.textContent = t("world.hunter_initials");
     button.append(icon);
     button.addEventListener("click", () => {
       const intent = createOpenHunterEnhancementIntent(state);
       if (!intent) return;
       const instance = findBuildingInstanceById(snapshot.village.building_system.instances, intent.buildingInstanceId);
       if (!instance || instance.building_id !== "build_15") {
-        showPanelMessage("Không thể mở cường hóa", "Lò Rèn Cường Hóa không còn khả dụng.");
+        showPanelMessage(t("enhancement.open_failed"), t("enhancement.forge_unavailable"));
         return;
       }
       enhancementHunterId = hunter.hunter_id;
@@ -934,9 +1160,13 @@ function renderHunterRoster(snapshot: OriginalFlowSnapshot): void {
     const hunter = roster.active[index];
     return hunter ? hunterRosterCard(hunter, snapshot) : emptyHunterSlot(index + 1);
   }));
-  void hunterRosterActors.render(roster.active.slice(0, roster.capacity));
+  void hunterRosterActors.render(roster.active.slice(0, roster.capacity)).catch((error: unknown) => {
+    console.error("Could not render current Hunter roster actors.", error);
+    hunterRosterStatus.textContent = t("roster.actor_load_failed");
+    hunterRosterStatus.classList.add("error");
+  });
   hunterRosterStatus.textContent = roster.constraintViolation
-    ?? (!roster.resolved ? "Waiting for the authoritative Hunter roster from the server." : "");
+    ?? (!roster.resolved ? t("roster.waiting_server") : "");
   hunterRosterStatus.classList.toggle("error", roster.constraintViolation !== null);
   if (hunterInfoModal.visible()) {
     const selected = [...roster.active, ...roster.waiting].find((hunter) => hunter.id === selectedHunterId);
@@ -966,10 +1196,10 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
   const levelClass = document.createElement("small");
   levelClass.className = "hunter-card-level-class";
   const level = document.createElement("span");
-  level.textContent = hunter.level === null ? "Lv.-" : `Lv.${hunter.level}`;
+  level.textContent = hunter.level === null ? t("common.level_unavailable") : t("common.level_short", { level: hunter.level });
   const className = document.createElement("em");
   className.className = `class-${hunterClassTone(hunter.classFamily)}`;
-  className.textContent = hunter.className ?? hunter.classFamily ?? "Class unavailable";
+  className.textContent = hunter.className ?? hunter.classFamily ?? t("roster.class_unavailable");
   levelClass.append(level, className);
   heading.append(nameRow, levelClass);
   const avatar = document.createElement("span");
@@ -984,8 +1214,10 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
   meta.className = "hunter-card-meta";
   const activity = document.createElement("small");
   activity.textContent = hunter.rosterState === "waiting"
-    ? `Waiting #${hunter.queuePosition ?? "-"}`
-    : hunter.hunt ? `${hunter.hunt.status}${hunter.hunt.zoneId ? ` · ${hunter.hunt.zoneId}` : ""}` : hunter.action ?? "Activity unavailable";
+    ? t("roster.waiting_position", { position: hunter.queuePosition ?? "-" })
+    : hunter.hunt
+      ? `${t(`hunter.activity.${hunter.hunt.status}` as MessageKey)}${hunter.hunt.zoneId ? ` · ${hunter.hunt.zoneId}` : ""}`
+      : hunter.action ?? t("roster.activity_unavailable");
   if (hunter.action?.toLowerCase() === "dead") activity.className = "danger";
   else if (hunter.action?.toLowerCase() === "idle") activity.className = "positive";
   meta.append(activity);
@@ -1000,8 +1232,8 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
   const info = document.createElement("button");
   info.type = "button";
   info.className = "hunter-card-info";
-  info.textContent = "Info";
-  info.setAttribute("aria-label", `${hunter.name} information`);
+  info.textContent = t("roster.info");
+  info.setAttribute("aria-label", t("roster.info_aria", { name: hunter.name }));
   info.addEventListener("click", () => {
     info.blur();
     selectHunterCard(hunter.id);
@@ -1013,8 +1245,8 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
   target.className = "hunter-card-target";
   const worldEntityId = hunterWorldEntityId(snapshot, hunter);
   target.disabled = worldEntityId === null;
-  target.title = worldEntityId ? "Locate Hunter" : "Hunter is not currently visible in town";
-  target.setAttribute("aria-label", worldEntityId ? `Locate ${hunter.name} on map` : `${hunter.name} is not visible on map`);
+  target.title = worldEntityId ? t("roster.locate") : t("roster.not_visible");
+  target.setAttribute("aria-label", worldEntityId ? t("roster.locate_aria", { name: hunter.name }) : t("roster.not_visible_aria", { name: hunter.name }));
   const targetIcon = document.createElement("img");
   targetIcon.src = originalAsset("sprites/ic_target__7095.png");
   targetIcon.alt = "";
@@ -1024,7 +1256,6 @@ function hunterRosterCard(hunter: HunterView, snapshot: OriginalFlowSnapshot): H
     selectHunterCard(hunter.id);
     setHunterRosterVisibility(false);
     hunterInfoModal.close();
-    if (latestSnapshot?.screen === "hunter_roster") client.navigateBack();
     if (!client.selectEntity(worldEntityId)) return;
     if (!world?.focusEntity(worldEntityId)) return;
     // Locate uses the same post-click command bubble as selecting the actor in
@@ -1059,7 +1290,7 @@ function hunterForWorldEntity(snapshot: OriginalFlowSnapshot | null, entityId: s
 function showWorldHunterInfo(entityId: string): void {
   const hunter = hunterForWorldEntity(latestSnapshot, entityId);
   if (!hunter || !latestSnapshot) {
-    showPanelMessage("Hunter binding unresolved", entityId);
+    showPanelMessage(t("error.hunter_binding_unresolved"), entityId);
     return;
   }
   selectedHunterId = hunter.id;
@@ -1068,9 +1299,9 @@ function showWorldHunterInfo(entityId: string): void {
 
 function useHunterSkillFromInfo(hunterId: number, skillId: string): void {
   if (client.useHunterSkill(hunterId, skillId, null)) {
-    showPanelMessage("Đã gửi lệnh dùng kỹ năng", "Server đang kiểm tra mục tiêu, tầm đánh và hồi chiêu");
+    showPanelMessage(t("feedback.skill_sent"), t("feedback.skill_checking"));
   } else {
-    showPanelMessage("Không thể dùng kỹ năng", "Kết nối server chưa sẵn sàng");
+    showPanelMessage(t("feedback.skill_failed"), t("feedback.server_not_ready"));
   }
 }
 
@@ -1081,48 +1312,48 @@ function handleHunterWorldCommandIntent(intent: HunterWorldCommandIntent): void 
   }));
   const hunter = hunterForWorldEntity(latestSnapshot, intent.hunterEntityId);
   if (hunter?.numericId === null || hunter?.numericId === undefined) {
-    showPanelMessage("Không thể ra lệnh", "Hunter ID chưa được bind");
+    showPanelMessage(t("feedback.command_failed"), t("feedback.hunter_id_unbound"));
     return;
   }
   if (intent.type === "sell_hunter_loot") {
     if (client.sellHunterLoot(hunter.numericId)) {
-      showPanelMessage("Đã gửi lệnh bán", "Trading Post đang kiểm tra yêu cầu mua và tiền town");
+      showPanelMessage(t("feedback.sale_sent"), t("feedback.sale_checking"));
     } else {
-      showPanelMessage("Không thể bán", "Kết nối server chưa sẵn sàng");
+      showPanelMessage(t("feedback.sale_failed"), t("feedback.server_not_ready"));
     }
     return;
   }
-  const region = { map_new01: "Thuộc Địa", background_08: "Tử Địa", background_11: "Ma Giới" }[intent.regionId];
+  const region = { map_new01: t("hunter.command.colony"), background_08: t("hunter.command.dead_land"), background_11: t("hunter.command.demon_world") }[intent.regionId];
   if (client.assignHunterHunt(hunter.numericId, intent.regionId)) {
-    showPanelMessage("Đã gửi lệnh thợ săn", `${region} · đang chờ server xác nhận`);
+    showPanelMessage(t("feedback.hunt_sent"), t("feedback.awaiting_server", { region }));
   } else {
-    showPanelMessage("Không thể ra lệnh", "Kết nối server chưa sẵn sàng");
+    showPanelMessage(t("feedback.command_failed"), t("feedback.server_not_ready"));
   }
 }
 
 function handleHunterEnhancementRequest(intent: HunterGearEnhancementRequestIntent): void {
   const hunter = hunterForWorldEntity(latestSnapshot, intent.hunterEntityId);
   if (hunter?.numericId === null || hunter?.numericId === undefined) {
-    showPanelMessage("Không thể ra lệnh", "Hunter ID chưa được bind");
+    showPanelMessage(t("feedback.command_failed"), t("feedback.hunter_id_unbound"));
     return;
   }
   if (!client.startHunterEnhancement(hunter.numericId)) {
-    showPanelMessage("Không thể ra lệnh", "Kết nối server chưa sẵn sàng");
+    showPanelMessage(t("feedback.command_failed"), t("feedback.server_not_ready"));
   }
 }
 
 function emptyHunterSlot(slot: number): HTMLElement {
   const card = document.createElement("article");
   card.className = "hunter-roster-card empty";
-  card.innerHTML = `<span class="hunter-avatar">+</span><b>Empty slot ${slot}</b>`;
+  card.innerHTML = `<span class="hunter-avatar">+</span><b>${t("roster.empty_slot", { slot })}</b>`;
   return card;
 }
 
 
 
 function rawHunterFor(snapshot: OriginalFlowSnapshot, hunter: HunterView): unknown {
-  const roster = snapshot.hunter_roster as unknown as { active_hunters?: unknown[]; waiting_hunters?: unknown[]; waiting_queue?: unknown[] };
-  const rows = [...(roster.active_hunters ?? []), ...(roster.waiting_hunters ?? roster.waiting_queue ?? [])];
+  const roster = snapshot.hunter_roster as unknown as { active_hunters?: unknown[]; waiting_hunters?: unknown[] };
+  const rows = [...(roster.active_hunters ?? []), ...(roster.waiting_hunters ?? [])];
   return rows.find((value) => {
     if (typeof value !== "object" || value === null) return false;
     const row = value as Record<string, unknown>;
@@ -1162,7 +1393,7 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
       const button = document.createElement("button");
       button.type = "button";
       button.className = evidence.id === selectedBuildingId ? "selected" : "";
-      button.textContent = `${evidence.name} ${state?.constructed ? `Lv.${state.level}` : `Lv.1-${evidence.maxLevel ?? "?"}`}`;
+      button.textContent = `${evidence.name} ${state?.constructed ? t("common.level_short", { level: state.level }) : `Lv.1-${evidence.maxLevel ?? "?"}`}`;
       button.addEventListener("click", () => {
         selectedBuildingId = evidence.id;
         selectedBuildingInstanceId = null;
@@ -1212,10 +1443,10 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
   buildingPanel.classList.toggle("potion-shop-ui", isPotionBuilding(selectedBuildingId));
   buildingPanel.classList.toggle("potion-crafting-ui", isPotionCraftingRoute);
   if (!evidence) {
-    buildingName.textContent = selectedBuildingId ?? "Building evidence unavailable";
-    buildingLevel.textContent = buildingEvidenceError ?? "Loading verified building evidence...";
-    buildingFeature.textContent = "No fabricated building data is shown.";
-    buildingCondition.textContent = "All interactions are disabled until the evidence binding loads.";
+    buildingName.textContent = selectedBuildingId ?? t("building.evidence_unavailable");
+    buildingLevel.textContent = buildingEvidenceError ?? t("building.loading_evidence");
+    buildingFeature.textContent = t("building.no_fabricated_data");
+    buildingCondition.textContent = t("building.actions_disabled");
     const previewPath = selectedBuildingVisual?.publicPath ?? "";
     if (previewPath) buildingPreview.src = previewPath;
     else buildingPreview.removeAttribute("src");
@@ -1233,49 +1464,50 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
   else buildingPreview.removeAttribute("src");
   buildingPreview.hidden = !previewPath;
   const currentLevel = selectedInstance?.level ?? (state?.constructed ? state.level : 0);
-  if (buildingPanelMode === "building") buildingName.textContent = "Lv." + currentLevel + " " + evidence.name;
+  if (buildingPanelMode === "building") buildingName.textContent = `${t("common.level_short", { level: currentLevel })} ${evidence.name}`;
   const targetLevel = Math.min(currentLevel + 1, evidence.maxLevel ?? currentLevel + 1);
   buildingLevel.textContent = state?.constructed
-    ? `Level ${currentLevel} / ${evidence.maxLevel ?? "?"} · Next: ${formatLevelCosts(evidence, targetLevel)}`
-    : `Not constructed · ${formatLevelCosts(evidence, 1)}`;
+    ? t("building.level_summary", { current: currentLevel, maximum: evidence.maxLevel ?? "?", cost: formatLevelCosts(evidence, targetLevel) })
+    : t("building.not_constructed", { cost: formatLevelCosts(evidence, 1) });
   const rawSourceSummary = [
-    evidence.maxBuild === null ? null : `maxBuild ${evidence.maxBuild}`,
-    evidence.gridSize === null ? null : `size ${evidence.gridSize[0]}×${evidence.gridSize[1]}`,
+    evidence.maxBuild === null ? null : t("building.max_build", { count: evidence.maxBuild }),
+    evidence.gridSize === null ? null : t("building.grid_size", { width: evidence.gridSize[0], height: evidence.gridSize[1] }),
   ].filter((entry): entry is string => entry !== null).join(" · ");
-  const sourceDescriptions: Record<string, string> = {
-    build_3: "Helps the town purchase loot from hunters",
-    build_7: "Displays and sells weapons crafted at the Blacksmith",
-    build_8: "Displays and sells armor crafted at the Blacksmith",
-    build_9: "Where hunters rest after becoming exhausted from hunting",
-    build_10: "Crafts weapons and armor using materials purchased from hunters",
-    build_11: "Displays and sells potions crafted at the Alchemist's Home",
-    build_20: "Displays and sells rings, necklaces, and belts crafted at the Jeweler",
-    build_21: "Crafts rings, necklaces, and belts using materials purchased from hunters",
-    build_12: "Injured hunters can be healed here",
-    build_13: "Sells food to fill up hunters' satiety gauge",
-    build_14: "Crafts potions from materials purchased from hunters",
-    build_19: "Sells cold beverages that raise hunters' morale a little",
+  const sourceDescriptions: Partial<Record<string, MessageKey>> = {
+    build_3: "building.build_3.description",
+    build_7: "building.build_7.description",
+    build_8: "building.build_8.description",
+    build_9: "building.build_9.description",
+    build_10: "building.build_10.description",
+    build_11: "building.build_11.description",
+    build_20: "building.build_20.description",
+    build_21: "building.build_21.description",
+    build_12: "building.build_12.description",
+    build_13: "building.build_13.description",
+    build_14: "building.build_14.description",
+    build_19: "building.build_19.description",
   };
-  const featureDescription = sourceDescriptions[evidence.id] ?? evidence.description;
+  const descriptionKey = sourceDescriptions[evidence.id];
+  const featureDescription = descriptionKey ? t(descriptionKey) : evidence.description;
   buildingFeature.textContent = buildingPanelMode === "building" ? featureDescription
     : rawSourceSummary ? `${featureDescription} · ${rawSourceSummary}` : featureDescription;
   const targetRequirement = evidence.levels.find((entry) => entry.level === targetLevel)?.requiredTownHallLevel ?? null;
   const localizedRequirement = targetRequirement === null
-    ? "Town Hall requirement unresolved"
-    : originalUiLabel("buildpop_9", undefined, [targetRequirement]);
+    ? t("building.town_hall_unresolved")
+    : originalUiLabel("buildpop_9", "vi", [targetRequirement]);
   buildingCondition.textContent = selectedInstance?.condition?.startsWith("building_prerequisite_required:")
     ? localizedRequirement
     : selectedInstance?.condition ?? localizedRequirement;
   buildingLevelContract.replaceChildren(...evidence.levels.map((entry) => {
     const row = document.createElement("div");
     const title = document.createElement("strong");
-    title.textContent = `Lv.${entry.level}`;
+    title.textContent = t("common.level_short", { level: entry.level });
     const requirement = document.createElement("span");
     requirement.textContent = entry.requiredTownHallLevel === null
-      ? "Town Hall requirement unresolved"
-      : originalUiLabel("buildpop_9", undefined, [entry.requiredTownHallLevel]);
+      ? t("building.town_hall_unresolved")
+      : originalUiLabel("buildpop_9", "vi", [entry.requiredTownHallLevel]);
     const costs = document.createElement("small");
-    costs.textContent = `${originalUiLabel("buildpop_32")}: ${entry.costs.length ? entry.costs.join(" · ") : "--"}`;
+    costs.textContent = t("building.required_resources", { resources: entry.costs.length ? entry.costs.join(" · ") : "--" });
     row.append(title, requirement, costs);
     return row;
   }));
@@ -1286,8 +1518,18 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
   } else if (buildingPanelMode === "building" && evidence.id === TRADING_POST_ROUTE.buildingId) {
     buildingLevelContract.hidden = true;
     buildingCatalog.hidden = false;
-    renderTradingPostCatalog(system.material_stocks, selectedInstance?.level ?? 1, targetRequirement);
-  } else if (buildingPanelMode === "building" && evidence.popupRoute === "production") {
+    const currentRequest = selectedTradingRequest
+      ? system.material_stocks.find((stock) => stock.id === selectedTradingRequest?.id) ?? null
+      : null;
+    if (selectedTradingRequest && !currentRequest) {
+      selectedTradingRequest = null;
+      tradingRequestPending = false;
+    } else if (currentRequest) {
+      selectedTradingRequest = currentRequest;
+    }
+    if (selectedTradingRequest) renderTradingRequestEditor();
+    else renderTradingPostCatalog(system.material_stocks, selectedInstance?.level ?? 1, targetRequirement);
+  } else if (buildingPanelMode === "building" && evidence.popupRoute === "production" && isCatalogShopRoute) {
     buildingLevelContract.hidden = true;
     buildingCatalog.hidden = false;
     if (isCraftingGearRoute) {
@@ -1297,16 +1539,23 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     } else {
       renderDisplayShopCatalog(system.recipes, selectedBuildingId);
     }
-  } else if (buildingPanelMode === "building" && evidence.popupRoute === "service") {
+  } else if (buildingPanelMode === "building" && evidence.popupRoute === "production") {
+    renderBuildingContractError(t("building.production_contract_missing"));
+    return;
+  } else if (buildingPanelMode === "building" && evidence.popupRoute === "service" && productServiceRoute(selectedBuildingId ?? "") !== null) {
     if (!selectedBuildingId) return;
     buildingLevelContract.hidden = true;
     buildingCatalog.hidden = false;
     const currentBuildingLevel = selectedInstance?.level ?? 1;
     const route = productServiceRoute(selectedBuildingId);
+    if (!route) {
+      renderBuildingContractError(t("building.service_contract_missing"));
+      return;
+    }
     const routeCandidates = system.recipes.filter((item) => item.shop_id === selectedBuildingId);
     // Project through the decoded route contract before rendering. This keeps
     // service popups isolated to their seven recovered product IDs.
-    const routeProjection = route ? projectProductService(selectedBuildingId, routeCandidates.map((recipe): ProductServiceInput => ({
+    const routeProjection = projectProductService(selectedBuildingId, routeCandidates.map((recipe): ProductServiceInput => ({
       productId: recipe.id,
       productName: recipe.product_name,
       requiredLevel: recipe.required_level,
@@ -1316,45 +1565,39 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
       stock: recipe.stock,
       capacity: recipe.capacity,
       materialCosts: recipe.material_costs.map((cost) => ({ materialId: cost.material_id, displayName: cost.display_name, quantity: cost.quantity, outputQuantity: cost.output_quantity })),
-    })), routeCandidates[0]?.capacity ?? 0) : null;
-    const allowedProductIds = routeProjection ? new Set(routeProjection.products.map((product) => product.productId)) : new Set<string>();
-    const allRecipes = routeProjection
-      ? routeCandidates.filter((item) => allowedProductIds.has(item.id))
-      : [];
+    })), routeCandidates[0]?.capacity ?? 0);
+    if (!routeProjection) {
+      renderBuildingContractError(t("building.contract_error"));
+      return;
+    }
+    const allowedProductIds = new Set(routeProjection.products.map((product) => product.productId));
+    const allRecipes = routeCandidates.filter((item) => allowedProductIds.has(item.id));
     const recipes = allRecipes.filter((item) => item.required_level < currentBuildingLevel);
     const totalStock = recipes.reduce((total, recipe) => total + recipe.stock, 0);
     const tabs = document.createElement("div");
     tabs.className = "service-tabs";
-    const activeServiceTab = serviceTabsByBuilding.get(route?.buildingId ?? selectedBuildingId) ?? "production";
-    const authoritativeService = route
-      ? snapshot.hunter_roster.product_services.find((service) => service.building_id === route.buildingId) ?? null
-      : null;
-    if (route) {
-      for (const tab of ["production", "hunters"] as const) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = tab === activeServiceTab ? "selected" : "";
-        button.textContent = tab === "production" ? "Production" : "Hunters";
-        button.addEventListener("click", () => {
-          serviceTabsByBuilding.set(route.buildingId, tab);
-          renderBuildingSystem(latestSnapshot);
-        });
-        tabs.append(button);
-      }
-      const capacityLabel = document.createElement("strong");
-      capacityLabel.textContent = activeServiceTab === "production"
-        ? `Stock ${totalStock}`
-        : `Hunters ${authoritativeService?.active.length ?? 0} / ${authoritativeService?.slots ?? 0}`;
-      tabs.append(capacityLabel);
-    } else {
-      tabs.innerHTML = `<b>Production</b><span>Hunters</span><strong>Stock ${totalStock}</strong>`;
+    const activeServiceTab = serviceTabsByBuilding.get(route.buildingId) ?? "production";
+    const authoritativeService = snapshot.hunter_roster.product_services.find((service) => service.building_id === route.buildingId) ?? null;
+    for (const tab of ["production", "hunters"] as const) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = tab === activeServiceTab ? "selected" : "";
+      button.textContent = tab === "production" ? t("service.production") : t("service.hunters");
+      button.addEventListener("click", () => {
+        serviceTabsByBuilding.set(route.buildingId, tab);
+        renderBuildingSystem(latestSnapshot);
+      });
+      tabs.append(button);
     }
+    const capacityLabel = document.createElement("strong");
+    capacityLabel.textContent = activeServiceTab === "production"
+      ? t("service.stock_total", { stock: totalStock })
+      : t("service.hunter_slots", { active: authoritativeService?.active.length ?? 0, slots: authoritativeService?.slots ?? 0 });
+    tabs.append(capacityLabel);
     const productList = document.createElement("div");
     productList.className = "service-product-list";
     productList.replaceChildren(...recipes.map((recipe) => {
-      const serviceRow = route !== null;
-      const row = document.createElement(serviceRow ? "div" : "button");
-      if (row instanceof HTMLButtonElement) row.type = "button";
+      const row = document.createElement("div");
       row.className = "service-product-row";
       const icon = document.createElement("img");
       const productIcon = recipe.icon;
@@ -1365,21 +1608,21 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
       const name = document.createElement("strong");
       name.textContent = recipe.product_name;
       const effect = document.createElement("small");
-      effect.textContent = "Recover " + recipe.effect_value.toLocaleString() + " " + (route?.effectKind ?? recipe.effect_kind) + " in " + (recipe.duration_ms / 1000) + " secs";
+      effect.textContent = t("service.recover", { value: formatNumber(recipe.effect_value), effect: route?.effectKind ?? recipe.effect_kind, seconds: recipe.duration_ms / 1000 });
       const economy = document.createElement("small");
       if (route) {
         const goldIcon = document.createElement("img");
         goldIcon.className = "inline-currency-icon";
         goldIcon.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
         goldIcon.alt = "";
-        economy.append(document.createTextNode("Fee "), goldIcon, document.createTextNode(` ${recipe.sale_price} Gold`));
+        economy.append(document.createTextNode(`${t("service.fee", { fee: formatNumber(recipe.sale_price) })} `), goldIcon);
       } else {
-        economy.textContent = `Fee ${recipe.sale_price} Gold · Capacity ${recipe.stock}/${recipe.capacity}`;
+        economy.textContent = t("service.fee_capacity", { fee: formatNumber(recipe.sale_price), stock: recipe.stock, capacity: recipe.capacity });
       }
       text.append(name, effect, economy);
-      const action = document.createElement(serviceRow ? "button" : "b");
-      if (action instanceof HTMLButtonElement) action.type = "button";
-      action.textContent = "Produce";
+      const action = document.createElement("button");
+      action.type = "button";
+      action.textContent = t("common.produce");
       row.append(icon, text, action);
       const openProduct = () => {
         selectedRecipe = recipe;
@@ -1388,8 +1631,7 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
         consumCreatePop.hidden = false;
         renderConsumCreatePop();
       };
-      if (serviceRow) action.addEventListener("click", openProduct);
-      else row.addEventListener("click", openProduct);
+      action.addEventListener("click", openProduct);
       return row;
     }));
     const nextRecipe = allRecipes
@@ -1398,22 +1640,22 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     const upgradeHint = document.createElement("div");
     upgradeHint.className = "service-upgrade-hint";
     if (nextRecipe) {
-      upgradeHint.textContent = `When Upgraded to Lv.${nextRecipe.required_level + 1} Able to produce ${nextRecipe.product_name}`;
-      if (route && targetRequirement !== null) {
+      upgradeHint.textContent = t("service.upgrade_product", { level: nextRecipe.required_level + 1, product: nextRecipe.product_name });
+      if (targetRequirement !== null) {
         const requirement = document.createElement("em");
-        requirement.textContent = `Town Hall Lv.${targetRequirement} or higher required.`;
+        requirement.textContent = originalUiLabel("buildpop_9", "vi", [targetRequirement]);
         upgradeHint.append(requirement);
       }
     } else {
-      upgradeHint.textContent = "All products available at this level";
+      upgradeHint.textContent = t("service.all_products");
     }
-    if (route && activeServiceTab === "hunters") {
+    if (activeServiceTab === "hunters") {
       const hunterList = document.createElement("div");
       hunterList.className = "service-hunter-list";
       if (!authoritativeService?.roster_resolved) {
         const blocked = document.createElement("div");
         blocked.className = "service-hunter-empty";
-        blocked.textContent = authoritativeService?.blockers.join(" · ") || "Hunter service state is unresolved.";
+        blocked.textContent = authoritativeService?.blockers.join(" · ") || t("service.state_unresolved");
         hunterList.append(blocked);
       } else {
         const stockedRecipes = recipes.filter((recipe) => recipe.stock > 0);
@@ -1423,21 +1665,21 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
           row.className = "service-product-row service-hunter-row";
           const text = document.createElement("span");
           const name = document.createElement("strong");
-          name.textContent = `Hunter #${hunter.hunter_id}`;
+          name.textContent = t("service.hunter_name", { id: hunter.hunter_id });
           const gauge = document.createElement("small");
-          gauge.textContent = `${route.effectKind} ${hunter.current_value.toLocaleString()} / ${hunter.maximum_value.toLocaleString()}`;
+          gauge.textContent = t("service.hunter_gauge", { effect: route.effectKind, current: formatNumber(hunter.current_value), maximum: formatNumber(hunter.maximum_value) });
           text.append(name, gauge);
           const product = document.createElement("select");
           for (const recipe of stockedRecipes) {
             const option = document.createElement("option");
             option.value = recipe.id;
-            option.textContent = `${recipe.product_name} (+${recipe.effect_value.toLocaleString()})`;
+            option.textContent = t("service.product_bonus", { product: recipe.product_name, value: formatNumber(recipe.effect_value) });
             product.append(option);
           }
           const action = document.createElement("button");
           action.type = "button";
           const activeVisit = authoritativeService.active.find((visit) => visit.hunter_id === hunter.hunter_id);
-          action.textContent = activeVisit ? `${Math.ceil(activeVisit.remaining_ms / 1000)}s` : route.buildingId === "build_9" ? "Rest" : route.buildingId === "build_12" ? "Treat" : "Serve";
+          action.textContent = activeVisit ? `${Math.ceil(activeVisit.remaining_ms / 1000)}s` : route.buildingId === "build_9" ? t("service.rest") : route.buildingId === "build_12" ? t("service.treat") : t("service.serve");
           action.disabled = hunter.service_state === "serving" || stockedRecipes.length === 0 || authoritativeService.available_slots === 0 || !selectedInstance;
           action.addEventListener("click", () => {
             if (selectedInstance && product.value) client.startBuildingService(selectedInstance.instance_id, hunter.hunter_id, product.value);
@@ -1456,6 +1698,9 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     } else {
       buildingCatalog.replaceChildren(tabs, productList, upgradeHint);
     }
+  } else if (buildingPanelMode === "building" && evidence.popupRoute === "service") {
+    renderBuildingContractError(t("building.service_contract_missing"));
+    return;
   } else if (buildingPanelMode === "building") {
     // Detail popups show the building function; upgrade levels belong to the
     // upgrade action and must not replace the building's main content.
@@ -1474,7 +1719,7 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     || evidence.id === TRADING_POST_ROUTE.buildingId
     || (evidence.popupRoute !== "request" && !isBounty && !isEnhancementForgeRoute);
   buildingConstruct.disabled = !spriteResolved || state?.constructed !== false || state.can_construct !== true;
-  buildingConstruct.title = !spriteResolved ? "Building sprite binding unresolved" : state?.condition ?? "";
+  buildingConstruct.title = !spriteResolved ? t("building.sprite_unresolved") : state?.condition ?? "";
   buildingUpgrade.disabled = !spriteResolved || !selectedInstance || selectedInstance.can_upgrade !== true;
   buildingUpgrade.title = selectedInstance?.condition ?? "";
   buildingUpgrade.textContent = productServiceRoute(evidence.id) || isCatalogShopRoute
@@ -1493,26 +1738,36 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     : !selectedInstance || (evidence.popupRoute !== "request" && evidence.popupRoute !== "production" && !isBounty);
   buildingUse.title = isEnhancementForgeRoute
     ? enhancementView === "select"
-      ? "Chọn trang bị rồi tiếp tục sang bước thiết lập cường hóa."
-      : "Chi phí, nguyên liệu và tỷ lệ thành công phải được xác minh trước khi giao dịch được mở."
+      ? t("enhancement.select_tooltip")
+      : t("enhancement.locked_tooltip")
     : evidence.popupRoute
-    ? "The popup binding is resolved; its exact recovered hierarchy is not implemented yet."
-    : evidence.actionBlockedReason ?? "Popup binding unresolved";
-  const serviceLabels: Record<string, string> = {
-    build_2: "Revive hunter",
-    build_9: "Rest",
-    build_12: "Treat hunter",
-    build_13: "Serve meal",
-    build_19: "Serve drink",
-    build_24: "Bank service",
-    build_25: "Study",
-    build_26: "Restore",
-    build_27: "Encourage",
-    build_28: "Train",
+    ? t("building.popup_resolved_unimplemented")
+    : evidence.actionBlockedReason ?? t("building.popup_unresolved");
+  const serviceLabels: Record<string, MessageKey> = {
+    build_2: "service.revive",
+    build_9: "service.rest",
+    build_12: "service.treat_hunter",
+    build_13: "service.serve_meal",
+    build_19: "service.serve_drink",
+    build_24: "service.bank",
+    build_25: "service.study",
+    build_26: "service.restore",
+    build_27: "service.encourage",
+    build_28: "service.train",
   };
-  buildingUse.textContent = isEnhancementForgeRoute ? (enhancementView === "select" ? "Tiếp Tục" : "Cường Hóa") : isBounty ? "Bounties" : evidence.popupRoute === "request" ? "Requests"
-    : evidence.popupRoute === "service" ? (serviceLabels[evidence.id] ?? "Use service")
-    : evidence.popupRoute === "production" ? "Create" : "Open";
+  buildingUse.textContent = isEnhancementForgeRoute ? (enhancementView === "select" ? t("enhancement.continue") : t("enhancement.action")) : isBounty ? t("service.bounties") : evidence.popupRoute === "request" ? t("service.requests")
+    : evidence.popupRoute === "service" ? t(serviceLabels[evidence.id] ?? "service.use")
+    : evidence.popupRoute === "production" ? t("common.create") : t("common.open");
+}
+
+function renderBuildingContractError(message: string): void {
+  const error = document.createElement("p");
+  error.className = "building-contract-error";
+  error.textContent = message;
+  buildingLevelContract.hidden = true;
+  buildingCatalog.hidden = false;
+  buildingCatalog.replaceChildren(error);
+  buildingUse.hidden = true;
 }
 
 function gearKindFromRecipe(recipe: ShopRecipeSnapshot): GearKind | null {
@@ -1595,7 +1850,7 @@ function fullGearRecipes(liveRecipes: readonly ShopRecipeSnapshot[], producerBui
 }
 
 function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], producerBuildingId: string): void {
-  const qualityLabels = ["Regular", "Sturdy", "Refined", "Powerful", "Supreme"] as const;
+  const qualityLabels = [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")] as const;
   const tabsForBuilding: readonly GearKind[] = producerBuildingId === JEWELER_BUILDING_IDS[0] ? JEWELER_GEAR_TABS : BLACKSMITH_GEAR_TABS;
   if (!tabsForBuilding.includes(gearTab)) gearTab = tabsForBuilding[0];
   const all = fullGearRecipes(recipes, producerBuildingId).filter((recipe) => gearKindFromRecipe(recipe) === gearTab);
@@ -1605,8 +1860,8 @@ function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], produ
     selectedBuildingInstanceId,
   )?.level ?? 1;
   const difficultyOptions = producerBuildingId === JEWELER_BUILDING_IDS[0]
-    ? ["Junk", "Easy", "Normal", "Hard", "Expert", "Nightmare", "Torment"]
-    : ["Easy", "Normal", "Hard", "Expert", "Nightmare", "Torment"];
+    ? [t("difficulty.junk"), t("difficulty.easy"), t("difficulty.normal"), t("difficulty.hard"), t("difficulty.expert"), t("difficulty.nightmare"), t("difficulty.torment")]
+    : [t("difficulty.easy"), t("difficulty.normal"), t("difficulty.hard"), t("difficulty.expert"), t("difficulty.nightmare"), t("difficulty.torment")];
   const maxDifficultyGroup = Math.min(6, producerBuildingId === JEWELER_BUILDING_IDS[0]
     ? Math.max(0, buildingLevel - 1)
     : Math.max(1, buildingLevel));
@@ -1627,7 +1882,7 @@ function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], produ
   for (const tab of tabsForBuilding) {
     const button = document.createElement("button");
     button.type = "button";
-    button.setAttribute("aria-label", tab);
+    button.setAttribute("aria-label", t(`craft.kind.${tab}` as MessageKey));
     button.dataset.gearTab = tab;
     button.className = tab === gearTab ? "selected" : "";
     button.addEventListener("click", () => { gearTab = tab; renderBuildingSystem(latestSnapshot); });
@@ -1639,7 +1894,7 @@ function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], produ
     const group = producerBuildingId === JEWELER_BUILDING_IDS[0] ? index : index + 1;
     return { value: String(group), label };
   });
-  const difficulty = createGameDropdown("Gear difficulty", String(blacksmithDifficultyGroup), difficultyEntries, (value) => {
+  const difficulty = createGameDropdown(t("craft.gear_difficulty"), String(blacksmithDifficultyGroup), difficultyEntries, (value) => {
     blacksmithDifficultyGroup = Number(value);
     renderBuildingSystem(latestSnapshot);
   });
@@ -1648,18 +1903,18 @@ function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], produ
   craftable.className = "blacksmith-craftable";
   const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.checked = blacksmithCraftableOnly;
   checkbox.addEventListener("change", () => { blacksmithCraftableOnly = checkbox.checked; renderBuildingSystem(latestSnapshot); });
-  craftable.append(checkbox, document.createTextNode("Craftable Items"));
+  craftable.append(checkbox, document.createTextNode(t("craft.craftable_items")));
   controls.append(tabs, filters);
   const grid = document.createElement("div"); grid.className = "blacksmith-grid";
   grid.replaceChildren(...matching.map((recipe) => {
     const card = document.createElement("button"); card.type = "button";
     card.className = "gear-catalog-card";
     card.dataset.rating = String(recipe.required_level);
-    const qualityLabel = qualityLabels[recipe.required_level] ?? `Quality ${recipe.required_level}`;
-    card.setAttribute("aria-label", `${recipe.product_name} · ${qualityLabel}`);
+    const qualityLabel = qualityLabels[recipe.required_level] ?? t("craft.quality_fallback", { quality: recipe.required_level });
+    card.setAttribute("aria-label", t("craft.item_quality", { item: recipe.product_name, quality: qualityLabel }));
     appendGearArt(card, recipe);
-    const name = document.createElement("strong"); name.textContent = `${recipe.product_name} · ${qualityLabel}`;
-    const action = document.createElement("b"); action.textContent = "Craft";
+    const name = document.createElement("strong"); name.textContent = t("craft.item_quality", { item: recipe.product_name, quality: qualityLabel });
+    const action = document.createElement("b"); action.textContent = t("common.create");
     card.append(name, action);
     card.addEventListener("click", () => openGearRecipe(recipe));
     return card;
@@ -1667,19 +1922,19 @@ function renderGearCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], produ
   if (matching.length === 0) {
     const empty = document.createElement("p");
     empty.className = "blacksmith-empty";
-    empty.textContent = "No items match this filter.";
+    empty.textContent = t("craft.no_filter_matches");
     grid.append(empty);
   }
   const footer = document.createElement("div");
   footer.className = "blacksmith-catalog-footer";
   const count = document.createElement("span");
-  count.textContent = `${matching.length} items`;
+  count.textContent = t("craft.item_count", { count: matching.length });
   footer.append(count, craftable);
   const hint = document.createElement("div"); hint.className = "blacksmith-upgrade-hint";
   const nextDifficulty = difficultyOptions[(producerBuildingId === JEWELER_BUILDING_IDS[0] ? buildingLevel : buildingLevel)];
   hint.textContent = nextDifficulty
-    ? `When Upgraded to Lv.${buildingLevel + 1} Able to craft ${nextDifficulty} ${producerBuildingId === JEWELER_BUILDING_IDS[0] ? "accessories" : "weapons and armor"}`
-    : "All decoded gear difficulties are available";
+    ? t("craft.gear_upgrade_hint", { level: buildingLevel + 1, difficulty: nextDifficulty, kind: producerBuildingId === JEWELER_BUILDING_IDS[0] ? t("craft.kind.accessories") : t("craft.kind.weapons_armor") })
+    : t("craft.all_gear_difficulties");
   buildingCatalog.replaceChildren(controls, grid, footer, hint);
 }
 
@@ -1699,15 +1954,15 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
 
   const shell = document.createElement("section");
   shell.className = "enhancement-forge-shell";
-  shell.setAttribute("aria-label", "Gear enhancement controls");
+  shell.setAttribute("aria-label", t("enhancement.controls_aria"));
 
   const workspace = document.createElement("div");
   workspace.className = "enhancement-workspace";
   const requiredMaterial = task?.required_materials[0];
   workspace.append(
-    createEnhancementMaterialSlot("Nguyên Liệu Thêm", "Đá Ánh Sáng", "optional", "material:137", "--/--"),
-    createEnhancementGearSlot(selected?.gear.level ?? null, presentation?.name ?? "Chọn trang bị", presentation?.icon ?? null),
-    createEnhancementMaterialSlot("Nguyên Liệu Cường Hóa", requiredMaterial?.material_id === "material:160" ? "Đá Cường Hóa Tối Thượng" : "Đá Cường Hóa", "required", requiredMaterial?.material_id ?? "material:160", requiredMaterial ? `?/${requiredMaterial.quantity}` : "--/--"),
+    createEnhancementMaterialSlot(t("enhancement.optional_material"), t("enhancement.light_stone"), "optional", "material:137", "--/--"),
+    createEnhancementGearSlot(selected?.gear.level ?? null, presentation?.name ?? t("enhancement.select_gear"), presentation?.icon ?? null),
+    createEnhancementMaterialSlot(t("enhancement.required_material"), requiredMaterial?.material_id === "material:160" ? t("enhancement.ultimate_stone") : t("enhancement.stone"), "required", requiredMaterial?.material_id ?? "material:160", requiredMaterial ? `?/${requiredMaterial.quantity}` : "--/--"),
   );
 
   const stage = document.createElement("div");
@@ -1716,7 +1971,7 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   hunterActor.className = "enhancement-stage-actor hunter";
   const hunterSilhouette = document.createElement("i");
   const hunterName = document.createElement("span");
-  hunterName.textContent = selected?.hunter.display_name ?? "Hunter";
+  hunterName.textContent = selected?.hunter.display_name ?? t("common.hunter");
   hunterActor.append(hunterSilhouette, hunterName);
   const anvil = document.createElement("div");
   anvil.className = "enhancement-anvil";
@@ -1725,13 +1980,13 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   smithActor.className = "enhancement-stage-actor smith";
   const smithSilhouette = document.createElement("i");
   const smithName = document.createElement("span");
-  smithName.textContent = "Thợ rèn";
+  smithName.textContent = t("enhancement.smith");
   smithActor.append(smithSilhouette, smithName);
   stage.append(hunterActor, anvil, smithActor);
 
   const stateBanner = document.createElement("strong");
   stateBanner.className = "enhancement-state-banner";
-  stateBanner.textContent = enhancementView === "configure" && selected ? "Thiết lập cách cường hóa" : "Chọn trang bị để cường hóa";
+  stateBanner.textContent = enhancementView === "configure" && selected ? t("enhancement.configure") : t("enhancement.select_prompt");
 
   const configureControls = document.createElement("div");
   configureControls.className = "enhancement-configure-controls";
@@ -1739,15 +1994,15 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   cost.className = "enhancement-cost-row unresolved";
   const goldIcon = document.createElement("img");
   goldIcon.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
-  goldIcon.alt = "Gold";
+  goldIcon.alt = t("common.gold");
   const nextCost = task?.next_attempt_gold_cost;
-  cost.append(document.createTextNode("Tiền Thợ Săn phải trả"), goldIcon, document.createTextNode(nextCost === null || nextCost === undefined ? "Chưa xác định" : nextCost.toLocaleString()));
+  cost.append(document.createTextNode(t("enhancement.hunter_fee")), goldIcon, document.createTextNode(nextCost === null || nextCost === undefined ? t("common.unresolved") : formatNumber(nextCost)));
   if (task?.next_attempt_success_bps !== null && task?.next_attempt_success_bps !== undefined) {
-    cost.append(document.createTextNode(` · Tỷ lệ ${task.next_attempt_success_bps / 100}%`));
+    cost.append(document.createTextNode(` · ${t("enhancement.success_rate", { rate: task.next_attempt_success_bps / 100 })}`));
   }
   const assists = document.createElement("div");
   assists.className = "enhancement-assists";
-  const optionalMaterials = [["Đá Ánh Sáng", "material:137"], ["Quặng Cường Hóa", "material:154"]] as const;
+  const optionalMaterials = [[t("enhancement.light_stone"), "material:137"], [t("enhancement.ore"), "material:154"]] as const;
   for (const [label, materialId] of optionalMaterials) {
     const option = document.createElement("label");
     const checkbox = document.createElement("input");
@@ -1767,10 +2022,10 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   const modes = document.createElement("div");
   modes.className = "enhancement-mode-options";
   const labels = {
-    single: "Chỉ 1 lần",
-    to_10: "Cho đến 10",
-    to_15: "Cho đến 15",
-    to_20: "Cho đến 20",
+    single: t("enhancement.mode.single"),
+    to_10: t("enhancement.mode.to_10"),
+    to_15: t("enhancement.mode.to_15"),
+    to_20: t("enhancement.mode.to_20"),
   } as const;
   for (const mode of GEAR_ENHANCEMENT_MODES) {
     const option = document.createElement("label");
@@ -1795,12 +2050,12 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   walletIcon.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
   walletIcon.alt = "";
   const walletAmount = document.createElement("b");
-  walletAmount.textContent = selected ? selected.hunter.gold.toLocaleString() : "--";
-  wallet.append(document.createTextNode("Tiền Thợ Săn có"), walletIcon, walletAmount);
+  walletAmount.textContent = selected ? formatNumber(selected.hunter.gold) : "--";
+  wallet.append(document.createTextNode(t("enhancement.hunter_wallet")), walletIcon, walletAmount);
 
   const inventory = document.createElement("div");
   inventory.className = "enhancement-inventory";
-  inventory.setAttribute("aria-label", "Owned gear");
+  inventory.setAttribute("aria-label", t("enhancement.owned_gear_aria"));
   for (const owned of ownedRows) {
     const gearPresentation = enhancementGearPresentation(owned.gear.product_id, _system);
     const row = document.createElement("button");
@@ -1833,28 +2088,28 @@ function renderEnhancementForge(_system: BuildingSystemSnapshot): void {
   if (ownedRows.length === 0) {
     const empty = document.createElement("p");
     empty.className = "enhancement-empty";
-    empty.textContent = "Hunter chưa có trang bị sở hữu hợp lệ để cường hóa.";
+    empty.textContent = t("enhancement.no_owned_gear");
     inventory.append(empty);
   }
 
   const capNote = document.createElement("p");
   capNote.className = "enhancement-cap-note";
-  capNote.textContent = "Cấp cường hóa tối đa: +20";
+  capNote.textContent = t("enhancement.max_level");
 
   const evidence = document.createElement("p");
   evidence.className = "enhancement-evidence-note";
-  evidence.textContent = "Chi phí, nguyên liệu và tỷ lệ thành công đang chờ evidence gốc. Hệ thống sẽ không trừ vàng hay vật phẩm cho đến khi dữ liệu được xác minh.";
+  evidence.textContent = t("enhancement.evidence_note");
 
   const processing = document.createElement("section");
   processing.className = "enhancement-processing";
   processing.hidden = enhancementView !== "processing";
-  processing.innerHTML = "<div class=\"enhancement-processing-art\"></div><strong>Đang cường hóa...</strong>";
+  processing.innerHTML = `<div class="enhancement-processing-art"></div><strong>${t("enhancement.processing")}</strong>`;
   const result = document.createElement("section");
   result.className = "enhancement-result";
   result.hidden = enhancementView !== "result";
   const finalLevel = task?.final_level === null || task?.final_level === undefined ? null : `+${task.final_level}`;
-  const spent = task ? `Đã dùng ${task.spent_gold.toLocaleString()} Gold` : "Chờ snapshot authoritative từ máy chủ.";
-  result.innerHTML = `<strong>Kết quả cường hóa</strong><p>${finalLevel ? `Mức cường hóa: ${finalLevel}` : "Mức cường hóa chưa xác định"}<br />${spent}<br />${task?.stop_reason ?? ""}</p>`;
+  const spent = task ? t("enhancement.spent_gold", { amount: formatNumber(task.spent_gold) }) : t("enhancement.waiting_snapshot");
+  result.innerHTML = `<strong>${t("enhancement.result")}</strong><p>${finalLevel ? t("enhancement.final_level", { level: finalLevel }) : t("enhancement.final_level_unresolved")}<br />${spent}<br />${task?.stop_reason ?? ""}</p>`;
 
   shell.append(workspace, stage, stateBanner);
   if (enhancementView === "configure" && selected) shell.append(configureControls);
@@ -1999,7 +2254,7 @@ function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildi
   const allowed = recipes.filter((recipe) => recipe.shop_id === buildingId && recipe.required_level < level);
   const heading = document.createElement("h3");
   const isPotionShop = buildingId === POTION_SHOP_BUILDING_ID;
-  heading.textContent = isPotionShop ? "Potion display" : "Display list";
+  heading.textContent = isPotionShop ? t("shop.potion_display") : t("shop.display_list");
   const grid = document.createElement("div");
   grid.className = isPotionShop ? "display-shop-grid potion-recipe-grid" : "display-shop-grid";
   grid.replaceChildren(...allowed.map((recipe) => {
@@ -2008,7 +2263,7 @@ function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildi
       card.className = "gear-catalog-card display-card potion-catalog-card potion-display-card";
       const badge = document.createElement("span");
       badge.className = "potion-stock-badge";
-      badge.textContent = `Stock\n${recipe.stock}`;
+      badge.textContent = `${t("common.stock")}\n${recipe.stock}`;
       appendPotionArt(card, recipe);
       const name = document.createElement("strong");
       name.textContent = recipe.product_name;
@@ -2016,7 +2271,7 @@ function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildi
       const gold = document.createElement("img");
       gold.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
       gold.alt = "";
-      price.append(gold, document.createTextNode(recipe.sale_price.toLocaleString()));
+      price.append(gold, document.createTextNode(formatNumber(recipe.sale_price)));
       card.append(badge, name, price);
       return card;
     }
@@ -2025,14 +2280,14 @@ function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildi
     card.className = "gear-catalog-card display-card";
     const badge = document.createElement("span");
     badge.className = "on-display-badge";
-    badge.textContent = "On\nDisplay";
+    badge.textContent = t("shop.on_display");
     appendGearArt(card, recipe);
     const name = document.createElement("strong"); name.textContent = recipe.product_name;
     const price = document.createElement("small");
     const gold = document.createElement("img");
     gold.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
     gold.alt = "";
-    price.append(gold, document.createTextNode(recipe.sale_price.toLocaleString()));
+    price.append(gold, document.createTextNode(formatNumber(recipe.sale_price)));
     card.append(badge, name, price);
     card.addEventListener("click", () => openGearDetail(recipe));
     return card;
@@ -2040,17 +2295,17 @@ function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildi
   if (allowed.length === 0) {
     const empty = document.createElement("p");
     empty.className = "display-shop-empty";
-    empty.textContent = isPotionShop ? "No crafted potions on display." : "No crafted gear on display.";
+    empty.textContent = isPotionShop ? t("shop.no_potions") : t("shop.no_gear");
     grid.append(empty);
   }
   const hint = document.createElement("div");
   hint.className = "blacksmith-upgrade-hint";
-  const nextTier = ["Sturdy", "Refined", "Powerful", "Supreme"][Math.min(level - 1, 3)];
+  const nextTier = ["shop.tier.sturdy", "shop.tier.refined", "shop.tier.powerful", "shop.tier.supreme"] as const;
   hint.textContent = isPotionShop
-    ? "Potions crafted at the Alchemist's Home are stocked here for hunters."
+    ? t("shop.potion_stock_hint")
     : level < 5
-      ? `When Upgraded to Lv.${level + 1} Able to display ${nextTier} ${buildingId === "build_7" ? "weapons" : "armor"}`
-      : "All decoded display tiers are available";
+      ? t("shop.display_upgrade_hint", { level: level + 1, tier: t(nextTier[Math.min(level - 1, 3)]), kind: t(buildingId === "build_7" ? "shop.kind.weapons" : "shop.kind.armor") })
+      : t("shop.all_tiers");
   buildingCatalog.replaceChildren(heading, grid, hint);
 }
 
@@ -2068,7 +2323,7 @@ function appendPotionArt(target: HTMLElement, recipe: ShopRecipeSnapshot): void 
 function renderPotionCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], buildingLevel: number): void {
   const allowed = recipes.filter((recipe) => recipe.shop_id === ALCHEMIST_BUILDING_ID && recipe.required_level < buildingLevel);
   const heading = document.createElement("h3");
-  heading.textContent = "Potion recipes";
+  heading.textContent = t("shop.potion_recipes");
   const grid = document.createElement("div");
   grid.className = "display-shop-grid potion-recipe-grid";
   grid.replaceChildren(...allowed.map((recipe) => {
@@ -2077,12 +2332,12 @@ function renderPotionCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], bui
     card.className = "gear-catalog-card potion-catalog-card";
     const stock = document.createElement("span");
     stock.className = "potion-stock-badge";
-    stock.textContent = `Stock\n${recipe.stock}/${recipe.capacity}`;
+    stock.textContent = `${t("common.stock")}\n${recipe.stock}/${recipe.capacity}`;
     appendPotionArt(card, recipe);
     const name = document.createElement("strong");
     name.textContent = recipe.product_name;
     const action = document.createElement("b");
-    action.textContent = "Create";
+    action.textContent = t("common.create");
     card.append(stock, name, action);
     card.addEventListener("click", () => {
       selectedRecipe = recipe;
@@ -2096,12 +2351,12 @@ function renderPotionCraftingCatalog(recipes: readonly ShopRecipeSnapshot[], bui
   if (allowed.length === 0) {
     const empty = document.createElement("p");
     empty.className = "display-shop-empty";
-    empty.textContent = "No potion recipes are unlocked at this level.";
+    empty.textContent = t("shop.no_potion_recipes");
     grid.append(empty);
   }
   const hint = document.createElement("div");
   hint.className = "blacksmith-upgrade-hint";
-  hint.textContent = "Create potions here, then sell the finished stock through the Potion Shop.";
+  hint.textContent = t("shop.potion_craft_hint");
   buildingCatalog.replaceChildren(heading, grid, hint);
 }
 
@@ -2115,9 +2370,9 @@ function renderTradingPostCatalog(
   const toolbar = document.createElement("div");
   toolbar.className = "trading-post-toolbar";
   const count = document.createElement("strong");
-  count.textContent = `Request to Purchase: ${activeRequests}`;
+  count.textContent = t("trading.request_count", { count: activeRequests });
   const difficulty = document.createElement("select");
-  difficulty.setAttribute("aria-label", "Trading Post difficulty");
+  difficulty.setAttribute("aria-label", t("trading.difficulty"));
   tradingPostDifficultyOptions(buildingLevel).forEach(({ label, difficulty: index, unlocked }) => {
     const option = document.createElement("option");
     option.value = String(index);
@@ -2153,15 +2408,15 @@ function renderTradingPostCatalog(
     const action = document.createElement("button");
     action.type = "button";
     action.className = stock.requested > 0 ? "cancel" : "request";
-    action.textContent = stock.requested > 0 ? "Cancel" : "Request";
+    action.textContent = stock.requested > 0 ? t("trading.cancel_request") : t("common.request");
     action.addEventListener("click", () => {
       if (!selectedBuildingInstanceId) return;
       if (stock.requested > 0) client.cancelMaterialRequest(selectedBuildingInstanceId, stock.id);
       else {
         selectedTradingRequest = stock;
         selectedTradingRequestQuantity = 1;
-        renderTradingRequestPop();
-        tradingRequestPop.hidden = false;
+        tradingRequestPending = false;
+        renderTradingRequestEditor();
       }
     });
     card.append(iconFrame, name, action);
@@ -2172,11 +2427,11 @@ function renderTradingPostCatalog(
   hint.className = "trading-post-upgrade-hint";
   const nextDifficulty = TRADING_POST_ROUTE.tabs[Math.min(buildingLevel, TRADING_POST_ROUTE.tabs.length - 1)];
   hint.textContent = buildingLevel < TRADING_POST_ROUTE.upgrade.maxLevel
-    ? `When Upgraded to Lv.${buildingLevel + 1} Adds purchase reservation list of [${nextDifficulty}] difficulty`
-    : "All decoded Trading Post levels unlocked";
+    ? t("trading.upgrade_hint", { level: buildingLevel + 1, difficulty: nextDifficulty })
+    : t("trading.all_levels");
   if (nextTownHallRequirement !== null) {
     const requirement = document.createElement("em");
-    requirement.textContent = `Town Hall Lv.${nextTownHallRequirement} or higher required.`;
+    requirement.textContent = originalUiLabel("buildpop_9", "vi", [nextTownHallRequirement]);
     hint.append(requirement);
   }
   buildingCatalog.replaceChildren(toolbar, grid, hint);
@@ -2186,7 +2441,7 @@ function renderBountyPop(): void {
   const system = latestSnapshot?.village.building_system;
   if (!system || selectedBuildingId !== BOUNTY_HUT_ROUTE.buildingId) return;
   const instance = findBuildingInstanceById(system.instances, selectedBuildingInstanceId);
-  bountyTitle.textContent = `Lv.${instance?.level ?? 1} ${BOUNTY_HUT_ROUTE.title}`;
+  bountyTitle.textContent = `${t("common.level_short", { level: instance?.level ?? 1 })} ${BOUNTY_HUT_ROUTE.title}`;
   bountyTierTabs.replaceChildren(...BOUNTY_TIERS.map((tier, index) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -2200,7 +2455,7 @@ function renderBountyPop(): void {
   }));
   bountyUpgrade.disabled = !instance || instance.can_upgrade !== true;
   const evidence = projectBuildingEvidence(buildingEvidenceRegistry, BOUNTY_HUT_ROUTE.buildingId);
-  bountyUpgrade.textContent = `Upgrade · ${evidence ? formatLevelCosts(evidence, (instance?.level ?? 1) + 1) : "Cost unresolved"}`;
+  bountyUpgrade.textContent = `${t("common.upgrade")} · ${evidence ? formatLevelCosts(evidence, (instance?.level ?? 1) + 1) : t("bounty.cost_unresolved")}`;
 }
 
 function resourceIconPath(resourceId: string): string | null {
@@ -2221,7 +2476,7 @@ function renderGearCreatePop(): void {
   const quantity = clampQuantity(gearCreateQuantity.value, 1, 1000);
   gearCreateQuantity.value = String(quantity);
   const gearKind = gearKindFromRecipe(selectedRecipe) ?? "weapon";
-  const gearKindLabel = gearKind.charAt(0).toUpperCase() + gearKind.slice(1);
+  const gearKindLabel = t(`craft.kind.${gearKind}` as MessageKey);
   const stockFamily = (recipe: ShopRecipeSnapshot): string => {
     const kind = gearKindFromRecipe(recipe);
     if (kind === "weapon") return "weapon";
@@ -2234,29 +2489,29 @@ function renderGearCreatePop(): void {
     (candidate, current) => stockFamily(candidate) === stockFamily(current),
   );
   gearCreatePop.classList.toggle("gear-detail-mode", gearPopupMode === "detail");
-  gearCreateTitle.textContent = gearPopupMode === "detail" ? selectedRecipe.product_name : `Craft ${gearKindLabel}`;
+  gearCreateTitle.textContent = gearPopupMode === "detail" ? selectedRecipe.product_name : t("craft.create_item", { item: gearKindLabel });
   if (selectedRecipe.icon) gearCreateIcon.src = selectedRecipe.icon;
   else gearCreateIcon.removeAttribute("src");
   gearCreateIcon.hidden = !selectedRecipe.icon;
   gearCreateName.textContent = selectedRecipe.product_name;
   gearCreatePrice.textContent = gearPopupMode === "detail"
-    ? `${gearKindLabel} · On Display · ${selectedRecipe.sale_price.toLocaleString()} Gold`
-    : `${gearKindLabel} · Shop stock ${selectedRecipe.stock}/${selectedRecipe.capacity}`;
+    ? t("craft.gear_display_price", { kind: gearKindLabel, price: formatNumber(selectedRecipe.sale_price) })
+    : `${gearKindLabel} · ${t("craft.shop_stock", { stock: selectedRecipe.stock, capacity: selectedRecipe.capacity })}`;
   gearCreateDescription.replaceChildren();
   if (gearPopupMode === "detail") {
     const unresolved = document.createElement("p");
-    unresolved.textContent = "Gear options and rune slots are unavailable until this displayed item is bound to an owned gear instance.";
+    unresolved.textContent = t("craft.gear_options_unavailable");
     gearCreateDescription.append(unresolved, gearLock);
   }
   gearLock.hidden = gearPopupMode !== "detail";
   gearLock.disabled = true;
   gearMaterialTitle.hidden = gearPopupMode === "detail";
-  gearMaterialTitle.textContent = "Required materials";
+  gearMaterialTitle.textContent = t("craft.required_materials");
   gearMaterialCosts.hidden = gearPopupMode === "detail";
   gearQuantityRow.hidden = gearPopupMode === "detail";
   gearStorageLabel.hidden = gearPopupMode === "detail";
   gearCreateSubmit.hidden = gearPopupMode === "detail";
-  gearCreateSubmit.textContent = "Produce";
+  gearCreateSubmit.textContent = t("common.produce");
   gearCreateSell.hidden = gearPopupMode !== "detail";
   gearCreateSell.disabled = true;
   let craftable = true;
@@ -2272,7 +2527,7 @@ function renderGearCreatePop(): void {
     } else {
       icon.className = "unresolved-material-icon";
       icon.textContent = cost.display_name.slice(0, 2).toUpperCase();
-      icon.title = `${cost.display_name}: source sprite unavailable`;
+      icon.title = t("craft.source_sprite_unavailable", { name: cost.display_name });
     }
     const batches = Math.ceil(quantity / Math.max(1, cost.output_quantity));
     const needed = cost.quantity * batches;
@@ -2284,13 +2539,13 @@ function renderGearCreatePop(): void {
   }));
   gearFrameQuantity.value = String(quantity);
   gearStorageLabel.textContent = selectedRecipe.capacity > 0
-    ? `Remaining storage: ${remainingCapacity}`
-    : "Remaining storage: Unlimited";
+    ? t("craft.remaining_storage", { amount: remainingCapacity })
+    : t("craft.remaining_storage_unlimited");
   gearCreateSubmit.disabled = gearPopupMode !== "craft" || !craftable || quantity > remainingCapacity;
   gearCreateSubmit.title = !craftable
-    ? "Town storage does not contain every required material."
+    ? t("craft.materials_missing_tooltip")
     : quantity > remainingCapacity
-      ? "The destination shop does not have enough shared stock capacity."
+      ? t("craft.capacity_tooltip")
       : "";
 }
 
@@ -2301,7 +2556,8 @@ function renderConsumCreatePop(): void {
     || productServiceRoute(selectedRecipe.shop_id) !== null;
   const isPotionRecipe = selectedRecipe.shop_id === ALCHEMIST_BUILDING_ID;
   if (!isServiceProduct && !isPotionRecipe) return;
-  consumCreatePop.classList.toggle("service-product-ui", isServiceProduct || isPotionRecipe);
+  // ConsumCreatePop and ProductCreatePop have different recovered layout contracts.
+  consumCreatePop.classList.toggle("service-product-ui", isServiceProduct);
   consumCreatePop.classList.toggle("potion-product-ui", isPotionRecipe);
   if (isServiceProduct) {
     selectedServiceMaterialId = resolveServiceMaterialId(
@@ -2332,19 +2588,19 @@ function renderConsumCreatePop(): void {
   );
   const serviceCapacity = isServiceProduct ? Number.MAX_SAFE_INTEGER : remainingCapacity;
 
-  consumCreateTitle.textContent = `Produce ${selectedRecipe.product_name}`;
+  consumCreateTitle.textContent = t("craft.produce_item", { item: selectedRecipe.product_name });
   if (selectedRecipe.icon) consumCreateIcon.src = selectedRecipe.icon;
   else consumCreateIcon.removeAttribute("src");
   consumCreateIcon.hidden = !selectedRecipe.icon;
   consumCreateIconPlaceholder.hidden = Boolean(selectedRecipe.icon);
   consumCreateQuantity.value = String(selectedServiceQuantity);
   consumCreateQuantityInput.value = String(selectedServiceQuantity);
-  consumMaterialTitle.textContent = isPotionRecipe ? "Required materials" : "Select material";
+  consumMaterialTitle.textContent = isPotionRecipe ? t("craft.required_materials") : t("craft.select_material");
   consumConversion.textContent = isPotionRecipe
-    ? `Stock ${selectedRecipe.stock}/${selectedRecipe.capacity > 0 ? selectedRecipe.capacity : "∞"}\nProduce ${selectedServiceQuantity}/${Math.min(possibleOutput, serviceCapacity)}`
+    ? `${t("craft.stock", { stock: selectedRecipe.stock, capacity: selectedRecipe.capacity > 0 ? selectedRecipe.capacity : "∞" })}\n${t("craft.produce_progress", { current: selectedServiceQuantity, maximum: Math.min(possibleOutput, serviceCapacity) })}`
     : selectedCost
-    ? `Able to produce ${outputPerBatch} ${selectedRecipe.product_name} per ${inputPerBatch} ${selectedCost.display_name}\nProduce ${selectedServiceQuantity}/${possibleOutput}`
-    : "Material conversion unresolved";
+    ? `${t("craft.conversion", { output: outputPerBatch, product: selectedRecipe.product_name, input: inputPerBatch, material: selectedCost.display_name })}\n${t("craft.produce_progress", { current: selectedServiceQuantity, maximum: possibleOutput })}`
+    : t("craft.conversion_unresolved");
   consumMaterialGrid.replaceChildren(...selectedRecipe.material_costs.map((cost) => {
     const stock = system.material_stocks.find((item) => item.id === cost.material_id);
     const button = document.createElement("button");
@@ -2377,14 +2633,14 @@ function renderConsumCreatePop(): void {
   const capacityExceeded = !isServiceProduct && selectedServiceQuantity > remainingCapacity;
   consumCreateSubmit.disabled = (!selectedCost && isServiceProduct) || missingMaterialId !== null || capacityExceeded;
   consumCreateSubmit.title = missingMaterialId
-    ? "Town storage does not contain the selected required material quantity."
+    ? t("craft.selected_material_missing_tooltip")
     : capacityExceeded
-      ? "The destination shop does not have enough shared stock capacity."
+      ? t("craft.capacity_tooltip")
       : "";
   if (consumCreateSubmit.disabled) {
     consumConversion.textContent += missingMaterialId
-      ? "\nMissing required town material."
-      : "\nDestination stock is full.";
+      ? `\n${t("craft.missing_material")}`
+      : `\n${t("craft.destination_full")}`;
   }
 }
 
@@ -2392,46 +2648,66 @@ function renderCombatHud(state: CombatHudState): void {
   latestCombatHud = state;
   combatHud.hidden = !debugUi || !state.visible;
   if (!state.visible) return;
-  element<HTMLElement>("#combat-evidence").textContent = `${state.evidenceLabel} · tick ${state.tick} · ${state.fighting ? "fighting" : "idle"}`;
+  element<HTMLElement>("#combat-evidence").textContent = `${state.evidenceLabel} · ${t("combat.tick", { tick: state.tick })} · ${state.fighting ? t("combat.fighting") : t("combat.idle")}`;
   element<HTMLElement>("#hunter-state").textContent = state.hunter.state;
-  element<HTMLElement>("#hunter-position").textContent = `position ${state.hunter.position}`;
-  element<HTMLElement>("#hunter-hp").textContent = `${state.hunter.hp} / ${state.hunter.maxHp} HP`;
+  element<HTMLElement>("#hunter-position").textContent = t("combat.position", { position: state.hunter.position });
+  element<HTMLElement>("#hunter-hp").textContent = t("combat.hp", { current: state.hunter.hp, maximum: state.hunter.maxHp });
   element<HTMLElement>("#hunter-hp-fill").style.width = `${state.hunter.percent}%`;
   element<HTMLElement>("#monster-state").textContent = state.monster.state;
-  element<HTMLElement>("#monster-position").textContent = `position ${state.monster.position}`;
-  element<HTMLElement>("#monster-hp").textContent = `${state.monster.hp} / ${state.monster.maxHp} HP`;
+  element<HTMLElement>("#monster-position").textContent = t("combat.position", { position: state.monster.position });
+  element<HTMLElement>("#monster-hp").textContent = t("combat.hp", { current: state.monster.hp, maximum: state.monster.maxHp });
   element<HTMLElement>("#monster-hp-fill").style.width = `${state.monster.percent}%`;
-  element<HTMLElement>("#combat-gold").textContent = `Gold ${state.gold}`;
-  element<HTMLElement>("#combat-inventory").textContent = `${state.inventory}${state.equipped ? " · item 2001 equipped" : ""}`;
+  element<HTMLElement>("#combat-gold").textContent = t("combat.gold", { amount: state.gold });
+  element<HTMLElement>("#combat-inventory").textContent = state.equipped
+    ? [state.inventory, t("combat.item_equipped", { id: 2001 })].filter(Boolean).join(" · ")
+    : state.inventory;
   element<HTMLElement>("#combat-drops").textContent = state.drops;
   equipFixtureItem.disabled = !state.equipEligible;
-  equipFixtureItem.textContent = state.equipped ? "Item 2001 equipped" : "Equip item 2001";
+  equipFixtureItem.textContent = state.equipped ? t("combat.item_equipped", { id: 2001 }) : t("combat.equip_item", { id: 2001 });
 }
 
 function showIntentResult(result: IntentFeedback): void {
+  if (result.intent === "set_material_request") {
+    tradingRequestPending = false;
+    if (result.accepted) {
+      selectedTradingRequest = null;
+      renderBuildingSystem(latestSnapshot);
+    } else if (selectedTradingRequest) {
+      renderTradingRequestEditor();
+    }
+  }
   if (!result.accepted) {
-    const reasons: Record<string, string> = {
-      insufficient_materials: "Trading Post chưa có đủ nguyên liệu trong kho thị trấn.",
-      material_stock_missing: "Hãy đặt request ở Trading Post trước khi craft.",
-      recipe_unknown: "Recipe này chưa được bind vào dữ liệu runtime.",
-      recipe_building_mismatch: "Recipe không thuộc nhà đang mở.",
-      product_level_locked: "Nâng cấp công trình để mở tier trang bị này.",
-      sale_building_instance_unknown: "Cần xây shop trưng bày tương ứng trước khi chế tạo.",
-      product_capacity_exceeded: "Kho sản phẩm của nhà đã đầy.",
-      product_stock_empty: "Shop đã hết món này.",
-      sale_price_unresolved: "Giá bán của món này chưa được bind từ source.",
+    const reasons: Record<string, MessageKey> = {
+      insufficient_materials: "error.insufficient_materials",
+      material_stock_missing: "error.material_stock_missing",
+      recipe_unknown: "error.recipe_unknown",
+      recipe_building_mismatch: "error.recipe_building_mismatch",
+      product_level_locked: "error.product_level_locked",
+      sale_building_instance_unknown: "error.sale_building_missing",
+      product_capacity_exceeded: "error.product_capacity",
+      product_stock_empty: "error.product_empty",
+      sale_price_unresolved: "error.sale_price_unresolved",
+      building_instance_unknown: "error.building_missing",
+      building_capability_mismatch: "error.capability_mismatch",
+      material_difficulty_unresolved: "error.material_difficulty_unresolved",
+      material_difficulty_locked: "error.material_difficulty_locked",
+      material_quantity_invalid: "error.material_quantity_invalid",
+      material_price_unresolved: "error.material_price_unresolved",
     };
-    const titles: Record<string, string> = {
-      select_bottom_menu: "Không thể mở menu",
-      navigate_back: "Không thể quay lại",
-      enter_field: "Không thể vào bãi quái",
-      select_entity: "Không thể chọn đối tượng",
+    const titles: Record<string, MessageKey> = {
+      select_bottom_menu: "error.cannot_open_menu",
+      navigate_back: "error.cannot_navigate_back",
+      enter_field: "error.cannot_enter_field",
+      select_entity: "error.cannot_select_entity",
+      set_material_request: "error.cannot_request",
     };
-    showPanelMessage(titles[result.intent] ?? "Không thể craft", reasons[result.reason ?? ""] ?? result.reason ?? "Please try again.");
+    const reasonKey = reasons[result.reason ?? ""];
+    const detail = reasonKey ? t(reasonKey) : debugUi && result.reason ? `${t("error.try_again")} (${result.reason})` : t("error.try_again");
+    showPanelMessage(t(titles[result.intent] ?? "error.cannot_craft"), detail);
   }
 }
 function showBindingBlocked(result: BindingBlockedFeedback): void {
-  showPanelMessage("Coming soon", debugUi ? `${result.intent.replaceAll("_", " ")} · ${result.blockers.join(", ")}` : "This feature is still being rebuilt.");
+  showPanelMessage(t("error.coming_soon"), debugUi ? `${result.intent.replaceAll("_", " ")} · ${result.blockers.join(", ")}` : t("error.feature_rebuilding"));
 }
 function showPanelMessage(title: string, detail: string): void {
   setPanelMessage(panelMessage, title, detail);
@@ -2444,21 +2720,27 @@ function showPanelMessage(title: string, detail: string): void {
 }
 function updateConnectionStatus(status: ConnectionStatus): void {
   connectionState = status;
-  const labels: Record<ConnectionStatus, string> = { connecting: "Connecting", online: "Server online", reconnecting: "Reconnecting", offline: "Offline" };
+  const labels: Record<ConnectionStatus, MessageKey> = { connecting: "connection.connecting", online: "connection.online", reconnecting: "connection.reconnecting", offline: "connection.offline" };
   connectionStatus.className = `connection-status ${status}`;
-  connectionStatus.querySelector("span")!.textContent = labels[status];
+  connectionStatus.querySelector("span")!.textContent = t(labels[status]);
   updateBootState();
 }
 function updateBootState(): void {
-  enterVillage.disabled = bootRequested || !mapReady || mapLoadFailed;
+  enterVillage.disabled = entryPhase !== "login" || mapLoadFailed;
+  const entry = projectEntryPresentation(entryPhase);
+  gameShell!.classList.toggle("entry-login", entryPhase === "login");
+  gameShell!.classList.toggle("entry-loading", entryPhase === "loading");
+  gameShell!.classList.toggle("entry-game", entryPhase === "game");
+  loginScreen.classList.toggle("leaving", !entry.showLogin);
+  gameLoadingScreen.hidden = !entry.showLoading;
   if (!bootRequested) {
     transition.hidden = true;
-    bootStatus.textContent = mapLoadFailed ? "Map unavailable" : !mapReady ? "Loading map..." : connectionState === "online" ? "Ready" : "Connecting to server...";
+    bootStatus.textContent = mapLoadFailed ? t("boot.map_unavailable") : !mapReady ? t("boot.preparing_assets") : connectionState === "online" ? t("boot.ready_sign_in") : t("boot.connecting_server");
     return;
   }
   const dispatching = connectionState === "online";
   transition.hidden = !dispatching;
-  bootStatus.textContent = dispatching ? "Entering village..." : "Waiting for server...";
+  bootStatus.textContent = dispatching ? t("boot.entering_village") : t("boot.waiting_server");
 }
 window.addEventListener("beforeunload", () => {
   hunterWorldCommandMenu.destroy();

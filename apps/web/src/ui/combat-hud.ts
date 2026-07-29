@@ -1,4 +1,5 @@
 import type { MigrationFixtureCombatProjection } from "../generated/protocol";
+import { t } from "../i18n";
 
 const FIXTURE_ITEM_ID = 2001;
 
@@ -30,13 +31,13 @@ export function projectCombatHud(screen: string, fixture: MigrationFixtureCombat
     monster: entityState(world.monster),
     ownedQuantity,
     inventory: world.inventory.length === 0
-      ? "Inventory empty"
-      : world.inventory.map((stack) => `Item ${stack.item_id} x${stack.quantity}`).join(" | "),
+      ? t("combat.inventory_empty")
+      : world.inventory.map((stack) => t("combat.inventory_item", { id: stack.item_id, quantity: stack.quantity })).join(" | "),
     equipped: world.equipped_item_id === FIXTURE_ITEM_ID,
     equipEligible: screen === "field" && fixture.active && ownedQuantity > 0 && world.equipped_item_id !== FIXTURE_ITEM_ID,
     drops: world.ground_drops.length === 0
-      ? "No ground drops"
-      : world.ground_drops.map((drop) => `Item ${drop.item_id} x${drop.quantity} @ ${drop.x},${drop.y}`).join(" | "),
+      ? t("combat.no_ground_drops")
+      : world.ground_drops.map((drop) => t("combat.ground_drop", { id: drop.item_id, quantity: drop.quantity, x: drop.x, y: drop.y })).join(" | "),
   };
 }
 

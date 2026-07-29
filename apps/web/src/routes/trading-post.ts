@@ -1,12 +1,14 @@
+import { t } from "../i18n";
+
 /** Route contract recovered from BuildingPop (build_3), not RequestPop. */
 export const TRADING_POST_ROUTE = {
   buildingId: "build_3",
   routeId: "trading-post-purchase",
   popup: { template: "BuildingPop", width: 560, height: 900 },
-  title: "Trading Post",
-  description: "Helps the town purchase loot from hunters",
+  title: t("trading.title"),
+  description: t("trading.description"),
   widgets: ["TextTab", "ratingTab", "MoneyChange", "CreatePossible", "RequestStateButton", "GridBorder", "GridSecondBorder"],
-  tabs: ["Easy", "Normal", "Hard", "Expert", "Nightmare", "Torment"],
+  tabs: [t("difficulty.easy"), t("difficulty.normal"), t("difficulty.hard"), t("difficulty.expert"), t("difficulty.nightmare"), t("difficulty.torment")],
   upgrade: {
     maxLevel: 6,
     gold: [300, 4800, 16200, 48600, 145800, 437400],
@@ -45,14 +47,14 @@ export function tradingPostView(state: TradingPostState) {
     stocks: state.stocks.map((stock) => ({
       ...stock,
       remainingRequest: stock.requested > 0 ? String(stock.requested) : "",
-      requestLabel: stock.requested > 0 ? "Cancel" : "Request",
+      requestLabel: stock.requested > 0 ? t("trading.cancel_request") : t("common.request"),
     })),
   };
 }
 
 export const TRADING_POST_RATING_TABS = [
-  "Easy", "Normal", "Hard", "Expert", "Nightmare", "Torment (Boost)",
-  "Super", "Chaos", "Abyss",
+  t("difficulty.easy"), t("difficulty.normal"), t("difficulty.hard"), t("difficulty.expert"), t("difficulty.nightmare"), t("difficulty.torment_boost"),
+  t("difficulty.super"), t("difficulty.chaos"), t("difficulty.abyss"),
 ] as const;
 
 export function tradingPostDifficultyOptions(level: number) {

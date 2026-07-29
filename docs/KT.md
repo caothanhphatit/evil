@@ -57,6 +57,13 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
 
 - Town projection, camera/depth handling, building placement, normalized base
   building versus skin data, and visible-world packaging are implemented.
+- Town building rows now use a `24 x 18` rebuild grid mirrored by client
+  projection and authoritative server obstacles. Idle Hunter patrol is limited
+  to a visually confirmed interior safe zone; newly added town Hunters enter
+  through the recovered Bridge C tunnel route, and completed revival is placed
+  beside the authoritative `build_2` Sanctuary footprint. Exact original
+  navigation polygons, arrival FSM coordinates, and revival offset remain
+  unresolved.
 - Building registries, conditions, product stock, crafting/service routes,
   trading post, blacksmith/gear shop, potion route separation, and related DB
   migrations exist. UI fidelity is still an iterative migration, not proof that
@@ -688,9 +695,9 @@ Before reporting work complete:
   unresolved and must not be synthesized.
 - The Hunter roster Locate action now closes both roster and detail overlays,
   selects and focuses the matching world actor, and opens the ordinary world
-  Hunter command bubble. It only sends a back-navigation command when the
-  authoritative screen is actually `hunter_roster`, avoiding the prior
-  `navigation_unavailable` error from the village screen.
+  Hunter command bubble. The web roster is now entirely client-presentational;
+  it never enters or navigates back from the removed legacy `hunter_roster`
+  screen.
 - Unassigned Hunters now roam inside explicit town bounds using deterministic
   rebuild waypoints and pause cadence. These anchors and timings are temporary
   presentation tuning, not recovered original AI. Server obstacle avoidance
@@ -750,3 +757,48 @@ Before reporting work complete:
   consumes resources or advances a level. See
   `docs/game-design/gear-enhancement-flow.md`. The UI route is the confirmed
   Enhancement Forge `build_15`; its popup-template binding remains unresolved.
+
+## 2026-07-29 UI fallback removal handoff
+
+- The web client no longer derives Hunter roster cards from old world entities,
+  infirmary rows, service rows, `waiting_queue`, nested profile aliases, or the
+  protocol-v14 adapter. Only the current authoritative `active_hunters` and
+  `waiting_hunters` projection is rendered. A legacy `hunter_roster` screen is
+  treated as a protocol fault instead of being normalized into the current UI.
+- Durable schema v16 migrates persisted `hunter_roster` navigation to `village`
+  during server restore. This prevents old browser sessions from reconnecting
+  forever at 92% without reintroducing the removed roster screen.
+- Generic service/production popup branches have been removed. A building must
+  match a current explicit route contract; otherwise its complete product frame
+  shows a compact fail-closed error and no old tabs or substitute product UI.
+- Trading Post purchase requests remain open and disabled while the
+  authoritative `set_material_request` command is pending. The popup closes
+  only after an accepted response; transport and server rejections remain
+  visible so the player can retry without losing the requested quantity.
+- The unused pre-authoritative Pixi world renderer, legacy animation mapper and
+  legacy snapshot interpolator were deleted. Required town-building asset load
+  failures now fail the game loading flow rather than silently omitting content.
+- The loading screen has a 30-second watchdog and explicit reload action. A
+  missing current snapshot or asset reports `ERROR`; it cannot remain silently
+  parked at the post-map 92% stage.
+
+## 2026-07-29 Vietnamese localization handoff
+
+- The web client now uses a typed, Vietnamese-first localization runtime under
+  `apps/web/src/i18n/`. Player-facing shell, login/loading, Hunter, combat,
+  building, shop, crafting, Trading Post, tooltip and error wording is resolved
+  through semantic message keys instead of inline literals.
+- Vietnamese (`vi`) is the only currently supported locale and is the explicit
+  default/fallback. The catalog is flat and compile-time checked through
+  `MessageKey`; adding another language requires a complete catalog matching the
+  same key set rather than DOM post-processing or an English UI fallback.
+- Runtime names and descriptions supplied by authoritative snapshots remain
+  data, not client translations. Original multi-language labels retained in
+  `content/original-ui-labels.ts` remain migrated source evidence; current UI
+  calls explicitly request Vietnamese.
+- `i18n/ui-wording.test.ts` guards the primary player-facing DOM sinks against
+  newly introduced hard-coded wording. Localization runtime tests cover locale
+  fallback, named parameters, unresolved parameter visibility and locale-aware
+  number formatting.
+- Validation: TypeScript `--noEmit` passes, all 42 web test files / 199 tests
+  pass, the production web build succeeds, and `git diff --check` is clean.

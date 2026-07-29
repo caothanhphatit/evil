@@ -63,6 +63,14 @@ docker run --rm --network evil-prod \
   postgres:17-alpine /bin/sh /migrations/run-migrations.sh
 ```
 
+The original production publication of
+`0010_normalized_building_gameplay_content` records checksum `53fe119c...`,
+while the canonical generated artifact retained in Git has checksum
+`218ffa02...`. The migration runner accepts only this exact legacy/canonical
+pair, preserves the recorded production checksum, and still fails closed for
+every other mismatch. Static catalogs under `core_game` remain a separate,
+reproducible initialization step.
+
 Keep the previous images as rollback targets, then recreate only the app
 containers. The persistent database and Redis containers are not replaced:
 

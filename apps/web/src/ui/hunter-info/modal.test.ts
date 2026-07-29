@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { equipmentDetailText } from "./modal";
+import { calculateExperiencePercent, calculateHunterInfoScale, equipmentDetailText } from "./modal";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../../../..");
 
@@ -18,9 +18,12 @@ describe("Hunter Info modal shell", () => {
     const modal = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
     const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
     expect(styles).toContain("inset: 0 0 calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved))");
-    expect(styles).toContain("width: min(88%, 440px)");
+    expect(styles).toContain("width: 440px");
     expect(styles).toContain("grid-template-rows: auto minmax(230px, 46%) auto minmax(150px, 1fr) auto");
-    expect(styles).toContain("height: min(94%, 690px)");
+    expect(styles).toContain("height: 690px");
+    expect(styles).toContain("transform-origin: top left");
+    expect(modal).toContain('node("div", "hunter-info-scale-frame")');
+    expect(modal).toContain("new ResizeObserver(syncScale).observe(overlay)");
     expect(styles).toContain(".hunter-info-actor-canvas");
     expect(styles).toContain("button:focus { outline: 0; }");
     expect(styles).toContain("button:focus-visible { outline: 3px solid #f7cf62");
@@ -31,18 +34,39 @@ describe("Hunter Info modal shell", () => {
   it("keeps equipment controls balanced inside the persistent-menu safe area", async () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     const modal = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
-    expect(styles).toContain("grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(78px, 1.45fr) minmax(0, 1fr) minmax(0, 1fr)");
-    expect(styles).toContain("width: min(100%, 356px)");
+    expect(styles).toContain("grid-template-columns: 42px 42px minmax(112px, 1fr) 42px 42px");
+    expect(styles).toContain("width: min(100%, 330px)");
     expect(styles).toContain("grid-template-rows: repeat(3, minmax(0, 1fr))");
-    expect(styles).toContain("width: 100%; min-width: 0; padding: 0; aspect-ratio: 1");
-    expect(styles).toContain("width: min(100%, 286px)");
-    expect(styles).toContain("width: min(100%, 226px)");
+    expect(styles).toContain("width: 42px; min-width: 0; justify-self: center; padding: 0; aspect-ratio: 1");
+    expect(styles).toContain("width: 36px; min-width: 0; justify-self: center; aspect-ratio: 1");
     expect(styles).toContain("min-height: 38px");
     expect(styles).toContain("hunter-info-equipment/equip_bg_9__2684.png");
     expect(styles).not.toMatch(/\.hunter-equipment-slot \{[^}]*box_gear_9__2514\.png/s);
     expect(modal).toContain('boots: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_06__1917.png"');
     expect(modal).toContain('armor: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_04__5943.png"');
     expect(modal).toContain('slot.dataset.slotId = slotId');
+  });
+
+  it("scales the complete design canvas by its tightest viewport boundary", () => {
+    expect(calculateHunterInfoScale(440, 690)).toBe(1);
+    expect(calculateHunterInfoScale(320, 690)).toBeCloseTo(320 / 440);
+    expect(calculateHunterInfoScale(440, 345)).toBe(.5);
+    expect(calculateHunterInfoScale(880, 1380)).toBe(1);
+  });
+
+  it("keeps Hunter EXP progress bounded by the authoritative current and maximum values", async () => {
+    expect(calculateExperiencePercent(262, 322)).toBeCloseTo(81.366);
+    expect(calculateExperiencePercent(-4, 322)).toBe(0);
+    expect(calculateExperiencePercent(400, 322)).toBe(100);
+    expect(calculateExperiencePercent(10, 0)).toBe(0);
+
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
+    const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
+    expect(source).toContain('track.setAttribute("role", "progressbar")');
+    expect(source).toContain('t("hunter.info.exp", { current: info.experience.current, maximum: info.experience.maximum })');
+    expect(styles).toContain(".hunter-experience { position: relative; height: 22px; margin: 2px 2px 0; }");
+    expect(styles).toContain("font-size: 9px");
+    expect(styles).toContain("left center / auto 100% repeat-x");
   });
 
   it("keeps server-authoritative hunt commands outside the original Detail popup", async () => {
@@ -68,7 +92,7 @@ describe("Hunter Info modal shell", () => {
     expect(source).toContain("EQUIPMENT_PLACEHOLDERS");
     expect(source).toContain('slot.addEventListener("click", () => select(equipment))');
     expect(source).toContain("hunter-equipment-detail");
-    expect(source).toContain("EXP unavailable");
+    expect(source).toContain('t("hunter.info.exp_unavailable")');
     expect(source).not.toContain("Look unavailable");
     expect(actor).toContain('const animation = "hunter_stay"');
     expect(actor).not.toContain('visual.animation ?? "hunter_stay"');
@@ -76,6 +100,8 @@ describe("Hunter Info modal shell", () => {
     expect(actor).toContain("2.4,");
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
+    expect(rosterActors).toContain("avatarBounds.height * 0.9");
+    expect(rosterActors).toContain("spine.mask = clip");
   });
 
   it("shows only evidence-backed equipment identity in the clickable item detail", () => {
@@ -107,20 +133,33 @@ describe("Hunter Info modal shell", () => {
     expect(styles).not.toContain("border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 7 fill");
   });
 
+  it("keeps the desktop roster compact and scrollable beyond two rows", async () => {
+    const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
+    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const actors = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-roster-actors.ts"), "utf8");
+    expect(styles).toContain("width: min(590px, calc(100% - 48px))");
+    expect(styles).toContain("grid-auto-rows: 164px");
+    expect(styles).toContain("overflow-y: auto");
+    expect(styles).toContain("height: 164px");
+    expect(main).toContain('hunterActiveList.addEventListener("scroll"');
+    expect(main).toContain("hunterRosterActors.refresh()");
+    expect(actors).toContain("refresh(): void");
+  });
+
   it("keeps unresolved Hunter tabs framed instead of collapsing to plain text", async () => {
     const materials = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/materials-tab.ts"), "utf8");
     const growth = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/growth-tab.ts"), "utf8");
     const riding = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/riding-pet-tab.ts"), "utf8");
     expect(materials).toContain("UNRESOLVED_PLACEHOLDER_COUNT = 12");
     expect(growth).toContain("index < 15");
-    expect(riding).toContain("Move to Ranch");
+    expect(riding).toContain('t("hunter.riding.move_ranch")');
   });
 
   it("presents carried loot as the original Material section", async () => {
     const modal = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
     const inventory = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/materials-tab.ts"), "utf8");
-    expect(modal).toContain('{ id: "materials", label: "Material" }');
-    expect(inventory).toContain('node("h3", "", "Material")');
+    expect(modal).toContain('{ id: "materials", label: t("hunter.tabs.materials") }');
+    expect(inventory).toContain('node("h3", "", t("hunter.materials.title"))');
     expect(inventory).not.toContain("INVENTORY_SLOT_COUNT");
   });
 });

@@ -27,5 +27,11 @@ describe("potion shop UI integration", () => {
     expect(styles).toContain("grid-template-columns: repeat(3, minmax(0, 1fr))");
     expect(source).toContain('className = "gear-catalog-card potion-catalog-card"');
     expect(styles).toContain(".consum-create-pop.potion-product-ui");
+    expect(source).toContain('classList.toggle("service-product-ui", isServiceProduct)');
+    expect(styles).toContain("ConsumCreatePop keeps the Alchemist route distinct from ProductCreatePop");
+    expect(styles).toContain("height: min(540px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 12px))");
+    expect(styles).toContain(".consum-create-pop.potion-product-ui .consum-material-grid { grid-template-columns: repeat(3, minmax(0, 1fr))");
+    expect(styles).toContain(".consum-create-pop.potion-product-ui #consum-create-close");
+    expect(styles).toContain(".consum-create-pop:not(.service-product-ui):not(.potion-product-ui)");
   });
 });

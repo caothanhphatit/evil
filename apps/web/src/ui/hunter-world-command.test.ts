@@ -148,6 +148,15 @@ describe("Hunter world command menu", () => {
     expect(source).not.toContain("experience");
     expect(source).not.toContain("drop");
   });
+
+  it("keeps the click tooltip compact and gives desktop a content-width command sheet", async () => {
+    const styles = await readFile(new URL("../styles.css", import.meta.url), "utf8");
+    expect(styles).toContain(".hunter-world-action-bubble button { position: relative; display: grid; place-items: center; width: 44px; height: 49px;");
+    expect(styles).toContain(".hunter-world-command-panel { position: absolute; right: 7px;");
+    expect(styles).toContain("min-height: 116px");
+    expect(styles).toContain(".hunter-command-fixture-icon { position: relative; display: grid; place-items: center; width: 29px; height: 29px;");
+    expect(styles).toContain(".hunter-world-command-panel { right: auto; left: 50%; width: min(480px, calc(100% - 32px)); transform: translateX(-50%); }");
+  });
 });
 
 class FakeElement {

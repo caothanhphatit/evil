@@ -229,6 +229,24 @@ describe("session bootstrap", () => {
     expect(socket.close).toHaveBeenCalledWith(4002, "Protocol error");
     client.disconnect();
   });
+
+  it("rejects the removed legacy Hunter roster screen instead of rendering it", async () => {
+    const socket = new FakeSocket();
+    const client = new WorldClient(() => undefined, () => undefined, undefined, undefined, undefined, {
+      apiBaseUrl: "http://game.test",
+      webSocketUrl: "ws://game.test/ws",
+      fetchFn: vi.fn(async () => new Response(null, { status: 204 })),
+      socketFactory: () => socket as unknown as WebSocket,
+      reconnectDelayMs: 60_000,
+    });
+
+    client.connect();
+    await settlePromises();
+    socket.emit("message", { data: serverEnvelope(1, "welcome", "hunter_roster") });
+
+    expect(socket.close).toHaveBeenCalledWith(4002, "Protocol error");
+    client.disconnect();
+  });
 });
 
 function fakeSocket(): WebSocket {
@@ -256,9 +274,9 @@ class FakeSocket {
   }
 }
 
-function serverEnvelope(sequence: number, type: "welcome" | "world_update" | "world_frame"): string {
+function serverEnvelope(sequence: number, type: "welcome" | "world_update" | "world_frame", screen = "boot"): string {
   const snapshot = {
-    screen: "boot",
+    screen,
     content_release_id: "original-flow-v1",
     content_release_runnable: false,
     flow_order: ["boot", "village", "hunter_roster", "field"],

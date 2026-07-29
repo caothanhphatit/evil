@@ -1,11 +1,13 @@
+import { t } from "../i18n";
+
 /** Route contract recovered from QuestPop (build_4). */
 export const BOUNTY_HUT_ROUTE = {
   buildingId: "build_4",
   routeId: "bounty-quest-list",
   popup: { template: "QuestPop", width: 480, height: 820 },
-  title: "Bounty Hut",
-  description: "Provides bounty quests to help hunters level up fast",
-  tabs: ["Small", "Medium", "Large", "Grand"],
+  title: t("bounty.title"),
+  description: t("bounty.description"),
+  tabs: [t("bounty.tier.small"), t("bounty.tier.medium"), t("bounty.tier.large"), t("bounty.tier.grand")],
   widgets: ["difficulty tabs", "quest list", "monster frame", "reward frame", "UpgradeExplan", "UpgradeButton", "CloseButton"],
   upgrade: { maxLevel: 6, gold: [780, 6240, 21060, 63180, 189540, 568620], effect: "Adds bounty quest list of [difficulty] difficulty", townHallLevel: 5 },
   assets: {
@@ -20,10 +22,10 @@ export interface BountyQuest { monsterId: string; monsterName: string; monsterIc
 export interface BountyHutState { level: number; tier: number; quests: BountyQuest[]; }
 
 const tierConfig = [
-  { label: "Small", kills: 15, multiplier: 2 },
-  { label: "Medium", kills: 45, multiplier: 1.8 },
-  { label: "Large", kills: 135, multiplier: 1.6 },
-  { label: "Grand", kills: 405, multiplier: 1.4 },
+  { label: t("bounty.tier.small"), kills: 15, multiplier: 2 },
+  { label: t("bounty.tier.medium"), kills: 45, multiplier: 1.8 },
+  { label: t("bounty.tier.large"), kills: 135, multiplier: 1.6 },
+  { label: t("bounty.tier.grand"), kills: 405, multiplier: 1.4 },
 ] as const;
 
 export function bountyHutView(state: BountyHutState) {

@@ -1,15 +1,17 @@
+import { t } from "../i18n";
+
 export const HUNTER_COMMAND_CATEGORIES = [
-  { id: "items", label: "Vật Phẩm", fixtureGlyph: "VP" },
-  { id: "movement", label: "Di Chuyển", fixtureGlyph: "DC" },
-  { id: "learn", label: "Học", fixtureGlyph: "H" },
-  { id: "daily-life", label: "Sinh Hoạt", fixtureGlyph: "SH" },
-  { id: "management", label: "Quản Lý", fixtureGlyph: "QL" },
+  { id: "items", label: t("hunter.command.items"), fixtureGlyph: "VP" },
+  { id: "movement", label: t("hunter.command.movement"), fixtureGlyph: "DC" },
+  { id: "learn", label: t("hunter.command.learn"), fixtureGlyph: "H" },
+  { id: "daily-life", label: t("hunter.command.daily_life"), fixtureGlyph: "SH" },
+  { id: "management", label: t("hunter.command.management"), fixtureGlyph: "QL" },
 ] as const;
 
 export const HUNTER_HUNTING_REGIONS = [
-  { id: "map_new01", label: "Thuộc Địa", fixtureGlyph: "I", tone: "colony" },
-  { id: "background_08", label: "Tử Địa", fixtureGlyph: "II", tone: "dead-land" },
-  { id: "background_11", label: "Ma Giới", fixtureGlyph: "III", tone: "demon-world" },
+  { id: "map_new01", label: t("hunter.command.colony"), fixtureGlyph: "I", tone: "colony" },
+  { id: "background_08", label: t("hunter.command.dead_land"), fixtureGlyph: "II", tone: "dead-land" },
+  { id: "background_11", label: t("hunter.command.demon_world"), fixtureGlyph: "III", tone: "demon-world" },
 ] as const;
 
 export type HunterCommandCategory = typeof HUNTER_COMMAND_CATEGORIES[number]["id"];
@@ -83,7 +85,7 @@ export function createHunterWorldCommandMenu(
   const root = document.createElement("section");
   root.className = "hunter-world-command-layer";
   root.hidden = true;
-  root.setAttribute("aria-label", "Hunter commands");
+  root.setAttribute("aria-label", t("hunter.command.aria"));
   host.append(root);
   let current: HunterWorldCommandState = { mode: "closed" };
 
@@ -102,14 +104,14 @@ export function createHunterWorldCommandMenu(
     actionBubble.className = "hunter-world-action-bubble";
     actionBubble.style.setProperty("--hunter-command-x", `${state.selection.screenPoint.x}px`);
     actionBubble.style.setProperty("--hunter-command-y", `${state.selection.screenPoint.y}px`);
-    actionBubble.setAttribute("aria-label", `${state.selection.displayName} actions`);
+    actionBubble.setAttribute("aria-label", t("hunter.command.actions_aria", { name: state.selection.displayName }));
 
-    const info = iconButton("hunter-world-info", "i", `Xem thông tin ${state.selection.displayName}`);
+    const info = iconButton("hunter-world-info", "i", t("hunter.command.info_aria", { name: state.selection.displayName }));
     info.dataset.evidence = "screenshot-reconstruction";
     info.addEventListener("click", () => callbacks.onInfo(state.selection.entityId));
-    const command = iconButton("hunter-world-command", "X", `Ra lệnh cho ${state.selection.displayName}`);
+    const command = iconButton("hunter-world-command", "X", t("hunter.command.order_aria", { name: state.selection.displayName }));
     command.dataset.evidence = "screenshot-reconstruction";
-    command.setAttribute("aria-label", `Bỏ chọn ${state.selection.displayName}`);
+    command.setAttribute("aria-label", t("hunter.command.release_aria", { name: state.selection.displayName }));
     command.addEventListener("click", () => {
       callbacks.onRelease(state.selection.entityId);
       transition({ type: "close" });
@@ -119,25 +121,25 @@ export function createHunterWorldCommandMenu(
 
     const panel = document.createElement("section");
     panel.className = "hunter-world-command-panel";
-    panel.setAttribute("aria-label", `${state.selection.displayName} command menu`);
+    panel.setAttribute("aria-label", t("hunter.command.menu_aria", { name: state.selection.displayName }));
     const speech = document.createElement("p");
     speech.className = "hunter-world-command-line";
     speech.textContent = state.mode === "movement"
-      ? "Không phải bạn bảo đang cần đến nơi nào thật gấp sao?"
+      ? t("hunter.command.speech.movement")
       : state.mode === "items"
-        ? "Bạn muốn tôi xử lý vật phẩm nào?"
-        : "Thời tiết hôm nay thật đẹp... Có mưa không nhỉ?";
+        ? t("hunter.command.speech.items")
+        : t("hunter.command.speech.default");
     panel.append(speech);
 
     const options = document.createElement("nav");
     options.className = state.mode === "movement" ? "hunter-region-options" : "hunter-command-categories";
     options.setAttribute("aria-label", state.mode === "movement"
-      ? "Hunting regions"
+      ? t("hunter.command.regions_aria")
       : state.mode === "items"
-        ? "Hunter item commands"
-        : "Hunter command categories");
+        ? t("hunter.command.items_aria")
+        : t("hunter.command.categories_aria"));
     if (state.mode === "movement") {
-      const back = menuButton("Quay Lại", "back", "←");
+      const back = menuButton(t("common.back"), "back", "←");
       back.addEventListener("click", () => transition({ type: "back" }));
       options.append(back);
       for (const region of HUNTER_HUNTING_REGIONS) {
@@ -155,11 +157,11 @@ export function createHunterWorldCommandMenu(
         options.append(button);
       }
     } else if (state.mode === "items") {
-      const back = menuButton("Quay Lại", "back", "←");
+      const back = menuButton(t("common.back"), "back", "←");
       back.addEventListener("click", () => transition({ type: "back" }));
       options.append(back);
 
-      const sell = menuButton("Bán Nguyên Liệu", "sell_hunter_loot", "BNL");
+      const sell = menuButton(t("hunter.command.sell_loot"), "sell_hunter_loot", "BNL");
       sell.dataset.evidence = "web-rebuild-confirmed-auto-trade-flow";
       sell.addEventListener("click", () => {
         callbacks.onIntent({ type: "sell_hunter_loot", hunterEntityId: state.selection.entityId });
@@ -167,7 +169,7 @@ export function createHunterWorldCommandMenu(
       });
       options.append(sell);
 
-      const enhance = menuButton("Cường Hóa Trang Bị", "request_hunter_gear_enhancement", "CH");
+      const enhance = menuButton(t("hunter.command.enhance_gear"), "request_hunter_gear_enhancement", "CH");
       enhance.dataset.evidence = "user-supplied-enhancement-flow";
       enhance.addEventListener("click", () => {
         callbacks.onEnhancementRequest?.({
@@ -183,7 +185,7 @@ export function createHunterWorldCommandMenu(
         const button = menuButton(category.label, category.id, category.fixtureGlyph);
         button.dataset.evidence = category.id === "movement" ? "user-screenshot-category" : "unresolved-icon-fixture";
         if (category.id !== "movement" && category.id !== "items") {
-          button.title = "Icon binding unresolved; command label follows the supplied screenshot.";
+          button.title = t("hunter.command.unresolved_icon");
         }
         button.addEventListener("click", () => {
           if (category.id === "movement" || category.id === "items") {

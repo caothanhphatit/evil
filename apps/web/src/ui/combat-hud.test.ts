@@ -8,8 +8,8 @@ describe("authoritative fixture combat HUD", () => {
     expect(state.hunter).toMatchObject({ hp: 75, maxHp: 100, percent: 75, state: "attacking", position: "138, 320" });
     expect(state.monster.percent).toBe(50);
     expect(state.gold).toBe(42);
-    expect(state.inventory).toBe("Item 2001 x1");
-    expect(state.drops).toContain("Item 2001 x1 @ 500,330");
+    expect(state.inventory).toBe("Vật phẩm 2001 x1");
+    expect(state.drops).toContain("Vật phẩm 2001 x1 @ 500,330");
   });
 
   it("allows equip only while field fixture is active, owned and not already equipped", () => {

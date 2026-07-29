@@ -14,7 +14,7 @@ describe("building evidence projection", () => {
       spriteAssetId: "build_10",
     });
     expect(view?.levels[1].requiredTownHallLevel).toBe(5);
-    expect(formatLevelCosts(view!, 2)).toBe("Gold 4.800 · Mảnh Cây Chi Hông 10");
+    expect(formatLevelCosts(view!, 2)).toBe("Vàng 4.800 · Mảnh Cây Chi Hông 10");
   });
 
   it("never treats the bounty RequestPop as a Trading Post request UI", () => {

@@ -17,6 +17,11 @@ use crate::buildings::{
     EconomyItemDefinition, EconomyProductDefinition, EconomyProductService,
 };
 
+use super::basic_hunter_skills::definition as basic_hunter_skill_definition;
+use super::evidence_policy::{
+    BUILDING_CAPABILITY_BLOCKERS, GEAR_ENHANCEMENT_BLOCKERS, MAIL_BLOCKERS, QUEST_BLOCKERS,
+    REWARDED_AD_BLOCKERS, SHOP_BLOCKERS, TOPUP_BLOCKERS,
+};
 #[cfg(test)]
 use super::hunter_roster::operational_migration_roster;
 #[cfg(test)]
@@ -26,6 +31,9 @@ use super::hunter_roster::{
     GearEnhancementTaskStatus, HunterRosterError, GEAR_ENHANCEMENT_WORKFLOW_VERSION,
     HUNT_TICKS_TO_RETURN, MAX_ACTIVE_TOWN_HUNTERS,
 };
+use super::monster_world::TOWN_ROAM_ANCHORS;
+#[cfg(test)]
+use super::monster_world::TOWN_ROAM_BOUNDS;
 use super::product_service::{capacity_for_level, HunterServiceGauge, ServiceEffectKind};
 #[cfg(test)]
 use super::trading_post::ACTIVE_MATERIAL_REQUEST;
@@ -39,131 +47,17 @@ use super::{
     MONSTER_RULESET,
 };
 
-pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 15;
+pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 16;
 pub const MIGRATION_FIXTURE_CONTENT_ID: &str = "migration-fixture.slice1-combat-v1";
 pub const MAX_GEAR_ENHANCEMENT_LEVEL: u8 = 20;
 
 const TOWN_GRID_MIN: i32 = -32;
 const TOWN_GRID_MAX: i32 = 32;
 const MAX_PRODUCTION_QUANTITY: u32 = 1_000;
-const TOWN_NAV_CELL_SIZE: i32 = 24;
+const TOWN_NAV_CELL_WIDTH: i32 = 24;
+const TOWN_NAV_CELL_HEIGHT: i32 = 18;
 const TOWN_NAV_ORIGIN_X: i32 = 1627;
 const TOWN_NAV_ORIGIN_Y: i32 = 600;
-
-const QUEST_BLOCKERS: [&str; 2] = ["quest_catalog_binding", "quest_reward_binding"];
-const SHOP_BLOCKERS: [&str; 2] = ["shop_catalog_binding", "shop_price_binding"];
-const MAIL_BLOCKERS: [&str; 2] = ["mail_schema_binding", "mail_grant_binding"];
-const REWARDED_AD_BLOCKERS: [&str; 2] = ["ad_placement_binding", "ad_reward_binding"];
-const TOPUP_BLOCKERS: [&str; 3] = [
-    "product_catalog_binding",
-    "provider_receipt_binding",
-    "entitlement_rules_binding",
-];
-const BUILDING_CAPABILITY_BLOCKERS: [&str; 2] = [
-    "building_capability_dispatch_binding",
-    "building_economy_settlement_binding",
-];
-const GEAR_ENHANCEMENT_BLOCKERS: [&str; 3] = [
-    "enhancement_cost_binding",
-    "enhancement_probability_binding",
-    "enhancement_material_binding",
-];
-
-#[derive(Clone, Copy)]
-struct BasicHunterSkillDefinition {
-    skill_id: &'static str,
-    display_name: &'static str,
-    class_id: &'static str,
-    class_family: &'static str,
-    cooldown_ms: u64,
-    confirmed_icon_path: Option<&'static str>,
-}
-
-fn basic_hunter_skill_definition(skill_id: &str) -> Option<BasicHunterSkillDefinition> {
-    Some(match skill_id {
-        "skill_h1_01" => BasicHunterSkillDefinition {
-            skill_id: "skill_h1_01",
-            display_name: "Fury",
-            class_id: "h1",
-            class_family: "H1",
-            cooldown_ms: 15_000,
-            confirmed_icon_path: Some("sprites/skill_h1_01__1395.png"),
-        },
-        "skill_h1_02" => BasicHunterSkillDefinition {
-            skill_id: "skill_h1_02",
-            display_name: "War Cry",
-            class_id: "h1",
-            class_family: "H1",
-            cooldown_ms: 16_000,
-            confirmed_icon_path: Some("sprites/skill_h1_02__5620.png"),
-        },
-        "skill_h2_01" => BasicHunterSkillDefinition {
-            skill_id: "skill_h2_01",
-            display_name: "Holy Light",
-            class_id: "h2",
-            class_family: "H2",
-            cooldown_ms: 8_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h2_02" => BasicHunterSkillDefinition {
-            skill_id: "skill_h2_02",
-            display_name: "Barrier",
-            class_id: "h2",
-            class_family: "H2",
-            cooldown_ms: 16_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h3_01" => BasicHunterSkillDefinition {
-            skill_id: "skill_h3_01",
-            display_name: "Multishot",
-            class_id: "h3",
-            class_family: "H3",
-            cooldown_ms: 6_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h3_02" => BasicHunterSkillDefinition {
-            skill_id: "skill_h3_02",
-            display_name: "Dodge",
-            class_id: "h3",
-            class_family: "H3",
-            cooldown_ms: 16_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h4_01" => BasicHunterSkillDefinition {
-            skill_id: "skill_h4_01",
-            display_name: "Thunderbolt",
-            class_id: "h4",
-            class_family: "H4",
-            cooldown_ms: 6_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h4_02" => BasicHunterSkillDefinition {
-            skill_id: "skill_h4_02",
-            display_name: "Ice Armor",
-            class_id: "h4",
-            class_family: "H4",
-            cooldown_ms: 16_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h5_01" => BasicHunterSkillDefinition {
-            skill_id: "skill_h5_01",
-            display_name: "Round Slash",
-            class_id: "h5",
-            class_family: "H5",
-            cooldown_ms: 6_000,
-            confirmed_icon_path: None,
-        },
-        "skill_h5_02" => BasicHunterSkillDefinition {
-            skill_id: "skill_h5_02",
-            display_name: "Concentrate",
-            class_id: "h5",
-            class_family: "H5",
-            cooldown_ms: 16_000,
-            confirmed_icon_path: None,
-        },
-        _ => return None,
-    })
-}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -1239,6 +1133,11 @@ impl OriginalFlowSession {
         seed: u64,
         building_content: Arc<AuthoritativeBuildingContent>,
     ) -> Self {
+        // Hunter roster is now a client-presentational overlay. Persisted
+        // sessions from the removed server screen resume in the village.
+        if state.navigation.screen == OriginalScreen::HunterRoster {
+            state.navigation.screen = OriginalScreen::Village;
+        }
         if state.schema_version < 3 && state.buildings.hunter_materials == 0 {
             state.buildings.hunter_materials = 20;
         }
@@ -1387,15 +1286,18 @@ impl OriginalFlowSession {
         }
         self.refresh_skill_cooldowns(100);
         for hunter in &mut self.hunter_roster.hunters {
-            hunter.hunt.healing_potion_cooldown_ms = hunter
-                .hunt
-                .healing_potion_cooldown_ms
-                .saturating_sub(100);
+            hunter.hunt.healing_potion_cooldown_ms =
+                hunter.hunt.healing_potion_cooldown_ms.saturating_sub(100);
         }
         self.auto_cast_ready_hunter_skills();
         self.visual_tick = self.visual_tick.wrapping_add(1);
         let navigation_obstacles =
             town_navigation_obstacles(&self.buildings.buildings, &self.building_content.catalog);
+        let revival_point = town_revival_point(
+            &self.buildings.buildings,
+            &self.building_content.catalog,
+            &navigation_obstacles,
+        );
         self.apply_autonomous_hunter_healing_policy();
         for hunter in &mut self.hunter_roster.hunters {
             let terminal_enhancement = hunter
@@ -1407,9 +1309,11 @@ impl OriginalFlowSession {
                 release_hunter_from_enhancement(hunter);
             }
         }
-        let mut operations = self
-            .monster_world
-            .tick_with_obstacles(&mut self.hunter_roster, &navigation_obstacles);
+        let mut operations = self.monster_world.tick_with_obstacles(
+            &mut self.hunter_roster,
+            &navigation_obstacles,
+            revival_point,
+        );
         self.advance_legacy_hunter_hunts(1);
         self.auto_sell_requested_hunter_loot();
         if self.state.screen == OriginalScreen::Field {
@@ -2917,10 +2821,10 @@ impl OriginalFlowSession {
             return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
         };
         let interaction_x = TOWN_NAV_ORIGIN_X
-            + building.grid_x * TOWN_NAV_CELL_SIZE
-            + grid_width * TOWN_NAV_CELL_SIZE / 2;
+            + building.grid_x * TOWN_NAV_CELL_WIDTH
+            + grid_width * TOWN_NAV_CELL_WIDTH / 2;
         let interaction_y =
-            TOWN_NAV_ORIGIN_Y + (building.grid_y + grid_height + 1) * TOWN_NAV_CELL_SIZE;
+            TOWN_NAV_ORIGIN_Y + (building.grid_y + grid_height + 1) * TOWN_NAV_CELL_HEIGHT;
         let building_instance_id = building.instance_id.clone();
         let Some(hunter) = self
             .hunter_roster
@@ -4884,20 +4788,54 @@ fn town_navigation_obstacles(
 ) -> Vec<NavigationObstacle> {
     buildings
         .iter()
-        .filter_map(|building| {
-            let building_id = BaseBuildingId::parse(&building.id).ok()?;
-            let definition = catalog.base(&building_id)?;
-            let (width, height) = building_grid_size(definition)?;
-            let width = i32::try_from(width).ok()?;
-            let height = i32::try_from(height).ok()?;
-            Some(NavigationObstacle {
-                min_x: TOWN_NAV_ORIGIN_X + building.grid_x * TOWN_NAV_CELL_SIZE,
-                max_x: TOWN_NAV_ORIGIN_X + (building.grid_x + width) * TOWN_NAV_CELL_SIZE,
-                min_y: TOWN_NAV_ORIGIN_Y + building.grid_y * TOWN_NAV_CELL_SIZE,
-                max_y: TOWN_NAV_ORIGIN_Y + (building.grid_y + height) * TOWN_NAV_CELL_SIZE,
+        .filter_map(|building| building_navigation_obstacle(building, catalog))
+        .collect()
+}
+
+fn building_navigation_obstacle(
+    building: &DurableBuilding,
+    catalog: &crate::buildings::BuildingCatalog,
+) -> Option<NavigationObstacle> {
+    let building_id = BaseBuildingId::parse(&building.id).ok()?;
+    let definition = catalog.base(&building_id)?;
+    let (width, height) = building_grid_size(definition)?;
+    let width = i32::try_from(width).ok()?;
+    let height = i32::try_from(height).ok()?;
+    Some(NavigationObstacle {
+        min_x: TOWN_NAV_ORIGIN_X + building.grid_x * TOWN_NAV_CELL_WIDTH,
+        max_x: TOWN_NAV_ORIGIN_X + (building.grid_x + width) * TOWN_NAV_CELL_WIDTH,
+        min_y: TOWN_NAV_ORIGIN_Y + building.grid_y * TOWN_NAV_CELL_HEIGHT,
+        max_y: TOWN_NAV_ORIGIN_Y + (building.grid_y + height) * TOWN_NAV_CELL_HEIGHT,
+    })
+}
+
+fn town_revival_point(
+    buildings: &[DurableBuilding],
+    catalog: &crate::buildings::BuildingCatalog,
+    obstacles: &[NavigationObstacle],
+) -> Option<(i32, i32)> {
+    const CLEARANCE: i32 = 15;
+    let sanctuary = buildings.iter().find(|building| building.id == "build_2")?;
+    let footprint = building_navigation_obstacle(sanctuary, catalog)?;
+    let center_x = footprint.min_x + (footprint.max_x - footprint.min_x) / 2;
+    let center_y = footprint.min_y + (footprint.max_y - footprint.min_y) / 2;
+    let candidates = [
+        (center_x, footprint.max_y + CLEARANCE),
+        (footprint.max_x + CLEARANCE, center_y),
+        (footprint.min_x - CLEARANCE, center_y),
+        (center_x, footprint.min_y - CLEARANCE),
+    ];
+    candidates
+        .into_iter()
+        .chain(TOWN_ROAM_ANCHORS)
+        .find(|(x, y)| {
+            obstacles.iter().all(|obstacle| {
+                *x < obstacle.min_x - 14
+                    || *x > obstacle.max_x + 14
+                    || *y < obstacle.min_y - 14
+                    || *y > obstacle.max_y + 14
             })
         })
-        .collect()
 }
 
 fn gold_cost(row: &BuildingLevelDefinition) -> Option<u64> {
@@ -6918,12 +6856,19 @@ mod tests {
                     .iter()
                     .find(|hunter| hunter.hunter_id == 1)
                     .unwrap();
-                assert!(obstacles.iter().all(|obstacle| {
-                    hunter.x < obstacle.min_x - ACTOR_CLEARANCE
-                        || hunter.x > obstacle.max_x + ACTOR_CLEARANCE
-                        || hunter.y < obstacle.min_y - ACTOR_CLEARANCE
-                        || hunter.y > obstacle.max_y + ACTOR_CLEARANCE
-                }));
+                for obstacle in &obstacles {
+                    assert!(
+                        hunter.x < obstacle.min_x - ACTOR_CLEARANCE
+                            || hunter.x > obstacle.max_x + ACTOR_CLEARANCE
+                            || hunter.y < obstacle.min_y - ACTOR_CLEARANCE
+                            || hunter.y > obstacle.max_y + ACTOR_CLEARANCE,
+                        "hunter {} at ({}, {}) overlaps obstacle {:?}",
+                        hunter.hunter_id,
+                        hunter.x,
+                        hunter.y,
+                        obstacle,
+                    );
+                }
                 if hunter.x >= config.bounds.min_x
                     && hunter.x <= config.bounds.max_x
                     && hunter.y >= config.bounds.min_y
@@ -6935,8 +6880,13 @@ mod tests {
             }
             assert!(
                 entered_field,
-                "Hunter did not reach {} without crossing a building",
-                config.map_id
+                "Hunter did not reach {} without crossing a building; final position: {:?}",
+                config.map_id,
+                flow.monster_world
+                    .hunters
+                    .iter()
+                    .find(|hunter| hunter.hunter_id == 1)
+                    .map(|hunter| (hunter.x, hunter.y, hunter.entry_stage)),
             );
         }
     }
@@ -6996,6 +6946,59 @@ mod tests {
         agent.animation = "hunter_stay".to_owned();
         let paused = hunter_visual_entity(&agent, 100, 100);
         assert_eq!(paused.action_state, WorldEntityActionState::Idle);
+    }
+
+    #[test]
+    fn town_roaming_hunters_stay_in_safe_floor_and_clear_buildings() {
+        const ANCHOR_CLEARANCE: i32 = 14;
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                buildings: test_town_building_state(),
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        let obstacles =
+            town_navigation_obstacles(&flow.buildings.buildings, &flow.building_content.catalog);
+        for (x, y) in TOWN_ROAM_ANCHORS {
+            for obstacle in &obstacles {
+                assert!(
+                    x < obstacle.min_x - ANCHOR_CLEARANCE
+                        || x > obstacle.max_x + ANCHOR_CLEARANCE
+                        || y < obstacle.min_y - ANCHOR_CLEARANCE
+                        || y > obstacle.max_y + ANCHOR_CLEARANCE,
+                    "town anchor ({x}, {y}) overlaps obstacle {obstacle:?}",
+                );
+            }
+        }
+        for _ in 0..240 {
+            flow.advance_simulation_tick().expect("active village tick");
+            for hunter in &flow.monster_world.hunters {
+                if hunter.region_id.is_some() {
+                    continue;
+                }
+                assert!((TOWN_ROAM_BOUNDS.min_x..=TOWN_ROAM_BOUNDS.max_x).contains(&hunter.x));
+                assert!((TOWN_ROAM_BOUNDS.min_y..=TOWN_ROAM_BOUNDS.max_y).contains(&hunter.y));
+                for obstacle in &obstacles {
+                    assert!(
+                        hunter.x < obstacle.min_x
+                            || hunter.x > obstacle.max_x
+                            || hunter.y < obstacle.min_y
+                            || hunter.y > obstacle.max_y,
+                        "town hunter {} at ({}, {}) overlaps obstacle {:?}",
+                        hunter.hunter_id,
+                        hunter.x,
+                        hunter.y,
+                        obstacle,
+                    );
+                }
+            }
+        }
     }
 
     #[test]
@@ -7298,11 +7301,29 @@ mod tests {
             7,
         );
         let durable = flow.durable_state();
-        assert_eq!(durable.schema_version, 15);
+        assert_eq!(durable.schema_version, 16);
         assert_eq!(durable.hunter_roster.hunters.len(), 8);
         assert_eq!(durable.hunter_roster.waiting_queue.len(), 2);
         assert_eq!(durable.hunter_roster.waiting_queue[0].hunter.hunter_id, 9);
         assert_eq!(durable.hunter_roster.waiting_queue[1].hunter.hunter_id, 10);
+    }
+
+    #[test]
+    fn removed_hunter_roster_screen_restores_to_village() {
+        let flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                schema_version: 15,
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::HunterRoster,
+                    boot_completed: true,
+                },
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+
+        assert_eq!(flow.state().screen, OriginalScreen::Village);
+        assert_eq!(flow.durable_state().schema_version, 16);
     }
 
     #[test]
@@ -7886,8 +7907,7 @@ mod tests {
         ranger_agent.x = target_x;
         ranger_agent.y = target_y;
         ranger_agent.target_monster_id = Some(target_id);
-        let mut command = 211_u128;
-        for (hunter_id, skill_ids, cooldown_ms) in jobs {
+        for (command, (hunter_id, skill_ids, cooldown_ms)) in (211_u128..).zip(jobs) {
             let used = flow
                 .handle_command_with_id(
                     ClientCommand::UseHunterSkill {
@@ -7898,7 +7918,6 @@ mod tests {
                     Uuid::from_u128(command),
                 )
                 .unwrap();
-            command += 1;
             assert!(
                 matches!(
                     used.message,

@@ -304,7 +304,7 @@ function isServerEnvelope(value: unknown): value is ServerEnvelope {
 function isSnapshot(value: unknown): value is OriginalFlowSnapshot {
   if (typeof value !== "object" || value === null) return false;
   const snapshot = value as Record<string, unknown>;
-  return ["boot", "village", "hunter_roster", "field"].includes(snapshot.screen as string)
+  return ["boot", "village", "field"].includes(snapshot.screen as string)
     && snapshot.content_release_id === "original-flow-v1" && Array.isArray(snapshot.flow_order)
     && typeof snapshot.village === "object" && snapshot.village !== null
     && typeof snapshot.hunter_roster === "object" && snapshot.hunter_roster !== null

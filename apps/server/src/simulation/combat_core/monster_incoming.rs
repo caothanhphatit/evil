@@ -1,6 +1,8 @@
 use super::arithmetic::{checked_trunc_f32_to_i64, CombatArithmeticError};
 
-const POSITIVE_SUBNORMAL_THRESHOLD: f32 = f32::from_bits(1);
+// Preserve the smallest positive subnormal without requiring const `from_bits`
+// support newer than the crate's Rust 1.82 MSRV.
+const POSITIVE_SUBNORMAL_THRESHOLD: f32 = f32::MIN_POSITIVE * f32::EPSILON;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub(crate) struct OriginalMonsterDamageInputs {

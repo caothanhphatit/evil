@@ -6,13 +6,14 @@ import type { HunterInfoEquipmentSlot, HunterInfoTabId, HunterInfoView } from ".
 import { renderRidingPetTab } from "./riding-pet-tab";
 import { renderSkillsTab } from "./skills-tab";
 import { renderStatusTab } from "./status-tab";
+import { formatNumber, t } from "../../i18n";
 
 const TABS: Array<{ id: HunterInfoTabId; label: string }> = [
-  { id: "status", label: "Status" },
-  { id: "skills", label: "Skills" },
-  { id: "materials", label: "Material" },
-  { id: "growth", label: "Growth" },
-  { id: "riding", label: "Riding Pet" },
+  { id: "status", label: t("hunter.tabs.status") },
+  { id: "skills", label: t("hunter.tabs.skills") },
+  { id: "materials", label: t("hunter.tabs.materials") },
+  { id: "growth", label: t("hunter.tabs.growth") },
+  { id: "riding", label: t("hunter.tabs.riding") },
 ];
 
 const EQUIPMENT_PLACEHOLDERS: Readonly<Record<string, string>> = {
@@ -26,6 +27,8 @@ const EQUIPMENT_PLACEHOLDERS: Readonly<Record<string, string>> = {
   belt: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_08__5673.png",
 };
 const UTILITY_SLOT_COUNT = 6;
+const HUNTER_INFO_DESIGN_WIDTH = 440;
+const HUNTER_INFO_DESIGN_HEIGHT = 690;
 const LOADOUT_COLUMNS = {
   // The source paper-doll places helmet and belt on the center axis. The
   // remaining six equipment slots form three rows around the Hunter.
@@ -44,6 +47,15 @@ export interface HunterInfoModalActions {
   useSkill?(hunterId: number, skillId: string): void;
 }
 
+export function calculateHunterInfoScale(availableWidth: number, availableHeight: number): number {
+  if (availableWidth <= 0 || availableHeight <= 0) return 1;
+  return Math.min(1, availableWidth / HUNTER_INFO_DESIGN_WIDTH, availableHeight / HUNTER_INFO_DESIGN_HEIGHT);
+}
+
+export function calculateExperiencePercent(current: number, maximum: number): number {
+  return percent(current, maximum);
+}
+
 export function createHunterInfoModal(host: HTMLElement, actions: HunterInfoModalActions = {}): HunterInfoModalController {
   let activeTab: HunterInfoTabId = "status";
   let current: HunterInfoView | null = null;
@@ -52,9 +64,22 @@ export function createHunterInfoModal(host: HTMLElement, actions: HunterInfoModa
   overlay.hidden = true;
   overlay.setAttribute("role", "dialog");
   overlay.setAttribute("aria-modal", "true");
-  overlay.setAttribute("aria-label", "Hunter information");
+  overlay.setAttribute("aria-label", t("hunter.info.aria"));
   host.append(overlay);
+  const scaleFrame = node("div", "hunter-info-scale-frame");
   let panel: HTMLElement | null = null;
+
+  const syncScale = (): void => {
+    if (overlay.hidden || !panel) return;
+    const style = getComputedStyle(overlay);
+    const availableWidth = overlay.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    const availableHeight = overlay.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+    const scale = calculateHunterInfoScale(availableWidth, availableHeight);
+    scaleFrame.style.width = `${HUNTER_INFO_DESIGN_WIDTH * scale}px`;
+    scaleFrame.style.height = `${HUNTER_INFO_DESIGN_HEIGHT * scale}px`;
+    panel.style.transform = `scale(${scale})`;
+  };
+  new ResizeObserver(syncScale).observe(overlay);
 
   const close = (): void => { overlay.hidden = true; current = null; panel = null; actor.clear(); };
   const render = (): void => {
@@ -71,7 +96,9 @@ export function createHunterInfoModal(host: HTMLElement, actions: HunterInfoModa
         button.setAttribute("aria-pressed", String(selected));
       });
     }, close, actions);
-    overlay.replaceChildren(panel);
+    scaleFrame.replaceChildren(panel);
+    overlay.replaceChildren(scaleFrame);
+    syncScale();
     panel.focus({ preventScroll: true });
     const actorHost = panel.querySelector<HTMLElement>(".hunter-paper-doll.actor");
     if (actorHost) void actor.render(actorHost, info.hunter);
@@ -96,16 +123,16 @@ function buildModal(info: HunterInfoView, activeTab: HunterInfoTabId, selectTab:
   header.append(node("span", "hunter-info-silhouette", info.hunter.classFamily ?? "H"), node("b", "", info.title));
   if (info.locked !== null) {
     const lock = node("span", `hunter-info-lock${info.locked ? " locked" : ""}`);
-    lock.title = info.locked ? "Hunter locked" : "Hunter unlocked";
-    if (info.locked) lock.append(sourceImage("/content/releases/evil-hunter-1.411/hunter-assets/ui/equipment-hud/ic_hunter_lock__6607.png", "Locked"));
-    else lock.append(node("small", "", "Unlocked"));
+    lock.title = info.locked ? t("hunter.info.locked") : t("hunter.info.unlocked");
+    if (info.locked) lock.append(sourceImage("/content/releases/evil-hunter-1.411/hunter-assets/ui/equipment-hud/ic_hunter_lock__6607.png", t("hunter.info.locked_alt")));
+    else lock.append(node("small", "", t("hunter.info.unlocked_label")));
     header.append(lock);
   }
   panel.append(header, buildHero(info), buildTabs(activeTab, selectTab));
   const body = node("div", "hunter-info-tab-body");
   body.append(renderTab(activeTab, info, actions));
   panel.append(body);
-  const closeButton = node("button", "source-red-button hunter-info-close", "Close");
+  const closeButton = node("button", "source-red-button hunter-info-close", t("common.close"));
   closeButton.type = "button";
   closeButton.addEventListener("click", close);
   panel.append(closeButton);
@@ -118,10 +145,10 @@ function buildHero(info: HunterInfoView): HTMLElement {
   const stars = node("span", "hunter-reincarnation-stars");
   const starMaximum = info.reincarnation?.maximum ?? 5;
   for (let index = 0; index < starMaximum; index += 1) stars.append(node("i", info.reincarnation && index < info.reincarnation.current ? "on" : ""));
-  top.append(stars, node("small", "", "Reincarnation"));
+  top.append(stars, node("small", "", t("hunter.info.reincarnation")));
   if (info.hunter.gold !== null) {
     const money = node("b", "hunter-info-money");
-    money.append(sourceImage("/content/releases/original-flow-v1/sprites/top_ic_01_gold_24__4677.png", "Gold"), node("span", "", info.hunter.gold.toLocaleString()));
+    money.append(sourceImage("/content/releases/original-flow-v1/sprites/top_ic_01_gold_24__4677.png", t("common.gold")), node("span", "", formatNumber(info.hunter.gold)));
     top.append(money);
   }
   hero.append(top);
@@ -138,9 +165,9 @@ function buildHero(info: HunterInfoView): HTMLElement {
   const selectEquipment = (equipment: HunterInfoEquipmentSlot): void => {
     const title = node("b", "", equipment.name ?? equipment.id);
     const description = node("small", "", equipmentDetailText(equipment));
-    const close = node("button", "source-red-button", "Close");
+    const close = node("button", "source-red-button", t("common.close"));
     close.type = "button";
-    close.setAttribute("aria-label", "Close equipment details");
+    close.setAttribute("aria-label", t("hunter.info.close_equipment"));
     close.addEventListener("click", () => { equipmentDetail.hidden = true; });
     equipmentDetail.replaceChildren(title, description, close);
     equipmentDetail.hidden = false;
@@ -155,7 +182,7 @@ function buildHero(info: HunterInfoView): HTMLElement {
   centerSlots.append(equipmentSlot(equipment.get("helmet") ?? null, EQUIPMENT_PLACEHOLDERS.helmet, selectEquipment, "helmet"));
   const paperDoll = node("div", `hunter-paper-doll${info.hunter.portrait ? "" : " actor"}`);
   if (info.hunter.portrait) paperDoll.append(sourceImage(info.hunter.portrait, info.hunter.name));
-  else paperDoll.append(node("span", "sr-only", "Runtime Hunter appearance projection"));
+  else paperDoll.append(node("span", "sr-only", t("hunter.info.runtime_appearance")));
   centerSlots.append(paperDoll);
   centerSlots.append(equipmentSlot(equipment.get("belt") ?? null, EQUIPMENT_PLACEHOLDERS.belt, selectEquipment, "belt"));
   stage.append(leftUtility, leftSlots, centerSlots, rightSlots, rightUtility);
@@ -164,9 +191,22 @@ function buildHero(info: HunterInfoView): HTMLElement {
     const exp = node("div", `hunter-experience${info.experience ? "" : " unresolved"}`);
     const track = node("i");
     const fill = node("i");
-    if (info.experience) fill.style.width = `${percent(info.experience.current, info.experience.maximum)}%`;
+    if (info.experience) {
+      const progress = calculateExperiencePercent(info.experience.current, info.experience.maximum);
+      const accessibleMaximum = Math.max(0, info.experience.maximum);
+      track.setAttribute("role", "progressbar");
+      track.setAttribute("aria-label", t("hunter.info.experience_aria"));
+      track.setAttribute("aria-valuemin", "0");
+      track.setAttribute("aria-valuemax", String(accessibleMaximum));
+      track.setAttribute("aria-valuenow", String(Math.max(0, Math.min(info.experience.current, accessibleMaximum))));
+      fill.style.width = `${progress}%`;
+    } else {
+      track.setAttribute("aria-hidden", "true");
+    }
     track.append(fill);
-    exp.append(track, node("b", "", info.experience ? `EXP ${info.experience.current}/${info.experience.maximum}` : "EXP unavailable"));
+    exp.append(track, node("b", "", info.experience
+      ? t("hunter.info.exp", { current: info.experience.current, maximum: info.experience.maximum })
+      : t("hunter.info.exp_unavailable")));
     hero.append(exp);
   }
   return hero;
@@ -182,7 +222,7 @@ function equipmentSlot(
   slot.type = "button";
   slot.dataset.slotId = slotId;
   slot.disabled = equipment === null;
-  slot.setAttribute("aria-label", equipment?.name ? `View ${equipment.name}` : "Equipment slot unavailable");
+  slot.setAttribute("aria-label", equipment?.name ? t("hunter.info.view_equipment", { name: equipment.name }) : t("hunter.info.equipment_unavailable"));
   if (equipment) slot.addEventListener("click", () => select(equipment));
   const icon = equipment?.icon ?? equipment?.placeholderIcon ?? fallbackPlaceholder;
   if (icon) slot.append(sourceImage(icon));
@@ -193,13 +233,15 @@ export function equipmentDetailText(equipment: HunterInfoEquipmentSlot): string 
   const identity = [equipment.catalogKind, equipment.catalogIndex === null ? null : `#${equipment.catalogIndex}`]
     .filter((value): value is string => value !== null)
     .join(" ");
-  const evidence = equipment.evidenceState ? `Evidence: ${equipment.evidenceState}` : "Evidence state unavailable";
+  const evidence = equipment.evidenceState
+    ? t("hunter.info.evidence", { state: equipment.evidenceState })
+    : t("hunter.info.evidence_unavailable");
   return identity ? `${identity} · ${evidence}` : evidence;
 }
 
 function utilitySlot(): HTMLElement {
   const slot = node("span", "hunter-utility-slot");
-  slot.setAttribute("aria-label", "Utility slot unavailable");
+  slot.setAttribute("aria-label", t("hunter.info.utility_unavailable"));
   // The captured utility icon-to-slot bindings are unresolved; keep the
   // original empty-state marker instead of assigning a gear selection asset.
   slot.append(node("i"));
@@ -208,7 +250,7 @@ function utilitySlot(): HTMLElement {
 
 function buildTabs(active: HunterInfoTabId, selectTab: (tab: HunterInfoTabId) => void): HTMLElement {
   const tabs = node("nav", "hunter-info-tabs");
-  tabs.setAttribute("aria-label", "Hunter information sections");
+  tabs.setAttribute("aria-label", t("hunter.tabs.aria"));
   for (const tab of TABS) {
     const button = node("button", tab.id === active ? "active" : "", tab.label);
     button.type = "button";

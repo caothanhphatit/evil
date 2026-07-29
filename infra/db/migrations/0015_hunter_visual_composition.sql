@@ -78,7 +78,9 @@ WHERE player_token = '00000000-0000-4000-8000-00000000a001';
 
 INSERT INTO player_hunter_visual_component
     (player_token, hunter_id, component_kind, release_id, component_id, equipped_order)
-VALUES
+SELECT seed.player_token::uuid, seed.hunter_id, seed.component_kind,
+       seed.release_id, seed.component_id, seed.equipped_order
+FROM (VALUES
     ('00000000-0000-4000-8000-00000000a001',1,'class_base','migration.hunter-demo-v1','class:all_h4_darkload',0),
     ('00000000-0000-4000-8000-00000000a001',1,'appearance','migration.hunter-demo-v1','appearance:hunter_f_01',1),
     ('00000000-0000-4000-8000-00000000a001',1,'costume','migration.hunter-demo-v1','costume:h4_01',2),
@@ -118,4 +120,8 @@ VALUES
     ('00000000-0000-4000-8000-00000000a001',8,'appearance','migration.hunter-demo-v1','appearance:hunter_m_117',1),
     ('00000000-0000-4000-8000-00000000a001',8,'costume','migration.hunter-demo-v1','costume:h4_08',2),
     ('00000000-0000-4000-8000-00000000a001',8,'hat','migration.hunter-demo-v1','hat:08',3),
-    ('00000000-0000-4000-8000-00000000a001',8,'weapon','migration.hunter-demo-v1','weapon:h4_c_02',4);
+    ('00000000-0000-4000-8000-00000000a001',8,'weapon','migration.hunter-demo-v1','weapon:h4_c_02',4)
+) AS seed(player_token, hunter_id, component_kind, release_id, component_id, equipped_order)
+JOIN player_hunter hunter
+  ON hunter.player_token = seed.player_token::uuid
+ AND hunter.hunter_id = seed.hunter_id;

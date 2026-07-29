@@ -37,7 +37,7 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".blacksmith-grid { position: relative; z-index: 1; flex: 1 1 auto; display: grid; grid-template-columns: repeat(3");
     expect(styles).toContain("grid-auto-rows: 82px");
     expect(styles).toContain("overflow-y: auto");
-    expect(source).toContain("createGameDropdown(\"Gear difficulty\"");
+    expect(source).toContain('createGameDropdown(t("craft.gear_difficulty")');
     const gearCatalogRenderer = source.slice(
       source.indexOf("function renderGearCraftingCatalog"),
       source.indexOf("function renderDisplayShopCatalog"),
@@ -46,12 +46,12 @@ describe("gear building UI integration", () => {
     expect(gearCatalogRenderer).not.toContain("Gear quality tier");
     expect(gearCatalogRenderer).not.toContain("qualityUnlocked");
     expect(gearCatalogRenderer).toContain('card.className = "gear-catalog-card"');
-    expect(gearCatalogRenderer).toContain('action.textContent = "Craft"');
-    expect(gearCatalogRenderer).toContain('const qualityLabels = ["Regular", "Sturdy", "Refined", "Powerful", "Supreme"]');
-    expect(gearCatalogRenderer).toContain('card.setAttribute("aria-label", `${recipe.product_name} · ${qualityLabel}`)');
+    expect(gearCatalogRenderer).toContain('action.textContent = t("common.create")');
+    expect(gearCatalogRenderer).toContain('t("craft.quality.regular")');
+    expect(gearCatalogRenderer).toContain('card.setAttribute("aria-label", t("craft.item_quality"');
     expect(styles).toContain("grid-auto-rows: 70px");
     expect(styles).toContain("max-height: 112px");
-    expect(source).toContain('count.textContent = `${matching.length} items`');
+    expect(source).toContain('count.textContent = t("craft.item_count"');
     expect(source).toContain("nextPopupSignature !== popupSnapshotSignature");
     expect(styles).toContain(".on-display-badge");
     expect(styles).toContain(".gear-create-pop.gear-detail-mode");

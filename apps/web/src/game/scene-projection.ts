@@ -7,9 +7,13 @@ export const TOWN_CAMERA_CLEAR_COLOR = 0x314d79;
 
 export const TOWN_CAMERA_CENTER = { x: 1627, y: 700 } as const;
 export const FIELD_CAMERA_CENTER = { x: 1536, y: 1050 } as const;
-export const TOWN_CAMERA_ZOOM = 1.45;
-export const FIELD_CAMERA_ZOOM = 1.35;
-export const TOWN_BUILDING_GRID = { cellWidth: 24, cellHeight: 24, originX: 1627, originY: 600 } as const;
+export const TOWN_CAMERA_ZOOM = 1.92;
+export const FIELD_CAMERA_ZOOM = TOWN_CAMERA_ZOOM;
+export const MIN_CAMERA_ZOOM = 1.44;
+export const MAX_CAMERA_ZOOM = 2.2;
+// Static navigation polygons are still unresolved. Keep the rebuild building
+// lattice inside the visibly confirmed town floor and mirror it on the server.
+export const TOWN_BUILDING_GRID = { cellWidth: 24, cellHeight: 18, originX: 1627, originY: 600 } as const;
 
 const TOWN_BOUNDS = { left: 1095, top: 330, width: 1064, height: 567 } as const;
 const FIELD_BOUNDS = { left: 256, top: 128, width: 2560, height: 1280 } as const;

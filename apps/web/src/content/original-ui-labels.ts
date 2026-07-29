@@ -17,7 +17,7 @@ const labels: Record<string, Record<OriginalLocale, string>> = {
   buildpop_32: { ko: "필요자원 ", ja: "必要資源", en: "Required Resources", "zh-TW": "必要資源", "zh-CN": "必要资源", ru: "Необходимые Ресурсы", fr: "Ressources Requises", es: "Recursos Necesarios", pt: "Recursos Necessários", it: "Risorse Necessarie", de: "Benötigte Ressourcen", th: "ทรัพยากรที่ต้องการ", vi: "Nguyên Liệu Yêu Cầu", id: "Sumber Daya yang Dibutuhkan" },
 };
 
-export function originalUiLabel(key: keyof typeof labels | string, locale = browserLocale(), args: Array<string | number> = []): string {
+export function originalUiLabel(key: keyof typeof labels | string, locale = "vi", args: Array<string | number> = []): string {
   const translations = labels[key];
   if (!translations) return key;
   const normalized = normalizeLocale(locale);
@@ -35,8 +35,4 @@ function normalizeLocale(locale: string): OriginalLocale {
 
 function stripUnityRichText(value: string): string {
   return value.replace(/<\/?color(?:=[^>]+)?>/g, "");
-}
-
-function browserLocale(): string {
-  return typeof navigator === "undefined" ? "en" : navigator.language;
 }

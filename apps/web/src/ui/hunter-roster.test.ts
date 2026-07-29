@@ -9,8 +9,8 @@ describe("projectHunterRoster", () => {
     const view = projectHunterRoster({
       hunter_roster: {
         active_capacity: 8,
-        active_hunters: [{ id: 7, name: "Rin", level: 12, class: { id: "berserker", name: "Berserker", family: "h1" }, trait: { name: "Swift" }, stats: { hp: 75, max_hp: 100, attack: 22 }, action_state: { kind: "farming", animation: "hunter_walk" }, skills: [{ id: "slash", name: "Slash", level: 2 }] }],
-        waiting_queue: [{ hunter_id: 9, display_name: "Mina", queue_position: 1 }],
+        active_hunters: [{ hunter_id: 7, display_name: "Rin", level: 12, class_id: "berserker", class_name: "Berserker", class_family: "h1", trait_name: "Swift", traits: [], current_hp: 75, max_hp: 100, attack: 22, action_state: "farming", animation: "hunter_walk", skills: [{ skill_id: "slash", display_name: "Slash", level: 2 }] }],
+        waiting_hunters: [{ hunter_id: 9, display_name: "Mina" }],
       },
       world: { entities: [] },
     }, null);
@@ -21,54 +21,24 @@ describe("projectHunterRoster", () => {
     expect(view.selectedId).toBe("hunter-7");
   });
 
-  it("keeps protocol v14 usable by deriving visible hunters without inventing stats", () => {
+  it("fails closed instead of deriving a roster from legacy world entities", () => {
     const view = projectHunterRoster({
       hunter_roster: { infirmary: { hunters: [] }, product_services: [] },
       world: { entities: [{ descriptor: { entity_id: "hunter-3", kind: "hunter" }, animation: "hunter_stay" }] },
     });
     expect(view.capacity).toBe(8);
-    expect(view.active[0]).toMatchObject({ id: "hunter-3", numericId: 3, animation: "hunter_stay", hp: null });
+    expect(view.active).toEqual([]);
     expect(view.resolved).toBe(false);
   });
 
   it("reports an invalid server projection that exceeds town capacity", () => {
-    const active_hunters = Array.from({ length: 9 }, (_, index) => ({ id: index + 1 }));
-    expect(projectHunterRoster({ hunter_roster: { capacity: 8, active_hunters }, world: {} }).constraintViolation).toBe("Town capacity exceeded: 9/8");
-  });
-
-  it("reads the durable Hunter profile shape without flattening it first", () => {
-    const view = projectHunterRoster({
-      hunter_roster: {
-        active_capacity: 8,
-        active_hunters: [{
-          hunter_id: 4,
-          current_hp: 88,
-          max_hp: 120,
-          profile: {
-            display_name: "Kara",
-            class_id: "h3",
-            class_name: "Sorcerer",
-            visual_family: "H3",
-            level: 17,
-            attack: 44,
-            defense: 19,
-            action_state: "walking",
-            animation_name: "hunter_walk",
-            traits: [{ trait_id: "swift", display_name: "Swift", unlocked_rank: 2, equipped: true }],
-            skills: [{ skill_id: "arcane", display_name: "Arcane", skill_level: 3, animation_name: "h3_hit_arcane", ready: true }],
-          },
-        }],
-      },
-      world: { entities: [] },
-    });
-    expect(view.active[0]).toMatchObject({ name: "Kara", classId: "h3", className: "Sorcerer", classFamily: "H3", level: 17, attack: 44, defense: 19, action: "walking", animation: "hunter_walk", traitName: "Swift" });
-    expect(view.active[0].traits[0]).toMatchObject({ id: "swift", name: "Swift", rank: 2, equipped: true });
-    expect(view.active[0].skills[0]).toMatchObject({ id: "arcane", name: "Arcane", level: 3, ready: true });
+    const active_hunters = Array.from({ length: 9 }, (_, index) => ({ hunter_id: index + 1, display_name: `Hunter ${index + 1}` }));
+    expect(projectHunterRoster({ hunter_roster: { active_capacity: 8, active_hunters }, world: {} }).constraintViolation).toBe("Vượt sức chứa thị trấn: 9/8");
   });
 
   it("projects authoritative hunt progress and loot without calculating outcomes", () => {
     const view = projectHunterRoster({
-      hunter_roster: { active_hunters: [{ hunter_id: 2, hunt: { status: "returning", zone_id: "migration-zone-1", progress_ticks: 10, required_ticks: 10, loot: [{ item_id: "young_lycan_fur", quantity: 1 }] } }] },
+      hunter_roster: { active_hunters: [{ hunter_id: 2, display_name: "Hunter 2", hunt: { status: "returning", zone_id: "migration-zone-1", progress_ticks: 10, required_ticks: 10, loot: [{ item_id: "young_lycan_fur", quantity: 1 }] } }] },
       world: { entities: [] },
     });
     expect(view.active[0].hunt).toEqual({ status: "returning", zoneId: "migration-zone-1", progressTicks: 10, requiredTicks: 10, loot: [{ itemId: "young_lycan_fur", quantity: 1 }] });
@@ -84,7 +54,7 @@ describe("hunter helpers", () => {
   });
 
   it("resolves a roster Hunter to its selectable world actor for locate", () => {
-    const roster = projectHunterRoster({ hunter_roster: { active_hunters: [{ hunter_id: 3 }] }, world: { entities: [] } });
+    const roster = projectHunterRoster({ hunter_roster: { active_hunters: [{ hunter_id: 3, display_name: "Hunter 3" }] }, world: { entities: [] } });
     expect(hunterWorldEntityId({ world: { entities: [{ descriptor: { entity_id: "village-hunter-3", source_skeleton_name: "hunter" }, selectable: true }] } }, roster.active[0])).toBe("village-hunter-3");
   });
   it("clamps gauges and resolves class-family Spine composition", () => {

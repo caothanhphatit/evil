@@ -42,6 +42,8 @@ import {
 import {
   FIELD_CAMERA_CENTER,
   FIELD_CAMERA_ZOOM,
+  MAX_CAMERA_ZOOM,
+  MIN_CAMERA_ZOOM,
   projectScenePoint,
   projectWorldEntityPoint,
   runtimeScenePieces,
@@ -94,12 +96,17 @@ export class VisibleEntityWorld {
   private readonly pending = new Set<string>();
   private readonly familyLoads = new Map<string, Promise<void>>();
   private readonly bundles = new Map<string, ActorBundle>();
-  private readonly projectionBuffer = new ProjectionBuffer();
+  private readonly projectionBuffer = new ProjectionBuffer({
+    tickDurationMs: 200,
+    renderDelayMs: 200,
+    maxExtrapolationTicks: 1,
+  });
   private buildingFootprints: BuildingFootprint[] = [];
   private readonly buildingTemplates = new Map<string, BuildingTemplate>();
   private readonly buildingInstances = new Map<string, BuildingInstanceSnapshot>();
   private readonly buildingSprites = new Map<string, Sprite>();
   private readonly worldLayer = new Container();
+  private readonly staticLayer = new Container();
   private readonly signboards = new Map<string, SignboardView>();
   private readonly rangedProjectiles: RangedProjectileView[] = [];
   private readonly pendingCombatPresentations: PendingCombatPresentation[] = [];
@@ -127,14 +134,15 @@ export class VisibleEntityWorld {
   ) {
     this.root.sortableChildren = true;
     this.worldLayer.sortableChildren = true;
+    this.staticLayer.sortableChildren = true;
   }
 
   async initialize(onProgress?: (loaded: number, total: number) => void): Promise<VisibleWorldDiagnostics> {
     const manifest = await loadVerifiedVisibleWorldRelease(fetch, onProgress);
     for (const bundle of manifest.actors) this.bundles.set(bundle.family, bundle);
 
+    await this.addScenePieces(manifest.village.tiles, this.staticLayer);
     await this.addScenePieces([
-      ...manifest.village.tiles,
       ...runtimeScenePieces(manifest.village.foreground),
       ...manifest.village.decorations,
     ]);
@@ -150,11 +158,17 @@ export class VisibleEntityWorld {
       Assets.load<Texture>(ACTOR_HP_INNER_ASSET),
       Assets.load<Texture>(ACTOR_HP_FRAME_ASSET),
     ]);
-    this.root.addChild(this.worldLayer);
+    this.root.addChild(this.staticLayer, this.worldLayer);
+    // The large town and farm backgrounds never change during a session. Bake
+    // only those tiles; foreground pieces keep dynamic depth sorting.
+    this.staticLayer.cacheAsTexture({ antialias: false });
     return { fixture: manifest.runtimeDiagnostics.fixture, unresolved: manifest.runtimeDiagnostics.unresolved };
   }
 
-  private async addScenePieces(pieces: Array<{ id?: string; publicPath: string; x: number; y: number; z?: number; scale?: number; anchor?: { x?: number; y?: number } }>): Promise<void> {
+  private async addScenePieces(
+    pieces: Array<{ id?: string; publicPath: string; x: number; y: number; z?: number; scale?: number; anchor?: { x?: number; y?: number } }>,
+    target = this.worldLayer,
+  ): Promise<void> {
     await Promise.all(pieces.map(async (piece) => {
       const texture = await Assets.load<Texture>(piece.publicPath);
       const sprite = new Sprite(texture);
@@ -163,18 +177,14 @@ export class VisibleEntityWorld {
       sprite.position.set(position.x, position.y);
       sprite.scale.set(piece.scale ?? 1);
       sprite.zIndex = scenePieceDepth(piece.id, piece.z ?? 499);
-      this.worldLayer.addChild(sprite);
+      target.addChild(sprite);
     }));
   }
 
   private async loadTownBuildingTemplates(buildings: TownBuilding[]): Promise<void> {
     await Promise.all(buildings.map(async (building) => {
-      try {
-        const texture = await Assets.load<Texture>(building.publicPath);
-        this.buildingTemplates.set(building.id, { visual: building, texture });
-      } catch (error) {
-        console.warn(`Could not load town building ${building.publicPath}.`, error);
-      }
+      const texture = await Assets.load<Texture>(building.publicPath);
+      this.buildingTemplates.set(building.id, { visual: building, texture });
     }));
   }
 
@@ -268,7 +278,7 @@ export class VisibleEntityWorld {
   }
 
   zoomBy(delta: number): void {
-    this.cameraZoom = Math.max(1, Math.min(1.8, this.cameraZoom + delta));
+    this.cameraZoom = Math.max(MIN_CAMERA_ZOOM, Math.min(MAX_CAMERA_ZOOM, this.cameraZoom + delta));
     this.applyCamera();
   }
 

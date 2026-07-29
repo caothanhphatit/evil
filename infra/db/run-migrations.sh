@@ -31,6 +31,11 @@ for migration in "$@"; do
         if [ "$applied_checksum" = "__missing__" ]; then
             psql "$DATABASE_URL" -v ON_ERROR_STOP=1 \
                 -c "UPDATE schema_migration SET checksum = '$checksum' WHERE version = '$version'"
+        elif [ "$version:$applied_checksum:$checksum" = "0010_normalized_building_gameplay_content:53fe119c2f20d52a67d3a1856c535a06730908367a0da7965386adb50952e13c:218ffa02208a139ec0626d318cee668bc9b4788b2f459ac4d7c1ed5fca2cfccc" ]; then
+            # The first production publication of 0010 predates the canonical
+            # generated artifact retained in Git. Keep its recorded checksum
+            # immutable while allowing later forward-only migrations.
+            echo "Accepting recorded production checksum for $version"
         elif [ "$applied_checksum" != "$checksum" ]; then
             echo "Migration checksum mismatch for $version" >&2
             exit 1

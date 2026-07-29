@@ -239,6 +239,7 @@ function fieldValue(value: unknown): unknown {
 
 function localizedText(value: unknown, fallback: string): string {
   if (!isRecord(value)) return fallback;
+  if (typeof value.vi === "string" && value.vi.length > 0) return value.vi;
   return typeof value.en === "string" && value.en.length > 0 ? value.en : fallback;
 }
 
