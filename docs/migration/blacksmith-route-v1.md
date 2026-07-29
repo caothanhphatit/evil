@@ -40,9 +40,11 @@ runtime capture proves their visible navigation binding.
 The server resolves the producer and destination shop from capability rows:
 weapon recipes route to `weapon-display-and-sale`; armor, helmet, glove, and
 boot recipes route to `armor-display-and-sale`. Crafting validates the
-Blacksmith instance, tier (`rating < building level`), quantity, and material
-costs before atomically adding stock to the matching display shop. A display
-shop also rejects products above its own unlocked tier.
+Blacksmith instance, difficulty (`difficultyGroup <= building level`),
+quantity, and material costs before atomically adding stock to the matching
+display shop. Quality/rating rows within an unlocked difficulty use their own
+material recipe and are not independently gated by building level. A display
+shop also rejects products above its own unlocked difficulty.
 
 The captured shop list marks crafted gear as `On Display`; it does not expose a
 player-operated Sell button. Hunter purchase settlement therefore remains

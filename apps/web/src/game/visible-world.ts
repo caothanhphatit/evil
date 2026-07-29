@@ -2,10 +2,10 @@ import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Skin } from "@esotericsoftware/spine-core";
 import { Assets, Circle, Container, Graphics, Sprite, Text, Texture } from "pixi.js";
 import { loadVerifiedVisibleWorldRelease, type ActorBundle, type MonsterDensitySignboard, type TownBuilding } from "../assets/visible-world-release";
-import type { BuildingInstanceSnapshot, CombatPresentationSnapshot, WorldEntityProjection } from "../generated/protocol";
+import type { BuildingInstanceSnapshot, CombatPresentationSnapshot, WorldDropProjection, WorldEntityProjection } from "../generated/protocol";
 import { projectRenderableBuildingInstances } from "./building-placement";
-import { panWorldViewport } from "./camera";
-import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth } from "./depth";
+import { panWorldViewport, worldPointVisible } from "./camera";
+import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageBuildingDepth } from "./depth";
 import { ProjectionBuffer } from "./projection-interpolation";
 import {
   RANGER_PROJECTILE_SCALE,
@@ -34,6 +34,7 @@ import {
   ORIGINAL_INCOMING_DAMAGE_COLOR,
   ORIGINAL_MISS_COLOR,
   ORIGINAL_NORMAL_DAMAGE_COLOR,
+  REBUILD_EXPERIENCE_COLOR,
   combatPresentationHasValidPayload,
   combatPresentationText,
   originalDamageMotionAt,
@@ -71,6 +72,7 @@ interface ActorView {
   family: string;
   skinSignature: string;
   actionSequence: number;
+  lootSequence: number;
 }
 interface ActorHealthBarView { root: Container; fill: Sprite; }
 interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; }
@@ -79,6 +81,12 @@ interface SignboardView { root: Container; sprite: Sprite; textures: Map<number,
 interface RangedProjectileView { sprite: Sprite; start: { x: number; y: number }; end: { x: number; y: number }; spawnedAtMs: number; }
 interface PendingCombatPresentation { event: CombatPresentationSnapshot; receivedAtMs: number; }
 interface CombatPresentationView { root: Container; originY: number; spawnedAtMs: number; }
+interface DropView { root: Container; sprite: Sprite; quantity: Text; iconPath: string; }
+interface LootPickupView { root: Container; spawnedAtMs: number; }
+
+export function groundDropIconScale(itemId: string): number {
+  return itemId === "gold" ? 0.55 : 0.72;
+}
 
 export class VisibleEntityWorld {
   readonly root = new Container();
@@ -97,6 +105,9 @@ export class VisibleEntityWorld {
   private readonly pendingCombatPresentations: PendingCombatPresentation[] = [];
   private readonly combatPresentationViews: CombatPresentationView[] = [];
   private readonly seenCombatPresentationSequences = new Set<number>();
+  private readonly dropViews = new Map<string, DropView>();
+  private readonly pendingDrops = new Set<string>();
+  private readonly lootPickupViews: LootPickupView[] = [];
   private rangerArrowTexture: Texture | null = null;
   private actorHpInnerTexture: Texture | null = null;
   private actorHpFrameTexture: Texture | null = null;
@@ -226,7 +237,7 @@ export class VisibleEntityWorld {
       sprite.anchor.set(template.visual.anchor.x, template.visual.anchor.y);
       sprite.position.set(placement.x, placement.y);
       sprite.scale.set(template.visual.scale);
-      sprite.zIndex = villageActorDepth(placement.y, SCENE_WORLD_HEIGHT);
+      sprite.zIndex = villageBuildingDepth(placement.y, SCENE_WORLD_HEIGHT);
       sprite.visible = true;
       this.buildingFootprints.push({
         id: placement.instanceId,
@@ -266,6 +277,15 @@ export class VisibleEntityWorld {
     for (const [id, view] of this.views) view.highlight.visible = id === entityId;
   }
 
+  screenPointForEntity(entityId: string): { x: number; y: number } | null {
+    const view = this.views.get(entityId);
+    if (!view?.root.renderable) return null;
+    return {
+      x: this.root.position.x + view.root.x * this.root.scale.x,
+      y: this.root.position.y + view.root.y * this.root.scale.y,
+    };
+  }
+
   focusEntity(entityId: string): boolean {
     const entity = this.latest.find((candidate) => candidate.descriptor.entity_id === entityId);
     if (!entity) return false;
@@ -292,18 +312,39 @@ export class VisibleEntityWorld {
     );
     this.root.scale.set(transform.scale);
     this.root.position.set(transform.x, transform.y);
+    this.updateActorVisibility(transform);
+  }
+
+  private updateActorVisibility(transform = {
+    scale: this.root.scale.x,
+    x: this.root.position.x,
+    y: this.root.position.y,
+  }): void {
+    for (const view of this.views.values()) {
+      const visible = worldPointVisible(
+        view.root.x,
+        view.root.y,
+        this.viewportWidth,
+        this.viewportHeight,
+        transform,
+      );
+      view.root.renderable = visible;
+      view.spine.state.timeScale = visible ? 1 : 0;
+    }
   }
 
   update(
     entities: WorldEntityProjection[],
     visualTick: number,
     combatPresentations: CombatPresentationSnapshot[] = [],
+    drops: WorldDropProjection[] = [],
     receivedAtMs = performance.now(),
   ): void {
     this.projectionBuffer.push(this.mode, visualTick, entities, receivedAtMs);
     this.queueCombatPresentations(combatPresentations, receivedAtMs);
     const sample = this.projectionBuffer.sample(receivedAtMs);
     if (sample) this.applyProjection(sample.entities);
+    this.applyDrops(drops);
     this.spawnPendingCombatPresentations(receivedAtMs);
   }
 
@@ -311,6 +352,7 @@ export class VisibleEntityWorld {
     const sample = this.projectionBuffer.sample(nowMs);
     if (sample) this.applyProjection(sample.entities);
     this.updateRangedProjectiles(nowMs);
+    this.updateLootPickupViews(nowMs);
     this.spawnPendingCombatPresentations(nowMs);
     this.updateCombatPresentationViews(nowMs);
   }
@@ -329,6 +371,7 @@ export class VisibleEntityWorld {
         this.views.delete(id);
       }
     }
+    this.updateActorVisibility();
   }
 
   destroy(): void {
@@ -339,7 +382,67 @@ export class VisibleEntityWorld {
     this.pendingCombatPresentations.length = 0;
     this.combatPresentationViews.length = 0;
     this.seenCombatPresentationSequences.clear();
+    this.dropViews.clear();
+    this.pendingDrops.clear();
+    this.lootPickupViews.length = 0;
     this.projectionBuffer.reset();
+  }
+
+  private applyDrops(drops: WorldDropProjection[]): void {
+    const active = new Set(drops.map((drop) => drop.drop_id));
+    for (const drop of drops) {
+      const view = this.dropViews.get(drop.drop_id);
+      if (view) {
+        view.root.position.set(drop.x, drop.y - 14);
+        view.root.zIndex = villageActorDepth(drop.y, SCENE_WORLD_HEIGHT) - 1;
+        view.quantity.text = drop.quantity > 1 ? `x${drop.quantity}` : "";
+      } else if (!this.pendingDrops.has(drop.drop_id) && drop.icon_path) {
+        void this.createDrop(drop);
+      }
+    }
+    for (const [dropId, view] of this.dropViews) {
+      if (!active.has(dropId)) {
+        view.root.destroy({ children: true });
+        this.dropViews.delete(dropId);
+      }
+    }
+  }
+
+  private async createDrop(drop: WorldDropProjection): Promise<void> {
+    this.pendingDrops.add(drop.drop_id);
+    try {
+      const texture = await Assets.load<Texture>(drop.icon_path);
+      const root = new Container();
+      const sprite = new Sprite(texture);
+      sprite.anchor.set(0.5);
+      sprite.scale.set(groundDropIconScale(drop.item_id));
+      if (drop.item_id === "gold") {
+        // The only confirmed gold sprite is small HUD art; layer copies into a
+        // readable ground pile without claiming a missing original drop asset.
+        const leftCoin = new Sprite(texture);
+        leftCoin.anchor.set(0.5);
+        leftCoin.position.set(-6, 4);
+        leftCoin.scale.set(0.42);
+        const rightCoin = new Sprite(texture);
+        rightCoin.anchor.set(0.5);
+        rightCoin.position.set(6, 4);
+        rightCoin.scale.set(0.42);
+        root.addChild(leftCoin, rightCoin);
+      }
+      const quantity = new Text({
+        text: drop.quantity > 1 ? `x${drop.quantity}` : "",
+        style: { fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY, fontSize: 12, fill: 0xffefba, stroke: { color: 0x261d0d, width: 3 } },
+      });
+      quantity.anchor.set(0.5, 0);
+      quantity.position.set(0, 10);
+      root.addChild(sprite, quantity);
+      root.position.set(drop.x, drop.y - 14);
+      root.zIndex = villageActorDepth(drop.y, SCENE_WORLD_HEIGHT) - 1;
+      this.worldLayer.addChild(root);
+      this.dropViews.set(drop.drop_id, { root, sprite, quantity, iconPath: drop.icon_path });
+    } finally {
+      this.pendingDrops.delete(drop.drop_id);
+    }
   }
 
   private async create(entity: WorldEntityProjection): Promise<void> {
@@ -370,7 +473,10 @@ export class VisibleEntityWorld {
       root.addChild(presence, highlight, spine);
       if (healthBar) root.addChild(healthBar.root);
       this.worldLayer.addChild(root);
-      const view = { root, spine, presence, highlight, healthBar, animation: "", family, skinSignature, actionSequence: 0 };
+      const view = {
+        root, spine, presence, highlight, healthBar, animation: "", family, skinSignature,
+        actionSequence: 0, lootSequence: current.loot_sequence,
+      };
       root.position.set(current.x, current.y);
       this.views.set(id, view);
       this.project(view, current);
@@ -418,6 +524,10 @@ export class VisibleEntityWorld {
     }
     this.projectHealthBar(view.healthBar, entity);
     this.maybeStartRangerProjectile(view, entity);
+    if (entity.loot_sequence > view.lootSequence && entity.loot_label) {
+      view.lootSequence = entity.loot_sequence;
+      this.showLootPickup(view, entity.loot_label);
+    }
     const requestedAnimation = view.family === "hunter" ? hunterActorVisual(entity).animation ?? entity.animation : entity.animation;
     if (view.animation === requestedAnimation && view.actionSequence === entity.action_sequence) return;
     if (view.spine.skeleton.data.findAnimation(requestedAnimation)) {
@@ -497,6 +607,36 @@ export class VisibleEntityWorld {
     }
   }
 
+  private showLootPickup(view: ActorView, label: string): void {
+    const root = new Container();
+    const text = new Text({
+      text: label,
+      style: {
+        fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY,
+        fontSize: 14,
+        fill: 0xffefba,
+        stroke: { color: 0x261d0d, width: 4 },
+      },
+    });
+    text.anchor.set(0.5);
+    root.addChild(text);
+    root.position.set(0, -72);
+    view.root.addChild(root);
+    this.lootPickupViews.push({ root, spawnedAtMs: performance.now() });
+  }
+
+  private updateLootPickupViews(nowMs: number): void {
+    for (let index = this.lootPickupViews.length - 1; index >= 0; index -= 1) {
+      const pickup = this.lootPickupViews[index]!;
+      const elapsed = nowMs - pickup.spawnedAtMs;
+      pickup.root.y = -72 - Math.min(18, elapsed * 0.018);
+      pickup.root.alpha = Math.max(0, 1 - Math.max(0, elapsed - 700) / 500);
+      if (elapsed < 1_200) continue;
+      pickup.root.destroy({ children: true });
+      this.lootPickupViews.splice(index, 1);
+    }
+  }
+
   private queueCombatPresentations(events: CombatPresentationSnapshot[], receivedAtMs: number): void {
     for (const event of events) {
       if (this.seenCombatPresentationSequences.has(event.sequence)) continue;
@@ -545,6 +685,8 @@ export class VisibleEntityWorld {
       ? ORIGINAL_EVADE_COLOR
       : event.kind === "miss"
         ? ORIGINAL_MISS_COLOR
+        : event.kind === "experience"
+          ? REBUILD_EXPERIENCE_COLOR
         : event.kind === "incoming_damage"
           ? ORIGINAL_INCOMING_DAMAGE_COLOR
           : ORIGINAL_NORMAL_DAMAGE_COLOR;

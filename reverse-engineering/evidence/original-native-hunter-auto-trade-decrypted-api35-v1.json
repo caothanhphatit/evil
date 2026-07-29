@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "contractType": "il2cpp-native-method-evidence",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "capturedAtUtc": "2026-07-28T01:32:44.319823Z",
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "deviceModel": "sdk_gphone64_arm64",
+    "androidRelease": "15",
+    "androidApi": "35",
+    "fridaClientVersion": "17.16.4",
+    "fridaServerVersion": "17.16.4",
+    "pid": 5391,
+    "action": "One-shot reviewed native-body capture for Hunter autonomous buy/sell chain; detach immediately; no managed values read",
+    "script": "tools/runtime/il2cpp-native-method-dump.js",
+    "requestedMethods": [
+      {
+        "className": "HunterCtrl",
+        "methodName": "ItemPotionBuy",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "SpeakItemSell",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "SpeakWeaponBuy",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "SpeakArmorBuy",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "ItemArmorBuy",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "ItemWeaponBuy",
+        "parameterCount": 0
+      },
+      {
+        "className": "HunterCtrl",
+        "methodName": "ItemAccessoryBuy",
+        "parameterCount": 0
+      }
+    ],
+    "requestedClasses": [],
+    "requestedModuleOffsets": [],
+    "requestedTargetAssembly": "Assembly-CSharp.dll",
+    "codeByteLimit": 4096,
+    "exactBoundaries": true,
+    "includeMethodIndex": false
+  },
+  "record": {
+    "kind": "il2cpp-native-methods",
+    "payload": {
+      "formatVersion": 1,
+      "source": "IL2CPP exported reflection API and MethodInfo pointer prefix",
+      "module": {
+        "name": "libil2cpp.so",
+        "base": "0x6f9840e000",
+        "size": 106893312
+      },
+      "assembly": "Assembly-CSharp.dll",
+      "architecture": "arm64",
+      "pointerSize": 8,
+      "codeByteLimit": 4096,
+      "exactBoundaries": true,
+      "requested": [
+        {
+          "className": "HunterCtrl",
+          "methodName": "ItemPotionBuy",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "SpeakItemSell",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "SpeakWeaponBuy",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "SpeakArmorBuy",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "ItemArmorBuy",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "ItemWeaponBuy",
+          "parameterCount": 0
+        },
+        {
+          "className": "HunterCtrl",
+          "methodName": "ItemAccessoryBuy",
+          "parameterCount": 0
+        }
+      ],
+      "requestedClasses": [],
+      "requestedModuleOffsets": [],
+      "missing": [],
+      "methods": [
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "ItemPotionBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Boolean",
+          "token": 100686720,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b8287f0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x341a7f0",
+              "codeHex": "ff0301d1fe5702a9f44f03a9747d0190556001b0f30300aa88726139b59e40f9e8010037006001d0007043f930f7bc97006001f000ec45f92df7bc97406001b0009c40f92af7bc972060019000e447f927f7bc972800805288722139e00313aa21018052220080528794ff97e00313aadc68ff97a00240f908e440b94800003563f7bc97e0031faa890fe897f40300aae00313aa184cff97800b00b408100491e2031faa000540a9a5efc097f40a00b4e103002ae00314aae2031faa210fe897e001003688c8feb0e0031faa7fea037900d146bde8330091edf3c097e0c3c03ce91f40b968d20691e00313aa0001803d69c601b99e68ff9704000014e00313aa21008052c6b7ff97a00240f9156001d008e440b9b57243f9480000353cf7bc97e0031faa620fe897a80240f9f40300aa09e540b969000035e00308aa34f7bc97540600b4a80240f9e00314aae2031faa085d40f901e148b976fee797f403002a00040036614245f9a10000b4e00313aae2031faa4d9799947f4205f9156001f0b5ee45f9a00240f908e440b9680000351ff7bc97a00240f9085c40f9e00313aae2031f2a012541b91494ff97a80240f9e00313aae2031f2a085d40f901bd41b90e94ff97a80240f9e00313aa22008052085d40f9017945b90894ff970600001428600190e1031faa08e547f9000140f9d0a6d39780020012f44f43a9fe5742a9ff030191c0035fd64ef7bc97",
+              "nativeSizeBytes": 524,
+              "boundaryModuleOffset": "0x341a9fc",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b8287f0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x341a7f0",
+              "codeHex": "ff0301d1fe5702a9f44f03a9747d0190556001b0f30300aa88726139b59e40f9e8010037006001d0007043f930f7bc97006001f000ec45f92df7bc97406001b0009c40f92af7bc972060019000e447f927f7bc972800805288722139e00313aa21018052220080528794ff97e00313aadc68ff97a00240f908e440b94800003563f7bc97e0031faa890fe897f40300aae00313aa184cff97800b00b408100491e2031faa000540a9a5efc097f40a00b4e103002ae00314aae2031faa210fe897e001003688c8feb0e0031faa7fea037900d146bde8330091edf3c097e0c3c03ce91f40b968d20691e00313aa0001803d69c601b99e68ff9704000014e00313aa21008052c6b7ff97a00240f9156001d008e440b9b57243f9480000353cf7bc97e0031faa620fe897a80240f9f40300aa09e540b969000035e00308aa34f7bc97540600b4a80240f9e00314aae2031faa085d40f901e148b976fee797f403002a00040036614245f9a10000b4e00313aae2031faa4d9799947f4205f9156001f0b5ee45f9a00240f908e440b9680000351ff7bc97a00240f9085c40f9e00313aae2031f2a012541b91494ff97a80240f9e00313aae2031f2a085d40f901bd41b90e94ff97a80240f9e00313aa22008052085d40f9017945b90894ff970600001428600190e1031faa08e547f9000140f9d0a6d39780020012f44f43a9fe5742a9ff030191c0035fd64ef7bc97",
+              "nativeSizeBytes": 524,
+              "boundaryModuleOffset": "0x341a9fc",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "SpeakItemSell",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686728,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b82a404",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x341c404",
+              "codeHex": "fe57bea9f44f01a9547d01d015600190f30300aa888a6139b53643f9c800003700600190003443f92cf0bc9728008052888a2139a00240f908e440b9480000356ef0bc97e0031faa7b8fca97000100b400e443f9c00000b4610241f9f44f41a9e2031faafe57c2a8caeadc17b0f0bc97",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x341c474",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b82a404",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x341c404",
+              "codeHex": "fe57bea9f44f01a9547d01d015600190f30300aa888a6139b53643f9c800003700600190003443f92cf0bc9728008052888a2139a00240f908e440b9480000356ef0bc97e0031faa7b8fca97000100b400e443f9c00000b4610241f9f44f41a9e2031faafe57c2a8caeadc17b0f0bc97",
+              "nativeSizeBytes": 112,
+              "boundaryModuleOffset": "0x341c474",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "SpeakWeaponBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686749,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b8320b0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34240b0",
+              "codeHex": "ffc300d1fe5701a9f44f02a9147d01d0d55f0190f30300aa88d66139b53643f9e8010037e05f0190002444f900d1bc97c05f0190003443f9fdd0bc97c05f01d0000840f9fad0bc97a06001b0005445f9f7d0bc972800805288d62139a00240f908e440b94800003539d1bc97e0031faa4670ca97000a00b400fc43f9c00900b4610241f9e2031f2ae3031faac200c897e0031faa3d70ca97e00800b4080443f9a80800b4f55f0190e2031faab52644f900bd43f901c143f971c9c097a80240f9f403002a09e540b989000035e00308aa1fd1bc97a80240f9085d40f9084d40b99f02086b01060054e00313aad225ff97200600b4080442a9e2031faae00308aa5fc9c09700050035d35f01d0730a40f9600240f908e440b9680000350cd1bc97600240f9085c40f9e1031faa00fd40f9a02ef69780030037e0031faaf018eb97a00300b4a86001b0e2031faae3031faa085545f9010140f96b1eeb97600240f908e440b968000035f9d0bc97600240f9a95f01d0085c40f9e1330091293543f913fd40f928008052201540f9e8330039f1d0bc97e10300aae00313aae2031faaef2ff697f44f42a9fe5741a9ffc30091c0035fd633d1bc97",
+              "nativeSizeBytes": 440,
+              "boundaryModuleOffset": "0x3424268",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b8320b0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x34240b0",
+              "codeHex": "ffc300d1fe5701a9f44f02a9147d01d0d55f0190f30300aa88d66139b53643f9e8010037e05f0190002444f900d1bc97c05f0190003443f9fdd0bc97c05f01d0000840f9fad0bc97a06001b0005445f9f7d0bc972800805288d62139a00240f908e440b94800003539d1bc97e0031faa4670ca97000a00b400fc43f9c00900b4610241f9e2031f2ae3031faac200c897e0031faa3d70ca97e00800b4080443f9a80800b4f55f0190e2031faab52644f900bd43f901c143f971c9c097a80240f9f403002a09e540b989000035e00308aa1fd1bc97a80240f9085d40f9084d40b99f02086b01060054e00313aad225ff97200600b4080442a9e2031faae00308aa5fc9c09700050035d35f01d0730a40f9600240f908e440b9680000350cd1bc97600240f9085c40f9e1031faa00fd40f9a02ef69780030037e0031faaf018eb97a00300b4a86001b0e2031faae3031faa085545f9010140f96b1eeb97600240f908e440b968000035f9d0bc97600240f9a95f01d0085c40f9e1330091293543f913fd40f928008052201540f9e8330039f1d0bc97e10300aae00313aae2031faaef2ff697f44f42a9fe5741a9ffc30091c0035fd633d1bc97",
+              "nativeSizeBytes": 440,
+              "boundaryModuleOffset": "0x3424268",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "SpeakArmorBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Void",
+          "token": 100686996,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b832268",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3424268",
+              "codeHex": "fe57bea9f44f01a9147d01d0d55f0190f30300aa88426539b53643f9c8000037c05f0190003443f993d0bc972800805288422539a00240f908e440b948000035d5d0bc97e0031faae26fca97200100b400fc43f9e00000b4610241f9f44f41a922008052e3031faafe57c2a85c00c81716d1bc97",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x34242dc",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b832268",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3424268",
+              "codeHex": "fe57bea9f44f01a9147d01d0d55f0190f30300aa88426539b53643f9c8000037c05f0190003443f993d0bc972800805288422539a00240f908e440b948000035d5d0bc97e0031faae26fca97200100b400fc43f9e00000b4610241f9f44f41a922008052e3031faafe57c2a85c00c81716d1bc97",
+              "nativeSizeBytes": 116,
+              "boundaryModuleOffset": "0x34242dc",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "ItemArmorBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Boolean",
+          "token": 100687026,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b877de0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3469de0",
+              "codeHex": "ff0301d1fe5702a9f44f03a9f47a01b0d55d01d0f30300aa88b26539b59e40f9e8010037805d01f0007043f9b4b9bb97a05d019000ec45f9b1b9bb97c05d01d0009c40f9aeb9bb97a05d01b000e447f9abb9bb972800805288b22539e00313aa01028052220080520b57fe97e00313aa602bfe97a00240f908e440b948000035e7b9bb97e0031faa0dd2e697f40300aae00313aa9c0efe97400c00b408100491e2031faa000540a929b2bf97b40b00b4e103002ae00314aae2031faaa5d1e697e001003608c6fed0e0031faa7fea037900d146bde833009171b6bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b9222bfe9704000014e00313aa210080524a7afe97a00240f9955d01f008e440b9b57243f948000035c0b9bb97e0031faae6d1e697a80240f9f40300aa09e540b969000035e00308aab8b9bb97140700b4a80240f9e00314aae2031faa085d40f901b148b9fac0e697f403002ac0040036614245f9a10000b4e00313aae2031faad15998947f4205f9b55d0190b5ee45f9a00240f908e440b968000035a3b9bb97a00240f9085c40f9e00313aae2031f2a011941b99856fe97a80240f9e00313aae2031f2a085d40f901b141b99256fe97a80240f9e00313aae2031f2a085d40f9018945b98c56fe97a80240f9e00313aa22008052085d40f901ed45b98656fe9706000014a85d01b0e1031faa08e547f9000140f94e69d29780020012f44f43a9fe5742a9ff030191c0035fd6ccb9bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346a004",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b877de0",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x3469de0",
+              "codeHex": "ff0301d1fe5702a9f44f03a9f47a01b0d55d01d0f30300aa88b26539b59e40f9e8010037805d01f0007043f9b4b9bb97a05d019000ec45f9b1b9bb97c05d01d0009c40f9aeb9bb97a05d01b000e447f9abb9bb972800805288b22539e00313aa01028052220080520b57fe97e00313aa602bfe97a00240f908e440b948000035e7b9bb97e0031faa0dd2e697f40300aae00313aa9c0efe97400c00b408100491e2031faa000540a929b2bf97b40b00b4e103002ae00314aae2031faaa5d1e697e001003608c6fed0e0031faa7fea037900d146bde833009171b6bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b9222bfe9704000014e00313aa210080524a7afe97a00240f9955d01f008e440b9b57243f948000035c0b9bb97e0031faae6d1e697a80240f9f40300aa09e540b969000035e00308aab8b9bb97140700b4a80240f9e00314aae2031faa085d40f901b148b9fac0e697f403002ac0040036614245f9a10000b4e00313aae2031faad15998947f4205f9b55d0190b5ee45f9a00240f908e440b968000035a3b9bb97a00240f9085c40f9e00313aae2031f2a011941b99856fe97a80240f9e00313aae2031f2a085d40f901b141b99256fe97a80240f9e00313aae2031f2a085d40f9018945b98c56fe97a80240f9e00313aa22008052085d40f901ed45b98656fe9706000014a85d01b0e1031faa08e547f9000140f94e69d29780020012f44f43a9fe5742a9ff030191c0035fd6ccb9bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346a004",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "ItemWeaponBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Boolean",
+          "token": 100687040,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b878e90",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x346ae90",
+              "codeHex": "ff0301d1fe5702a9f44f03a9f47a0190d55d01b0f30300aa88da6539b59e40f9e8010037805d01d0007043f988b5bb97805d01f000ec45f985b5bb97c05d01b0009c40f982b5bb97a05d019000e447f97fb5bb972800805288da2539e00313aae101805222008052df52fe97e00313aa3427fe97a00240f908e440b948000035bbb5bb97e0031faae1cde697f40300aae00313aa700afe97400c00b408100491e2031faa000540a9fdadbf97b40b00b4e103002ae00314aae2031faa79cde697e001003608c6feb0e0031faa7fea037900d146bde833009145b2bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b9f626fe9704000014e00313aa210080521e76fe97a00240f9955d01d008e440b9b57243f94800003594b5bb97e0031faabacde697a80240f9f40300aa09e540b969000035e00308aa8cb5bb97140700b4a80240f9e00314aae2031faa085d40f901a148b9cebce697f403002ac0040036614245f9a10000b4e00313aae2031faaa55598947f4205f9955d01d0b5ee45f9a00240f908e440b96800003577b5bb97a00240f9085c40f9e00313aae2031f2a011541b96c52fe97a80240f9e00313aae2031f2a085d40f901ad41b96652fe97a80240f9e00313aae2031f2a085d40f9018545b96052fe97a80240f9e00313aa22008052085d40f901e945b95a52fe9706000014885d01f0e1031faa08e547f9000140f92265d29780020012f44f43a9fe5742a9ff030191c0035fd6a0b5bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346b0b4",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b878e90",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x346ae90",
+              "codeHex": "ff0301d1fe5702a9f44f03a9f47a0190d55d01b0f30300aa88da6539b59e40f9e8010037805d01d0007043f988b5bb97805d01f000ec45f985b5bb97c05d01b0009c40f982b5bb97a05d019000e447f97fb5bb972800805288da2539e00313aae101805222008052df52fe97e00313aa3427fe97a00240f908e440b948000035bbb5bb97e0031faae1cde697f40300aae00313aa700afe97400c00b408100491e2031faa000540a9fdadbf97b40b00b4e103002ae00314aae2031faa79cde697e001003608c6feb0e0031faa7fea037900d146bde833009145b2bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b9f626fe9704000014e00313aa210080521e76fe97a00240f9955d01d008e440b9b57243f94800003594b5bb97e0031faabacde697a80240f9f40300aa09e540b969000035e00308aa8cb5bb97140700b4a80240f9e00314aae2031faa085d40f901a148b9cebce697f403002ac0040036614245f9a10000b4e00313aae2031faaa55598947f4205f9955d01d0b5ee45f9a00240f908e440b96800003577b5bb97a00240f9085c40f9e00313aae2031f2a011541b96c52fe97a80240f9e00313aae2031f2a085d40f901ad41b96652fe97a80240f9e00313aae2031f2a085d40f9018545b96052fe97a80240f9e00313aa22008052085d40f901e945b95a52fe9706000014885d01f0e1031faa08e547f9000140f92265d29780020012f44f43a9fe5742a9ff030191c0035fd6a0b5bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346b0b4",
+              "codeTruncated": false
+            }
+          ]
+        },
+        {
+          "namespace": "",
+          "className": "HunterCtrl",
+          "methodName": "ItemAccessoryBuy",
+          "parameterCount": 0,
+          "parameterTypes": [],
+          "returnType": "System.Boolean",
+          "token": 100687052,
+          "candidates": [
+            {
+              "slot": 0,
+              "assumedField": "methodPointer",
+              "address": "0x6f9b879520",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x346b520",
+              "codeHex": "ff0301d1fe5702a9f44f03a9d47a01f0d55d0190f30300aa880a6639b59e40f9e8010037805d01b0007043f9e4b3bb97805d01d000ec45f9e1b3bb97c05d0190009c40f9deb3bb97805d01f000e447f9dbb3bb9728008052880a2639e00313aa21028052220080523b51fe97e00313aa9025fe97a00240f908e440b94800003517b4bb97e0031faa3dcce697f40300aae00313aacc08fe97400c00b408100491e2031faa000540a959acbf97b40b00b4e103002ae00314aae2031faad5cbe697e001003608c6fe90e0031faa7fea037900d146bde8330091a1b0bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b95225fe9704000014e00313aa210080527a74fe97a00240f9955d01b008e440b9b57243f948000035f0b3bb97e0031faa16cce697a80240f9f40300aa09e540b969000035e00308aae8b3bb97140700b4a80240f9e00314aae2031faa085d40f9017149b92abbe697f403002ac0040036614245f9a10000b4e00313aae2031faa015498947f4205f9955d01d0b5ee45f9a00240f908e440b968000035d3b3bb97a00240f9085c40f9e00313aae2031f2a014941b9c850fe97a80240f9e00313aae2031f2a085d40f901e141b9c250fe97a80240f9e00313aae2031f2a085d40f9018d45b9bc50fe97a80240f9e00313aa22008052085d40f901f145b9b650fe9706000014885d01f0e1031faa08e547f9000140f97e63d29780020012f44f43a9fe5742a9ff030191c0035fd6fcb3bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346b744",
+              "codeTruncated": false
+            },
+            {
+              "slot": 1,
+              "assumedField": "virtualMethodPointer",
+              "address": "0x6f9b879520",
+              "module": "libil2cpp.so",
+              "moduleOffset": "0x346b520",
+              "codeHex": "ff0301d1fe5702a9f44f03a9d47a01f0d55d0190f30300aa880a6639b59e40f9e8010037805d01b0007043f9e4b3bb97805d01d000ec45f9e1b3bb97c05d0190009c40f9deb3bb97805d01f000e447f9dbb3bb9728008052880a2639e00313aa21028052220080523b51fe97e00313aa9025fe97a00240f908e440b94800003517b4bb97e0031faa3dcce697f40300aae00313aacc08fe97400c00b408100491e2031faa000540a959acbf97b40b00b4e103002ae00314aae2031faad5cbe697e001003608c6fe90e0031faa7fea037900d146bde8330091a1b0bf97e0c3c03ce91f40b968d20691e00313aa0001803d69c601b95225fe9704000014e00313aa210080527a74fe97a00240f9955d01b008e440b9b57243f948000035f0b3bb97e0031faa16cce697a80240f9f40300aa09e540b969000035e00308aae8b3bb97140700b4a80240f9e00314aae2031faa085d40f9017149b92abbe697f403002ac0040036614245f9a10000b4e00313aae2031faa015498947f4205f9955d01d0b5ee45f9a00240f908e440b968000035d3b3bb97a00240f9085c40f9e00313aae2031f2a014941b9c850fe97a80240f9e00313aae2031f2a085d40f901e141b9c250fe97a80240f9e00313aae2031f2a085d40f9018d45b9bc50fe97a80240f9e00313aa22008052085d40f901f145b9b650fe9706000014885d01f0e1031faa08e547f9000140f97e63d29780020012f44f43a9fe5742a9ff030191c0035fd6fcb3bb97",
+              "nativeSizeBytes": 548,
+              "boundaryModuleOffset": "0x346b744",
+              "codeTruncated": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "MethodInfo pointer fields are version-sensitive; both leading candidates are retained.",
+    "Without --exact-boundaries, a bounded native prefix may not contain every branch or inlined dependency.",
+    "Disassembly and behavioral tests are required before porting a formula to Rust."
+  ]
+}

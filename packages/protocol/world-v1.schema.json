@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 24,
+  "schemaVersion": 28,
   "fixtureContracts": [
     {
       "id": "migration-fixture.slice1-combat-v1",
@@ -23,6 +23,13 @@
     }
   },
   "clientCommands": [
+    {
+      "wireName": "submit_farm_report",
+      "rustName": "SubmitFarmReport",
+      "fields": [
+        { "wireName": "report", "rustType": "FarmReport", "tsType": "FarmReport" }
+      ]
+    },
     {
       "wireName": "start_building_service",
       "rustName": "StartBuildingService",
@@ -67,9 +74,11 @@
     { "wireName": "use_hunter_skill", "rustName": "UseHunterSkill", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "skill_id", "rustType": "String", "tsType": "string" }, { "wireName": "target_entity_id", "rustType": "Option<String>", "tsType": "string | null" }] },
     { "wireName": "banish_hunter", "rustName": "BanishHunter", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "equip_hunter_item", "rustName": "EquipHunterItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "item_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "start_hunter_enhancement", "rustName": "StartHunterEnhancement", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "enhance_hunter_gear", "rustName": "EnhanceHunterGear", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "gear_instance_id", "rustType": "Uuid", "tsType": "string" }, { "wireName": "mode", "rustType": "String", "tsType": "string" }, { "wireName": "optional_material_ids", "rustType": "Vec<String>", "tsType": "string[]" }] },
     { "wireName": "claim_quest_reward", "rustName": "ClaimQuestReward", "fields": [{ "wireName": "quest_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "open_shop", "rustName": "OpenShop", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }] },
-    { "wireName": "purchase_shop_item", "rustName": "PurchaseShopItem", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
+    { "wireName": "purchase_shop_item", "rustName": "PurchaseShopItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "sell_shop_item", "rustName": "SellShopItem", "fields": [{ "wireName": "shop_id", "rustType": "String", "tsType": "string" }, { "wireName": "product_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "claim_mail", "rustName": "ClaimMail", "fields": [{ "wireName": "mail_id", "rustType": "String", "tsType": "string" }] },
     { "wireName": "claim_rewarded_ad", "rustName": "ClaimRewardedAd", "fields": [{ "wireName": "placement", "rustType": "String", "tsType": "string" }] },
@@ -77,6 +86,7 @@
     { "wireName": "request_resync", "rustName": "RequestResync", "fields": [] }
   ],
   "serverMessages": [
+    { "wireName": "farm_report_queued", "rustName": "FarmReportQueued", "fields": ["window_id"] },
     { "wireName": "welcome", "rustName": "Welcome", "fields": ["player_token", "session_id", "snapshot"] },
     { "wireName": "resync", "rustName": "Resync", "fields": ["snapshot"] },
     { "wireName": "world_update", "rustName": "WorldUpdate", "fields": ["snapshot"] },

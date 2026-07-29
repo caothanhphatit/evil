@@ -62,6 +62,9 @@ flowchart LR
 - Uses deterministic integer/fixed-point math for game-relevant calculations.
 - Produces state deltas for interested clients and domain events for durable changes.
 - Degrades inactive villages to scheduled/event-driven simulation instead of continuous ticks.
+- Uses the tiered authority boundary in ADR 0009: ordinary client-predicted farm
+  simulation is asynchronously audited, while protected economy and ownership
+  changes remain synchronously server-authoritative.
 
 ### Economy and progression domain
 

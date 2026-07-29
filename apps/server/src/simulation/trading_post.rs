@@ -4,6 +4,7 @@ use crate::buildings::BuildingGameplayCatalog;
 
 use super::original_flow::{DurableBuildingState, DurableMaterialStock};
 
+#[cfg(test)]
 pub(super) const ACTIVE_MATERIAL_REQUEST: u32 = 1;
 
 // Generated from core-economy-tables-v1.json materials[index].rating. The six decoded ratings
@@ -42,6 +43,10 @@ pub(super) fn material_catalog_stocks(
         .values()
         .filter_map(|item| {
             let unit_price = item.town_pays_hunter_gold_per_unit?;
+            let display_name = item.localized_names.get("en")?.trim();
+            if display_name.is_empty() || display_name.ends_with("---") {
+                return None;
+            }
             let existing = durable.iter().find(|stock| stock.id == item.item_id);
             Some((
                 item.item_id.clone(),
@@ -59,6 +64,9 @@ pub(super) fn material_catalog_stocks(
     // Preserve persisted rows that are no longer present in the current release so no stock is
     // silently hidden during a content migration.
     for stock in durable {
+        if gameplay.items.contains_key(&stock.id) {
+            continue;
+        }
         stocks
             .entry(stock.id.clone())
             .or_insert_with(|| stock.clone());
@@ -83,11 +91,11 @@ pub(super) fn settle_returning_hunters(state: &mut DurableBuildingState) -> bool
         return false;
     }
 
-    if state.material_stocks.iter().any(|stock| {
-        stock.requested == ACTIVE_MATERIAL_REQUEST
-            && stock.hunter_quantity > 0
-            && stock.unit_price > 0
-    }) {
+    if state
+        .material_stocks
+        .iter()
+        .any(|stock| stock.requested > 0 && stock.hunter_quantity > 0 && stock.unit_price > 0)
+    {
         return false;
     }
     state.settled_field_trip_id = trip_id;
@@ -132,5 +140,41 @@ mod tests {
         assert_eq!(material_difficulty_rating("material:5"), Some(4));
         assert_eq!(material_difficulty_rating("material:171"), Some(5));
         assert_eq!(material_difficulty_rating("currency:gold"), None);
+    }
+
+    #[test]
+    fn material_catalog_excludes_unresolved_placeholder_rows() {
+        let gameplay = BuildingGameplayCatalog {
+            registry_id: "test".to_owned(),
+            capabilities: Vec::new(),
+            items: [
+                ("material:1", "Linen Cloth", 10),
+                ("material:132", "B---", 0),
+            ]
+            .into_iter()
+            .map(|(id, name, price)| {
+                (
+                    id.to_owned(),
+                    crate::buildings::EconomyItemDefinition {
+                        item_id: id.to_owned(),
+                        internal_name: None,
+                        item_type: Some("material".to_owned()),
+                        stack_limit: None,
+                        town_pays_hunter_gold_per_unit: Some(price),
+                        localized_names: [("en".to_owned(), name.to_owned())].into_iter().collect(),
+                        buy_price: Vec::new(),
+                        sell_price: Vec::new(),
+                        hunter_pays_town_gold_by_tier: Vec::new(),
+                    },
+                )
+            })
+            .collect(),
+            products: BTreeMap::new(),
+        };
+
+        let projected = material_catalog_stocks(&gameplay, &[]);
+
+        assert_eq!(projected.len(), 1);
+        assert_eq!(projected[0].id, "material:1");
     }
 }

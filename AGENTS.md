@@ -46,6 +46,12 @@ If code and documentation disagree, stop and resolve the mismatch in the same ch
 8. Prefer evidence under `reverse-engineering/evidence/` and `docs/migration/` over filename order or visual guesses.
 9. Preserve unsupported behavior as an explicit unresolved state instead of adding a silent fallback.
 
+## UI Consistency
+
+- Follow `docs/engineering/project-rules.md#source-style-ui-consistency` for every new or changed building screen, popup, and modal.
+- Screen dimensions and internal layout may vary with content, but the established frame language, title treatment, close control, action buttons, disabled/focus states, and keyboard/touch interaction behavior must remain consistent with existing game screens.
+- Do not ship a technical placeholder or raw evidence diagnostics as the player-facing UI. Unresolved mechanics must remain visible as a compact fail-closed state inside the complete product frame.
+
 ## Definition Of Done
 
 A change is done only when it is deterministic, tested, observable, documented where necessary, compatible with Docker development, and has no known critical security or licensing issue. Asset work also requires manifest coverage and visual/audio validation.

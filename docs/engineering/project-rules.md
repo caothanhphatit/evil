@@ -53,6 +53,15 @@ Generated files contain a header and are changed only through their generator. D
 - Content releases are immutable after publication.
 - Missing references, duplicate IDs, unsupported effects, and unreviewed licenses block promotion.
 
+## Source-Style UI Consistency
+
+- New building and modal screens must reuse the established source-popup visual language: recovered frame treatment, title hierarchy, spacing rhythm, pixel-art image treatment, and the existing green/red action button families.
+- A screen may be taller, shorter, or use a different internal grid when its content requires it, but it must remain visually consistent with neighboring building screens.
+- Every interactive popup must provide the same close affordance and behavior as existing screens, including keyboard/touch activation, disabled-state styling, and focus visibility.
+- Full-screen overlays and content modals must reserve the persistent bottom-menu safe area. Their content may scroll internally, but primary information and close/action controls must never render behind persistent navigation.
+- Technical evidence blockers belong in a compact, user-readable status area; raw binding keys and diagnostic lists must not replace the product UI.
+- Processing and result states may be rendered only after an authoritative command response. Unresolved economy/RNG evidence must fail closed without mutating player state.
+
 ## Environment Rules
 
 - `docker compose up` is the supported local integration path.

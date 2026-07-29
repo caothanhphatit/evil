@@ -3,6 +3,8 @@
  *  or a guessed gear icon must never be presented as an item asset.
  */
 export const BLACKSMITH_BUILDING_IDS = ["build_10"] as const;
+/** Enhancement Forge route is separate from Blacksmith crafting. */
+export const ENHANCEMENT_FORGE_BUILDING_IDS = ["build_15"] as const;
 export const WEAPON_SHOP_BUILDING_IDS = ["build_7"] as const;
 export const ARMOR_SHOP_BUILDING_IDS = ["build_8"] as const;
 export const ACCESSORY_SHOP_BUILDING_IDS = ["build_20"] as const;
@@ -10,7 +12,8 @@ export const JEWELER_BUILDING_IDS = ["build_21"] as const;
 
 export const BLACKSMITH_GEAR_TABS = ["weapon", "armor", "gloves", "boots"] as const;
 export const JEWELER_GEAR_TABS = ["ring", "necklace", "belt"] as const;
-export const ALL_GEAR_KINDS = [...BLACKSMITH_GEAR_TABS, ...JEWELER_GEAR_TABS] as const;
+/** Includes packaged helmet evidence; the tab remains hidden until runtime UI binding is proven. */
+export const ALL_GEAR_KINDS = [...BLACKSMITH_GEAR_TABS, ...JEWELER_GEAR_TABS, "helmet"] as const;
 
 export const GEAR_BUILDING_PROGRESSION = {
   build_10: { townHallLevels: [2, 5, 7, 9, 11], gold: [660, 5280, 17820, 53460, 160380], materialQuantity: 10 },
@@ -75,7 +78,7 @@ export interface GearCatalogRow {
   salePrice?: { value?: number | null } | null;
 }
 
-const RECIPE_RE = /^recipe:(weapon|armor|gloves|boots|ring|necklace|belt):([^:]+):rating:(\d+)$/;
+const RECIPE_RE = /^recipe:(weapon|armor|helmet|gloves|boots|ring|necklace|belt):([^:]+):rating:(\d+)$/;
 
 /** Converts normalized product rows to the exact card model used by the route. */
 export function adaptBlacksmithRecipes(
@@ -134,7 +137,7 @@ export function decodeGearCatalog(itemRows: readonly unknown[], productRows: rea
     if (!isRecord(candidate)) continue;
     const id = fieldValue(candidate.productId);
     if (typeof id !== "string") continue;
-    const match = id.match(/^recipe:(weapon|armor|gloves|boots|ring|necklace|belt):(\d+):rating:(\d+)$/);
+    const match = id.match(/^recipe:(weapon|armor|helmet|gloves|boots|ring|necklace|belt):(\d+):rating:(\d+)$/);
     if (!match) continue;
     const outputRows = collectionRows(candidate.outputs);
     const gearId = outputRows.map((row) => fieldValue(row.itemId)).find((value): value is string => typeof value === "string");

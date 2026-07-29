@@ -7,7 +7,7 @@ use futures_util::StreamExt;
 use tracing::{debug, error, warn};
 use uuid::Uuid;
 
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use crate::{
     identity::SessionTokenHash,
@@ -21,6 +21,9 @@ use crate::{
 use super::session::{resolve_player, session_token};
 
 const ACTIVE_WORLD_CHECKPOINT_SECONDS: u64 = 5;
+// A slow checkpoint must not consume the simulation frame budget. The next
+// checkpoint retries the unchanged durable snapshot when this budget expires.
+const WORLD_CHECKPOINT_BUDGET: Duration = Duration::from_millis(100);
 
 pub async fn upgrade(
     ws: WebSocketUpgrade,
@@ -124,14 +127,17 @@ async fn handle_socket(
     loop {
         tokio::select! {
             _ = simulation_interval.tick() => {
-                let Some(result) = flow.advance_simulation_tick() else { continue };
+                let elapsed_ns = u64::try_from(simulation_step.as_nanos()).unwrap_or(u64::MAX);
+                let Some(result) = flow.advance_simulation_step(elapsed_ns) else { continue };
                 durable_state_dirty = true;
                 pending_operations.extend(result.operations);
-                let checkpoint_ticks = u64::from(state.config.simulation.tick_rate)
+                let checkpoint_ticks = 10_u64
                     .saturating_mul(ACTIVE_WORLD_CHECKPOINT_SECONDS)
                     .max(1);
-                let should_checkpoint = !pending_operations.is_empty()
-                    || result.simulation_tick % checkpoint_ticks == 0;
+                // Autonomous rewards stay ordered in memory and flush with the fixed
+                // checkpoint cadence. Persisting immediately for every operation put
+                // PostgreSQL latency directly into the 10 Hz movement/combat loop.
+                let should_checkpoint = result.simulation_tick % checkpoint_ticks == 0;
                 if should_checkpoint {
                     match state.coordinator.renew_lease(player_token, &lease, lease_ttl).await {
                         Ok(true) => {}
@@ -141,21 +147,42 @@ async fn handle_socket(
                         }
                     }
                     let durable_state = flow.durable_state();
-                    match state.repository.persist(
-                        player_token,
-                        &durable_state,
-                        revision,
-                        lease.fence,
-                        &pending_operations,
+                    let persist_started = Instant::now();
+                    match tokio::time::timeout(
+                        WORLD_CHECKPOINT_BUDGET,
+                        state.repository.persist(
+                            player_token,
+                            &durable_state,
+                            revision,
+                            lease.fence,
+                            &pending_operations,
+                        ),
                     ).await {
-                        Ok(next_revision) => {
+                        Ok(Ok(next_revision)) => {
+                            let persist_elapsed = persist_started.elapsed();
+                            if persist_elapsed > simulation_step {
+                                warn!(
+                                    %session_id,
+                                    %player_token,
+                                    elapsed_ms = persist_elapsed.as_millis(),
+                                    "simulation checkpoint exceeded one world-frame budget"
+                                );
+                            }
                             revision = next_revision;
                             durable_state_dirty = false;
                             pending_operations.clear();
                         }
-                        Err(error) => {
+                        Ok(Err(error)) => {
                             error!(%session_id, %player_token, error = ?error, "failed to persist simulation state");
                             break;
+                        }
+                        Err(_) => {
+                            warn!(
+                                %session_id,
+                                %player_token,
+                                budget_ms = WORLD_CHECKPOINT_BUDGET.as_millis(),
+                                "simulation checkpoint exceeded persistence budget; retrying"
+                            );
                         }
                     }
                 }
@@ -223,6 +250,39 @@ async fn handle_socket(
                         last_client_sequence = envelope.sequence;
                         let correlation_id = envelope.correlation_id;
                         let command = envelope.payload;
+                        if let ClientCommand::SubmitFarmReport { report } = &command {
+                            if report.from_revision != revision
+                                || report.elapsed_ms == 0
+                                || report.elapsed_ms > 10_000
+                                || !report.protected_claims.is_empty()
+                            {
+                                warn!(
+                                    %session_id,
+                                    %player_token,
+                                    window_id = report.window_id,
+                                    "rejected invalid farm report at queue ingress"
+                                );
+                                break;
+                            }
+                            if let Err(error) = state
+                                .coordinator
+                                .enqueue_farm_report(player_token, report)
+                                .await
+                            {
+                                error!(%session_id, %player_token, %error, "farm report queue unavailable");
+                                break;
+                            }
+                            if !send_message(
+                                &mut socket,
+                                session_id,
+                                &mut server_sequence,
+                                Some(correlation_id),
+                                &ServerMessage::FarmReportQueued {
+                                    window_id: report.window_id,
+                                },
+                            ).await { break; }
+                            continue;
+                        }
                         if matches!(command, ClientCommand::RequestResync) {
                             if !send_message(
                                 &mut socket,

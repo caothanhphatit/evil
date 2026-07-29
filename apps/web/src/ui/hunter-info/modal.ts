@@ -10,26 +10,27 @@ import { renderStatusTab } from "./status-tab";
 const TABS: Array<{ id: HunterInfoTabId; label: string }> = [
   { id: "status", label: "Status" },
   { id: "skills", label: "Skills" },
-  { id: "materials", label: "Materials" },
+  { id: "materials", label: "Material" },
   { id: "growth", label: "Growth" },
   { id: "riding", label: "Riding Pet" },
 ];
 
-const EQUIPMENT_PLACEHOLDERS = [
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_07__6275.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_01__7584.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_03__5688.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_06__1917.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_02__4105.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_05__4925.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_04__5943.png",
-  "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_08__5673.png",
-];
+const EQUIPMENT_PLACEHOLDERS: Readonly<Record<string, string>> = {
+  gloves: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_07__6275.png",
+  helmet: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_01__7584.png",
+  necklace: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_03__5688.png",
+  boots: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_06__1917.png",
+  ring: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_02__4105.png",
+  weapon: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_05__4925.png",
+  armor: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_04__5943.png",
+  belt: "/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_dummy_08__5673.png",
+};
 const UTILITY_SLOT_COUNT = 6;
 const LOADOUT_COLUMNS = {
-  // Confirmed owned-data order: Gloves, Helmet, Necklace, Boots, Ring, Weapon, Armor, Belt.
-  left: [7, 4, 6, 3],
-  right: [1, 2, 5, 0],
+  // The source paper-doll places helmet and belt on the center axis. The
+  // remaining six equipment slots form three rows around the Hunter.
+  left: ["ring", "weapon", "necklace"],
+  right: ["armor", "gloves", "boots"],
 } as const;
 
 export interface HunterInfoModalController {
@@ -130,6 +131,7 @@ function buildHero(info: HunterInfoView): HTMLElement {
   const rightSlots = node("div", "hunter-equipment-column right");
   const leftUtility = node("div", "hunter-utility-column left");
   const rightUtility = node("div", "hunter-utility-column right");
+  const centerSlots = node("div", "hunter-center-loadout");
   const equipmentDetail = node("section", "hunter-equipment-detail");
   equipmentDetail.hidden = true;
   equipmentDetail.setAttribute("aria-live", "polite");
@@ -147,13 +149,16 @@ function buildHero(info: HunterInfoView): HTMLElement {
     leftUtility.append(utilitySlot());
     rightUtility.append(utilitySlot());
   }
-  const equipment = Array.from({ length: 8 }, (_, index) => info.equipment[index] ?? null);
-  for (const index of LOADOUT_COLUMNS.left) leftSlots.append(equipmentSlot(equipment[index], EQUIPMENT_PLACEHOLDERS[index], selectEquipment));
-  for (const index of LOADOUT_COLUMNS.right) rightSlots.append(equipmentSlot(equipment[index], EQUIPMENT_PLACEHOLDERS[index], selectEquipment));
+  const equipment = new Map(info.equipment.map((slot) => [slot.id, slot]));
+  for (const slotId of LOADOUT_COLUMNS.left) leftSlots.append(equipmentSlot(equipment.get(slotId) ?? null, EQUIPMENT_PLACEHOLDERS[slotId], selectEquipment, slotId));
+  for (const slotId of LOADOUT_COLUMNS.right) rightSlots.append(equipmentSlot(equipment.get(slotId) ?? null, EQUIPMENT_PLACEHOLDERS[slotId], selectEquipment, slotId));
+  centerSlots.append(equipmentSlot(equipment.get("helmet") ?? null, EQUIPMENT_PLACEHOLDERS.helmet, selectEquipment, "helmet"));
   const paperDoll = node("div", `hunter-paper-doll${info.hunter.portrait ? "" : " actor"}`);
   if (info.hunter.portrait) paperDoll.append(sourceImage(info.hunter.portrait, info.hunter.name));
   else paperDoll.append(node("span", "sr-only", "Runtime Hunter appearance projection"));
-  stage.append(leftUtility, leftSlots, paperDoll, rightSlots, rightUtility);
+  centerSlots.append(paperDoll);
+  centerSlots.append(equipmentSlot(equipment.get("belt") ?? null, EQUIPMENT_PLACEHOLDERS.belt, selectEquipment, "belt"));
+  stage.append(leftUtility, leftSlots, centerSlots, rightSlots, rightUtility);
   hero.append(stage, equipmentDetail);
   {
     const exp = node("div", `hunter-experience${info.experience ? "" : " unresolved"}`);
@@ -171,9 +176,11 @@ function equipmentSlot(
   equipment: HunterInfoEquipmentSlot | null,
   fallbackPlaceholder: string | null,
   select: (equipment: HunterInfoEquipmentSlot) => void,
+  slotId: string,
 ): HTMLElement {
   const slot = node("button", `hunter-equipment-slot${equipment?.locked ? " locked" : ""}`);
   slot.type = "button";
+  slot.dataset.slotId = slotId;
   slot.disabled = equipment === null;
   slot.setAttribute("aria-label", equipment?.name ? `View ${equipment.name}` : "Equipment slot unavailable");
   if (equipment) slot.addEventListener("click", () => select(equipment));
@@ -193,6 +200,8 @@ export function equipmentDetailText(equipment: HunterInfoEquipmentSlot): string 
 function utilitySlot(): HTMLElement {
   const slot = node("span", "hunter-utility-slot");
   slot.setAttribute("aria-label", "Utility slot unavailable");
+  // The captured utility icon-to-slot bindings are unresolved; keep the
+  // original empty-state marker instead of assigning a gear selection asset.
   slot.append(node("i"));
   return slot;
 }

@@ -40,10 +40,16 @@ only the old `material:1` fixture. The server:
 
 1. groups the Hunter's carried material stacks by canonical item ID;
 2. rejects unknown, non-material, unpriced, or overflowing lines before mutation;
-3. verifies the town wallet can fund the complete sale;
+3. caps each deterministic sale line to the quantity the remaining town wallet
+   can fund, retaining unsold loot and request remainder;
 4. credits town stock and Hunter gold atomically in the durable aggregate;
 5. writes one deterministic trade-settlement row per material line;
 6. retains command-id idempotency for retries.
+
+The current web-rebuild runtime also auto-settles requested common materials for
+Hunters continuously farming an ordinary region. This is explicit product
+behavior while the original walk-to-Trading-Post trigger remains unresolved;
+it is not claimed as a recovered original-game method.
 
 The browser still cannot submit quantity, price, or settlement outcome as a
 trusted value.

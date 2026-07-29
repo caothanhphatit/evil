@@ -50,6 +50,13 @@ pub struct OriginalPlusGoldResult {
     pub hunter_money: i64,
 }
 
+/// Exact ordinary material-slot threshold from `RewardMetrial`.
+/// `roll` is the inclusive `Range(1, 10001)` result and raw percentages are
+/// stored as integer percentage points before the native `* 10` conversion.
+pub fn original_material_slot_grants(raw_percent: u32, roll: u32) -> bool {
+    raw_percent.saturating_mul(10) >= roll
+}
+
 /// Exact `PlusGold` branch and sink after Reward and village tax have produced
 /// the post-tax grant. The product meaning of the 0.3 branch remains unresolved.
 #[allow(dead_code)]
@@ -78,8 +85,8 @@ pub fn original_plus_gold(
 #[cfg(test)]
 mod tests {
     use super::{
-        original_apply_tax_candidate, original_plus_gold, OriginalPlusGoldResult,
-        OriginalTaxSegmentResult,
+        original_apply_tax_candidate, original_material_slot_grants, original_plus_gold,
+        OriginalPlusGoldResult, OriginalTaxSegmentResult,
     };
 
     fn assert_tax_result(actual: OriginalTaxSegmentResult, expected: OriginalTaxSegmentResult) {
@@ -139,5 +146,13 @@ mod tests {
                 hunter_money: 5,
             }
         );
+    }
+
+    #[test]
+    fn material_slot_threshold_is_inclusive_and_fail_closed_at_high_roll() {
+        assert!(original_material_slot_grants(1, 10));
+        assert!(!original_material_slot_grants(1, 11));
+        assert!(original_material_slot_grants(1000, 10_000));
+        assert!(!original_material_slot_grants(999, 10_000));
     }
 }

@@ -20,8 +20,8 @@ use crate::{
     },
     identity::SessionTokenHash,
     simulation::{
-        operational_migration_roster, upgrade_operational_fixture_roster, DurableBuilding,
-        DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterProfile,
+        new_account_roster, operational_migration_roster, upgrade_operational_fixture_roster,
+        DurableBuilding, DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterProfile,
         DurableHunterProgress, DurableHunterRosterState, DurableHunterRuntimeAppearance,
         DurableHunterRuntimeConsumable, DurableHunterRuntimeGear, DurableHunterRuntimeGrowth,
         DurableHunterRuntimeInventory, DurableHunterRuntimeItem, DurableHunterRuntimeRidingPet,
@@ -131,7 +131,13 @@ impl PlayerRepository for InMemoryPlayerRepository {
         player_token: Uuid,
     ) -> Result<LoadedPlayerState, RepositoryError> {
         let mut durable = self.durable.write().await;
-        let (state, revision, _) = durable.states.entry(player_token).or_default();
+        let entry = durable.states.entry(player_token).or_insert_with(|| {
+            let mut state = DurablePlayerAggregate::default();
+            state.buildings.town_gold = 100_000;
+            state.hunter_roster = new_account_roster(player_token);
+            (state, 0, 0)
+        });
+        let (state, revision, _) = entry;
         Ok(LoadedPlayerState {
             state: state.clone(),
             revision: *revision,
@@ -245,7 +251,16 @@ impl PlayerRepository for PostgresPlayerRepository {
         &self,
         player_token: Uuid,
     ) -> Result<LoadedPlayerState, RepositoryError> {
-        let default_state = DurablePlayerAggregate::default();
+        let mut default_state = DurablePlayerAggregate::default();
+        let is_new_account = !sqlx::query_scalar::<_, bool>(
+            "SELECT EXISTS (SELECT 1 FROM player_world_state WHERE player_token = $1)",
+        )
+        .bind(player_token)
+        .fetch_one(&self.pool)
+        .await?;
+        if is_new_account {
+            default_state.buildings.town_gold = 100_000;
+        }
         let default_json = encode_non_building_state(&default_state)?;
         let mut transaction = self.pool.begin().await?;
         let row = sqlx::query(
@@ -293,7 +308,11 @@ impl PlayerRepository for PostgresPlayerRepository {
             .await?
             .unwrap_or_default();
         if !roster.roster_resolved && roster.hunters.is_empty() && roster.waiting_queue.is_empty() {
-            roster = operational_migration_roster();
+            roster = if is_new_account {
+                new_account_roster(player_token)
+            } else {
+                operational_migration_roster()
+            };
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
         } else if upgrade_operational_fixture_roster(&mut roster) {
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
@@ -449,7 +468,7 @@ async fn load_hunter_roster_in(
                ph.reincarnation_current, ph.reincarnation_maximum, ph.is_locked,
                ph.riding_pet_state_resolved,
                hcd.display_name AS characteristic_name,
-               ph.action_state, ph.animation_name, ph.hunt_state,
+               ph.action_state, ph.animation_name, ph.hunt_state, ph.owned_items,
                ph.source_dictionary_key, ph.source_index, ph.source_job, ph.source_sub_job,
                ph.source_third_job, ph.source_fourth_job, ph.source_personality,
                ph.source_grade_rank_up, ph.source_dark_soul, ph.source_used_dark_soul,
@@ -614,6 +633,7 @@ async fn load_hunter_roster_in(
                 maximum: db_u64(&row, "mood_maximum")?,
             },
             hunt: serde_json::from_value(row.try_get("hunt_state")?)?,
+            owned_items: serde_json::from_value(row.try_get("owned_items")?)?,
             profile: DurableHunterProfile {
                 content_release_id: row.try_get("content_release_id")?,
                 display_name: row.try_get("display_name")?,
@@ -1112,10 +1132,10 @@ async fn insert_hunter_row(
              critical_rate_bps, attack_speed_milli, evasion_rate_bps,
              awakening_current, awakening_maximum, reincarnation_current,
              reincarnation_maximum, is_locked, riding_pet_state_resolved,
-             action_state, animation_name, hunt_state)
+             action_state, animation_name, hunt_state, owned_items)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
                 $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26,
-                $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37)
+                $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38)
         ON CONFLICT (player_token, hunter_id) DO UPDATE
         SET roster_state = EXCLUDED.roster_state,
             roster_position = EXCLUDED.roster_position,
@@ -1152,6 +1172,7 @@ async fn insert_hunter_row(
             action_state = EXCLUDED.action_state,
             animation_name = EXCLUDED.animation_name,
             hunt_state = EXCLUDED.hunt_state,
+            owned_items = EXCLUDED.owned_items,
             state_revision = player_hunter.state_revision + 1
         "#,
     )
@@ -1239,6 +1260,7 @@ async fn insert_hunter_row(
     .bind(action_state)
     .bind(animation_name)
     .bind(serde_json::to_value(&hunter.hunt)?)
+    .bind(serde_json::to_value(&hunter.owned_items)?)
     .execute(&mut **transaction)
     .await?;
     sqlx::query("DELETE FROM player_hunter_trait WHERE player_token = $1 AND hunter_id = $2")
@@ -1864,6 +1886,22 @@ mod tests {
         assert_ne!(first, second);
     }
 
+    #[tokio::test]
+    async fn new_local_account_is_seeded_once_with_gold_and_five_hunters() {
+        let repository = InMemoryPlayerRepository::default();
+        let player = repository
+            .resolve_or_create_local_identity(SessionTokenHash::from_token(Uuid::new_v4()))
+            .await
+            .unwrap();
+
+        let first = repository.load_or_create(player).await.unwrap();
+        assert_eq!(first.state.buildings.town_gold, 100_000);
+        assert_eq!(first.state.hunter_roster.hunters.len(), 5);
+
+        let second = repository.load_or_create(player).await.unwrap();
+        assert_eq!(second.state, first.state);
+    }
+
     #[test]
     fn durable_identity_migration_stores_only_a_fixed_length_hash() {
         let migration =
@@ -2000,6 +2038,33 @@ mod tests {
         assert!(include_str!("persistence.rs").contains("hunt_state"));
     }
 
+    #[test]
+    fn enhancement_action_states_are_allowed_by_the_player_constraint() {
+        let migration =
+            include_str!("../../../infra/db/migrations/0028_hunter_enhancement_action_states.sql");
+        for state in [
+            "traveling_to_enhancement_forge",
+            "waiting_for_enhancement_interaction",
+            "configuring_enhancement",
+        ] {
+            assert!(migration.contains(state));
+        }
+    }
+
+    #[test]
+    fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
+        let ownership = include_str!("../../../infra/db/migrations/0024_hunter_owned_items.sql");
+        let gear_stock = include_str!("../../../infra/db/migrations/0025_crafted_gear_stock.sql");
+
+        assert!(ownership.contains("ADD COLUMN owned_items JSONB NOT NULL"));
+        assert!(gear_stock.contains("CREATE TABLE crafted_gear_stock"));
+        assert!(gear_stock.contains("gear_instance_id UUID NOT NULL"));
+        assert!(gear_stock.contains("FOREIGN KEY (town_id, building_instance_id)"));
+        assert!(gear_stock.contains("icon_path TEXT NOT NULL"));
+        assert!(gear_stock.contains("ruleset TEXT NOT NULL"));
+        assert!(gear_stock.contains("crafted_gear_stock_shop_idx"));
+    }
+
     #[tokio::test]
     async fn postgres_loads_only_the_pinned_active_building_release_when_configured() {
         let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
@@ -2041,6 +2106,65 @@ mod tests {
         assert_eq!(stored_length, 32);
 
         sqlx::query("DELETE FROM local_identities WHERE player_token = $1")
+            .bind(player)
+            .execute(&repository.pool)
+            .await
+            .unwrap();
+    }
+
+    #[tokio::test]
+    async fn postgres_new_account_seed_is_atomic_and_idempotent_when_configured() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let repository = PostgresPlayerRepository::connect_lazy(&database_url).unwrap();
+        let token_hash = SessionTokenHash::from_token(Uuid::new_v4());
+        let player = repository
+            .resolve_or_create_local_identity(token_hash)
+            .await
+            .unwrap();
+
+        let first = repository.load_or_create(player).await.unwrap();
+        assert_eq!(first.state.buildings.town_gold, 100_000);
+        assert_eq!(first.state.hunter_roster.hunters.len(), 5);
+        let second = repository.load_or_create(player).await.unwrap();
+        assert_eq!(second.state.buildings.town_gold, 100_000);
+        let first_rolls = first
+            .state
+            .hunter_roster
+            .hunters
+            .iter()
+            .map(|hunter| {
+                (
+                    hunter.hunter_id,
+                    hunter.profile.class_id.clone(),
+                    hunter.profile.rarity_id.clone(),
+                    hunter.max_hp,
+                )
+            })
+            .collect::<Vec<_>>();
+        let second_rolls = second
+            .state
+            .hunter_roster
+            .hunters
+            .iter()
+            .map(|hunter| {
+                (
+                    hunter.hunter_id,
+                    hunter.profile.class_id.clone(),
+                    hunter.profile.rarity_id.clone(),
+                    hunter.max_hp,
+                )
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(second_rolls, first_rolls);
+
+        sqlx::query("DELETE FROM local_identities WHERE player_token = $1")
+            .bind(player)
+            .execute(&repository.pool)
+            .await
+            .unwrap();
+        sqlx::query("DELETE FROM player_world_state WHERE player_token = $1")
             .bind(player)
             .execute(&repository.pool)
             .await

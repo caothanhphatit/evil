@@ -191,11 +191,13 @@ describe("session bootstrap", () => {
   it("merges lightweight world frames without discarding domain state", async () => {
     const socket = new FakeSocket();
     const snapshots: Array<Record<string, unknown>> = [];
+    const frames: Array<Record<string, unknown>> = [];
     const client = new WorldClient((snapshot) => snapshots.push(snapshot as unknown as Record<string, unknown>), () => undefined, undefined, undefined, undefined, {
       apiBaseUrl: "http://game.test",
       webSocketUrl: "ws://game.test/ws",
       fetchFn: vi.fn(async () => new Response(null, { status: 204 })),
       socketFactory: () => socket as unknown as WebSocket,
+      onWorldFrame: (snapshot) => frames.push(snapshot as unknown as Record<string, unknown>),
     });
 
     client.connect();
@@ -203,9 +205,10 @@ describe("session bootstrap", () => {
     socket.emit("message", { data: serverEnvelope(1, "welcome") });
     socket.emit("message", { data: serverEnvelope(2, "world_frame") });
 
-    expect(snapshots).toHaveLength(2);
-    expect(snapshots[1]?.village).toEqual({ marker: "keep-village" });
-    expect((snapshots[1]?.world as { visual_tick: number }).visual_tick).toBe(12);
+    expect(snapshots).toHaveLength(1);
+    expect(frames).toHaveLength(1);
+    expect(frames[0]?.village).toEqual({ marker: "keep-village" });
+    expect((frames[0]?.world as { visual_tick: number }).visual_tick).toBe(12);
     client.disconnect();
   });
 
@@ -262,12 +265,12 @@ function serverEnvelope(sequence: number, type: "welcome" | "world_update" | "wo
     village: { marker: "keep-village" },
     hunter_roster: {},
     field: {},
-    world: { entities: [], combat_presentations: [] },
+    world: { entities: [], drops: [], combat_presentations: [] },
   };
   const payload = type === "welcome"
     ? { type, player_token: TOKEN, session_id: "00000000-0000-4000-8000-000000000001", snapshot }
     : type === "world_frame"
-      ? { type, world: { visual_tick: 12, entities: [], combat_presentations: [] } }
+      ? { type, world: { visual_tick: 12, entities: [], drops: [], combat_presentations: [] } }
       : { type, snapshot };
   return JSON.stringify({
     version: PROTOCOL_VERSION,

@@ -9,6 +9,7 @@ import {
   actorHealthPresentation,
   actorHealthRatio,
 } from "./actor-health-bar";
+import { groundDropIconScale } from "./visible-world";
 
 describe("original actor health-bar presentation", () => {
   it("uses the exact Hunter and monster prefab offsets", () => {
@@ -36,6 +37,11 @@ describe("original actor health-bar presentation", () => {
     expect(actorHealthRatio(10, 0)).toBeNull();
     expect(actorHealthPresentation(entity({ current_hp: null, maximum_hp: null }))).toBeNull();
   });
+
+  it("keeps the HUD-derived gold pile smaller than material drops", () => {
+    expect(groundDropIconScale("gold")).toBe(0.55);
+    expect(groundDropIconScale("material:1")).toBe(0.72);
+  });
 });
 
 function entity(overrides: Partial<WorldEntityProjection>): WorldEntityProjection {
@@ -57,10 +63,13 @@ function entity(overrides: Partial<WorldEntityProjection>): WorldEntityProjectio
     class_family: null,
     target_entity_id: null,
     action_sequence: 0,
+    loot_sequence: 0,
+    loot_label: null,
     attack_effect_key: null,
     skill_presentation_key: null,
     current_hp: 100,
     maximum_hp: 100,
+    interaction_prompt_key: null,
     selectable: true,
     ...overrides,
   };

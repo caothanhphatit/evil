@@ -1,26 +1,29 @@
 import { node, sourceImage, unavailable } from "./dom";
 import type { HunterInfoView } from "./model";
 
+const UNRESOLVED_PLACEHOLDER_COUNT = 12;
+
 export function renderMaterialsTab(info: HunterInfoView): HTMLElement {
   const root = node("section", "hunter-info-materials-tab");
   root.append(node("h3", "", "Material"));
+  const grid = node("div", `hunter-material-grid${info.materials === null ? " unresolved" : ""}`);
   if (info.materials === null) {
-    const grid = node("div", "hunter-material-grid unresolved");
-    for (let index = 0; index < 12; index += 1) grid.append(node("div", "hunter-material-cell empty"));
+    appendEmptySlots(grid, UNRESOLVED_PLACEHOLDER_COUNT);
     root.append(grid, unavailable("This Hunter's material inventory has not been synchronized."));
     return root;
   }
-  if (!info.materials.length) {
-    root.append(node("p", "hunter-info-empty", "No carried materials."));
-    return root;
-  }
-  const grid = node("div", "hunter-material-grid");
-  for (const material of info.materials) {
+  for (const item of info.materials) {
     const cell = node("div", "hunter-material-cell");
-    cell.title = material.name ?? material.id;
-    cell.append(sourceImage(material.icon, material.name ?? ""), node("b", "", String(material.quantity)));
+    cell.title = item.name ?? item.id;
+    cell.append(sourceImage(item.icon, item.name ?? item.id), node("b", "", String(item.quantity)));
     grid.append(cell);
   }
   root.append(grid);
   return root;
+}
+
+function appendEmptySlots(grid: HTMLElement, count: number): void {
+  for (let index = 0; index < count; index += 1) {
+    grid.append(node("div", "hunter-material-cell empty"));
+  }
 }

@@ -20,12 +20,12 @@ describe("blacksmith route contract", () => {
     expect(JEWELER_GEAR_TABS).toEqual(["ring", "necklace", "belt"]);
   });
 
-  it("does not expose the decoded helmet table without a visible runtime tab binding", () => {
+  it("packages decoded helmet evidence without adding an unproven visible tab", () => {
     const adapted = adaptBlacksmithRecipes(
       [{ productId: { value: "recipe:helmet:0:rating:0" } }],
       new Map([["gear:helmet:0", { title: "Helmet", description: "", materials: { ids: [], quantities: [] }, price: 10 }]]),
     );
-    expect(adapted).toEqual([]);
+    expect(adapted).toEqual([expect.objectContaining({ kind: "helmet", iconPath: null })]);
   });
 
   it("adapts all gear recipe kinds without leaking raw IDs", () => {
@@ -82,13 +82,14 @@ describe("blacksmith route contract", () => {
     };
     const rows = decodeGearCatalog(registry.catalogs.items.rows, registry.catalogs.products.rows);
 
-    expect(rows).toHaveLength(2_820);
+    expect(rows).toHaveLength(3_355);
     expect(rows.filter((row) => row.kind === "weapon")).toHaveLength(1_575);
     expect(rows.filter((row) => row.kind === "weapon" && row.rating === 0)).toHaveLength(315);
     for (const kind of ["armor", "gloves", "boots"] as const) {
       expect(rows.filter((row) => row.kind === kind)).toHaveLength(215);
       expect(rows.filter((row) => row.kind === kind && row.rating === 4)).toHaveLength(43);
     }
+    expect(rows.filter((row) => row.kind === "helmet")).toHaveLength(535);
     expect(rows.filter((row) => row.kind === "ring")).toHaveLength(215);
     expect(rows.filter((row) => row.kind === "necklace")).toHaveLength(215);
     expect(rows.filter((row) => row.kind === "belt")).toHaveLength(170);
@@ -127,7 +128,7 @@ describe("blacksmith route contract", () => {
     expect(accessories.some((row) => row.kind === "belt" && row.difficultyGroup === 0)).toBe(true);
   });
 
-  it("packages every available source material sprite used by forge recipes", async () => {
+  it("binds forge materials to the complete source sprite sequence", async () => {
     const catalogPath = resolve(import.meta.dirname, "../../../../packages/content/releases/evil-hunter-1.411/gear-catalog.json");
     const payload = await readFile(catalogPath, "utf8");
     const rows = await loadGearCatalog(async () => new Response(payload, { status: 200 }));
@@ -135,10 +136,16 @@ describe("blacksmith route contract", () => {
     const resolved = costs.filter((cost) => cost.iconPath !== null);
 
     expect(costs).toHaveLength(182);
-    expect(resolved).toHaveLength(172);
+    expect(resolved).toHaveLength(182);
     await Promise.all(resolved.map(async (cost) => {
       const localPath = resolve(import.meta.dirname, `../../public${cost.iconPath}`);
       expect((await readFile(localPath)).byteLength).toBeGreaterThan(0);
     }));
+    expect(resolved.find((cost) => cost.materialId === "material:1")?.iconPath).toBe(
+      "/content/releases/evil-hunter-1.411/material-icons/material-1.png",
+    );
+    expect(resolved.find((cost) => cost.materialId === "material:139")?.iconPath).toBe(
+      "/content/releases/evil-hunter-1.411/material-icons/material-139.png",
+    );
   });
 });

@@ -5,7 +5,7 @@ import { projectAuthoritativeMonsterField, projectMonsterField, validateMonsterI
 describe("monster field projection", () => {
   it("uses visible-world monster families and leaves spawn bounds unresolved", () => {
     const projection = projectMonsterField([entity("mon_goldblin", "gold")], null);
-    expect(projection.monsters[0]).toMatchObject({ family: "mon_goldblin", state: "alive", targetable: true });
+    expect(projection.monsters[0]).toMatchObject({ family: "mon_goldblin", state: "alive", targetable: false });
     expect(projection.spawn).toMatchObject({ current: 1, minimum: null, maximum: null, evidenceState: "fixture_current_only" });
   });
 
@@ -23,11 +23,11 @@ describe("monster field projection", () => {
     expect(projection.dropCount).toBe(2);
   });
 
-  it("rejects stale or unknown targeting intents", () => {
+  it("does not create player targeting intents for monsters", () => {
     const projection = projectMonsterField([entity("mon_a_01_1", "a")], null);
     expect(validateMonsterIntent(projection, "missing", "map_new01")).toBeNull();
     expect(validateMonsterIntent(projection, "monster:a", "bad-map")).toBeNull();
-    expect(validateMonsterIntent(projection, "monster:a", "map_new01")).toEqual({ type: "target_monster", entityId: "monster:a", mapId: "map_new01" });
+    expect(validateMonsterIntent(projection, "monster:a", "map_new01")).toBeNull();
   });
 
   it("projects all three in-instance farms and their density counts", () => {
@@ -52,9 +52,14 @@ describe("monster field projection", () => {
       monsters: Array.from({ length: 7 }, (_, index) => ({
         entity_id: `monster-background_11-${index}`,
         monster_id: "mon_a_01_1",
+        source_index: 0,
         asset_bundle_id: "mon_a_01_1",
         hp: 20,
         max_hp: 20,
+        damage: 4,
+        armor: 1,
+        experience: 7,
+        gold: 3,
         x: 560,
         y: 735,
         action_state: "idle",
@@ -73,6 +78,9 @@ describe("monster field projection", () => {
     ]);
     expect(projection.densityLevel).toBe(2);
     expect(projection.spawn.current).toBe(7);
+    expect(projection.monsters[0]).toMatchObject({
+      sourceIndex: 0, hp: 20, maxHp: 20, damage: 4, armor: 1, experience: 7, gold: 3,
+    });
   });
 });
 
@@ -84,7 +92,9 @@ function entity(family: "mon_a_01_1" | "mon_goldblin", id: string): WorldEntityP
       source_binding: { id: family, confidence: "confirmed", resolved: true },
       placement_binding: { id: `${family}:placement`, confidence: "unknown", resolved: false },
     }, x: 200, y: 300, facing: "right", action_state: "idle", animation: "idle", class_family: null,
-    target_entity_id: null, action_sequence: 0, attack_effect_key: null, skill_presentation_key: null,
+    target_entity_id: null, action_sequence: 0, loot_sequence: 0, loot_label: null,
+    attack_effect_key: null, skill_presentation_key: null,
     current_hp: 100, maximum_hp: 100, selectable: true,
+    interaction_prompt_key: null,
   };
 }

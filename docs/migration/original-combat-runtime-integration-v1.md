@@ -44,6 +44,15 @@ whose writer is unresolved. The pre-existing rebuild projection divisor remains
 isolated before the recovered tail; raw catalog damage is not falsely claimed
 as the value passed directly to `HunterCtrl.Damaged`.
 
+The divisor is currently `250` and is compatibility tuning, not migrated
+balance. For example, the exact difficulty-zero source row `0` keeps catalog
+damage `542` in the monster snapshot while the live neutral-attack resolver
+receives fixture input `2` before variance and Hunter defense. With the current
+demo Hunter armor this commonly reaches the recovered minimum-one branch. This
+observable `1 HP` result is therefore evidence that the missing selected-factor
+writer and live Hunter stat bindings still matter; it must not be corrected by
+guessing a different divisor.
+
 ## Hit-result boundary
 
 - Critical damage is now emitted live by the server.

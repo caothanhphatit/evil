@@ -1,5 +1,5 @@
 import { MAX_MESSAGE_BYTES, PROTOCOL_VERSION } from "../generated/protocol";
-import type { BottomMenuIntent, ClientCommand, ClientEnvelope, OriginalFlowSnapshot, ServerEnvelope, ServerMessage } from "../generated/protocol";
+import type { BottomMenuIntent, ClientCommand, ClientEnvelope, FarmReport, OriginalFlowSnapshot, ServerEnvelope, ServerMessage } from "../generated/protocol";
 
 export type ConnectionStatus = "connecting" | "online" | "reconnecting" | "offline";
 export interface IntentFeedback { intent: string; accepted: boolean; reason: string | null }
@@ -12,6 +12,7 @@ export interface WorldClientOptions {
   reconnectDelayMs?: number;
   apiBaseUrl?: string;
   webSocketUrl?: string;
+  onWorldFrame?: (snapshot: OriginalFlowSnapshot) => void;
 }
 
 export class EnvelopeSequencer {
@@ -49,6 +50,7 @@ export class WorldClient {
   private readonly reconnectDelayMs: number;
   private readonly apiBaseUrl: string;
   private readonly webSocketUrl: string;
+  private readonly onWorldFrame: (snapshot: OriginalFlowSnapshot) => void;
   private readonly envelopeSequencer = new EnvelopeSequencer();
   private readonly serverSequenceGuard = new ServerSequenceGuard();
   private latestSnapshot: OriginalFlowSnapshot | null = null;
@@ -67,9 +69,11 @@ export class WorldClient {
     this.reconnectDelayMs = options.reconnectDelayMs ?? 1500;
     this.apiBaseUrl = stripTrailingSlash(options.apiBaseUrl ?? defaultApiBaseUrl());
     this.webSocketUrl = options.webSocketUrl ?? defaultWebSocketUrl();
+    this.onWorldFrame = options.onWorldFrame ?? this.onSnapshot;
   }
 
   connect(): void { this.stopped = false; void this.openSocket("connecting"); }
+  submitFarmReport(report: FarmReport): boolean { return this.send({ type: "submit_farm_report", report }); }
   disconnect(): void {
     this.stopped = true;
     this.pendingBoot = false;
@@ -104,12 +108,13 @@ export class WorldClient {
   setMaterialRequest(instanceId: string, materialId: string, quantity: number): boolean { return this.send({ type: "set_material_request", instance_id: instanceId, material_id: materialId, quantity }); }
   cancelMaterialRequest(instanceId: string, materialId: string): boolean { return this.send({ type: "cancel_material_request", instance_id: instanceId, material_id: materialId }); }
   craftShopItem(instanceId: string, recipeId: string, quantity: number, materialId: string | null = null): boolean { return this.send({ type: "craft_shop_item", instance_id: instanceId, recipe_id: recipeId, material_id: materialId, quantity }); }
-  purchaseShopItem(shopId: string, productId: string): boolean { return this.send({ type: "purchase_shop_item", shop_id: shopId, product_id: productId }); }
+  purchaseShopItem(hunterId: number, shopId: string, productId: string): boolean { return this.send({ type: "purchase_shop_item", hunter_id: hunterId, shop_id: shopId, product_id: productId }); }
   sellShopItem(shopId: string, productId: string): boolean { return this.send({ type: "sell_shop_item", shop_id: shopId, product_id: productId }); }
   openHunterProgression(hunterId: number): boolean { return this.send({ type: "open_hunter_progression", hunter_id: hunterId }); }
   assignHunterHunt(hunterId: number, zoneId: string): boolean { return this.send({ type: "assign_hunter_hunt", hunter_id: hunterId, zone_id: zoneId }); }
   returnHunterHunt(hunterId: number): boolean { return this.send({ type: "return_hunter_hunt", hunter_id: hunterId }); }
   sellHunterLoot(hunterId: number): boolean { return this.send({ type: "sell_hunter_loot", hunter_id: hunterId }); }
+  startHunterEnhancement(hunterId: number): boolean { return this.send({ type: "start_hunter_enhancement", hunter_id: hunterId }); }
   reviveHunter(hunterId: number): boolean { return this.send({ type: "revive_hunter", hunter_id: hunterId }); }
   learnHunterSkill(hunterId: number, skillId: string): boolean { return this.send({ type: "learn_hunter_skill", hunter_id: hunterId, skill_id: skillId }); }
   useHunterSkill(hunterId: number, skillId: string, targetEntityId: string | null = null): boolean {
@@ -117,6 +122,14 @@ export class WorldClient {
   }
   banishHunter(hunterId: number): boolean { return this.send({ type: "banish_hunter", hunter_id: hunterId }); }
   equipHunterItem(hunterId: number, itemId: number): boolean { return this.send({ type: "equip_hunter_item", hunter_id: hunterId, item_id: itemId }); }
+  enhanceHunterGear(
+    hunterId: number,
+    gearInstanceId: string,
+    mode: "single" | "to_10" | "to_15" | "to_20",
+    optionalMaterialIds: string[] = [],
+  ): boolean {
+    return this.send({ type: "enhance_hunter_gear", hunter_id: hunterId, gear_instance_id: gearInstanceId, mode, optional_material_ids: optionalMaterialIds });
+  }
   requestResync(): boolean { return this.send({ type: "request_resync" }); }
 
   private async openSocket(status: ConnectionStatus): Promise<void> {
@@ -185,7 +198,7 @@ export class WorldClient {
       if (message.type === "world_frame") {
         if (this.latestSnapshot) {
           this.latestSnapshot = { ...this.latestSnapshot, world: message.world };
-          this.onSnapshot(this.latestSnapshot);
+          this.onWorldFrame(this.latestSnapshot);
         }
         return;
       }
@@ -267,6 +280,7 @@ function isServerMessage(value: unknown): value is ServerMessage {
   if (message.type === "resync") return isSnapshot(message.snapshot);
   if (message.type === "world_update") return isSnapshot(message.snapshot);
   if (message.type === "world_frame") return isWorldProjection(message.world);
+  if (message.type === "farm_report_queued") return typeof message.window_id === "number";
   if (message.type === "intent_result") return typeof message.intent === "string" && typeof message.accepted === "boolean" && isSnapshot(message.snapshot);
   return message.type === "binding_blocked" && typeof message.intent === "string" && Array.isArray(message.blockers) && isSnapshot(message.snapshot);
 }
@@ -276,6 +290,7 @@ function isWorldProjection(value: unknown): boolean {
   const world = value as Record<string, unknown>;
   return typeof world.visual_tick === "number"
     && Array.isArray(world.entities)
+    && Array.isArray(world.drops)
     && Array.isArray(world.combat_presentations);
 }
 
@@ -296,5 +311,6 @@ function isSnapshot(value: unknown): value is OriginalFlowSnapshot {
     && typeof snapshot.field === "object" && snapshot.field !== null
     && typeof snapshot.world === "object" && snapshot.world !== null
     && Array.isArray((snapshot.world as Record<string, unknown>).entities)
+    && Array.isArray((snapshot.world as Record<string, unknown>).drops)
     && Array.isArray((snapshot.world as Record<string, unknown>).combat_presentations);
 }

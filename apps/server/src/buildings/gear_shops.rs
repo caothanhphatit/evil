@@ -1,4 +1,6 @@
 use super::{BaseBuildingId, BuildingGameplayCatalog, EconomyProductDefinition};
+use std::collections::HashMap;
+use std::sync::OnceLock;
 
 const GEAR_CRAFTING_CAPABILITY: &str = "weapon-and-armor-crafting";
 const ACCESSORY_CRAFTING_CAPABILITY: &str = "accessory-crafting";
@@ -42,6 +44,41 @@ pub struct GearProductRoute {
     pub family: GearProductFamily,
     pub kind: GearProductKind,
     pub rating: u16,
+    pub difficulty_group: u16,
+}
+
+fn difficulty_groups() -> &'static HashMap<String, u16> {
+    static GROUPS: OnceLock<HashMap<String, u16>> = OnceLock::new();
+    GROUPS.get_or_init(|| {
+        let payload: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../../packages/content/releases/evil-hunter-1.411/gear-catalog.json"
+        ))
+        .expect("gear catalog JSON is valid");
+        let mut groups = HashMap::new();
+        for row in payload
+            .get("rows")
+            .and_then(serde_json::Value::as_array)
+            .into_iter()
+            .flatten()
+        {
+            let Some(kind) = row.get("kind").and_then(serde_json::Value::as_str) else {
+                continue;
+            };
+            let Some(index) = row.get("index").and_then(serde_json::Value::as_u64) else {
+                continue;
+            };
+            let Some(group) = row.get("group").and_then(serde_json::Value::as_u64) else {
+                continue;
+            };
+            for rating in 0..5 {
+                groups.insert(
+                    format!("recipe:{kind}:{index}:rating:{rating}"),
+                    group as u16,
+                );
+            }
+        }
+        groups
+    })
 }
 
 /// Resolves the Blacksmith -> display shop route from recovered capability
@@ -84,6 +121,7 @@ pub fn gear_product_route(
         family,
         kind,
         rating,
+        difficulty_group: *difficulty_groups().get(&product.product_id)?,
     })
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fitWorldViewport, panWorldViewport } from "./camera";
+import { fitWorldViewport, panWorldViewport, worldPointVisible } from "./camera";
 
 describe("visible-world camera", () => {
   it("fills a portrait viewport and crops the wider world horizontally", () => {
@@ -19,5 +19,11 @@ describe("visible-world camera", () => {
       x: 0,
       y: 0,
     });
+  });
+
+  it("culls actors outside the transformed viewport with a safety margin", () => {
+    const transform = { scale: 1, x: -1_000, y: -500 };
+    expect(worldPointVisible(1_250, 800, 500, 900, transform)).toBe(true);
+    expect(worldPointVisible(2_000, 800, 500, 900, transform)).toBe(false);
   });
 });

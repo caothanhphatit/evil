@@ -42,7 +42,11 @@ export function tradingPostView(state: TradingPostState) {
     difficulty,
     difficultyLabel: TRADING_POST_ROUTE.tabs[difficulty],
     requestCount: state.stocks.filter((stock) => stock.requested > 0).length,
-    stocks: state.stocks.map((stock) => ({ ...stock, requestLabel: stock.requested > 0 ? "Cancel" : "Request" })),
+    stocks: state.stocks.map((stock) => ({
+      ...stock,
+      remainingRequest: stock.requested > 0 ? String(stock.requested) : "",
+      requestLabel: stock.requested > 0 ? "Cancel" : "Request",
+    })),
   };
 }
 

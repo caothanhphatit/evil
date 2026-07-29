@@ -20,7 +20,9 @@ user-supplied raw tables, and unresolved rules.
 - `apps/web/`: Vite/TypeScript game client and town/building/Hunter UI.
 - `apps/server/`: Rust server, session handling, simulation, products, Hunter
   roster, trading post, and building services.
-- `infra/db/migrations/`: relational schema and seed migrations through `0023`.
+- `infra/db/migrations/`: relational schema and seed migrations through `0026`.
+- `infra/db/core_game/`: deterministic static core-game catalog SQL bundle and
+  `psql` init entrypoint; it is separate from player-state migrations.
 - `packages/content/`: generated schemas and normalized runtime catalogs.
 - `game-assets/normalized/`: normalized assets used by the rebuild.
 - `reverse-engineering/evidence/`: machine-readable extracted evidence.
@@ -39,12 +41,57 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
 
 ## Current implementation
 
+- ADR 0009 accepts tiered authority: ordinary movement/combat/common-farm
+  reports may be client-predicted and asynchronously validated, while payment,
+  premium currency, gacha, Hunter/protected-item ownership and player trade
+  remain synchronous PostgreSQL transactions. The protocol/worker migration is
+  incremental; existing server simulation remains authoritative until each
+  low-value field is explicitly moved behind the farm-report validator.
+
+- The WebSocket scheduler may run at a configured 1-60 Hz, but the gameplay
+  domain advances through a deterministic 100 ms fixed-step accumulator. This
+  keeps movement, combat, respawn, buffs and cooldowns invariant when transport
+  cadence changes; scheduler elapsed time must be passed to
+  `OriginalFlowSession::advance_simulation_step` rather than adding new
+  hard-coded per-network-tick decrements.
+
 - Town projection, camera/depth handling, building placement, normalized base
   building versus skin data, and visible-world packaging are implemented.
 - Building registries, conditions, product stock, crafting/service routes,
   trading post, blacksmith/gear shop, potion route separation, and related DB
   migrations exist. UI fidelity is still an iterative migration, not proof that
   every building matches the original behavior.
+- Material icon binding uses the complete exported `src_00000` through
+  `src_00368` sprite sequence. The numeric `shop_product_*` namespace is cash
+  shop content and must not be used as a material-ID mapping.
+- Trading Post orders store the remaining requested quantity. Hunter auto-sale
+  is capped by that remainder, decrements it atomically with the wallet/stock
+  transfer, and leaves excess carried loot with the Hunter; zero restores the
+  Request action.
+- Monster death projects gold as its own ground drop alongside independently
+  rolled material drops. Gold and experience are awarded only when the owning
+  Hunter collects the gold drop. Once a pickup starts, nearby aggro no longer
+  resets it indefinitely; the presentation includes the collected quantity.
+- Service crafting and Hunter-to-town service payment are connected for Inn,
+  Infirmary, Restaurant and Tavern, but autonomous gauge decay, service choice
+  and walk-to-building behavior remain unresolved. Static capture targets and
+  exact field/method identities are recorded in
+  `docs/migration/hunter-autonomous-service-evidence-v1.md`.
+- Alchemist (`build_14`) craft now routes finished consumables to Potion Shop
+  (`build_11`) for display/purchase using the resolved recipe inputs/outputs
+  and `hunterPaysTownGoldByTier` price rows. Craft timers, stack limits and
+  native queue semantics remain unresolved; see
+  `docs/game-design/alchemist-crafting-and-purchase.md`.
+- Hunter vitals are four independent current/maximum pairs, not fixed percent
+  bars. Packaged class rows prove HP base ranges of `5600..5800` or
+  `6000..6200`; exact HP RNG and the original mood/satiety/stamina generation
+  and decay formulas remain unresolved. See
+  `docs/migration/hunter-vitals-mining-v1.md`.
+- The disposable rebuild roster no longer seeds all four gauges as `100`:
+  migration `0027_non_percent_hunter_vitals.sql` uses deterministic fixture
+  current/max values, with HP kept inside the recovered class bounds. These
+  values are presentation/test fixtures, not recovered constructor RNG; live
+  captured values still supersede them when available.
 - A demo Hunter roster and modular Hunter appearance projection exist across DB,
   server, and web layers.
 - Hunter Info has Status, Skills, Materials/Inventory, Growth, and Riding Pet
@@ -235,8 +282,9 @@ Before reporting work complete:
   town and all three hunting regions are one village world instance, and this
   intent changes camera/interaction focus rather than replacing the world or
   its actor roster. Each board changes only its region's durable density
-  I/II/III; monster runtime remains server-authoritative and ephemeral, while
-  world difficulty stays global.
+  I/II/III; monster actors and ground drops remain server-authoritative and
+  ephemeral, while active Hunter position/FSM runtime is checkpointed for
+  reconnect continuity and world difficulty stays global.
 - An ACTk semantic-key matching attempt was run against the rooted API35 save.
   It produced zero matches from 39 candidate names, so no PlayerPrefs entry is
   claimed as `UserData` or `HunterData`; the sanitized attempt is recorded in
@@ -297,12 +345,11 @@ Before reporting work complete:
   helpers. Exact skill-to-animation/icon/effect bindings and native branch
   conditions remain unresolved; see
   `docs/migration/original-hunter-skill-use-evidence-v1.md`.
-- Protocol v23 adds `use_hunter_skill`. The rebuild exposes all ten packaged
+- Protocol v23 introduced `use_hunter_skill`; later runtime work connects all ten packaged
   basic skills with exact base-job ownership and catalog cooldowns after
-  server-side learned-state, target-range, and readiness validation. Exact
-  effect formulas and skill-specific animation/effect bindings remain
-  unavailable; activation advances the matching class presentation without
-  synthesizing combat outcomes.
+  server-side learned-state, target-range, and readiness validation. Recovered
+  level-1 effect values are connected as described in the current handoff;
+  skill-specific animation bindings and exact native priority remain unresolved.
 - A second native combat capture now preserves sixteen live API35 method bodies
   spanning Hunter damage/critical, monster damage/reduction and gear
   damage/armor/accessory modifiers. `EvilCtrl.GetReduceAttackValue` is recovered
@@ -566,6 +613,65 @@ Before reporting work complete:
   landing exactly on the current threshold does not level, while positive
   overflow carries. The threshold itself remains the explicit fixture sequence
   until authoritative per-Hunter `revive` is bound for `GetNeedExp`.
+- Monster snapshots now expose the catalog-backed source index, HP, damage,
+  armor, base EXP and gold reward through protocol v26. Selecting a live
+  monster shows those authoritative catalog values in the web client. The
+  displayed damage is not yet the exact original damage dealt to a Hunter:
+  live combat still applies the explicit rebuild `250` compatibility divisor
+  because the native selected runtime-factor writer remains unresolved. With
+  current demo Hunter armor, many difficulty-zero attacks consequently reach
+  the recovered minimum-one branch. Collecting its
+  gold drop credits the catalog base EXP and emits a server-authored `+n EXP`
+  presentation over the collecting Hunter. Native `PlusExp` still caps stored
+  level at 99 (display level 100) and discards further EXP. EXP modifiers,
+  exact class/revive threshold binding and reincarnation/rank-up remain
+  explicitly unresolved and are not synthesized or activated.
+- Live ordinary Hunter attacks now apply the recovered native stored-level
+  factor `float32(1 + level * 0.003)` to the fixture base attack before the
+  connected outgoing-damage resolver. This increases the base damage component
+  by 0.3% per stored level and reaches the nominal float32 factor 1.297x at
+  displayed level 100; the downstream integer conversion truncates exactly as
+  native arithmetic does. No HP or defense level scaling is claimed;
+  reincarnation remains disconnected.
+- Field projection now renders the real authoritative `village-hunter-{id}`
+  agents instead of the old independent `field-hunter-01` roaming fixture.
+  This makes post-kill target acquisition/movement observable and preserves
+  Hunter-targeted EXP presentations through the client event pipeline. Gold
+  uses the confirmed gold icon layered as an explicit rebuild ground-pile
+  presentation because no original ground-drop gold sprite is yet bound.
+- Operational Hunter fixtures now start with exactly the two packaged basic
+  skills for their H1-H5 job. Existing fixture rosters with an empty skill list
+  are backfilled once without overwriting learned state or cooldowns.
+- Basic skills now auto-cast server-side when a Hunter has a live in-range
+  target and a ready skill. Cooldowns and level-1 catalog values come from the
+  recovered 1.411 rows. Connected effects cover Fury attack-speed/basic-damage,
+  War Cry stun proc, Holy Light/Thunderbolt/Round Slash AoE, Barrier defense,
+  Multishot four-hit damage, Dodge evasion, Ice Armor retaliation slow, and
+  Concentrate critical chance. Exact native skill priority/proc ordering is not
+  recovered, so choosing the first ready learned skill is explicitly the
+  `web-rebuild-v1-auto-skill` policy rather than an original-game claim.
+- Active world frames now declare `server_authoritative_simulation`. The FE may
+  predict movement and presentation between 10 Hz confirmations, but position,
+  targets, hits, damage, loot, economy and rollback authority remain server-side.
+- Migration `0026_demo_basic_skill_aliases` explicitly maps the rebuild's
+  class-scoped `skill_h*_0*` IDs to the recovered `basic:0..9` definition rows;
+  without these FK rows, backfilled learned skills cannot persist and the WS
+  session fails closed while loading the player.
+- Static catalogs that were previously JSON-only are now reproducibly packaged
+  under the `core_game` PostgreSQL schema by `tools/generate-core-game-sql.py`:
+  monster stats/drop slots, unique-gear pools, material-market cross-links,
+  recipe/building material links (including unresolved conditions), EXP rows,
+  and the complete packaged gear rows. The bundle records source SHA-256 values
+  and has count guards; it does not replace the existing `0010` material/economy
+  seed or any player ownership/ledger tables. Run `psql "$DATABASE_URL" -f
+  infra/db/core_game/init.sql` from the bundle directory.
+- Durable schema v15 checkpoints active Hunter world runtime and Hunter potion
+  cooldown state so reconnects
+  restore position, facing, action/animation, a still-valid monster target,
+  timers and temporary skill presentation state before the welcome snapshot.
+  Monster actors and drops remain ephemeral; invalid targets are cleared and
+  interrupted loot collection resumes target acquisition without moving the
+  Hunter. Abrupt process loss remains bounded by the last completed checkpoint.
 
 ## 2026-07-28 Hunter interaction and movement handoff
 
@@ -598,3 +704,49 @@ Before reporting work complete:
   the full Rust suite and clippy passed during the implementation cycle, and
   `git diff --check` is clean. Browser smoke testing confirms equipment detail
   opening and Locate returning to the normal world command flow.
+
+## 2026-07-28 external Hunter auto-trade mining
+
+- A rooted API35 ARM64 session was used without an in-process long-lived hook:
+  external `/proc/PID/mem` reads remain stable and recover the resident
+  30-entry `RandDamage` stream. Unexecuted protected method pages are not
+  treated as decrypted code.
+- One-shot native capture recovered exact ARM64 bodies for Hunter
+  `ItemPotionBuy`, `SpeakItemSell`, `SpeakWeaponBuy`, `SpeakArmorBuy`,
+  `ItemArmorBuy`, `ItemWeaponBuy`, and `ItemAccessoryBuy`. The three gear-buy
+  bodies share a `0x224`-byte structural flow with pending-object cleanup and
+  repeated mutation-helper calls, but buyer, wallet, stock, ownership, and
+  equip semantics remain unresolved. See
+  `docs/migration/original-native-hunter-auto-trade-evidence-v1.md` and
+  `reverse-engineering/evidence/original-native-hunter-auto-trade-decrypted-api35-v1.json`.
+- `tools/runtime/capture-android-process-methods.py` captures stable external
+  method ranges by token/module offset. It is evidence-only and does not read
+  managed values or connect production services.
+- `tools/tests/test_original_hunter_auto_trade_evidence.py` cross-validates the
+  external method artifact against the one-shot decrypted capture (all seven
+  method identities, offsets, and native sizes) and verifies body hashes.
+- The rebuild now implements the user-confirmed player-guided economy flow as
+  an explicit web-rebuild contract: idle Hunters and Hunters farming an ordinary
+  region auto-settle only requested materials, while the Hunter tooltip can
+  invoke the same seller-attributed transaction. Gold drops are credited only
+  to the Hunter wallet and are never copied into sellable material inventory;
+  an underfunded town buys only the quantity its wallet can afford.
+  `purchase_shop_item` now carries `hunter_id` and atomically
+  debits Hunter gold, credits town/Lord gold, decrements shop stock, and adds a
+  durable owned product. Migration `0024_hunter_owned_items.sql` persists that
+  ownership. These transaction semantics are rebuild product behavior; they do
+  not claim the still-unresolved original helper/offset identities.
+- Gear crafting is being upgraded from aggregate product stock to individual
+  rows under the explicit `web-rebuild-v1-gear-roll` ruleset. Recipe
+  `kind/index/rating` binds directly to the packaged gear catalog and normalized
+  icon path; migration `0025_crafted_gear_stock.sql` defines durable shop rows.
+  The deterministic row generator is implemented and tested, but repository
+  load/save plus craft/purchase transfer wiring remain incomplete and must not
+  yet be presented as a finished individual-gear flow.
+- Gear enhancement now has a versioned intent and ownership/result projection
+  for the product-required `+20` cap and four UI modes. It remains fail-closed:
+  original enhancement cost, material and probability bindings have not been
+  captured, so the Blacksmith preview lists those blockers and the server never
+  consumes resources or advances a level. See
+  `docs/game-design/gear-enhancement-flow.md`. The UI route is the confirmed
+  Enhancement Forge `build_15`; its popup-template binding remains unresolved.

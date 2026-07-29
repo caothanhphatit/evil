@@ -82,6 +82,20 @@
     server obstacle solver, pause between waypoints, and remain in town bounds.
     No native town-roam waypoint table has been recovered, so this is
     presentation tuning rather than a claim about original cadence.
+15. **Reconnect continuity** - complete for active Hunter agents. PostgreSQL
+    checkpoints preserve each Hunter's scene position, facing, FSM action,
+    animation, combat target, recovery/respawn timers, presentation sequences,
+    active temporary skill state, and region-entry stage. Re-entering the game
+    restores that state before the welcome snapshot is projected. Monster
+    actors and ground drops remain reconstructable ephemeral state; a persisted
+    target is retained only when the regenerated monster ID is live, while an
+    interrupted loot action falls back to target acquisition at the same Hunter
+    position because its referenced drop no longer exists.
+16. **Loot pickup completion** - an initiated pickup finishes its short
+    authoritative recovery before a newly aggroed monster can retake the
+    Hunter's FSM. Gold remains wallet-only, material inventory receives only
+    `material:*` rows, and pickup text includes the collected quantity. The
+    exact original pickup cadence and ground-gold sprite remain unresolved.
 
 ## Evidence-backed behavior
 
@@ -121,6 +135,13 @@ Current temporary choices are:
   not recovered original values;
 - monster and Hunter respawn ticks;
 - compatibility scaling for catalog monster damage against demo Hunter stats;
+- the operational world constructor currently starts at global difficulty `0`
+  and has no difficulty-transition command, so only the nine difficulty-zero
+  rows are live; the other 36 exact rows remain catalog-backed but unreachable
+  until the difficulty gate is recovered or deliberately implemented;
+- active spawn type order uses `spawn_index % 3` across each three-row pool.
+  The packaged row mapping is exact, but the original type-selection/random
+  order is unresolved, so this deterministic order is rebuild fixture policy;
 - the town revival anchor;
 - town-roam waypoint anchors and cadence (temporary fixture only; native
   waypoint semantics remain unresolved);
@@ -140,3 +161,6 @@ Current temporary choices are:
 - Original revival point and revive-building routing.
 - Ground-drop sprite/icon projection; reward ownership and collection already
   run on the server, but the exact presentation binding remains unresolved.
+- Crash recovery is bounded by the current world-checkpoint interval. Graceful
+  disconnect persists the latest runtime state, while abrupt process loss may
+  restore the last completed checkpoint rather than the last rendered frame.

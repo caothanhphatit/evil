@@ -1,6 +1,6 @@
 import type { EvidenceBuildingRegistry, EvidenceField } from "./building-registry";
 
-export type BuildingPopupRoute = "building" | "request" | "production" | "service";
+export type BuildingPopupRoute = "building" | "request" | "production" | "service" | "gear-enhancement";
 
 export interface BuildingEvidenceView {
   id: string;
@@ -66,7 +66,9 @@ export function projectBuildingEvidence(
     gridSize: resolvedNumberPair(record(building.sourceData)?.gridSize),
     popupRoute,
     capabilityKinds,
-    actionBlockedReason: popupRoute ? null : unresolvedReason,
+    actionBlockedReason: popupRoute === "gear-enhancement"
+      ? "popup-template-binding"
+      : popupRoute ? null : unresolvedReason,
     constructionBlockedReason: requiredEvidence(placementField) ?? requiredEvidence(targetTimer),
     spriteAssetId: resolvedString(record(building.visualBinding)?.spriteAssetId),
   };
@@ -102,6 +104,10 @@ function capabilitiesFor(registry: EvidenceBuildingRegistry, building: Record<st
 }
 
 function popupClassRoute(buildingId: string, popupClass: string | null, capabilityKinds: string[], hasProducts: boolean): BuildingPopupRoute | null {
+  // The serialized catalog confirms build_15 is the Enhancement Forge. Its
+  // popup/controller binding is unresolved, so the client exposes only the
+  // bounded blocker shell for this route.
+  if (buildingId === "build_15") return "gear-enhancement";
   if (new Set(["build_2", "build_9", "build_12", "build_13", "build_19", "build_24", "build_25", "build_26", "build_27", "build_28"]).has(buildingId)) return "service";
   // RequestPop is the bounty dialog. Trading Post requests are a BuildingPop mode.
   if (popupClass === "BuildingPop" && capabilityKinds.includes("loot-purchase-reservations")) return "request";

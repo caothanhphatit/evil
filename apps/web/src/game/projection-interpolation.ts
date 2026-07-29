@@ -33,6 +33,8 @@ export class ProjectionBuffer {
   private readonly maxTickGap: number;
   private readonly teleportDistance: number;
   private readonly maxExtrapolationTicks: number;
+  private renderTick: number | null = null;
+  private sampledAtMs: number | null = null;
 
   constructor(options: ProjectionBufferOptions = {}) {
     this.tickDurationMs = options.tickDurationMs ?? 100;
@@ -40,7 +42,7 @@ export class ProjectionBuffer {
     this.maxFrames = options.maxFrames ?? 12;
     this.maxTickGap = options.maxTickGap ?? 5;
     this.teleportDistance = options.teleportDistance ?? 220;
-    this.maxExtrapolationTicks = options.maxExtrapolationTicks ?? 5;
+    this.maxExtrapolationTicks = options.maxExtrapolationTicks ?? 3;
   }
 
   push(mode: ProjectionMode, visualTick: number, entities: WorldEntityProjection[], receivedAtMs: number): ProjectionPushResult {
@@ -56,7 +58,11 @@ export class ProjectionBuffer {
       || visualTick - newest.visualTick > this.maxTickGap
       || hasTeleport(newest.entities, entities, this.teleportDistance)
     );
-    if (discontinuity) this.frames.length = 0;
+    if (discontinuity) {
+      this.frames.length = 0;
+      this.renderTick = null;
+      this.sampledAtMs = null;
+    }
 
     this.frames.push({ mode, visualTick, receivedAtMs, entities });
     this.frames.sort((left, right) => left.visualTick - right.visualTick);
@@ -69,8 +75,15 @@ export class ProjectionBuffer {
     const newest = this.frames[this.frames.length - 1];
     if (this.frames.length === 1) return sampleFrame(newest);
 
-    const elapsedTicks = Math.max(0, nowMs - newest.receivedAtMs) / this.tickDurationMs;
-    const targetTick = newest.visualTick - this.renderDelayTicks + elapsedTicks;
+    if (this.renderTick === null || this.sampledAtMs === null) {
+      this.renderTick = newest.visualTick
+        - this.renderDelayTicks
+        + Math.max(0, nowMs - newest.receivedAtMs) / this.tickDurationMs;
+    } else {
+      this.renderTick += Math.max(0, nowMs - this.sampledAtMs) / this.tickDurationMs;
+    }
+    this.sampledAtMs = nowMs;
+    const targetTick = this.renderTick;
     const oldest = this.frames[0];
     if (targetTick <= oldest.visualTick) return sampleFrame(oldest);
     if (targetTick >= newest.visualTick) {
@@ -104,7 +117,11 @@ export class ProjectionBuffer {
     return sampleFrame(newest);
   }
 
-  reset(): void { this.frames.length = 0; }
+  reset(): void {
+    this.frames.length = 0;
+    this.renderTick = null;
+    this.sampledAtMs = null;
+  }
 
   bufferedTicks(): number[] { return this.frames.map((frame) => frame.visualTick); }
 }

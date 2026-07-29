@@ -7,6 +7,7 @@ use tokio::sync::Mutex;
 use uuid::Uuid;
 
 use crate::identity::SessionTokenHash;
+use crate::simulation::farm_validation::FarmReport;
 
 #[derive(Clone, Debug)]
 pub struct PlayerLease {
@@ -56,6 +57,11 @@ pub trait SessionCoordinator: Send + Sync {
         limit: u32,
         window: Duration,
     ) -> Result<bool, CoordinationError>;
+    async fn enqueue_farm_report(
+        &self,
+        player: Uuid,
+        report: &FarmReport,
+    ) -> Result<(), CoordinationError>;
     async fn is_ready(&self) -> bool;
 }
 
@@ -72,6 +78,7 @@ struct MemoryState {
     leases: HashMap<Uuid, PlayerLease>,
     fences: HashMap<Uuid, i64>,
     rates: HashMap<SessionTokenHash, (tokio::time::Instant, u32)>,
+    farm_reports: Vec<(Uuid, FarmReport)>,
 }
 
 #[async_trait]
@@ -157,6 +164,19 @@ impl SessionCoordinator for InMemorySessionCoordinator {
         }
         entry.1 += 1;
         Ok(entry.1 <= limit)
+    }
+
+    async fn enqueue_farm_report(
+        &self,
+        player: Uuid,
+        report: &FarmReport,
+    ) -> Result<(), CoordinationError> {
+        self.inner
+            .lock()
+            .await
+            .farm_reports
+            .push((player, report.clone()));
+        Ok(())
     }
 
     async fn is_ready(&self) -> bool {
@@ -294,6 +314,34 @@ impl SessionCoordinator for RedisSessionCoordinator {
         Ok(count <= limit)
     }
 
+    async fn enqueue_farm_report(
+        &self,
+        player: Uuid,
+        report: &FarmReport,
+    ) -> Result<(), CoordinationError> {
+        let payload = serde_json::to_string(report).map_err(|error| {
+            CoordinationError::Redis(redis::RedisError::from((
+                redis::ErrorKind::TypeError,
+                "farm report serialization failed",
+                error.to_string(),
+            )))
+        })?;
+        let mut connection = self.connection().await?;
+        let _: String = redis::cmd("XADD")
+            .arg("eh:farm-reports")
+            .arg("MAXLEN")
+            .arg("~")
+            .arg(100_000_u64)
+            .arg("*")
+            .arg("player")
+            .arg(player.to_string())
+            .arg("report")
+            .arg(payload)
+            .query_async(&mut connection)
+            .await?;
+        Ok(())
+    }
+
     async fn is_ready(&self) -> bool {
         match self.connection().await {
             Ok(mut connection) => redis::cmd("PING")
@@ -366,5 +414,29 @@ mod tests {
             .allow_command(token_hash, 2, window)
             .await
             .unwrap());
+    }
+
+    #[tokio::test]
+    async fn farm_reports_enter_the_async_lane_without_mutating_economy() {
+        let coordinator = InMemorySessionCoordinator::default();
+        let player = Uuid::new_v4();
+        let report = FarmReport {
+            window_id: 1,
+            from_revision: 3,
+            elapsed_ms: 1_000,
+            distance_px: 10,
+            damage: 20,
+            ordinary_kills: 1,
+            common_materials: 1,
+            protected_claims: Vec::new(),
+        };
+        coordinator
+            .enqueue_farm_report(player, &report)
+            .await
+            .unwrap();
+        assert_eq!(
+            coordinator.inner.lock().await.farm_reports,
+            vec![(player, report)]
+        );
     }
 }

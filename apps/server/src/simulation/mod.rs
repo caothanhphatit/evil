@@ -1,4 +1,6 @@
 pub(crate) mod combat_core;
+pub mod farm_validation;
+pub mod gear_enhancement;
 mod hunter_roster;
 mod hunter_runtime;
 mod model;
@@ -12,12 +14,15 @@ mod product_service;
 mod protocol;
 mod rng;
 mod trading_post;
+mod web_rebuild_gear;
 
 pub use hunter_roster::{
-    operational_migration_roster, upgrade_operational_fixture_roster, DurableHunterEquipmentSlot,
+    new_account_roster, operational_migration_roster, upgrade_operational_fixture_roster,
+    DurableGearEnhancementAttempt, DurableGearEnhancementTask, DurableHunterEquipmentSlot,
     DurableHunterProfile, DurableHunterProgress, DurableHunterRosterState, DurableHunterSkill,
-    DurableHunterState, DurableHunterTrait, DurableWaitingHunter, HunterArrivalDisposition,
-    HunterBanishment, HunterRosterError, MAX_ACTIVE_TOWN_HUNTERS, MIGRATION_HUNTER_RELEASE_ID,
+    DurableHunterState, DurableHunterTrait, DurableWaitingHunter, GearEnhancementTaskStatus,
+    HunterArrivalDisposition, HunterBanishment, HunterRosterError,
+    GEAR_ENHANCEMENT_WORKFLOW_VERSION, MAX_ACTIVE_TOWN_HUNTERS, MIGRATION_HUNTER_RELEASE_ID,
 };
 pub use hunter_runtime::{
     DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable, DurableHunterRuntimeGear,

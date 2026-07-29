@@ -47,10 +47,13 @@ function entity(overrides: Partial<WorldEntityProjection>): WorldEntityProjectio
     class_family: "H3",
     target_entity_id: "monster-1",
     action_sequence: 1,
+    loot_sequence: 0,
+    loot_label: null,
     attack_effect_key: "ranger_basic_arrow",
     skill_presentation_key: null,
     current_hp: 100,
     maximum_hp: 100,
+    interaction_prompt_key: null,
     selectable: true,
     ...overrides,
   };

@@ -33,6 +33,13 @@ export interface MonsterRowProjection {
   state: "alive" | "dead" | "respawning";
   targetable: boolean;
   dropCount: number;
+  sourceIndex: number | null;
+  hp: number | null;
+  maxHp: number | null;
+  damage: number | null;
+  armor: number | null;
+  experience: number | null;
+  gold: number | null;
 }
 
 export interface MonsterFieldProjection {
@@ -59,8 +66,15 @@ export function projectMonsterField(
       entityId: entity.descriptor.entity_id,
       family: monsterFamily(entity.descriptor.source_skeleton_name),
       state: entity.action_state === "idle" && entity.animation === "die" ? "dead" : "alive",
-      targetable: entity.selectable && entity.action_state !== "walking" && entity.animation !== "die",
+      targetable: false,
       dropCount: 0,
+      sourceIndex: null,
+      hp: entity.current_hp,
+      maxHp: entity.maximum_hp,
+      damage: null,
+      armor: null,
+      experience: null,
+      gold: null,
     } satisfies MonsterRowProjection));
   const combatMonster = combat?.monster;
   const combatDead = combatMonster !== undefined && (!combatMonster.alive || combatMonster.state === "dead");
@@ -69,8 +83,15 @@ export function projectMonsterField(
       entityId: `monster:${combatMonster.id}`,
       family: "mon_a_01_1",
       state: combatDead ? "dead" : "alive",
-      targetable: !combatDead,
+      targetable: false,
       dropCount: combat?.ground_drops.length ?? 0,
+      sourceIndex: null,
+      hp: combatMonster.hp,
+      maxHp: combatMonster.max_hp,
+      damage: null,
+      armor: null,
+      experience: null,
+      gold: null,
     });
   }
   return {
@@ -113,8 +134,15 @@ export function projectAuthoritativeMonsterField(world: MonsterWorldSnapshot): M
       entityId: monster.entity_id,
       family: monster.monster_id === "mon_goldblin" ? "mon_goldblin" : "mon_a_01_1",
       state: monster.respawn_ticks !== null || monster.hp === 0 ? "respawning" : "alive",
-      targetable: monster.hp > 0 && monster.respawn_ticks === null,
+      targetable: false,
       dropCount: world.drops.filter((drop) => drop.monster_entity_id === monster.entity_id).reduce((sum, drop) => sum + drop.quantity, 0),
+      sourceIndex: monster.source_index,
+      hp: monster.hp,
+      maxHp: monster.max_hp,
+      damage: monster.damage,
+      armor: monster.armor,
+      experience: monster.experience,
+      gold: monster.gold,
     })),
     respawnEvent: world.monsters.some((monster) => monster.respawn_ticks !== null),
     dropCount: world.drops.reduce((sum, drop) => sum + drop.quantity, 0),

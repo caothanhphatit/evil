@@ -4,6 +4,22 @@ export interface WorldViewportTransform {
   y: number;
 }
 
+export function worldPointVisible(
+  worldX: number,
+  worldY: number,
+  viewportWidth: number,
+  viewportHeight: number,
+  transform: WorldViewportTransform,
+  margin = 160,
+): boolean {
+  const screenX = worldX * transform.scale + transform.x;
+  const screenY = worldY * transform.scale + transform.y;
+  return screenX >= -margin
+    && screenX <= viewportWidth + margin
+    && screenY >= -margin
+    && screenY <= viewportHeight + margin;
+}
+
 export function panWorldViewport(
   width: number,
   height: number,

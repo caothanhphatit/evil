@@ -44,6 +44,18 @@ describe("Hunter world command menu", () => {
         regionId: "background_08",
       }]);
       expect(layer?.hidden).toBe(true);
+
+      menu.selectHunter(selection);
+      findByDataValue(layer, "items")?.click();
+      expect(menu.state()).toEqual({ mode: "items", selection });
+      expect(findByDataValue(layer, "sell_hunter_loot")).toBeDefined();
+      expect(findByDataValue(layer, "request_hunter_gear_enhancement")).toBeDefined();
+      findByDataValue(layer, "sell_hunter_loot")?.click();
+      expect(intents[1]).toEqual({
+        type: "sell_hunter_loot",
+        hunterEntityId: "village-hunter-7",
+      });
+      expect(layer?.hidden).toBe(true);
     } finally {
       Object.defineProperty(globalThis, "document", { value: previousDocument, configurable: true, writable: true });
     }
@@ -55,6 +67,39 @@ describe("Hunter world command menu", () => {
     const movement = reduceHunterWorldCommandState(categories, { type: "open_category", category: "movement" });
     expect(movement).toEqual({ mode: "movement", selection });
     expect(reduceHunterWorldCommandState(movement, { type: "back" })).toEqual({ mode: "categories", selection });
+    const items = reduceHunterWorldCommandState(categories, { type: "open_category", category: "items" });
+    expect(items).toEqual({ mode: "items", selection });
+    expect(reduceHunterWorldCommandState(items, { type: "back" })).toEqual({ mode: "categories", selection });
+  });
+
+  it("emits a travel request for build_15 instead of opening enhancement immediately", () => {
+    const previousDocument = globalThis.document;
+    const fakeDocument = { createElement: () => new FakeElement() };
+    Object.defineProperty(globalThis, "document", { value: fakeDocument, configurable: true, writable: true });
+    try {
+      const host = new FakeElement();
+      const intents: unknown[] = [];
+      const menu = createHunterWorldCommandMenu(host as unknown as HTMLElement, {
+        onInfo: () => undefined,
+        onIntent: () => undefined,
+        onEnhancementRequest: (intent) => intents.push(intent),
+        onRelease: () => undefined,
+      });
+
+      menu.selectHunter(selection);
+      const layer = host.children[0];
+      findByDataValue(layer, "items")?.click();
+      findByDataValue(layer, "request_hunter_gear_enhancement")?.click();
+
+      expect(intents).toEqual([{
+        type: "request_hunter_gear_enhancement",
+        hunterEntityId: "village-hunter-7",
+        buildingId: "build_15",
+      }]);
+      expect(menu.state()).toEqual({ mode: "closed" });
+    } finally {
+      Object.defineProperty(globalThis, "document", { value: previousDocument, configurable: true, writable: true });
+    }
   });
 
   it("uses X only to close the tooltip and release the selected Hunter", () => {

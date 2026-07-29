@@ -15,10 +15,14 @@ export const HUNTER_HUNTING_REGIONS = [
 export type HunterCommandCategory = typeof HUNTER_COMMAND_CATEGORIES[number]["id"];
 export type HunterHuntingRegionId = typeof HUNTER_HUNTING_REGIONS[number]["id"];
 
-export interface HunterWorldCommandIntent {
-  type: "assign_hunter_hunting_region";
+export type HunterWorldCommandIntent =
+  | { type: "assign_hunter_hunting_region"; hunterEntityId: string; regionId: HunterHuntingRegionId }
+  | { type: "sell_hunter_loot"; hunterEntityId: string };
+
+export interface HunterGearEnhancementRequestIntent {
+  type: "request_hunter_gear_enhancement";
   hunterEntityId: string;
-  regionId: HunterHuntingRegionId;
+  buildingId: "build_15";
 }
 
 export interface HunterWorldCommandSelection {
@@ -30,6 +34,7 @@ export interface HunterWorldCommandSelection {
 export type HunterWorldCommandState =
   | { mode: "closed" }
   | { mode: "categories"; selection: HunterWorldCommandSelection }
+  | { mode: "items"; selection: HunterWorldCommandSelection }
   | { mode: "movement"; selection: HunterWorldCommandSelection };
 
 export type HunterWorldCommandEvent =
@@ -41,8 +46,9 @@ export type HunterWorldCommandEvent =
 export interface HunterWorldCommandCallbacks {
   onInfo: (entityId: string) => void;
   onIntent: (intent: HunterWorldCommandIntent) => void;
+  onEnhancementRequest?: (intent: HunterGearEnhancementRequestIntent) => void;
   onRelease: (entityId: string) => void;
-  onUnavailable?: (category: Exclude<HunterCommandCategory, "movement">) => void;
+  onUnavailable?: (category: Exclude<HunterCommandCategory, "items" | "movement">) => void;
 }
 
 export interface HunterWorldCommandMenu {
@@ -63,6 +69,9 @@ export function reduceHunterWorldCommandState(
   if (event.type === "back") return { mode: "categories", selection: state.selection };
   if (event.type === "open_category" && event.category === "movement") {
     return { mode: "movement", selection: state.selection };
+  }
+  if (event.type === "open_category" && event.category === "items") {
+    return { mode: "items", selection: state.selection };
   }
   return state;
 }
@@ -115,12 +124,18 @@ export function createHunterWorldCommandMenu(
     speech.className = "hunter-world-command-line";
     speech.textContent = state.mode === "movement"
       ? "Không phải bạn bảo đang cần đến nơi nào thật gấp sao?"
-      : "Thời tiết hôm nay thật đẹp... Có mưa không nhỉ?";
+      : state.mode === "items"
+        ? "Bạn muốn tôi xử lý vật phẩm nào?"
+        : "Thời tiết hôm nay thật đẹp... Có mưa không nhỉ?";
     panel.append(speech);
 
     const options = document.createElement("nav");
     options.className = state.mode === "movement" ? "hunter-region-options" : "hunter-command-categories";
-    options.setAttribute("aria-label", state.mode === "movement" ? "Hunting regions" : "Hunter command categories");
+    options.setAttribute("aria-label", state.mode === "movement"
+      ? "Hunting regions"
+      : state.mode === "items"
+        ? "Hunter item commands"
+        : "Hunter command categories");
     if (state.mode === "movement") {
       const back = menuButton("Quay Lại", "back", "←");
       back.addEventListener("click", () => transition({ type: "back" }));
@@ -139,13 +154,41 @@ export function createHunterWorldCommandMenu(
         });
         options.append(button);
       }
+    } else if (state.mode === "items") {
+      const back = menuButton("Quay Lại", "back", "←");
+      back.addEventListener("click", () => transition({ type: "back" }));
+      options.append(back);
+
+      const sell = menuButton("Bán Nguyên Liệu", "sell_hunter_loot", "BNL");
+      sell.dataset.evidence = "web-rebuild-confirmed-auto-trade-flow";
+      sell.addEventListener("click", () => {
+        callbacks.onIntent({ type: "sell_hunter_loot", hunterEntityId: state.selection.entityId });
+        transition({ type: "close" });
+      });
+      options.append(sell);
+
+      const enhance = menuButton("Cường Hóa Trang Bị", "request_hunter_gear_enhancement", "CH");
+      enhance.dataset.evidence = "user-supplied-enhancement-flow";
+      enhance.addEventListener("click", () => {
+        callbacks.onEnhancementRequest?.({
+          type: "request_hunter_gear_enhancement",
+          hunterEntityId: state.selection.entityId,
+          buildingId: "build_15",
+        });
+        transition({ type: "close" });
+      });
+      options.append(enhance);
     } else {
       for (const category of HUNTER_COMMAND_CATEGORIES) {
         const button = menuButton(category.label, category.id, category.fixtureGlyph);
         button.dataset.evidence = category.id === "movement" ? "user-screenshot-category" : "unresolved-icon-fixture";
-        if (category.id !== "movement") button.title = "Icon binding unresolved; command label follows the supplied screenshot.";
+        if (category.id !== "movement" && category.id !== "items") {
+          button.title = "Icon binding unresolved; command label follows the supplied screenshot.";
+        }
         button.addEventListener("click", () => {
-          if (category.id === "movement") transition({ type: "open_category", category: category.id });
+          if (category.id === "movement" || category.id === "items") {
+            transition({ type: "open_category", category: category.id });
+          }
           else callbacks.onUnavailable?.(category.id);
         });
         options.append(button);

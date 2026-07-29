@@ -1,0 +1,12 @@
+UPDATE player_hunter
+SET max_hp = CASE hunter_id
+        WHEN 1 THEN 140 WHEN 2 THEN 180 WHEN 3 THEN 150 WHEN 4 THEN 210
+        WHEN 5 THEN 130 WHEN 6 THEN 160 WHEN 7 THEN 120 WHEN 8 THEN 145
+    END,
+    current_hp = CASE hunter_id
+        WHEN 1 THEN 128 WHEN 2 THEN 165 WHEN 3 THEN 142 WHEN 4 THEN 196
+        WHEN 5 THEN 118 WHEN 6 THEN 151 WHEN 7 THEN 104 WHEN 8 THEN 136
+    END,
+    stamina_maximum = 100, satiety_maximum = 100, mood_maximum = 100
+WHERE player_token = '00000000-0000-4000-8000-00000000a001'
+  AND hunter_id BETWEEN 1 AND 8;

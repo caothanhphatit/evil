@@ -19,8 +19,8 @@
   "evidenceSources": [
     {
       "path": "game-assets/manifests/original-flow-v1.selection.json",
-      "bytes": 22691,
-      "sha256": "308c12f79965d621914fab9180396f78f0475a7badff52c61689f10fa35dfd75"
+      "bytes": 30241,
+      "sha256": "ead62e2427f081bb98a298e6200b158c14e50098466b1039440570bb4a2b7396"
     },
     {
       "path": "game-assets/asset-index.json",
@@ -1216,6 +1216,426 @@
       "confidence": "strongly-inferred",
       "bytes": 558,
       "sha256": "6e310bd83da6ba9f4d49abfb14a355169bbc1a19e16ea79b3981431d42f120b7"
+    },
+    {
+      "id": "service.product.0",
+      "sourcePath": "sprites/product_00__3523.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3523,
+        "type": "Sprite",
+        "name": "product_00"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 794,
+      "sha256": "ed24da23e297824710445a6e92735765a73568b33320786ca1a456ecec0121ab"
+    },
+    {
+      "id": "service.product.1",
+      "sourcePath": "sprites/product_01__4988.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4988,
+        "type": "Sprite",
+        "name": "product_01"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 718,
+      "sha256": "a4e006dcd78e97ba753bdcf51fee185db1e1d66c12577a8ea568873e26ed79c2"
+    },
+    {
+      "id": "service.product.2",
+      "sourcePath": "sprites/product_02__4912.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4912,
+        "type": "Sprite",
+        "name": "product_02"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 820,
+      "sha256": "4ecd8ef4665aa69f53dbfae74cf80cf7b6a4da8a78544461701267207550860d"
+    },
+    {
+      "id": "service.product.3",
+      "sourcePath": "sprites/product_03__2634.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2634,
+        "type": "Sprite",
+        "name": "product_03"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 723,
+      "sha256": "8a1728e4231c8d94c4745591923c40132a84c67a6ca48c53502b13e2dc159a87"
+    },
+    {
+      "id": "service.product.4",
+      "sourcePath": "sprites/product_04__7168.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7168,
+        "type": "Sprite",
+        "name": "product_04"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 855,
+      "sha256": "a70fcc2cc0b3ce4c71cf5a065bcdf4a600b87ad4309b6490f4983dce1eb437fd"
+    },
+    {
+      "id": "service.product.5",
+      "sourcePath": "sprites/product_05__2957.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2957,
+        "type": "Sprite",
+        "name": "product_05"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 718,
+      "sha256": "e618f0b394a61cf4b15b67c1f27fdceee6e5f3932bc19a9cb9d56416c498fc98"
+    },
+    {
+      "id": "service.product.6",
+      "sourcePath": "sprites/product_06__3994.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3994,
+        "type": "Sprite",
+        "name": "product_06"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 724,
+      "sha256": "1b0358f95f2b6879ac348783469613bc03ddaf8be66e89bcb33ddcc84270d1d0"
+    },
+    {
+      "id": "service.product.7",
+      "sourcePath": "sprites/product_07__2037.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2037,
+        "type": "Sprite",
+        "name": "product_07"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 768,
+      "sha256": "c32c1bfbd50f94885ce8be99420744e4b1399f1c67d30cfa9ddc6ce6cdd7cfbb"
+    },
+    {
+      "id": "service.product.8",
+      "sourcePath": "sprites/product_08__6490.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6490,
+        "type": "Sprite",
+        "name": "product_08"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1099,
+      "sha256": "0fe83f36f75e639f9f7e2baae4dde85867159a0694d3f5ff16e0df787e56403b"
+    },
+    {
+      "id": "service.product.9",
+      "sourcePath": "sprites/product_09__1935.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1935,
+        "type": "Sprite",
+        "name": "product_09"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 678,
+      "sha256": "e648584efc45dcd419f17b378981fa0e3ab1be11f5777d0138ba2758a18fea1d"
+    },
+    {
+      "id": "service.product.10",
+      "sourcePath": "sprites/product_10__6271.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6271,
+        "type": "Sprite",
+        "name": "product_10"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 904,
+      "sha256": "a875cd8f5078d6ecd43a0925904436a097d42a0be91d1d4119e77f1d3eb3b477"
+    },
+    {
+      "id": "service.product.11",
+      "sourcePath": "sprites/product_11__2026.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 2026,
+        "type": "Sprite",
+        "name": "product_11"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 734,
+      "sha256": "4e7f1f6899bf7be9de2d177b51df6b1fc5dfb847fd6eaf6d70f1cca5516b9b8f"
+    },
+    {
+      "id": "service.product.12",
+      "sourcePath": "sprites/product_12__1368.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1368,
+        "type": "Sprite",
+        "name": "product_12"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1017,
+      "sha256": "b0d50cae440424580072ac391f920ac07062bb0979476e733124a53339224066"
+    },
+    {
+      "id": "service.product.13",
+      "sourcePath": "sprites/product_13__3637.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3637,
+        "type": "Sprite",
+        "name": "product_13"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 803,
+      "sha256": "beed59abe8bc95d0cd7ca9a147a3a723e0f0a38bf2b2b3d9383fb54b6295ca0c"
+    },
+    {
+      "id": "service.product.14",
+      "sourcePath": "sprites/product_14__1604.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1604,
+        "type": "Sprite",
+        "name": "product_14"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 974,
+      "sha256": "629d4a309f169d500de2675e094c673e386bc7e04db66306742a9ecdbd8470b5"
+    },
+    {
+      "id": "service.product.15",
+      "sourcePath": "sprites/product_15__6488.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6488,
+        "type": "Sprite",
+        "name": "product_15"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 802,
+      "sha256": "7abee4b2da520d5a321e90d700266c6aa04f160503a55cb48759a6547bde7c6b"
+    },
+    {
+      "id": "service.product.16",
+      "sourcePath": "sprites/product_16__3707.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3707,
+        "type": "Sprite",
+        "name": "product_16"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 808,
+      "sha256": "51b2ff1cd0af68b7dce96996ced0a5380fe9168435d3b3fa32984729ab6f409b"
+    },
+    {
+      "id": "service.product.17",
+      "sourcePath": "sprites/product_17__6592.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6592,
+        "type": "Sprite",
+        "name": "product_17"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 657,
+      "sha256": "b9fb7b5f46f440c926845e3cec8d8e647d2b953a932829406dd1a56f41ef5e87"
+    },
+    {
+      "id": "service.product.18",
+      "sourcePath": "sprites/product_18__6216.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6216,
+        "type": "Sprite",
+        "name": "product_18"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 744,
+      "sha256": "a7fc3cc6b9946466dc1dd53b2a409248d65df3c51ac2109db958a5588aea4ceb"
+    },
+    {
+      "id": "service.product.19",
+      "sourcePath": "sprites/product_19__5193.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 5193,
+        "type": "Sprite",
+        "name": "product_19"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 842,
+      "sha256": "ad080de51a41e0d3a390e584db65887ba4d11d923af1644f9d3fccfaa788089f"
+    },
+    {
+      "id": "service.product.29",
+      "sourcePath": "sprites/product_29__6396.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6396,
+        "type": "Sprite",
+        "name": "product_29"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1150,
+      "sha256": "7145a28df9ad82c135afadc45f655fe07cb5a0adf51033f7619ae9f879624be1"
+    },
+    {
+      "id": "service.product.30",
+      "sourcePath": "sprites/product_30__3026.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 3026,
+        "type": "Sprite",
+        "name": "product_30"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1180,
+      "sha256": "8c3877c21e2bcf5bfddbdf41d3ff7f35ebbe0eb2a2e0ed13ae55c3ab0259167b"
+    },
+    {
+      "id": "service.product.31",
+      "sourcePath": "sprites/product_31__1771.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 1771,
+        "type": "Sprite",
+        "name": "product_31"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1128,
+      "sha256": "ab4f74e92b40d34bcdb7300736bc49933d7aa59cfb873fce7d8b4131f7eff362"
+    },
+    {
+      "id": "service.product.32",
+      "sourcePath": "sprites/product_32__7065.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 7065,
+        "type": "Sprite",
+        "name": "product_32"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 872,
+      "sha256": "62fea7cd174c99c923552b7afdcf0a2552eee688cb3af37212b9b62bdfc9679f"
+    },
+    {
+      "id": "service.product.48",
+      "sourcePath": "sprites/product_48__4411.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4411,
+        "type": "Sprite",
+        "name": "product_48"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1486,
+      "sha256": "21fb47dc9357f99f7793898477e6d916d357e834f8788ce724bf1a5609e7bce5"
+    },
+    {
+      "id": "service.product.49",
+      "sourcePath": "sprites/product_49__4142.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4142,
+        "type": "Sprite",
+        "name": "product_49"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1133,
+      "sha256": "6f68652f0f77647fd166dd2a06901f847206789afc0ca12de9597141b2f83eb1"
+    },
+    {
+      "id": "service.product.50",
+      "sourcePath": "sprites/product_50__4905.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 4905,
+        "type": "Sprite",
+        "name": "product_50"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1863,
+      "sha256": "8136f10f10c856f07676feac3318a3cc4f1524b3b618e5366fb10ef605d1b821"
+    },
+    {
+      "id": "service.product.51",
+      "sourcePath": "sprites/product_51__6664.png",
+      "unity": {
+        "source": "sharedassets0.assets",
+        "pathId": 6664,
+        "type": "Sprite",
+        "name": "product_51"
+      },
+      "role": "service-product-icon",
+      "bindingState": "runtime-method-bound",
+      "confidence": "strongly-inferred",
+      "bytes": 1216,
+      "sha256": "fb07a496ef7e1f9aeb43400801ac9328be855bba8ba87a60289704877e18615a"
     }
   ],
   "releaseGate": {

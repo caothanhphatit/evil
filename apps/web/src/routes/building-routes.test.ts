@@ -5,8 +5,9 @@ import { TRADING_POST_ROUTE, tradingPostDifficultyOptions, tradingPostStocksForD
 describe("decoded building route contracts", () => {
   it("keeps Trading Post on BuildingPop and exposes reservation state", () => {
     expect(TRADING_POST_ROUTE.popup).toEqual({ template: "BuildingPop", width: 560, height: 900 });
-    const view = tradingPostView({ level: 1, townGold: 10000, difficulty: 0, stocks: [{ id: "material:1", displayName: "Linen Cloth", icon: null, townQuantity: 0, hunterQuantity: 2, requested: 1, unitPrice: 10, difficulty: 0 }] });
+    const view = tradingPostView({ level: 1, townGold: 10000, difficulty: 0, stocks: [{ id: "material:1", displayName: "Linen Cloth", icon: null, townQuantity: 0, hunterQuantity: 2, requested: 50, unitPrice: 10, difficulty: 0 }] });
     expect(view.requestCount).toBe(1);
+    expect(view.stocks[0].remainingRequest).toBe("50");
     expect(view.stocks[0].requestLabel).toBe("Cancel");
   });
 

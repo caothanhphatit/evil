@@ -1,13 +1,21 @@
 use axum::{extract::State, http::StatusCode, Json};
 use serde::Serialize;
 
-use crate::AppState;
+use crate::{
+    simulation::{
+        DURABLE_PLAYER_SCHEMA_VERSION, GEAR_ENHANCEMENT_WORKFLOW_VERSION, PROTOCOL_VERSION,
+    },
+    AppState,
+};
 
 #[derive(Serialize)]
 pub struct HealthResponse {
     status: &'static str,
     service: &'static str,
     tick_rate: u32,
+    protocol_version: u16,
+    durable_schema_version: u16,
+    enhancement_workflow_version: u16,
     dependencies: DependencyStatus,
 }
 
@@ -46,6 +54,9 @@ fn response(
         status: "ok",
         service: "evil-hunter-server",
         tick_rate: state.config.simulation.tick_rate,
+        protocol_version: PROTOCOL_VERSION,
+        durable_schema_version: DURABLE_PLAYER_SCHEMA_VERSION,
+        enhancement_workflow_version: GEAR_ENHANCEMENT_WORKFLOW_VERSION,
         dependencies: DependencyStatus {
             postgres_configured: state.config.database_url.is_some(),
             redis_configured: state.config.redis_url.is_some(),
@@ -63,7 +74,11 @@ mod tests {
     };
     use tower::ServiceExt;
 
-    use crate::{app_for_test, config::AppConfig};
+    use crate::{
+        app_for_test,
+        config::AppConfig,
+        simulation::{DURABLE_PLAYER_SCHEMA_VERSION, PROTOCOL_VERSION},
+    };
 
     #[tokio::test]
     async fn health_returns_server_status() {
@@ -77,5 +92,11 @@ mod tests {
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(json["status"], "ok");
         assert_eq!(json["tick_rate"], 10);
+        assert_eq!(json["protocol_version"], PROTOCOL_VERSION);
+        assert_eq!(
+            json["durable_schema_version"],
+            DURABLE_PLAYER_SCHEMA_VERSION
+        );
+        assert_eq!(json["enhancement_workflow_version"], 1);
     }
 }

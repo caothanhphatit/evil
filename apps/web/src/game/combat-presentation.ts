@@ -15,6 +15,8 @@ export const ORIGINAL_INCOMING_DAMAGE_COLOR = 0xde3232;
 export const ORIGINAL_CRITICAL_LABEL_COLOR = 0xffd228;
 export const ORIGINAL_EVADE_COLOR = 0x81f7f3;
 export const ORIGINAL_MISS_COLOR = 0xd43d3d;
+// EXP has no recovered color binding yet; this is rebuild-only presentation tuning.
+export const REBUILD_EXPERIENCE_COLOR = 0xf4df67;
 
 // The packaged Dodge clip runs from 0 through 1.0166666507720947 seconds and
 // swaps these four sprites in a symmetric seven-key sequence.
@@ -64,6 +66,7 @@ export function combatPresentationText(event: CombatPresentationSnapshot): strin
   if (event.kind === "evade") return ["Evade"];
   if (event.kind === "miss") return ["Miss"];
   const amount = event.amount === null ? "" : event.amount.toLocaleString("en-US");
+  if (event.kind === "experience") return [`+${amount} EXP`];
   return event.kind === "critical_damage" ? ["CRIT", amount] : [amount];
 }
 

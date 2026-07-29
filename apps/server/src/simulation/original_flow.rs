@@ -9,13 +9,12 @@ use uuid::Uuid;
 
 use crate::buildings::{
     gear_product_route, AuthoritativeBuildingContent, BaseBuildingDefinition, BaseBuildingId,
-    BuildingLevelDefinition, EconomyAmount,
+    BuildingGameplayCatalog, BuildingLevelDefinition, EconomyAmount,
 };
 #[cfg(test)]
 use crate::buildings::{
-    BuildingCapabilityDefinition, BuildingCatalog, BuildingGameplayCatalog,
-    BuildingLevelPrerequisite, EconomyItemDefinition, EconomyProductDefinition,
-    EconomyProductService,
+    BuildingCapabilityDefinition, BuildingCatalog, BuildingLevelPrerequisite,
+    EconomyItemDefinition, EconomyProductDefinition, EconomyProductService,
 };
 
 #[cfg(test)]
@@ -23,22 +22,26 @@ use super::hunter_roster::operational_migration_roster;
 #[cfg(test)]
 use super::hunter_roster::DurableHunterProfile;
 use super::hunter_roster::{
-    DurableHunterRosterState, DurableHunterState, HunterRosterError, HUNT_TICKS_TO_RETURN,
-    MAX_ACTIVE_TOWN_HUNTERS,
+    DurableGearEnhancementTask, DurableHunterRosterState, DurableHunterState,
+    GearEnhancementTaskStatus, HunterRosterError, GEAR_ENHANCEMENT_WORKFLOW_VERSION,
+    HUNT_TICKS_TO_RETURN, MAX_ACTIVE_TOWN_HUNTERS,
 };
 use super::product_service::{capacity_for_level, HunterServiceGauge, ServiceEffectKind};
+#[cfg(test)]
+use super::trading_post::ACTIVE_MATERIAL_REQUEST;
 use super::trading_post::{
     material_catalog_stocks, material_difficulty_rating, settle_returning_hunters,
-    ACTIVE_MATERIAL_REQUEST,
 };
 use super::{
-    map_config, ClientCommand, DurablePlayerState, FixtureCommand, HunterAgentState,
-    HunterEvidenceState, MonsterActionState, MonsterState, MonsterWorldState, NavigationObstacle,
-    PendingOperation, ServerMessage, Simulation, WorldSnapshot, MAP_CONFIGS, MONSTER_RULESET,
+    map_config, ClientCommand, DurablePlayerState, FixtureCommand, HunterActionState,
+    HunterAgentState, HunterEvidenceState, MonsterActionState, MonsterState, MonsterWorldState,
+    NavigationObstacle, PendingOperation, ServerMessage, Simulation, WorldSnapshot, MAP_CONFIGS,
+    MONSTER_RULESET,
 };
 
-pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 12;
+pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 15;
 pub const MIGRATION_FIXTURE_CONTENT_ID: &str = "migration-fixture.slice1-combat-v1";
+pub const MAX_GEAR_ENHANCEMENT_LEVEL: u8 = 20;
 
 const TOWN_GRID_MIN: i32 = -32;
 const TOWN_GRID_MAX: i32 = 32;
@@ -49,12 +52,6 @@ const TOWN_NAV_ORIGIN_Y: i32 = 600;
 
 const QUEST_BLOCKERS: [&str; 2] = ["quest_catalog_binding", "quest_reward_binding"];
 const SHOP_BLOCKERS: [&str; 2] = ["shop_catalog_binding", "shop_price_binding"];
-const GEAR_SALE_BLOCKERS: [&str; 4] = [
-    "hunter_roster_binding",
-    "hunter_wallet_binding",
-    "hunter_equipment_inventory_binding",
-    "shop_visit_binding",
-];
 const MAIL_BLOCKERS: [&str; 2] = ["mail_schema_binding", "mail_grant_binding"];
 const REWARDED_AD_BLOCKERS: [&str; 2] = ["ad_placement_binding", "ad_reward_binding"];
 const TOPUP_BLOCKERS: [&str; 3] = [
@@ -65,6 +62,11 @@ const TOPUP_BLOCKERS: [&str; 3] = [
 const BUILDING_CAPABILITY_BLOCKERS: [&str; 2] = [
     "building_capability_dispatch_binding",
     "building_economy_settlement_binding",
+];
+const GEAR_ENHANCEMENT_BLOCKERS: [&str; 3] = [
+    "enhancement_cost_binding",
+    "enhancement_probability_binding",
+    "enhancement_material_binding",
 ];
 
 #[derive(Clone, Copy)]
@@ -318,6 +320,9 @@ pub struct DurablePlayerAggregate {
     pub hunter_roster: DurableHunterRosterState,
     pub product_services: DurableProductServiceState,
     pub monster_field_config: DurableMonsterFieldConfig,
+    /// Durable continuity for active Hunters only. Monster actors and ground
+    /// drops remain reconstructable runtime state.
+    pub hunter_world_runtime: Vec<HunterAgentState>,
     #[serde(default, rename = "infirmary", skip_serializing)]
     pub legacy_infirmary: Option<DurableLegacyInfirmaryState>,
 }
@@ -332,6 +337,7 @@ impl Default for DurablePlayerAggregate {
             hunter_roster: DurableHunterRosterState::default(),
             product_services: DurableProductServiceState::default(),
             monster_field_config: DurableMonsterFieldConfig::default(),
+            hunter_world_runtime: Vec::new(),
             legacy_infirmary: None,
         }
     }
@@ -595,9 +601,57 @@ pub struct HunterRosterMemberSnapshot {
     pub skills: Vec<HunterSkillSnapshot>,
     pub hunt: HunterHuntSnapshot,
     pub hunter_info: HunterInfoSnapshot,
+    pub gear_enhancements: Vec<GearEnhancementSnapshot>,
+    pub gear_enhancement_task: Option<GearEnhancementTaskSnapshot>,
     pub runtime_evidence: HunterRuntimeEvidenceSnapshot,
     pub roster_state: &'static str,
     pub position: usize,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct GearEnhancementSnapshot {
+    pub product_id: String,
+    pub level: Option<u8>,
+    pub max_level: u8,
+    pub instance_id: Option<Uuid>,
+    pub evidence_state: &'static str,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct GearEnhancementResourceSnapshot {
+    pub material_id: String,
+    pub quantity: u32,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct GearEnhancementAttemptSnapshot {
+    pub attempt: u32,
+    pub starting_level: u8,
+    pub resulting_level: u8,
+    pub succeeded: bool,
+    pub gold_spent: u64,
+    pub materials_spent: Vec<GearEnhancementResourceSnapshot>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct GearEnhancementTaskSnapshot {
+    pub building_instance_id: String,
+    pub status: &'static str,
+    pub interaction_ready: bool,
+    pub selected_gear_instance_id: Option<Uuid>,
+    pub selected_product_id: Option<String>,
+    pub mode: Option<String>,
+    pub target_level: Option<u8>,
+    pub optional_material_ids: Vec<String>,
+    pub next_attempt_gold_cost: Option<u64>,
+    pub next_attempt_success_bps: Option<u32>,
+    pub required_materials: Vec<GearEnhancementResourceSnapshot>,
+    pub attempts: Vec<GearEnhancementAttemptSnapshot>,
+    pub spent_gold: u64,
+    pub spent_materials: Vec<GearEnhancementResourceSnapshot>,
+    pub final_level: Option<u8>,
+    pub stop_reason: Option<String>,
+    pub blockers: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -955,10 +1009,13 @@ pub struct WorldEntityProjection {
     pub class_family: Option<String>,
     pub target_entity_id: Option<String>,
     pub action_sequence: u64,
+    pub loot_sequence: u64,
+    pub loot_label: Option<String>,
     pub attack_effect_key: Option<&'static str>,
     pub skill_presentation_key: Option<String>,
     pub current_hp: Option<u64>,
     pub maximum_hp: Option<u64>,
+    pub interaction_prompt_key: Option<&'static str>,
     pub selectable: bool,
 }
 
@@ -972,6 +1029,16 @@ pub struct CombatPresentationSnapshot {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct WorldDropProjection {
+    pub drop_id: String,
+    pub item_id: String,
+    pub quantity: u32,
+    pub x: i32,
+    pub y: i32,
+    pub icon_path: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct WorldProjection {
     pub mode: WorldMode,
     pub visual_tick: u64,
@@ -979,6 +1046,7 @@ pub struct WorldProjection {
     pub authority_scope: &'static str,
     pub entities: Vec<WorldEntityProjection>,
     pub selected_entity_id: Option<String>,
+    pub drops: Vec<WorldDropProjection>,
     pub combat_presentations: Vec<CombatPresentationSnapshot>,
 }
 
@@ -1014,9 +1082,14 @@ pub struct MonsterDropSnapshot {
 pub struct MonsterSnapshot {
     pub entity_id: String,
     pub monster_id: String,
+    pub source_index: u32,
     pub asset_bundle_id: String,
     pub hp: u64,
     pub max_hp: u64,
+    pub damage: u64,
+    pub armor: u64,
+    pub experience: u64,
+    pub gold: u64,
     pub x: i32,
     pub y: i32,
     pub action_state: String,
@@ -1088,9 +1161,14 @@ fn monster_world_snapshot(world: &MonsterWorldState) -> MonsterWorldSnapshot {
             .map(|monster| MonsterSnapshot {
                 entity_id: monster.entity_id.clone(),
                 monster_id: monster.monster_id.clone(),
+                source_index: monster.source_index,
                 asset_bundle_id: monster.asset_bundle_id.clone(),
                 hp: monster.hp,
                 max_hp: monster.max_hp,
+                damage: monster.damage,
+                armor: monster.armor,
+                experience: monster.experience,
+                gold: monster.gold,
                 x: monster.x,
                 y: monster.y,
                 action_state: monster_action_name(monster.action_state).to_owned(),
@@ -1118,6 +1196,7 @@ pub struct OriginalFlowSession {
     combat_snapshot: WorldSnapshot,
     selected_entity_id: Option<String>,
     visual_tick: u64,
+    simulation_remainder_ns: u64,
     buildings: DurableBuildingState,
     hunter_roster: DurableHunterRosterState,
     product_services: DurableProductServiceState,
@@ -1169,6 +1248,32 @@ impl OriginalFlowSession {
         if state.schema_version < 11 {
             state.hunter_roster.upgrade_legacy_capacity();
         }
+        // Older runtime builds accidentally copied collected gold drops into the
+        // material inventory after already crediting the Hunter wallet.
+        for hunter in state.hunter_roster.hunters.iter_mut().chain(
+            state
+                .hunter_roster
+                .waiting_queue
+                .iter_mut()
+                .map(|waiting| &mut waiting.hunter),
+        ) {
+            hunter.hunt.loot.retain(|loot| loot.item_id != "gold");
+            if hunter.hunt.status == "returning_for_infirmary" && hunter.hunt.zone_id.is_none() {
+                hunter.hunt.status = "idle".to_owned();
+                hunter.profile.action_state = "idle".to_owned();
+                hunter.profile.animation_name = "hunter_stay".to_owned();
+            }
+            let incompatible_or_terminal_enhancement =
+                hunter.hunt.gear_enhancement.as_ref().is_some_and(|task| {
+                    task.workflow_version != GEAR_ENHANCEMENT_WORKFLOW_VERSION
+                        || enhancement_task_terminal(task)
+                });
+            let orphaned_enhancement_action = hunter.hunt.gear_enhancement.is_none()
+                && is_enhancement_action_state(&hunter.profile.action_state);
+            if incompatible_or_terminal_enhancement || orphaned_enhancement_action {
+                release_hunter_from_enhancement(hunter);
+            }
+        }
         if let Some(legacy) = state.legacy_infirmary.take() {
             if state.hunter_roster.hunters.is_empty() {
                 state.hunter_roster.roster_resolved = legacy.roster_resolved;
@@ -1191,11 +1296,12 @@ impl OriginalFlowSession {
                 }));
         }
         let monster_densities = state.monster_field_config.normalized_densities();
-        let monster_world = MonsterWorldState::with_densities(
+        let mut monster_world = MonsterWorldState::with_densities(
             monster_densities
                 .iter()
                 .map(|density| (density.map_id.as_str(), density.density_level)),
         );
+        monster_world.restore_hunter_runtime(&state.hunter_roster, state.hunter_world_runtime);
         let simulation = Simulation::from_state(seed, state.migration_fixture_combat);
         let combat_snapshot = simulation.snapshot();
         Self {
@@ -1204,10 +1310,10 @@ impl OriginalFlowSession {
             combat_snapshot,
             selected_entity_id: None,
             visual_tick: 0,
+            simulation_remainder_ns: 0,
             buildings: state.buildings,
             hunter_roster: state.hunter_roster,
             product_services: state.product_services,
-            // Monster actors, combat state, and unclaimed drops are ephemeral runtime data.
             monster_world,
             building_content,
         }
@@ -1238,39 +1344,157 @@ impl OriginalFlowSession {
                 legacy_map_id: None,
                 legacy_density_level: None,
             },
+            hunter_world_runtime: self.monster_world.hunters.clone(),
             legacy_infirmary: None,
         }
     }
 
     pub fn advance_simulation_tick(&mut self) -> Option<OriginalFlowTickResult> {
+        self.advance_simulation_step(100_000_000)
+    }
+
+    /// Advances the deterministic 10 Hz gameplay domain using scheduler time.
+    /// Network cadence may vary without changing movement, combat, or cooldown speed.
+    pub fn advance_simulation_step(&mut self, elapsed_ns: u64) -> Option<OriginalFlowTickResult> {
         if matches!(
             self.state.screen,
             OriginalScreen::Boot | OriginalScreen::HunterRoster
         ) {
             return None;
         }
-        if self.state.screen == OriginalScreen::Field {
-            self.combat_snapshot = self.simulation.step();
+        const DOMAIN_STEP_NS: u64 = 100_000_000;
+        self.simulation_remainder_ns = self.simulation_remainder_ns.saturating_add(elapsed_ns);
+        let step_count = self.simulation_remainder_ns / DOMAIN_STEP_NS;
+        self.simulation_remainder_ns %= DOMAIN_STEP_NS;
+        if step_count == 0 {
+            return None;
         }
-        self.refresh_skill_cooldowns(200);
-        self.visual_tick = self.visual_tick.wrapping_add(1);
-        let navigation_obstacles =
-            town_navigation_obstacles(&self.buildings.buildings, &self.building_content.catalog);
-        let operations = self
-            .monster_world
-            .tick_with_obstacles(&mut self.hunter_roster, &navigation_obstacles);
-        self.advance_legacy_hunter_hunts(1);
+
+        let mut operations = Vec::new();
+        for _ in 0..step_count {
+            operations.extend(self.advance_domain_tick());
+        }
         Some(OriginalFlowTickResult {
             world: self.world_projection(),
             simulation_tick: self.monster_world.tick.max(self.combat_snapshot.tick),
-            operations: if self.state.screen == OriginalScreen::Field {
-                let mut combined = self.simulation.drain_operations();
-                combined.extend(operations);
-                combined
-            } else {
-                operations
-            },
+            operations,
         })
+    }
+
+    fn advance_domain_tick(&mut self) -> Vec<PendingOperation> {
+        if self.state.screen == OriginalScreen::Field {
+            self.combat_snapshot = self.simulation.step();
+        }
+        self.refresh_skill_cooldowns(100);
+        for hunter in &mut self.hunter_roster.hunters {
+            hunter.hunt.healing_potion_cooldown_ms = hunter
+                .hunt
+                .healing_potion_cooldown_ms
+                .saturating_sub(100);
+        }
+        self.auto_cast_ready_hunter_skills();
+        self.visual_tick = self.visual_tick.wrapping_add(1);
+        let navigation_obstacles =
+            town_navigation_obstacles(&self.buildings.buildings, &self.building_content.catalog);
+        self.apply_autonomous_hunter_healing_policy();
+        for hunter in &mut self.hunter_roster.hunters {
+            let terminal_enhancement = hunter
+                .hunt
+                .gear_enhancement
+                .as_ref()
+                .is_some_and(enhancement_task_terminal);
+            if terminal_enhancement {
+                release_hunter_from_enhancement(hunter);
+            }
+        }
+        let mut operations = self
+            .monster_world
+            .tick_with_obstacles(&mut self.hunter_roster, &navigation_obstacles);
+        self.advance_legacy_hunter_hunts(1);
+        self.auto_sell_requested_hunter_loot();
+        if self.state.screen == OriginalScreen::Field {
+            let mut combined = self.simulation.drain_operations();
+            combined.append(&mut operations);
+            combined
+        } else {
+            operations
+        }
+    }
+
+    /// Applies the explicit rebuild healing policy at the simulation boundary.
+    ///
+    /// The original package exposes potion slots and HP/service methods, but no
+    /// captured threshold or autonomous decision body. Until that evidence is
+    /// recovered, the product rule is: below 10% HP, consume a Healing Potion
+    /// first; when none is owned, leave the hunting region and return to town for
+    /// the Infirmary route. This mutation is server-owned and deterministic.
+    fn apply_autonomous_hunter_healing_policy(&mut self) {
+        const HEALING_POTION_VALUES: [u64; 8] = [
+            4_000, 12_000, 32_400, 77_800, 163_300, 294_000, 1_562_500, 9_375_000,
+        ];
+
+        for hunter in &mut self.hunter_roster.hunters {
+            if hunter.current_hp == 0
+                || hunter.max_hp == 0
+                || u128::from(hunter.current_hp) * 100 >= u128::from(hunter.max_hp) * 10
+                || hunter.hunt.gear_enhancement.is_some()
+                || hunter.hunt.healing_potion_cooldown_ms > 0
+                || self
+                    .product_services
+                    .visits
+                    .iter()
+                    .any(|visit| visit.hunter_id == hunter.hunter_id)
+            {
+                continue;
+            }
+
+            let potion = hunter
+                .owned_items
+                .iter_mut()
+                .filter_map(|item| {
+                    let prefix = "recipe:consumable:0:level:";
+                    let level = item
+                        .product_id
+                        .strip_prefix(prefix)?
+                        .parse::<usize>()
+                        .ok()?;
+                    (level < HEALING_POTION_VALUES.len() && item.quantity > 0)
+                        .then_some((level, item))
+                })
+                .max_by_key(|(level, _)| *level);
+            if let Some((level, item)) = potion {
+                item.quantity = item.quantity.saturating_sub(1);
+                hunter.current_hp = hunter
+                    .current_hp
+                    .saturating_add(HEALING_POTION_VALUES[level])
+                    .min(hunter.max_hp);
+                hunter.profile.action_state = "using_healing_potion".to_owned();
+                hunter.profile.animation_name = "hunter_stay".to_owned();
+                hunter.hunt.healing_potion_cooldown_ms = 20_000;
+                continue;
+            }
+
+            // No consumable is available. Unassign the farm region so the world
+            // agent returns to town; service stock/payment remains authoritative
+            // and can be started by the Infirmary flow once it arrives.
+            let leaving_field = hunter.hunt.zone_id.take().is_some();
+            // The exact autonomous service-selection body is still unresolved.
+            // Keep the Hunter commandable instead of persisting a terminal state
+            // that no subsystem can complete.
+            hunter.hunt.status = "idle".to_owned();
+            hunter.profile.action_state = if leaving_field {
+                "returning_for_infirmary"
+            } else {
+                "idle"
+            }
+            .to_owned();
+            hunter.profile.animation_name = if leaving_field {
+                "hunter_walk"
+            } else {
+                "hunter_stay"
+            }
+            .to_owned();
+        }
     }
 
     pub fn advance_visual_tick(&mut self) -> Option<OriginalFlowSnapshot> {
@@ -1411,6 +1635,10 @@ impl OriginalFlowSession {
     ) -> Option<OriginalFlowCommandResult> {
         let previous_state = self.durable_state();
         let message = match command {
+            ClientCommand::SubmitFarmReport { .. } => self.rejected(
+                "submit_farm_report",
+                "farm reports are handled by the queue ingress",
+            ),
             ClientCommand::RequestResync => return None,
             ClientCommand::StartBuildingService {
                 instance_id,
@@ -1504,24 +1732,43 @@ impl OriginalFlowSession {
                 hunter_id,
                 skill_id,
                 target_entity_id,
-            } => self.use_hunter_skill(
-                command_id,
-                hunter_id,
-                &skill_id,
-                target_entity_id.as_deref(),
-            ),
+            } => self
+                .use_hunter_skill(
+                    command_id,
+                    hunter_id,
+                    &skill_id,
+                    target_entity_id.as_deref(),
+                    true,
+                )
+                .expect("player skill commands always produce a response"),
             ClientCommand::BanishHunter { hunter_id } => self.banish_hunter(command_id, hunter_id),
             ClientCommand::EquipHunterItem { hunter_id, item_id } => {
                 self.equip_fixture_item(command_id, hunter_id, item_id)
             }
+            ClientCommand::StartHunterEnhancement { hunter_id } => {
+                self.start_hunter_enhancement(command_id, hunter_id)
+            }
+            ClientCommand::EnhanceHunterGear {
+                hunter_id,
+                gear_instance_id,
+                mode,
+                optional_material_ids,
+            } => self.enhance_hunter_gear(
+                command_id,
+                hunter_id,
+                gear_instance_id,
+                &mode,
+                &optional_material_ids,
+            ),
             ClientCommand::ClaimQuestReward { .. } => {
                 self.binding_blocked("claim_quest_reward", &QUEST_BLOCKERS)
             }
             ClientCommand::OpenShop { .. } => self.binding_blocked("open_shop", &SHOP_BLOCKERS),
             ClientCommand::PurchaseShopItem {
+                hunter_id,
                 shop_id,
                 product_id,
-            } => self.purchase_shop_item(&shop_id, &product_id),
+            } => self.purchase_shop_item(command_id, hunter_id, &shop_id, &product_id),
             ClientCommand::SellShopItem {
                 shop_id,
                 product_id,
@@ -1639,7 +1886,7 @@ impl OriginalFlowSession {
                     .item(&stock.id)
                     .and_then(|item| item.localized_names.get("en").cloned())
                     .unwrap_or_else(|| stock.id.clone()),
-                icon: material_icon_path(&stock.id).unwrap_or_default().to_owned(),
+                icon: material_icon_path(&stock.id).unwrap_or_default(),
                 town_quantity: stock.town_quantity,
                 hunter_quantity: stock.hunter_quantity,
                 requested: stock.requested,
@@ -1663,10 +1910,9 @@ impl OriginalFlowSession {
                     let mut gear_buckets = HashMap::new();
                     for product in content.gameplay.products.values() {
                         let gear_route = gear_product_route(&content.gameplay, product);
+                        let sale_building_id = product_sale_building_id(&content.gameplay, product);
                         let is_native_product = product.building_id.as_ref() == Some(&building_id);
-                        let is_sale_product = gear_route
-                            .as_ref()
-                            .is_some_and(|route| route.sale_building_id == building_id);
+                        let is_sale_product = sale_building_id.as_ref() == Some(&building_id);
                         if !is_native_product && !is_sale_product {
                             continue;
                         }
@@ -1684,15 +1930,16 @@ impl OriginalFlowSession {
                             }
                         }
 
-                        let stock_building = gear_route
+                        let stock_building = sale_building_id
                             .as_ref()
-                            .and_then(|route| {
-                                self.buildings.buildings.iter().find(|candidate| {
-                                    candidate.id == route.sale_building_id.as_str()
-                                })
+                            .and_then(|sale_building_id| {
+                                self.buildings
+                                    .buildings
+                                    .iter()
+                                    .find(|candidate| candidate.id == sale_building_id.as_str())
                             })
                             .or(building);
-                        let stock = stock_building.map_or(0, |stock_building| {
+                        let stored_stock = stock_building.map_or(0, |stock_building| {
                             self.buildings
                                 .product_stocks
                                 .iter()
@@ -1702,9 +1949,10 @@ impl OriginalFlowSession {
                                 })
                                 .map_or(0, |stock| stock.quantity)
                         });
-                        if is_sale_product && stock == 0 {
+                        if is_sale_product && stored_stock == 0 {
                             continue;
                         }
+                        let stock = stored_stock;
                         let product_name = product_display_name(&product.product_id)
                             .map(str::to_owned)
                             .or_else(|| {
@@ -1734,6 +1982,13 @@ impl OriginalFlowSession {
                             .and_then(|level| level.production_slots)
                             .or_else(|| capacity_for_level(stock_building_id.as_str(), stock_level))
                             .unwrap_or(0);
+                        // Preserve the service route when a legacy DB row has the
+                        // optional service payload missing but still has recovered
+                        // conversion inputs under a service building.
+                        let service_product = product.service.is_some()
+                            || (ServiceEffectKind::for_building(stock_building_id.as_str())
+                                .is_some()
+                                && !product.conversion_options.is_empty());
                         recipes.push(ShopRecipeSnapshot {
                             id: product.product_id.clone(),
                             shop_id: definition.id.to_string(),
@@ -1746,9 +2001,7 @@ impl OriginalFlowSession {
                                 .iter()
                                 .map(|cost| (cost.resource_id.clone(), cost.quantity, 1))
                                 .chain(
-                                    product
-                                        .service
-                                        .is_some()
+                                    service_product
                                         .then(|| {
                                             product.conversion_options.iter().map(|option| {
                                                 (
@@ -1793,14 +2046,19 @@ impl OriginalFlowSession {
                                 .collect(),
                             stock,
                             sale_price: product.service.as_ref().map_or_else(
-                                || product.sale_price.first().map_or(0, |price| price.quantity),
+                                || {
+                                    product
+                                        .sale_price
+                                        .first()
+                                        .map(|price| price.quantity)
+                                        .or_else(|| {
+                                            consumable_purchase_price(&content.gameplay, product)
+                                        })
+                                        .unwrap_or(0)
+                                },
                                 |service| service.use_money,
                             ),
-                            kind: if product.service.is_some() {
-                                "service"
-                            } else {
-                                "craft"
-                            },
+                            kind: if service_product { "service" } else { "craft" },
                             required_level: gear_route.as_ref().map_or_else(
                                 || {
                                     product
@@ -2028,10 +2286,7 @@ impl OriginalFlowSession {
         if difficulty >= building.level {
             return self.rejected("set_material_request", "material_difficulty_locked");
         }
-        // The recovered BuildingPop exposes a per-item Request/Cancel toggle, not a requested
-        // quantity editor. Keep the wire field for protocol compatibility but accept only the
-        // active-reservation sentinel.
-        if quantity != ACTIVE_MATERIAL_REQUEST {
+        if quantity == 0 {
             return self.rejected("set_material_request", "material_quantity_invalid");
         }
         let Some(authoritative_price) = self
@@ -2048,14 +2303,14 @@ impl OriginalFlowSession {
             .iter_mut()
             .find(|stock| stock.id == material_id)
         {
-            stock.requested = ACTIVE_MATERIAL_REQUEST;
+            stock.requested = quantity;
             stock.unit_price = authoritative_price;
         } else {
             self.buildings.material_stocks.push(DurableMaterialStock {
                 id: material_id.to_owned(),
                 town_quantity: 0,
                 hunter_quantity: 0,
-                requested: ACTIVE_MATERIAL_REQUEST,
+                requested: quantity,
                 unit_price: authoritative_price,
             });
             self.buildings
@@ -2128,10 +2383,16 @@ impl OriginalFlowSession {
         if product.building_id.as_ref() != Some(&building_id) {
             return self.rejected("craft_shop_item", "recipe_building_mismatch");
         }
+        // A partially migrated service row may have conversion options but no
+        // decoded service payload. The building route still identifies it as a
+        // service product, which must remain uncapped.
+        let service_product = product.service.is_some()
+            || (ServiceEffectKind::for_building(building_id.as_str()).is_some()
+                && !product.conversion_options.is_empty());
         let gear_route = gear_product_route(&self.building_content.gameplay, product);
         if gear_route
             .as_ref()
-            .is_some_and(|route| route.rating >= u16::from(building.level))
+            .is_some_and(|route| route.difficulty_group > u16::from(building.level))
         {
             return self.rejected("craft_shop_item", "product_level_locked");
         }
@@ -2144,15 +2405,16 @@ impl OriginalFlowSession {
                     || capability.kind == "potion-crafting"
                     || capability.kind == "accessory-crafting"
             });
-        if !crafting_capability && product.service.is_none() {
+        if !crafting_capability && !service_product {
             return self.rejected("craft_shop_item", "building_capability_mismatch");
         }
-        let stock_building = if let Some(route) = &gear_route {
+        let sale_building_id = product_sale_building_id(&self.building_content.gameplay, product);
+        let stock_building = if let Some(sale_building_id) = &sale_building_id {
             let Some(sale_building) = self
                 .buildings
                 .buildings
                 .iter()
-                .find(|candidate| candidate.id == route.sale_building_id.as_str())
+                .find(|candidate| candidate.id == sale_building_id.as_str())
             else {
                 return self.rejected("craft_shop_item", "sale_building_instance_unknown");
             };
@@ -2179,10 +2441,13 @@ impl OriginalFlowSession {
             .iter()
             .filter(|stock| stock.building_instance_id == stock_building_instance_id)
             .fold(0_u32, |total, stock| total.saturating_add(stock.quantity));
-        if capacity > 0 && stocked.saturating_add(quantity) > capacity {
+        // Service products are consumed by the service flow and are not
+        // constrained by the building's display-stock cap. Crafted gear and
+        // sale inventory still use the authoritative capacity check.
+        if !service_product && capacity > 0 && stocked.saturating_add(quantity) > capacity {
             return self.rejected("craft_shop_item", "product_capacity_exceeded");
         }
-        let costs = if product.service.is_some() {
+        let costs = if service_product {
             let Some(material_id) = material_id else {
                 return self.rejected("craft_shop_item", "material_selection_required");
             };
@@ -2489,7 +2754,13 @@ impl OriginalFlowSession {
         settle_returning_hunters(&mut self.buildings);
     }
 
-    fn purchase_shop_item(&mut self, shop_id: &str, product_id: &str) -> ServerMessage {
+    fn purchase_shop_item(
+        &mut self,
+        command_id: Uuid,
+        hunter_id: u32,
+        shop_id: &str,
+        product_id: &str,
+    ) -> ServerMessage {
         if self.state.screen != OriginalScreen::Village {
             return self.rejected("purchase_shop_item", "village_unavailable");
         }
@@ -2499,10 +2770,9 @@ impl OriginalFlowSession {
         let Some(product) = self.building_content.gameplay.product(product_id) else {
             return self.rejected("purchase_shop_item", "recipe_unknown");
         };
-        let Some(route) = gear_product_route(&self.building_content.gameplay, product) else {
-            return self.rejected("purchase_shop_item", "recipe_building_mismatch");
-        };
-        if route.sale_building_id != building_id {
+        let route = gear_product_route(&self.building_content.gameplay, product);
+        let sale_building_id = product_sale_building_id(&self.building_content.gameplay, product);
+        if sale_building_id.as_ref() != Some(&building_id) {
             return self.rejected("purchase_shop_item", "recipe_building_mismatch");
         }
         let Some(building) = self
@@ -2513,7 +2783,10 @@ impl OriginalFlowSession {
         else {
             return self.rejected("purchase_shop_item", "building_instance_unknown");
         };
-        if route.rating >= u16::from(building.level) {
+        if route
+            .as_ref()
+            .is_some_and(|route| route.difficulty_group > u16::from(building.level))
+        {
             return self.rejected("purchase_shop_item", "product_level_locked");
         }
         let building_instance_id = building.instance_id.clone();
@@ -2525,19 +2798,67 @@ impl OriginalFlowSession {
         if stock.quantity == 0 {
             return self.rejected("purchase_shop_item", "product_stock_empty");
         }
-        let price = product
-            .sale_price
-            .first()
-            .map_or(0, |amount| amount.quantity);
+        let price = route
+            .as_ref()
+            .and_then(|_| product.sale_price.first().map(|amount| amount.quantity))
+            .or_else(|| consumable_purchase_price(&self.building_content.gameplay, product))
+            .unwrap_or(0);
         if price == 0 {
             return self.rejected("purchase_shop_item", "sale_price_unresolved");
         }
-        let _ = stock;
-        // A hunter sale must debit a concrete hunter wallet and hand an owned
-        // gear instance to that hunter atomically. The current command carries
-        // neither a buyer nor authoritative hunter economy state, so settling
-        // town gold here would create value from nothing.
-        self.binding_blocked("purchase_shop_item", &GEAR_SALE_BLOCKERS)
+        let Some(hunter) = self
+            .hunter_roster
+            .hunters
+            .iter_mut()
+            .find(|hunter| hunter.hunter_id == hunter_id)
+        else {
+            return self.rejected("purchase_shop_item", "hunter_unknown");
+        };
+        if !hunter.hunt.is_idle() {
+            return self.rejected("purchase_shop_item", "hunter_not_in_town");
+        }
+        if hunter.gold < price {
+            return self.rejected("purchase_shop_item", "insufficient_hunter_gold");
+        }
+        let key = format!("purchase_shop_item:{hunter_id}:{shop_id}:{product_id}");
+        if command_id != Uuid::nil() {
+            if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
+                return if previous == &key {
+                    self.accepted("purchase_shop_item")
+                } else {
+                    self.rejected("purchase_shop_item", "command_id_conflict")
+                };
+            }
+        }
+
+        hunter.gold -= price;
+        stock.quantity -= 1;
+        self.buildings.town_gold = self.buildings.town_gold.saturating_add(price);
+        if let Some(owned) = hunter
+            .owned_items
+            .iter_mut()
+            .find(|owned| owned.product_id == product_id)
+        {
+            owned.quantity = owned.quantity.saturating_add(1);
+        } else {
+            hunter
+                .owned_items
+                .push(super::hunter_roster::DurableHunterOwnedItem {
+                    product_id: product_id.to_owned(),
+                    quantity: 1,
+                    enhancement_level: None,
+                    gear_instance_id: (command_id != Uuid::nil() && route.is_some())
+                        .then_some(command_id),
+                });
+        }
+        if route.is_some() {
+            self.buildings.hunter_equipment_purchases =
+                self.buildings.hunter_equipment_purchases.saturating_add(1);
+        }
+        if command_id != Uuid::nil() {
+            self.hunter_roster.hunt_commands.insert(command_id, key);
+        }
+        self.accepted("purchase_shop_item")
     }
 
     fn sell_shop_item(&mut self, shop_id: &str, product_id: &str) -> ServerMessage {
@@ -2555,6 +2876,203 @@ impl OriginalFlowSession {
                 "accessory-display-and-sale",
             ],
         )
+    }
+
+    fn start_hunter_enhancement(&mut self, command_id: Uuid, hunter_id: u32) -> ServerMessage {
+        const INTENT: &str = "start_hunter_enhancement";
+        if self.state.screen != OriginalScreen::Village {
+            return self.rejected(INTENT, "village_unavailable");
+        }
+        let key = format!("{INTENT}:{hunter_id}");
+        if command_id != Uuid::nil() {
+            if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
+                return if previous == &key {
+                    self.accepted(INTENT)
+                } else {
+                    self.rejected(INTENT, "command_id_conflict")
+                };
+            }
+        }
+        let Some(building) = self
+            .buildings
+            .buildings
+            .iter()
+            .find(|building| building.id == "build_15")
+        else {
+            return self.rejected(INTENT, "enhancement_forge_unavailable");
+        };
+        let Some(definition) = BaseBuildingId::parse("build_15")
+            .ok()
+            .and_then(|building_id| self.building_content.catalog.base(&building_id))
+        else {
+            return self.rejected(INTENT, "enhancement_forge_definition_unavailable");
+        };
+        let Some((grid_width, grid_height)) = building_grid_size(definition) else {
+            return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
+        };
+        let Ok(grid_width) = i32::try_from(grid_width) else {
+            return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
+        };
+        let Ok(grid_height) = i32::try_from(grid_height) else {
+            return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
+        };
+        let interaction_x = TOWN_NAV_ORIGIN_X
+            + building.grid_x * TOWN_NAV_CELL_SIZE
+            + grid_width * TOWN_NAV_CELL_SIZE / 2;
+        let interaction_y =
+            TOWN_NAV_ORIGIN_Y + (building.grid_y + grid_height + 1) * TOWN_NAV_CELL_SIZE;
+        let building_instance_id = building.instance_id.clone();
+        let Some(hunter) = self
+            .hunter_roster
+            .hunters
+            .iter_mut()
+            .find(|hunter| hunter.hunter_id == hunter_id)
+        else {
+            return self.rejected(INTENT, "hunter_unknown");
+        };
+        if !hunter.hunt.is_idle() {
+            return self.rejected(INTENT, "hunter_not_in_town");
+        }
+        if hunter.current_hp == 0 {
+            return self.rejected(INTENT, "hunter_unavailable");
+        }
+        if hunter.hunt.gear_enhancement.is_some() {
+            return self.rejected(INTENT, "enhancement_task_already_active");
+        }
+        hunter.hunt.gear_enhancement = Some(DurableGearEnhancementTask {
+            workflow_version: GEAR_ENHANCEMENT_WORKFLOW_VERSION,
+            building_instance_id,
+            status: GearEnhancementTaskStatus::Traveling,
+            interaction_x,
+            interaction_y,
+            blockers: GEAR_ENHANCEMENT_BLOCKERS
+                .iter()
+                .map(|blocker| (*blocker).to_owned())
+                .collect(),
+            ..DurableGearEnhancementTask::default()
+        });
+        hunter.profile.action_state = "traveling_to_enhancement_forge".to_owned();
+        hunter.profile.animation_name = "hunter_walk".to_owned();
+        if command_id != Uuid::nil() {
+            self.hunter_roster.hunt_commands.insert(command_id, key);
+        }
+        self.accepted(INTENT)
+    }
+
+    fn enhance_hunter_gear(
+        &mut self,
+        command_id: Uuid,
+        hunter_id: u32,
+        gear_instance_id: Uuid,
+        mode: &str,
+        optional_material_ids: &[String],
+    ) -> ServerMessage {
+        const INTENT: &str = "enhance_hunter_gear";
+        if self.state.screen != OriginalScreen::Village {
+            return self.rejected(INTENT, "village_unavailable");
+        }
+        let target_level = match mode {
+            "single" => None,
+            "to_10" => Some(10),
+            "to_15" => Some(15),
+            "to_20" => Some(MAX_GEAR_ENHANCEMENT_LEVEL),
+            _ => return self.rejected(INTENT, "enhancement_mode_invalid"),
+        };
+        let mut unique_materials = HashSet::new();
+        for material_id in optional_material_ids {
+            if !unique_materials.insert(material_id.as_str()) {
+                return self.rejected(INTENT, "enhancement_optional_material_duplicated");
+            }
+            if self.building_content.gameplay.item(material_id).is_none() {
+                return self.rejected(INTENT, "enhancement_optional_material_unknown");
+            }
+        }
+        let key = format!(
+            "{INTENT}:{hunter_id}:{gear_instance_id}:{mode}:{}",
+            optional_material_ids.join(",")
+        );
+        if command_id != Uuid::nil() {
+            if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
+                return if previous == &key {
+                    self.binding_blocked(INTENT, &GEAR_ENHANCEMENT_BLOCKERS)
+                } else {
+                    self.rejected(INTENT, "command_id_conflict")
+                };
+            }
+        }
+        let Some(hunter_index) = self
+            .hunter_roster
+            .hunters
+            .iter()
+            .position(|hunter| hunter.hunter_id == hunter_id)
+        else {
+            return self.rejected(INTENT, "hunter_unknown");
+        };
+        let hunter = &self.hunter_roster.hunters[hunter_index];
+        if !hunter.hunt.is_idle() {
+            return self.rejected(INTENT, "hunter_not_in_town");
+        }
+        let Some(task) = hunter.hunt.gear_enhancement.as_ref() else {
+            return self.rejected(INTENT, "enhancement_visit_not_started");
+        };
+        if !matches!(
+            task.status,
+            GearEnhancementTaskStatus::WaitingForInteraction
+                | GearEnhancementTaskStatus::Configuring
+        ) {
+            return self.rejected(INTENT, "hunter_not_ready_at_enhancement_forge");
+        }
+        let Some(owned) = hunter
+            .owned_items
+            .iter()
+            .find(|owned| owned.gear_instance_id == Some(gear_instance_id) && owned.quantity > 0)
+        else {
+            return self.rejected(INTENT, "gear_instance_not_owned");
+        };
+        let Some(product) = self.building_content.gameplay.product(&owned.product_id) else {
+            return self.rejected(INTENT, "gear_definition_unavailable");
+        };
+        if gear_product_route(&self.building_content.gameplay, product).is_none() {
+            return self.rejected(INTENT, "product_is_not_gear");
+        }
+        if owned
+            .enhancement_level
+            .is_some_and(|level| level >= MAX_GEAR_ENHANCEMENT_LEVEL)
+        {
+            return self.rejected(INTENT, "gear_enhancement_cap_reached");
+        }
+        let product_id = owned.product_id.clone();
+        let current_level = owned.enhancement_level;
+        let hunter = &mut self.hunter_roster.hunters[hunter_index];
+        let task = hunter
+            .hunt
+            .gear_enhancement
+            .as_mut()
+            .expect("enhancement task was validated above");
+        task.status = GearEnhancementTaskStatus::Configuring;
+        task.selected_gear_instance_id = Some(gear_instance_id);
+        task.selected_product_id = Some(product_id);
+        task.mode = Some(mode.to_owned());
+        task.target_level = target_level;
+        task.optional_material_ids = optional_material_ids.to_vec();
+        task.attempts.clear();
+        task.spent_gold = 0;
+        task.spent_materials.clear();
+        task.final_level = current_level;
+        task.stop_reason = Some("evidence_disabled".to_owned());
+        task.blockers = GEAR_ENHANCEMENT_BLOCKERS
+            .iter()
+            .map(|blocker| (*blocker).to_owned())
+            .collect();
+        hunter.profile.action_state = "configuring_enhancement".to_owned();
+        hunter.profile.animation_name = "hunter_stay".to_owned();
+        if command_id != Uuid::nil() {
+            self.hunter_roster.hunt_commands.insert(command_id, key);
+        }
+        // This is a terminal fail-closed result: no economy mutation occurred,
+        // so the Hunter must be released instead of remaining pinned to the forge.
+        release_hunter_from_enhancement(hunter);
+        self.binding_blocked(INTENT, &GEAR_ENHANCEMENT_BLOCKERS)
     }
 
     fn equip_fixture_item(
@@ -2850,19 +3368,22 @@ impl OriginalFlowSession {
         hunter_id: u32,
         skill_id: &str,
         target_entity_id: Option<&str>,
-    ) -> ServerMessage {
+        produce_response: bool,
+    ) -> Option<ServerMessage> {
         let key = format!("use_hunter_skill:{hunter_id}:{skill_id}");
         if command_id != Uuid::nil() {
             if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
                 return if previous == &key {
-                    self.accepted("use_hunter_skill")
+                    produce_response.then(|| self.accepted("use_hunter_skill"))
                 } else {
-                    self.rejected("use_hunter_skill", "command id was already used")
+                    produce_response
+                        .then(|| self.rejected("use_hunter_skill", "command id was already used"))
                 };
             }
         }
         let Some(definition) = basic_hunter_skill_definition(skill_id) else {
-            return self.rejected("use_hunter_skill", "skill definition is unavailable");
+            return produce_response
+                .then(|| self.rejected("use_hunter_skill", "skill definition is unavailable"));
         };
         let Some(hunter) = self
             .hunter_roster
@@ -2870,15 +3391,18 @@ impl OriginalFlowSession {
             .iter()
             .find(|hunter| hunter.hunter_id == hunter_id)
         else {
-            return self.rejected(
-                "use_hunter_skill",
-                "hunter is not in the active town roster",
-            );
+            return produce_response.then(|| {
+                self.rejected(
+                    "use_hunter_skill",
+                    "hunter is not in the active town roster",
+                )
+            });
         };
         if hunter.profile.class_id != definition.class_id
             || hunter.profile.visual_family != definition.class_family
         {
-            return self.rejected("use_hunter_skill", "skill is unavailable for hunter job");
+            return produce_response
+                .then(|| self.rejected("use_hunter_skill", "skill is unavailable for hunter job"));
         }
         let Some(skill) = hunter
             .profile
@@ -2886,10 +3410,20 @@ impl OriginalFlowSession {
             .iter()
             .find(|skill| skill.skill_id == skill_id)
         else {
-            return self.rejected("use_hunter_skill", "skill is not learned");
+            return produce_response
+                .then(|| self.rejected("use_hunter_skill", "skill is not learned"));
         };
         if !skill.ready || skill.cooldown_remaining_ms > 0 {
-            return self.rejected("use_hunter_skill", "skill is on cooldown");
+            return produce_response
+                .then(|| self.rejected("use_hunter_skill", "skill is on cooldown"));
+        }
+        if let Err(reason) = self.monster_world.validate_hunter_skill_effect(
+            &self.hunter_roster,
+            hunter_id,
+            skill_id,
+            target_entity_id,
+        ) {
+            return produce_response.then(|| self.rejected("use_hunter_skill", reason));
         }
         if let Err(reason) = self.monster_world.trigger_hunter_skill(
             hunter_id,
@@ -2897,7 +3431,13 @@ impl OriginalFlowSession {
             definition.class_family,
             definition.skill_id,
         ) {
-            return self.rejected("use_hunter_skill", reason);
+            return produce_response.then(|| self.rejected("use_hunter_skill", reason));
+        }
+        if let Err(reason) =
+            self.monster_world
+                .apply_hunter_skill_effect(&self.hunter_roster, hunter_id, skill_id)
+        {
+            return produce_response.then(|| self.rejected("use_hunter_skill", reason));
         }
         if let Some(hunter) = self
             .hunter_roster
@@ -2918,7 +3458,7 @@ impl OriginalFlowSession {
         if command_id != Uuid::nil() {
             self.hunter_roster.hunt_commands.insert(command_id, key);
         }
-        self.accepted("use_hunter_skill")
+        produce_response.then(|| self.accepted("use_hunter_skill"))
     }
 
     fn refresh_skill_cooldowns(&mut self, elapsed_ms: u64) {
@@ -2935,7 +3475,58 @@ impl OriginalFlowSession {
         }
     }
 
+    fn auto_cast_ready_hunter_skills(&mut self) {
+        let casts = self
+            .monster_world
+            .hunters
+            .iter()
+            .filter_map(|agent| {
+                if agent.action_state != HunterActionState::Attacking {
+                    return None;
+                }
+                let target = agent.target_monster_id.clone()?;
+                if agent.active_skill_id.is_some() || agent.region_id.is_none() {
+                    return None;
+                }
+                let hunter = self
+                    .hunter_roster
+                    .hunters
+                    .iter()
+                    .find(|hunter| hunter.hunter_id == agent.hunter_id)?;
+                let skill = hunter
+                    .profile
+                    .skills
+                    .iter()
+                    .find(|skill| skill.ready && skill.cooldown_remaining_ms == 0)?;
+                Some((agent.hunter_id, skill.skill_id.clone(), target))
+            })
+            .collect::<Vec<_>>();
+        for (hunter_id, skill_id, target) in casts {
+            let _ = self.use_hunter_skill(Uuid::nil(), hunter_id, &skill_id, Some(&target), false);
+        }
+    }
+
     fn sell_hunter_loot(&mut self, command_id: Uuid, hunter_id: u32) -> ServerMessage {
+        let requested_only = self
+            .hunter_roster
+            .hunters
+            .iter()
+            .find(|hunter| hunter.hunter_id == hunter_id)
+            .is_some_and(|hunter| {
+                hunter.hunt.status == "hunting"
+                    && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
+                        super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+                    })
+            });
+        self.sell_hunter_loot_internal(command_id, hunter_id, requested_only)
+    }
+
+    fn sell_hunter_loot_internal(
+        &mut self,
+        command_id: Uuid,
+        hunter_id: u32,
+        requested_only: bool,
+    ) -> ServerMessage {
         let key = format!("sell_hunter_loot:{hunter_id}");
         if command_id != Uuid::nil() {
             if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
@@ -2960,12 +3551,20 @@ impl OriginalFlowSession {
                 "hunter is not in the active town roster",
             );
         };
-        if !hunter.hunt.is_idle() {
+        let ordinary_field_auto_sale = requested_only
+            && hunter.hunt.status == "hunting"
+            && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
+                super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+            });
+        if !hunter.hunt.is_idle() && !ordinary_field_auto_sale {
             return self.rejected("sell_hunter_loot", "hunter must be idle to sell loot");
         }
         let mut sale_lines = BTreeMap::<String, u32>::new();
         for loot in &hunter.hunt.loot {
             if loot.quantity == 0 {
+                continue;
+            }
+            if loot.item_id == "gold" {
                 continue;
             }
             if !loot.item_id.starts_with("material:") {
@@ -2974,13 +3573,29 @@ impl OriginalFlowSession {
             let Some(item) = self.building_content.gameplay.item(&loot.item_id) else {
                 return self.rejected("sell_hunter_loot", "loot definition is unavailable");
             };
+            let already_selected = sale_lines.get(&loot.item_id).copied().unwrap_or(0);
+            let sale_quantity = if requested_only {
+                let remaining_request = self
+                    .buildings
+                    .material_stocks
+                    .iter()
+                    .find(|stock| stock.id == loot.item_id)
+                    .map_or(0, |stock| stock.requested)
+                    .saturating_sub(already_selected);
+                loot.quantity.min(remaining_request)
+            } else {
+                loot.quantity
+            };
+            if sale_quantity == 0 {
+                continue;
+            }
             if item.item_type.as_deref() != Some("material")
                 || item.town_pays_hunter_gold_per_unit.is_none()
             {
                 return self.rejected("sell_hunter_loot", "loot price is unavailable");
             }
             let quantity = sale_lines.entry(loot.item_id.clone()).or_default();
-            let Some(total) = quantity.checked_add(loot.quantity) else {
+            let Some(total) = quantity.checked_add(sale_quantity) else {
                 return self.rejected("sell_hunter_loot", "loot quantity overflow");
             };
             *quantity = total;
@@ -2990,6 +3605,7 @@ impl OriginalFlowSession {
         }
         let mut priced_lines = Vec::with_capacity(sale_lines.len());
         let mut total_gold = 0_u64;
+        let mut available_town_gold = self.buildings.town_gold;
         for (material_id, quantity) in sale_lines {
             let Some(unit_price) = self
                 .building_content
@@ -2999,6 +3615,14 @@ impl OriginalFlowSession {
             else {
                 return self.rejected("sell_hunter_loot", "loot price is unavailable");
             };
+            if unit_price == 0 {
+                return self.rejected("sell_hunter_loot", "loot price is unavailable");
+            }
+            let affordable_quantity = available_town_gold / unit_price;
+            let quantity = quantity.min(u32::try_from(affordable_quantity).unwrap_or(u32::MAX));
+            if quantity == 0 {
+                continue;
+            }
             let Some(line_gold) = u64::from(quantity).checked_mul(unit_price) else {
                 return self.rejected("sell_hunter_loot", "loot price overflow");
             };
@@ -3006,11 +3630,14 @@ impl OriginalFlowSession {
                 return self.rejected("sell_hunter_loot", "loot price overflow");
             };
             total_gold = next_total;
+            available_town_gold -= line_gold;
             priced_lines.push((material_id, quantity, unit_price, line_gold));
         }
-        if self.buildings.town_gold < total_gold {
+        if priced_lines.is_empty() {
             return self.rejected("sell_hunter_loot", "town wallet cannot afford loot");
         }
+        let settlement_field_trip_id = self.buildings.field_trip_id.max(1);
+        self.buildings.field_trip_id = settlement_field_trip_id;
         self.buildings.town_gold -= total_gold;
         for (material_id, quantity, unit_price, _) in &priced_lines {
             if let Some(stock) = self
@@ -3020,6 +3647,7 @@ impl OriginalFlowSession {
                 .find(|stock| stock.id == *material_id)
             {
                 stock.town_quantity = stock.town_quantity.saturating_add(*quantity);
+                stock.requested = stock.requested.saturating_sub(*quantity);
                 stock.unit_price = *unit_price;
             } else {
                 self.buildings.material_stocks.push(DurableMaterialStock {
@@ -3040,7 +3668,18 @@ impl OriginalFlowSession {
             unreachable!()
         };
         hunter.gold = hunter.gold.saturating_add(total_gold);
-        hunter.hunt.loot.clear();
+        let mut sold_quantities = priced_lines
+            .iter()
+            .map(|(material_id, quantity, _, _)| (material_id.clone(), *quantity))
+            .collect::<BTreeMap<_, _>>();
+        for loot in &mut hunter.hunt.loot {
+            if let Some(sold) = sold_quantities.get_mut(&loot.item_id) {
+                let deducted = loot.quantity.min(*sold);
+                loot.quantity -= deducted;
+                *sold -= deducted;
+            }
+        }
+        hunter.hunt.loot.retain(|loot| loot.quantity > 0);
         for (line_index, (material_id, quantity, unit_price, line_gold)) in
             priced_lines.into_iter().enumerate()
         {
@@ -3053,7 +3692,7 @@ impl OriginalFlowSession {
                 .trade_settlements
                 .push(DurableTradeSettlement {
                     settlement_id,
-                    field_trip_id: self.buildings.field_trip_id,
+                    field_trip_id: settlement_field_trip_id,
                     material_id,
                     quantity,
                     unit_price,
@@ -3066,6 +3705,84 @@ impl OriginalFlowSession {
         self.accepted("sell_hunter_loot")
     }
 
+    fn auto_sell_requested_hunter_loot(&mut self) {
+        let hunter_ids = self
+            .hunter_roster
+            .hunters
+            .iter()
+            .filter(|hunter| {
+                let can_settle_requested_loot = hunter.hunt.is_idle()
+                    || (hunter.hunt.status == "hunting"
+                        && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
+                            super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+                        }));
+                can_settle_requested_loot && self.has_affordable_auto_sale(hunter)
+            })
+            .map(|hunter| hunter.hunter_id)
+            .collect::<Vec<_>>();
+        for hunter_id in hunter_ids {
+            let settlement_id = self.next_auto_trade_settlement_id(hunter_id);
+            let _ = self.sell_hunter_loot_internal(settlement_id, hunter_id, true);
+        }
+    }
+
+    /// Avoid invoking the rejection path on every simulation tick when a
+    /// requested sale cannot succeed. Rejections build a complete snapshot,
+    /// which is too expensive for the 10 Hz movement loop.
+    fn has_affordable_auto_sale(&self, hunter: &DurableHunterState) -> bool {
+        for loot in &hunter.hunt.loot {
+            if loot.quantity == 0 || loot.item_id == "gold" {
+                continue;
+            }
+            let Some(item) = self.building_content.gameplay.item(&loot.item_id) else {
+                return false;
+            };
+            let Some(unit_price) = item.town_pays_hunter_gold_per_unit else {
+                return false;
+            };
+            if unit_price == 0 {
+                return false;
+            }
+            let Some(stock) = self
+                .buildings
+                .material_stocks
+                .iter()
+                .find(|stock| stock.id == loot.item_id)
+            else {
+                continue;
+            };
+            if stock.requested > 0
+                && loot.quantity.min(stock.requested) > 0
+                && self.buildings.town_gold >= unit_price
+            {
+                return true;
+            }
+        }
+        false
+    }
+
+    fn next_auto_trade_settlement_id(&self, hunter_id: u32) -> Uuid {
+        let mut sequence = u32::try_from(self.buildings.trade_settlements.len())
+            .unwrap_or(u32::MAX)
+            .saturating_add(1);
+        loop {
+            let id = Uuid::from_u128(
+                (u128::from(self.buildings.field_trip_id.max(1)) << 64)
+                    | (u128::from(hunter_id) << 32)
+                    | u128::from(sequence),
+            );
+            let id_text = id.to_string();
+            let settlement_exists = self.buildings.trade_settlements.iter().any(|settlement| {
+                settlement.settlement_id == id_text
+                    || settlement.settlement_id.starts_with(&format!("{id_text}:"))
+            });
+            if !settlement_exists && !self.hunter_roster.hunt_commands.contains_key(&id) {
+                return id;
+            }
+            sequence = sequence.wrapping_add(1);
+        }
+    }
+
     fn world_projection(&self) -> WorldProjection {
         WorldProjection {
             mode: match self.state.screen {
@@ -3075,9 +3792,23 @@ impl OriginalFlowSession {
             },
             visual_tick: self.visual_tick,
             coordinate_space: "scene_pixels_v1",
-            authority_scope: "visual_roaming_only",
+            authority_scope: "server_authoritative_simulation",
             entities: self.world_entities(),
             selected_entity_id: self.selected_entity_id.clone(),
+            drops: self
+                .monster_world
+                .fields
+                .iter()
+                .flat_map(|field| &field.drops)
+                .map(|drop| WorldDropProjection {
+                    drop_id: drop.drop_id.clone(),
+                    item_id: drop.item_id.clone(),
+                    quantity: drop.quantity,
+                    x: drop.x,
+                    y: drop.y,
+                    icon_path: drop_icon_path(&drop.item_id),
+                })
+                .collect(),
             combat_presentations: self
                 .monster_world
                 .combat_presentations
@@ -3125,6 +3856,32 @@ impl OriginalFlowSession {
                             )
                         };
                         entity.class_family = Some(hunter.profile.visual_family.clone());
+                        entity.loot_label =
+                            self.monster_world
+                                .hunters
+                                .iter()
+                                .find(|agent| agent.hunter_id == hunter.hunter_id)
+                                .and_then(|agent| {
+                                    agent
+                                        .loot_item_id
+                                        .as_deref()
+                                        .map(|item_id| (item_id, agent.loot_quantity))
+                                })
+                                .and_then(|(item_id, loot_quantity)| {
+                                    if item_id == "gold" {
+                                        Some(format!("Gold +{loot_quantity}"))
+                                    } else {
+                                        self.building_content.gameplay.item(item_id).and_then(
+                                            |item| {
+                                                item.localized_names
+                                                    .get("en")
+                                                    .cloned()
+                                                    .or_else(|| item.internal_name.clone())
+                                                    .map(|name| format!("{name} x{loot_quantity}"))
+                                            },
+                                        )
+                                    }
+                                });
                         entity.attack_effect_key =
                             match (entity.action_state, hunter.profile.visual_family.as_str()) {
                                 (WorldEntityActionState::Attacking, "H3")
@@ -3137,6 +3894,19 @@ impl OriginalFlowSession {
                             };
                         entity.current_hp = Some(hunter.current_hp);
                         entity.maximum_hp = Some(hunter.max_hp);
+                        entity.interaction_prompt_key = hunter
+                            .hunt
+                            .gear_enhancement
+                            .as_ref()
+                            .filter(|task| {
+                                matches!(
+                                    task.status,
+                                    GearEnhancementTaskStatus::WaitingForInteraction
+                                        | GearEnhancementTaskStatus::Configuring
+                                        | GearEnhancementTaskStatus::Result
+                                )
+                            })
+                            .map(|_| "hunter_enhancement_ready");
                         entity
                     })
                     .collect::<Vec<_>>();
@@ -3161,18 +3931,43 @@ impl OriginalFlowSession {
                 entities
             }
             OriginalScreen::Field => {
-                let mut entities = vec![visual_entity(
-                    "field-hunter-01",
-                    WorldEntityKind::Hunter,
-                    "hunter",
-                    "hunter",
-                    BindingConfidence::Confirmed,
-                    roam(self.visual_tick, 600, 900, 90).0,
-                    750,
-                    roam(self.visual_tick, 600, 900, 90).1,
-                    WorldEntityActionState::Walking,
-                    "hunter_walk",
-                )];
+                // Field rendering must use the authoritative hunting agents.
+                // The former roaming fixture had a different entity id, which
+                // hid movement and caused target-bound EXP events to expire.
+                let mut entities = self
+                    .hunter_roster
+                    .hunters
+                    .iter()
+                    .filter_map(|hunter| {
+                        let agent = self
+                            .monster_world
+                            .hunters
+                            .iter()
+                            .find(|agent| agent.hunter_id == hunter.hunter_id)?;
+                        let mut entity =
+                            hunter_visual_entity(agent, hunter.current_hp, hunter.max_hp);
+                        entity.class_family = Some(hunter.profile.visual_family.clone());
+                        entity.loot_label = agent.loot_item_id.as_deref().and_then(|item_id| {
+                            if item_id == "gold" {
+                                Some(format!("Gold +{}", agent.loot_quantity))
+                            } else {
+                                self.building_content
+                                    .gameplay
+                                    .item(item_id)
+                                    .and_then(|item| {
+                                        item.localized_names
+                                            .get("en")
+                                            .cloned()
+                                            .or_else(|| item.internal_name.clone())
+                                            .map(|name| format!("{name} x{}", agent.loot_quantity))
+                                    })
+                            }
+                        });
+                        entity.current_hp = Some(hunter.current_hp);
+                        entity.maximum_hp = Some(hunter.max_hp);
+                        Some(entity)
+                    })
+                    .collect::<Vec<_>>();
                 entities.extend(
                     self.monster_world
                         .fields
@@ -3239,6 +4034,13 @@ impl OriginalFlowSession {
         }
         self.binding_blocked(intent, &BUILDING_CAPABILITY_BLOCKERS)
     }
+}
+
+fn drop_icon_path(item_id: &str) -> String {
+    if item_id == "gold" {
+        return "/content/releases/original-flow-v1/sprites/top_ic_01_gold_24__4677.png".to_owned();
+    }
+    material_icon_path(item_id).unwrap_or_default()
 }
 
 fn building_definition_snapshot(
@@ -3325,6 +4127,45 @@ fn can_pay_costs(state: &DurableBuildingState, costs: &[EconomyAmount]) -> bool 
     })
 }
 
+/// Resolves the recovered consumable price table for a crafted potion row.
+/// Product `salePrice` is intentionally absent for these rows in the catalog.
+fn product_sale_building_id(
+    gameplay: &BuildingGameplayCatalog,
+    product: &crate::buildings::EconomyProductDefinition,
+) -> Option<BaseBuildingId> {
+    if let Some(route) = gear_product_route(gameplay, product) {
+        return Some(route.sale_building_id);
+    }
+    let is_potion = product
+        .building_id
+        .as_ref()
+        .is_some_and(|id| id.as_str() == "build_14")
+        && product.outputs.len() == 1
+        && product.outputs[0].resource_id.starts_with("consumable:");
+    is_potion.then(|| BaseBuildingId::parse("build_11").expect("potion shop id is canonical"))
+}
+
+fn consumable_purchase_price(
+    gameplay: &BuildingGameplayCatalog,
+    product: &crate::buildings::EconomyProductDefinition,
+) -> Option<u64> {
+    let output = product.outputs.first()?;
+    if !output.resource_id.starts_with("consumable:") || output.quantity == 0 {
+        return None;
+    }
+    let level = product
+        .product_id
+        .split_once(":level:")?
+        .1
+        .parse::<usize>()
+        .ok()?;
+    gameplay
+        .item(&output.resource_id)?
+        .hunter_pays_town_gold_by_tier
+        .get(level)
+        .copied()
+}
+
 fn product_display_name(product_id: &str) -> Option<&'static str> {
     Some(match product_id {
         "product:0" => "Small Room",
@@ -3393,16 +4234,26 @@ fn product_icon_path(product_id: &str) -> Option<&'static str> {
     })
 }
 
-fn material_icon_path(material_id: &str) -> Option<&'static str> {
-    Some(match material_id {
-        "material:1" => "/content/releases/original-flow-v1/sprites/shop_product_26__6294.png",
-        "material:16" => "/content/releases/original-flow-v1/sprites/shop_product_251__3130.png",
-        "currency:gem" => "/content/releases/original-flow-v1/sprites/top_ic_02_gem__6963.png",
-        "currency:elemental" => {
-            "/content/releases/original-flow-v1/sprites/top_ic_03_element__4250.png"
+fn material_icon_path(material_id: &str) -> Option<String> {
+    if let Some(index) = material_id
+        .strip_prefix("material:")
+        .and_then(|value| value.parse::<u32>().ok())
+        .filter(|index| *index < 369)
+    {
+        return Some(format!(
+            "/content/releases/evil-hunter-1.411/material-icons/material-{index}.png"
+        ));
+    }
+    Some(
+        match material_id {
+            "currency:gem" => "/content/releases/original-flow-v1/sprites/top_ic_02_gem__6963.png",
+            "currency:elemental" => {
+                "/content/releases/original-flow-v1/sprites/top_ic_03_element__4250.png"
+            }
+            _ => return None,
         }
-        _ => return None,
-    })
+        .to_owned(),
+    )
 }
 
 fn service_effect_kind(building_id: &str) -> &'static str {
@@ -3562,11 +4413,98 @@ fn hunter_roster_member(
                     can_move_to_ranch: false,
                 },
             ),
-            materials: None,
+            materials: Some(
+                hunter
+                    .hunt
+                    .loot
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, loot)| loot.quantity > 0 && loot.item_id.starts_with("material:"))
+                    .map(|(order, loot)| HunterMaterialSnapshot {
+                        material_id: loot.item_id.clone(),
+                        display_name: None,
+                        icon_path: drop_icon_path(&loot.item_id),
+                        quantity: u64::from(loot.quantity),
+                        order: u32::try_from(order).unwrap_or(u32::MAX),
+                    })
+                    .collect(),
+            ),
         },
+        gear_enhancements: hunter
+            .owned_items
+            .iter()
+            .filter(|owned| owned.quantity > 0 && owned.gear_instance_id.is_some())
+            .map(|owned| GearEnhancementSnapshot {
+                product_id: owned.product_id.clone(),
+                level: owned.enhancement_level,
+                max_level: MAX_GEAR_ENHANCEMENT_LEVEL,
+                instance_id: owned.gear_instance_id,
+                evidence_state: "unresolved",
+            })
+            .collect(),
+        gear_enhancement_task: hunter
+            .hunt
+            .gear_enhancement
+            .as_ref()
+            .map(gear_enhancement_task_snapshot),
         runtime_evidence: runtime_evidence_snapshot(hunter),
         roster_state,
         position,
+    }
+}
+
+fn gear_enhancement_task_snapshot(
+    task: &DurableGearEnhancementTask,
+) -> GearEnhancementTaskSnapshot {
+    let status = match task.status {
+        GearEnhancementTaskStatus::Traveling => "traveling",
+        GearEnhancementTaskStatus::WaitingForInteraction => "waiting_for_interaction",
+        GearEnhancementTaskStatus::Configuring => "configuring",
+        GearEnhancementTaskStatus::Processing => "processing",
+        GearEnhancementTaskStatus::Result => "result",
+    };
+    let resources = |rows: &[super::hunter_roster::DurableHunterLoot]| {
+        rows.iter()
+            .map(|row| GearEnhancementResourceSnapshot {
+                material_id: row.item_id.clone(),
+                quantity: row.quantity,
+            })
+            .collect::<Vec<_>>()
+    };
+    GearEnhancementTaskSnapshot {
+        building_instance_id: task.building_instance_id.clone(),
+        status,
+        interaction_ready: matches!(
+            task.status,
+            GearEnhancementTaskStatus::WaitingForInteraction
+                | GearEnhancementTaskStatus::Configuring
+                | GearEnhancementTaskStatus::Result
+        ),
+        selected_gear_instance_id: task.selected_gear_instance_id,
+        selected_product_id: task.selected_product_id.clone(),
+        mode: task.mode.clone(),
+        target_level: task.target_level,
+        optional_material_ids: task.optional_material_ids.clone(),
+        next_attempt_gold_cost: None,
+        next_attempt_success_bps: None,
+        required_materials: Vec::new(),
+        attempts: task
+            .attempts
+            .iter()
+            .map(|attempt| GearEnhancementAttemptSnapshot {
+                attempt: attempt.attempt,
+                starting_level: attempt.starting_level,
+                resulting_level: attempt.resulting_level,
+                succeeded: attempt.succeeded,
+                gold_spent: attempt.gold_spent,
+                materials_spent: resources(&attempt.materials_spent),
+            })
+            .collect(),
+        spent_gold: task.spent_gold,
+        spent_materials: resources(&task.spent_materials),
+        final_level: task.final_level,
+        stop_reason: task.stop_reason.clone(),
+        blockers: task.blockers.clone(),
     }
 }
 
@@ -3670,6 +4608,26 @@ fn hunter_skill_catalog_preview(hunter: &DurableHunterState) -> Vec<HunterInfoSk
             }
         })
         .collect()
+}
+
+fn release_hunter_from_enhancement(hunter: &mut DurableHunterState) {
+    hunter.hunt.gear_enhancement = None;
+    hunter.profile.action_state = "idle".to_owned();
+    hunter.profile.animation_name = "hunter_stay".to_owned();
+}
+
+fn enhancement_task_terminal(task: &DurableGearEnhancementTask) -> bool {
+    task.status == GearEnhancementTaskStatus::Result
+        || (task.status == GearEnhancementTaskStatus::Configuring && task.stop_reason.is_some())
+}
+
+fn is_enhancement_action_state(action_state: &str) -> bool {
+    matches!(
+        action_state,
+        "traveling_to_enhancement_forge"
+            | "waiting_for_enhancement_interaction"
+            | "configuring_enhancement"
+    )
 }
 
 fn runtime_evidence_snapshot(hunter: &DurableHunterState) -> HunterRuntimeEvidenceSnapshot {
@@ -3989,10 +4947,13 @@ fn visual_entity(
         class_family: None,
         target_entity_id: None,
         action_sequence: 0,
+        loot_sequence: 0,
+        loot_label: None,
         attack_effect_key: None,
         skill_presentation_key: None,
         current_hp: None,
         maximum_hp: None,
+        interaction_prompt_key: None,
         selectable: true,
     }
 }
@@ -4038,8 +4999,10 @@ fn monster_visual_entity(monster: &MonsterState) -> WorldEntityProjection {
         },
         animation,
     );
-    entity.selectable = monster.hp > 0 && monster.respawn_ticks.is_none();
+    // Monsters remain server-owned combat actors, but are not player-selectable UI entities.
+    entity.selectable = false;
     entity.target_entity_id = monster.target_hunter_id.map(village_hunter_entity_id);
+    entity.action_sequence = monster.attack_sequence;
     entity.current_hp = Some(monster.hp);
     entity.maximum_hp = Some(monster.max_hp);
     entity
@@ -4080,6 +5043,9 @@ fn hunter_visual_entity(
             | HunterActionState::CollectingLoot => WorldEntityActionState::Walking,
             HunterActionState::Attacking => WorldEntityActionState::Attacking,
             HunterActionState::Dead => WorldEntityActionState::Dead,
+            HunterActionState::TownIdle if agent.animation == "hunter_walk" => {
+                WorldEntityActionState::Walking
+            }
             HunterActionState::TownIdle | HunterActionState::AcquiringTarget => {
                 WorldEntityActionState::Idle
             }
@@ -4088,6 +5054,7 @@ fn hunter_visual_entity(
     );
     entity.target_entity_id = agent.target_monster_id.clone();
     entity.action_sequence = agent.attack_sequence;
+    entity.loot_sequence = agent.loot_sequence;
     entity.skill_presentation_key = agent.active_skill_id.clone();
     entity.current_hp = Some(current_hp);
     entity.maximum_hp = Some(maximum_hp);
@@ -4159,22 +5126,6 @@ fn interpolate_lane(start: i32, end: i32, elapsed: u64, duration: u64) -> i32 {
     let offset =
         delta * i64::try_from(elapsed).unwrap_or(0) / i64::try_from(duration.max(1)).unwrap_or(1);
     start + i32::try_from(offset).unwrap_or(0)
-}
-
-fn roam(tick: u64, min: i32, max: i32, period: u64) -> (i32, Facing) {
-    let span = (max - min).max(1) as u64;
-    let phase = tick % (period * 2);
-    let offset = if phase <= period {
-        phase * span / period
-    } else {
-        (period * 2 - phase) * span / period
-    };
-    let facing = if phase < period {
-        Facing::Right
-    } else {
-        Facing::Left
-    };
-    (min + offset as i32, facing)
 }
 
 #[cfg(test)]
@@ -4364,6 +5315,7 @@ mod tests {
                 boot_completed: true,
             },
             buildings: test_town_building_state(),
+            hunter_roster: operational_migration_roster(),
             ..DurablePlayerAggregate::default()
         };
         aggregate
@@ -4412,7 +5364,7 @@ mod tests {
     }
 
     #[test]
-    fn blacksmith_crafts_into_weapon_shop_stock_without_minting_unbound_hunter_gold() {
+    fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         let product_id = "recipe:weapon:0:rating:0";
         let mut flow = gear_flow(product_id, 75);
         let blacksmith_id = building_instance_id(&flow, "build_10");
@@ -4441,28 +5393,398 @@ mod tests {
         );
 
         let gold_before = flow.buildings.town_gold;
-        let blocked_sale = flow
+        let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
+        let purchase = flow
             .handle_command(ClientCommand::PurchaseShopItem {
+                hunter_id: 1,
                 shop_id: "build_7".to_owned(),
                 product_id: product_id.to_owned(),
             })
             .unwrap();
         assert!(matches!(
-            blocked_sale.message,
-            ServerMessage::BindingBlocked { ref blockers, .. }
-                if blockers == &GEAR_SALE_BLOCKERS
+            purchase.message,
+            ServerMessage::IntentResult { accepted: true, .. }
         ));
-        assert_eq!(flow.buildings.product_stocks[0].quantity, 2);
-        assert_eq!(flow.buildings.town_gold, gold_before);
-        assert_eq!(flow.buildings.hunter_equipment_purchases, 0);
+        assert_eq!(flow.buildings.product_stocks[0].quantity, 1);
+        assert_eq!(flow.buildings.town_gold, gold_before + 75);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, hunter_gold_before - 75);
+        assert_eq!(
+            flow.hunter_roster.hunters[0].owned_items[0].product_id,
+            product_id
+        );
+        assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
+        assert_eq!(flow.buildings.hunter_equipment_purchases, 1);
 
         let recipes = flow.snapshot().village.building_system.recipes;
         assert!(recipes
             .iter()
             .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_10"));
         assert!(recipes.iter().any(|recipe| {
-            recipe.id == product_id && recipe.shop_id == "build_7" && recipe.stock == 2
+            recipe.id == product_id && recipe.shop_id == "build_7" && recipe.stock == 1
         }));
+    }
+
+    #[test]
+    fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
+        let product_id = "recipe:weapon:0:rating:0";
+        let mut flow = gear_flow(product_id, 75);
+        let blacksmith_id = building_instance_id(&flow, "build_10");
+        let crafted = flow
+            .handle_command(ClientCommand::CraftShopItem {
+                instance_id: blacksmith_id,
+                recipe_id: product_id.to_owned(),
+                material_id: None,
+                quantity: 1,
+            })
+            .unwrap();
+        assert!(matches!(
+            crafted.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        let gear_instance_id = Uuid::from_u128(8_001);
+        let purchase = flow
+            .handle_command_with_id(
+                ClientCommand::PurchaseShopItem {
+                    hunter_id: 1,
+                    shop_id: "build_7".to_owned(),
+                    product_id: product_id.to_owned(),
+                },
+                gear_instance_id,
+            )
+            .unwrap();
+        assert!(matches!(
+            purchase.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        let premature = flow
+            .handle_command(ClientCommand::EnhanceHunterGear {
+                hunter_id: 1,
+                gear_instance_id,
+                mode: "single".to_owned(),
+                optional_material_ids: Vec::new(),
+            })
+            .unwrap();
+        assert!(matches!(
+            premature.message,
+            ServerMessage::IntentResult {
+                accepted: false,
+                reason: Some(ref reason),
+                ..
+            } if reason == "enhancement_visit_not_started"
+        ));
+        let started = flow
+            .handle_command_with_id(
+                ClientCommand::StartHunterEnhancement { hunter_id: 1 },
+                Uuid::from_u128(8_002),
+            )
+            .unwrap();
+        assert!(matches!(
+            started.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        assert_eq!(
+            flow.hunter_roster.hunters[0]
+                .hunt
+                .gear_enhancement
+                .as_ref()
+                .map(|task| task.status),
+            Some(GearEnhancementTaskStatus::Traveling)
+        );
+        for _ in 0..500 {
+            flow.advance_simulation_tick();
+            if flow.hunter_roster.hunters[0]
+                .hunt
+                .gear_enhancement
+                .as_ref()
+                .is_some_and(|task| task.status == GearEnhancementTaskStatus::WaitingForInteraction)
+            {
+                break;
+            }
+        }
+        let ready_world = flow.snapshot();
+        let ready_snapshot = ready_world.hunter_roster.active_hunters[0]
+            .gear_enhancement_task
+            .as_ref()
+            .expect("enhancement task is projected");
+        assert_eq!(ready_snapshot.status, "waiting_for_interaction");
+        assert!(ready_snapshot.interaction_ready);
+        let gold_before = flow.hunter_roster.hunters[0].gold;
+        let result = flow
+            .handle_command_with_id(
+                ClientCommand::EnhanceHunterGear {
+                    hunter_id: 1,
+                    gear_instance_id,
+                    mode: "single".to_owned(),
+                    optional_material_ids: Vec::new(),
+                },
+                Uuid::from_u128(8_003),
+            )
+            .unwrap();
+        assert!(matches!(
+            result.message,
+            ServerMessage::BindingBlocked { .. }
+        ));
+        assert_eq!(flow.hunter_roster.hunters[0].gold, gold_before);
+        assert_eq!(
+            flow.hunter_roster.hunters[0].owned_items[0].enhancement_level,
+            None
+        );
+        let released = flow.snapshot().hunter_roster.active_hunters[0].clone();
+        assert!(released.gear_enhancement_task.is_none());
+        assert_eq!(flow.hunter_roster.hunters[0].profile.action_state, "idle");
+    }
+
+    #[test]
+    fn enhancement_visit_survives_reconnect_and_resumes_until_interaction_ready() {
+        let aggregate = DurablePlayerAggregate {
+            navigation: OriginalFlowPlayerState {
+                screen: OriginalScreen::Village,
+                boot_completed: true,
+            },
+            buildings: test_town_building_state(),
+            hunter_roster: operational_migration_roster(),
+            ..DurablePlayerAggregate::default()
+        };
+        let mut flow = OriginalFlowSession::from_aggregate(aggregate, 7);
+        let started = flow
+            .handle_command_with_id(
+                ClientCommand::StartHunterEnhancement { hunter_id: 1 },
+                Uuid::from_u128(8_101),
+            )
+            .unwrap();
+        assert!(matches!(
+            started.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        for _ in 0..5 {
+            flow.advance_simulation_tick();
+        }
+
+        let durable = flow.durable_state();
+        let mut restored = OriginalFlowSession::from_aggregate(durable, 7);
+        assert_eq!(
+            restored.hunter_roster.hunters[0]
+                .hunt
+                .gear_enhancement
+                .as_ref()
+                .map(|task| task.status),
+            Some(GearEnhancementTaskStatus::Traveling)
+        );
+        for _ in 0..500 {
+            restored.advance_simulation_tick();
+            if restored.hunter_roster.hunters[0]
+                .hunt
+                .gear_enhancement
+                .as_ref()
+                .is_some_and(|task| task.status == GearEnhancementTaskStatus::WaitingForInteraction)
+            {
+                break;
+            }
+        }
+        let task = restored.hunter_roster.hunters[0]
+            .hunt
+            .gear_enhancement
+            .as_ref()
+            .expect("enhancement task survives reconnect");
+        assert_eq!(
+            task.status,
+            GearEnhancementTaskStatus::WaitingForInteraction
+        );
+        assert_eq!(
+            restored.hunter_roster.hunters[0].profile.action_state,
+            "waiting_for_enhancement_interaction"
+        );
+    }
+
+    #[test]
+    fn terminal_enhancement_task_is_released_when_restoring_a_session() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.gear_enhancement = Some(DurableGearEnhancementTask {
+            status: GearEnhancementTaskStatus::Configuring,
+            stop_reason: Some("evidence_disabled".to_owned()),
+            ..DurableGearEnhancementTask::default()
+        });
+        roster.hunters[0].profile.action_state = "configuring_enhancement".to_owned();
+
+        let flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                buildings: test_town_building_state(),
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+
+        assert!(flow.hunter_roster.hunters[0]
+            .hunt
+            .gear_enhancement
+            .is_none());
+        assert_eq!(flow.hunter_roster.hunters[0].profile.action_state, "idle");
+        assert_eq!(
+            flow.hunter_roster.hunters[0].profile.animation_name,
+            "hunter_stay"
+        );
+    }
+
+    #[test]
+    fn legacy_enhancement_task_and_orphaned_action_are_released_on_restore() {
+        let mut roster = operational_migration_roster();
+        let task = serde_json::json!({
+            "building_instance_id": "forge-legacy",
+            "status": "waiting_for_interaction",
+            "interaction_x": 1,
+            "interaction_y": 2
+        });
+        roster.hunters[0].hunt.gear_enhancement =
+            Some(serde_json::from_value(task).expect("legacy task shape remains readable"));
+        roster.hunters[0].profile.action_state = "waiting_for_enhancement_interaction".to_owned();
+        roster.hunters[1].profile.action_state = "configuring_enhancement".to_owned();
+
+        let flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                buildings: test_town_building_state(),
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+
+        assert!(flow.hunter_roster.hunters[0]
+            .hunt
+            .gear_enhancement
+            .is_none());
+        assert!(flow.hunter_roster.hunters[1]
+            .hunt
+            .gear_enhancement
+            .is_none());
+        assert_eq!(flow.hunter_roster.hunters[0].profile.action_state, "idle");
+        assert_eq!(flow.hunter_roster.hunters[1].profile.action_state, "idle");
+    }
+
+    #[test]
+    fn alchemist_crafts_and_sells_catalog_potion_at_recovered_price() {
+        let product_id = "recipe:consumable:0:level:0";
+        let mut aggregate = DurablePlayerAggregate {
+            navigation: OriginalFlowPlayerState {
+                screen: OriginalScreen::Village,
+                boot_completed: true,
+            },
+            buildings: test_town_building_state(),
+            hunter_roster: operational_migration_roster(),
+            ..DurablePlayerAggregate::default()
+        };
+        aggregate
+            .buildings
+            .material_stocks
+            .push(DurableMaterialStock {
+                id: "material:139".to_owned(),
+                town_quantity: 3,
+                hunter_quantity: 0,
+                requested: 0,
+                unit_price: 1,
+            });
+        let mut content = (*test_authoritative_building_content()).clone();
+        content.gameplay.products.insert(
+            product_id.to_owned(),
+            EconomyProductDefinition {
+                product_id: product_id.to_owned(),
+                building_id: Some(BaseBuildingId::parse("build_14").unwrap()),
+                duration_ms: None,
+                exact_mutation_ready: false,
+                inputs: vec![EconomyAmount {
+                    resource_id: "material:139".to_owned(),
+                    quantity: 3,
+                }],
+                outputs: vec![EconomyAmount {
+                    resource_id: "consumable:0".to_owned(),
+                    quantity: 1,
+                }],
+                sale_price: Vec::new(),
+                service: None,
+                conversion_options: Vec::new(),
+                random_output: None,
+            },
+        );
+        let mut flow =
+            OriginalFlowSession::from_aggregate_with_content(aggregate, 7, Arc::new(content));
+        let alchemist_id = building_instance_id(&flow, "build_14");
+        let crafted = flow
+            .handle_command(ClientCommand::CraftShopItem {
+                instance_id: alchemist_id,
+                recipe_id: product_id.to_owned(),
+                material_id: None,
+                quantity: 1,
+            })
+            .unwrap();
+        assert!(matches!(
+            crafted.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        let potion_shop_id = building_instance_id(&flow, "build_11");
+        assert_eq!(
+            flow.buildings
+                .product_stocks
+                .iter()
+                .find(|stock| stock.building_instance_id == potion_shop_id
+                    && stock.product_id == product_id)
+                .map(|stock| stock.quantity),
+            Some(1)
+        );
+        let potion_row = flow
+            .snapshot()
+            .village
+            .building_system
+            .recipes
+            .into_iter()
+            .find(|recipe| recipe.id == product_id && recipe.shop_id == "build_11")
+            .expect("potion shop row");
+        assert_eq!(potion_row.stock, 1);
+        assert_eq!(potion_row.sale_price, 68);
+
+        let town_gold_before = flow.buildings.town_gold;
+        let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
+        let equipment_purchase_count_before = flow.buildings.hunter_equipment_purchases;
+        let purchased = flow
+            .handle_command(ClientCommand::PurchaseShopItem {
+                hunter_id: 1,
+                shop_id: "build_11".to_owned(),
+                product_id: product_id.to_owned(),
+            })
+            .unwrap();
+        assert!(matches!(
+            purchased.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        assert_eq!(
+            flow.buildings
+                .product_stocks
+                .iter()
+                .find(|stock| stock.building_instance_id == potion_shop_id
+                    && stock.product_id == product_id)
+                .map(|stock| stock.quantity),
+            Some(0)
+        );
+        assert_eq!(flow.buildings.town_gold, town_gold_before + 68);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, hunter_gold_before - 68);
+        assert_eq!(
+            flow.buildings.hunter_equipment_purchases,
+            equipment_purchase_count_before
+        );
+        assert!(flow.snapshot().hunter_roster.active_hunters[0]
+            .gear_enhancements
+            .is_empty());
+        assert_eq!(
+            flow.hunter_roster.hunters[0].owned_items[0].product_id,
+            product_id
+        );
     }
 
     #[test]
@@ -4502,8 +5824,10 @@ mod tests {
     }
 
     #[test]
-    fn blacksmith_routes_wearable_armor_to_armor_shop_and_enforces_tier_levels() {
-        let product_id = "recipe:helmet:0:rating:1";
+    fn blacksmith_routes_wearable_armor_to_armor_shop_and_enforces_difficulty_levels() {
+        // Helmet 10 belongs to difficulty group 2. Its quality/rating is not
+        // the building-level gate.
+        let product_id = "recipe:helmet:10:rating:1";
         let mut flow = gear_flow(product_id, 90);
         let blacksmith_id = building_instance_id(&flow, "build_10");
         let before = flow.buildings.clone();
@@ -4551,6 +5875,7 @@ mod tests {
 
         let shop_locked = flow
             .handle_command(ClientCommand::PurchaseShopItem {
+                hunter_id: 1,
                 shop_id: "build_8".to_owned(),
                 product_id: product_id.to_owned(),
             })
@@ -4596,6 +5921,7 @@ mod tests {
                         profile: DurableHunterProfile::migration_default(hunter_id),
                         hunt: Default::default(),
                         runtime: Default::default(),
+                        owned_items: Vec::new(),
                     })
                     .collect(),
                 ..DurableHunterRosterState::default()
@@ -4972,6 +6298,149 @@ mod tests {
     }
 
     #[test]
+    fn infirmary_production_ignores_display_capacity_but_consumes_materials() {
+        let mut flow = infirmary_flow(true);
+        let instance_id = infirmary_instance_id(&flow);
+        flow.buildings.material_stocks.push(DurableMaterialStock {
+            id: "material:11".to_owned(),
+            town_quantity: 20,
+            hunter_quantity: 0,
+            requested: 0,
+            unit_price: 1,
+        });
+        Arc::make_mut(&mut flow.building_content)
+            .gameplay
+            .products
+            .get_mut(TEST_BANDAGE_ID)
+            .expect("test bandage product")
+            .service = None;
+        Arc::make_mut(&mut flow.building_content)
+            .gameplay
+            .products
+            .get_mut(TEST_BANDAGE_ID)
+            .expect("test bandage product")
+            .conversion_options = vec![crate::buildings::EconomyConversionOption {
+            input_kind: "material".to_owned(),
+            input_resource_id: "material:11".to_owned(),
+            input_quantity: 1,
+            output_stock_quantity: 1,
+        }];
+
+        let result = flow
+            .handle_command(ClientCommand::CraftShopItem {
+                instance_id: instance_id.clone(),
+                recipe_id: TEST_BANDAGE_ID.to_owned(),
+                material_id: Some("material:11".to_owned()),
+                quantity: 10,
+            })
+            .expect("bandage production result");
+
+        assert!(matches!(
+            result.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 10);
+        assert_eq!(
+            flow.buildings
+                .product_stocks
+                .iter()
+                .find(|stock| {
+                    stock.building_instance_id == instance_id && stock.product_id == TEST_BANDAGE_ID
+                })
+                .expect("bandage stock")
+                .quantity,
+            15
+        );
+    }
+
+    #[test]
+    fn autonomous_healing_uses_owned_healing_potion_below_ten_percent() {
+        let mut flow = infirmary_flow(true);
+        let hunter = &mut flow.hunter_roster.hunters[0];
+        hunter.current_hp = 90;
+        hunter.max_hp = 1_000;
+        hunter.hunt.status = "hunting".to_owned();
+        hunter.hunt.zone_id = Some(super::super::hunter_roster::FIXTURE_HUNT_ZONE_ID.to_owned());
+        hunter
+            .owned_items
+            .push(super::super::hunter_roster::DurableHunterOwnedItem {
+                product_id: "recipe:consumable:0:level:0".to_owned(),
+                quantity: 2,
+                ..super::super::hunter_roster::DurableHunterOwnedItem::default()
+            });
+
+        flow.apply_autonomous_hunter_healing_policy();
+
+        assert_eq!(flow.hunter_roster.hunters[0].current_hp, 1_000);
+        assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
+        assert_eq!(
+            flow.hunter_roster.hunters[0].hunt.zone_id.as_deref(),
+            Some(super::super::hunter_roster::FIXTURE_HUNT_ZONE_ID)
+        );
+        assert_eq!(
+            flow.hunter_roster.hunters[0].profile.action_state,
+            "using_healing_potion"
+        );
+    }
+
+    #[test]
+    fn autonomous_healing_respects_recovered_potion_cooldown() {
+        let mut flow = infirmary_flow(true);
+        let hunter = &mut flow.hunter_roster.hunters[0];
+        hunter.current_hp = 100;
+        hunter.max_hp = 100_000;
+        hunter.hunt.status = "hunting".to_owned();
+        hunter.hunt.zone_id = Some(super::super::hunter_roster::FIXTURE_HUNT_ZONE_ID.to_owned());
+        hunter
+            .owned_items
+            .push(super::super::hunter_roster::DurableHunterOwnedItem {
+                product_id: "recipe:consumable:0:level:0".to_owned(),
+                quantity: 2,
+                ..super::super::hunter_roster::DurableHunterOwnedItem::default()
+            });
+
+        flow.apply_autonomous_hunter_healing_policy();
+        flow.apply_autonomous_hunter_healing_policy();
+
+        assert_eq!(flow.hunter_roster.hunters[0].current_hp, 4_100);
+        assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
+        assert_eq!(
+            flow.hunter_roster.hunters[0]
+                .hunt
+                .healing_potion_cooldown_ms,
+            20_000
+        );
+
+        let restored = OriginalFlowSession::from_aggregate(flow.durable_state(), 7);
+        assert_eq!(
+            restored.hunter_roster.hunters[0]
+                .hunt
+                .healing_potion_cooldown_ms,
+            20_000
+        );
+    }
+
+    #[test]
+    fn autonomous_healing_returns_to_infirmary_when_no_potion_is_owned() {
+        let mut flow = infirmary_flow(true);
+        let hunter = &mut flow.hunter_roster.hunters[0];
+        hunter.current_hp = 99;
+        hunter.max_hp = 1_000;
+        hunter.hunt.status = "hunting".to_owned();
+        hunter.hunt.zone_id = Some(super::super::hunter_roster::FIXTURE_HUNT_ZONE_ID.to_owned());
+
+        flow.apply_autonomous_hunter_healing_policy();
+
+        assert_eq!(flow.hunter_roster.hunters[0].current_hp, 99);
+        assert!(flow.hunter_roster.hunters[0].hunt.zone_id.is_none());
+        assert_eq!(flow.hunter_roster.hunters[0].hunt.status, "idle");
+        assert_eq!(
+            flow.hunter_roster.hunters[0].profile.action_state,
+            "returning_for_infirmary"
+        );
+    }
+
+    #[test]
     fn original_flow_reaches_village_and_roster_without_fixture_combat() {
         let mut flow = OriginalFlowSession::from_state(OriginalFlowPlayerState::default());
         flow.handle_command(ClientCommand::CompleteBoot);
@@ -5064,11 +6533,11 @@ mod tests {
             .building_system
             .material_stocks
             .iter()
-            .any(|stock| stock.id == "material:0" && stock.town_quantity == 0));
+            .any(|stock| stock.id == "material:1" && stock.town_quantity == 0));
         let wrong_building = flow
             .handle_command(ClientCommand::SetMaterialRequest {
                 instance_id: town_hall_instance_id,
-                material_id: "material:0".to_owned(),
+                material_id: "material:1".to_owned(),
                 quantity: 3,
             })
             .unwrap();
@@ -5080,21 +6549,26 @@ mod tests {
                 ..
             } if reason.as_deref() == Some("building_capability_mismatch")
         ));
-        let invalid_quantity = flow
+        let quantity_request = flow
             .handle_command(ClientCommand::SetMaterialRequest {
                 instance_id: trading_post_instance_id.clone(),
-                material_id: "material:0".to_owned(),
+                material_id: "material:1".to_owned(),
                 quantity: 2,
             })
             .unwrap();
         assert!(matches!(
-            invalid_quantity.message,
-            ServerMessage::IntentResult {
-                accepted: false,
-                ref reason,
-                ..
-            } if reason.as_deref() == Some("material_quantity_invalid")
+            quantity_request.message,
+            ServerMessage::IntentResult { accepted: true, .. }
         ));
+        assert_eq!(
+            flow.buildings
+                .material_stocks
+                .iter()
+                .find(|stock| stock.id == "material:1")
+                .unwrap()
+                .requested,
+            2
+        );
         let locked_difficulty = flow
             .handle_command(ClientCommand::SetMaterialRequest {
                 instance_id: trading_post_instance_id.clone(),
@@ -5112,27 +6586,39 @@ mod tests {
         ));
         flow.handle_command(ClientCommand::SetMaterialRequest {
             instance_id: trading_post_instance_id.clone(),
-            material_id: "material:0".to_owned(),
+            material_id: "material:1".to_owned(),
             quantity: ACTIVE_MATERIAL_REQUEST,
         });
         flow.handle_command(ClientCommand::CancelMaterialRequest {
             instance_id: trading_post_instance_id.clone(),
-            material_id: "material:0".to_owned(),
+            material_id: "material:1".to_owned(),
         });
-        assert_eq!(flow.buildings.material_stocks[0].requested, 0);
+        let material_index = flow
+            .buildings
+            .material_stocks
+            .iter()
+            .position(|stock| stock.id == "material:1")
+            .unwrap();
+        assert_eq!(flow.buildings.material_stocks[material_index].requested, 0);
         flow.handle_command(ClientCommand::SetMaterialRequest {
             instance_id: trading_post_instance_id,
-            material_id: "material:0".to_owned(),
+            material_id: "material:1".to_owned(),
             quantity: ACTIVE_MATERIAL_REQUEST,
         });
-        flow.buildings.material_stocks[0].hunter_quantity = 5;
+        flow.buildings.material_stocks[material_index].hunter_quantity = 5;
         flow.handle_command(ClientCommand::EnterField);
         flow.handle_command(ClientCommand::NavigateBack);
         assert_eq!(flow.buildings.town_gold, 1_500);
-        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 0);
-        assert_eq!(flow.buildings.material_stocks[0].hunter_quantity, 5);
         assert_eq!(
-            flow.buildings.material_stocks[0].requested,
+            flow.buildings.material_stocks[material_index].town_quantity,
+            0
+        );
+        assert_eq!(
+            flow.buildings.material_stocks[material_index].hunter_quantity,
+            5
+        );
+        assert_eq!(
+            flow.buildings.material_stocks[material_index].requested,
             ACTIVE_MATERIAL_REQUEST
         );
         assert!(flow.buildings.trade_settlements.is_empty());
@@ -5161,10 +6647,17 @@ mod tests {
 
     #[test]
     fn field_entry_projects_visual_entities_without_enabling_gameplay() {
-        let mut flow = OriginalFlowSession::from_state(OriginalFlowPlayerState {
-            screen: OriginalScreen::Village,
-            boot_completed: true,
-        });
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
         let result = flow
             .handle_command(ClientCommand::EnterField)
             .expect("field intent returns a result");
@@ -5178,21 +6671,54 @@ mod tests {
         assert!(accepted);
         assert_eq!(snapshot.screen, OriginalScreen::Field);
         assert_eq!(snapshot.world.mode, WorldMode::Field);
-        assert_eq!(snapshot.world.authority_scope, "visual_roaming_only");
-        assert_eq!(snapshot.world.entities.len(), 10);
+        assert_eq!(
+            snapshot.world.authority_scope,
+            "server_authoritative_simulation"
+        );
+        assert_eq!(
+            snapshot
+                .world
+                .entities
+                .iter()
+                .filter(|entity| entity.descriptor.kind == WorldEntityKind::Hunter)
+                .count(),
+            8
+        );
+        assert_eq!(
+            snapshot
+                .world
+                .entities
+                .iter()
+                .filter(|entity| entity.descriptor.kind == WorldEntityKind::Monster)
+                .count(),
+            9
+        );
         assert!(snapshot.field.visual_projection_runnable);
         assert!(snapshot.field.gameplay_runnable);
         assert!(snapshot.field.blockers.is_empty());
-        assert!(snapshot.world.entities.iter().all(|entity| {
-            !matches!(entity.animation.as_str(), "atk" | "die" | "dying")
-                && !entity.descriptor.placement_binding.resolved
-        }));
+        assert!(snapshot
+            .world
+            .entities
+            .iter()
+            .all(|entity| !matches!(entity.animation.as_str(), "atk" | "die" | "dying")));
         for region in ["map_new01", "background_08", "background_11"] {
             assert!(snapshot.world.entities.iter().any(|entity| entity
                 .descriptor
                 .entity_id
                 .starts_with(&format!("monster-{region}-"))));
         }
+        flow.advance_simulation_tick();
+        let live = flow.snapshot();
+        assert!(live
+            .world
+            .entities
+            .iter()
+            .any(|entity| entity.descriptor.entity_id == "village-hunter-1"));
+        assert!(live
+            .world
+            .entities
+            .iter()
+            .all(|entity| entity.descriptor.entity_id != "field-hunter-01"));
     }
 
     #[test]
@@ -5212,6 +6738,7 @@ mod tests {
             profile: DurableHunterProfile::migration_default(7),
             runtime: Default::default(),
             hunt: Default::default(),
+            owned_items: Vec::new(),
         });
 
         let world = flow.snapshot().world;
@@ -5279,6 +6806,47 @@ mod tests {
             flow.snapshot().world.selected_entity_id,
             Some("village-npc-01".to_owned())
         );
+    }
+
+    #[test]
+    fn monsters_project_health_without_becoming_selectable_entities() {
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.advance_simulation_tick();
+        let monster = flow
+            .snapshot()
+            .world
+            .entities
+            .into_iter()
+            .find(|entity| entity.descriptor.kind == WorldEntityKind::Monster)
+            .expect("monster remains in the visible-world projection");
+
+        assert!(!monster.selectable);
+        assert!(monster.current_hp.is_some());
+        assert!(monster.maximum_hp.is_some());
+
+        let rejected = flow
+            .handle_command(ClientCommand::SelectEntity {
+                entity_id: monster.descriptor.entity_id,
+            })
+            .expect("selection rejection");
+        assert!(matches!(
+            rejected.message,
+            ServerMessage::IntentResult {
+                accepted: false,
+                ..
+            }
+        ));
+        assert_eq!(flow.snapshot().world.selected_entity_id, None);
     }
 
     #[test]
@@ -5414,6 +6982,23 @@ mod tests {
     }
 
     #[test]
+    fn town_roaming_hunter_projects_walking_motion_for_client_interpolation() {
+        let mut world = MonsterWorldState::default();
+        let mut roster = operational_migration_roster();
+        world.tick(&mut roster);
+        let mut agent = world.hunters[0].clone();
+        agent.action_state = crate::simulation::HunterActionState::TownIdle;
+        agent.animation = "hunter_walk".to_owned();
+
+        let walking = hunter_visual_entity(&agent, 100, 100);
+        assert_eq!(walking.action_state, WorldEntityActionState::Walking);
+
+        agent.animation = "hunter_stay".to_owned();
+        let paused = hunter_visual_entity(&agent, 100, 100);
+        assert_eq!(paused.action_state, WorldEntityActionState::Idle);
+    }
+
+    #[test]
     fn hunter_info_projects_fixture_equipment_without_claiming_runtime_capture() {
         let flow = OriginalFlowSession::from_aggregate(
             DurablePlayerAggregate {
@@ -5473,6 +7058,7 @@ mod tests {
                 shop_id: "main".to_owned(),
             },
             ClientCommand::PurchaseShopItem {
+                hunter_id: 1,
                 shop_id: "main".to_owned(),
                 product_id: "product-1".to_owned(),
             },
@@ -5601,6 +7187,7 @@ mod tests {
                     profile: DurableHunterProfile::migration_default(hunter_id),
                     runtime: Default::default(),
                     hunt: Default::default(),
+                    owned_items: Vec::new(),
                 })
                 .unwrap();
         }
@@ -5697,6 +7284,7 @@ mod tests {
                     profile: DurableHunterProfile::migration_default(hunter_id),
                     runtime: Default::default(),
                     hunt: Default::default(),
+                    owned_items: Vec::new(),
                 })
                 .collect(),
             ..DurableHunterRosterState::default()
@@ -5710,7 +7298,7 @@ mod tests {
             7,
         );
         let durable = flow.durable_state();
-        assert_eq!(durable.schema_version, 12);
+        assert_eq!(durable.schema_version, 15);
         assert_eq!(durable.hunter_roster.hunters.len(), 8);
         assert_eq!(durable.hunter_roster.waiting_queue.len(), 2);
         assert_eq!(durable.hunter_roster.waiting_queue[0].hunter.hunter_id, 9);
@@ -5912,6 +7500,280 @@ mod tests {
     }
 
     #[test]
+    fn idle_hunter_auto_sells_only_requested_materials() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.loot = vec![
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "material:32".to_owned(),
+                quantity: 2,
+            },
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "material:92".to_owned(),
+                quantity: 3,
+            },
+        ];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 1,
+            unit_price: 10,
+        }];
+        let town_gold_before = flow.buildings.town_gold;
+        let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
+
+        flow.advance_simulation_tick().expect("village tick");
+
+        assert_eq!(flow.buildings.town_gold, town_gold_before - 10);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, hunter_gold_before + 10);
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 1);
+        assert_eq!(flow.buildings.material_stocks[0].requested, 0);
+        assert_eq!(
+            flow.hunter_roster.hunters[0].hunt.loot,
+            vec![
+                super::super::hunter_roster::DurableHunterLoot {
+                    item_id: "material:32".to_owned(),
+                    quantity: 1,
+                },
+                super::super::hunter_roster::DurableHunterLoot {
+                    item_id: "material:92".to_owned(),
+                    quantity: 3,
+                },
+            ]
+        );
+        assert_eq!(flow.buildings.trade_settlements.len(), 1);
+    }
+
+    #[test]
+    fn idle_hunter_can_auto_sell_again_without_starting_a_new_field_trip() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.loot = vec![super::super::hunter_roster::DurableHunterLoot {
+            item_id: "material:32".to_owned(),
+            quantity: 2,
+        }];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 1,
+            unit_price: 10,
+        }];
+
+        flow.advance_simulation_tick().expect("first village tick");
+        flow.buildings.material_stocks[0].requested = 1;
+        flow.advance_simulation_tick().expect("second village tick");
+
+        assert_eq!(flow.buildings.town_gold, 1_480);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, 1_020);
+        assert!(flow.hunter_roster.hunters[0].hunt.loot.is_empty());
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 2);
+        assert_eq!(flow.buildings.material_stocks[0].requested, 0);
+        assert_eq!(flow.buildings.trade_settlements.len(), 2);
+        assert_eq!(flow.buildings.field_trip_id, 1);
+        assert!(flow
+            .buildings
+            .trade_settlements
+            .iter()
+            .all(|settlement| settlement.field_trip_id == 1));
+        assert_ne!(
+            flow.buildings.trade_settlements[0].settlement_id,
+            flow.buildings.trade_settlements[1].settlement_id
+        );
+    }
+
+    #[test]
+    fn ordinary_field_hunter_auto_sells_requested_material_and_ignores_legacy_gold_row() {
+        let mut roster = operational_migration_roster();
+        roster
+            .assign_hunt(1, super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS[0])
+            .unwrap();
+        roster.hunters[0].hunt.loot = vec![
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "gold".to_owned(),
+                quantity: 500,
+            },
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "material:32".to_owned(),
+                quantity: 2,
+            },
+        ];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 2,
+            unit_price: 0,
+        }];
+        let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
+
+        flow.advance_simulation_tick().expect("village tick");
+
+        assert_eq!(flow.buildings.town_gold, 1_480);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, hunter_gold_before + 20);
+        assert_eq!(flow.buildings.material_stocks[0].unit_price, 10);
+        assert!(flow.hunter_roster.hunters[0].hunt.loot.is_empty());
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 2);
+        assert_eq!(flow.buildings.material_stocks[0].requested, 0);
+    }
+
+    #[test]
+    fn ordinary_field_hunter_sell_command_uses_the_requested_material_lane() {
+        let mut roster = operational_migration_roster();
+        roster
+            .assign_hunt(1, super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS[0])
+            .unwrap();
+        roster.hunters[0].hunt.loot = vec![
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "material:32".to_owned(),
+                quantity: 2,
+            },
+            super::super::hunter_roster::DurableHunterLoot {
+                item_id: "material:92".to_owned(),
+                quantity: 3,
+            },
+        ];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 1,
+            unit_price: 10,
+        }];
+
+        let result = flow
+            .handle_command_with_id(
+                ClientCommand::SellHunterLoot { hunter_id: 1 },
+                Uuid::from_u128(8_001),
+            )
+            .unwrap();
+
+        assert!(matches!(
+            result.message,
+            ServerMessage::IntentResult { accepted: true, .. }
+        ));
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 1);
+        assert_eq!(flow.buildings.material_stocks[0].requested, 0);
+        assert_eq!(flow.hunter_roster.hunters[0].hunt.loot[0].quantity, 1);
+        assert_eq!(flow.hunter_roster.hunters[0].hunt.loot[1].quantity, 3);
+    }
+
+    #[test]
+    fn auto_sale_buys_only_the_quantity_the_town_wallet_can_afford() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.loot = vec![super::super::hunter_roster::DurableHunterLoot {
+            item_id: "material:32".to_owned(),
+            quantity: 2,
+        }];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.town_gold = 15;
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 2,
+            unit_price: 10,
+        }];
+        let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
+
+        flow.advance_simulation_tick().expect("village tick");
+
+        assert_eq!(flow.buildings.town_gold, 5);
+        assert_eq!(flow.hunter_roster.hunters[0].gold, hunter_gold_before + 10);
+        assert_eq!(flow.buildings.material_stocks[0].town_quantity, 1);
+        assert_eq!(flow.buildings.material_stocks[0].requested, 1);
+        assert_eq!(flow.hunter_roster.hunters[0].hunt.loot[0].quantity, 1);
+    }
+
+    #[test]
+    fn auto_sale_does_not_enter_rejection_path_when_wallet_cannot_buy_one_unit() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.loot = vec![super::super::hunter_roster::DurableHunterLoot {
+            item_id: "material:32".to_owned(),
+            quantity: 2,
+        }];
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Village,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.buildings.town_gold = 9;
+        flow.buildings.material_stocks = vec![DurableMaterialStock {
+            id: "material:32".to_owned(),
+            town_quantity: 0,
+            hunter_quantity: 0,
+            requested: 2,
+            unit_price: 10,
+        }];
+
+        let hunter = &flow.hunter_roster.hunters[0];
+        assert!(!flow.has_affordable_auto_sale(hunter));
+        flow.advance_simulation_tick().expect("village tick");
+        assert_eq!(flow.buildings.town_gold, 9);
+        assert_eq!(flow.buildings.trade_settlements.len(), 0);
+        assert_eq!(flow.hunter_roster.hunters[0].hunt.loot[0].quantity, 2);
+    }
+
+    #[test]
     fn skill_and_revive_commands_are_whitelisted_and_persisted() {
         let mut flow = OriginalFlowSession::from_aggregate(
             DurablePlayerAggregate {
@@ -5980,7 +7842,7 @@ mod tests {
     }
 
     #[test]
-    fn all_basic_jobs_can_learn_and_activate_their_catalog_skills() {
+    fn all_basic_jobs_start_with_and_can_activate_their_two_catalog_skills() {
         let mut flow = OriginalFlowSession::from_aggregate(
             DurablePlayerAggregate {
                 hunter_roster: operational_migration_roster(),
@@ -5996,27 +7858,35 @@ mod tests {
             (4, ["skill_h4_01", "skill_h4_02"], 6_000),
             (5, ["skill_h5_01", "skill_h5_02"], 6_000),
         ];
-        let mut command = 211_u128;
         for (hunter_id, skill_ids, _) in jobs {
-            for skill_id in skill_ids {
-                let learned = flow
-                    .handle_command_with_id(
-                        ClientCommand::LearnHunterSkill {
-                            hunter_id,
-                            skill_id: skill_id.to_owned(),
-                        },
-                        Uuid::from_u128(command),
-                    )
-                    .unwrap();
-                command += 1;
-                assert!(matches!(
-                    learned.message,
-                    ServerMessage::IntentResult { accepted: true, .. }
-                ));
-            }
+            let hunter = &flow.hunter_roster.hunters[usize::try_from(hunter_id - 1).unwrap()];
+            assert_eq!(
+                hunter
+                    .profile
+                    .skills
+                    .iter()
+                    .map(|skill| skill.skill_id.as_str())
+                    .collect::<Vec<_>>(),
+                skill_ids
+            );
         }
 
         flow.monster_world.tick(&mut flow.hunter_roster);
+        let (target_id, target_x, target_y) = {
+            let target = &flow.monster_world.fields[0].monsters[0];
+            (target.entity_id.clone(), target.x, target.y)
+        };
+        let ranger_agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 3)
+            .unwrap();
+        ranger_agent.region_id = Some(flow.monster_world.fields[0].map_id.clone());
+        ranger_agent.x = target_x;
+        ranger_agent.y = target_y;
+        ranger_agent.target_monster_id = Some(target_id);
+        let mut command = 211_u128;
         for (hunter_id, skill_ids, cooldown_ms) in jobs {
             let used = flow
                 .handle_command_with_id(
@@ -6029,10 +7899,15 @@ mod tests {
                 )
                 .unwrap();
             command += 1;
-            assert!(matches!(
-                used.message,
-                ServerMessage::IntentResult { accepted: true, .. }
-            ));
+            assert!(
+                matches!(
+                    used.message,
+                    ServerMessage::IntentResult { accepted: true, .. }
+                ),
+                "hunter {hunter_id} failed to activate {}: {:?}",
+                skill_ids[0],
+                used.message
+            );
             let skill = &flow.hunter_roster.hunters[usize::try_from(hunter_id - 1).unwrap()]
                 .profile
                 .skills[0];
@@ -6060,14 +7935,166 @@ mod tests {
     }
 
     #[test]
-    fn durable_aggregate_excludes_ephemeral_monster_runtime() {
-        let mut flow = OriginalFlowSession::from_state(OriginalFlowPlayerState {
-            screen: OriginalScreen::Field,
-            boot_completed: true,
-        });
+    fn hunter_automatically_casts_the_first_ready_skill_on_an_acquired_target() {
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.state.screen = OriginalScreen::Village;
+        flow.monster_world.tick(&mut flow.hunter_roster);
+        let target = &flow.monster_world.fields[0].monsters[0];
+        let target_id = target.entity_id.clone();
+        let target_position = (target.x, target.y);
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        agent.region_id = Some(flow.monster_world.fields[0].map_id.clone());
+        agent.x = target_position.0;
+        agent.y = target_position.1;
+        agent.target_monster_id = Some(target_id);
+        agent.active_skill_id = None;
+        agent.action_state = HunterActionState::Attacking;
+
+        flow.auto_cast_ready_hunter_skills();
+
+        let skill = &flow.hunter_roster.hunters[0].profile.skills[0];
+        assert_eq!(skill.skill_id, "skill_h1_01");
+        assert!(!skill.ready);
+        assert_eq!(skill.cooldown_remaining_ms, 15_000);
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        assert_eq!(agent.active_skill_id.as_deref(), Some("skill_h1_01"));
+        assert_eq!(agent.recovery_ticks, 3);
+        assert_eq!(agent.skill_attack_percent, 10);
+        assert_eq!(agent.skill_attack_speed_milli, 2_380);
+
+        flow.advance_simulation_tick().expect("active village tick");
+        assert_eq!(
+            flow.hunter_roster.hunters[0].profile.skills[0].cooldown_remaining_ms,
+            14_900
+        );
+    }
+
+    #[test]
+    fn hunter_does_not_attempt_auto_cast_while_chasing_an_out_of_range_target() {
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.state.screen = OriginalScreen::Village;
+        flow.monster_world.tick(&mut flow.hunter_roster);
+        let target_id = flow.monster_world.fields[0].monsters[0].entity_id.clone();
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        agent.target_monster_id = Some(target_id);
+        agent.action_state = HunterActionState::Chasing;
+
+        flow.auto_cast_ready_hunter_skills();
+
+        let skill = &flow.hunter_roster.hunters[0].profile.skills[0];
+        assert!(skill.ready);
+        assert_eq!(skill.cooldown_remaining_ms, 0);
+        assert!(flow.monster_world.hunters[0].active_skill_id.is_none());
+    }
+
+    #[test]
+    fn rejected_targeted_skill_does_not_mutate_combat_presentation() {
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.monster_world.tick(&mut flow.hunter_roster);
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 3)
+            .unwrap();
+        agent.target_monster_id = None;
+        let before = agent.clone();
+
+        let result = flow
+            .handle_command_with_id(
+                ClientCommand::UseHunterSkill {
+                    hunter_id: 3,
+                    skill_id: "skill_h3_01".to_owned(),
+                    target_entity_id: None,
+                },
+                Uuid::from_u128(301),
+            )
+            .unwrap();
+
+        assert!(matches!(
+            result.message,
+            ServerMessage::IntentResult {
+                accepted: false,
+                ..
+            }
+        ));
+        assert_eq!(
+            flow.monster_world
+                .hunters
+                .iter()
+                .find(|agent| agent.hunter_id == 3)
+                .unwrap(),
+            &before
+        );
+    }
+
+    #[test]
+    fn durable_aggregate_restores_hunter_runtime_but_excludes_monsters_and_drops() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.zone_id = Some("background_11".to_owned());
+        roster.hunters[0].hunt.status = "hunting".to_owned();
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                navigation: OriginalFlowPlayerState {
+                    screen: OriginalScreen::Field,
+                    boot_completed: true,
+                },
+                hunter_roster: roster,
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
         flow.monster_world.enter_map("background_11").unwrap();
         flow.monster_world.set_density(3).unwrap();
         flow.monster_world.tick = 99;
+        flow.monster_world.tick(&mut flow.hunter_roster);
+        let target_id = flow.monster_world.fields[2].monsters[0].entity_id.clone();
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        agent.x = 411;
+        agent.y = 733;
+        agent.facing_left = true;
+        agent.action_state = HunterActionState::Attacking;
+        agent.animation = "hunter_atk".to_owned();
+        agent.target_monster_id = Some(target_id.clone());
+        agent.recovery_ticks = 4;
         flow.monster_world
             .current_field_mut()
             .drops
@@ -6086,6 +8113,7 @@ mod tests {
         let durable = flow.durable_state();
         let json = serde_json::to_value(&durable).unwrap();
         assert!(json.get("monster_world").is_none());
+        assert_eq!(json["hunter_world_runtime"][0]["x"], 411);
         assert!(json["monster_field_config"].get("tier_id").is_none());
         assert!(json["monster_field_config"].get("density_level").is_none());
         assert_eq!(
@@ -6113,6 +8141,105 @@ mod tests {
             .fields
             .iter()
             .all(|field| field.drops.is_empty()));
+        let restored_agent = restored
+            .monster_world
+            .hunters
+            .iter()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        assert_eq!((restored_agent.x, restored_agent.y), (411, 733));
+        assert!(restored_agent.facing_left);
+        assert_eq!(restored_agent.action_state, HunterActionState::Attacking);
+        assert_eq!(restored_agent.animation, "hunter_atk");
+        assert_eq!(
+            restored_agent.target_monster_id.as_deref(),
+            Some(target_id.as_str())
+        );
+        assert_eq!(restored_agent.recovery_ticks, 4);
+    }
+
+    #[test]
+    fn reconnect_drops_an_unrestorable_loot_action_without_resetting_position() {
+        let mut roster = operational_migration_roster();
+        roster.hunters[0].hunt.zone_id = Some("background_08".to_owned());
+        roster.hunters[0].hunt.status = "hunting".to_owned();
+        let runtime = HunterAgentState {
+            hunter_id: 1,
+            region_id: Some("background_08".to_owned()),
+            x: 123,
+            y: 456,
+            facing_left: false,
+            action_state: HunterActionState::CollectingLoot,
+            animation: "hunter_stay".to_owned(),
+            target_monster_id: None,
+            target_drop_id: Some("expired-drop".to_owned()),
+            recovery_ticks: 12,
+            respawn_ticks: None,
+            attack_sequence: 3,
+            loot_sequence: 8,
+            loot_item_id: Some("material:32".to_owned()),
+            loot_quantity: 2,
+            active_skill_id: None,
+            skill_buff_ticks: 0,
+            skill_attack_percent: 0,
+            skill_defense_percent: 0,
+            skill_evasion_percent: 0,
+            skill_critical_percent: 0,
+            skill_attack_speed_milli: 0,
+            ice_armor_active: false,
+            entry_stage: 2,
+        };
+        let restored = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                hunter_roster: roster,
+                hunter_world_runtime: vec![runtime],
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+
+        let agent = restored
+            .monster_world
+            .hunters
+            .iter()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        assert_eq!((agent.x, agent.y), (123, 456));
+        assert_eq!(agent.action_state, HunterActionState::AcquiringTarget);
+        assert!(agent.target_drop_id.is_none());
+        assert!(agent.loot_item_id.is_none());
+        assert_eq!(agent.loot_quantity, 0);
+        assert_eq!(agent.recovery_ticks, 0);
+    }
+
+    #[test]
+    fn world_projection_includes_the_collected_gold_quantity() {
+        let mut flow = OriginalFlowSession::from_aggregate(
+            DurablePlayerAggregate {
+                hunter_roster: operational_migration_roster(),
+                ..DurablePlayerAggregate::default()
+            },
+            7,
+        );
+        flow.state.screen = OriginalScreen::Village;
+        flow.monster_world.tick(&mut flow.hunter_roster);
+        let agent = flow
+            .monster_world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        agent.loot_sequence = 1;
+        agent.loot_item_id = Some("gold".to_owned());
+        agent.loot_quantity = 39;
+
+        let hunter = flow
+            .world_entities()
+            .into_iter()
+            .find(|entity| entity.descriptor.entity_id == "village-hunter-1")
+            .unwrap();
+
+        assert_eq!(hunter.loot_label.as_deref(), Some("Gold +39"));
     }
 
     #[test]
@@ -6164,6 +8291,36 @@ mod tests {
         );
     }
 
+    #[test]
+    fn simulation_outcome_is_invariant_to_scheduler_tick_rate() {
+        let state = OriginalFlowPlayerState {
+            screen: OriginalScreen::Village,
+            boot_completed: true,
+        };
+        let mut ten_hz = OriginalFlowSession::from_state(state.clone());
+        let mut twenty_hz = OriginalFlowSession::from_state(state);
+
+        let mut ten_hz_result = None;
+        for _ in 0..10 {
+            ten_hz_result = ten_hz.advance_simulation_step(100_000_000);
+        }
+        let mut twenty_hz_result = None;
+        for _ in 0..20 {
+            if let Some(result) = twenty_hz.advance_simulation_step(50_000_000) {
+                twenty_hz_result = Some(result);
+            }
+        }
+
+        let ten_hz_result = ten_hz_result.expect("10 Hz produces a domain frame");
+        let twenty_hz_result = twenty_hz_result.expect("20 Hz produces a domain frame");
+        assert_eq!(
+            ten_hz_result.simulation_tick,
+            twenty_hz_result.simulation_tick
+        );
+        assert_eq!(ten_hz_result.world, twenty_hz_result.world);
+        assert_eq!(ten_hz.durable_state(), twenty_hz.durable_state());
+    }
+
     fn accepted_snapshot(message: &ServerMessage) -> &OriginalFlowSnapshot {
         match message {
             ServerMessage::IntentResult { snapshot, .. }
@@ -6171,8 +8328,8 @@ mod tests {
             | ServerMessage::Resync { snapshot }
             | ServerMessage::WorldUpdate { snapshot }
             | ServerMessage::Welcome { snapshot, .. } => snapshot,
-            ServerMessage::WorldFrame { .. } => {
-                panic!("world frames do not carry domain snapshots")
+            ServerMessage::WorldFrame { .. } | ServerMessage::FarmReportQueued { .. } => {
+                panic!("lightweight transport messages do not carry domain snapshots")
             }
         }
     }

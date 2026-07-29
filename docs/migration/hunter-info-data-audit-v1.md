@@ -38,8 +38,8 @@ Existing exact evidence also supplies:
 - 33 Characteristic/personality definitions;
 - 5 class rows with HP, damage, armor, dodge, critical and attack-speed data;
 - 10 consumables, 671 gear definitions, 369 materials, 61 runes and their recipes;
-- 172 material icons currently packaged by the rebuild through the
-  `shop_product_<index>` filename convention;
+- 369 material icons packaged from the complete `src_<five-digit material id>`
+  sprite sequence;
 - 320 portraits and the modular Hunter Spine skins.
 
 Definition completeness must not be confused with player-state completeness.
@@ -148,11 +148,13 @@ pet, but the populated state cannot yet be authoritative.
 
 ### 6. Carried-materials tab
 
-All 369 material definitions are available. The rebuild currently exposes 172
-matching icon files selected by the `shop_product_<index>` filename convention;
-that convention is not a serialized row reference and does not cover the other
-197 rows. The original `HunterData` has per-Hunter item/consumable/gear
-collections.
+All 369 material definitions and all 369 matching `src_<five-digit material id>`
+sprites are available. The sequence is complete for IDs `0..368`; supplied
+original-game Trading Post evidence visually confirms representative bindings
+including Linen Cloth (`1`), Rugged Leather (`6`), Old Magic Powder (`139`),
+Leftover Orange (`144`) and Soggy Flour (`149`). The unrelated
+`shop_product_*` sprite namespace must not be used for materials. The original
+`HunterData` has per-Hunter item/consumable/gear collections.
 
 The current `BuildingSystemSnapshot.material_stocks` is town/trading stock, not
 the selected Hunter's carried inventory. `hunter_materials` is an aggregate

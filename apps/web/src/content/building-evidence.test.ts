@@ -60,6 +60,14 @@ describe("building evidence projection", () => {
     expect(view?.popupRoute).toBeNull();
     expect(view?.actionBlockedReason).toMatch(/controller dispatch/);
   });
+
+  it("routes the confirmed Enhancement Forge build_15 to its blocker shell", () => {
+    const registry = fixture();
+    registry.buildings.rows[0].buildId = field("build_15");
+    const view = projectBuildingEvidence(registry, "build_15");
+    expect(view?.popupRoute).toBe("gear-enhancement");
+    expect(view?.actionBlockedReason).toBe("popup-template-binding");
+  });
 });
 
 function fixture(): EvidenceBuildingRegistry {

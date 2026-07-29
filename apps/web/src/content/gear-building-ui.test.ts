@@ -44,8 +44,11 @@ describe("gear building UI integration", () => {
     );
     expect(gearCatalogRenderer).not.toContain('document.createElement("select")');
     expect(gearCatalogRenderer).not.toContain("Gear quality tier");
-    expect(gearCatalogRenderer).toContain("rating === unlockedRating");
+    expect(gearCatalogRenderer).not.toContain("qualityUnlocked");
+    expect(gearCatalogRenderer).toContain('card.className = "gear-catalog-card"');
     expect(gearCatalogRenderer).toContain('action.textContent = "Craft"');
+    expect(gearCatalogRenderer).toContain('const qualityLabels = ["Regular", "Sturdy", "Refined", "Powerful", "Supreme"]');
+    expect(gearCatalogRenderer).toContain('card.setAttribute("aria-label", `${recipe.product_name} · ${qualityLabel}`)');
     expect(styles).toContain("grid-auto-rows: 70px");
     expect(styles).toContain("max-height: 112px");
     expect(source).toContain('count.textContent = `${matching.length} items`');
@@ -53,9 +56,14 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".on-display-badge");
     expect(styles).toContain(".gear-create-pop.gear-detail-mode");
     expect(source).toContain('id="gear-quantity-minus"');
+    expect(source).toContain('id="gear-create-quantity" type="number"');
+    expect(source).toContain('data-gear-delta="1"');
     expect(source).toContain('data-gear-delta="1000"');
-    expect(styles).toContain("grid-template-columns: repeat(4, minmax(0, 1fr))");
+    expect(source).not.toContain("data-gear-max");
+    expect(styles).toContain(".quantity-input-row input[type='number']");
     expect(source).toContain("gearMaterialIcons.get(cost.material_id)");
     expect(source).toContain('icon.className = "unresolved-material-icon"');
+    expect(source).toContain('id="consum-create-icon-placeholder"');
+    expect(styles).toContain(".product-icon-unresolved");
   });
 });

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { PRODUCT_SERVICE_ROUTES, productServiceRoute, productServiceSprite, projectProductService } from "./product-service-routes";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { PRODUCT_SERVICE_ROUTES, PRODUCT_SERVICE_SPRITES, productServiceRoute, productServiceSprite, projectProductService } from "./product-service-routes";
 
 describe("ProductCreatePop service routes", () => {
   it("keeps the recovered seven-product order per building", () => {
@@ -21,5 +23,12 @@ describe("ProductCreatePop service routes", () => {
     expect(productServiceRoute("build_10")).toBeNull();
     expect(productServiceSprite("product:0")).toContain("product_00__3523.png");
     expect(productServiceSprite("product:5")).toContain("product_05__2957.png");
+  });
+
+  it("packages every service product sprite referenced by the runtime contract", async () => {
+    await Promise.all(Object.values(PRODUCT_SERVICE_SPRITES).map(async (iconPath) => {
+      const localPath = resolve(import.meta.dirname, `../../public${iconPath}`);
+      expect((await readFile(localPath)).byteLength).toBeGreaterThan(0);
+    }));
   });
 });

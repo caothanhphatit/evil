@@ -6,6 +6,7 @@ use uuid::Uuid;
 
 use super::combat_core::hit_resolution::OriginalEvasionCalculator;
 use super::product_service::HunterServiceGauge;
+use super::rng::DeterministicRng;
 use super::DurableHunterRuntimeState;
 
 pub const MAX_ACTIVE_TOWN_HUNTERS: usize = 8;
@@ -13,6 +14,7 @@ pub const MIGRATION_HUNTER_RELEASE_ID: &str = "migration.hunter-demo-v1";
 pub const HUNT_TICKS_TO_RETURN: u32 = 10;
 pub const FIXTURE_HUNT_ZONE_ID: &str = "migration-zone-1";
 pub const ORDINARY_HUNT_REGION_IDS: [&str; 3] = ["map_new01", "background_08", "background_11"];
+pub const GEAR_ENHANCEMENT_WORKFLOW_VERSION: u16 = 1;
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
@@ -23,12 +25,94 @@ pub struct DurableHunterLoot {
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
+pub struct DurableHunterOwnedItem {
+    pub product_id: String,
+    pub quantity: u32,
+    #[serde(default)]
+    pub enhancement_level: Option<u8>,
+    #[serde(default)]
+    pub gear_instance_id: Option<Uuid>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum GearEnhancementTaskStatus {
+    Traveling,
+    WaitingForInteraction,
+    Configuring,
+    Processing,
+    Result,
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableGearEnhancementAttempt {
+    pub attempt: u32,
+    pub starting_level: u8,
+    pub resulting_level: u8,
+    pub succeeded: bool,
+    pub gold_spent: u64,
+    pub materials_spent: Vec<DurableHunterLoot>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableGearEnhancementTask {
+    /// Zero identifies rows written before enhancement workflow compatibility
+    /// was tracked. Such tasks are released during session restore.
+    pub workflow_version: u16,
+    pub building_instance_id: String,
+    pub status: GearEnhancementTaskStatus,
+    pub interaction_x: i32,
+    pub interaction_y: i32,
+    pub selected_gear_instance_id: Option<Uuid>,
+    pub selected_product_id: Option<String>,
+    pub mode: Option<String>,
+    pub target_level: Option<u8>,
+    pub optional_material_ids: Vec<String>,
+    pub attempts: Vec<DurableGearEnhancementAttempt>,
+    pub spent_gold: u64,
+    pub spent_materials: Vec<DurableHunterLoot>,
+    pub final_level: Option<u8>,
+    pub stop_reason: Option<String>,
+    pub blockers: Vec<String>,
+}
+
+impl Default for DurableGearEnhancementTask {
+    fn default() -> Self {
+        Self {
+            workflow_version: 0,
+            building_instance_id: String::new(),
+            status: GearEnhancementTaskStatus::Traveling,
+            interaction_x: 0,
+            interaction_y: 0,
+            selected_gear_instance_id: None,
+            selected_product_id: None,
+            mode: None,
+            target_level: None,
+            optional_material_ids: Vec::new(),
+            attempts: Vec::new(),
+            spent_gold: 0,
+            spent_materials: Vec::new(),
+            final_level: None,
+            stop_reason: None,
+            blockers: Vec::new(),
+        }
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
 pub struct DurableHunterHuntState {
     /// This is an explicit web-rebuild-v1 fixture state, not a recovered legacy rule.
     pub status: String,
     pub zone_id: Option<String>,
     pub progress_ticks: u32,
     pub loot: Vec<DurableHunterLoot>,
+    #[serde(default)]
+    pub healing_potion_cooldown_ms: u64,
+    #[serde(default)]
+    pub gear_enhancement: Option<DurableGearEnhancementTask>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
@@ -216,11 +300,40 @@ impl DurableHunterProfile {
             ),
             riding_pet_state_resolved: hunter_id % 3 == 0,
             equipment_slots: fixture_equipment(class.0, hunter_id),
+            skills: fixture_basic_skills(class.0),
             action_state: "idle".to_owned(),
             animation_name: "hunter_stay".to_owned(),
             ..Self::default()
         }
     }
+}
+
+fn fixture_basic_skills(class_id: &str) -> Vec<DurableHunterSkill> {
+    let rows = match class_id {
+        "h1" => [("skill_h1_01", "Fury"), ("skill_h1_02", "War Cry")],
+        "h2" => [("skill_h2_01", "Holy Light"), ("skill_h2_02", "Barrier")],
+        "h3" => [("skill_h3_01", "Multishot"), ("skill_h3_02", "Dodge")],
+        "h4" => [("skill_h4_01", "Thunderbolt"), ("skill_h4_02", "Ice Armor")],
+        "h5" => [
+            ("skill_h5_01", "Round Slash"),
+            ("skill_h5_02", "Concentrate"),
+        ],
+        _ => return Vec::new(),
+    };
+    rows.into_iter()
+        .map(|(skill_id, display_name)| DurableHunterSkill {
+            skill_id: skill_id.to_owned(),
+            display_name: display_name.to_owned(),
+            icon_path: match skill_id {
+                "skill_h1_01" => Some("sprites/skill_h1_01__1395.png".to_owned()),
+                "skill_h1_02" => Some("sprites/skill_h1_02__5620.png".to_owned()),
+                _ => None,
+            },
+            skill_level: 1,
+            ready: true,
+            ..DurableHunterSkill::default()
+        })
+        .collect()
 }
 
 fn fixture_equipment(class_id: &str, hunter_id: u32) -> Vec<DurableHunterEquipmentSlot> {
@@ -286,28 +399,32 @@ pub fn upgrade_operational_fixture_roster(roster: &mut DurableHunterRosterState)
         .iter_mut()
         .chain(roster.waiting_queue.iter_mut().map(|row| &mut row.hunter))
     {
-        let profile = &hunter.profile;
-        let old_fixture = profile.content_release_id == MIGRATION_HUNTER_RELEASE_ID
-            && profile.class_id == "h1"
-            && profile.visual_family == "H1"
-            && profile.level == 1
-            && profile.attack == 10
-            && profile.defense == 10;
+        let is_migration_fixture = hunter.profile.content_release_id == MIGRATION_HUNTER_RELEASE_ID;
+        let old_fixture = is_migration_fixture
+            && hunter.profile.class_id == "h1"
+            && hunter.profile.visual_family == "H1"
+            && hunter.profile.level == 1
+            && hunter.profile.attack == 10
+            && hunter.profile.defense == 10;
         if !old_fixture {
-            if profile.content_release_id == MIGRATION_HUNTER_RELEASE_ID
-                && hunter.profile.equipment_slots.is_empty()
-            {
+            if is_migration_fixture && hunter.profile.equipment_slots.is_empty() {
                 hunter.profile.equipment_slots =
                     fixture_equipment(&hunter.profile.class_id, hunter.hunter_id);
                 upgraded = true;
             }
+            if is_migration_fixture && hunter.profile.skills.is_empty() {
+                hunter.profile.skills = fixture_basic_skills(&hunter.profile.class_id);
+                upgraded = true;
+            }
             continue;
         }
-        let skills = profile.skills.clone();
-        let action_state = profile.action_state.clone();
-        let animation_name = profile.animation_name.clone();
+        let skills = hunter.profile.skills.clone();
+        let action_state = hunter.profile.action_state.clone();
+        let animation_name = hunter.profile.animation_name.clone();
         hunter.profile = DurableHunterProfile::migration_default(hunter.hunter_id);
-        hunter.profile.skills = skills;
+        if !skills.is_empty() {
+            hunter.profile.skills = skills;
+        }
         hunter.profile.action_state = action_state;
         hunter.profile.animation_name = animation_name;
         upgraded = true;
@@ -324,32 +441,136 @@ pub fn operational_migration_roster() -> DurableHunterRosterState {
         ..DurableHunterRosterState::default()
     };
     for hunter_id in 1..=9 {
+        let class_id = ["h1", "h2", "h3", "h4", "h5"][(hunter_id as usize - 1) % 5];
+        let (max_hp, current_hp) = fixture_hp_values(hunter_id, class_id);
+        let (stamina_max, satiety_max, mood_max) = fixture_gauge_maxima(hunter_id);
         let hunter = DurableHunterState {
             hunter_id,
             gold: 1_000,
-            current_hp: 72 + u64::from((hunter_id * 3) % 29),
-            max_hp: 100,
+            current_hp,
+            max_hp,
             stamina: HunterServiceGauge {
-                current: 65 + u64::from((hunter_id * 5) % 31),
-                maximum: 100,
+                current: stamina_max.saturating_sub(10 + u64::from((hunter_id * 5) % 31)),
+                maximum: stamina_max,
             },
             satiety: HunterServiceGauge {
-                current: 60 + u64::from((hunter_id * 7) % 36),
-                maximum: 100,
+                current: satiety_max.saturating_sub(12 + u64::from((hunter_id * 7) % 36)),
+                maximum: satiety_max,
             },
             mood: HunterServiceGauge {
-                current: 70 + u64::from((hunter_id * 4) % 27),
-                maximum: 100,
+                current: mood_max.saturating_sub(8 + u64::from((hunter_id * 4) % 27)),
+                maximum: mood_max,
             },
             profile: DurableHunterProfile::migration_default(hunter_id),
             runtime: DurableHunterRuntimeState::default(),
             hunt: DurableHunterHuntState::default(),
+            owned_items: Vec::new(),
         };
         roster
             .arrive(hunter)
             .expect("fixed migration roster satisfies capacity invariants");
     }
     roster
+}
+
+/// Seeds the starter roster for a newly registered local account. This is a
+/// rebuild rule: the original starter roll is unresolved, so the server owns a
+/// deterministic RNG stream derived from the account UUID and never rerolls it
+/// on reconnect.
+pub fn new_account_roster(player_token: Uuid) -> DurableHunterRosterState {
+    const CLASSES: [(&str, &str, &str); 5] = [
+        ("h1", "Berserker", "H1"),
+        ("h2", "Paladin", "H2"),
+        ("h3", "Ranger", "H3"),
+        ("h4", "Sorcerer", "H4"),
+        ("h5", "DarkKnight", "H5"),
+    ];
+    const RARITIES: [(&str, &str); 5] = [
+        ("normal", "Normal"),
+        ("rare", "Rare"),
+        ("superior", "Superior"),
+        ("heroic", "Heroic"),
+        ("legendary", "Legendary"),
+    ];
+    let seed = u64::from_le_bytes(player_token.as_bytes()[..8].try_into().unwrap());
+    let mut rng = DeterministicRng::new(seed);
+    let mut roster = DurableHunterRosterState {
+        roster_resolved: true,
+        wallets_resolved: true,
+        ..DurableHunterRosterState::default()
+    };
+    for hunter_id in 1..=5 {
+        let class = CLASSES[rng.range_inclusive(0, 4) as usize];
+        let rarity = RARITIES[rng.range_inclusive(0, 4) as usize];
+        let base_hp = if matches!(class.0, "h3" | "h4") {
+            5_600
+        } else {
+            6_000
+        };
+        let max_hp = base_hp + rng.range_inclusive(0, 200) as u64;
+        let current_hp = max_hp.saturating_sub(rng.range_inclusive(80, 500) as u64);
+        let stamina_max = rng.range_inclusive(90, 150) as u64;
+        let satiety_max = rng.range_inclusive(95, 160) as u64;
+        let mood_max = rng.range_inclusive(85, 155) as u64;
+        let mut profile = DurableHunterProfile::migration_default(hunter_id);
+        profile.class_id = class.0.to_owned();
+        profile.class_name = class.1.to_owned();
+        profile.visual_family = class.2.to_owned();
+        profile.rarity_id = rarity.0.to_owned();
+        profile.rarity_name = rarity.1.to_owned();
+        profile.level = 1 + rng.range_inclusive(0, 4) as u32;
+        profile.xp = 0;
+        profile.equipment_slots = fixture_equipment(class.0, hunter_id);
+        profile.skills = fixture_basic_skills(class.0);
+        let hunter = DurableHunterState {
+            hunter_id,
+            gold: 0,
+            current_hp,
+            max_hp,
+            stamina: HunterServiceGauge {
+                current: stamina_max.saturating_sub(rng.range_inclusive(0, 20) as u64),
+                maximum: stamina_max,
+            },
+            satiety: HunterServiceGauge {
+                current: satiety_max.saturating_sub(rng.range_inclusive(0, 20) as u64),
+                maximum: satiety_max,
+            },
+            mood: HunterServiceGauge {
+                current: mood_max.saturating_sub(rng.range_inclusive(0, 20) as u64),
+                maximum: mood_max,
+            },
+            profile,
+            runtime: DurableHunterRuntimeState::default(),
+            hunt: DurableHunterHuntState::default(),
+            owned_items: Vec::new(),
+        };
+        roster
+            .arrive(hunter)
+            .expect("new-account starter roster satisfies capacity invariants");
+    }
+    roster
+}
+
+// These are deterministic rebuild fixtures, not claims about the unresolved
+// original constructor RNG. HP stays inside the recovered class bounds while
+// the other three native current/max pairs remain visibly non-percent gauges.
+fn fixture_hp_values(hunter_id: u32, class_id: &str) -> (u64, u64) {
+    let base = if matches!(class_id, "h3" | "h4") {
+        5_600
+    } else {
+        6_000
+    };
+    let maximum = base + u64::from((hunter_id * 37) % 201);
+    let current = maximum.saturating_sub(180 + u64::from((hunter_id * 53) % 420));
+    (current, maximum)
+}
+
+fn fixture_gauge_maxima(hunter_id: u32) -> (u64, u64, u64) {
+    (
+        90 + u64::from((hunter_id * 17) % 61),
+        95 + u64::from((hunter_id * 23) % 66),
+        85 + u64::from((hunter_id * 29) % 71),
+    )
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
@@ -384,6 +605,8 @@ pub struct DurableHunterState {
     pub runtime: DurableHunterRuntimeState,
     #[serde(default)]
     pub hunt: DurableHunterHuntState,
+    #[serde(default)]
+    pub owned_items: Vec<DurableHunterOwnedItem>,
 }
 
 impl DurableHunterHuntState {
@@ -441,15 +664,23 @@ impl DurableHunterRosterState {
             return Err(HunterRosterError::InvalidState("hunt zone is unavailable"));
         }
         let hunter = self.active_mut(hunter_id)?;
+        if hunter.hunt.gear_enhancement.is_some() {
+            return Err(HunterRosterError::InvalidState(
+                "hunter has an active enhancement task",
+            ));
+        }
         if !hunter.hunt.is_idle() && hunter.hunt.status != "hunting" {
             return Err(HunterRosterError::InvalidState("hunter is not idle"));
         }
         let existing_loot = std::mem::take(&mut hunter.hunt.loot);
+        let healing_potion_cooldown_ms = hunter.hunt.healing_potion_cooldown_ms;
         hunter.hunt = DurableHunterHuntState {
             status: "hunting".to_owned(),
             zone_id: Some(zone_id.to_owned()),
             progress_ticks: 0,
             loot: existing_loot,
+            healing_potion_cooldown_ms,
+            gear_enhancement: None,
         };
         hunter.profile.action_state = "hunting".to_owned();
         hunter.profile.animation_name = "hunter_walk".to_owned();
@@ -697,6 +928,22 @@ impl DurableHunterRosterState {
 mod tests {
     use super::*;
 
+    #[test]
+    fn new_account_seed_has_five_rng_hunters_and_is_replayable() {
+        let player = Uuid::from_u128(0x1234);
+        let first = new_account_roster(player);
+        let second = new_account_roster(player);
+        assert_eq!(first, second);
+        assert_eq!(first.hunters.len(), 5);
+        assert!(first.waiting_queue.is_empty());
+        assert!(first.validate().is_ok());
+        assert!(first.hunters.iter().all(|hunter| hunter.gold == 0));
+        assert!(first
+            .hunters
+            .iter()
+            .any(|hunter| hunter.profile.class_id != "h1"));
+    }
+
     fn hunter(hunter_id: u32) -> DurableHunterState {
         DurableHunterState {
             hunter_id,
@@ -709,6 +956,7 @@ mod tests {
             profile: DurableHunterProfile::migration_default(hunter_id),
             runtime: DurableHunterRuntimeState::default(),
             hunt: DurableHunterHuntState::default(),
+            owned_items: Vec::new(),
         }
     }
 

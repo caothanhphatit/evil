@@ -27,6 +27,7 @@ describe("original combat presentation contract", () => {
     expect(combatPresentationText(event("normal_damage", 1234))).toEqual(["1,234"]);
     expect(combatPresentationText(event("incoming_damage", 987))).toEqual(["987"]);
     expect(combatPresentationText(event("critical_damage", 4321))).toEqual(["CRIT", "4,321"]);
+    expect(combatPresentationText(event("experience", 77))).toEqual(["+77 EXP"]);
     expect(combatPresentationText(event("evade", null))).toEqual(["Evade"]);
     expect(combatPresentationText(event("miss", null))).toEqual(["Miss"]);
   });
@@ -52,6 +53,7 @@ describe("original combat presentation contract", () => {
   it("fails closed on incompatible amount payloads", () => {
     expect(combatPresentationHasValidPayload("normal_damage", 1)).toBe(true);
     expect(combatPresentationHasValidPayload("incoming_damage", 1)).toBe(true);
+    expect(combatPresentationHasValidPayload("experience", 1)).toBe(true);
     expect(combatPresentationHasValidPayload("critical_damage", null)).toBe(false);
     expect(combatPresentationHasValidPayload("evade", null)).toBe(true);
     expect(combatPresentationHasValidPayload("evade", 0)).toBe(false);
@@ -59,7 +61,7 @@ describe("original combat presentation contract", () => {
   });
 });
 
-function event(kind: "incoming_damage" | "normal_damage" | "critical_damage" | "evade" | "miss", amount: number | null) {
+function event(kind: "incoming_damage" | "normal_damage" | "critical_damage" | "experience" | "evade" | "miss", amount: number | null) {
   return {
     sequence: 1,
     source_entity_id: "source",

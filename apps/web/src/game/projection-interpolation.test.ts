@@ -21,7 +21,7 @@ describe("protocol-v5 projection interpolation", () => {
   });
 
   it("advances walking presentation independently between confirmations", () => {
-    const buffer = new ProjectionBuffer();
+    const buffer = new ProjectionBuffer({ renderDelayMs: 0, maxExtrapolationTicks: 5 });
     buffer.push("village", 10, [entity(0)], 1000);
     buffer.push("village", 11, [entity(100)], 1100);
     expect(buffer.sample(1100)?.entities[0]?.x).toBe(100);
@@ -37,7 +37,7 @@ describe("protocol-v5 projection interpolation", () => {
   });
 
   it("bounds Hunter dead reckoning when confirmations are delayed", () => {
-    const buffer = new ProjectionBuffer();
+    const buffer = new ProjectionBuffer({ renderDelayMs: 0, maxExtrapolationTicks: 5 });
     buffer.push("village", 10, [entity(0)], 1000);
     buffer.push("village", 11, [entity(10)], 1100);
     expect(buffer.sample(1600)?.entities[0]?.x).toBe(60);
@@ -45,7 +45,7 @@ describe("protocol-v5 projection interpolation", () => {
   });
 
   it("bounds monster patrol dead reckoning when confirmations are delayed", () => {
-    const buffer = new ProjectionBuffer();
+    const buffer = new ProjectionBuffer({ renderDelayMs: 0, maxExtrapolationTicks: 5 });
     const monster = { ...entity(0), descriptor: { ...entity(0).descriptor, kind: "monster" as const } };
     buffer.push("village", 10, [monster], 1000);
     buffer.push("village", 11, [{ ...monster, x: 10 }], 1100);
@@ -57,6 +57,38 @@ describe("protocol-v5 projection interpolation", () => {
     buffer.push("village", 10, [entity(0)], 1000);
     buffer.push("village", 11, [{ ...entity(10), action_state: "attacking" }], 1100);
     expect(buffer.sample(1400)?.entities[0]?.x).toBe(10);
+  });
+
+  it("does not overshoot and snap backward during steady authoritative movement", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 150 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+    const beforeConfirmation = buffer.sample(1190)?.entities[0]?.x ?? 0;
+    buffer.push("village", 12, [entity(20)], 1200);
+    const afterConfirmation = buffer.sample(1200)?.entities[0]?.x ?? 0;
+
+    expect(beforeConfirmation).toBeLessThanOrEqual(10);
+    expect(afterConfirmation).toBeGreaterThanOrEqual(beforeConfirmation);
+  });
+
+  it("keeps the client presentation clock monotonic when a confirmation arrives", () => {
+    const buffer = new ProjectionBuffer();
+    buffer.push("village", 10, [entity(0)], 1000);
+    expect(buffer.sample(1000)?.entities[0]?.x).toBe(0);
+    buffer.push("village", 11, [entity(10)], 1100);
+    expect(buffer.sample(1190)?.entities[0]?.x).toBeCloseTo(19);
+
+    buffer.push("village", 12, [entity(20)], 1200);
+    expect(buffer.sample(1200)?.entities[0]?.x).toBe(20);
+  });
+
+  it("uses immediate prediction with enough headroom for brief frame delays", () => {
+    const buffer = new ProjectionBuffer();
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+
+    expect(buffer.sample(1150)?.entities[0]?.x).toBe(15);
+    expect(buffer.sample(1500)?.entities[0]?.x).toBe(40);
   });
 
   it("snaps instead of crossing a teleport or visual-tick gap", () => {
@@ -98,10 +130,13 @@ function entity(x: number): WorldEntityProjection {
     class_family: "H1",
     target_entity_id: null,
     action_sequence: 0,
+    loot_sequence: 0,
+    loot_label: null,
     attack_effect_key: null,
     skill_presentation_key: null,
     current_hp: 100,
     maximum_hp: 100,
+    interaction_prompt_key: null,
     selectable: true,
   };
 }

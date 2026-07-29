@@ -3,14 +3,15 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use super::{BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
+use super::{farm_validation::FarmReport, BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 24;
+pub const PROTOCOL_VERSION: u16 = 28;
 pub const MAX_MESSAGE_BYTES: usize = 1048576;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]
 pub enum ClientCommand {
+    SubmitFarmReport { report: FarmReport },
     StartBuildingService { instance_id: String, hunter_id: u32, product_id: String },
     StartInfirmaryTreatment { instance_id: String, hunter_id: u32, product_id: String },
     CompleteBoot,
@@ -39,9 +40,11 @@ pub enum ClientCommand {
     UseHunterSkill { hunter_id: u32, skill_id: String, target_entity_id: Option<String> },
     BanishHunter { hunter_id: u32 },
     EquipHunterItem { hunter_id: u32, item_id: u32 },
+    StartHunterEnhancement { hunter_id: u32 },
+    EnhanceHunterGear { hunter_id: u32, gear_instance_id: Uuid, mode: String, optional_material_ids: Vec<String> },
     ClaimQuestReward { quest_id: String },
     OpenShop { shop_id: String },
-    PurchaseShopItem { shop_id: String, product_id: String },
+    PurchaseShopItem { hunter_id: u32, shop_id: String, product_id: String },
     SellShopItem { shop_id: String, product_id: String },
     ClaimMail { mail_id: String },
     ClaimRewardedAd { placement: String },
@@ -52,6 +55,7 @@ pub enum ClientCommand {
 #[derive(Debug, Serialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ServerMessage {
+    FarmReportQueued { window_id: u64 },
     Welcome { player_token: Uuid, session_id: Uuid, snapshot: OriginalFlowSnapshot },
     Resync { snapshot: OriginalFlowSnapshot },
     WorldUpdate { snapshot: OriginalFlowSnapshot },
