@@ -7,10 +7,23 @@
    `Ma Giới` in the recovered ordinary-region order.
 2. **Authoritative region assignment** - complete. The browser sends only the
    Hunter ID and region ID through `assign_hunter_hunt`; the Rust session owns
-   the resulting hunt state.
+   the resulting hunt state. A player-issued ordinary-region assignment is the
+   highest-priority Hunter task: it preempts an unfinished town task, refunds an
+   unfinished paid service and its consumed stock, and publishes the
+   `EnteringRegion` FSM in the accepted snapshot. Reassignment also normalizes
+   an older persisted bridge checkpoint to the furthest reached entry waypoint;
+   a position outside the assigned field, town floor and recovered bridge
+   checkpoints is relocated to a clear town anchor before routing. Dead Hunters
+   remain rejected. Migration `0029` keeps PostgreSQL's normalized Hunter
+   action constraint aligned with the durable `entering_region` FSM state, so
+   an accepted assignment cannot disconnect during checkpoint persistence.
 3. **Shared-world navigation** - complete. Town and the three hunting regions
    remain in one actor roster and coordinate space. Hunter assignment changes
-   AI destination, not world ownership or scene lifetime.
+   AI destination, not world ownership or scene lifetime. Clearing a field
+   assignment now preserves the Hunter's current position and walks through the
+   town-arrival corridor instead of relocating directly to a town anchor.
+   Returning low-HP Hunters with no owned potion continue to an obstacle-safe
+   Infirmary interaction point when an affordable stocked treatment exists.
 4. **Hunter and monster FSM runtime** - complete for the basic loop. Typed
    states cover entry, target acquisition, chase, attack, loot collection,
    patrol, death, and respawn.
@@ -56,8 +69,11 @@
 11. **Ordinary-region entry routing** - partial. Hunters enter through the
     exact recovered bridge and density-sign scene anchors before moving into
     the corresponding safe field extent. The left and southern routes use
-    `Village_Bridge_C` with `sign_01` or `sign_02`; the eastern route uses
-    `sign_03` and `Village_Bridge_B`, following their town-to-field geometry.
+    `Village_Bridge_C`; the eastern route uses `Village_Bridge_B`. Each route
+    now approaches from a tested safe-floor anchor before crossing the
+    recovered bridge center and leaving from the sprite's field-side edge.
+    Density signs remain interaction controls and are no longer treated as
+    walkable waypoints.
     Original path-helper and navigation-polygon semantics remain unresolved.
     Bridge sprites render as walkable floor surfaces above the town ground but
     below actors, so the exact route no longer visually passes underneath the
@@ -78,15 +94,20 @@
     waypoint before the next idle. `EvilCtrl.FsmMoveEnd` confirms the original
     waypoint-end transition, but not its numeric radius or pause duration.
 14. **Town Hunter movement** - implemented as an explicit rebuild fixture.
-    Unassigned Hunters select deterministic town waypoints, route with the same
-    server obstacle solver, pause between waypoints, and remain in town bounds.
-    No native town-roam waypoint table has been recovered, so this is
-    presentation tuning rather than a claim about original cadence.
+    Unassigned Hunters follow deterministic per-Hunter waypoint permutations,
+    keep a destination until they reach it, and use staggered per-journey pause
+    durations. This avoids the former shared global cadence that made the town
+    roster march in rows and reverse direction together. Movement still uses
+    the server obstacle solver and remains inside the confirmed safe town floor.
+    No native town-roam waypoint table has been recovered, so the route order
+    and pause distribution are presentation tuning rather than a claim about
+    original cadence.
 15. **Reconnect continuity** - complete for active Hunter agents. PostgreSQL
     checkpoints preserve each Hunter's scene position, facing, FSM action,
     animation, combat target, recovery/respawn timers, presentation sequences,
-    active temporary skill state, and region-entry stage. Re-entering the game
-    restores that state before the welcome snapshot is projected. Monster
+    active temporary skill state, region-entry stage, and town-roam journey and
+    pause state. Re-entering the game restores that state before the welcome
+    snapshot is projected. Monster
     actors and ground drops remain reconstructable ephemeral state; a persisted
     target is retained only when the regenerated monster ID is live, while an
     interrupted loot action falls back to target acquisition at the same Hunter
@@ -143,8 +164,9 @@ Current temporary choices are:
   The packaged row mapping is exact, but the original type-selection/random
   order is unresolved, so this deterministic order is rebuild fixture policy;
 - the town revival anchor;
-- town-roam waypoint anchors and cadence (temporary fixture only; native
-  waypoint semantics remain unresolved);
+- town-roam waypoint anchors, deterministic per-Hunter route permutation and
+  staggered pause cadence (temporary fixture only; native waypoint semantics
+  remain unresolved);
 - ordinary-field extents extending outward from the exact recovered
   `sign_01`, `sign_02`, and `sign_03` transforms; the extents are isolated from
   the town building zone and remain temporary until navigation polygons are

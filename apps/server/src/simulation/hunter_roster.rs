@@ -664,13 +664,8 @@ impl DurableHunterRosterState {
             return Err(HunterRosterError::InvalidState("hunt zone is unavailable"));
         }
         let hunter = self.active_mut(hunter_id)?;
-        if hunter.hunt.gear_enhancement.is_some() {
-            return Err(HunterRosterError::InvalidState(
-                "hunter has an active enhancement task",
-            ));
-        }
-        if !hunter.hunt.is_idle() && hunter.hunt.status != "hunting" {
-            return Err(HunterRosterError::InvalidState("hunter is not idle"));
+        if hunter.current_hp == 0 || hunter.hunt.status == "dead" {
+            return Err(HunterRosterError::InvalidState("hunter is dead"));
         }
         let existing_loot = std::mem::take(&mut hunter.hunt.loot);
         let healing_potion_cooldown_ms = hunter.hunt.healing_potion_cooldown_ms;
@@ -682,7 +677,12 @@ impl DurableHunterRosterState {
             healing_potion_cooldown_ms,
             gear_enhancement: None,
         };
-        hunter.profile.action_state = "hunting".to_owned();
+        hunter.profile.action_state = if ORDINARY_HUNT_REGION_IDS.contains(&zone_id) {
+            "entering_region"
+        } else {
+            "hunting"
+        }
+        .to_owned();
         hunter.profile.animation_name = "hunter_walk".to_owned();
         Ok(())
     }
@@ -1227,6 +1227,45 @@ mod tests {
         );
         roster.return_from_hunt(1).unwrap();
         assert!(roster.hunters[0].hunt.is_idle());
+    }
+
+    #[test]
+    fn player_hunt_assignment_preempts_non_dead_hunter_tasks() {
+        let mut roster = operational_migration_roster();
+        let hunter = &mut roster.hunters[0];
+        hunter.hunt.status = "returning_for_infirmary".to_owned();
+        hunter.hunt.loot.push(DurableHunterLoot {
+            item_id: "material:21".to_owned(),
+            quantity: 3,
+        });
+        hunter.hunt.healing_potion_cooldown_ms = 1_200;
+        hunter.hunt.gear_enhancement = Some(DurableGearEnhancementTask::default());
+
+        roster.assign_hunt(1, ORDINARY_HUNT_REGION_IDS[0]).unwrap();
+
+        let hunter = &roster.hunters[0];
+        assert_eq!(hunter.hunt.status, "hunting");
+        assert_eq!(
+            hunter.hunt.zone_id.as_deref(),
+            Some(ORDINARY_HUNT_REGION_IDS[0])
+        );
+        assert_eq!(hunter.hunt.loot[0].quantity, 3);
+        assert_eq!(hunter.hunt.healing_potion_cooldown_ms, 1_200);
+        assert!(hunter.hunt.gear_enhancement.is_none());
+        assert_eq!(hunter.profile.action_state, "entering_region");
+    }
+
+    #[test]
+    fn player_hunt_assignment_does_not_preempt_death() {
+        let mut roster = operational_migration_roster();
+        roster.defeat_hunter(1).unwrap();
+
+        assert_eq!(
+            roster.assign_hunt(1, ORDINARY_HUNT_REGION_IDS[0]),
+            Err(HunterRosterError::InvalidState("hunter is dead"))
+        );
+        assert_eq!(roster.hunters[0].hunt.status, "dead");
+        assert!(roster.hunters[0].hunt.zone_id.is_none());
     }
 
     #[test]

@@ -2052,6 +2052,21 @@ mod tests {
     }
 
     #[test]
+    fn autonomous_hunt_action_states_are_allowed_by_the_player_constraint() {
+        let migration = include_str!(
+            "../../../infra/db/migrations/0029_hunter_entering_region_action_state.sql"
+        );
+        for state in [
+            "entering_region",
+            "returning_for_infirmary",
+            "using_healing_potion",
+        ] {
+            assert!(migration.contains(&format!("'{state}'")));
+        }
+        assert!(migration.contains("player_hunter_action_state_check"));
+    }
+
+    #[test]
     fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
         let ownership = include_str!("../../../infra/db/migrations/0024_hunter_owned_items.sql");
         let gear_stock = include_str!("../../../infra/db/migrations/0025_crafted_gear_stock.sql");

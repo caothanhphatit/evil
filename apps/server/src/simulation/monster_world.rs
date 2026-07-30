@@ -1,4 +1,7 @@
-use std::{collections::HashSet, sync::OnceLock};
+use std::{
+    collections::{HashMap, HashSet},
+    sync::OnceLock,
+};
 
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -46,23 +49,25 @@ const MONSTER_PATROL_RADIUS_PX: i32 = 64;
 // No native town-roam waypoint table has been recovered. These anchors and
 // cadence are an explicit presentation fixture so idle Hunters do not freeze
 // in the town while preserving server-owned positions and obstacle routing.
-const TOWN_ROAM_CYCLE_TICKS: u64 = 80;
-const TOWN_ROAM_MOVE_TICKS: u64 = 56;
+const TOWN_ROAM_MIN_IDLE_TICKS: u16 = 12;
+const TOWN_ROAM_IDLE_VARIANCE_TICKS: u16 = 27;
 pub(super) const TOWN_ROAM_BOUNDS: RegionBounds = RegionBounds {
     min_x: 1400,
     max_x: 1850,
     min_y: 560,
     max_y: 740,
 };
+// The order deliberately alternates rows and distances. Each Hunter walks a
+// deterministic per-id permutation rather than marching through the same row.
 pub(super) const TOWN_ROAM_ANCHORS: [(i32, i32); 8] = [
     (1410, 618),
-    (1410, 690),
-    (1505, 618),
-    (1505, 690),
-    (1600, 618),
     (1600, 690),
-    (1695, 618),
+    (1505, 618),
     (1695, 690),
+    (1410, 690),
+    (1600, 618),
+    (1505, 690),
+    (1695, 618),
 ];
 // Bridge C is the recovered tunnel route used for newly arriving town Hunters.
 // The exact original arrival FSM coordinates remain unresolved.
@@ -74,6 +79,10 @@ const TOWN_ARRIVAL_INSIDE: (i32, i32) = TOWN_ROAM_ANCHORS[0];
 // original arithmetic.
 const MONSTER_INCOMING_DAMAGE_FIXTURE_DIVISOR: u64 = 250;
 const TOWN_RESPAWN_POINT: (i32, i32) = (1627, 700);
+// Persisted runtimes from older bridge routes may stop exactly beside a
+// recovered waypoint. Treat that checkpoint as reached instead of routing the
+// Hunter back to stage zero after a new player assignment.
+const ENTRY_CHECKPOINT_TOLERANCE_PX: i32 = 64;
 
 // CalcAttackSpeed is the authoritative delay in seconds. The fixture profile
 // stores that value in milli-seconds; keep the 100 ms simulation cadence while
@@ -212,6 +221,10 @@ pub struct HunterAgentState {
     pub ice_armor_active: bool,
     #[serde(default)]
     pub entry_stage: u8,
+    #[serde(default)]
+    pub town_roam_sequence: u32,
+    #[serde(default)]
+    pub town_roam_idle_ticks: u16,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -286,7 +299,7 @@ pub struct MonsterMapConfig {
     pub map_asset_id: &'static str,
     pub density_counts: [u32; 3],
     pub bounds: RegionBounds,
-    pub entry_waypoints: [(i32, i32); 2],
+    pub entry_waypoints: [(i32, i32); 3],
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -318,8 +331,10 @@ pub const MAP_CONFIGS: [MonsterMapConfig; 3] = [
             min_y: 500,
             max_y: 1000,
         },
-        // Village_Bridge_C -> sign_01, projected from exact scene transforms.
-        entry_waypoints: [(1356, 800), (1233, 786)],
+        // Approach Bridge C from the tested town safe floor, cross its
+        // recovered center, then leave through the field-side edge. Density
+        // signs are controls, not navigation nodes.
+        entry_waypoints: [(1410, 690), (1356, 800), (1273, 800)],
     },
     MonsterMapConfig {
         map_id: "background_08",
@@ -334,8 +349,8 @@ pub const MAP_CONFIGS: [MonsterMapConfig; 3] = [
             min_y: 1080,
             max_y: 1430,
         },
-        // Village_Bridge_C -> sign_02, projected from exact scene transforms.
-        entry_waypoints: [(1356, 800), (1416, 873)],
+        // Bridge C uses the same town-side approach before exiting south.
+        entry_waypoints: [(1410, 690), (1356, 800), (1356, 861)],
     },
     MonsterMapConfig {
         map_id: "background_11",
@@ -350,8 +365,9 @@ pub const MAP_CONFIGS: [MonsterMapConfig; 3] = [
             min_y: 500,
             max_y: 1030,
         },
-        // sign_03 -> Village_Bridge_B follows the town-to-eastern-field geometry.
-        entry_waypoints: [(1957, 809), (2043, 724)],
+        // The recovered sign-03 approach is already on the tested eastern
+        // town route. Cross Bridge B from there and leave through its edge.
+        entry_waypoints: [(1957, 809), (2043, 724), (2127, 724)],
     },
 ];
 
@@ -815,8 +831,53 @@ impl MonsterWorldState {
         Ok(())
     }
 
+    /// Applies a player-issued region assignment at the command boundary.
+    /// The following simulation tick owns movement, but the accepted snapshot
+    /// must already expose the preempted FSM instead of the previous town task.
+    pub fn prioritize_hunt_assignment(
+        &mut self,
+        hunter_id: u32,
+        region_id: &str,
+        obstacles: &[NavigationObstacle],
+    ) {
+        let Some(config) = map_config(region_id) else {
+            return;
+        };
+        let Some(agent) = self
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == hunter_id)
+        else {
+            return;
+        };
+        agent.region_id = Some(region_id.to_owned());
+        agent.target_monster_id = None;
+        agent.target_drop_id = None;
+        agent.loot_item_id = None;
+        agent.loot_quantity = 0;
+        agent.recovery_ticks = 0;
+        agent.active_skill_id = None;
+        let checkpoint_stage = entry_checkpoint_stage(config, agent.x, agent.y);
+        let position_blocked = obstacles
+            .iter()
+            .any(|obstacle| obstacle.expanded(14).contains(agent.x, agent.y));
+        if checkpoint_stage.is_none() || position_blocked {
+            if let Some((x, y)) = nearest_clear_town_anchor(agent.x, agent.y, obstacles) {
+                agent.x = x;
+                agent.y = y;
+            } else {
+                agent.x = config.entry_waypoints[0].0;
+                agent.y = config.entry_waypoints[0].1;
+            }
+            agent.entry_stage = 0;
+        } else {
+            agent.entry_stage = checkpoint_stage.unwrap_or(0);
+        }
+        set_hunter_presentation(agent, HunterActionState::EnteringRegion, "hunter_walk");
+    }
+
     pub fn tick(&mut self, roster: &mut DurableHunterRosterState) -> Vec<PendingOperation> {
-        self.tick_with_obstacles(roster, &[], None)
+        self.tick_with_obstacles(roster, &[], None, &HashMap::new())
     }
 
     pub fn tick_with_obstacles(
@@ -824,12 +885,13 @@ impl MonsterWorldState {
         roster: &mut DurableHunterRosterState,
         obstacles: &[NavigationObstacle],
         revival_point: Option<(i32, i32)>,
+        town_destinations: &HashMap<u32, (i32, i32)>,
     ) -> Vec<PendingOperation> {
         self.tick = self.tick.saturating_add(1);
         self.combat_presentations.clear();
         self.reconcile_hunters(roster, obstacles);
         self.tick_monsters(roster);
-        self.tick_hunters(roster, obstacles, revival_point)
+        self.tick_hunters(roster, obstacles, revival_point, town_destinations)
     }
 
     fn reconcile_hunters(
@@ -899,6 +961,8 @@ impl MonsterWorldState {
                 skill_attack_speed_milli: 0,
                 ice_armor_active: false,
                 entry_stage: if arriving_in_town { 3 } else { 0 },
+                town_roam_sequence: 0,
+                town_roam_idle_ticks: initial_town_roam_idle_ticks(hunter.hunter_id),
             });
         }
         for agent in &mut self.hunters {
@@ -919,6 +983,7 @@ impl MonsterWorldState {
                     .clone()
                     .filter(|id| map_config(id).is_some());
                 if agent.region_id != assigned {
+                    let returning_to_town = agent.region_id.is_some() && assigned.is_none();
                     agent.region_id = assigned;
                     agent.target_monster_id = None;
                     agent.target_drop_id = None;
@@ -927,7 +992,10 @@ impl MonsterWorldState {
                     } else {
                         HunterActionState::TownIdle
                     };
-                    agent.entry_stage = 0;
+                    // Preserve the field position and walk back through the
+                    // town-arrival corridor. Resetting to stage zero makes the
+                    // out-of-town sanitizer teleport a returning Hunter home.
+                    agent.entry_stage = if returning_to_town { 3 } else { 0 };
                 }
             }
             if agent.region_id.is_none()
@@ -1140,6 +1208,7 @@ impl MonsterWorldState {
         roster: &mut DurableHunterRosterState,
         obstacles: &[NavigationObstacle],
         revival_point: Option<(i32, i32)>,
+        town_destinations: &HashMap<u32, (i32, i32)>,
     ) -> Vec<PendingOperation> {
         let mut operations = Vec::new();
         for agent_index in 0..self.hunters.len() {
@@ -1223,29 +1292,45 @@ impl MonsterWorldState {
                     }
                     continue;
                 }
-                let hunter_id = self.hunters[agent_index].hunter_id;
-                let cycle_tick = self
-                    .tick
-                    .wrapping_add(u64::from(hunter_id).wrapping_mul(13))
-                    % TOWN_ROAM_CYCLE_TICKS;
-                if cycle_tick >= TOWN_ROAM_MOVE_TICKS {
-                    set_hunter_presentation(
-                        &mut self.hunters[agent_index],
-                        HunterActionState::TownIdle,
-                        "hunter_stay",
-                    );
+                if let Some(&(target_x, target_y)) = town_destinations.get(&hunter_id) {
+                    let agent = &mut self.hunters[agent_index];
+                    if squared_distance(agent.x, agent.y, target_x, target_y)
+                        <= i64::from(HUNTER_MOVE_MAX_PX_PER_TICK).pow(2)
+                    {
+                        agent.x = target_x;
+                        agent.y = target_y;
+                        set_hunter_presentation(agent, HunterActionState::TownIdle, "hunter_stay");
+                    } else {
+                        set_hunter_presentation(agent, HunterActionState::TownIdle, "hunter_walk");
+                        move_toward_avoiding(
+                            &mut agent.x,
+                            &mut agent.y,
+                            target_x,
+                            target_y,
+                            move_step,
+                            &mut agent.facing_left,
+                            obstacles,
+                        );
+                    }
                     continue;
                 }
-                let anchor_index = usize::try_from(
-                    (self.tick / TOWN_ROAM_CYCLE_TICKS).wrapping_add(u64::from(hunter_id)),
-                )
-                .unwrap_or(0)
-                    % TOWN_ROAM_ANCHORS.len();
-                let (target_x, target_y) = TOWN_ROAM_ANCHORS[anchor_index];
                 let agent = &mut self.hunters[agent_index];
+                if agent.town_roam_idle_ticks > 0 {
+                    agent.town_roam_idle_ticks = agent.town_roam_idle_ticks.saturating_sub(1);
+                    set_hunter_presentation(agent, HunterActionState::TownIdle, "hunter_stay");
+                    continue;
+                }
+                let anchor_index =
+                    town_roam_anchor_index(agent.hunter_id, agent.town_roam_sequence);
+                let (target_x, target_y) = TOWN_ROAM_ANCHORS[anchor_index];
                 if squared_distance(agent.x, agent.y, target_x, target_y)
                     <= i64::from(HUNTER_MOVE_MAX_PX_PER_TICK).pow(2)
                 {
+                    agent.x = target_x;
+                    agent.y = target_y;
+                    agent.town_roam_sequence = agent.town_roam_sequence.wrapping_add(1);
+                    agent.town_roam_idle_ticks =
+                        town_roam_idle_ticks(agent.hunter_id, agent.town_roam_sequence);
                     set_hunter_presentation(agent, HunterActionState::TownIdle, "hunter_stay");
                     continue;
                 }
@@ -1280,7 +1365,7 @@ impl MonsterWorldState {
                 {
                     *waypoint
                 } else {
-                    let final_approach = config.entry_waypoints[1];
+                    let final_approach = config.entry_waypoints[config.entry_waypoints.len() - 1];
                     config
                         .bounds
                         .closest_point(final_approach.0, final_approach.1, 48)
@@ -1301,6 +1386,12 @@ impl MonsterWorldState {
                     agent.entry_stage = agent.entry_stage.saturating_add(1);
                 }
                 continue;
+            }
+            if let Ok(hunter) = roster.active_mut(hunter_id) {
+                if hunter.profile.action_state == "entering_region" {
+                    hunter.profile.action_state = "hunting".to_owned();
+                    hunter.profile.animation_name = "hunter_stay".to_owned();
+                }
             }
             self.hunters[agent_index].recovery_ticks =
                 self.hunters[agent_index].recovery_ticks.saturating_sub(1);
@@ -1869,7 +1960,7 @@ impl MonsterFieldState {
 }
 
 impl RegionBounds {
-    fn contains(self, x: i32, y: i32) -> bool {
+    pub(super) fn contains(self, x: i32, y: i32) -> bool {
         (self.min_x..=self.max_x).contains(&x) && (self.min_y..=self.max_y).contains(&y)
     }
 
@@ -2227,6 +2318,42 @@ fn nearest_clear_town_anchor(
         .min_by_key(|(anchor_x, anchor_y)| squared_distance(x, y, *anchor_x, *anchor_y))
 }
 
+fn initial_town_roam_idle_ticks(hunter_id: u32) -> u16 {
+    u16::try_from(u64::from(hunter_id).wrapping_mul(7) % 18).unwrap_or(0)
+}
+
+fn town_roam_anchor_index(hunter_id: u32, sequence: u32) -> usize {
+    const STRIDES: [usize; 4] = [1, 3, 5, 7];
+    let hunter_seed = u64::from(hunter_id).wrapping_mul(0x9e37_79b9_7f4a_7c15);
+    let start =
+        usize::try_from(hunter_seed ^ (hunter_seed >> 32)).unwrap_or(0) % TOWN_ROAM_ANCHORS.len();
+    let stride = STRIDES[usize::try_from(hunter_id).unwrap_or(0) % STRIDES.len()];
+    start.wrapping_add(usize::try_from(sequence).unwrap_or(0).wrapping_mul(stride))
+        % TOWN_ROAM_ANCHORS.len()
+}
+
+fn town_roam_idle_ticks(hunter_id: u32, sequence: u32) -> u16 {
+    let mixed = u64::from(hunter_id)
+        .wrapping_mul(0x517c_c1b7_2722_0a95)
+        .wrapping_add(u64::from(sequence).wrapping_mul(0x6eed_0e9d_a4d9_4a4f));
+    TOWN_ROAM_MIN_IDLE_TICKS
+        + u16::try_from(mixed % u64::from(TOWN_ROAM_IDLE_VARIANCE_TICKS)).unwrap_or(0)
+}
+
+fn entry_checkpoint_stage(config: &MonsterMapConfig, x: i32, y: i32) -> Option<u8> {
+    if config.bounds.contains(x, y) {
+        return Some(u8::try_from(config.entry_waypoints.len()).unwrap_or(u8::MAX));
+    }
+    for (index, (waypoint_x, waypoint_y)) in config.entry_waypoints.iter().enumerate().rev() {
+        if squared_distance(x, y, *waypoint_x, *waypoint_y)
+            <= i64::from(ENTRY_CHECKPOINT_TOLERANCE_PX).pow(2)
+        {
+            return u8::try_from(index + 1).ok();
+        }
+    }
+    TOWN_ROAM_BOUNDS.contains(x, y).then_some(0)
+}
+
 impl NavigationObstacle {
     fn expanded(self, amount: i32) -> Self {
         Self {
@@ -2237,7 +2364,7 @@ impl NavigationObstacle {
         }
     }
 
-    fn contains(self, x: i32, y: i32) -> bool {
+    pub(super) fn contains(self, x: i32, y: i32) -> bool {
         (self.min_x..=self.max_x).contains(&x) && (self.min_y..=self.max_y).contains(&y)
     }
 }
@@ -2421,10 +2548,19 @@ mod tests {
     }
 
     #[test]
-    fn hunter_enters_each_field_through_recovered_bridge_and_sign_anchors() {
-        assert_eq!(MAP_CONFIGS[0].entry_waypoints, [(1356, 800), (1233, 786)]);
-        assert_eq!(MAP_CONFIGS[1].entry_waypoints, [(1356, 800), (1416, 873)]);
-        assert_eq!(MAP_CONFIGS[2].entry_waypoints, [(1957, 809), (2043, 724)]);
+    fn hunter_enters_each_field_through_recovered_bridge_corridors() {
+        assert_eq!(
+            MAP_CONFIGS[0].entry_waypoints,
+            [(1410, 690), (1356, 800), (1273, 800)]
+        );
+        assert_eq!(
+            MAP_CONFIGS[1].entry_waypoints,
+            [(1410, 690), (1356, 800), (1356, 861)]
+        );
+        assert_eq!(
+            MAP_CONFIGS[2].entry_waypoints,
+            [(1957, 809), (2043, 724), (2127, 724)]
+        );
         for config in MAP_CONFIGS {
             let mut world = MonsterWorldState::default();
             let mut roster = operational_migration_roster();
@@ -2538,6 +2674,38 @@ mod tests {
     }
 
     #[test]
+    fn each_hunter_uses_a_distinct_deterministic_town_route() {
+        let routes = (1..=5)
+            .map(|hunter_id| {
+                (0..TOWN_ROAM_ANCHORS.len())
+                    .map(|sequence| {
+                        town_roam_anchor_index(hunter_id, u32::try_from(sequence).unwrap())
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .collect::<Vec<_>>();
+
+        for route in &routes {
+            assert_eq!(route.iter().copied().collect::<HashSet<_>>().len(), 8);
+            assert!(route.windows(2).all(|pair| pair[0] != pair[1]));
+        }
+        assert!(routes.iter().collect::<HashSet<_>>().len() >= 4);
+    }
+
+    #[test]
+    fn town_roam_pauses_are_staggered_and_bounded_per_hunter() {
+        let pause_ticks = (1..=8)
+            .map(|hunter_id| town_roam_idle_ticks(hunter_id, 3))
+            .collect::<Vec<_>>();
+
+        assert!(pause_ticks
+            .iter()
+            .all(|ticks| (*ticks >= TOWN_ROAM_MIN_IDLE_TICKS)
+                && (*ticks < TOWN_ROAM_MIN_IDLE_TICKS + TOWN_ROAM_IDLE_VARIANCE_TICKS)));
+        assert!(pause_ticks.iter().copied().collect::<HashSet<_>>().len() >= 4);
+    }
+
+    #[test]
     fn newly_added_town_hunter_walks_in_through_the_tunnel() {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
@@ -2576,11 +2744,49 @@ mod tests {
         world.hunters[0].respawn_ticks = Some(1);
         let sanctuary_point = (1498, 510);
 
-        world.tick_with_obstacles(&mut roster, &[], Some(sanctuary_point));
+        world.tick_with_obstacles(&mut roster, &[], Some(sanctuary_point), &HashMap::new());
 
         assert_eq!((world.hunters[0].x, world.hunters[0].y), sanctuary_point);
         assert_eq!(world.hunters[0].respawn_ticks, None);
         assert_eq!(roster.hunters[0].current_hp, roster.hunters[0].max_hp);
+    }
+
+    #[test]
+    fn clearing_a_field_assignment_walks_back_without_teleporting() {
+        let mut world = MonsterWorldState::default();
+        let mut roster = operational_migration_roster();
+        roster.assign_hunt(1, MAP_CONFIGS[0].map_id).unwrap();
+        world.tick(&mut roster);
+        let field_position = (
+            MAP_CONFIGS[0].bounds.min_x + 120,
+            MAP_CONFIGS[0].bounds.min_y + 120,
+        );
+        let agent = world
+            .hunters
+            .iter_mut()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        agent.region_id = Some(MAP_CONFIGS[0].map_id.to_owned());
+        agent.x = field_position.0;
+        agent.y = field_position.1;
+        roster.hunters[0].hunt.zone_id = None;
+        roster.hunters[0].hunt.status = "idle".to_owned();
+
+        world.tick(&mut roster);
+
+        let returning = world
+            .hunters
+            .iter()
+            .find(|agent| agent.hunter_id == 1)
+            .unwrap();
+        assert!(returning.region_id.is_none());
+        assert_eq!(returning.entry_stage, 3);
+        assert_eq!(returning.action_state, HunterActionState::TownIdle);
+        assert_ne!((returning.x, returning.y), TOWN_ARRIVAL_OUTSIDE);
+        assert!(
+            squared_distance(field_position.0, field_position.1, returning.x, returning.y)
+                <= i64::from(HUNTER_MOVE_MAX_PX_PER_TICK).pow(2)
+        );
     }
 
     #[test]
@@ -2702,7 +2908,7 @@ mod tests {
             });
         }
 
-        world.tick_hunters(&mut roster, &[], None);
+        world.tick_hunters(&mut roster, &[], None, &HashMap::new());
 
         let agent = world
             .hunters
@@ -2769,7 +2975,7 @@ mod tests {
             },
         ]);
 
-        world.tick_hunters(&mut roster, &[], None);
+        world.tick_hunters(&mut roster, &[], None, &HashMap::new());
         let agent = world
             .hunters
             .iter()
@@ -2787,7 +2993,7 @@ mod tests {
         }
 
         for _ in 0..8 {
-            world.tick_hunters(&mut roster, &[], None);
+            world.tick_hunters(&mut roster, &[], None, &HashMap::new());
         }
 
         let hunter = roster
@@ -3115,6 +3321,8 @@ mod tests {
             skill_attack_speed_milli: 0,
             ice_armor_active: false,
             entry_stage: 1,
+            town_roam_sequence: 0,
+            town_roam_idle_ticks: 0,
         });
         world.fields[0].drops.push(MonsterDrop {
             drop_id: "gold-only".to_owned(),
@@ -3205,7 +3413,7 @@ mod tests {
             experience: 0,
         });
 
-        let operations = world.tick_hunters(&mut roster, &[], None);
+        let operations = world.tick_hunters(&mut roster, &[], None, &HashMap::new());
 
         assert!(world.fields[0].drops.is_empty());
         assert_eq!(world.hunters[0].target_drop_id, None);

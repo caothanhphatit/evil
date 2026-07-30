@@ -63,6 +63,8 @@ export const vi = {
   "loading.preparing_hunters": "Đang chuẩn bị Hunter và giao diện thị trấn...",
   "loading.server_timeout": "Máy chủ không trả về trạng thái trò chơi hiện hành trong thời gian cho phép.",
   "loading.world_failure": "Không tải được tài nguyên thế giới hiện hành. Trò chơi không sử dụng tài nguyên fallback.",
+  "orientation.mobile_landscape_title": "Không hỗ trợ màn hình ngang",
+  "orientation.mobile_landscape_body": "Hãy xoay điện thoại về màn hình dọc để tiếp tục chơi.",
 
   "world.village": "Thị trấn",
   "world.entity_world": "Thế giới thực thể authoritative",
@@ -298,6 +300,7 @@ export const vi = {
   "trading.estimated_total": "Tổng dự kiến",
   "trading.request_quantity": "Số lượng đặt mua: {quantity}",
   "trading.request_editor_aria": "Chọn số lượng đặt mua tại Chợ",
+  "trading.request_title": "Đặt mua nguyên liệu",
   "trading.all_levels": "Đã mở toàn bộ cấp Chợ đã giải mã",
   "trading.upgrade_hint": "Nâng lên Lv.{level} để mở danh sách đặt mua độ khó [{difficulty}]",
   "difficulty.easy": "Dễ",

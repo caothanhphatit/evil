@@ -24,7 +24,7 @@ describe("Trading Post compact BuildingPop", () => {
     expect(styles).toContain("width: calc(100% - 10px)");
   });
 
-  it("keeps quantity selection inside BuildingPop until the authoritative command succeeds", async () => {
+  it("keeps the quantity sub-popup open until the authoritative command succeeds", async () => {
     const source = await readFile(mainPath, "utf8");
     const submitHandler = source.slice(
       source.indexOf('submit.addEventListener("click"'),
@@ -35,14 +35,16 @@ describe("Trading Post compact BuildingPop", () => {
     expect(source).toContain('if (result.intent === "set_material_request")');
     expect(source).toContain("if (result.accepted)");
     expect(source).toContain('editor.id = "trading-request-editor"');
-    expect(source).not.toContain('id="trading-request-pop"');
+    expect(source).toContain('id="trading-request-pop"');
+    expect(source).toContain("tradingRequestContent.replaceChildren(editor)");
   });
 
-  it("does not use the bounty RequestPop frame for Trading Post quantity", async () => {
+  it("uses a dedicated source-style sub-popup instead of replacing the Trading Post catalog", async () => {
     const [source, styles] = await Promise.all([readFile(mainPath, "utf8"), readFile(stylesPath, "utf8")]);
-    expect(source).not.toContain("trading-request-pop source-popup");
+    expect(source).toContain("trading-request-pop source-popup");
     expect(styles).toContain(".trading-request-editor");
-    expect(styles).not.toContain(".trading-request-pop");
+    expect(styles).toContain(".trading-request-pop");
+    expect(source).not.toContain("buildingCatalog.replaceChildren(editor)");
   });
 
   it("does not retain generic service-tab fallback markup", async () => {

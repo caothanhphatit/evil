@@ -42,6 +42,11 @@ button:focus { outline: 0; }
 button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 .game-shell { --bottom-menu-bottom: max(13px, env(safe-area-inset-bottom)); --bottom-menu-reserved: 112px; position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; background: #081016; isolation: isolate; container: game-shell / inline-size; }
+.mobile-orientation-error { position: absolute; z-index: 1000; inset: 0; display: none; place-items: center; padding: 24px; background: radial-gradient(circle at 50% 42%, #354b49 0%, #111918 62%, #080c0c 100%); color: #f4e8c9; text-align: center; }
+.mobile-landscape-blocked .mobile-orientation-error { display: grid; }
+.mobile-orientation-error > div { display: grid; gap: 10px; width: min(430px, calc(100% - 32px)); padding: 22px 24px; border: 12px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 20px stretch; filter: drop-shadow(0 10px 24px #000c); }
+.mobile-orientation-error b { color: #f6cf72; font-size: 17px; text-shadow: 0 2px #39220e; }
+.mobile-orientation-error span { font-size: 11px; line-height: 1.5; }
 
 @supports (height: 100dvh) {
   html, body, #app, .game-shell { height: 100dvh; }
@@ -379,7 +384,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .trading-post-card > button.cancel { border-color: #6f8232; background: linear-gradient(#829b38, #536820); }
 .trading-post-upgrade-hint { display: grid; place-items: center; min-height: 48px; padding: 8px; border: 1px solid #343029; border-radius: 4px; background: #27251f; color: #bad64b; font-size: 8px; line-height: 1.25; text-align: center; }
 .trading-post-upgrade-hint em { display: block; color: #ef8d89; font-style: normal; }
-.trading-request-editor { display: grid; align-content: start; gap: 10px; min-height: 0; padding: 10px 4px 2px; overflow-y: auto; text-align: center; }
+.trading-request-pop { z-index: 18; width: min(390px, calc(100% - 36px)); max-height: calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 24px); padding: 20px 21px 18px; grid-template-rows: auto 2px minmax(0, 1fr); gap: 10px; overflow: hidden; box-shadow: 0 0 0 100vmax #05040399, 0 14px 34px #000d; }
+.trading-request-pop #trading-request-content { min-height: 0; overflow: hidden; }
+.trading-request-editor { display: grid; align-content: start; gap: 10px; min-height: 0; padding: 5px 2px 2px; overflow-y: auto; text-align: center; }
 .trading-request-product { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 10px 12px; padding: 11px; border: 1px solid #514a3e; border-radius: 7px; background: linear-gradient(145deg, #211d18, #151310); }
 .trading-request-frame { position: relative; display: grid; place-items: center; align-self: stretch; min-height: 126px; border: 1px solid #9b8f72; border-radius: 6px; background: #171512; }
 .trading-request-frame img { width: 104px; height: 104px; object-fit: contain; image-rendering: pixelated; }
@@ -387,6 +394,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .trading-request-controls { display: grid; align-content: center; gap: 8px; min-width: 0; }
 .trading-request-controls > span { color: #d8cdb8; font-size: 9px; letter-spacing: .04em; text-transform: uppercase; }
 .trading-request-editor .consum-round-button { width: 34px; height: 34px; }
+.trading-request-editor .trading-quantity-button { display: grid; place-items: center; color: #fff8ea; font: 700 24px/1 "DefaultFont2", "NotoSansThaiGame", sans-serif; }
 .trading-request-editor .quantity-stepper { grid-template-columns: 34px minmax(56px, 1fr) 34px; gap: 5px; }
 .trading-request-editor .quantity-stepper input[type='number'] { height: 34px; font-size: 11px; }
 .trading-request-editor .quantity-step-buttons { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: 27px; gap: 5px; }
@@ -998,9 +1006,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-info-overlay { position: absolute; z-index: 40; inset: 0 0 calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved)); display: grid; place-items: center; padding: max(10px, 2vh) 3%; background: radial-gradient(circle at 50% 36%, #4a315375, #050807e8 72%); backdrop-filter: blur(2px); }
 .hunter-info-scale-frame { position: relative; flex: 0 0 auto; animation: hunter-panel-arrive .22s cubic-bezier(.18,.85,.28,1) both; }
 /* Scale the complete recovered layout as one 440x690 design canvas. */
-.hunter-info-modal { position: absolute; left: 0; top: 0; display: grid; grid-template-rows: auto minmax(230px, 46%) auto minmax(150px, 1fr) auto; width: 440px; height: 690px; padding: 13px 14px 10px; overflow: hidden; border: 2px solid #c2b694; border-radius: 2px; background: linear-gradient(180deg, #211d18f7, #100e0cf7 42%); box-shadow: inset 0 0 0 3px #17130f, inset 0 0 0 5px #6f6550, inset 0 0 28px #000c, 0 13px 24px #000d; outline: 0; image-rendering: pixelated; transform-origin: top left; }
-.hunter-info-modal::before { content: ""; position: absolute; inset: 7px; border: 1px solid #373126; box-shadow: inset 0 0 0 1px #0b0908; pointer-events: none; }
-.hunter-info-modal::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#e0d3aa, #e0d3aa) 8px 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) 8px 100% / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 100% / 31px 2px no-repeat; opacity: .72; pointer-events: none; }
+.hunter-info-modal { position: absolute; left: 0; top: 0; display: grid; grid-template-rows: auto minmax(230px, 46%) auto minmax(150px, 1fr) auto; width: 440px; height: 690px; padding: 12px 13px 10px; overflow: hidden; border: 18px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 18px stretch; background: #100e0c; box-shadow: inset 0 0 24px #000b, 0 13px 24px #000d; outline: 0; image-rendering: pixelated; transform-origin: top left; }
 .hunter-info-header { display: grid; grid-template-columns: 31px minmax(0, 1fr) 31px; align-items: center; gap: 6px; min-height: 38px; padding: 0 3px 5px; border-bottom: 1px solid #b6a982; box-shadow: 0 2px #15110d; }
 .hunter-info-header > b { overflow: hidden; color: #fff0c8; font-size: 13px; text-align: center; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #2d1e13; }
 .hunter-info-silhouette { display: grid; place-items: center; width: 28px; height: 28px; border: 5px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/equip_bg_9__2684.png') 5 fill / 5px stretch; color: #d8c9a5; font-size: 7px; }
@@ -1039,8 +1045,8 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-paper-doll span { align-self: center; color: #948a75; font-size: 7px; }
 .hunter-info-actor-canvas { display: block; width: 100% !important; height: 100% !important; image-rendering: pixelated; }
 .hunter-experience { position: relative; height: 22px; margin: 2px 2px 0; }
-.hunter-experience > i { position: absolute; inset: 1px 0; overflow: hidden; border: 4px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-experience/exp_gauge_back_9__4014.png') 4 fill / 4px stretch; background: #211725; }
-.hunter-experience > i > i { display: block; height: 100%; min-width: 0; background: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-experience/exp_gauge_in_9__6967.png') left center / auto 100% repeat-x; }
+.hunter-experience > i { position: absolute; inset: 3px 0; overflow: hidden; border: 2px solid #b8aa86; border-radius: 3px; background: #211725; box-shadow: inset 0 0 0 1px #0c090d, 0 1px #090707; }
+.hunter-experience > i > i { display: block; height: 100%; min-width: 0; background: linear-gradient(90deg, #6f069e, #a915d4); box-shadow: inset 0 1px #d86bf055, inset 0 -1px #3f075a; }
 .hunter-experience b { position: relative; display: grid; place-items: center; height: 22px; color: white; font-size: 9px; line-height: 1; text-align: center; text-shadow: 0 1px #000, 1px 0 #000, -1px 0 #000; }
 .hunter-experience.unresolved b { color: #9c927f; }
 .hunter-info-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; padding: 0 2px 2px; border-bottom: 1px solid #b4a47d; }

@@ -97,8 +97,11 @@ export class VisibleEntityWorld {
   private readonly familyLoads = new Map<string, Promise<void>>();
   private readonly bundles = new Map<string, ActorBundle>();
   private readonly projectionBuffer = new ProjectionBuffer({
-    tickDurationMs: 200,
-    renderDelayMs: 200,
+    // WorldFrame is published at the authoritative 10 Hz simulation cadence.
+    // A stale 200 ms clock rendered movement at half speed and periodically
+    // jumped forward even while the Pixi ticker correctly reported 60 FPS.
+    tickDurationMs: 100,
+    renderDelayMs: 100,
     maxExtrapolationTicks: 1,
   });
   private buildingFootprints: BuildingFootprint[] = [];

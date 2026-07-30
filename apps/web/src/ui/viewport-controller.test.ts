@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { classifyShellViewport } from "./viewport-controller";
+import { classifyShellViewport, shouldBlockMobileLandscape } from "./viewport-controller";
 
 describe("classifyShellViewport", () => {
   it.each([
@@ -9,5 +9,17 @@ describe("classifyShellViewport", () => {
     expect(classifyShellViewport(405, 560)).toMatchObject({ short: true, veryShort: true, gearShort: true });
     expect(classifyShellViewport(405, 620)).toMatchObject({ short: true, veryShort: false, gearShort: true });
     expect(classifyShellViewport(405, 641)).toMatchObject({ short: false, veryShort: false, gearShort: false });
+  });
+});
+
+describe("shouldBlockMobileLandscape", () => {
+  it("blocks a coarse-pointer phone in landscape", () => {
+    expect(shouldBlockMobileLandscape(844, 390, true)).toBe(true);
+  });
+
+  it("keeps portrait phones and desktop landscape available", () => {
+    expect(shouldBlockMobileLandscape(390, 844, true)).toBe(false);
+    expect(shouldBlockMobileLandscape(1440, 900, false)).toBe(false);
+    expect(shouldBlockMobileLandscape(1024, 768, true)).toBe(false);
   });
 });

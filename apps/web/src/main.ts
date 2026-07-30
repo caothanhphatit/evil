@@ -160,6 +160,10 @@ mount.innerHTML = `
         <div id="consum-material-grid" class="consum-material-grid"></div>
         <div class="source-popup-actions"><button id="consum-create-submit" class="source-green-button" type="button">${t("common.produce")}</button><button id="consum-create-close" class="source-red-button" type="button">${t("common.close")}</button></div>
       </section>
+      <section id="trading-request-pop" class="trading-request-pop source-popup" hidden aria-label="${t("trading.request_editor_aria")}">
+        <b>${t("trading.request_title")}</b><i class="source-popup-line"></i>
+        <div id="trading-request-content"></div>
+      </section>
       <button id="connection-status" class="connection-status connecting" type="button" aria-label="${t("world.server_status")}"><i></i><span>${t("world.connecting")}</span></button>
       <span id="fps-counter" class="fps-counter" aria-live="off">FPS --</span>
     </section>
@@ -173,6 +177,9 @@ mount.innerHTML = `
     </section>
     <nav id="bottom-menu" class="bottom-menu persistent-bottom-menu" aria-label="${t("menu.aria")}" hidden>${menuItems.map((item) => `<button class="menu-button" type="button" data-action="${item.action}" ${item.enabled ? "" : `disabled title="${t("common.feature_in_development")}"`}><span class="menu-icon"><img data-game-src="${originalAsset(item.icon)}" alt="" /></span><b>${t(item.label)}</b></button>`).join("")}</nav>
     <div id="loading-transition" class="loading-transition" hidden><img data-game-src="${originalAsset("sprites/cloud_loading_btn__4266.png")}" alt="" /><span>${t("loading.loading")}</span></div>
+    <section class="mobile-orientation-error" role="alert" aria-live="assertive">
+      <div><b>${t("orientation.mobile_landscape_title")}</b><span>${t("orientation.mobile_landscape_body")}</span></div>
+    </section>
   </main>`;
 
 const gameShell = mount.querySelector<HTMLElement>(".game-shell");
@@ -226,6 +233,8 @@ const buildingConstruct = element<HTMLButtonElement>("#building-construct");
 const buildingUpgrade = element<HTMLButtonElement>("#building-upgrade");
 const buildingUse = element<HTMLButtonElement>("#building-use");
 const buildingPanelClose = element<HTMLButtonElement>("#building-panel-close");
+const tradingRequestPop = element<HTMLElement>("#trading-request-pop");
+const tradingRequestContent = element<HTMLElement>("#trading-request-content");
 const bountyPop = element<HTMLElement>("#bounty-quest-pop");
 const bountyTitle = element<HTMLElement>("#bounty-title");
 const bountyTierTabs = element<HTMLElement>("#bounty-tier-tabs");
@@ -559,6 +568,7 @@ document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) =
 });
 buildingPanelClose.addEventListener("click", () => {
   buildingPanel.hidden = true;
+  tradingRequestPop.hidden = true;
   selectedTradingRequest = null;
   tradingRequestPending = false;
   enhancementView = "select";
@@ -639,8 +649,9 @@ function renderTradingRequestEditor(): void {
   stepper.className = "quantity-stepper";
   const minus = document.createElement("button");
   minus.id = "trading-request-minus";
-  minus.className = "consum-round-button minus";
+  minus.className = "consum-round-button trading-quantity-button";
   minus.type = "button";
+  minus.textContent = "−";
   minus.setAttribute("aria-label", t("craft.decrease_quantity"));
   const input = document.createElement("input");
   input.id = "trading-request-quantity-input";
@@ -653,8 +664,9 @@ function renderTradingRequestEditor(): void {
   input.setAttribute("aria-label", t("trading.quantity_aria"));
   const plus = document.createElement("button");
   plus.id = "trading-request-plus";
-  plus.className = "consum-round-button plus";
+  plus.className = "consum-round-button trading-quantity-button";
   plus.type = "button";
+  plus.textContent = "+";
   plus.setAttribute("aria-label", t("craft.increase_quantity"));
   stepper.append(minus, input, plus);
 
@@ -722,11 +734,13 @@ function renderTradingRequestEditor(): void {
   back.addEventListener("click", () => {
     selectedTradingRequest = null;
     tradingRequestPending = false;
+    tradingRequestPop.hidden = true;
     renderBuildingSystem(latestSnapshot);
   });
   actions.append(submit, back);
   editor.append(product, name, total, actions);
-  buildingCatalog.replaceChildren(editor);
+  tradingRequestContent.replaceChildren(editor);
+  tradingRequestPop.hidden = false;
 }
 gearCreateQuantity.addEventListener("input", () => {
   if (gearCreateQuantity.value === "") return;
@@ -1323,10 +1337,7 @@ function handleHunterWorldCommandIntent(intent: HunterWorldCommandIntent): void 
     }
     return;
   }
-  const region = { map_new01: t("hunter.command.colony"), background_08: t("hunter.command.dead_land"), background_11: t("hunter.command.demon_world") }[intent.regionId];
-  if (client.assignHunterHunt(hunter.numericId, intent.regionId)) {
-    showPanelMessage(t("feedback.hunt_sent"), t("feedback.awaiting_server", { region }));
-  } else {
+  if (!client.assignHunterHunt(hunter.numericId, intent.regionId)) {
     showPanelMessage(t("feedback.command_failed"), t("feedback.server_not_ready"));
   }
 }
@@ -1435,6 +1446,11 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
   buildingPanel.classList.toggle("service-mode", buildingPanelMode === "building" && evidence?.popupRoute === "service");
   buildingPanel.classList.toggle("service-building-ui", buildingPanelMode === "building" && productServiceRoute(selectedBuildingId ?? "") !== null);
   buildingPanel.classList.toggle("trading-post-ui", buildingPanelMode === "building" && selectedBuildingId === TRADING_POST_ROUTE.buildingId);
+  if (!(buildingPanelMode === "building" && selectedBuildingId === TRADING_POST_ROUTE.buildingId)) {
+    tradingRequestPop.hidden = true;
+    selectedTradingRequest = null;
+    tradingRequestPending = false;
+  }
   buildingPanel.classList.toggle("gear-route-ui", isCatalogShopRoute);
   buildingPanel.classList.toggle("blacksmith-ui", isCraftingGearRoute);
   buildingPanel.classList.toggle("enhancement-forge-ui", isEnhancementForgeRoute);
@@ -1527,8 +1543,9 @@ function renderBuildingSystem(snapshot: OriginalFlowSnapshot | null): void {
     } else if (currentRequest) {
       selectedTradingRequest = currentRequest;
     }
+    renderTradingPostCatalog(system.material_stocks, selectedInstance?.level ?? 1, targetRequirement);
     if (selectedTradingRequest) renderTradingRequestEditor();
-    else renderTradingPostCatalog(system.material_stocks, selectedInstance?.level ?? 1, targetRequirement);
+    else tradingRequestPop.hidden = true;
   } else if (buildingPanelMode === "building" && evidence.popupRoute === "production" && isCatalogShopRoute) {
     buildingLevelContract.hidden = true;
     buildingCatalog.hidden = false;
@@ -2671,6 +2688,7 @@ function showIntentResult(result: IntentFeedback): void {
     tradingRequestPending = false;
     if (result.accepted) {
       selectedTradingRequest = null;
+      tradingRequestPop.hidden = true;
       renderBuildingSystem(latestSnapshot);
     } else if (selectedTradingRequest) {
       renderTradingRequestEditor();

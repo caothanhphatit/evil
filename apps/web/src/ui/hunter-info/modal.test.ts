@@ -22,6 +22,7 @@ describe("Hunter Info modal shell", () => {
     expect(styles).toContain("grid-template-rows: auto minmax(230px, 46%) auto minmax(150px, 1fr) auto");
     expect(styles).toContain("height: 690px");
     expect(styles).toContain("transform-origin: top left");
+    expect(styles).toContain("popup_bg_9__1928.png') 20 fill / 18px stretch");
     expect(modal).toContain('node("div", "hunter-info-scale-frame")');
     expect(modal).toContain("new ResizeObserver(syncScale).observe(overlay)");
     expect(styles).toContain(".hunter-info-actor-canvas");
@@ -65,8 +66,9 @@ describe("Hunter Info modal shell", () => {
     expect(source).toContain('track.setAttribute("role", "progressbar")');
     expect(source).toContain('t("hunter.info.exp", { current: info.experience.current, maximum: info.experience.maximum })');
     expect(styles).toContain(".hunter-experience { position: relative; height: 22px; margin: 2px 2px 0; }");
+    expect(styles).toContain("background: linear-gradient(90deg, #6f069e, #a915d4)");
+    expect(styles).not.toContain("exp_gauge_in_9__6967.png");
     expect(styles).toContain("font-size: 9px");
-    expect(styles).toContain("left center / auto 100% repeat-x");
   });
 
   it("keeps server-authoritative hunt commands outside the original Detail popup", async () => {

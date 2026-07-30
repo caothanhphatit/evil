@@ -139,6 +139,7 @@ describe("Hunter world command menu", () => {
   it("renders menu state inside one persistent layer and emits intent instead of an outcome", async () => {
     const source = await readFile(new URL("./hunter-world-command.ts", import.meta.url), "utf8");
     const visibleWorld = await readFile(new URL("../game/visible-world.ts", import.meta.url), "utf8");
+    const main = await readFile(new URL("../main.ts", import.meta.url), "utf8");
     expect(source).toContain('root.className = "hunter-world-command-layer"');
     expect(source).toContain("root.replaceChildren()");
     expect(source).toContain('type: "assign_hunter_hunting_region"');
@@ -147,6 +148,7 @@ describe("Hunter world command menu", () => {
     expect(source).not.toContain("damage");
     expect(source).not.toContain("experience");
     expect(source).not.toContain("drop");
+    expect(main).not.toContain('showPanelMessage(t("feedback.hunt_sent")');
   });
 
   it("keeps the click tooltip compact and gives desktop a content-width command sheet", async () => {

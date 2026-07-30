@@ -13,9 +13,10 @@
 - Starting a service consumes one stock unit and debits Hunter gold. Completion
   restores the bound gauge and credits the payment to town gold.
 
-These service transactions currently require a player/client command. The
-server does not yet decay stamina, satiety or mood, choose a service product for
-an exhausted Hunter, or route that Hunter to the service building.
+Manual service transactions remain available through player/client commands.
+The accepted HP policy also routes a returning Hunter to the Infirmary and
+starts an authoritative stocked treatment automatically. Stamina, satiety and
+mood decay/selection remain unresolved.
 
 ## Accepted rebuild healing policy
 
@@ -30,9 +31,15 @@ supersedes it:
    deterministically, healing is capped at maximum HP, and the recovered
    20-second potion cooldown is persisted with the Hunter.
 3. If no Healing Potion is owned, the server clears the farming-region
-   assignment and returns the Hunter to a commandable idle state in town. The
-   profile may present `returning_for_infirmary` while the world actor walks
-   back, but no durable service task is claimed or left stuck.
+   assignment and walks the Hunter back through the town corridor without
+   teleporting.
+4. When an unlocked Infirmary has available capacity and stocked service
+   products the server routes the Hunter to its obstacle-safe interaction
+   point. It deterministically selects the highest-restoration product the
+   Hunter can afford, breaking ties by lower price and stable product/instance
+   ID, then uses the existing authoritative stock/payment/service transaction.
+5. If no eligible treatment exists, the Hunter finishes returning to town and
+   remains commandable; no fake stock, debt or stuck service task is created.
 
 The Healing Potion identity and restoration values are package-confirmed:
 `consumable:0`, levels `0..7`, with `keepValue` values `4000`, `12000`,
@@ -40,8 +47,10 @@ The Healing Potion identity and restoration values are package-confirmed:
 decision threshold and highest-tier-first inventory policy are rebuild product
 rules, not claims about the original game's recovered AI.
 
-Automatic Infirmary product selection, stock reservation, payment and service
-start remain unresolved. They are not synthesized by this policy.
+The automatic selection order above is an explicit user-accepted rebuild
+policy. Product identities, unlock levels, restoration values, prices, service
+times, stock mutation and payment settlement continue to come from normalized
+package data rather than synthesized fixtures.
 
 ## Static original-game evidence
 

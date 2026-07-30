@@ -20,10 +20,10 @@ describe("static scene rendering", () => {
     expect(source).toContain("Math.round(app.ticker.FPS)");
   });
 
-  it("buffers the authoritative 200ms visual tick instead of correcting extrapolation every frame", async () => {
+  it("buffers one authoritative 10 Hz simulation tick for smooth world motion", async () => {
     const source = await readFile(resolve(repositoryRoot, "apps/web/src/game/visible-world.ts"), "utf8");
-    expect(source).toContain("tickDurationMs: 200");
-    expect(source).toContain("renderDelayMs: 200");
+    expect(source).toContain("tickDurationMs: 100");
+    expect(source).toContain("renderDelayMs: 100");
     expect(source).toContain("maxExtrapolationTicks: 1");
   });
 
