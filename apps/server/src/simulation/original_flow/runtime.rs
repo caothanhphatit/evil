@@ -110,10 +110,6 @@ impl OriginalFlowSession {
     /// first; when none is owned, leave the hunting region and return to town for
     /// the Infirmary route. This mutation is server-owned and deterministic.
     pub(super) fn apply_autonomous_hunter_healing_policy(&mut self) {
-        const HEALING_POTION_VALUES: [u64; 8] = [
-            4_000, 12_000, 32_400, 77_800, 163_300, 294_000, 1_562_500, 9_375_000,
-        ];
-
         for hunter in &mut self.hunter_roster.hunters {
             if hunter.current_hp == 0
                 || hunter.max_hp == 0
@@ -135,25 +131,34 @@ impl OriginalFlowSession {
                 .owned_items
                 .iter_mut()
                 .filter_map(|item| {
-                    let prefix = "recipe:consumable:0:level:";
-                    let level = item
-                        .product_id
-                        .strip_prefix(prefix)?
-                        .parse::<usize>()
-                        .ok()?;
-                    (level < HEALING_POTION_VALUES.len() && item.quantity > 0)
-                        .then_some((level, item))
+                    #[cfg(not(test))]
+                    let definition = self
+                        .building_content
+                        .gameplay
+                        .consumable_product(&item.product_id)?;
+                    #[cfg(test)]
+                    let definition = self
+                        .building_content
+                        .gameplay
+                        .consumable_product(&item.product_id)
+                        .or_else(|| test_consumable_products().get(&item.product_id))?;
+                    (definition.consumable_index == 0 && item.quantity > 0).then_some((
+                        definition.level,
+                        definition.keep_value,
+                        definition.cooldown_ms,
+                        item,
+                    ))
                 })
-                .max_by_key(|(level, _)| *level);
-            if let Some((level, item)) = potion {
+                .max_by_key(|(level, _, _, _)| *level);
+            if let Some((_, keep_value, cooldown_ms, item)) = potion {
                 item.quantity = item.quantity.saturating_sub(1);
                 hunter.current_hp = hunter
                     .current_hp
-                    .saturating_add(HEALING_POTION_VALUES[level])
+                    .saturating_add(keep_value)
                     .min(hunter.max_hp);
                 hunter.profile.action_state = "using_healing_potion".to_owned();
                 hunter.profile.animation_name = "hunter_stay".to_owned();
-                hunter.hunt.healing_potion_cooldown_ms = 20_000;
+                hunter.hunt.healing_potion_cooldown_ms = cooldown_ms;
                 continue;
             }
 
@@ -374,4 +379,61 @@ impl OriginalFlowSession {
             let _ = self.hunter_roster.advance_hunt(hunter_id, ticks);
         }
     }
+}
+
+#[cfg(test)]
+fn test_consumable_products(
+) -> &'static std::collections::BTreeMap<String, crate::buildings::ConsumableProductDefinition> {
+    static PRODUCTS: std::sync::OnceLock<
+        std::collections::BTreeMap<String, crate::buildings::ConsumableProductDefinition>,
+    > = std::sync::OnceLock::new();
+    PRODUCTS.get_or_init(|| {
+        let source: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../../../reverse-engineering/evidence/core-economy-tables-v1.json"
+        ))
+        .expect("test consumable fixture must decode");
+        source["consumables"]
+            .as_array()
+            .into_iter()
+            .flatten()
+            .flat_map(|consumable| {
+                let index = consumable["index"].as_u64().expect("consumable index") as u32;
+                let cooldown_ms = consumable["coolTime"]
+                    .as_f64()
+                    .expect("consumable cooldown") as u64
+                    * 1_000;
+                let keep_times = consumable["keepTimeByLevel"]
+                    .as_array()
+                    .expect("consumable keep times");
+                let prices = consumable["priceByLevel"]
+                    .as_array()
+                    .expect("consumable prices");
+                consumable["keepValueByLevel"]
+                    .as_array()
+                    .expect("consumable keep values")
+                    .iter()
+                    .enumerate()
+                    .map(move |(level, keep_value)| {
+                        let product_id = format!("recipe:consumable:{index}:level:{level}");
+                        (
+                            product_id.clone(),
+                            crate::buildings::ConsumableProductDefinition {
+                                product_id,
+                                consumable_index: index,
+                                level: u16::try_from(level).expect("consumable level"),
+                                keep_time_ms: keep_times[level]
+                                    .as_f64()
+                                    .expect("consumable keep time")
+                                    as u64
+                                    * 1_000,
+                                keep_value: keep_value.as_f64().expect("consumable keep value")
+                                    as u64,
+                                cooldown_ms,
+                                price: prices[level].as_f64().expect("consumable price") as u64,
+                            },
+                        )
+                    })
+            })
+            .collect()
+    })
 }

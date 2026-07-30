@@ -1,5 +1,10 @@
+#[path = "monster_world/catalog.rs"]
+mod catalog;
 #[path = "monster_world/combat_runtime.rs"]
 mod combat_runtime;
+use catalog::monster_pools;
+pub(crate) use catalog::{install_map_configs, install_monster_pools};
+pub use catalog::{map_config, map_configs};
 #[path = "monster_world/control.rs"]
 mod control;
 #[path = "monster_world/hunter_tick.rs"]
@@ -29,10 +34,7 @@ use spawn::*;
 #[path = "monster_world/tests.rs"]
 mod tests;
 
-use std::{
-    collections::{HashMap, HashSet},
-    sync::OnceLock,
-};
+use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -361,101 +363,6 @@ pub struct NavigationObstacle {
     pub max_y: i32,
 }
 
-pub const MAP_CONFIGS: [MonsterMapConfig; 3] = [
-    MonsterMapConfig {
-        map_id: "map_new01",
-        area: 0,
-        monster_tier: 1,
-        map_asset_id: "/content/releases/visible-world-v1/maps/map_new01.png",
-        density_counts: [3, 6, 9],
-        bounds: RegionBounds {
-            min_x: 320,
-            max_x: 1030,
-            min_y: 500,
-            max_y: 1000,
-        },
-        // Approach Bridge C from the tested town safe floor, cross its
-        // recovered center, then leave through the field-side edge. Density
-        // signs are controls, not navigation nodes.
-        entry_waypoints: [(1410, 690), (1356, 800), (1273, 800)],
-    },
-    MonsterMapConfig {
-        map_id: "background_08",
-        area: 1,
-        monster_tier: 2,
-        map_asset_id:
-            "/content/releases/visible-world-v1/village/background/background_08__1530.png",
-        density_counts: [3, 6, 9],
-        bounds: RegionBounds {
-            min_x: 1080,
-            max_x: 1760,
-            min_y: 1080,
-            max_y: 1430,
-        },
-        // Bridge C uses the same town-side approach before exiting south.
-        entry_waypoints: [(1410, 690), (1356, 800), (1356, 861)],
-    },
-    MonsterMapConfig {
-        map_id: "background_11",
-        area: 2,
-        monster_tier: 3,
-        map_asset_id:
-            "/content/releases/visible-world-v1/village/background/background_11__1508.png",
-        density_counts: [3, 6, 9],
-        bounds: RegionBounds {
-            min_x: 2220,
-            max_x: 2860,
-            min_y: 500,
-            max_y: 1030,
-        },
-        // The recovered sign-03 approach is already on the tested eastern
-        // town route. Cross Bridge B from there and leave through its edge.
-        entry_waypoints: [(1957, 809), (2043, 724), (2127, 724)],
-    },
-];
-
-#[derive(Deserialize)]
-struct OrdinaryMonsterMap {
-    regions: Vec<OrdinaryRegion>,
-}
-
-#[derive(Deserialize)]
-struct OrdinaryRegion {
-    area: u8,
-    difficulties: Vec<OrdinaryDifficulty>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct OrdinaryDifficulty {
-    global_difficulty: u8,
-    monster_pool: Vec<OrdinaryMonster>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct OrdinaryMonster {
-    source_index: u32,
-    hp: u64,
-    damage: u64,
-    armor: u64,
-    experience: u64,
-    gold: u64,
-    materials: OrdinaryMaterials,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct OrdinaryMaterials {
-    indices: Vec<u32>,
-    counts: Vec<u32>,
-    percent_values: Vec<u32>,
-}
-
-pub fn map_config(map_id: &str) -> Option<&'static MonsterMapConfig> {
-    MAP_CONFIGS.iter().find(|config| config.map_id == map_id)
-}
-
 impl Default for MonsterWorldState {
     fn default() -> Self {
         Self::with_densities(std::iter::empty())
@@ -465,7 +372,7 @@ impl Default for MonsterWorldState {
 impl Default for MonsterFieldState {
     fn default() -> Self {
         Self {
-            map_id: MAP_CONFIGS[0].map_id.to_owned(),
+            map_id: map_configs()[0].map_id.to_owned(),
             density_level: 1,
             spawn_count: 0,
             monsters: Vec::new(),

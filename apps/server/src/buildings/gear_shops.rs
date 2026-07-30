@@ -1,6 +1,4 @@
 use super::{BaseBuildingId, BuildingGameplayCatalog, EconomyProductDefinition};
-use std::collections::HashMap;
-use std::sync::OnceLock;
 
 const GEAR_CRAFTING_CAPABILITY: &str = "weapon-and-armor-crafting";
 const ACCESSORY_CRAFTING_CAPABILITY: &str = "accessory-crafting";
@@ -47,40 +45,6 @@ pub struct GearProductRoute {
     pub difficulty_group: u16,
 }
 
-fn difficulty_groups() -> &'static HashMap<String, u16> {
-    static GROUPS: OnceLock<HashMap<String, u16>> = OnceLock::new();
-    GROUPS.get_or_init(|| {
-        let payload: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../../packages/content/releases/evil-hunter-1.411/gear-catalog.json"
-        ))
-        .expect("gear catalog JSON is valid");
-        let mut groups = HashMap::new();
-        for row in payload
-            .get("rows")
-            .and_then(serde_json::Value::as_array)
-            .into_iter()
-            .flatten()
-        {
-            let Some(kind) = row.get("kind").and_then(serde_json::Value::as_str) else {
-                continue;
-            };
-            let Some(index) = row.get("index").and_then(serde_json::Value::as_u64) else {
-                continue;
-            };
-            let Some(group) = row.get("group").and_then(serde_json::Value::as_u64) else {
-                continue;
-            };
-            for rating in 0..5 {
-                groups.insert(
-                    format!("recipe:{kind}:{index}:rating:{rating}"),
-                    group as u16,
-                );
-            }
-        }
-        groups
-    })
-}
-
 /// Resolves the Blacksmith -> display shop route from recovered capability
 /// bindings instead of coupling simulation code to concrete building IDs.
 pub fn gear_product_route(
@@ -88,7 +52,20 @@ pub fn gear_product_route(
     product: &EconomyProductDefinition,
 ) -> Option<GearProductRoute> {
     let producer_building_id = product.building_id.clone()?;
-    let (kind, rating) = parse_recipe_kind_and_rating(&product.product_id)?;
+    #[cfg(not(test))]
+    let gear = gameplay.gear_product(&product.product_id)?;
+    #[cfg(test)]
+    let test_gear;
+    #[cfg(test)]
+    let gear = match gameplay.gear_product(&product.product_id) {
+        Some(gear) => gear,
+        None => {
+            test_gear = test_gear_product(&product.product_id)?;
+            &test_gear
+        }
+    };
+    let kind = parse_gear_kind(&gear.gear_kind)?;
+    let rating = gear.rating;
     let family = kind.family();
     let producer_capability = match family {
         GearProductFamily::Weapon | GearProductFamily::Armor => GEAR_CRAFTING_CAPABILITY,
@@ -121,16 +98,39 @@ pub fn gear_product_route(
         family,
         kind,
         rating,
-        difficulty_group: *difficulty_groups().get(&product.product_id)?,
+        difficulty_group: gear.difficulty_group,
     })
 }
 
-fn parse_recipe_kind_and_rating(product_id: &str) -> Option<(GearProductKind, u16)> {
+#[cfg(test)]
+fn test_gear_product(product_id: &str) -> Option<crate::buildings::GearProductDefinition> {
     let mut parts = product_id.split(':');
-    if parts.next()? != "recipe" {
-        return None;
-    }
-    let kind = match parts.next()? {
+    (parts.next()? == "recipe").then_some(())?;
+    let gear_kind = parts.next()?.to_owned();
+    let gear_index = parts.next()?.parse::<u32>().ok()?;
+    (parts.next()? == "rating").then_some(())?;
+    let rating = parts.next()?.parse::<u16>().ok()?;
+    parts.next().is_none().then_some(())?;
+    let payload: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../../packages/content/releases/evil-hunter-1.411/gear-catalog.json"
+    ))
+    .expect("test gear fixture must decode");
+    let difficulty_group = payload["rows"].as_array()?.iter().find_map(|row| {
+        (row["kind"] == gear_kind && row["index"] == gear_index)
+            .then(|| u16::try_from(row["group"].as_u64()?).ok())
+            .flatten()
+    })?;
+    Some(crate::buildings::GearProductDefinition {
+        product_id: product_id.to_owned(),
+        gear_kind,
+        gear_index,
+        rating,
+        difficulty_group,
+    })
+}
+
+fn parse_gear_kind(kind: &str) -> Option<GearProductKind> {
+    Some(match kind {
         "weapon" => GearProductKind::Weapon,
         "armor" => GearProductKind::Armor,
         "helmet" => GearProductKind::Helmet,
@@ -140,13 +140,7 @@ fn parse_recipe_kind_and_rating(product_id: &str) -> Option<(GearProductKind, u1
         "necklace" => GearProductKind::Necklace,
         "belt" => GearProductKind::Belt,
         _ => return None,
-    };
-    parts.next()?;
-    if parts.next()? != "rating" {
-        return None;
-    }
-    let rating = parts.next()?.parse().ok()?;
-    parts.next().is_none().then_some((kind, rating))
+    })
 }
 
 #[cfg(test)]
@@ -168,6 +162,34 @@ mod tests {
             ],
             items: BTreeMap::new(),
             products: BTreeMap::new(),
+            gear_products: [
+                ("recipe:weapon:12:rating:3", "weapon", 12, 3, 0),
+                ("recipe:weapon:0:rating:0", "weapon", 0, 0, 0),
+                ("recipe:armor:2:rating:1", "armor", 2, 1, 0),
+                ("recipe:helmet:2:rating:1", "helmet", 2, 1, 0),
+                ("recipe:gloves:2:rating:1", "gloves", 2, 1, 0),
+                ("recipe:boots:2:rating:1", "boots", 2, 1, 0),
+                ("recipe:ring:2:rating:1", "ring", 2, 1, 0),
+                ("recipe:necklace:2:rating:1", "necklace", 2, 1, 0),
+                ("recipe:belt:2:rating:1", "belt", 2, 1, 0),
+            ]
+            .into_iter()
+            .map(
+                |(product_id, gear_kind, gear_index, rating, difficulty_group)| {
+                    (
+                        product_id.to_owned(),
+                        crate::buildings::GearProductDefinition {
+                            product_id: product_id.to_owned(),
+                            gear_kind: gear_kind.to_owned(),
+                            gear_index,
+                            rating,
+                            difficulty_group,
+                        },
+                    )
+                },
+            )
+            .collect(),
+            consumable_products: BTreeMap::new(),
         }
     }
 

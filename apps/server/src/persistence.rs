@@ -7,6 +7,9 @@ use building_codec::*;
 #[path = "persistence/hunter_roster_save.rs"]
 mod hunter_roster_save;
 use hunter_roster_save::*;
+#[path = "persistence/hunter_owned_items_save.rs"]
+mod hunter_owned_items_save;
+use hunter_owned_items_save::*;
 #[path = "persistence/hunter_runtime_load.rs"]
 mod hunter_runtime_load;
 use hunter_runtime_load::*;
@@ -46,15 +49,15 @@ use crate::{
     identity::SessionTokenHash,
     simulation::{
         new_account_roster, operational_migration_roster, upgrade_operational_fixture_roster,
-        DurableBuilding, DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterProfile,
-        DurableHunterProgress, DurableHunterRosterState, DurableHunterRuntimeAppearance,
-        DurableHunterRuntimeConsumable, DurableHunterRuntimeGear, DurableHunterRuntimeGrowth,
-        DurableHunterRuntimeInventory, DurableHunterRuntimeItem, DurableHunterRuntimeRidingPet,
-        DurableHunterRuntimeSkill, DurableHunterRuntimeState, DurableHunterRuntimeStatus,
-        DurableHunterSkill, DurableHunterState, DurableHunterTrait, DurableMaterialStock,
-        DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement, DurableWaitingHunter,
-        HunterBanishment, HunterServiceGauge, OriginalFlowPlayerState, PendingOperation,
-        DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_HUNTER_RELEASE_ID,
+        DurableBuilding, DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterOwnedItem,
+        DurableHunterProfile, DurableHunterProgress, DurableHunterRosterState,
+        DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable, DurableHunterRuntimeGear,
+        DurableHunterRuntimeGrowth, DurableHunterRuntimeInventory, DurableHunterRuntimeItem,
+        DurableHunterRuntimeRidingPet, DurableHunterRuntimeSkill, DurableHunterRuntimeState,
+        DurableHunterRuntimeStatus, DurableHunterSkill, DurableHunterState, DurableHunterTrait,
+        DurableMaterialStock, DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement,
+        DurableWaitingHunter, HunterBanishment, HunterServiceGauge, OriginalFlowPlayerState,
+        PendingOperation, DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_HUNTER_RELEASE_ID,
     },
 };
 

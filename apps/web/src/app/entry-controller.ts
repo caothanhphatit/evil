@@ -8,6 +8,7 @@ import {
 } from "../ui/browser-accounts";
 import { projectEntryPresentation, type EntryPhase } from "../ui/entry-flow";
 import { t, type MessageKey } from "../i18n";
+import { recordClientEvent } from "../observability/client-telemetry";
 
 const SELECTED_ACCOUNT_KEY = "evil.browser.selected-account.v1";
 
@@ -127,6 +128,7 @@ export class EntryController {
   }
 
   fail(message: string): void {
+    recordClientEvent("error", "game_loading_failed", { phase: this.phase, message });
     this.mapLoadFailed = true;
     if (this.timeoutTimer !== undefined) clearTimeout(this.timeoutTimer);
     this.timeoutTimer = undefined;

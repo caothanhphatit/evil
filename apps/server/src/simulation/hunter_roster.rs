@@ -13,7 +13,12 @@ pub const MAX_ACTIVE_TOWN_HUNTERS: usize = 8;
 pub const MIGRATION_HUNTER_RELEASE_ID: &str = "migration.hunter-demo-v1";
 pub const HUNT_TICKS_TO_RETURN: u32 = 10;
 pub const FIXTURE_HUNT_ZONE_ID: &str = "migration-zone-1";
+#[cfg(test)]
 pub const ORDINARY_HUNT_REGION_IDS: [&str; 3] = ["map_new01", "background_08", "background_11"];
+
+pub fn is_ordinary_hunt_region(zone_id: &str) -> bool {
+    super::monster_world::map_config(zone_id).is_some()
+}
 pub const GEAR_ENHANCEMENT_WORKFLOW_VERSION: u16 = 1;
 pub const HUNTER_TRADE_WORKFLOW_VERSION: u16 = 1;
 
@@ -239,57 +244,11 @@ pub struct DurableHunterSkill {
 
 impl DurableHunterProfile {
     pub fn migration_default(hunter_id: u32) -> Self {
-        const CLASSES: [(&str, &str, &str); 5] = [
-            ("h1", "Berserker", "H1"),
-            ("h2", "Paladin", "H2"),
-            ("h3", "Ranger", "H3"),
-            ("h4", "Sorcerer", "H4"),
-            ("h5", "DarkKnight", "H5"),
-        ];
-        const RARITIES: [(&str, &str); 5] = [
-            ("normal", "Normal"),
-            ("rare", "Rare"),
-            ("superior", "Superior"),
-            ("heroic", "Heroic"),
-            ("legendary", "Legendary"),
-        ];
-        const PERSONALITIES: [&str; 33] = [
-            "Strong",
-            "Fast Runner",
-            "Swift",
-            "Fragile",
-            "Sluggish",
-            "Thickheaded",
-            "Careless",
-            "Stingy",
-            "Charismatic",
-            "Dead Weight",
-            "Baggy Eyes",
-            "Energetic",
-            "Overweight",
-            "Skinny",
-            "Optimistic",
-            "Pessimistic",
-            "Coward",
-            "Fearless",
-            "Addict",
-            "Scared of Hospital",
-            "Heroic",
-            "Rich",
-            "Gambler",
-            "Man of Steel",
-            "Nimble",
-            "Laggard",
-            "Sharp",
-            "Dull",
-            "Ordinary",
-            "YOLO",
-            "Internet Troll",
-            "Naughty",
-            "Rude",
-        ];
-        let class = CLASSES[(hunter_id.saturating_sub(1) as usize) % CLASSES.len()];
-        let rarity = RARITIES[(fixture_roll(hunter_id, 1) as usize) % RARITIES.len()];
+        let classes = super::hunter_content::classes();
+        let rarities = super::hunter_content::rarities();
+        let personalities = super::hunter_content::personalities();
+        let class = &classes[(hunter_id.saturating_sub(1) as usize) % classes.len()];
+        let rarity = &rarities[(fixture_roll(hunter_id, 1) as usize) % rarities.len()];
         let level = 8 + fixture_roll(hunter_id, 2) % 23;
         let xp_to_next_level = 180 + u64::from(fixture_roll(hunter_id, 3) % 360);
         let xp = u64::from(fixture_roll(hunter_id, 4)) % xp_to_next_level;
@@ -298,11 +257,11 @@ impl DurableHunterProfile {
         Self {
             content_release_id: MIGRATION_HUNTER_RELEASE_ID.to_owned(),
             display_name: format!("Hunter {hunter_id}"),
-            class_id: class.0.to_owned(),
-            class_name: class.1.to_owned(),
-            visual_family: class.2.to_owned(),
-            rarity_id: rarity.0.to_owned(),
-            rarity_name: rarity.1.to_owned(),
+            class_id: class.class_id.clone(),
+            class_name: class.display_name.clone(),
+            visual_family: class.visual_family.clone(),
+            rarity_id: rarity.rarity_id.clone(),
+            rarity_name: rarity.display_name.clone(),
             level,
             xp,
             xp_to_next_level: Some(xp_to_next_level),
@@ -322,12 +281,11 @@ impl DurableHunterProfile {
             }),
             is_locked: Some(hunter_id % 4 == 0),
             characteristic_name: Some(
-                PERSONALITIES[(fixture_roll(hunter_id, 13) as usize) % PERSONALITIES.len()]
-                    .to_owned(),
+                personalities[(fixture_roll(hunter_id, 13) as usize) % personalities.len()].clone(),
             ),
             riding_pet_state_resolved: hunter_id % 3 == 0,
-            equipment_slots: fixture_equipment(class.0, hunter_id),
-            skills: fixture_basic_skills(class.0),
+            equipment_slots: fixture_equipment(&class.class_id, hunter_id),
+            skills: fixture_basic_skills(&class.class_id),
             action_state: "idle".to_owned(),
             animation_name: "hunter_stay".to_owned(),
             ..Self::default()
@@ -505,20 +463,8 @@ pub fn operational_migration_roster() -> DurableHunterRosterState {
 /// deterministic RNG stream derived from the account UUID and never rerolls it
 /// on reconnect.
 pub fn new_account_roster(player_token: Uuid) -> DurableHunterRosterState {
-    const CLASSES: [(&str, &str, &str); 5] = [
-        ("h1", "Berserker", "H1"),
-        ("h2", "Paladin", "H2"),
-        ("h3", "Ranger", "H3"),
-        ("h4", "Sorcerer", "H4"),
-        ("h5", "DarkKnight", "H5"),
-    ];
-    const RARITIES: [(&str, &str); 5] = [
-        ("normal", "Normal"),
-        ("rare", "Rare"),
-        ("superior", "Superior"),
-        ("heroic", "Heroic"),
-        ("legendary", "Legendary"),
-    ];
+    let classes = super::hunter_content::classes();
+    let rarities = super::hunter_content::rarities();
     let seed = u64::from_le_bytes(player_token.as_bytes()[..8].try_into().unwrap());
     let mut rng = DeterministicRng::new(seed);
     let mut roster = DurableHunterRosterState {
@@ -527,9 +473,9 @@ pub fn new_account_roster(player_token: Uuid) -> DurableHunterRosterState {
         ..DurableHunterRosterState::default()
     };
     for hunter_id in 1..=5 {
-        let class = CLASSES[rng.range_inclusive(0, 4) as usize];
-        let rarity = RARITIES[rng.range_inclusive(0, 4) as usize];
-        let base_hp = if matches!(class.0, "h3" | "h4") {
+        let class = &classes[rng.range_inclusive(0, 4) as usize];
+        let rarity = &rarities[rng.range_inclusive(0, 4) as usize];
+        let base_hp = if matches!(class.class_id.as_str(), "h3" | "h4") {
             5_600
         } else {
             6_000
@@ -540,15 +486,15 @@ pub fn new_account_roster(player_token: Uuid) -> DurableHunterRosterState {
         let satiety_max = rng.range_inclusive(95, 160) as u64;
         let mood_max = rng.range_inclusive(85, 155) as u64;
         let mut profile = DurableHunterProfile::migration_default(hunter_id);
-        profile.class_id = class.0.to_owned();
-        profile.class_name = class.1.to_owned();
-        profile.visual_family = class.2.to_owned();
-        profile.rarity_id = rarity.0.to_owned();
-        profile.rarity_name = rarity.1.to_owned();
+        profile.class_id = class.class_id.clone();
+        profile.class_name = class.display_name.clone();
+        profile.visual_family = class.visual_family.clone();
+        profile.rarity_id = rarity.rarity_id.clone();
+        profile.rarity_name = rarity.display_name.clone();
         profile.level = 1 + rng.range_inclusive(0, 4) as u32;
         profile.xp = 0;
-        profile.equipment_slots = fixture_equipment(class.0, hunter_id);
-        profile.skills = fixture_basic_skills(class.0);
+        profile.equipment_slots = fixture_equipment(&class.class_id, hunter_id);
+        profile.skills = fixture_basic_skills(&class.class_id);
         let hunter = DurableHunterState {
             hunter_id,
             gold: 0,
@@ -687,7 +633,7 @@ impl DurableHunterRosterState {
         if zone_id.trim().is_empty() {
             return Err(HunterRosterError::InvalidState("hunt zone is empty"));
         }
-        if zone_id != FIXTURE_HUNT_ZONE_ID && !ORDINARY_HUNT_REGION_IDS.contains(&zone_id) {
+        if zone_id != FIXTURE_HUNT_ZONE_ID && !is_ordinary_hunt_region(zone_id) {
             return Err(HunterRosterError::InvalidState("hunt zone is unavailable"));
         }
         let hunter = self.active_mut(hunter_id)?;
@@ -710,7 +656,7 @@ impl DurableHunterRosterState {
             gear_enhancement: None,
             pending_trade: None,
         };
-        hunter.profile.action_state = if ORDINARY_HUNT_REGION_IDS.contains(&zone_id) {
+        hunter.profile.action_state = if is_ordinary_hunt_region(zone_id) {
             "entering_region"
         } else {
             "hunting"

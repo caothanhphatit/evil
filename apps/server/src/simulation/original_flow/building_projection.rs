@@ -111,7 +111,8 @@ impl OriginalFlowSession {
                 hunter_quantity: stock.hunter_quantity,
                 requested: stock.requested,
                 unit_price: stock.unit_price,
-                difficulty: material_difficulty_rating(&stock.id).unwrap_or(u8::MAX),
+                difficulty: material_difficulty_rating(&content.gameplay, &stock.id)
+                    .unwrap_or(u8::MAX),
             })
             .collect(),
             recipes: {

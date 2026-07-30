@@ -1,3 +1,4 @@
+mod admin;
 mod health;
 mod session;
 mod websocket;
@@ -28,6 +29,7 @@ pub fn router(state: AppState) -> Router {
         .allow_headers([header::CONTENT_TYPE]);
 
     Router::new()
+        .nest("/admin", admin::router())
         .route("/health", get(health::health))
         .route("/ready", get(health::ready))
         .route("/session/bootstrap", post(session::bootstrap))

@@ -1,6 +1,6 @@
 use super::{
-    spawn_point, MonsterActionState, MonsterFieldState, MonsterMapConfig,
-    MonsterMaterialDefinition, MonsterState, OnceLock, OrdinaryMonsterMap, RegionBounds,
+    monster_pools, spawn_point, MonsterActionState, MonsterFieldState, MonsterMapConfig,
+    MonsterMaterialDefinition, MonsterState, RegionBounds,
 };
 
 impl MonsterFieldState {
@@ -77,28 +77,10 @@ pub(super) fn spawn_monster(
     world_difficulty: u8,
     index: usize,
 ) -> MonsterState {
-    static DEFINITIONS: OnceLock<OrdinaryMonsterMap> = OnceLock::new();
-    let definitions = DEFINITIONS.get_or_init(|| {
-        match serde_json::from_str(include_str!("../../../../../packages/content/releases/evil-hunter-1.411/ordinary-hunting-monster-map.json")) {
-            Ok(definitions) => definitions,
-            Err(error) => panic!("validated ordinary monster mapping cannot be decoded: {error}"),
-        }
-    });
-    let definition = definitions
-        .regions
+    let definition = monster_pools()
         .iter()
-        .find(|region| region.area == config.area)
-        .and_then(|region| {
-            region
-                .difficulties
-                .iter()
-                .find(|difficulty| difficulty.global_difficulty == world_difficulty)
-        })
-        .and_then(|difficulty| {
-            difficulty
-                .monster_pool
-                .get(index % difficulty.monster_pool.len().max(1))
-        });
+        .find(|pool| pool.map_id == config.map_id && pool.global_difficulty == world_difficulty)
+        .and_then(|pool| pool.monsters.get(index % pool.monsters.len().max(1)));
     let Some(monster) = definition else {
         panic!(
             "validated ordinary monster pool is missing for area {} difficulty {}",
@@ -107,21 +89,11 @@ pub(super) fn spawn_monster(
     };
     let materials = monster
         .materials
-        .indices
         .iter()
-        .enumerate()
-        .map(|(slot, source_index)| {
-            let Some(count) = monster.materials.counts.get(slot) else {
-                panic!("validated monster material count is missing at slot {slot}");
-            };
-            let Some(raw_percent) = monster.materials.percent_values.get(slot) else {
-                panic!("validated monster material percentage is missing at slot {slot}");
-            };
-            MonsterMaterialDefinition {
-                source_index: *source_index,
-                count: *count,
-                raw_percent: *raw_percent,
-            }
+        .map(|material| MonsterMaterialDefinition {
+            source_index: material.source_index,
+            count: material.count,
+            raw_percent: material.raw_percent,
         })
         .collect();
     let (source_index, hp, damage, armor, experience, gold) = (
@@ -137,7 +109,7 @@ pub(super) fn spawn_monster(
         entity_id: format!("monster-{}-{index}", config.map_id),
         monster_id: format!("monster:{source_index}"),
         source_index,
-        asset_bundle_id: "mon_a_01_1".to_owned(),
+        asset_bundle_id: monster.asset_bundle_id.clone(),
         hp,
         max_hp: hp,
         damage,

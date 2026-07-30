@@ -49,7 +49,8 @@ pub(super) fn add_experience(
     experience: u64,
 ) -> u64 {
     // The native PlusExp cap applies to stored HunterData.level (display is +1).
-    if hunter.profile.level >= super::super::original_progression::ORIGINAL_HUNTER_MAX_STORED_LEVEL
+    if hunter.profile.level
+        >= super::super::original_progression::original_hunter_max_stored_level()
     {
         return 0;
     }

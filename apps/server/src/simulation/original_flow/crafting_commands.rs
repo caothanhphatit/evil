@@ -33,7 +33,9 @@ impl OriginalFlowSession {
         {
             return self.rejected("set_material_request", "building_capability_mismatch");
         }
-        let Some(difficulty) = material_difficulty_rating(material_id) else {
+        let Some(difficulty) =
+            material_difficulty_rating(&self.building_content.gameplay, material_id)
+        else {
             return self.rejected("set_material_request", "material_difficulty_unresolved");
         };
         if difficulty >= building.level {

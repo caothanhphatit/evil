@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS economy_product_consumable_binding;
+DROP TABLE IF EXISTS consumable_level_definition;
+DROP TABLE IF EXISTS consumable_definition;
+DROP TABLE IF EXISTS economy_product_gear_binding;
+DROP TABLE IF EXISTS gear_material_requirement;
+DROP TABLE IF EXISTS gear_rating_definition;
+DROP TABLE IF EXISTS gear_definition;
+DROP TABLE IF EXISTS ordinary_monster_pool_definition;
+DROP TABLE IF EXISTS monster_material_drop_definition;
+DROP TABLE IF EXISTS monster_definition;
+DROP TABLE IF EXISTS material_definition;
+DROP TABLE IF EXISTS content_source_manifest;

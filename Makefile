@@ -1,4 +1,4 @@
-.PHONY: bootstrap dev down logs test quality verify-assets asset-index full-asset-catalog protocol
+.PHONY: bootstrap dev down logs test quality verify-assets asset-index full-asset-catalog protocol e2e
 
 bootstrap:
 	cp .env.example .env
@@ -20,6 +20,9 @@ test:
 	pnpm test:web
 	cargo test --manifest-path apps/server/Cargo.toml
 
+e2e:
+	pnpm test:e2e
+
 quality:
 	pnpm protocol:generate
 	cargo fmt --manifest-path apps/server/Cargo.toml -- --check
@@ -27,6 +30,7 @@ quality:
 	cargo clippy --manifest-path apps/server/Cargo.toml --all-targets --all-features -- -D warnings
 	pnpm test:web
 	pnpm build:web
+	pnpm architecture:validate
 	npm audit --prefix apps/web
 	pnpm assets:verify
 	pnpm assets:validate:slice1

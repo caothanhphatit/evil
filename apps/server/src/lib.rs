@@ -21,6 +21,8 @@ use persistence::{PostgresPlayerRepository, SharedPlayerRepository};
 use thiserror::Error;
 
 const BUILDING_RELEASE_ID: &str = "evil-hunter-1.411.buildings-v1";
+const HUNTER_PROFILE_RELEASE_ID: &str = "migration.hunter-demo-v1";
+const HUNTER_INFO_RELEASE_ID: &str = "evil-hunter-1.411.hunter-info-v1";
 
 #[derive(Clone)]
 pub struct AppState {
@@ -61,6 +63,30 @@ pub async fn app(config: AppConfig) -> Result<Router, AppBuildError> {
     let gameplay = building_repository
         .load_gameplay_catalog(BUILDING_RELEASE_ID, EMBEDDED_REGISTRY_SHA256)
         .await?;
+    let world_maps = building_repository
+        .load_world_maps(BUILDING_RELEASE_ID)
+        .await?;
+    simulation::install_map_configs(world_maps).map_err(|_| {
+        BuildingRepositoryError::InvalidCatalog("world map catalog installation failed")
+    })?;
+    let monster_pools = building_repository
+        .load_ordinary_monster_pools(BUILDING_RELEASE_ID)
+        .await?;
+    simulation::install_monster_pools(monster_pools).map_err(|_| {
+        BuildingRepositoryError::InvalidCatalog("ordinary monster catalog installation failed")
+    })?;
+    let progression = building_repository
+        .load_hunter_progression(BUILDING_RELEASE_ID, simulation::EXPERIENCE_PROGRESSION_ID)
+        .await?;
+    simulation::install_experience_catalog(progression).map_err(|_| {
+        BuildingRepositoryError::InvalidCatalog("Hunter progression installation failed")
+    })?;
+    let hunter_content = building_repository
+        .load_hunter_static_content(HUNTER_PROFILE_RELEASE_ID, HUNTER_INFO_RELEASE_ID)
+        .await?;
+    simulation::install_hunter_static_content(hunter_content).map_err(|_| {
+        BuildingRepositoryError::InvalidCatalog("Hunter static content installation failed")
+    })?;
     let building_content = Arc::new(AuthoritativeBuildingContent::new(catalog, gameplay)?);
     let coordinator = Arc::new(RedisSessionCoordinator::new(redis_url)?);
     Ok(app_with_adapters(

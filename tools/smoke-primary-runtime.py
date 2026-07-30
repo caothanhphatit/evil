@@ -11,10 +11,14 @@ import socket
 import struct
 import time
 import uuid
+from pathlib import Path
 from urllib.parse import urlparse
 
 
-PROTOCOL_VERSION = 7
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+PROTOCOL_VERSION = json.loads(
+    (REPOSITORY_ROOT / "packages/protocol/world-v1.schema.json").read_text(encoding="utf-8")
+)["schemaVersion"]
 LOOT_ITEM_ID = 2001
 
 

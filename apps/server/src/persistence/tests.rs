@@ -241,9 +241,56 @@ fn hunter_trade_action_state_is_allowed_by_the_player_constraint() {
 }
 
 #[test]
+fn world_map_catalog_is_normalized_and_versioned() {
+    let migration = include_str!("../../../../infra/db/migrations/0031_world_content_catalog.sql");
+    assert!(migration.contains("CREATE TABLE world_map_definition"));
+    assert!(migration.contains("CREATE TABLE world_map_density_definition"));
+    assert!(migration.contains("CREATE TABLE world_map_entry_waypoint"));
+    assert!(migration.contains("REFERENCES content_release(release_id)"));
+    assert!(!migration.contains("JSONB"));
+}
+
+#[test]
+fn progression_catalog_is_normalized_and_versioned() {
+    let migration =
+        include_str!("../../../../infra/db/migrations/0032_progression_content_catalog.sql");
+    assert!(migration.contains("CREATE TABLE hunter_progression_definition"));
+    assert!(migration.contains("CREATE TABLE hunter_progression_experience"));
+    assert!(migration.contains("REFERENCES content_release(release_id)"));
+    assert!(!migration.contains("JSONB"));
+}
+
+#[test]
+fn runtime_object_catalog_has_admin_ready_relational_boundaries() {
+    let migration = include_str!("../../../../infra/db/migrations/0033_runtime_object_catalog.sql");
+    for table in [
+        "content_source_manifest",
+        "material_definition",
+        "monster_definition",
+        "monster_material_drop_definition",
+        "ordinary_monster_pool_definition",
+        "gear_definition",
+        "gear_rating_definition",
+        "gear_material_requirement",
+        "economy_product_gear_binding",
+        "consumable_definition",
+        "consumable_level_definition",
+        "economy_product_consumable_binding",
+    ] {
+        assert!(migration.contains(&format!("CREATE TABLE {table}")));
+    }
+    assert!(migration.contains("REFERENCES content_release(release_id)"));
+    assert!(migration.contains("source_sha256 BYTEA"));
+    assert!(migration.contains("unresolved_evidence JSONB"));
+    assert!(migration.contains("UPDATE hunter_skill_definition"));
+}
+
+#[test]
 fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
     let ownership = include_str!("../../../../infra/db/migrations/0024_hunter_owned_items.sql");
     let gear_stock = include_str!("../../../../infra/db/migrations/0025_crafted_gear_stock.sql");
+    let inventory =
+        include_str!("../../../../infra/db/migrations/0034_player_inventory_authority.sql");
 
     assert!(ownership.contains("ADD COLUMN owned_items JSONB NOT NULL"));
     assert!(gear_stock.contains("CREATE TABLE crafted_gear_stock"));
@@ -252,6 +299,11 @@ fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
     assert!(gear_stock.contains("icon_path TEXT NOT NULL"));
     assert!(gear_stock.contains("ruleset TEXT NOT NULL"));
     assert!(gear_stock.contains("crafted_gear_stock_shop_idx"));
+    assert!(inventory.contains("CREATE TABLE player_hunter_item_stack"));
+    assert!(inventory.contains("CREATE TABLE player_hunter_gear_instance"));
+    assert!(inventory.contains("gear_instance_id UUID PRIMARY KEY"));
+    assert!(inventory.contains("REFERENCES economy_product_definition"));
+    assert!(inventory.contains("legacy JSONB column"));
 }
 
 #[tokio::test]

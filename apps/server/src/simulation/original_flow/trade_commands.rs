@@ -18,7 +18,7 @@ impl OriginalFlowSession {
             .is_some_and(|hunter| {
                 hunter.hunt.status == "hunting"
                     && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
-                        super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+                        super::super::hunter_roster::is_ordinary_hunt_region(zone_id)
                     })
             });
         self.schedule_hunter_loot_sale(command_id, hunter_id, requested_only)
@@ -62,7 +62,7 @@ impl OriginalFlowSession {
         let ordinary_field_sale = requested_only
             && hunter.hunt.status == "hunting"
             && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
-                super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+                super::super::hunter_roster::is_ordinary_hunt_region(zone_id)
             });
         let active_service = self
             .product_services
@@ -151,7 +151,7 @@ impl OriginalFlowSession {
         let ordinary_field_auto_sale = requested_only
             && hunter.hunt.status == "hunting"
             && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
-                super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS.contains(&zone_id)
+                super::super::hunter_roster::is_ordinary_hunt_region(zone_id)
             });
         let pending_trade = hunter
             .hunt
@@ -336,8 +336,7 @@ impl OriginalFlowSession {
                     && (hunter.hunt.is_idle()
                         || (hunter.hunt.status == "hunting"
                             && hunter.hunt.zone_id.as_deref().is_some_and(|zone_id| {
-                                super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS
-                                    .contains(&zone_id)
+                                super::super::hunter_roster::is_ordinary_hunt_region(zone_id)
                             })));
                 can_settle_requested_loot && self.has_affordable_auto_sale(hunter)
             })

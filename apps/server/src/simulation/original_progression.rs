@@ -1,42 +1,97 @@
 use std::sync::OnceLock;
 
-use serde::Deserialize;
+use crate::buildings::HunterProgressionDefinition;
 
-const EXPERIENCE_CATALOG_JSON: &str = include_str!(
-    "../../../../packages/content/releases/evil-hunter-1.411/experience-runtime-catalog.json"
-);
+pub const EXPERIENCE_PROGRESSION_ID: &str = "evil-hunter-1.411.experience-runtime-v1";
 
-/// Exact `1.411` cap for stored `HunterData.level`. Product-facing UI displays
-/// this value plus one, so the corresponding displayed cap is level 100.
-pub const ORIGINAL_HUNTER_MAX_STORED_LEVEL: u32 = 99;
+struct ExperienceCatalog {
+    max_stored_level: u32,
+    display_level_offset: u32,
+    rows: Vec<[u64; 6]>,
+}
+
+static EXPERIENCE_CATALOG: OnceLock<ExperienceCatalog> = OnceLock::new();
+
+pub(crate) fn install_experience_catalog(
+    definition: HunterProgressionDefinition,
+) -> Result<(), &'static str> {
+    if definition.progression_id != EXPERIENCE_PROGRESSION_ID {
+        return Err("unexpected Hunter progression identity");
+    }
+    let display_level_offset = u32::try_from(definition.display_level_offset)
+        .map_err(|_| "Hunter progression display offset is invalid")?;
+    let catalog = ExperienceCatalog {
+        max_stored_level: definition.max_stored_level,
+        display_level_offset,
+        rows: definition.experience_by_level,
+    };
+    if let Some(installed) = EXPERIENCE_CATALOG.get() {
+        return (installed.max_stored_level == catalog.max_stored_level
+            && installed.display_level_offset == catalog.display_level_offset
+            && installed.rows == catalog.rows)
+            .then_some(())
+            .ok_or("Hunter progression was already installed with different data");
+    }
+    EXPERIENCE_CATALOG
+        .set(catalog)
+        .map_err(|_| "Hunter progression installation raced")
+}
+
+fn experience_catalog() -> &'static ExperienceCatalog {
+    EXPERIENCE_CATALOG.get_or_init(test_experience_catalog)
+}
+
+#[cfg(not(test))]
+fn test_experience_catalog() -> ExperienceCatalog {
+    panic!("Hunter progression catalog must be installed from PostgreSQL before simulation starts")
+}
+
+#[cfg(test)]
+fn test_experience_catalog() -> ExperienceCatalog {
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    struct SourceCatalog {
+        rows: Vec<SourceRow>,
+    }
+    #[derive(serde::Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    struct SourceRow {
+        index: u32,
+        experience_by_difficulty: [u64; 6],
+    }
+    let source: SourceCatalog = serde_json::from_str(include_str!(
+        "../../../../packages/content/releases/evil-hunter-1.411/experience-runtime-catalog.json"
+    ))
+    .expect("test progression fixture must decode");
+    assert!(source
+        .rows
+        .iter()
+        .enumerate()
+        .all(|(index, row)| row.index == index as u32));
+    ExperienceCatalog {
+        max_stored_level: 99,
+        display_level_offset: 1,
+        rows: source
+            .rows
+            .into_iter()
+            .map(|row| row.experience_by_difficulty)
+            .collect(),
+    }
+}
+
+pub fn original_hunter_max_stored_level() -> u32 {
+    experience_catalog().max_stored_level
+}
+
 #[allow(dead_code)]
-pub const ORIGINAL_HUNTER_MAX_DISPLAY_LEVEL: u32 = ORIGINAL_HUNTER_MAX_STORED_LEVEL + 1;
+pub fn original_hunter_max_display_level() -> u32 {
+    original_hunter_max_stored_level().wrapping_add(experience_catalog().display_level_offset)
+}
 
 /// Exact presentation/mission projection used by the recovered `PlusExp` path.
 #[allow(dead_code)]
 pub fn original_hunter_display_level(stored_level: u32) -> u32 {
-    stored_level.wrapping_add(1)
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct ExperienceCatalog {
-    rows: Vec<ExperienceRow>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct ExperienceRow {
-    index: u32,
-    experience_by_difficulty: [u64; 6],
-}
-
-fn experience_catalog() -> &'static ExperienceCatalog {
-    static CATALOG: OnceLock<ExperienceCatalog> = OnceLock::new();
-    CATALOG.get_or_init(|| {
-        serde_json::from_str(EXPERIENCE_CATALOG_JSON)
-            .expect("generated original experience catalog must remain valid")
-    })
+    stored_level.wrapping_add(experience_catalog().display_level_offset)
 }
 
 /// Exact `GameManager.GetNeedExp(revive, currentLevel)` table lookup.
@@ -47,15 +102,12 @@ pub fn original_need_experience(revive: u32, current_level: u32) -> Option<u64> 
     let row = experience_catalog()
         .rows
         .get(usize::try_from(row_index).ok()?)?;
-    if row.index != row_index {
-        return None;
-    }
     let column = if revive <= 4 {
         usize::try_from(revive).ok()?
     } else {
         5
     };
-    Some(row.experience_by_difficulty[column])
+    Some(row[column])
 }
 
 /// Replays the exact `PlusExp` carry rule at the recovered global level cap.
@@ -67,7 +119,8 @@ pub fn original_apply_experience(
     mut incoming_experience: u64,
     revive: u32,
 ) -> Option<(u32, u64)> {
-    if level >= ORIGINAL_HUNTER_MAX_STORED_LEVEL {
+    let maximum_level = original_hunter_max_stored_level();
+    if level >= maximum_level {
         return Some((level, current_experience));
     }
 
@@ -78,7 +131,7 @@ pub fn original_apply_experience(
             incoming_experience -= missing;
             level = level.saturating_add(1);
             current_experience = 0;
-            if level >= ORIGINAL_HUNTER_MAX_STORED_LEVEL {
+            if level >= maximum_level {
                 return Some((level, current_experience));
             }
             continue;
@@ -97,7 +150,7 @@ pub fn original_secondary_progression_base(
     hunter_level: u32,
     stage_level: u32,
 ) -> u32 {
-    if revive == 5 && hunter_level == ORIGINAL_HUNTER_MAX_STORED_LEVEL && stage_level >= 6 {
+    if revive == 5 && hunter_level == original_hunter_max_stored_level() && stage_level >= 6 {
         if stage_level == 6 {
             100
         } else {
@@ -111,9 +164,9 @@ pub fn original_secondary_progression_base(
 #[cfg(test)]
 mod tests {
     use super::{
-        original_apply_experience, original_hunter_display_level, original_need_experience,
-        original_secondary_progression_base, ORIGINAL_HUNTER_MAX_DISPLAY_LEVEL,
-        ORIGINAL_HUNTER_MAX_STORED_LEVEL,
+        original_apply_experience, original_hunter_display_level,
+        original_hunter_max_display_level, original_hunter_max_stored_level,
+        original_need_experience, original_secondary_progression_base,
     };
 
     #[test]
@@ -139,8 +192,8 @@ mod tests {
 
     #[test]
     fn maximum_level_discards_the_incoming_grant() {
-        assert_eq!(ORIGINAL_HUNTER_MAX_STORED_LEVEL, 99);
-        assert_eq!(ORIGINAL_HUNTER_MAX_DISPLAY_LEVEL, 100);
+        assert_eq!(original_hunter_max_stored_level(), 99);
+        assert_eq!(original_hunter_max_display_level(), 100);
         assert_eq!(original_hunter_display_level(99), 100);
         assert_eq!(original_apply_experience(99, 77, 999, 0), Some((99, 77)));
         assert_eq!(original_apply_experience(98, 0, u64::MAX, 0), Some((99, 0)));

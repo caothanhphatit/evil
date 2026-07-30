@@ -1,7 +1,7 @@
 use super::{
-    db_i64, fixture_equipment_slot_order, nonempty_or, save_hunter_runtime_in,
-    DurableHunterProfile, DurableHunterRosterState, DurableHunterState, Postgres, RepositoryError,
-    Transaction, Uuid, MIGRATION_HUNTER_RELEASE_ID,
+    db_i64, fixture_equipment_slot_order, nonempty_or, save_hunter_owned_items_in,
+    save_hunter_runtime_in, DurableHunterProfile, DurableHunterRosterState, DurableHunterState,
+    Postgres, RepositoryError, Transaction, Uuid, MIGRATION_HUNTER_RELEASE_ID,
 };
 
 pub(super) async fn save_hunter_roster_in(
@@ -247,7 +247,10 @@ pub(super) async fn insert_hunter_row(
     .bind(action_state)
     .bind(animation_name)
     .bind(serde_json::to_value(&hunter.hunt)?)
-    .bind(serde_json::to_value(&hunter.owned_items)?)
+    // The normalized inventory tables are authoritative after migration
+    // 0034. Keep the legacy column empty so old fallback reads cannot
+    // resurrect stale ownership rows.
+    .bind(serde_json::json!([]))
     .execute(&mut **transaction)
     .await?;
     sqlx::query("DELETE FROM player_hunter_trait WHERE player_token = $1 AND hunter_id = $2")
@@ -291,7 +294,9 @@ pub(super) async fn insert_hunter_row(
                 (player_token, hunter_id, content_release_id, skill_id, skill_level, equipped_slot,
                  cooldown_ready_at)
             VALUES ($1, $2, $3, $4, $5, $6,
-                    CASE WHEN $7 THEN NULL ELSE now() + interval '1 second' END)
+                    CASE WHEN $7 THEN NULL
+                         ELSE now() + ($8::bigint * interval '1 millisecond')
+                    END)
             "#,
         )
         .bind(player_token)
@@ -301,6 +306,10 @@ pub(super) async fn insert_hunter_row(
         .bind(i16::from(skill.skill_level.max(1)))
         .bind(skill.equipped_slot.map(i16::from))
         .bind(skill.ready)
+        .bind(
+            i64::try_from(skill.cooldown_remaining_ms)
+                .map_err(|_| RepositoryError::InvalidOperation)?,
+        )
         .execute(&mut **transaction)
         .await?;
     }
@@ -331,5 +340,6 @@ pub(super) async fn insert_hunter_row(
         .await?;
     }
     save_hunter_runtime_in(transaction, player_token, hunter).await?;
+    save_hunter_owned_items_in(transaction, player_token, hunter).await?;
     Ok(())
 }

@@ -860,3 +860,85 @@ Before reporting work complete:
 - The source difficulty sprite contains an embedded Korean label. Runtime UI
   masks only that label area with the localized world-mode text; the recovered
   skull and badge artwork remain unchanged.
+
+## 2026-07-30 Quality baseline
+
+- `.github/workflows/quality.yml` now enforces independent web, Rust, migration,
+  and browser-smoke jobs on pull requests and pushes to `main`.
+- Playwright covers the sign-in/loading/town/Hunter-roster journey at desktop
+  1366x768 and mobile 393x852. The Docker smoke job also runs the authoritative
+  protocol reconnect journey.
+- `tools/verify-latest-migration.sh` applies all migrations, rolls back the
+  newest migration, and reapplies it. It refuses to run unless the caller marks
+  the database as disposable.
+- Browser failures and rejected intents emit structured `evil:telemetry`
+  events; server intent, lease, persistence, and checkpoint events remain in
+  structured `tracing` logs.
+- Review ownership and the executable regression checklist live in
+  `.github/CODEOWNERS`, `.github/pull_request_template.md`, and
+  `docs/engineering/regression-checklist.md`.
+
+## 2026-07-30 relational gameplay content authority
+
+- ADR 0010 makes PostgreSQL the production source of truth for stable gameplay
+  content while formulas, RNG and state machines remain in Rust.
+- Migrations `0031` through `0033` normalize world maps, density/waypoints,
+  Hunter EXP progression, monster definitions/pools/drops, all 369 material
+  difficulty rows, 671 gear definitions with 3,355 ratings and recipe bindings,
+  9,715 gear material requirements, and 40 consumable level bindings.
+- Production startup installs map, monster and progression catalogs from the
+  active release and fails closed if they are missing or inconsistent. Gear,
+  material and consumable runtime decisions are loaded through the normalized
+  building gameplay catalog.
+- Starter Hunter generation and basic-skill lookup now consume the normalized
+  Hunter class, rarity, characteristic and skill tables; their former production
+  match tables remain only as exact `cfg(test)` fixtures.
+- `tools/generate-progression-content-migration.mjs` and
+  `tools/generate-runtime-content-migration.mjs` deterministically reproduce the
+  generated SQL from immutable package/evidence inputs. Source hashes are stored
+  in `content_source_manifest`; the one known monster drop-array mismatch is
+  preserved as unresolved JSONB evidence rather than guessed.
+- Future admin tooling must clone/edit a draft content release, validate all
+  references/counts, record an audit event and promote atomically. Active release
+  rows are immutable and must not be edited in place.
+
+## 2026-07-30 player inventory authority
+
+- Migration `0034_player_inventory_authority.sql` separates Hunter-owned stacks
+  from individually rolled gear instances. `player_hunter_item_stack` stores
+  stackable product quantities; `player_hunter_gear_instance` stores identity,
+  recipe/catalog binding, rating and enhancement level for each gear item.
+- `player_hunter.owned_items` remains a compatibility read path only. An
+  authoritative save clears that legacy JSONB field and writes normalized rows
+  in the same transaction as the Hunter roster.
+- Gear purchases are never merged by product ID; each purchase receives a
+  distinct gear instance ID. Consumables and other stackable products continue
+  to aggregate by product.
+- Skill cooldown persistence now stores the exact remaining duration through
+  `cooldown_ready_at` instead of replacing every non-ready skill with a fixed
+  one-second delay on reconnect.
+- Runtime-capture tables remain evidence snapshots and are not interchangeable
+  with live learned skills, owned inventory, growth state or pet ownership.
+  Growth/material/pet normalized tables still require gameplay wiring before
+  those features can claim complete player-state authority.
+
+## 2026-07-30 admin console scaffold
+
+- `apps/admin/` is a separate Vite/Tailwind operations-console application with
+  responsive navigation, an item table, search, status/category controls and
+  create/edit/delete interaction scaffolding.
+- The current item rows and CRUD mutations are client-local demonstration data.
+  They are not connected to PostgreSQL and must not be presented as a working
+  content editor. The next admin slice must implement draft-release APIs,
+  validation, audit records and atomic promotion before enabling durable CRUD.
+- The Rust server currently exposes only authenticated `GET /admin/overview`.
+  It reports service/protocol/schema status and does not mutate player or
+  content data.
+- Admin Basic Auth credentials are required server configuration. Docker Compose
+  refuses to start the server without `ADMIN_BASIC_AUTH_PASSWORD`; the browser
+  retains the username only and keeps the password in memory for the current
+  page session rather than local storage.
+- The intended deployment is same-origin or a trusted reverse proxy. Do not
+  expose the temporary Basic Auth endpoint directly to the public internet;
+  production administration still requires TLS, stronger identity/RBAC, CSRF
+  protection, audit logging and rate limiting.

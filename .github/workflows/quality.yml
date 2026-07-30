@@ -1,0 +1,100 @@
+name: quality
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: node ../../tools/validate-source-architecture.mjs
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.82.0
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/server
+      - run: cargo fmt --manifest-path apps/server/Cargo.toml --check
+      - run: cargo test --manifest-path apps/server/Cargo.toml
+      - run: cargo clippy --manifest-path apps/server/Cargo.toml --all-targets -- -D warnings
+
+  migration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: evil_hunter
+          POSTGRES_USER: evil_hunter
+          POSTGRES_PASSWORD: evil_hunter
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U evil_hunter -d evil_hunter"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgres://evil_hunter:evil_hunter@127.0.0.1:5432/evil_hunter
+      MIGRATION_VERIFY_DISPOSABLE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - run: sh tools/verify-latest-migration.sh
+
+  browser-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci --prefix apps/web
+      - run: npm --prefix apps/web exec -- playwright install --with-deps chromium
+      - run: docker compose -f docker-compose.yml -f docker-compose.smoke.yml up -d --build postgres redis migrate server web
+      - run: |
+          for attempt in $(seq 1 60); do
+            curl --fail --silent http://127.0.0.1:25173 >/dev/null && exit 0
+            sleep 2
+          done
+          docker compose -f docker-compose.yml -f docker-compose.smoke.yml logs
+          exit 1
+      - run: npm --prefix apps/web run test:e2e
+      - run: python3 tools/smoke-primary-runtime.py
+      - if: failure()
+        run: docker compose -f docker-compose.yml -f docker-compose.smoke.yml logs --no-color
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          if-no-files-found: ignore

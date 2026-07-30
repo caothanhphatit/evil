@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body { margin: 0; min-width: 320px; background: #f4f7fb; color: #172033; font-family: var(--font-sans); }
+button, input, select { font: inherit; }
+.nav-item { display: flex; width: 100%; align-items: center; gap: .75rem; border-radius: .75rem; padding: .7rem .75rem; text-align: left; font-size: .875rem; font-weight: 600; color: #94a3b8; transition: background .15s, color .15s; }
+.nav-item:hover { background: rgba(255,255,255,.06); color: #e2e8f0; }
+.nav-item.active { background: rgba(34,211,238,.12); color: #67e8f9; }

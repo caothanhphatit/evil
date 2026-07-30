@@ -5,6 +5,9 @@ node_modules/
 dist/
 target/
 coverage/
+playwright-report/
+test-results/
+__pycache__/
 *.log
 *.tsbuildinfo
 

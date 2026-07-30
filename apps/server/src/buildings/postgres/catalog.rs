@@ -11,8 +11,12 @@ use crate::buildings::{
     BaseBuildingDefinition, BaseBuildingId, BuildingCapabilityDefinition, BuildingCatalog,
     BuildingGameplayCatalog, BuildingLevelDefinition, BuildingLevelPrerequisite,
     BuildingRepository, BuildingRepositoryError, BuildingSkinDefinition, BuildingSkinId,
-    BuildingSkinKey, EconomyAmount, EconomyConversionOption, EconomyItemDefinition,
-    EconomyProductDefinition, EconomyProductService, EconomyRandomOutput,
+    BuildingSkinKey, ConsumableProductDefinition, EconomyAmount, EconomyConversionOption,
+    EconomyItemDefinition, EconomyProductDefinition, EconomyProductService, EconomyRandomOutput,
+    GearProductDefinition, HunterBasicSkillContentDefinition, HunterClassContentDefinition,
+    HunterProgressionDefinition, HunterRarityContentDefinition, HunterStaticContent,
+    MonsterDefinition, MonsterMaterialDefinition, OrdinaryMonsterPoolDefinition,
+    WorldMapDefinition,
 };
 
 #[async_trait]
@@ -251,6 +255,15 @@ impl BuildingRepository for PostgresBuildingRepository {
         .bind(expected_registry_id)
         .fetch_all(&mut *transaction)
         .await?;
+        let material_rows = sqlx::query(
+            r#"SELECT item_id, difficulty_rating
+               FROM material_definition
+               WHERE release_id = $1
+               ORDER BY source_index"#,
+        )
+        .bind(expected_registry_id)
+        .fetch_all(&mut *transaction)
+        .await?;
         let item_price_rows = sqlx::query(
             r#"SELECT item_id, price_direction, ordinal, resource_id, quantity
                FROM economy_item_price_component
@@ -327,6 +340,42 @@ impl BuildingRepository for PostgresBuildingRepository {
         .bind(expected_registry_id)
         .fetch_all(&mut *transaction)
         .await?;
+        let gear_rows = sqlx::query(
+            r#"SELECT binding.product_id, binding.gear_kind,
+                      binding.gear_index::bigint AS gear_index,
+                      binding.rating::bigint AS rating,
+                      gear.difficulty_group::bigint AS difficulty_group
+               FROM economy_product_gear_binding AS binding
+               JOIN gear_definition AS gear
+                 ON gear.release_id = binding.release_id
+                AND gear.gear_kind = binding.gear_kind
+                AND gear.gear_index = binding.gear_index
+               WHERE binding.release_id = $1
+               ORDER BY binding.product_id"#,
+        )
+        .bind(expected_registry_id)
+        .fetch_all(&mut *transaction)
+        .await?;
+        let consumable_rows = sqlx::query(
+            r#"SELECT binding.product_id,
+                      binding.consumable_index::bigint AS consumable_index,
+                      binding.level::bigint AS level, level_definition.keep_time_ms,
+                      level_definition.keep_value, definition.cooldown_ms,
+                      level_definition.price
+               FROM economy_product_consumable_binding AS binding
+               JOIN consumable_level_definition AS level_definition
+                 ON level_definition.release_id = binding.release_id
+                AND level_definition.consumable_index = binding.consumable_index
+                AND level_definition.level = binding.level
+               JOIN consumable_definition AS definition
+                 ON definition.release_id = binding.release_id
+                AND definition.consumable_index = binding.consumable_index
+               WHERE binding.release_id = $1
+               ORDER BY binding.product_id"#,
+        )
+        .bind(expected_registry_id)
+        .fetch_all(&mut *transaction)
+        .await?;
 
         let capabilities = capability_rows
             .into_iter()
@@ -354,6 +403,7 @@ impl BuildingRepository for PostgresBuildingRepository {
                     town_pays_hunter_gold_per_unit: optional_u64(
                         row.try_get("town_pays_hunter_gold_per_unit")?,
                     )?,
+                    difficulty_rating: None,
                     localized_names: BTreeMap::new(),
                     buy_price: Vec::new(),
                     sell_price: Vec::new(),
@@ -366,6 +416,19 @@ impl BuildingRepository for PostgresBuildingRepository {
                 item.localized_names
                     .insert(row.try_get("locale")?, row.try_get("display_name")?);
             }
+        }
+        for row in material_rows {
+            let item_id: String = row.try_get("item_id")?;
+            items
+                .get_mut(&item_id)
+                .ok_or(BuildingRepositoryError::InvalidCatalog(
+                    "material definition references unknown item",
+                ))?
+                .difficulty_rating = Some(
+                u8::try_from(row.try_get::<i32, _>("difficulty_rating")?).map_err(|_| {
+                    BuildingRepositoryError::InvalidCatalog("material rating is invalid")
+                })?,
+            );
         }
         for row in item_price_rows {
             let item_id: String = row.try_get("item_id")?;
@@ -504,17 +567,410 @@ impl BuildingRepository for PostgresBuildingRepository {
                 rng_ready: row.try_get("rng_ready")?,
             });
         }
+        let mut gear_products = BTreeMap::new();
+        for row in gear_rows {
+            let product_id: String = row.try_get("product_id")?;
+            gear_products.insert(
+                product_id.clone(),
+                GearProductDefinition {
+                    product_id,
+                    gear_kind: row.try_get("gear_kind")?,
+                    gear_index: to_u32(row.try_get("gear_index")?)?,
+                    rating: to_u16(row.try_get("rating")?)?,
+                    difficulty_group: to_u16(row.try_get("difficulty_group")?)?,
+                },
+            );
+        }
+        let mut consumable_products = BTreeMap::new();
+        for row in consumable_rows {
+            let product_id: String = row.try_get("product_id")?;
+            consumable_products.insert(
+                product_id.clone(),
+                ConsumableProductDefinition {
+                    product_id,
+                    consumable_index: to_u32(row.try_get("consumable_index")?)?,
+                    level: to_u16(row.try_get("level")?)?,
+                    keep_time_ms: to_u64(row.try_get("keep_time_ms")?)?,
+                    keep_value: to_u64(row.try_get("keep_value")?)?,
+                    cooldown_ms: to_u64(row.try_get("cooldown_ms")?)?,
+                    price: to_u64(row.try_get("price")?)?,
+                },
+            );
+        }
         transaction.commit().await?;
         let gameplay = BuildingGameplayCatalog {
             registry_id: expected_registry_id.to_owned(),
             capabilities,
             items,
             products,
+            gear_products,
+            consumable_products,
         };
         let catalog = self
             .load_catalog(expected_registry_id, expected_registry_sha256)
             .await?;
         gameplay.validate(&catalog)?;
         Ok(gameplay)
+    }
+}
+
+impl PostgresBuildingRepository {
+    pub async fn load_hunter_static_content(
+        &self,
+        profile_release_id: &str,
+        info_release_id: &str,
+    ) -> Result<HunterStaticContent, BuildingRepositoryError> {
+        let class_rows = sqlx::query(
+            r#"SELECT class_id, display_name, visual_family
+               FROM hunter_class_definition
+               WHERE release_id = $1
+               ORDER BY source_job_index"#,
+        )
+        .bind(profile_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let rarity_rows = sqlx::query(
+            r#"SELECT rarity_id, display_name
+               FROM hunter_rarity_definition
+               WHERE release_id = $1
+               ORDER BY rank"#,
+        )
+        .bind(profile_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let personality_rows = sqlx::query(
+            r#"SELECT display_name
+               FROM hunter_characteristic_definition
+               WHERE release_id = $1
+               ORDER BY source_index"#,
+        )
+        .bind(info_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let skill_rows = sqlx::query(
+            r#"SELECT skill.skill_id, skill.display_name, skill.class_id,
+                      class.visual_family,
+                      ((skill.source_parameters ->> 'coolTime')::double precision * 1000)::bigint
+                          AS cooldown_ms,
+                      skill.icon_path
+               FROM hunter_skill_definition AS skill
+               JOIN hunter_class_definition AS class
+                 ON class.release_id = skill.release_id
+                AND class.class_id = skill.class_id
+               WHERE skill.release_id = $1
+                 AND skill.skill_id ~ '^skill_h[1-5]_0[12]$'
+               ORDER BY skill.skill_id"#,
+        )
+        .bind(profile_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+
+        let classes = class_rows
+            .into_iter()
+            .map(|row| {
+                Ok(HunterClassContentDefinition {
+                    class_id: row.try_get("class_id")?,
+                    display_name: row.try_get("display_name")?,
+                    visual_family: row.try_get("visual_family")?,
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
+        let rarities = rarity_rows
+            .into_iter()
+            .map(|row| {
+                Ok(HunterRarityContentDefinition {
+                    rarity_id: row.try_get("rarity_id")?,
+                    display_name: row.try_get("display_name")?,
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
+        let personalities = personality_rows
+            .into_iter()
+            .map(|row| row.try_get("display_name"))
+            .collect::<Result<Vec<String>, sqlx::Error>>()?;
+        let basic_skills = skill_rows
+            .into_iter()
+            .map(|row| {
+                Ok(HunterBasicSkillContentDefinition {
+                    skill_id: row.try_get("skill_id")?,
+                    display_name: row.try_get("display_name")?,
+                    class_id: row.try_get("class_id")?,
+                    class_family: row.try_get("visual_family")?,
+                    cooldown_ms: to_u64(row.try_get("cooldown_ms")?)?,
+                    confirmed_icon_path: row.try_get("icon_path")?,
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
+        if classes.len() != 5
+            || rarities.len() != 5
+            || personalities.len() != 33
+            || basic_skills.len() != 10
+            || basic_skills.iter().any(|skill| skill.cooldown_ms == 0)
+        {
+            return Err(BuildingRepositoryError::InvalidCatalog(
+                "Hunter static content is incomplete",
+            ));
+        }
+        Ok(HunterStaticContent {
+            classes,
+            rarities,
+            personalities,
+            basic_skills,
+        })
+    }
+
+    pub async fn load_ordinary_monster_pools(
+        &self,
+        expected_release_id: &str,
+    ) -> Result<Vec<OrdinaryMonsterPoolDefinition>, BuildingRepositoryError> {
+        let monster_rows = sqlx::query(
+            r#"SELECT source_index::bigint AS source_index, hp, damage, armor,
+                      experience, gold, asset_bundle_id
+               FROM monster_definition
+               WHERE release_id = $1
+               ORDER BY source_index"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let drop_rows = sqlx::query(
+            r#"SELECT monster_source_index::bigint AS monster_source_index,
+                      slot, material_source_index::bigint AS material_source_index,
+                      quantity::bigint AS quantity, raw_percent::bigint AS raw_percent
+               FROM monster_material_drop_definition
+               WHERE release_id = $1
+               ORDER BY monster_source_index, slot"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let pool_rows = sqlx::query(
+            r#"SELECT map_id, global_difficulty, pool_ordinal,
+                      monster_source_index::bigint AS monster_source_index
+               FROM ordinary_monster_pool_definition
+               WHERE release_id = $1
+               ORDER BY map_id, global_difficulty, pool_ordinal"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&self.pool)
+        .await?;
+
+        let mut monsters = BTreeMap::new();
+        for row in monster_rows {
+            let source_index = to_u32(row.try_get("source_index")?)?;
+            monsters.insert(
+                source_index,
+                MonsterDefinition {
+                    source_index,
+                    hp: to_u64(row.try_get("hp")?)?,
+                    damage: to_u64(row.try_get("damage")?)?,
+                    armor: to_u64(row.try_get("armor")?)?,
+                    experience: to_u64(row.try_get("experience")?)?,
+                    gold: to_u64(row.try_get("gold")?)?,
+                    asset_bundle_id: row.try_get("asset_bundle_id")?,
+                    materials: Vec::new(),
+                },
+            );
+        }
+        for row in drop_rows {
+            let monster_source_index = to_u32(row.try_get("monster_source_index")?)?;
+            monsters
+                .get_mut(&monster_source_index)
+                .ok_or(BuildingRepositoryError::InvalidCatalog(
+                    "monster drop references unknown monster",
+                ))?
+                .materials
+                .push(MonsterMaterialDefinition {
+                    source_index: to_u32(row.try_get("material_source_index")?)?,
+                    count: to_u32(row.try_get("quantity")?)?,
+                    raw_percent: to_u32(row.try_get("raw_percent")?)?,
+                });
+        }
+
+        let mut pools: Vec<OrdinaryMonsterPoolDefinition> = Vec::new();
+        for row in pool_rows {
+            let map_id: String = row.try_get("map_id")?;
+            let difficulty = u8::try_from(row.try_get::<i32, _>("global_difficulty")?)
+                .map_err(|_| BuildingRepositoryError::InvalidCatalog("invalid world difficulty"))?;
+            if pools
+                .last()
+                .is_none_or(|pool| pool.map_id != map_id || pool.global_difficulty != difficulty)
+            {
+                pools.push(OrdinaryMonsterPoolDefinition {
+                    map_id: map_id.clone(),
+                    global_difficulty: difficulty,
+                    monsters: Vec::new(),
+                });
+            }
+            let source_index = to_u32(row.try_get("monster_source_index")?)?;
+            pools.last_mut().expect("pool was inserted").monsters.push(
+                monsters.get(&source_index).cloned().ok_or(
+                    BuildingRepositoryError::InvalidCatalog("pool references unknown monster"),
+                )?,
+            );
+        }
+        if pools.is_empty() || pools.iter().any(|pool| pool.monsters.is_empty()) {
+            return Err(BuildingRepositoryError::InvalidCatalog(
+                "ordinary monster catalog is incomplete",
+            ));
+        }
+        Ok(pools)
+    }
+
+    pub async fn load_hunter_progression(
+        &self,
+        expected_release_id: &str,
+        progression_id: &str,
+    ) -> Result<HunterProgressionDefinition, BuildingRepositoryError> {
+        let definition = sqlx::query(
+            r#"SELECT max_stored_level::bigint AS max_stored_level, display_level_offset
+               FROM hunter_progression_definition
+               WHERE release_id = $1 AND progression_id = $2"#,
+        )
+        .bind(expected_release_id)
+        .bind(progression_id)
+        .fetch_optional(&self.pool)
+        .await?
+        .ok_or(BuildingRepositoryError::InvalidCatalog(
+            "hunter progression is unavailable",
+        ))?;
+        let rows = sqlx::query(
+            r#"SELECT level_index, revive_tier, required_experience
+               FROM hunter_progression_experience
+               WHERE release_id = $1 AND progression_id = $2
+               ORDER BY level_index, revive_tier"#,
+        )
+        .bind(expected_release_id)
+        .bind(progression_id)
+        .fetch_all(&self.pool)
+        .await?;
+        let max_stored_level = to_u32(definition.try_get("max_stored_level")?)?;
+        let row_count = usize::try_from(max_stored_level)
+            .map_err(|_| BuildingRepositoryError::InvalidCatalog("progression cap is invalid"))?
+            + 1;
+        let mut experience_by_level = vec![[0_u64; 6]; row_count];
+        let mut populated = vec![[false; 6]; row_count];
+        for row in rows {
+            let level = usize::try_from(row.try_get::<i32, _>("level_index")?).map_err(|_| {
+                BuildingRepositoryError::InvalidCatalog("progression level is invalid")
+            })?;
+            let revive = usize::try_from(row.try_get::<i32, _>("revive_tier")?).map_err(|_| {
+                BuildingRepositoryError::InvalidCatalog("progression revive tier is invalid")
+            })?;
+            let slot = experience_by_level
+                .get_mut(level)
+                .and_then(|levels| levels.get_mut(revive))
+                .ok_or(BuildingRepositoryError::InvalidCatalog(
+                    "progression row is outside declared bounds",
+                ))?;
+            *slot = to_u64(row.try_get("required_experience")?)?;
+            populated[level][revive] = true;
+        }
+        if populated.iter().flatten().any(|present| !present) {
+            return Err(BuildingRepositoryError::InvalidCatalog(
+                "hunter progression catalog is incomplete",
+            ));
+        }
+        let display_level_offset: i32 = definition.try_get("display_level_offset")?;
+        if display_level_offset < 0 {
+            return Err(BuildingRepositoryError::InvalidCatalog(
+                "progression display offset is negative",
+            ));
+        }
+        Ok(HunterProgressionDefinition {
+            progression_id: progression_id.to_owned(),
+            max_stored_level,
+            display_level_offset,
+            experience_by_level,
+        })
+    }
+
+    pub async fn load_world_maps(
+        &self,
+        expected_release_id: &str,
+    ) -> Result<Vec<WorldMapDefinition>, BuildingRepositoryError> {
+        let mut transaction = self.pool.begin().await?;
+        let map_rows = sqlx::query(
+            r#"SELECT map_id, area::bigint AS area, monster_tier::bigint AS monster_tier,
+                      map_asset_id, min_x, max_x, min_y, max_y
+               FROM world_map_definition
+               WHERE release_id = $1
+               ORDER BY area, map_id"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&mut *transaction)
+        .await?;
+        let density_rows = sqlx::query(
+            r#"SELECT map_id, density_level, spawn_count
+               FROM world_map_density_definition
+               WHERE release_id = $1
+               ORDER BY map_id, density_level"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&mut *transaction)
+        .await?;
+        let waypoint_rows = sqlx::query(
+            r#"SELECT map_id, ordinal, x, y
+               FROM world_map_entry_waypoint
+               WHERE release_id = $1
+               ORDER BY map_id, ordinal"#,
+        )
+        .bind(expected_release_id)
+        .fetch_all(&mut *transaction)
+        .await?;
+        transaction.commit().await?;
+
+        let mut maps = map_rows
+            .into_iter()
+            .map(|row| {
+                Ok(WorldMapDefinition {
+                    map_id: row.try_get("map_id")?,
+                    area: u8::try_from(row.try_get::<i64, _>("area")?).map_err(|_| {
+                        BuildingRepositoryError::InvalidCatalog("world map area is outside u8")
+                    })?,
+                    monster_tier: u8::try_from(row.try_get::<i64, _>("monster_tier")?).map_err(
+                        |_| BuildingRepositoryError::InvalidCatalog("world map tier is outside u8"),
+                    )?,
+                    map_asset_id: row.try_get("map_asset_id")?,
+                    density_counts: [0; 3],
+                    bounds: (
+                        row.try_get("min_x")?,
+                        row.try_get("max_x")?,
+                        row.try_get("min_y")?,
+                        row.try_get("max_y")?,
+                    ),
+                    entry_waypoints: [(0, 0); 3],
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
+        for row in density_rows {
+            let map_id: String = row.try_get("map_id")?;
+            let map = maps.iter_mut().find(|map| map.map_id == map_id).ok_or(
+                BuildingRepositoryError::InvalidCatalog("density references unknown map"),
+            )?;
+            let level = usize::try_from(row.try_get::<i32, _>("density_level")? - 1)
+                .map_err(|_| BuildingRepositoryError::InvalidCatalog("invalid density level"))?;
+            map.density_counts[level] = u32::try_from(row.try_get::<i32, _>("spawn_count")?)
+                .map_err(|_| BuildingRepositoryError::InvalidCatalog("spawn count outside u32"))?;
+        }
+        for row in waypoint_rows {
+            let map_id: String = row.try_get("map_id")?;
+            let map = maps.iter_mut().find(|map| map.map_id == map_id).ok_or(
+                BuildingRepositoryError::InvalidCatalog("waypoint references unknown map"),
+            )?;
+            let ordinal = usize::try_from(row.try_get::<i32, _>("ordinal")?)
+                .map_err(|_| BuildingRepositoryError::InvalidCatalog("invalid waypoint ordinal"))?;
+            map.entry_waypoints[ordinal] = (row.try_get("x")?, row.try_get("y")?);
+        }
+        if maps.is_empty()
+            || maps
+                .iter()
+                .any(|map| map.density_counts.contains(&0) || map.entry_waypoints.contains(&(0, 0)))
+        {
+            return Err(BuildingRepositoryError::InvalidCatalog(
+                "world map catalog is incomplete",
+            ));
+        }
+        Ok(maps)
     }
 }

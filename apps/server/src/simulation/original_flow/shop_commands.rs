@@ -88,12 +88,25 @@ impl OriginalFlowSession {
         hunter.gold -= price;
         stock.quantity -= 1;
         self.buildings.town_gold = self.buildings.town_gold.saturating_add(price);
-        if let Some(owned) = hunter
-            .owned_items
-            .iter_mut()
-            .find(|owned| owned.product_id == product_id)
-        {
-            owned.quantity = owned.quantity.saturating_add(1);
+        // A gear purchase is an individually rolled item and must never be
+        // merged into a product stack. Consumables remain stackable.
+        if route.is_none() {
+            if let Some(owned) = hunter
+                .owned_items
+                .iter_mut()
+                .find(|owned| owned.product_id == product_id && owned.gear_instance_id.is_none())
+            {
+                owned.quantity = owned.quantity.saturating_add(1);
+            } else {
+                hunter
+                    .owned_items
+                    .push(super::super::hunter_roster::DurableHunterOwnedItem {
+                        product_id: product_id.to_owned(),
+                        quantity: 1,
+                        enhancement_level: None,
+                        gear_instance_id: None,
+                    });
+            }
         } else {
             hunter
                 .owned_items
@@ -101,8 +114,13 @@ impl OriginalFlowSession {
                     product_id: product_id.to_owned(),
                     quantity: 1,
                     enhancement_level: None,
-                    gear_instance_id: (command_id != Uuid::nil() && route.is_some())
-                        .then_some(command_id),
+                    gear_instance_id: route.is_some().then(|| {
+                        if command_id != Uuid::nil() {
+                            command_id
+                        } else {
+                            Uuid::new_v4()
+                        }
+                    }),
                 });
         }
         if route.is_some() {

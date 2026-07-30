@@ -1,14 +1,14 @@
 use super::{
-    entry_checkpoint_stage, map_config, nearest_clear_town_anchor, set_hunter_presentation,
-    HunterActionState, MonsterFieldState, MonsterWorldState, NavigationObstacle,
-    OriginalDamageMultiplierStream, MAP_CONFIGS,
+    entry_checkpoint_stage, map_config, map_configs, nearest_clear_town_anchor,
+    set_hunter_presentation, HunterActionState, MonsterFieldState, MonsterWorldState,
+    NavigationObstacle, OriginalDamageMultiplierStream,
 };
 
 impl MonsterWorldState {
     pub fn with_densities<'a>(densities: impl IntoIterator<Item = (&'a str, u8)>) -> Self {
         let configured = densities.into_iter().collect::<Vec<_>>();
         let world_difficulty = 0;
-        let fields = MAP_CONFIGS
+        let fields = map_configs()
             .iter()
             .map(|config| {
                 let density = configured
@@ -20,7 +20,7 @@ impl MonsterWorldState {
             })
             .collect();
         Self {
-            current_map_id: MAP_CONFIGS[0].map_id.to_owned(),
+            current_map_id: map_configs()[0].map_id.to_owned(),
             world_difficulty,
             tick: 0,
             fields,

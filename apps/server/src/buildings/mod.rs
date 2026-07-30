@@ -15,8 +15,12 @@ mod town;
 pub use catalog::{
     AuthoritativeBuildingContent, BaseBuildingDefinition, BuildingCapabilityDefinition,
     BuildingCatalog, BuildingGameplayCatalog, BuildingLevelDefinition, BuildingLevelPrerequisite,
-    BuildingSkinDefinition, EconomyAmount, EconomyConversionOption, EconomyItemDefinition,
-    EconomyProductDefinition, EconomyProductService, EconomyRandomOutput,
+    BuildingSkinDefinition, ConsumableProductDefinition, EconomyAmount, EconomyConversionOption,
+    EconomyItemDefinition, EconomyProductDefinition, EconomyProductService, EconomyRandomOutput,
+    GearProductDefinition, HunterBasicSkillContentDefinition, HunterClassContentDefinition,
+    HunterProgressionDefinition, HunterRarityContentDefinition, HunterStaticContent,
+    MonsterDefinition, MonsterMaterialDefinition, OrdinaryMonsterPoolDefinition,
+    WorldMapDefinition,
 };
 pub use error::BuildingRepositoryError;
 pub use gear_shops::{gear_product_route, GearProductFamily, GearProductKind, GearProductRoute};

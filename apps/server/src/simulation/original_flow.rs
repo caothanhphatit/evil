@@ -108,9 +108,9 @@ use super::trading_post::{
     material_catalog_stocks, material_difficulty_rating, settle_returning_hunters,
 };
 use super::{
-    map_config, ClientCommand, DurablePlayerState, FixtureCommand, HunterActionState,
+    map_config, map_configs, ClientCommand, DurablePlayerState, FixtureCommand, HunterActionState,
     HunterAgentState, HunterEvidenceState, MonsterActionState, MonsterState, MonsterWorldState,
-    NavigationObstacle, PendingOperation, ServerMessage, Simulation, WorldSnapshot, MAP_CONFIGS,
+    NavigationObstacle, PendingOperation, ServerMessage, Simulation, WorldSnapshot,
     MONSTER_RULESET,
 };
 

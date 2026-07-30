@@ -5,7 +5,9 @@
   "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev:web": "pnpm --dir apps/web dev",
+    "dev:admin": "pnpm --dir apps/admin dev",
     "build:web": "pnpm --dir apps/web build",
+    "build:admin": "pnpm --dir apps/admin build",
     "test:web": "pnpm --dir apps/web test",
     "assets:index": "node tools/generate-asset-index.mjs",
     "assets:catalog:full": "node tools/generate-full-asset-catalog.mjs",
@@ -34,6 +36,10 @@
     "assets:extract:fonts": "python3 tools/extract-unity-fonts.py",
     "test:assets": "node --test tools/tests/*.test.mjs",
     "architecture:validate": "node tools/validate-source-architecture.mjs",
+    "test:e2e": "npm --prefix apps/web run test:e2e",
+    "migration:verify-latest": "sh tools/verify-latest-migration.sh",
+    "content:generate:progression-sql": "node tools/generate-progression-content-migration.mjs",
+    "content:generate:runtime-sql": "node tools/generate-runtime-content-migration.mjs",
     "protocol:generate": "node tools/generate-protocol.mjs",
     "smoke:fixture": "node tools/smoke-world.mjs",
     "smoke:primary": "python3 tools/smoke-primary-runtime.py"

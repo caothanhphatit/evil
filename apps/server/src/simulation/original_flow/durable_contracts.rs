@@ -1,6 +1,6 @@
 use super::{
-    Deserialize, DurableHunterRosterState, DurableHunterState, DurablePlayerState,
-    HunterAgentState, Serialize, ServiceEffectKind, MAP_CONFIGS,
+    map_configs, Deserialize, DurableHunterRosterState, DurableHunterState, DurablePlayerState,
+    HunterAgentState, Serialize, ServiceEffectKind,
 };
 
 pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 17;
@@ -212,7 +212,7 @@ pub struct DurableMonsterMapDensity {
 impl Default for DurableMonsterFieldConfig {
     fn default() -> Self {
         Self {
-            densities: MAP_CONFIGS
+            densities: map_configs()
                 .iter()
                 .map(|config| DurableMonsterMapDensity {
                     map_id: config.map_id.to_owned(),
@@ -227,7 +227,7 @@ impl Default for DurableMonsterFieldConfig {
 
 impl DurableMonsterFieldConfig {
     pub(super) fn normalized_densities(&self) -> Vec<DurableMonsterMapDensity> {
-        MAP_CONFIGS
+        map_configs()
             .iter()
             .map(|config| {
                 let configured = (self.legacy_map_id.as_deref() == Some(config.map_id))

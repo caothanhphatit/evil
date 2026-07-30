@@ -150,13 +150,31 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
     assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
     assert_eq!(flow.buildings.hunter_equipment_purchases, 1);
 
+    let second_purchase = flow
+        .handle_command_with_id(
+            ClientCommand::PurchaseShopItem {
+                hunter_id: 1,
+                shop_id: "build_7".to_owned(),
+                product_id: product_id.to_owned(),
+            },
+            Uuid::from_u128(8_000),
+        )
+        .unwrap();
+    assert!(matches!(
+        second_purchase.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+    let owned = &flow.hunter_roster.hunters[0].owned_items;
+    assert_eq!(owned.len(), 2);
+    assert!(owned.iter().all(|item| item.quantity == 1));
+    assert!(owned.iter().all(|item| item.gear_instance_id.is_some()));
+    assert_ne!(owned[0].gear_instance_id, owned[1].gear_instance_id);
+
     let recipes = flow.snapshot().village.building_system.recipes;
     assert!(recipes
         .iter()
         .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_10"));
-    assert!(recipes.iter().any(|recipe| {
-        recipe.id == product_id && recipe.shop_id == "build_7" && recipe.stock == 1
-    }));
+    assert_eq!(flow.buildings.product_stocks[0].quantity, 0);
 }
 
 #[test]
@@ -1181,7 +1199,7 @@ fn autonomous_healing_walks_to_stocked_infirmary_and_starts_service() {
     hunter.current_hp = 99;
     hunter.max_hp = 1_000;
     hunter.hunt.status = "hunting".to_owned();
-    hunter.hunt.zone_id = Some(MAP_CONFIGS[0].map_id.to_owned());
+    hunter.hunt.zone_id = Some(map_configs()[0].map_id.to_owned());
     hunter.profile.action_state = "hunting".to_owned();
     let hunter_gold_before = hunter.gold;
     let stock_before = flow
@@ -1199,9 +1217,9 @@ fn autonomous_healing_walks_to_stocked_infirmary_and_starts_service() {
         .iter_mut()
         .find(|agent| agent.hunter_id == 1)
         .unwrap();
-    agent.region_id = Some(MAP_CONFIGS[0].map_id.to_owned());
-    agent.x = MAP_CONFIGS[0].bounds.min_x + 120;
-    agent.y = MAP_CONFIGS[0].bounds.min_y + 120;
+    agent.region_id = Some(map_configs()[0].map_id.to_owned());
+    agent.x = map_configs()[0].bounds.min_x + 120;
+    agent.y = map_configs()[0].bounds.min_y + 120;
 
     for _ in 0..600 {
         flow.advance_simulation_tick();
@@ -1928,7 +1946,7 @@ fn hunt_assignment_refunds_service_and_enters_region_immediately() {
 #[test]
 fn assigned_hunter_routes_never_cross_authoritative_building_footprints() {
     const ACTOR_CLEARANCE: i32 = 14;
-    for config in &MAP_CONFIGS {
+    for config in map_configs() {
         let mut flow = OriginalFlowSession::from_aggregate(
             DurablePlayerAggregate {
                 navigation: OriginalFlowPlayerState {
@@ -3650,7 +3668,7 @@ fn colony_route_advances_from_the_live_blocked_town_checkpoint() {
     flow.advance_simulation_tick();
     let hunter_id = flow.hunter_roster.hunters[0].hunter_id;
     flow.hunter_roster
-        .assign_hunt(hunter_id, MAP_CONFIGS[0].map_id)
+        .assign_hunt(hunter_id, map_configs()[0].map_id)
         .unwrap();
     let agent = flow
         .monster_world
@@ -3658,7 +3676,7 @@ fn colony_route_advances_from_the_live_blocked_town_checkpoint() {
         .iter_mut()
         .find(|agent| agent.hunter_id == hunter_id)
         .unwrap();
-    agent.region_id = Some(MAP_CONFIGS[0].map_id.to_owned());
+    agent.region_id = Some(map_configs()[0].map_id.to_owned());
     agent.x = 1_522;
     agent.y = 690;
     agent.entry_stage = 0;

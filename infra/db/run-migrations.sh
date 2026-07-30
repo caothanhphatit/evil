@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS schema_migration (
 ALTER TABLE schema_migration ADD COLUMN IF NOT EXISTS checksum TEXT;
 SQL
 
-migration_dir="/migrations/migrations"
+script_dir=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+migration_dir="$script_dir/migrations"
 set -- "$migration_dir"/[0-9][0-9][0-9][0-9]_*.sql
 if [ ! -e "$1" ]; then
     echo "No forward migrations found in $migration_dir" >&2

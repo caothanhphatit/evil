@@ -7,29 +7,11 @@ use super::original_flow::{DurableBuildingState, DurableMaterialStock};
 #[cfg(test)]
 pub(super) const ACTIVE_MATERIAL_REQUEST: u32 = 1;
 
-// Generated from core-economy-tables-v1.json materials[index].rating. The six decoded ratings
-// map directly to Trading Post levels Easy through Torment.
-const MATERIAL_DIFFICULTY_RATINGS: [u8; 369] = [
-    0, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0,
-    0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0,
-    1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1,
-    2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 0, 0, 1, 1, 2, 2,
-    3, 3, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 0, 0, 1, 2, 3,
-    4, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 5,
-    5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5,
-    4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5, 4, 5, 5, 5,
-    4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 0, 0, 1, 2,
-    3, 4, 5, 5, 5, 5, 5, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-    5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-    5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5,
-];
-
-pub(super) fn material_difficulty_rating(material_id: &str) -> Option<u8> {
-    let index = material_id
-        .strip_prefix("material:")?
-        .parse::<usize>()
-        .ok()?;
-    MATERIAL_DIFFICULTY_RATINGS.get(index).copied()
+pub(super) fn material_difficulty_rating(
+    gameplay: &BuildingGameplayCatalog,
+    material_id: &str,
+) -> Option<u8> {
+    gameplay.item(material_id)?.difficulty_rating
 }
 
 /// Projects the decoded material price table together with the town's durable stock state.
@@ -133,13 +115,40 @@ mod tests {
 
     #[test]
     fn decoded_material_ratings_cover_all_six_trading_post_levels() {
-        assert_eq!(material_difficulty_rating("material:1"), Some(0));
-        assert_eq!(material_difficulty_rating("material:2"), Some(1));
-        assert_eq!(material_difficulty_rating("material:3"), Some(2));
-        assert_eq!(material_difficulty_rating("material:4"), Some(3));
-        assert_eq!(material_difficulty_rating("material:5"), Some(4));
-        assert_eq!(material_difficulty_rating("material:171"), Some(5));
-        assert_eq!(material_difficulty_rating("currency:gold"), None);
+        let gameplay = BuildingGameplayCatalog {
+            registry_id: "test".to_owned(),
+            capabilities: Vec::new(),
+            items: (0..=5)
+                .map(|rating| {
+                    let id = format!("material:{rating}");
+                    (
+                        id.clone(),
+                        crate::buildings::EconomyItemDefinition {
+                            item_id: id,
+                            internal_name: None,
+                            item_type: Some("material".to_owned()),
+                            stack_limit: None,
+                            town_pays_hunter_gold_per_unit: Some(1),
+                            difficulty_rating: Some(rating),
+                            localized_names: BTreeMap::new(),
+                            buy_price: Vec::new(),
+                            sell_price: Vec::new(),
+                            hunter_pays_town_gold_by_tier: Vec::new(),
+                        },
+                    )
+                })
+                .collect(),
+            products: BTreeMap::new(),
+            gear_products: BTreeMap::new(),
+            consumable_products: BTreeMap::new(),
+        };
+        for rating in 0..=5 {
+            assert_eq!(
+                material_difficulty_rating(&gameplay, &format!("material:{rating}")),
+                Some(rating)
+            );
+        }
+        assert_eq!(material_difficulty_rating(&gameplay, "currency:gold"), None);
     }
 
     #[test]
@@ -161,6 +170,7 @@ mod tests {
                         item_type: Some("material".to_owned()),
                         stack_limit: None,
                         town_pays_hunter_gold_per_unit: Some(price),
+                        difficulty_rating: Some(0),
                         localized_names: [("en".to_owned(), name.to_owned())].into_iter().collect(),
                         buy_price: Vec::new(),
                         sell_price: Vec::new(),
@@ -170,6 +180,8 @@ mod tests {
             })
             .collect(),
             products: BTreeMap::new(),
+            gear_products: BTreeMap::new(),
+            consumable_products: BTreeMap::new(),
         };
 
         let projected = material_catalog_stocks(&gameplay, &[]);

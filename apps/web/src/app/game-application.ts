@@ -16,6 +16,7 @@ import { BOUNTY_HUT_ROUTE } from "../routes/bounty-hut";
 import { TRADING_POST_ROUTE } from "../routes/trading-post";
 import { decodeGearCatalog, loadGearCatalog } from "../content/blacksmith-route";
 import { t, type MessageKey } from "../i18n";
+import { recordClientEvent } from "../observability/client-telemetry";
 import { mountGameShell, originalAsset, type MenuAction } from "./shell";
 import { EntryController } from "./entry-controller";
 import { createBuildingRenderer, type BuildingRenderingContext } from "./building-renderer";
@@ -23,7 +24,6 @@ import { createHunterController, type HunterControllerContext } from "./hunter-c
 import { createWorldController, type WorldControllerContext } from "./world-controller";
 import { createTradePopup, type TradePopupContext } from "./trade-popup";
 import "../styles.css";
-
 const mount = document.querySelector<HTMLDivElement>("#app");
 if (!mount) throw new Error(t("error.missing_mount"));
 
@@ -392,6 +392,7 @@ function showIntentResult(result: IntentFeedback): void {
     }
   }
   if (!result.accepted) {
+    recordClientEvent("warn", "intent_rejected", { intent: result.intent, reason: result.reason });
     const reasons: Record<string, MessageKey> = {
       insufficient_materials: "error.insufficient_materials", material_stock_missing: "error.material_stock_missing", recipe_unknown: "error.recipe_unknown", recipe_building_mismatch: "error.recipe_building_mismatch", product_level_locked: "error.product_level_locked", sale_building_instance_unknown: "error.sale_building_missing", product_capacity_exceeded: "error.product_capacity", product_stock_empty: "error.product_empty", sale_price_unresolved: "error.sale_price_unresolved", building_instance_unknown: "error.building_missing", building_capability_mismatch: "error.capability_mismatch", material_difficulty_unresolved: "error.material_difficulty_unresolved", material_difficulty_locked: "error.material_difficulty_locked", material_quantity_invalid: "error.material_quantity_invalid", material_price_unresolved: "error.material_price_unresolved",
     };
@@ -401,11 +402,9 @@ function showIntentResult(result: IntentFeedback): void {
     showPanelMessage(t(titles[result.intent] ?? "error.cannot_craft"), detail);
   }
 }
-
 function showBindingBlocked(result: BindingBlockedFeedback): void {
   showPanelMessage(t("error.coming_soon"), debugUi ? `${result.intent.replaceAll("_", " ")} · ${result.blockers.join(", ")}` : t("error.feature_rebuilding"));
 }
-
 async function initializeBuildingEvidence(): Promise<void> {
   try {
     const [registry, decodedCatalog] = await Promise.all([loadVerifiedBuildingEvidenceRegistry(), loadGearCatalog().catch(() => null)]);
@@ -417,6 +416,7 @@ async function initializeBuildingEvidence(): Promise<void> {
     if (world && latestSnapshot) buildingRenderer.syncBuildingPresentation(world, latestSnapshot);
     buildingRenderer.renderBuildingSystem(latestSnapshot);
   } catch (error) {
+    recordClientEvent("error", "building_evidence_load_failed", { reason: error instanceof Error ? error.message : "unknown" });
     buildingContext.buildingEvidenceError = debugUi && error instanceof Error ? error.message : t("diagnostics.building_load_failed");
     console.error("Failed to load verified building evidence.", error);
   }

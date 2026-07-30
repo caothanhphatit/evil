@@ -1,5 +1,6 @@
 import { MAX_MESSAGE_BYTES, PROTOCOL_VERSION } from "../generated/protocol";
 import type { BottomMenuIntent, ClientCommand, ClientEnvelope, FarmReport, OriginalFlowSnapshot, ServerEnvelope, ServerMessage } from "../generated/protocol";
+import { recordClientEvent } from "../observability/client-telemetry";
 
 export type ConnectionStatus = "connecting" | "online" | "reconnecting" | "offline";
 export interface IntentFeedback { intent: string; accepted: boolean; reason: string | null }
@@ -153,7 +154,7 @@ export class WorldClient {
         if (this.welcomeTimer !== null) clearTimeout(this.welcomeTimer);
         this.welcomeTimer = setTimeout(() => {
           if (this.socket !== socket || this.envelopeSequencer.isReady()) return;
-          console.warn("WebSocket opened but the server welcome timed out.");
+          recordClientEvent("warn", "websocket_welcome_timeout", { attempt });
           this.failProtocol(socket);
         }, 10000);
       });
@@ -171,7 +172,7 @@ export class WorldClient {
         this.scheduleReconnect();
       });
     } catch (error) {
-      console.warn("Session bootstrap or WebSocket connection failed.", error);
+      recordClientEvent("warn", "connection_bootstrap_failed", { attempt, reason: error instanceof Error ? error.message : "unknown" });
       if (attempt === this.connectionAttempt) this.scheduleReconnect();
     }
   }
@@ -209,7 +210,7 @@ export class WorldClient {
         this.onSnapshot(snapshot);
       }
     } catch (error) {
-      console.warn("Protocol fault; reconnecting for a clean resync.", error);
+      recordClientEvent("error", "protocol_fault", { reason: error instanceof Error ? error.message : "unknown" });
       this.failProtocol(socket);
     }
   }
@@ -237,6 +238,7 @@ export class WorldClient {
 
   private scheduleReconnect(): void {
     if (this.stopped || this.reconnectTimer !== null) { if (this.stopped) this.onStatus("offline"); return; }
+    recordClientEvent("info", "connection_reconnect_scheduled", { delay_ms: this.reconnectDelayMs });
     this.onStatus("reconnecting");
     this.reconnectTimer = setTimeout(() => { this.reconnectTimer = null; void this.openSocket("reconnecting"); }, this.reconnectDelayMs);
   }

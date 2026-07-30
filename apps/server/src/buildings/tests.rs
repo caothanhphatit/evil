@@ -143,6 +143,8 @@ fn gameplay_catalog_rejects_unknown_building_references() {
         }],
         items: BTreeMap::new(),
         products: BTreeMap::new(),
+        gear_products: BTreeMap::new(),
+        consumable_products: BTreeMap::new(),
     };
 
     assert!(matches!(
@@ -203,5 +205,91 @@ async fn migrated_catalog_loads_complete_normalized_content() {
     assert_eq!(gameplay.capabilities.len(), 10);
     assert_eq!(gameplay.items.len(), 1_107);
     assert_eq!(gameplay.products.len(), 3_457);
+    assert_eq!(gameplay.gear_products.len(), 3_355);
+    assert_eq!(gameplay.consumable_products.len(), 40);
+    assert_eq!(
+        gameplay
+            .items
+            .values()
+            .filter(|item| item.difficulty_rating.is_some())
+            .count(),
+        369
+    );
+    let healing = gameplay
+        .consumable_product("recipe:consumable:0:level:7")
+        .unwrap();
+    assert_eq!(
+        (healing.keep_value, healing.cooldown_ms),
+        (9_375_000, 20_000)
+    );
     gameplay.validate(&catalog).unwrap();
+}
+
+#[tokio::test]
+async fn postgres_world_map_catalog_is_complete_when_configured() {
+    let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+        return;
+    };
+    let repository = PostgresBuildingRepository::connect_lazy(&database_url).unwrap();
+    let maps = repository
+        .load_world_maps("evil-hunter-1.411.buildings-v1")
+        .await
+        .unwrap();
+    assert_eq!(maps.len(), 3);
+    assert_eq!(maps[0].map_id, "map_new01");
+    assert_eq!(maps[0].density_counts, [3, 6, 9]);
+    assert_eq!(maps[2].entry_waypoints[2], (2127, 724));
+}
+
+#[tokio::test]
+async fn postgres_progression_and_monster_catalogs_are_complete_when_configured() {
+    let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+        return;
+    };
+    let repository = PostgresBuildingRepository::connect_lazy(&database_url).unwrap();
+    let progression = repository
+        .load_hunter_progression(
+            "evil-hunter-1.411.buildings-v1",
+            "evil-hunter-1.411.experience-runtime-v1",
+        )
+        .await
+        .unwrap();
+    assert_eq!(progression.max_stored_level, 99);
+    assert_eq!(progression.experience_by_level.len(), 100);
+    assert_eq!(
+        progression.experience_by_level[1],
+        [240, 960, 5_760, 46_080, 460_800, 5_529_600]
+    );
+
+    let pools = repository
+        .load_ordinary_monster_pools("evil-hunter-1.411.buildings-v1")
+        .await
+        .unwrap();
+    assert_eq!(pools.len(), 15);
+    assert!(pools.iter().all(|pool| pool.monsters.len() == 3));
+    let first = &pools
+        .iter()
+        .find(|pool| pool.map_id == "map_new01" && pool.global_difficulty == 0)
+        .unwrap()
+        .monsters[0];
+    assert_eq!(
+        (first.source_index, first.hp, first.damage),
+        (0, 1_298, 542)
+    );
+    assert_eq!(first.materials.len(), 8);
+
+    let hunter_content = repository
+        .load_hunter_static_content(
+            "migration.hunter-demo-v1",
+            "evil-hunter-1.411.hunter-info-v1",
+        )
+        .await
+        .unwrap();
+    assert_eq!(hunter_content.classes.len(), 5);
+    assert_eq!(hunter_content.rarities.len(), 5);
+    assert_eq!(hunter_content.personalities.len(), 33);
+    assert_eq!(hunter_content.basic_skills.len(), 10);
+    assert_eq!(hunter_content.basic_skills[0].skill_id, "skill_h1_01");
+    assert_eq!(hunter_content.basic_skills[0].cooldown_ms, 15_000);
+    assert!(hunter_content.basic_skills[0].confirmed_icon_path.is_some());
 }

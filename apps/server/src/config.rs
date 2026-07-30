@@ -11,8 +11,15 @@ pub struct AppConfig {
     pub log_format: String,
     pub database_url: Option<String>,
     pub redis_url: Option<String>,
+    pub admin: AdminConfig,
     pub session: SessionConfig,
     pub simulation: SimulationConfig,
+}
+
+#[derive(Clone, Debug)]
+pub struct AdminConfig {
+    pub username: String,
+    pub password: String,
 }
 
 #[derive(Clone, Debug)]
@@ -44,6 +51,8 @@ pub enum ConfigError {
     InvalidWebOrigin(#[from] InvalidHeaderValue),
     #[error("session TTL, lease TTL, command limit, or command window is outside safe bounds")]
     InvalidSessionSettings,
+    #[error("ADMIN_BASIC_AUTH_USER and ADMIN_BASIC_AUTH_PASSWORD must both be configured")]
+    MissingAdminCredentials,
 }
 
 impl AppConfig {
@@ -72,6 +81,13 @@ impl AppConfig {
             return Err(ConfigError::InvalidSessionSettings);
         }
 
+        let admin = AdminConfig {
+            username: non_empty_env("ADMIN_BASIC_AUTH_USER")
+                .ok_or(ConfigError::MissingAdminCredentials)?,
+            password: non_empty_env("ADMIN_BASIC_AUTH_PASSWORD")
+                .ok_or(ConfigError::MissingAdminCredentials)?,
+        };
+
         Ok(Self {
             host: env::var("SERVER_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
             port: parse_env("SERVER_PORT", 8080_u16)?,
@@ -79,6 +95,7 @@ impl AppConfig {
             log_format: env::var("LOG_FORMAT").unwrap_or_else(|_| "pretty".into()),
             database_url: non_empty_env("DATABASE_URL"),
             redis_url: non_empty_env("REDIS_URL"),
+            admin,
             session,
             simulation: SimulationConfig {
                 tick_rate,
@@ -95,6 +112,10 @@ impl AppConfig {
             log_format: "pretty".into(),
             database_url: None,
             redis_url: None,
+            admin: AdminConfig {
+                username: "admin".into(),
+                password: "test-password".into(),
+            },
             session: SessionConfig {
                 cookie_secure: false,
                 ttl_seconds: 604_800,

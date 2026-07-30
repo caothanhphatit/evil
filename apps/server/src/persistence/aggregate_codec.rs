@@ -1,10 +1,10 @@
 use super::{
     db_u64, load_hunter_runtime_in, optional_db_u32, optional_db_u64, optional_progress,
-    runtime_status_from_row, BTreeMap, DurableHunterEquipmentSlot, DurableHunterProfile,
-    DurableHunterRosterState, DurableHunterSkill, DurableHunterState, DurableHunterTrait,
-    DurablePlayerAggregate, DurableWaitingHunter, HashMap, HunterBanishment, HunterServiceGauge,
-    OriginalFlowPlayerState, Postgres, RepositoryError, Row, Transaction, Uuid,
-    DURABLE_PLAYER_SCHEMA_VERSION,
+    runtime_status_from_row, BTreeMap, DurableHunterEquipmentSlot, DurableHunterOwnedItem,
+    DurableHunterProfile, DurableHunterRosterState, DurableHunterSkill, DurableHunterState,
+    DurableHunterTrait, DurablePlayerAggregate, DurableWaitingHunter, HashMap, HashSet,
+    HunterBanishment, HunterServiceGauge, OriginalFlowPlayerState, Postgres, RepositoryError, Row,
+    Transaction, Uuid, DURABLE_PLAYER_SCHEMA_VERSION,
 };
 
 pub(super) fn encode_non_building_state(
@@ -111,7 +111,11 @@ pub(super) async fn load_hunter_roster_in(
         r#"
         SELECT phs.hunter_id, phs.skill_id, hsd.display_name, hsd.icon_path,
                hsd.animation_name, phs.skill_level, phs.equipped_slot,
-               (phs.cooldown_ready_at IS NULL OR phs.cooldown_ready_at <= now()) AS ready
+               (phs.cooldown_ready_at IS NULL OR phs.cooldown_ready_at <= now()) AS ready,
+               GREATEST(
+                   0,
+                   (EXTRACT(EPOCH FROM (phs.cooldown_ready_at - now())) * 1000)::bigint
+               ) AS cooldown_remaining_ms
         FROM player_hunter_skill phs
         JOIN hunter_skill_definition hsd
           ON hsd.release_id = phs.content_release_id AND hsd.skill_id = phs.skill_id
@@ -142,7 +146,10 @@ pub(super) async fn load_hunter_roster_in(
                     .transpose()
                     .map_err(|_| RepositoryError::InvalidOperation)?,
                 ready: row.try_get("ready")?,
-                cooldown_remaining_ms: 0,
+                cooldown_remaining_ms: u64::try_from(
+                    row.try_get::<i64, _>("cooldown_remaining_ms")?,
+                )
+                .map_err(|_| RepositoryError::InvalidOperation)?,
             });
     }
     let equipment_rows = sqlx::query(
@@ -173,6 +180,58 @@ pub(super) async fn load_hunter_roster_in(
                 required_class_id: row.try_get("required_class_id")?,
                 locked: row.try_get("locked")?,
                 evidence_state: row.try_get("evidence_state")?,
+            });
+    }
+    let mut owned_items_by_hunter: HashMap<u32, Vec<DurableHunterOwnedItem>> = HashMap::new();
+    let mut normalized_item_hunters = HashSet::new();
+    let stack_rows = sqlx::query(
+        r#"SELECT hunter_id, product_id, quantity
+           FROM player_hunter_item_stack
+           WHERE player_token = $1
+           ORDER BY hunter_id, product_id"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in stack_rows {
+        let hunter_id = u32::try_from(row.try_get::<i64, _>("hunter_id")?)
+            .map_err(|_| RepositoryError::InvalidOperation)?;
+        normalized_item_hunters.insert(hunter_id);
+        owned_items_by_hunter
+            .entry(hunter_id)
+            .or_default()
+            .push(DurableHunterOwnedItem {
+                product_id: row.try_get::<String, _>("product_id")?,
+                quantity: u32::try_from(row.try_get::<i64, _>("quantity")?)
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                enhancement_level: None,
+                gear_instance_id: None,
+            });
+    }
+    let gear_rows = sqlx::query(
+        r#"SELECT hunter_id, gear_instance_id, product_id, enhancement_level
+           FROM player_hunter_gear_instance
+           WHERE player_token = $1
+           ORDER BY hunter_id, created_at, gear_instance_id"#,
+    )
+    .bind(player_token)
+    .fetch_all(&mut **transaction)
+    .await?;
+    for row in gear_rows {
+        let hunter_id = u32::try_from(row.try_get::<i64, _>("hunter_id")?)
+            .map_err(|_| RepositoryError::InvalidOperation)?;
+        normalized_item_hunters.insert(hunter_id);
+        owned_items_by_hunter
+            .entry(hunter_id)
+            .or_default()
+            .push(DurableHunterOwnedItem {
+                product_id: row.try_get::<String, _>("product_id")?,
+                quantity: 1,
+                enhancement_level: Some(
+                    u8::try_from(row.try_get::<i16, _>("enhancement_level")?)
+                        .map_err(|_| RepositoryError::InvalidOperation)?,
+                ),
+                gear_instance_id: Some(row.try_get::<Uuid, _>("gear_instance_id")?),
             });
     }
     let mut runtime_by_hunter = load_hunter_runtime_in(transaction, player_token).await?;
@@ -210,7 +269,11 @@ pub(super) async fn load_hunter_roster_in(
                 maximum: db_u64(&row, "mood_maximum")?,
             },
             hunt: serde_json::from_value(row.try_get("hunt_state")?)?,
-            owned_items: serde_json::from_value(row.try_get("owned_items")?)?,
+            owned_items: if normalized_item_hunters.contains(&hunter_id) {
+                owned_items_by_hunter.remove(&hunter_id).unwrap_or_default()
+            } else {
+                serde_json::from_value(row.try_get("owned_items")?)?
+            },
             profile: DurableHunterProfile {
                 content_release_id: row.try_get("content_release_id")?,
                 display_name: row.try_get("display_name")?,

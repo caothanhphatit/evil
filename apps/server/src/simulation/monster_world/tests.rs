@@ -20,7 +20,7 @@ fn live_progression_keeps_the_recovered_strict_experience_threshold() {
 fn live_progression_discards_experience_at_display_level_100() {
     let mut roster = operational_migration_roster();
     let hunter = &mut roster.hunters[0];
-    hunter.profile.level = super::super::original_progression::ORIGINAL_HUNTER_MAX_STORED_LEVEL;
+    hunter.profile.level = super::super::original_progression::original_hunter_max_stored_level();
     hunter.profile.xp = 12;
 
     assert_eq!(add_experience(hunter, 50), 0);
@@ -74,7 +74,7 @@ fn density_reconciles_only_the_selected_region() {
 
 #[test]
 fn ordinary_regions_never_overlap_the_town_building_zone() {
-    for config in MAP_CONFIGS {
+    for config in map_configs() {
         assert!(!config.bounds.intersects(TOWN_EXCLUSION_BOUNDS));
         for index in 0..9 {
             let point = spawn_point(config.bounds, index);
@@ -87,18 +87,18 @@ fn ordinary_regions_never_overlap_the_town_building_zone() {
 #[test]
 fn hunter_enters_each_field_through_recovered_bridge_corridors() {
     assert_eq!(
-        MAP_CONFIGS[0].entry_waypoints,
+        map_configs()[0].entry_waypoints,
         [(1410, 690), (1356, 800), (1273, 800)]
     );
     assert_eq!(
-        MAP_CONFIGS[1].entry_waypoints,
+        map_configs()[1].entry_waypoints,
         [(1410, 690), (1356, 800), (1356, 861)]
     );
     assert_eq!(
-        MAP_CONFIGS[2].entry_waypoints,
+        map_configs()[2].entry_waypoints,
         [(1957, 809), (2043, 724), (2127, 724)]
     );
-    for config in MAP_CONFIGS {
+    for config in map_configs() {
         let mut world = MonsterWorldState::default();
         let mut roster = operational_migration_roster();
         roster.assign_hunt(1, config.map_id).unwrap();
@@ -290,18 +290,18 @@ fn completed_revival_uses_the_authoritative_sanctuary_point() {
 fn clearing_a_field_assignment_walks_back_without_teleporting() {
     let mut world = MonsterWorldState::default();
     let mut roster = operational_migration_roster();
-    roster.assign_hunt(1, MAP_CONFIGS[0].map_id).unwrap();
+    roster.assign_hunt(1, map_configs()[0].map_id).unwrap();
     world.tick(&mut roster);
     let field_position = (
-        MAP_CONFIGS[0].bounds.min_x + 120,
-        MAP_CONFIGS[0].bounds.min_y + 120,
+        map_configs()[0].bounds.min_x + 120,
+        map_configs()[0].bounds.min_y + 120,
     );
     let agent = world
         .hunters
         .iter_mut()
         .find(|agent| agent.hunter_id == 1)
         .unwrap();
-    agent.region_id = Some(MAP_CONFIGS[0].map_id.to_owned());
+    agent.region_id = Some(map_configs()[0].map_id.to_owned());
     agent.x = field_position.0;
     agent.y = field_position.1;
     roster.hunters[0].hunt.zone_id = None;
@@ -341,8 +341,8 @@ fn field_target_acquisition_searches_the_entire_assigned_region() {
         .unwrap();
     agent.region_id = Some("map_new01".to_owned());
     agent.entry_stage = 2;
-    agent.x = MAP_CONFIGS[0].bounds.max_x;
-    agent.y = MAP_CONFIGS[0].bounds.max_y;
+    agent.x = map_configs()[0].bounds.max_x;
+    agent.y = map_configs()[0].bounds.max_y;
     assert!(
         squared_distance(agent.x, agent.y, field_monster.x, field_monster.y)
             > i64::from(MONSTER_DETECTION_RANGE_PX).pow(2)
@@ -681,7 +681,7 @@ fn connected_original_resolver_emits_critical_damage_from_the_server() {
 
 #[test]
 fn exact_catalog_monster_damage_stays_separate_from_fixture_attack_input() {
-    let monster = spawn_monster(&MAP_CONFIGS[0], 0, 0);
+    let monster = spawn_monster(&map_configs()[0], 0, 0);
 
     assert_eq!(monster.source_index, 0);
     assert_eq!(monster.damage, 542);
@@ -690,20 +690,13 @@ fn exact_catalog_monster_damage_stays_separate_from_fixture_attack_input() {
 
 #[test]
 fn all_ordinary_monster_stats_survive_catalog_selection_into_runtime_state() {
-    let definitions: OrdinaryMonsterMap = serde_json::from_str(include_str!(
-        "../../../../../packages/content/releases/evil-hunter-1.411/ordinary-hunting-monster-map.json"
-    ))
-    .unwrap();
-
-    for config in MAP_CONFIGS {
-        let region = definitions
-            .regions
+    for config in map_configs() {
+        for pool in monster_pools()
             .iter()
-            .find(|region| region.area == config.area)
-            .unwrap();
-        for difficulty in &region.difficulties {
-            for (index, expected) in difficulty.monster_pool.iter().enumerate() {
-                let actual = spawn_monster(&config, difficulty.global_difficulty, index);
+            .filter(|pool| pool.map_id == config.map_id)
+        {
+            for (index, expected) in pool.monsters.iter().enumerate() {
+                let actual = spawn_monster(config, pool.global_difficulty, index);
                 assert_eq!(actual.source_index, expected.source_index);
                 assert_eq!(actual.max_hp, expected.hp);
                 assert_eq!(actual.hp, expected.hp);
@@ -829,7 +822,7 @@ fn a_new_server_tick_expires_prior_combat_presentations() {
 fn gold_only_drop_never_emits_an_invalid_item_reward_operation() {
     let mut world = MonsterWorldState::default();
     let mut roster = operational_migration_roster();
-    let config = &MAP_CONFIGS[0];
+    let config = &map_configs()[0];
     let (x, y) = spawn_point(config.bounds, 0);
     world.hunters.push(HunterAgentState {
         hunter_id: 1,
@@ -1042,7 +1035,7 @@ fn hunter_navigation_routes_around_clustered_buildings_toward_third_field() {
             max_y: 840,
         },
     ];
-    let target = MAP_CONFIGS[2].entry_waypoints[0];
+    let target = map_configs()[2].entry_waypoints[0];
     let (mut x, mut y) = TOWN_RESPAWN_POINT;
     let mut facing_left = false;
     for _ in 0..160 {
@@ -1072,7 +1065,7 @@ fn hunter_navigation_routes_around_clustered_buildings_toward_third_field() {
 
 #[test]
 fn monster_patrol_uses_short_segments_then_idles_for_two_and_a_half_seconds() {
-    let config = &MAP_CONFIGS[0];
+    let config = &map_configs()[0];
     let mut monster = spawn_monster(config, 0, 0);
     let origin = (monster.spawn_x, monster.spawn_y);
 
@@ -1110,7 +1103,7 @@ fn monster_patrol_uses_short_segments_then_idles_for_two_and_a_half_seconds() {
 
 #[test]
 fn monster_patrol_waypoints_stay_inside_their_region() {
-    for config in &MAP_CONFIGS {
+    for config in map_configs() {
         for index in 0..9 {
             let mut monster = spawn_monster(config, 0, index);
             for phase in 0..8 {

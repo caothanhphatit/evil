@@ -1,0 +1,8 @@
+* @caothanhphatit
+
+/apps/server/src/simulation/ @caothanhphatit
+/apps/server/src/persistence/ @caothanhphatit
+/packages/protocol/ @caothanhphatit
+/tools/generate-protocol.mjs @caothanhphatit
+/infra/db/migrations/ @caothanhphatit
+/.github/workflows/ @caothanhphatit

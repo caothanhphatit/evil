@@ -87,6 +87,19 @@ pub(crate) fn test_authoritative_building_content() -> Arc<AuthoritativeBuilding
                     runnable: capability.runnable,
                 })
                 .collect();
+            let economy_evidence: serde_json::Value = serde_json::from_str(include_str!(
+                "../../../../../reverse-engineering/evidence/core-economy-tables-v1.json"
+            ))
+            .expect("test economy fixture must decode");
+            let material_ratings = economy_evidence["materials"]
+                .as_array()
+                .expect("test material fixture")
+                .iter()
+                .map(|material| {
+                    u8::try_from(material["rating"].as_u64().expect("material rating"))
+                        .expect("material rating fits u8")
+                })
+                .collect::<Vec<_>>();
             let items = embedded
                 .items
                 .iter()
@@ -99,6 +112,10 @@ pub(crate) fn test_authoritative_building_content() -> Arc<AuthoritativeBuilding
                             item_type: item.item_type.clone(),
                             stack_limit: item.stack_limit,
                             town_pays_hunter_gold_per_unit: item.town_pays_hunter_gold_per_unit,
+                            difficulty_rating: item_id
+                                .strip_prefix("material:")
+                                .and_then(|index| index.parse::<usize>().ok())
+                                .and_then(|index| material_ratings.get(index).copied()),
                             localized_names: item
                                 .display_name
                                 .as_ref()
@@ -141,6 +158,8 @@ pub(crate) fn test_authoritative_building_content() -> Arc<AuthoritativeBuilding
                         capabilities,
                         items,
                         products: BTreeMap::new(),
+                        gear_products: BTreeMap::new(),
+                        consumable_products: BTreeMap::new(),
                     },
                 )
                 .expect("test authoritative building content"),

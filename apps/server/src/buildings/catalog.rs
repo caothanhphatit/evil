@@ -76,6 +76,7 @@ pub struct EconomyItemDefinition {
     pub item_type: Option<String>,
     pub stack_limit: Option<u64>,
     pub town_pays_hunter_gold_per_unit: Option<u64>,
+    pub difficulty_rating: Option<u8>,
     pub localized_names: BTreeMap<String, String>,
     pub buy_price: Vec<EconomyAmount>,
     pub sell_price: Vec<EconomyAmount>,
@@ -132,6 +133,28 @@ pub struct BuildingGameplayCatalog {
     pub capabilities: Vec<BuildingCapabilityDefinition>,
     pub items: BTreeMap<String, EconomyItemDefinition>,
     pub products: BTreeMap<String, EconomyProductDefinition>,
+    pub gear_products: BTreeMap<String, GearProductDefinition>,
+    pub consumable_products: BTreeMap<String, ConsumableProductDefinition>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ConsumableProductDefinition {
+    pub product_id: String,
+    pub consumable_index: u32,
+    pub level: u16,
+    pub keep_time_ms: u64,
+    pub keep_value: u64,
+    pub cooldown_ms: u64,
+    pub price: u64,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct GearProductDefinition {
+    pub product_id: String,
+    pub gear_kind: String,
+    pub gear_index: u32,
+    pub rating: u16,
+    pub difficulty_group: u16,
 }
 
 impl BuildingGameplayCatalog {
@@ -150,6 +173,14 @@ impl BuildingGameplayCatalog {
 
     pub fn product(&self, product_id: &str) -> Option<&EconomyProductDefinition> {
         self.products.get(product_id)
+    }
+
+    pub fn gear_product(&self, product_id: &str) -> Option<&GearProductDefinition> {
+        self.gear_products.get(product_id)
+    }
+
+    pub fn consumable_product(&self, product_id: &str) -> Option<&ConsumableProductDefinition> {
+        self.consumable_products.get(product_id)
     }
 
     pub fn products_for_building<'a>(
@@ -227,6 +258,21 @@ impl BuildingGameplayCatalog {
                         building_id.clone(),
                     ));
                 }
+            }
+        }
+
+        for (product_id, gear) in &self.gear_products {
+            if product_id != &gear.product_id || !self.products.contains_key(product_id) {
+                return Err(BuildingRepositoryError::InvalidCatalog(
+                    "gear bindings must reference matching products",
+                ));
+            }
+        }
+        for (product_id, consumable) in &self.consumable_products {
+            if product_id != &consumable.product_id || !self.products.contains_key(product_id) {
+                return Err(BuildingRepositoryError::InvalidCatalog(
+                    "consumable bindings must reference matching products",
+                ));
             }
         }
         Ok(())
@@ -346,6 +392,82 @@ impl BuildingCatalog {
 pub struct AuthoritativeBuildingContent {
     pub catalog: BuildingCatalog,
     pub gameplay: BuildingGameplayCatalog,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct WorldMapDefinition {
+    pub map_id: String,
+    pub area: u8,
+    pub monster_tier: u8,
+    pub map_asset_id: String,
+    pub density_counts: [u32; 3],
+    pub bounds: (i32, i32, i32, i32),
+    pub entry_waypoints: [(i32, i32); 3],
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HunterProgressionDefinition {
+    pub progression_id: String,
+    pub max_stored_level: u32,
+    pub display_level_offset: i32,
+    pub experience_by_level: Vec<[u64; 6]>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MonsterMaterialDefinition {
+    pub source_index: u32,
+    pub count: u32,
+    pub raw_percent: u32,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MonsterDefinition {
+    pub source_index: u32,
+    pub hp: u64,
+    pub damage: u64,
+    pub armor: u64,
+    pub experience: u64,
+    pub gold: u64,
+    pub asset_bundle_id: String,
+    pub materials: Vec<MonsterMaterialDefinition>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct OrdinaryMonsterPoolDefinition {
+    pub map_id: String,
+    pub global_difficulty: u8,
+    pub monsters: Vec<MonsterDefinition>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HunterClassContentDefinition {
+    pub class_id: String,
+    pub display_name: String,
+    pub visual_family: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HunterRarityContentDefinition {
+    pub rarity_id: String,
+    pub display_name: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HunterBasicSkillContentDefinition {
+    pub skill_id: String,
+    pub display_name: String,
+    pub class_id: String,
+    pub class_family: String,
+    pub cooldown_ms: u64,
+    pub confirmed_icon_path: Option<String>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HunterStaticContent {
+    pub classes: Vec<HunterClassContentDefinition>,
+    pub rarities: Vec<HunterRarityContentDefinition>,
+    pub personalities: Vec<String>,
+    pub basic_skills: Vec<HunterBasicSkillContentDefinition>,
 }
 
 impl AuthoritativeBuildingContent {

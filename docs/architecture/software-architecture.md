@@ -77,6 +77,10 @@ flowchart LR
 - Imports extracted source records into a canonical, versioned content model.
 - Validates references, ranges, localization keys, animation clips, and asset checksums.
 - Publishes immutable content releases. Active sessions pin a compatible release.
+- Stores stable gameplay objects in normalized PostgreSQL tables; source JSON is
+  an import artifact, not a production runtime fallback.
+- Future admin tooling edits draft releases and promotes them atomically after
+  validation and audit, never mutating an active release in place.
 
 ## Domain Boundaries
 
@@ -115,11 +119,16 @@ sequenceDiagram
 
 ## Data Architecture
 
-PostgreSQL is the system of record. Core tables use UUID/ULID identifiers externally, monotonic versions for optimistic concurrency, UTC timestamps, and append-only ledgers for valuable mutations. Inventory and wallet writes are transactional. JSONB is limited to versioned extension data, not used to avoid modeling stable fields.
+PostgreSQL is the system of record. Core tables use UUID/ULID identifiers externally, monotonic versions for optimistic concurrency, UTC timestamps, and append-only ledgers for valuable mutations. Inventory and wallet writes are transactional. JSONB is limited to versioned extension data, world/workflow checkpoints, and compatibility snapshots; stable ownership is modeled relationally. Migration `0034_player_inventory_authority` separates stacked Hunter products from individually owned gear instances, while the legacy Hunter ownership JSONB remains only as a bounded migration fallback.
 
 Redis may hold session presence, rate-limit buckets, distributed leases, matchmaking queues, pub/sub notifications, and disposable projections. Redis loss must not lose authoritative player value.
 
 Every durable command carries an idempotency key. Database migrations are forward-only, reviewed, reversible by compensating migration, and exercised against production-like data volumes.
+
+Gameplay content follows ADR 0010. PostgreSQL owns versioned object definitions
+and relationships; Rust owns formulas, RNG, validation and state machines.
+Server startup loads the pinned active catalogs and fails closed if required
+rows are missing or incomplete.
 
 ## Network Protocol
 
