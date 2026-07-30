@@ -2,10 +2,12 @@
 
 ## Implemented rebuild boundary
 
-- Idle Hunters automatically sell only material quantities still requested by
-  the Trading Post. The authoritative transaction debits town gold, credits the
-  selling Hunter, moves stock to town inventory and decrements the remaining
-  order quantity.
+- Hunters with eligible requested materials receive a durable trade task and
+  walk through the authoritative town route to the obstacle-safe interaction
+  point of the constructed Trading Post (`build_3`). Only arrival at that point
+  settles the transaction: town gold is debited, the selling Hunter is credited,
+  stock moves to town inventory, and the remaining order quantity is decremented.
+  The client then presents the server-projected gold and sold-material lines.
 - Inn (`build_9`), Infirmary (`build_12`), Restaurant (`build_13`) and Tavern
   (`build_19`) service recipes are loaded from the normalized package tables.
 - Crafting a service product consumes authoritative town resources and adds
@@ -81,6 +83,10 @@ version `1.411`:
 Signatures prove method identity only. They do not yet prove thresholds,
 priority between simultaneous needs, recipe choice, affordability behavior,
 queue retry, gauge decay cadence or navigation destinations.
+
+The Trading Post visit destination and travel timing are an explicit rebuild
+contract based on the existing building footprint and authoritative pathing.
+They are not claimed as recovered original coordinates or AI cadence.
 
 ## Required runtime capture
 

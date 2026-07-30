@@ -16,7 +16,10 @@ describe("Hunter Info modal shell", () => {
   it("keeps a content-sized frame and clears the roster trigger focus", async () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     const modal = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
-    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const main = (await Promise.all([
+      readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/hunter-controller.ts"), "utf8"),
+    ])).join("\n");
     expect(styles).toContain("inset: 0 0 calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved))");
     expect(styles).toContain("width: 440px");
     expect(styles).toContain("grid-template-rows: auto minmax(230px, 46%) auto minmax(150px, 1fr) auto");
@@ -29,7 +32,7 @@ describe("Hunter Info modal shell", () => {
     expect(styles).toContain("button:focus { outline: 0; }");
     expect(styles).toContain("button:focus-visible { outline: 3px solid #f7cf62");
     expect(modal).toContain("panel.focus({ preventScroll: true })");
-    expect(main).toContain("info.blur()");
+    expect(main).toContain("trigger.blur()");
   });
 
   it("keeps equipment controls balanced inside the persistent-menu safe area", async () => {
@@ -82,6 +85,7 @@ describe("Hunter Info modal shell", () => {
     const source = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
     const actor = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/actor.ts"), "utf8");
     const rosterActors = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-roster-actors.ts"), "utf8");
+    const presentationAssets = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-presentation-assets.ts"), "utf8");
     expect(source).toContain("createHunterInfoActor");
     expect(source).toContain("UTILITY_SLOT_COUNT = 6");
     expect(source).toContain('left: ["ring", "weapon", "necklace"]');
@@ -104,6 +108,27 @@ describe("Hunter Info modal shell", () => {
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
     expect(rosterActors).toContain("avatarBounds.height * 0.9");
     expect(rosterActors).toContain("spine.mask = clip");
+    expect(actor).toContain("preload: initialize");
+    expect(rosterActors).toContain("preloadHunterPresentationAssets()");
+    expect(presentationAssets).toContain('HUNTER_SKELETON_ALIAS = "hunter:presentation:skeleton"');
+    expect(presentationAssets).toContain("let preloadPromise: Promise<void> | null = null");
+  });
+
+  it("preloads both Hunter Info canvases before the game loading screen completes", async () => {
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/world-controller.ts"), "utf8");
+    const modal = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/modal.ts"), "utf8");
+    expect(modal).toContain("preload: () => actor.preload()");
+    expect(source).toContain("hunterInfoModal.preload()");
+    expect(source).toContain("worldHunterInfoModal.preload()");
+  });
+
+  it("replaces the embedded Korean difficulty wording with the localized runtime label", async () => {
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/shell.ts"), "utf8");
+    const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
+    expect(source).toContain('<b id="world-mode-label">${t("world.easy")}</b>');
+    expect(source).not.toContain('id="world-mode-label" class="sr-only"');
+    expect(styles).toContain("#world-mode-label { position: absolute;");
+    expect(styles).toContain("background: #08723e");
   });
 
   it("shows only evidence-backed equipment identity in the clickable item detail", () => {
@@ -137,7 +162,7 @@ describe("Hunter Info modal shell", () => {
 
   it("keeps the desktop roster compact and scrollable beyond two rows", async () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
-    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const main = await readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8");
     const actors = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-roster-actors.ts"), "utf8");
     expect(styles).toContain("width: min(590px, calc(100% - 48px))");
     expect(styles).toContain("grid-auto-rows: 164px");

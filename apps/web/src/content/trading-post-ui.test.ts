@@ -3,7 +3,8 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const stylesPath = resolve(import.meta.dirname, "../styles.css");
-const mainPath = resolve(import.meta.dirname, "../main.ts");
+const mainPath = resolve(import.meta.dirname, "../app/game-application.ts");
+const tradePath = resolve(import.meta.dirname, "../app/trade-popup.ts");
 
 describe("Trading Post compact BuildingPop", () => {
   it("uses the shared compact shell and keeps its bottom actions visible", async () => {
@@ -25,22 +26,23 @@ describe("Trading Post compact BuildingPop", () => {
   });
 
   it("keeps the quantity sub-popup open until the authoritative command succeeds", async () => {
-    const source = await readFile(mainPath, "utf8");
+    const source = await Promise.all([readFile(tradePath, "utf8"), readFile(resolve(import.meta.dirname, "../app/shell.ts"), "utf8")]).then((parts) => parts.join("\n"));
     const submitHandler = source.slice(
       source.indexOf('submit.addEventListener("click"'),
       source.indexOf('back.addEventListener("click"'),
     );
-    expect(submitHandler).toContain("client.setMaterialRequest");
-    expect(submitHandler).toContain("tradingRequestPending = true");
-    expect(source).toContain('if (result.intent === "set_material_request")');
-    expect(source).toContain("if (result.accepted)");
+    expect(submitHandler).toContain("context.client.setMaterialRequest");
+    expect(submitHandler).toContain("context.tradingRequestPending = true");
+    const appSource = await readFile(mainPath, "utf8");
+    expect(appSource).toContain('if (result.intent === "set_material_request")');
+    expect(appSource).toContain("if (result.accepted)");
     expect(source).toContain('editor.id = "trading-request-editor"');
     expect(source).toContain('id="trading-request-pop"');
-    expect(source).toContain("tradingRequestContent.replaceChildren(editor)");
+    expect(source).toContain("context.tradingRequestContent.replaceChildren(editor)");
   });
 
   it("uses a dedicated source-style sub-popup instead of replacing the Trading Post catalog", async () => {
-    const [source, styles] = await Promise.all([readFile(mainPath, "utf8"), readFile(stylesPath, "utf8")]);
+    const [source, styles] = await Promise.all([readFile(resolve(import.meta.dirname, "../app/shell.ts"), "utf8"), readFile(stylesPath, "utf8")]);
     expect(source).toContain("trading-request-pop source-popup");
     expect(styles).toContain(".trading-request-editor");
     expect(styles).toContain(".trading-request-pop");
@@ -48,10 +50,14 @@ describe("Trading Post compact BuildingPop", () => {
   });
 
   it("does not retain generic service-tab fallback markup", async () => {
-    const [source, styles] = await Promise.all([readFile(mainPath, "utf8"), readFile(stylesPath, "utf8")]);
+    const [source, styles, renderer] = await Promise.all([
+      readFile(resolve(import.meta.dirname, "../app/shell.ts"), "utf8"),
+      readFile(stylesPath, "utf8"),
+      readFile(resolve(import.meta.dirname, "../app/building-renderer.ts"), "utf8"),
+    ]);
     expect(source).not.toContain("tabs.innerHTML");
     expect(source).not.toContain('document.createElement(serviceRow ? "div" : "button")');
-    expect(source).toContain("renderBuildingContractError");
+    expect(renderer).toContain("renderBuildingContractError");
     expect(styles).not.toContain(".service-tabs b, .service-tabs span");
   });
 });

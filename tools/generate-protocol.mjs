@@ -175,6 +175,9 @@ export interface WorldEntityProjection {
   action_sequence: number;
   loot_sequence: number;
   loot_label: string | null;
+  trade_sequence: number;
+  trade_gold: number;
+  trade_materials: TradeMaterialPresentationSnapshot[];
   attack_effect_key: string | null;
   skill_presentation_key: string | null;
   current_hp: number | null;
@@ -182,6 +185,8 @@ export interface WorldEntityProjection {
   interaction_prompt_key: "hunter_enhancement_ready" | null;
   selectable: boolean;
 }
+
+export interface TradeMaterialPresentationSnapshot { material_id: string; display_name: string; quantity: number }
 
 export type CombatPresentationKind = "incoming_damage" | "normal_damage" | "critical_damage" | "experience" | "evade" | "miss";
 export interface CombatPresentationSnapshot {

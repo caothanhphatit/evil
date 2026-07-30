@@ -158,8 +158,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .village-world::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 90px #17242b5c; }
 
 .resource-bar { position: absolute; z-index: 8; top: max(7px, env(safe-area-inset-top)); left: 7px; display: flex; align-items: flex-start; gap: 3px; pointer-events: none; filter: drop-shadow(0 3px 3px #000c); }
-.difficulty-hud { width: 66px; height: 64px; }
+.difficulty-hud { position: relative; width: 66px; height: 64px; }
 .difficulty-hud img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: top left; image-rendering: pixelated; }
+#world-mode-label { position: absolute; left: 0; bottom: 0; display: grid; place-items: center; width: 65.22%; height: 18%; padding-top: 1px; overflow: hidden; background: #08723e; color: #f8f3da; font-size: 7px; line-height: 1; text-align: center; text-shadow: 0 1px #173227; }
 .resource-ledger { display: grid; min-width: 104px; padding: 2px 8px 3px 4px; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/top_ic_00_bg_9__3155.png') 5 fill / 5px stretch; background: #10120fbf; }
 .resource-line { display: grid; grid-template-columns: 21px minmax(62px, auto); align-items: center; min-height: 19px; border-bottom: 1px solid #6e665542; }
 .resource-line:last-child { border-bottom: 0; }
@@ -982,7 +983,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-card-level-class .class-h4 { color: #68c9d7; }
 .hunter-card-level-class .class-h5 { color: #b081d7; }
 .hunter-card-level-class .class-unresolved { color: #a9a18f; }
-.hunter-roster-card .hunter-avatar { align-self: stretch; width: 100%; height: auto; min-height: 62px; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core) 0 13%, transparent 62%); }
+.hunter-roster-card .hunter-avatar { align-self: stretch; width: 100%; height: auto; min-height: 62px; margin: 0; padding: 0; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core) 0 13%, transparent 62%); cursor: pointer; }
 .hunter-roster-card .hunter-avatar.composed { color: transparent; }
 .hunter-roster-card .hunter-avatar img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
 .hunter-card-meta { display: grid; width: 100%; min-width: 0; text-align: center; }

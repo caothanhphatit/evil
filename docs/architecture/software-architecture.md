@@ -133,11 +133,43 @@ Every durable command carries an idempotency key. Database migrations are forwar
 ## Simulation Model
 
 - Active zones execute a fixed 100 ms step by default.
+- Town and ordinary hunting regions are one authoritative world instance.
+  `Village` and `Field` are navigation/camera focus states, not separate
+  authority boundaries: building, economy and service commands and clocks must
+  remain available in both through the shared-world guard. Exact-town-only
+  focus transitions remain explicit commands.
+- Every new building or economy command requires regression coverage from both
+  shared-world focus states so a legacy Village-only gate cannot silently
+  reappear.
 - Rendering remains independent at the browser refresh rate.
 - Spatial interest management limits snapshots to relevant entities.
 - AI uses bounded work budgets and deterministic scheduling.
 - RNG uses server-owned streams scoped by encounter/domain; seeds are not disclosed before outcomes finalize.
 - Offline progress is calculated from persisted timestamps and event rules, with server-defined caps.
+
+### Original-flow application boundary
+
+The rebuild remains a modular monolith. `OriginalFlowSession` is the application
+facade for one leased player world: it owns orchestration, deterministic tick
+ordering, durable before/after comparison, and operation draining. Feature rules
+must not be added directly to its command router.
+
+- `command_dispatch` maps generated protocol commands to application handlers;
+  it does not own domain state or persistence.
+- `economy` owns building, crafting, service, shop, and enhancement use cases.
+- `hunter_actions` owns Hunter commands and authoritative trade settlement.
+- `hunter_trade_workflow` is the state-machine boundary for beginning, restoring,
+  resuming, and releasing durable Hunter trade tasks.
+- `building_domain` and `hunter_domain` contain reusable domain policies and
+  snapshot mapping for their bounded contexts.
+- `projection` and `world_projection_support` form the anti-corruption layer
+  from internal world state to protocol snapshots and evidence-aware
+  presentation data.
+
+New workflows should use a typed state machine or policy object when they span
+multiple ticks or reconnects. Persisted strings remain compatibility fields at
+the serialization boundary; transition decisions must be centralized rather
+than duplicated across command, restore, and tick paths.
 
 ## Deployment Topology
 
@@ -157,3 +189,8 @@ Static assets are content-addressed and served through a CDN. Server processes a
 ## Evolution Rules
 
 An ADR is required for changes to authority, transport, persistence technology, deployment boundaries, deterministic math, or compatibility policy. Performance claims require profiles or load tests. Service extraction requires a documented scaling bottleneck and ownership plan.
+
+Internal source boundaries and the current decomposition roadmap are tracked in
+`docs/architecture/source-boundary-audit.md`. `pnpm architecture:validate` is
+the architecture fitness function for dependency direction and hotspot-size
+ratchets.

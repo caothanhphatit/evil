@@ -1,6 +1,6 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Skin } from "@esotericsoftware/spine-core";
-import { Assets, Circle, Container, Graphics, Sprite, Text, Texture } from "pixi.js";
+import { Assets, Circle, Container, Graphics, Sprite, Texture } from "pixi.js";
 import { loadVerifiedVisibleWorldRelease, type ActorBundle, type MonsterDensitySignboard, type TownBuilding } from "../assets/visible-world-release";
 import type { BuildingInstanceSnapshot, CombatPresentationSnapshot, WorldDropProjection, WorldEntityProjection } from "../generated/protocol";
 import { projectRenderableBuildingInstances } from "./building-placement";
@@ -20,25 +20,12 @@ import {
   actorHealthBarLayout,
   actorHealthPresentation,
 } from "./actor-health-bar";
-import { hunterActorVisual } from "../ui/hunter-roster";
-import { applyHunterSpineSkin } from "../ui/hunter-spine-presentation";
-import {
-  COMBAT_CRITICAL_AMOUNT_OFFSET_Y,
-  COMBAT_CRITICAL_LABEL_OFFSET_Y,
-  COMBAT_CRITICAL_LABEL_SIZE_PX,
-  COMBAT_DAMAGE_FONT_SIZE_PX,
-  ORIGINAL_CRITICAL_LABEL_COLOR,
-  ORIGINAL_DAMAGE_FONT_FAMILY,
-  ORIGINAL_DAMAGE_TEXT_IDEAL_DURATION_MS,
-  ORIGINAL_EVADE_COLOR,
-  ORIGINAL_INCOMING_DAMAGE_COLOR,
-  ORIGINAL_MISS_COLOR,
-  ORIGINAL_NORMAL_DAMAGE_COLOR,
-  REBUILD_EXPERIENCE_COLOR,
-  combatPresentationHasValidPayload,
-  combatPresentationText,
-  originalDamageMotionAt,
-} from "./combat-presentation";
+import { hunterActorVisual } from "./hunter-actor-presentation";
+import { applyHunterSpineSkin } from "./hunter-spine-presentation";
+import { ORIGINAL_DAMAGE_FONT_FAMILY } from "./combat-presentation";
+import { WorldEffects } from "./world-effects";
+import { actorScaleForFamily, facingScale } from "./actor-presentation";
+export { groundDropIconScale, tradeSettlementText } from "./world-effects";
 import {
   FIELD_CAMERA_CENTER,
   FIELD_CAMERA_ZOOM,
@@ -75,20 +62,13 @@ interface ActorView {
   skinSignature: string;
   actionSequence: number;
   lootSequence: number;
+  tradeSequence: number;
 }
 interface ActorHealthBarView { root: Container; fill: Sprite; }
 interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; }
 interface BuildingTemplate { visual: TownBuilding; texture: Texture; }
 interface SignboardView { root: Container; sprite: Sprite; textures: Map<number, Texture>; densityLevel: number; }
 interface RangedProjectileView { sprite: Sprite; start: { x: number; y: number }; end: { x: number; y: number }; spawnedAtMs: number; }
-interface PendingCombatPresentation { event: CombatPresentationSnapshot; receivedAtMs: number; }
-interface CombatPresentationView { root: Container; originY: number; spawnedAtMs: number; }
-interface DropView { root: Container; sprite: Sprite; quantity: Text; iconPath: string; }
-interface LootPickupView { root: Container; spawnedAtMs: number; }
-
-export function groundDropIconScale(itemId: string): number {
-  return itemId === "gold" ? 0.55 : 0.72;
-}
 
 export class VisibleEntityWorld {
   readonly root = new Container();
@@ -112,12 +92,10 @@ export class VisibleEntityWorld {
   private readonly staticLayer = new Container();
   private readonly signboards = new Map<string, SignboardView>();
   private readonly rangedProjectiles: RangedProjectileView[] = [];
-  private readonly pendingCombatPresentations: PendingCombatPresentation[] = [];
-  private readonly combatPresentationViews: CombatPresentationView[] = [];
-  private readonly seenCombatPresentationSequences = new Set<number>();
-  private readonly dropViews = new Map<string, DropView>();
-  private readonly pendingDrops = new Set<string>();
-  private readonly lootPickupViews: LootPickupView[] = [];
+  private readonly effects = new WorldEffects(
+    this.worldLayer,
+    (entityId) => this.views.get(entityId)?.root ?? null,
+  );
   private rangerArrowTexture: Texture | null = null;
   private actorHpInnerTexture: Texture | null = null;
   private actorHpFrameTexture: Texture | null = null;
@@ -167,7 +145,6 @@ export class VisibleEntityWorld {
     this.staticLayer.cacheAsTexture({ antialias: false });
     return { fixture: manifest.runtimeDiagnostics.fixture, unresolved: manifest.runtimeDiagnostics.unresolved };
   }
-
   private async addScenePieces(
     pieces: Array<{ id?: string; publicPath: string; x: number; y: number; z?: number; scale?: number; anchor?: { x?: number; y?: number } }>,
     target = this.worldLayer,
@@ -183,14 +160,12 @@ export class VisibleEntityWorld {
       target.addChild(sprite);
     }));
   }
-
   private async loadTownBuildingTemplates(buildings: TownBuilding[]): Promise<void> {
     await Promise.all(buildings.map(async (building) => {
       const texture = await Assets.load<Texture>(building.publicPath);
       this.buildingTemplates.set(building.id, { visual: building, texture });
     }));
   }
-
   setMode(mode: "village" | "field"): void {
     if (mode === this.mode) return;
     this.mode = mode;
@@ -200,7 +175,6 @@ export class VisibleEntityWorld {
     this.cameraZoom = mode === "village" ? TOWN_CAMERA_ZOOM : FIELD_CAMERA_ZOOM;
     this.applyCamera();
   }
-
   setMonsterDensityLevels(fields: ReadonlyArray<{ id: string; densityLevel: number }>): void {
     for (const field of fields) {
       const view = this.signboards.get(field.id);
@@ -354,20 +328,16 @@ export class VisibleEntityWorld {
     receivedAtMs = performance.now(),
   ): void {
     this.projectionBuffer.push(this.mode, visualTick, entities, receivedAtMs);
-    this.queueCombatPresentations(combatPresentations, receivedAtMs);
     const sample = this.projectionBuffer.sample(receivedAtMs);
     if (sample) this.applyProjection(sample.entities);
-    this.applyDrops(drops);
-    this.spawnPendingCombatPresentations(receivedAtMs);
+    this.effects.update(combatPresentations, drops, receivedAtMs);
   }
 
   tick(nowMs = performance.now()): void {
     const sample = this.projectionBuffer.sample(nowMs);
     if (sample) this.applyProjection(sample.entities);
     this.updateRangedProjectiles(nowMs);
-    this.updateLootPickupViews(nowMs);
-    this.spawnPendingCombatPresentations(nowMs);
-    this.updateCombatPresentationViews(nowMs);
+    this.effects.tick(nowMs);
   }
 
   private applyProjection(entities: WorldEntityProjection[]): void {
@@ -392,70 +362,8 @@ export class VisibleEntityWorld {
     this.views.clear();
     this.pending.clear();
     this.rangedProjectiles.length = 0;
-    this.pendingCombatPresentations.length = 0;
-    this.combatPresentationViews.length = 0;
-    this.seenCombatPresentationSequences.clear();
-    this.dropViews.clear();
-    this.pendingDrops.clear();
-    this.lootPickupViews.length = 0;
+    this.effects.destroy();
     this.projectionBuffer.reset();
-  }
-
-  private applyDrops(drops: WorldDropProjection[]): void {
-    const active = new Set(drops.map((drop) => drop.drop_id));
-    for (const drop of drops) {
-      const view = this.dropViews.get(drop.drop_id);
-      if (view) {
-        view.root.position.set(drop.x, drop.y - 14);
-        view.root.zIndex = villageActorDepth(drop.y, SCENE_WORLD_HEIGHT) - 1;
-        view.quantity.text = drop.quantity > 1 ? `x${drop.quantity}` : "";
-      } else if (!this.pendingDrops.has(drop.drop_id) && drop.icon_path) {
-        void this.createDrop(drop);
-      }
-    }
-    for (const [dropId, view] of this.dropViews) {
-      if (!active.has(dropId)) {
-        view.root.destroy({ children: true });
-        this.dropViews.delete(dropId);
-      }
-    }
-  }
-
-  private async createDrop(drop: WorldDropProjection): Promise<void> {
-    this.pendingDrops.add(drop.drop_id);
-    try {
-      const texture = await Assets.load<Texture>(drop.icon_path);
-      const root = new Container();
-      const sprite = new Sprite(texture);
-      sprite.anchor.set(0.5);
-      sprite.scale.set(groundDropIconScale(drop.item_id));
-      if (drop.item_id === "gold") {
-        // The only confirmed gold sprite is small HUD art; layer copies into a
-        // readable ground pile without claiming a missing original drop asset.
-        const leftCoin = new Sprite(texture);
-        leftCoin.anchor.set(0.5);
-        leftCoin.position.set(-6, 4);
-        leftCoin.scale.set(0.42);
-        const rightCoin = new Sprite(texture);
-        rightCoin.anchor.set(0.5);
-        rightCoin.position.set(6, 4);
-        rightCoin.scale.set(0.42);
-        root.addChild(leftCoin, rightCoin);
-      }
-      const quantity = new Text({
-        text: drop.quantity > 1 ? `x${drop.quantity}` : "",
-        style: { fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY, fontSize: 12, fill: 0xffefba, stroke: { color: 0x261d0d, width: 3 } },
-      });
-      quantity.anchor.set(0.5, 0);
-      quantity.position.set(0, 10);
-      root.addChild(sprite, quantity);
-      root.position.set(drop.x, drop.y - 14);
-      root.zIndex = villageActorDepth(drop.y, SCENE_WORLD_HEIGHT) - 1;
-      this.worldLayer.addChild(root);
-      this.dropViews.set(drop.drop_id, { root, sprite, quantity, iconPath: drop.icon_path });
-    } finally {
-      this.pendingDrops.delete(drop.drop_id);
-    }
   }
 
   private async create(entity: WorldEntityProjection): Promise<void> {
@@ -489,6 +397,7 @@ export class VisibleEntityWorld {
       const view = {
         root, spine, presence, highlight, healthBar, animation: "", family, skinSignature,
         actionSequence: 0, lootSequence: current.loot_sequence,
+        tradeSequence: current.trade_sequence,
       };
       root.position.set(current.x, current.y);
       this.views.set(id, view);
@@ -513,23 +422,7 @@ export class VisibleEntityWorld {
     view.presence.visible = entity.descriptor.kind === "monster";
     view.root.eventMode = entity.selectable ? "static" : "none";
     view.root.cursor = entity.selectable ? "pointer" : "default";
-    // The recovered Hunter setup pose faces left; mirror it only for right-facing movement.
-    // Hunter and monster Spine setup poses both face left. Their authoritative
-    // left/right value therefore uses the same mirror inversion.
-    const direction = view.family === "hunter" || entity.descriptor.kind === "monster"
-      ? (entity.facing === "left" ? 1 : -1)
-      : (entity.facing === "left" ? -1 : 1);
-    const actorScale: Record<string, number> = {
-      hunter: 1.02,
-      Chief: 1.08,
-      Npc: 0.80,
-      npc_animal: 0.68,
-      pet: 0.58,
-      mon_goldblin: 1.15,
-      mon_a_01_1: 1.15,
-    };
-    const scale = actorScale[view.family] ?? 0.72;
-    view.spine.scale.set(scale * direction, scale);
+    view.spine.scale.set(actorScaleForFamily(view.family) * facingScale(view.family, entity), actorScaleForFamily(view.family));
     if (view.family === "hunter") {
       const visual = hunterActorVisual(entity);
       view.spine.tint = visual.tint;
@@ -539,7 +432,11 @@ export class VisibleEntityWorld {
     this.maybeStartRangerProjectile(view, entity);
     if (entity.loot_sequence > view.lootSequence && entity.loot_label) {
       view.lootSequence = entity.loot_sequence;
-      this.showLootPickup(view, entity.loot_label);
+      this.effects.showLootPickup(view.root, entity.loot_label);
+    }
+    if (entity.trade_sequence > view.tradeSequence) {
+      view.tradeSequence = entity.trade_sequence;
+      this.effects.showTradeSettlement(view.root, entity);
     }
     const requestedAnimation = view.family === "hunter" ? hunterActorVisual(entity).animation ?? entity.animation : entity.animation;
     if (view.animation === requestedAnimation && view.actionSequence === entity.action_sequence) return;
@@ -617,119 +514,6 @@ export class VisibleEntityWorld {
       if (!pose.done) continue;
       projectile.sprite.destroy();
       this.rangedProjectiles.splice(index, 1);
-    }
-  }
-
-  private showLootPickup(view: ActorView, label: string): void {
-    const root = new Container();
-    const text = new Text({
-      text: label,
-      style: {
-        fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY,
-        fontSize: 14,
-        fill: 0xffefba,
-        stroke: { color: 0x261d0d, width: 4 },
-      },
-    });
-    text.anchor.set(0.5);
-    root.addChild(text);
-    root.position.set(0, -72);
-    view.root.addChild(root);
-    this.lootPickupViews.push({ root, spawnedAtMs: performance.now() });
-  }
-
-  private updateLootPickupViews(nowMs: number): void {
-    for (let index = this.lootPickupViews.length - 1; index >= 0; index -= 1) {
-      const pickup = this.lootPickupViews[index]!;
-      const elapsed = nowMs - pickup.spawnedAtMs;
-      pickup.root.y = -72 - Math.min(18, elapsed * 0.018);
-      pickup.root.alpha = Math.max(0, 1 - Math.max(0, elapsed - 700) / 500);
-      if (elapsed < 1_200) continue;
-      pickup.root.destroy({ children: true });
-      this.lootPickupViews.splice(index, 1);
-    }
-  }
-
-  private queueCombatPresentations(events: CombatPresentationSnapshot[], receivedAtMs: number): void {
-    for (const event of events) {
-      if (this.seenCombatPresentationSequences.has(event.sequence)) continue;
-      this.seenCombatPresentationSequences.add(event.sequence);
-      if (!combatPresentationHasValidPayload(event.kind, event.amount)) continue;
-      this.pendingCombatPresentations.push({ event, receivedAtMs });
-    }
-    if (this.seenCombatPresentationSequences.size > 512) {
-      const newest = [...this.seenCombatPresentationSequences].sort((a, b) => b - a).slice(0, 256);
-      this.seenCombatPresentationSequences.clear();
-      for (const sequence of newest) this.seenCombatPresentationSequences.add(sequence);
-    }
-  }
-
-  private spawnPendingCombatPresentations(nowMs: number): void {
-    for (let index = this.pendingCombatPresentations.length - 1; index >= 0; index -= 1) {
-      const pending = this.pendingCombatPresentations[index]!;
-      const target = this.views.get(pending.event.target_entity_id);
-      if (!target) {
-        if (nowMs - pending.receivedAtMs < ORIGINAL_DAMAGE_TEXT_IDEAL_DURATION_MS) continue;
-        this.pendingCombatPresentations.splice(index, 1);
-        continue;
-      }
-      const root = this.createCombatPresentationView(pending.event);
-      const originY = target.root.position.y - 52;
-      root.position.set(target.root.position.x, originY);
-      root.zIndex = villageActorDepth(target.root.position.y, SCENE_WORLD_HEIGHT) + 0.1;
-      this.worldLayer.addChild(root);
-      this.combatPresentationViews.push({ root, originY, spawnedAtMs: nowMs });
-      this.pendingCombatPresentations.splice(index, 1);
-    }
-  }
-
-  private createCombatPresentationView(event: CombatPresentationSnapshot): Container {
-    const root = new Container();
-    const lines = combatPresentationText(event);
-    if (event.kind === "critical_damage") {
-      const label = this.createCombatText(lines[0]!, COMBAT_CRITICAL_LABEL_SIZE_PX, ORIGINAL_CRITICAL_LABEL_COLOR);
-      const amount = this.createCombatText(lines[1]!, COMBAT_DAMAGE_FONT_SIZE_PX, ORIGINAL_NORMAL_DAMAGE_COLOR);
-      label.position.y = COMBAT_CRITICAL_LABEL_OFFSET_Y;
-      amount.position.y = COMBAT_CRITICAL_AMOUNT_OFFSET_Y;
-      root.addChild(label, amount);
-      return root;
-    }
-    const color = event.kind === "evade"
-      ? ORIGINAL_EVADE_COLOR
-      : event.kind === "miss"
-        ? ORIGINAL_MISS_COLOR
-        : event.kind === "experience"
-          ? REBUILD_EXPERIENCE_COLOR
-        : event.kind === "incoming_damage"
-          ? ORIGINAL_INCOMING_DAMAGE_COLOR
-          : ORIGINAL_NORMAL_DAMAGE_COLOR;
-    root.addChild(this.createCombatText(lines[0]!, COMBAT_DAMAGE_FONT_SIZE_PX, color));
-    return root;
-  }
-
-  private createCombatText(value: string, fontSize: number, fill: number): Text {
-    const text = new Text({
-      text: value,
-      style: {
-        fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY,
-        fontSize,
-        fill,
-        align: "center",
-      },
-    });
-    text.anchor.set(0.5);
-    return text;
-  }
-
-  private updateCombatPresentationViews(nowMs: number): void {
-    for (let index = this.combatPresentationViews.length - 1; index >= 0; index -= 1) {
-      const view = this.combatPresentationViews[index]!;
-      const motion = originalDamageMotionAt(nowMs - view.spawnedAtMs);
-      view.root.position.y = view.originY - motion.yOffset;
-      view.root.scale.set(motion.scale);
-      if (!motion.done) continue;
-      view.root.destroy({ children: true });
-      this.combatPresentationViews.splice(index, 1);
     }
   }
 

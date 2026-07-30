@@ -4,7 +4,7 @@ use axum::{
     response::{IntoResponse, Response},
 };
 use futures_util::StreamExt;
-use tracing::{debug, error, warn};
+use tracing::{debug, error, info_span, warn, Instrument};
 use uuid::Uuid;
 
 use std::time::{Duration, Instant};
@@ -293,7 +293,46 @@ async fn handle_socket(
                             ).await { break; }
                             continue;
                         }
-                        if let Some(result) = flow.handle_command_with_id(command, correlation_id) {
+                        let result = {
+                            let span = info_span!(
+                                "authoritative_command",
+                                %session_id,
+                                %player_token,
+                                %correlation_id,
+                                revision,
+                            );
+                            let _entered = span.enter();
+                            flow.handle_command_with_id(command, correlation_id)
+                        };
+                        if let Some(result) = result {
+                            if let ServerMessage::IntentResult { intent, accepted, .. } = &result.message {
+                                debug!(
+                                    %session_id,
+                                    %player_token,
+                                    %correlation_id,
+                                    intent,
+                                    accepted,
+                                    durable_state_changed = result.durable_state_changed,
+                                    operation_count = result.operations.len(),
+                                    "authoritative command handled"
+                                );
+                            }
+                            if let ServerMessage::IntentResult {
+                                intent,
+                                accepted: false,
+                                reason,
+                                ..
+                            } = &result.message
+                            {
+                                warn!(
+                                    %session_id,
+                                    %player_token,
+                                    %correlation_id,
+                                    intent,
+                                    reason = reason.as_deref().unwrap_or("unspecified"),
+                                    "authoritative intent rejected"
+                                );
+                            }
                             pending_operations.extend(result.operations);
                             if result.durable_state_changed || !pending_operations.is_empty() {
                                 durable_state_dirty = true;
@@ -305,13 +344,22 @@ async fn handle_socket(
                                     }
                                 }
                                 let durable_state = flow.durable_state();
+                                let persist_span = info_span!(
+                                    "authoritative_persist",
+                                    %session_id,
+                                    %player_token,
+                                    %correlation_id,
+                                    expected_revision = revision,
+                                    lease_fence = lease.fence,
+                                    operation_count = pending_operations.len(),
+                                );
                                 match state.repository.persist(
                                     player_token,
                                     &durable_state,
                                     revision,
                                     lease.fence,
                                     &pending_operations,
-                                ).await {
+                                ).instrument(persist_span).await {
                                     Ok(next_revision) => {
                                         revision = next_revision;
                                         durable_state_dirty = false;

@@ -41,6 +41,37 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
 
 ## Current implementation
 
+- The former monolithic `original_flow.rs` has been split behind an application
+  facade into command dispatch, economy, Hunter actions, trade workflow,
+  building/Hunter domain policies, world projection, and tests.
+  `OriginalFlowSession` retains deterministic
+  orchestration and durable-change detection; feature modules own their use
+  cases. Hunter trade transitions are centralized in a typed workflow helper so
+  command, reconnect normalization, settlement, and release cannot silently
+  drift into different string-state rules.
+- A repository-wide source-boundary audit now records the remaining modular
+  monolith hotspots and their ordered decomposition in
+  `docs/architecture/source-boundary-audit.md`. `pnpm architecture:validate`
+  prevents domain-to-adapter and game-to-UI dependency inversions and ratchets
+  current oversized files so new features cannot make them larger. Hunter actor
+  and Spine presentation are now owned by the web game layer and reused by world,
+  roster, and Hunter Info renderers instead of the world importing UI modules.
+- The authoritative monster world is no longer a 3,653-line mixed module. Its
+  public state/config facade is separated from fixed-tick runtime, control,
+  skills, navigation, combat settlement, rewards/progression, spawn, presentation,
+  and scenario tests. The deterministic tick order and public simulation API are
+  unchanged, and the architecture ratchet now caps the facade at 550 lines.
+- Player persistence is now a repository port facade rather than a mixed
+  2,658-line adapter. In-memory and PostgreSQL implementations, aggregate codec,
+  normalized building codec, full Hunter runtime codec, and persistence tests
+  have separate modules. PostgreSQL transaction/idempotency behavior is
+  unchanged; the facade ratchet is reduced to 150 lines.
+- WebSocket command handling now creates structured `authoritative_command` and
+  `authoritative_persist` tracing spans carrying session, player, correlation,
+  revision, lease fence, and operation count. Hunter trade workflow transitions
+  emit structured Hunter/command/building events. Architecture validation also
+  ratchets wildcard parent imports toward explicit package APIs.
+
 - ADR 0009 accepts tiered authority: ordinary movement/combat/common-farm
   reports may be client-predicted and asynchronously validated, while payment,
   premium currency, gacha, Hunter/protected-item ownership and player trade
@@ -75,6 +106,22 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   is capped by that remainder, decrements it atomically with the wallet/stock
   transfer, and leaves excess carried loot with the Hunter; zero restores the
   Request action.
+- Hunter material sales now create a durable pending trade and clear any farm
+  assignment so the authoritative world agent returns through the town corridor
+  and walks to the constructed `build_3` Trading Post interaction point. Wallet,
+  stock, request and settlement rows mutate only after arrival; the world
+  projection then emits gold-received and material-sold presentation data. The
+  exact original visit coordinate and cadence remain unresolved, so this uses
+  the existing rebuild building placement and obstacle-aware pathing contract.
+- Trading Post request and cancellation commands remain available while the
+  unified world is focused on a hunting region (`field`) as well as town. The
+  prior Village-only guard contradicted the single-instance world contract and
+  caused valid order attempts to fail with `village_unavailable`.
+- Building, crafting, shop, service and enhancement commands now share the same
+  `Village | Field` world-availability guard, and service clocks continue while
+  the camera is focused on a hunting region. Exact-town-only navigation intents
+  such as entering the field remain separate. Authoritative command rejections
+  are logged with player, session, correlation, intent and stable reason fields.
 - Monster death projects gold as its own ground drop alongside independently
   rolled material drops. Gold and experience are awarded only when the owning
   Hunter collects the gold drop. Once a pickup starts, nearby aggro no longer
@@ -802,3 +849,14 @@ Before reporting work complete:
   number formatting.
 - Validation: TypeScript `--noEmit` passes, all 42 web test files / 199 tests
   pass, the production web build succeeds, and `git diff --check` is clean.
+
+## 2026-07-30 Hunter presentation preload and roster interaction
+
+- The roster and both Hunter Info overlays now share one memoized Hunter Spine
+  asset bundle and initialize during the post-login game loading phase. Opening
+  Hunter Info no longer starts a second alias-specific skeleton/atlas load.
+- Hunter roster avatars are real accessible buttons and use the same Hunter Info
+  action as the explicit Info control.
+- The source difficulty sprite contains an embedded Korean label. Runtime UI
+  masks only that label area with the localized world-mode text; the recovered
+  skull and badge artwork remain unchanged.

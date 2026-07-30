@@ -33,6 +33,7 @@
     "scene:validate": "node tools/validate-level1-scene-evidence.mjs",
     "assets:extract:fonts": "python3 tools/extract-unity-fonts.py",
     "test:assets": "node --test tools/tests/*.test.mjs",
+    "architecture:validate": "node tools/validate-source-architecture.mjs",
     "protocol:generate": "node tools/generate-protocol.mjs",
     "smoke:fixture": "node tools/smoke-world.mjs",
     "smoke:primary": "python3 tools/smoke-primary-runtime.py"

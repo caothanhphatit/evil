@@ -73,6 +73,11 @@ Generated files contain a header and are changed only through their generator. D
 
 Before merge, relevant formatting, linting, unit, integration, contract, migration, security, and asset validation checks pass. Main remains deployable. Flaky tests are treated as defects and assigned an owner; they are not repeatedly rerun until green without diagnosis.
 
+Run `pnpm architecture:validate` when changing a ratcheted source hotspot or a
+dependency between web core/UI/network layers or server domain/adapter layers.
+Do not raise a source ceiling to accommodate feature growth; extract the owning
+responsibility and lower the ceiling after the refactor.
+
 ## Documentation Rules
 
 Update documentation in the same change when behavior, operations, architecture, protocol, content schema, or asset handling changes. Record durable architectural decisions as ADRs. Runbooks must be executable by an engineer who did not implement the feature.

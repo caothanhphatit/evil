@@ -22,9 +22,10 @@ pub use hunter_roster::{
     new_account_roster, operational_migration_roster, upgrade_operational_fixture_roster,
     DurableGearEnhancementAttempt, DurableGearEnhancementTask, DurableHunterEquipmentSlot,
     DurableHunterProfile, DurableHunterProgress, DurableHunterRosterState, DurableHunterSkill,
-    DurableHunterState, DurableHunterTrait, DurableWaitingHunter, GearEnhancementTaskStatus,
-    HunterArrivalDisposition, HunterBanishment, HunterRosterError,
-    GEAR_ENHANCEMENT_WORKFLOW_VERSION, MAX_ACTIVE_TOWN_HUNTERS, MIGRATION_HUNTER_RELEASE_ID,
+    DurableHunterState, DurableHunterTradeTask, DurableHunterTrait, DurableWaitingHunter,
+    GearEnhancementTaskStatus, HunterArrivalDisposition, HunterBanishment, HunterRosterError,
+    GEAR_ENHANCEMENT_WORKFLOW_VERSION, HUNTER_TRADE_WORKFLOW_VERSION, MAX_ACTIVE_TOWN_HUNTERS,
+    MIGRATION_HUNTER_RELEASE_ID,
 };
 pub use hunter_runtime::{
     DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable, DurableHunterRuntimeGear,
@@ -39,7 +40,7 @@ pub use model::{
 pub use monster_world::{
     map_config, CombatPresentation, CombatPresentationKind, HunterActionState, HunterAgentState,
     MonsterActionState, MonsterDrop, MonsterMapConfig, MonsterState, MonsterWorldState,
-    NavigationObstacle, MAP_CONFIGS, MONSTER_RULESET,
+    NavigationObstacle, TradeMaterialPresentation, MAP_CONFIGS, MONSTER_RULESET,
 };
 pub use original_combat::{OriginalDamageMultiplierStream, ORIGINAL_DAMAGE_MULTIPLIER_HUNDREDTHS};
 #[cfg(test)]
@@ -49,8 +50,9 @@ pub use original_flow::{
     DurableMonsterFieldConfig, DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement,
     Facing, MigrationFixtureCombatProjection, OriginalFlowCommandResult, OriginalFlowPlayerState,
     OriginalFlowSession, OriginalFlowSnapshot, OriginalFlowTickResult, OriginalScreen,
-    WorldEntityActionState, WorldEntityDescriptor, WorldEntityKind, WorldEntityProjection,
-    WorldMode, WorldProjection, DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_FIXTURE_CONTENT_ID,
+    TradeMaterialPresentationSnapshot, WorldEntityActionState, WorldEntityDescriptor,
+    WorldEntityKind, WorldEntityProjection, WorldMode, WorldProjection,
+    DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_FIXTURE_CONTENT_ID,
 };
 pub use product_service::HunterServiceGauge;
 pub use protocol::{

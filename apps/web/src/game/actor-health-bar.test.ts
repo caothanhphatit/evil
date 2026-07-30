@@ -72,5 +72,8 @@ function entity(overrides: Partial<WorldEntityProjection>): WorldEntityProjectio
     interaction_prompt_key: null,
     selectable: true,
     ...overrides,
+    trade_sequence: overrides.trade_sequence ?? 0,
+    trade_gold: overrides.trade_gold ?? 0,
+    trade_materials: overrides.trade_materials ?? [],
   };
 }

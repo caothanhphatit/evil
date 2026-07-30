@@ -15,6 +15,7 @@ pub const HUNT_TICKS_TO_RETURN: u32 = 10;
 pub const FIXTURE_HUNT_ZONE_ID: &str = "migration-zone-1";
 pub const ORDINARY_HUNT_REGION_IDS: [&str; 3] = ["map_new01", "background_08", "background_11"];
 pub const GEAR_ENHANCEMENT_WORKFLOW_VERSION: u16 = 1;
+pub const HUNTER_TRADE_WORKFLOW_VERSION: u16 = 1;
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
@@ -32,6 +33,30 @@ pub struct DurableHunterOwnedItem {
     pub enhancement_level: Option<u8>,
     #[serde(default)]
     pub gear_instance_id: Option<Uuid>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct DurableHunterTradeTask {
+    pub workflow_version: u16,
+    pub command_id: Uuid,
+    pub requested_only: bool,
+    pub building_instance_id: String,
+    pub interaction_x: i32,
+    pub interaction_y: i32,
+}
+
+impl Default for DurableHunterTradeTask {
+    fn default() -> Self {
+        Self {
+            workflow_version: 0,
+            command_id: Uuid::nil(),
+            requested_only: true,
+            building_instance_id: String::new(),
+            interaction_x: 0,
+            interaction_y: 0,
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -113,6 +138,8 @@ pub struct DurableHunterHuntState {
     pub healing_potion_cooldown_ms: u64,
     #[serde(default)]
     pub gear_enhancement: Option<DurableGearEnhancementTask>,
+    #[serde(default)]
+    pub pending_trade: Option<DurableHunterTradeTask>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
@@ -667,6 +694,11 @@ impl DurableHunterRosterState {
         if hunter.current_hp == 0 || hunter.hunt.status == "dead" {
             return Err(HunterRosterError::InvalidState("hunter is dead"));
         }
+        if hunter.hunt.pending_trade.is_some() {
+            return Err(HunterRosterError::InvalidState(
+                "hunter is traveling to trade",
+            ));
+        }
         let existing_loot = std::mem::take(&mut hunter.hunt.loot);
         let healing_potion_cooldown_ms = hunter.hunt.healing_potion_cooldown_ms;
         hunter.hunt = DurableHunterHuntState {
@@ -676,6 +708,7 @@ impl DurableHunterRosterState {
             loot: existing_loot,
             healing_potion_cooldown_ms,
             gear_enhancement: None,
+            pending_trade: None,
         };
         hunter.profile.action_state = if ORDINARY_HUNT_REGION_IDS.contains(&zone_id) {
             "entering_region"

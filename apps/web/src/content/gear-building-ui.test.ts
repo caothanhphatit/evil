@@ -6,7 +6,7 @@ const repositoryRoot = resolve(import.meta.dirname, "../../../..");
 
 describe("gear building UI integration", () => {
   it("uses one BuildingPop route instead of the legacy shop popup", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8");
 
     expect(source).not.toContain('id="shop-building-pop"');
     expect(source).not.toContain("renderShopBuildingPop");
@@ -17,7 +17,7 @@ describe("gear building UI integration", () => {
   });
 
   it("never substitutes a building thumbnail for an unresolved gear icon", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8");
     const gearRenderer = source.slice(
       source.indexOf("function appendGearArt"),
       source.indexOf("function renderTradingPostCatalog"),
@@ -30,7 +30,7 @@ describe("gear building UI integration", () => {
 
   it("keeps the recovered grid, display badge and compact overlay styling", async () => {
     const [source, styles] = await Promise.all([
-      readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8"),
+      Promise.all(["building-renderer.ts", "shell.ts", "world-controller.ts"].map((file) => readFile(resolve(repositoryRoot, `apps/web/src/app/${file}`), "utf8"))).then((parts) => parts.join("\n")),
       readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8"),
     ]);
 
@@ -52,7 +52,7 @@ describe("gear building UI integration", () => {
     expect(styles).toContain("grid-auto-rows: 70px");
     expect(styles).toContain("max-height: 112px");
     expect(source).toContain('count.textContent = t("craft.item_count"');
-    expect(source).toContain("nextPopupSignature !== popupSnapshotSignature");
+    expect(source).toContain("function popupDataSignature");
     expect(styles).toContain(".on-display-badge");
     expect(styles).toContain(".gear-create-pop.gear-detail-mode");
     expect(source).toContain('id="gear-quantity-minus"');

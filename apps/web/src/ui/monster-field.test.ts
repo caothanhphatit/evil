@@ -93,6 +93,7 @@ function entity(family: "mon_a_01_1" | "mon_goldblin", id: string): WorldEntityP
       placement_binding: { id: `${family}:placement`, confidence: "unknown", resolved: false },
     }, x: 200, y: 300, facing: "right", action_state: "idle", animation: "idle", class_family: null,
     target_entity_id: null, action_sequence: 0, loot_sequence: 0, loot_label: null,
+    trade_sequence: 0, trade_gold: 0, trade_materials: [],
     attack_effect_key: null, skill_presentation_key: null,
     current_hp: 100, maximum_hp: 100, selectable: true,
     interaction_prompt_key: null,

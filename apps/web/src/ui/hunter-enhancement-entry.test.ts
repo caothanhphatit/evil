@@ -53,7 +53,7 @@ describe("Hunter enhancement interaction entry", () => {
   });
 
   it("renders separate travel and arrival presentations without a success popup", async () => {
-    const main = await readFile(new URL("../main.ts", import.meta.url), "utf8");
+    const main = await readFile(new URL("../app/world-controller.ts", import.meta.url), "utf8");
     const styles = await readFile(new URL("../styles.css", import.meta.url), "utf8");
     expect(main).toContain('state.mode === "traveling"');
     expect(main).toContain('indicator.className = "hunter-enhancement-travel-indicator"');

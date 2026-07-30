@@ -48,7 +48,7 @@ describe("localized player-facing wording", () => {
   });
 
   it("keeps the application shell wording behind localization keys", async () => {
-    const source = await readFile(resolve(sourceRoot, "main.ts"), "utf8");
+    const source = await readFile(resolve(sourceRoot, "app/shell.ts"), "utf8");
     expect(source).toContain('aria-label="${t("login.aria")}"');
     expect(source).toContain('${t("loading.title")}');
     expect(source).toContain('label: "menu.hunters"');

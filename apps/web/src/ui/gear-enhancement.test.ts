@@ -26,18 +26,21 @@ describe("gear enhancement evidence boundary", () => {
   });
 
   it("renders selection and configuration as separate source-style steps", async () => {
-    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const main = await Promise.all([
+      readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8"),
+    ]).then((parts) => parts.join("\n"));
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     expect(main).toContain("enhancement-workspace");
     expect(main).toContain("enhancement-stage");
     expect(main).toContain("enhancementView: GearEnhancementView");
-    expect(main).toContain('if (enhancementView === "configure" && selected) shell.append(configureControls)');
-    expect(main).toContain('enhancementView = "configure"');
+    expect(main).toContain('if (context.enhancementView === "configure" && selected) shell.append(configureControls)');
+    expect(main).toContain('buildingContext.enhancementView = "configure"');
     expect(main).toContain("enhancement-cost-row unresolved");
     expect(main).toContain("enhancement-inventory");
     expect(main).toContain("enhancement-processing");
     expect(main).toContain("enhancement-result");
-    expect(main).toContain('if (selectedBuildingId === "build_15") buildingPanel.hidden = true');
+    expect(main).toContain("ENHANCEMENT_FORGE_BUILDING_IDS.includes(context.selectedBuildingId");
     expect(styles).toContain(".building-panel.source-popup.enhancement-forge-ui > #building-panel-close");
     expect(styles).toContain(".building-panel.source-popup.enhancement-forge-ui .building-actions .source-green-button");
     expect(main).not.toContain("Unavailable until evidence capture:");
@@ -53,13 +56,13 @@ describe("gear enhancement evidence boundary", () => {
   });
 
   it("does not auto-select the first owned gear when the forge opens", async () => {
-    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const main = await readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8");
     expect(main).toContain("selectedEnhancementGearKey = null");
     expect(main).not.toContain("selectedEnhancementGearKey = ownedRows[0]?.key");
   });
 
   it("does not synthesize an enhancement badge for unresolved levels", async () => {
-    const main = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const main = await readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8");
     expect(main).toContain("if (level !== null)");
     expect(main).toContain("if (owned.gear.level !== null)");
     expect(main).not.toContain('badge.textContent = "+20"');

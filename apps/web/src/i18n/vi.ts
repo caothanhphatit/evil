@@ -75,6 +75,8 @@ export const vi = {
   "world.hunt": "Săn bắn",
   "world.easy_difficulty": "Độ khó Dễ",
   "world.gold": "Vàng",
+  "world.trade_gold_received": "+{amount} Vàng",
+  "world.trade_material_sold": "Đã bán {name} x{quantity}",
   "world.gem": "Đá quý",
   "world.elemental": "Nguyên tố",
   "world.book": "Sách",

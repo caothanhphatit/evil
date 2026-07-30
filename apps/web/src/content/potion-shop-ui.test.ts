@@ -6,7 +6,7 @@ const repositoryRoot = resolve(import.meta.dirname, "../../../..");
 
 describe("potion shop UI integration", () => {
   it("routes potion retail and crafting through separate reusable shop views", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8");
 
     expect(source).toContain('selectedBuildingId === POTION_SHOP_BUILDING_ID');
     expect(source).toContain('selectedBuildingId === ALCHEMIST_BUILDING_ID');
@@ -16,7 +16,7 @@ describe("potion shop UI integration", () => {
 
   it("uses ConsumCreatePop for potion materials instead of GearCreatePop", async () => {
     const [source, styles] = await Promise.all([
-      readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/building-renderer.ts"), "utf8"),
       readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8"),
     ]);
 

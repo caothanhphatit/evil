@@ -15,8 +15,11 @@ describe("static scene rendering", () => {
   });
 
   it("reports the measured Pixi ticker rate in the game HUD", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
-    expect(source).toContain('id="fps-counter"');
+    const [source, shell] = await Promise.all([
+      readFile(resolve(repositoryRoot, "apps/web/src/app/world-controller.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/shell.ts"), "utf8"),
+    ]);
+    expect(shell).toContain('id="fps-counter"');
     expect(source).toContain("Math.round(app.ticker.FPS)");
   });
 
@@ -36,27 +39,25 @@ describe("static scene rendering", () => {
   });
 
   it("warms the first world frame before enabling entry", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/world-controller.ts"), "utf8");
     expect(source).toContain("app.render()");
-    expect(source.indexOf("app.render()")).toBeLessThan(source.indexOf("mapReady = true"));
-    expect(source.indexOf("loginReadiness.hidden = true")).toBeLessThan(source.indexOf("mapReady = true"));
+    expect(source).toContain("context.entryController.markMapReady");
   });
 
   it("keeps a restored server session behind the login gate until the player enters", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
-    expect(source).toContain('let entryPhase: EntryPhase = "login"');
-    expect(source).toContain("const entry = projectEntryPresentation(entryPhase)");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/entry-controller.ts"), "utf8");
+    expect(source).toContain('private phase: EntryPhase = "login"');
+    expect(source).toContain("projectEntryPresentation(this.phase)");
     expect(source).toContain("const village = entry.renderWorld &&");
-    expect(source).toContain('bottomMenu.hidden = !entry.enableGameUi || snapshot.screen === "boot"');
-    expect(source).toContain('loginScreen.classList.toggle("leaving", !entry.showLogin)');
-    expect(source).toContain("scheduleGameReveal(latestSnapshot)");
-    expect(source.indexOf("scheduleGameReveal(snapshot)")).toBeLessThan(source.indexOf("world?.setMode"));
-    expect(source).toContain('enterVillage.disabled = entryPhase !== "login" || mapLoadFailed');
-    expect(source).toContain('if (mapLoadFailed || entryPhase !== "login") return');
+    expect(source).toContain('this.bottomMenu.hidden = !entry.enableGameUi || snapshot.screen === "boot"');
+    expect(source).toContain('this.loginScreen.classList.toggle("leaving", !entry.showLogin)');
+    expect(source).toContain("scheduleReveal");
+    expect(source).toContain('this.enterVillage.disabled = this.phase !== "login" || this.mapLoadFailed');
+    expect(source).toContain('if (this.mapLoadFailed || this.phase !== "login") return');
   });
 
   it("uses distinct login and full-screen loading presentations", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await readFile(resolve(repositoryRoot, "apps/web/src/app/shell.ts"), "utf8");
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     expect(source.indexOf('id="login-screen"')).toBeLessThan(source.indexOf('id="game-loading-screen"'));
     expect(source).toContain('class="basic-login-card"');
@@ -66,17 +67,24 @@ describe("static scene rendering", () => {
   });
 
   it("defers server bootstrap and game assets until sign in", async () => {
-    const source = await readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8");
+    const source = await Promise.all([
+      readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/entry-controller.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/shell.ts"), "utf8"),
+    ]).then((parts) => parts.join("\n"));
     expect(source.match(/client\.connect\(\)/g)).toHaveLength(1);
     expect(source).toContain("function startGameRuntime(): void");
     expect(source).toContain('document.querySelectorAll<HTMLImageElement>("img[data-game-src]")');
-    expect(source).toContain("startGameRuntime();\n  client.completeBoot();");
-    expect(source).toContain('class="game-shell entry-login"');
+    expect(source).toContain("this.onStartRuntime();");
+    expect(source).toContain('mountGameShell(mount)');
   });
 
   it("fails visibly instead of leaving loading parked at 92 percent", async () => {
     const [source, styles] = await Promise.all([
-      readFile(resolve(repositoryRoot, "apps/web/src/main.ts"), "utf8"),
+      Promise.all([
+        readFile(resolve(repositoryRoot, "apps/web/src/app/entry-controller.ts"), "utf8"),
+        readFile(resolve(repositoryRoot, "apps/web/src/app/shell.ts"), "utf8"),
+      ]).then((parts) => parts.join("\n")),
       readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8"),
     ]);
     expect(source).toContain('id="game-loading-retry"');

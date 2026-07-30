@@ -1,13 +1,9 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
-import { Application, Assets, Graphics } from "pixi.js";
+import { Application, Graphics } from "pixi.js";
 import type { HunterView } from "./hunter-roster";
-import { hunterActorVisual } from "./hunter-roster";
-import { applyHunterSpineSkin } from "./hunter-spine-presentation";
-
-const SKELETON_ALIAS = "roster:hunter:skeleton";
-const ATLAS_ALIAS = "roster:hunter:atlas";
-const SKELETON_PATH = "/content/releases/visible-world-v1/actors/hunter/hunter.json";
-const ATLAS_PATH = "/content/releases/visible-world-v1/actors/hunter/hunter.atlas";
+import { hunterActorVisual } from "../game/hunter-actor-presentation";
+import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "./hunter-presentation-assets";
+import { applyHunterSpineSkin } from "../game/hunter-spine-presentation";
 
 export interface HunterRosterActorController {
   preload(): Promise<void>;
@@ -25,9 +21,7 @@ export function createHunterRosterActors(host: HTMLElement): HunterRosterActorCo
     await app.init({ backgroundAlpha: 0, antialias: false, resizeTo: host, resolution: Math.min(window.devicePixelRatio, 2) });
     ready = true;
     app.canvas.className = "hunter-roster-actor-canvas";
-    if (!Assets.cache.has(SKELETON_ALIAS)) Assets.add({ alias: SKELETON_ALIAS, src: SKELETON_PATH });
-    if (!Assets.cache.has(ATLAS_ALIAS)) Assets.add({ alias: ATLAS_ALIAS, src: ATLAS_PATH });
-    await Assets.load([SKELETON_ALIAS, ATLAS_ALIAS]);
+    await preloadHunterPresentationAssets();
   })();
 
   return {
@@ -53,7 +47,7 @@ function draw(app: Application, host: HTMLElement, hunters: HunterView[]): void 
     const avatar = cards[index].querySelector<HTMLElement>(".hunter-avatar");
     if (!avatar) return;
     const avatarBounds = avatar.getBoundingClientRect();
-    const spine = Spine.from({ skeleton: SKELETON_ALIAS, atlas: ATLAS_ALIAS, autoUpdate: true });
+    const spine = Spine.from({ skeleton: HUNTER_SKELETON_ALIAS, atlas: HUNTER_ATLAS_ALIAS, autoUpdate: true });
     const visual = hunterActorVisual({
       entity_id: hunter.id,
       hunter_id: hunter.numericId,

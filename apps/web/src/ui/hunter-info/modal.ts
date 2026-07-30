@@ -37,6 +37,7 @@ const LOADOUT_COLUMNS = {
 } as const;
 
 export interface HunterInfoModalController {
+  preload(): Promise<void>;
   show(info: HunterInfoView): void;
   refresh(info: HunterInfoView): void;
   close(): void;
@@ -105,6 +106,7 @@ export function createHunterInfoModal(host: HTMLElement, actions: HunterInfoModa
   };
   overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
   return {
+    preload: () => actor.preload(),
     show(info) { current = info; activeTab = "status"; overlay.hidden = false; render(); },
     refresh(info) {
       if (!current || !panel) return;

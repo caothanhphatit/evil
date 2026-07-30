@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { hunterActorVisual, hunterClassTone, hunterPercent, hunterRarityPresentation, hunterWorldEntityId, projectHunterRoster } from "./hunter-roster";
-import { hunterWeaponAttachment } from "./hunter-spine-presentation";
+import { hunterWeaponAttachment } from "../game/hunter-spine-presentation";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
@@ -47,10 +47,18 @@ describe("projectHunterRoster", () => {
 
 describe("hunter helpers", () => {
   it("locate closes the roster and reuses normal world Hunter selection", async () => {
-    const source = await readFile(resolve(import.meta.dirname, "../main.ts"), "utf8");
+    const source = await readFile(resolve(import.meta.dirname, "../app/hunter-controller.ts"), "utf8");
     expect(source).toContain("setHunterRosterVisibility(false);");
     expect(source).toContain("hunterWorldCommandMenu.selectHunter({");
     expect(source).toContain("world?.focusEntity(worldEntityId)");
+  });
+
+  it("opens Hunter Info from both the avatar and the explicit Info control", async () => {
+    const source = await readFile(resolve(import.meta.dirname, "../app/hunter-controller.ts"), "utf8");
+    expect(source).toContain('const avatar = document.createElement("button")');
+    expect(source).toContain('avatar.setAttribute("aria-label", t("roster.info_aria", { name: hunter.name }))');
+    expect(source).toContain('avatar.addEventListener("click", () => openHunterInfo(avatar))');
+    expect(source).toContain('info.addEventListener("click", () => openHunterInfo(info))');
   });
 
   it("resolves a roster Hunter to its selectable world actor for locate", () => {
