@@ -28,6 +28,7 @@ export interface HunterControllerContext {
   buildingContext: BuildingRenderingContext;
   setHunterRosterVisibility(open: boolean): void;
   showPanelMessage(title: string, detail: string): void;
+  openHunterShop(hunterId: number, shopId: "build_7" | "build_8" | "build_20"): void;
 }
 
 export function createHunterController(context: HunterControllerContext) {
@@ -205,6 +206,10 @@ export function createHunterController(context: HunterControllerContext) {
       } else {
         context.showPanelMessage(t("feedback.sale_failed"), t("feedback.server_not_ready"));
       }
+      return;
+    }
+    if (intent.type === "request_hunter_shop") {
+      context.openHunterShop(hunter.numericId, intent.shopId);
       return;
     }
     if (!context.client.assignHunterHunt(hunter.numericId, intent.regionId)) {

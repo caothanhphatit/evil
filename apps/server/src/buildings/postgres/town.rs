@@ -8,8 +8,8 @@ use super::{
 };
 use crate::buildings::{
     BaseBuildingId, BuildingRepositoryError, LoadedTownBuildingState, TownBuildingInstance,
-    TownBuildingInstanceId, TownBuildingRepository, TownBuildingState, TownMaterialStock,
-    TownProductStock, TownTradeSettlement,
+    TownBuildingInstanceId, TownBuildingRepository, TownBuildingState, TownCraftedGearStock,
+    TownMaterialStock, TownProductStock, TownTradeSettlement,
 };
 
 #[async_trait]
@@ -170,6 +170,40 @@ impl PostgresBuildingRepository {
                 })
             })
             .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
+        let crafted_gear_rows = sqlx::query(
+            r#"SELECT gear_instance_id, building_instance_id, product_id, gear_kind,
+                      rating::bigint AS rating, quality::bigint AS quality,
+                      primary_stat, option_type::bigint AS option_type, option_value::bigint AS option_value,
+                      icon_path, ruleset
+               FROM crafted_gear_stock
+               WHERE town_id = $1
+               ORDER BY building_instance_id, product_id, created_at, gear_instance_id"#,
+        )
+        .bind(town_id)
+        .fetch_all(&mut **transaction)
+        .await?;
+        let crafted_gear_stocks = crafted_gear_rows
+            .into_iter()
+            .map(|row| {
+                Ok(TownCraftedGearStock {
+                    gear_instance_id: row.try_get("gear_instance_id")?,
+                    building_instance_id: TownBuildingInstanceId::new(
+                        row.try_get("building_instance_id")?,
+                    ),
+                    product_id: row.try_get("product_id")?,
+                    gear_kind: row.try_get("gear_kind")?,
+                    rating: to_u16(row.try_get::<i64, _>("rating")?)?,
+                    quality: u8::try_from(to_u16(row.try_get::<i64, _>("quality")?)?)
+                        .map_err(|_| BuildingRepositoryError::NumericBounds)?,
+                    primary_stat: to_u32(row.try_get("primary_stat")?)?,
+                    option_type: u8::try_from(to_u16(row.try_get::<i64, _>("option_type")?)?)
+                        .map_err(|_| BuildingRepositoryError::NumericBounds)?,
+                    option_value: to_u16(row.try_get::<i64, _>("option_value")?)?,
+                    icon_path: row.try_get("icon_path")?,
+                    ruleset: row.try_get("ruleset")?,
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?;
         let settlement_rows = sqlx::query(
             r#"SELECT settlement_id, field_trip_id, material_id, quantity,
                       unit_price, total_gold
@@ -209,6 +243,7 @@ impl PostgresBuildingRepository {
                 settled_field_trip_id: to_u64(trade_state.try_get("settled_field_trip_id")?)?,
                 material_stocks,
                 product_stocks,
+                crafted_gear_stocks,
                 trade_settlements,
             },
             revision: row.try_get("revision")?,
@@ -452,6 +487,33 @@ impl PostgresBuildingRepository {
             .bind(stock.building_instance_id.get())
             .bind(&stock.product_id)
             .bind(i64::from(stock.quantity))
+            .execute(&mut **transaction)
+            .await?;
+        }
+        sqlx::query("DELETE FROM crafted_gear_stock WHERE town_id = $1")
+            .bind(town_id)
+            .execute(&mut **transaction)
+            .await?;
+        for gear in &state.crafted_gear_stocks {
+            sqlx::query(
+                r#"INSERT INTO crafted_gear_stock
+                   (town_id, gear_instance_id, building_instance_id, product_id,
+                    gear_kind, rating, quality, primary_stat, option_type,
+                    option_value, icon_path, ruleset)
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)"#,
+            )
+            .bind(town_id)
+            .bind(gear.gear_instance_id)
+            .bind(gear.building_instance_id.get())
+            .bind(&gear.product_id)
+            .bind(&gear.gear_kind)
+            .bind(i64::from(gear.rating))
+            .bind(i64::from(gear.quality))
+            .bind(i64::from(gear.primary_stat))
+            .bind(i64::from(gear.option_type))
+            .bind(i64::from(gear.option_value))
+            .bind(&gear.icon_path)
+            .bind(&gear.ruleset)
             .execute(&mut **transaction)
             .await?;
         }

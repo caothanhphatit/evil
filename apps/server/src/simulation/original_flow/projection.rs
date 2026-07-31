@@ -7,6 +7,38 @@ use super::{
     WorldProjection, BUILDING_CAPABILITY_BLOCKERS,
 };
 
+fn service_speech(
+    action_state: &str,
+    hp: u64,
+    max_hp: u64,
+    stamina: u64,
+    max_stamina: u64,
+    satiety: u64,
+    max_satiety: u64,
+    mood: u64,
+    max_mood: u64,
+) -> Option<String> {
+    let critical = |current: u64, maximum: u64| {
+        maximum > 0 && u128::from(current) * 100 < u128::from(maximum) * 10
+    };
+    match action_state {
+        "waiting_for_service" => {
+            if critical(hp, max_hp) {
+                Some("Bệnh xá hết thuốc rồi… mình chịu thêm được bao lâu đây?".to_owned())
+            } else if critical(stamina, max_stamina) {
+                Some("Chỉ cần một chiếc giường thôi mà…".to_owned())
+            } else if critical(satiety, max_satiety) {
+                Some("Bụng đói thế này thì săn kiểu gì đây?".to_owned())
+            } else if critical(mood, max_mood) {
+                Some("Quán rượu còn gì uống không vậy?".to_owned())
+            } else {
+                Some("Mình cần ghé dịch vụ một lát…".to_owned())
+            }
+        }
+        _ => None,
+    }
+}
+
 impl OriginalFlowSession {
     pub(super) fn world_projection(&self) -> WorldProjection {
         WorldProjection {
@@ -81,6 +113,17 @@ impl OriginalFlowSession {
                             )
                         };
                         entity.class_family = Some(hunter.profile.visual_family.clone());
+                        entity.speech_label = service_speech(
+                            &hunter.profile.action_state,
+                            hunter.current_hp,
+                            hunter.max_hp,
+                            hunter.stamina.current,
+                            hunter.stamina.maximum,
+                            hunter.satiety.current,
+                            hunter.satiety.maximum,
+                            hunter.mood.current,
+                            hunter.mood.maximum,
+                        );
                         entity.loot_label =
                             self.monster_world
                                 .hunters
@@ -191,6 +234,17 @@ impl OriginalFlowSession {
                         let mut entity =
                             hunter_visual_entity(agent, hunter.current_hp, hunter.max_hp);
                         entity.class_family = Some(hunter.profile.visual_family.clone());
+                        entity.speech_label = service_speech(
+                            &hunter.profile.action_state,
+                            hunter.current_hp,
+                            hunter.max_hp,
+                            hunter.stamina.current,
+                            hunter.stamina.maximum,
+                            hunter.satiety.current,
+                            hunter.satiety.maximum,
+                            hunter.mood.current,
+                            hunter.mood.maximum,
+                        );
                         entity.loot_label = agent.loot_item_id.as_deref().and_then(|item_id| {
                             if item_id == "gold" {
                                 Some(format!("Gold +{}", agent.loot_quantity))

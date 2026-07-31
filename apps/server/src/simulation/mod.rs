@@ -49,12 +49,12 @@ pub use original_combat::{OriginalDamageMultiplierStream, ORIGINAL_DAMAGE_MULTIP
 #[cfg(test)]
 pub(crate) use original_flow::test_authoritative_building_content;
 pub use original_flow::{
-    BottomMenuIntent, DurableBuilding, DurableBuildingState, DurableMaterialStock,
-    DurableMonsterFieldConfig, DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement,
-    Facing, MigrationFixtureCombatProjection, OriginalFlowCommandResult, OriginalFlowPlayerState,
-    OriginalFlowSession, OriginalFlowSnapshot, OriginalFlowTickResult, OriginalScreen,
-    TradeMaterialPresentationSnapshot, WorldEntityActionState, WorldEntityDescriptor,
-    WorldEntityKind, WorldEntityProjection, WorldMode, WorldProjection,
+    BottomMenuIntent, DurableBuilding, DurableBuildingState, DurableCraftedGearStock,
+    DurableMaterialStock, DurableMonsterFieldConfig, DurablePlayerAggregate, DurableProductStock,
+    DurableTradeSettlement, Facing, MigrationFixtureCombatProjection, OriginalFlowCommandResult,
+    OriginalFlowPlayerState, OriginalFlowSession, OriginalFlowSnapshot, OriginalFlowTickResult,
+    OriginalScreen, TradeMaterialPresentationSnapshot, WorldEntityActionState,
+    WorldEntityDescriptor, WorldEntityKind, WorldEntityProjection, WorldMode, WorldProjection,
     DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_FIXTURE_CONTENT_ID,
 };
 pub(crate) use original_progression::install_experience_catalog;

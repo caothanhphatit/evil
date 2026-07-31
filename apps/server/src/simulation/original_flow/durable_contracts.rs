@@ -1,6 +1,6 @@
 use super::{
     map_configs, Deserialize, DurableHunterRosterState, DurableHunterState, DurablePlayerState,
-    HunterAgentState, Serialize, ServiceEffectKind,
+    HunterAgentState, Serialize, ServiceEffectKind, Uuid,
 };
 
 pub const DURABLE_PLAYER_SCHEMA_VERSION: u16 = 17;
@@ -86,6 +86,7 @@ pub struct DurableBuildingState {
     pub armor: u32,
     pub material_stocks: Vec<DurableMaterialStock>,
     pub product_stocks: Vec<DurableProductStock>,
+    pub crafted_gear_stocks: Vec<DurableCraftedGearStock>,
     pub hunter_equipment_purchases: u32,
     pub town_seed_version: u16,
     pub next_building_instance_id: u64,
@@ -106,6 +107,7 @@ impl Default for DurableBuildingState {
             armor: 0,
             material_stocks: default_material_stocks(),
             product_stocks: Vec::new(),
+            crafted_gear_stocks: Vec::new(),
             hunter_equipment_purchases: 0,
             town_seed_version: 0,
             next_building_instance_id: 1,
@@ -130,6 +132,21 @@ pub struct DurableProductStock {
     pub building_instance_id: String,
     pub product_id: String,
     pub quantity: u32,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct DurableCraftedGearStock {
+    pub building_instance_id: String,
+    pub gear_instance_id: Uuid,
+    pub product_id: String,
+    pub gear_kind: String,
+    pub rating: u16,
+    pub quality: u8,
+    pub primary_stat: u32,
+    pub option_type: u8,
+    pub option_value: u16,
+    pub icon_path: String,
+    pub ruleset: String,
 }
 
 pub(super) fn default_material_stocks() -> Vec<DurableMaterialStock> {

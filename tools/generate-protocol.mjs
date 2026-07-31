@@ -175,6 +175,7 @@ export interface WorldEntityProjection {
   action_sequence: number;
   loot_sequence: number;
   loot_label: string | null;
+  speech_label?: string | null;
   trade_sequence: number;
   trade_gold: number;
   trade_materials: TradeMaterialPresentationSnapshot[];

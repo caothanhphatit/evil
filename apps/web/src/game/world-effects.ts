@@ -116,6 +116,26 @@ export class WorldEffects {
     this.showLootPickup(actorRoot, tradeSettlementText(entity));
   }
 
+  showSpeech(actorRoot: Container, label: string): void {
+    const root = new Container();
+    const text = new Text({
+      text: label,
+      style: {
+        fontFamily: ORIGINAL_DAMAGE_FONT_FAMILY,
+        fontSize: 12,
+        fill: 0xffffff,
+        stroke: { color: 0x2b2418, width: 4 },
+        wordWrap: true,
+        wordWrapWidth: 180,
+      },
+    });
+    text.anchor.set(0.5, 1);
+    root.position.set(0, -78);
+    root.addChild(text);
+    actorRoot.addChild(root);
+    this.lootPickupViews.push({ root, spawnedAtMs: performance.now() });
+  }
+
   destroy(): void {
     this.pendingCombatPresentations.length = 0;
     this.combatPresentationViews.length = 0;

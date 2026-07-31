@@ -1,68 +1,96 @@
 import "./styles.css";
 
-type Item = { id: string; name: string; category: string; status: "Published" | "Draft"; updated: string; owner: string };
-
-const seed: Item[] = [
-  { id: "mat_00001", name: "Iron Ore", category: "Material", status: "Published", updated: "Today, 09:24", owner: "Content team" },
-  { id: "gear_00187", name: "Hunter's Longbow", category: "Equipment", status: "Published", updated: "Yesterday", owner: "Content team" },
-  { id: "cons_00004", name: "Minor Healing Potion", category: "Consumable", status: "Draft", updated: "Jul 28, 2026", owner: "Linh Nguyen" },
-  { id: "rune_00021", name: "Rune of Swiftness", category: "Rune", status: "Published", updated: "Jul 26, 2026", owner: "Content team" },
-];
-
-const icon = (path: string) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">${path}</svg>`;
-const nav = (active = "Items") => [
-  ["Overview", icon('<path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v4h6V4h-6Z"/>')],
-  ["Items", icon('<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 9 8-4.5M12 12v9M4 7.5 12 12"/>')],
-  ["Players", icon('<path d="M16 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-3A4.5 4.5 0 0 0 4 18.5V20m6-10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm6-5h4m-2-2v4"/>')],
-  ["Content releases", icon('<path d="M5 4h14v16H5zM8 8h8m-8 4h8m-8 4h5"/>')],
-  ["Audit log", icon('<path d="M4 5h16M4 12h16M4 19h10"/>')],
-].map(([label, glyph]) => `<button class="nav-item ${label === active ? "active" : ""}" data-nav="${label}">${glyph}<span>${label}</span></button>`).join("");
+type CollectionSummary = { id: string; count: number };
+type CatalogSummary = { id: string; label: string; collections: CollectionSummary[] };
+type JsonObject = Record<string, unknown>;
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
-let items = [...seed];
+let username = localStorage.getItem("admin_user") ?? "admin";
+let password = "";
+let catalogs: CatalogSummary[] = [];
+let catalogData: JsonObject = {};
+let activeCatalog = "";
+let activeCollection = "";
 let query = "";
-let adminUsername = localStorage.getItem("admin_user") ?? "admin";
-let adminPassword = "";
-localStorage.removeItem("admin_password");
+let selected: unknown;
+
+const escapeHtml = (value: unknown) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]!));
+const authHeaders = () => ({ Authorization: `Basic ${btoa(`${username}:${password}`)}` });
+const request = (path: string) => fetch(path, { headers: authHeaders() });
+
+function displayValue(value: unknown) {
+  if (value === null) return "null";
+  if (typeof value === "object") return Array.isArray(value) ? `[${value.length} values]` : `{${Object.keys(value as JsonObject).length} fields}`;
+  return String(value);
+}
+
+function rowTitle(row: unknown, index: number) {
+  if (!row || typeof row !== "object") return `Value ${index + 1}`;
+  const object = row as JsonObject;
+  for (const key of ["displayName", "name", "id", "catalogId", "buildingId", "monsterId", "materialId", "key", "index"]) {
+    if (object[key] !== undefined) return String(object[key]);
+  }
+  return `Object ${index + 1}`;
+}
+
+function currentRows() {
+  const value = activeCollection.split(".").reduce<unknown>((current, segment) => current && typeof current === "object" ? (current as JsonObject)[segment] : undefined, catalogData);
+  const rows = Array.isArray(value) ? value : value === undefined ? [] : [value];
+  const needle = query.trim().toLowerCase();
+  return needle ? rows.filter((row) => JSON.stringify(row).toLowerCase().includes(needle)) : rows;
+}
 
 function render() {
-  const filtered = items.filter((item) => `${item.id} ${item.name} ${item.category}`.toLowerCase().includes(query.toLowerCase()));
-  app.innerHTML = `<div class="flex min-h-screen">
-    <aside class="hidden w-64 shrink-0 border-r border-slate-800 bg-[#07111f] text-slate-300 lg:flex lg:flex-col">
-      <div class="flex h-20 items-center gap-3 border-b border-white/10 px-6"><div class="grid h-9 w-9 place-items-center rounded-xl bg-cyan-400 font-black text-slate-950">EH</div><div><p class="text-sm font-semibold text-white">Evil Hunter</p><p class="text-[11px] text-slate-500">Operations console</p></div></div>
-      <div class="px-4 pt-7"><p class="mb-3 px-3 text-[10px] font-bold uppercase tracking-[.18em] text-slate-600">Workspace</p><nav class="space-y-1">${nav()}</nav></div>
-      <div class="mt-auto border-t border-white/10 p-4"><div class="flex items-center gap-3 rounded-xl bg-white/5 p-3"><div class="grid h-8 w-8 place-items-center rounded-full bg-cyan-400/15 text-xs font-bold text-cyan-300">AD</div><div class="min-w-0"><p class="truncate text-xs font-semibold text-white">Admin</p><p class="truncate text-[11px] text-slate-500">Content manager</p></div></div></div>
+  const summary = catalogs.find((catalog) => catalog.id === activeCatalog);
+  const rows = currentRows();
+  app.innerHTML = `<div class="min-h-screen lg:flex">
+    <aside class="border-b border-slate-800 bg-[#07111f] text-slate-300 lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r">
+      <div class="flex h-20 items-center gap-3 border-b border-white/10 px-6"><div class="grid h-9 w-9 place-items-center rounded-xl bg-cyan-400 font-black text-slate-950">EH</div><div><p class="text-sm font-semibold text-white">Evil Hunter</p><p class="text-[11px] text-slate-500">Catalog object browser</p></div></div>
+      <nav class="flex gap-2 overflow-x-auto p-4 lg:block lg:space-y-1">${catalogs.map((catalog) => `<button data-catalog="${escapeHtml(catalog.id)}" class="nav-item shrink-0 ${catalog.id === activeCatalog ? "active" : ""}"><span>${escapeHtml(catalog.label)}</span><span class="ml-auto text-[10px] opacity-60">${catalog.collections.reduce((total, collection) => total + collection.count, 0)}</span></button>`).join("")}</nav>
     </aside>
-    <main class="min-w-0 flex-1"><header class="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-5 sm:px-8"><div><p class="text-xs font-semibold uppercase tracking-[.16em] text-cyan-600">Content management</p><h1 class="mt-1 text-xl font-bold tracking-tight text-slate-900">Items</h1></div><div class="flex items-center gap-3"><span id="api-status" class="hidden items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 sm:flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Server connected</span><button class="rounded-lg border border-slate-200 p-2 text-slate-500 hover:bg-slate-50">${icon('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>')}</button></div></header>
-      <div class="mx-auto max-w-[1440px] p-5 sm:p-8"><div class="mb-7 grid gap-4 sm:grid-cols-3"><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-xs font-semibold text-slate-500">Total items</p><p class="mt-2 text-3xl font-bold text-slate-900">369</p><p class="mt-1 text-xs text-emerald-600">+12 this release</p></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-xs font-semibold text-slate-500">Published</p><p class="mt-2 text-3xl font-bold text-slate-900">${items.filter((i) => i.status === "Published").length}</p><p class="mt-1 text-xs text-slate-500">Active in production</p></div><div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><p class="text-xs font-semibold text-slate-500">Draft changes</p><p class="mt-2 text-3xl font-bold text-slate-900">${items.filter((i) => i.status === "Draft").length}</p><p class="mt-1 text-xs text-amber-600">Awaiting review</p></div></div>
-        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div class="flex flex-col gap-4 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between"><div><h2 class="font-bold text-slate-900">Item catalog</h2><p class="mt-1 text-xs text-slate-500">Manage game definitions in the current draft release.</p></div><button id="create" class="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-700">${icon('<path d="M12 5v14m-7-7h14"/>')} Add item</button></div><div class="flex flex-col gap-3 border-b border-slate-100 bg-slate-50/70 p-4 sm:flex-row"><label class="relative flex-1"><span class="sr-only">Search items</span><span class="pointer-events-none absolute left-3 top-2.5 text-slate-400">${icon('<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>')}</span><input id="search" value="${query}" placeholder="Search by name or ID..." class="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm outline-none ring-cyan-500 focus:ring-2" /></label><select class="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none"><option>All categories</option><option>Material</option><option>Equipment</option><option>Consumable</option></select><select class="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none"><option>All statuses</option><option>Published</option><option>Draft</option></select></div><div class="overflow-x-auto"><table class="w-full min-w-[760px] text-left text-sm"><thead class="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500"><tr><th class="px-5 py-3">Item</th><th class="px-5 py-3">Category</th><th class="px-5 py-3">Status</th><th class="px-5 py-3">Last updated</th><th class="px-5 py-3">Owner</th><th class="px-5 py-3 text-right">Actions</th></tr></thead><tbody class="divide-y divide-slate-100">${filtered.map(row).join("") || '<tr><td colspan="6" class="px-5 py-12 text-center text-slate-500">No items match your search.</td></tr>'}</tbody></table></div><div class="flex items-center justify-between border-t border-slate-100 px-5 py-4 text-xs text-slate-500"><span>Showing 1–${filtered.length} of ${items.length} items</span><div class="flex gap-1"><button class="rounded border border-slate-200 px-3 py-1.5 hover:bg-slate-50">Previous</button><button class="rounded border border-slate-200 bg-slate-900 px-3 py-1.5 text-white">1</button><button class="rounded border border-slate-200 px-3 py-1.5 hover:bg-slate-50">2</button><button class="rounded border border-slate-200 px-3 py-1.5 hover:bg-slate-50">Next</button></div></div></section></div></main></div>`;
+    <main class="min-w-0 flex-1"><header class="border-b border-slate-200 bg-white px-5 py-5 sm:px-8"><p class="text-xs font-semibold uppercase tracking-[.16em] text-cyan-600">${escapeHtml(summary?.label ?? "Admin")}</p><div class="mt-1 flex flex-wrap items-end justify-between gap-3"><h1 class="text-2xl font-bold text-slate-900">Runtime objects</h1><span class="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">Authoritative catalog · read only</span></div></header>
+      <div class="p-5 sm:p-8"><div class="mb-5 flex flex-col gap-3 xl:flex-row"><select id="collection" class="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm">${summary?.collections.map((collection) => `<option value="${escapeHtml(collection.id)}" ${collection.id === activeCollection ? "selected" : ""}>${escapeHtml(collection.id)} (${collection.count})</option>`).join("") ?? ""}</select><input id="search" value="${escapeHtml(query)}" placeholder="Search every field in this collection..." class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500"><div class="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-500">${rows.length} matching objects</div></div>
+        <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.7fr)]"><section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div class="max-h-[70vh] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500"><tr><th class="px-5 py-3">#</th><th class="px-5 py-3">Object</th><th class="px-5 py-3">Preview</th><th class="px-5 py-3 text-right">Fields</th></tr></thead><tbody class="divide-y divide-slate-100">${rows.map((row, index) => `<tr data-row="${index}" class="cursor-pointer hover:bg-cyan-50/50"><td class="px-5 py-3 font-mono text-xs text-slate-400">${index + 1}</td><td class="px-5 py-3 font-semibold text-slate-800">${escapeHtml(rowTitle(row, index))}</td><td class="max-w-md truncate px-5 py-3 text-slate-500">${escapeHtml(displayValue(row))}</td><td class="px-5 py-3 text-right text-slate-500">${row && typeof row === "object" ? Object.keys(row).length : 1}</td></tr>`).join("") || '<tr><td colspan="4" class="px-5 py-12 text-center text-slate-500">No matching objects.</td></tr>'}</tbody></table></div></section>
+          <section class="overflow-hidden rounded-2xl border border-slate-200 bg-[#07111f] shadow-sm"><div class="border-b border-white/10 px-5 py-4 text-sm font-semibold text-white">Complete object JSON</div><pre class="max-h-[70vh] overflow-auto whitespace-pre-wrap break-words p-5 text-xs leading-6 text-cyan-100">${escapeHtml(selected === undefined ? "Select an object to inspect every field." : JSON.stringify(selected, null, 2))}</pre></section></div>
+      </div></main></div>`;
   bind();
 }
 
-function row(item: Item) { return `<tr class="group hover:bg-slate-50/70"><td class="px-5 py-4"><div class="flex items-center gap-3"><div class="grid h-9 w-9 place-items-center rounded-lg bg-cyan-50 text-xs font-bold text-cyan-700">${item.name.slice(0, 2).toUpperCase()}</div><div><p class="font-semibold text-slate-800">${item.name}</p><p class="mt-0.5 font-mono text-[11px] text-slate-400">${item.id}</p></div></div></td><td class="px-5 py-4 text-slate-600">${item.category}</td><td class="px-5 py-4"><span class="rounded-full px-2.5 py-1 text-[11px] font-bold ${item.status === "Published" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}">${item.status}</span></td><td class="px-5 py-4 text-slate-500">${item.updated}</td><td class="px-5 py-4 text-slate-600">${item.owner}</td><td class="px-5 py-4 text-right"><button data-edit="${item.id}" class="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700">${icon('<path d="m14 6 4 4M4 20l1-4L16 5a2.8 2.8 0 0 1 4 4L9 20H4Z"/>')}</button><button data-delete="${item.id}" class="rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600">${icon('<path d="M4 7h16m-10 4v5m4-5v5M6 7l1 13h10l1-13M9 7V4h6v3"/>')}</button></td></tr>`; }
-
-function bind() { document.querySelector<HTMLInputElement>("#search")?.addEventListener("input", (e) => { query = (e.target as HTMLInputElement).value; render(); }); document.querySelector("#create")?.addEventListener("click", () => openModal()); document.querySelectorAll<HTMLButtonElement>("[data-delete]").forEach((button) => button.addEventListener("click", () => { items = items.filter((item) => item.id !== button.dataset.delete); render(); })); document.querySelectorAll<HTMLButtonElement>("[data-edit]").forEach((button) => button.addEventListener("click", () => openModal(items.find((item) => item.id === button.dataset.edit)))); }
-function openModal(item?: Item) { const editing = Boolean(item); const modal = document.createElement("div"); modal.className = "fixed inset-0 z-10 grid place-items-center bg-slate-950/40 p-4"; modal.innerHTML = `<form class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl"><div class="flex items-start justify-between"><div><h3 class="text-lg font-bold text-slate-900">${editing ? "Edit item" : "Create item"}</h3><p class="mt-1 text-xs text-slate-500">Changes are saved to the current draft release.</p></div><button type="button" class="close text-2xl leading-none text-slate-400">&times;</button></div><div class="mt-6 grid gap-4 sm:grid-cols-2"><label class="text-xs font-semibold text-slate-600">Item ID<input name="id" required ${editing ? "readonly" : ""} value="${item?.id ?? ""}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm ${editing ? "bg-slate-50" : ""}" /></label><label class="text-xs font-semibold text-slate-600">Name<input name="name" required value="${item?.name ?? ""}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm" /></label><label class="text-xs font-semibold text-slate-600">Category<select name="category" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"><option ${item?.category === "Material" ? "selected" : ""}>Material</option><option ${item?.category === "Equipment" ? "selected" : ""}>Equipment</option><option ${item?.category === "Consumable" ? "selected" : ""}>Consumable</option><option ${item?.category === "Rune" ? "selected" : ""}>Rune</option></select></label><label class="text-xs font-semibold text-slate-600">Status<select name="status" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"><option ${item?.status === "Published" ? "selected" : ""}>Published</option><option ${item?.status === "Draft" || !item ? "selected" : ""}>Draft</option></select></label></div><div class="mt-7 flex justify-end gap-3"><button type="button" class="close rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600">Cancel</button><button class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Save changes</button></div></form>`; document.body.append(modal); modal.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => modal.remove())); modal.querySelector("form")!.addEventListener("submit", (event) => { event.preventDefault(); const data = new FormData(event.currentTarget as HTMLFormElement); const next = { id: String(data.get("id")), name: String(data.get("name")), category: String(data.get("category")), status: String(data.get("status")) as Item["status"], updated: "Just now", owner: "Admin" }; items = editing ? items.map((current) => current.id === item!.id ? next : current) : [next, ...items]; modal.remove(); render(); }); }
-
-function checkAdminAccess() {
-  if (!adminPassword) {
-    showLogin();
-    return;
-  }
-  requestWithStoredCredentials().then((response) => { if (response.status === 401) showLogin(); else if (!response.ok) markDisconnected(); }).catch(markDisconnected);
+function bind() {
+  document.querySelectorAll<HTMLButtonElement>("[data-catalog]").forEach((button) => button.addEventListener("click", () => loadCatalog(button.dataset.catalog!)));
+  document.querySelector<HTMLSelectElement>("#collection")?.addEventListener("change", (event) => { activeCollection = (event.target as HTMLSelectElement).value; query = ""; selected = undefined; render(); });
+  document.querySelector<HTMLInputElement>("#search")?.addEventListener("input", (event) => { query = (event.target as HTMLInputElement).value; selected = undefined; render(); const input = document.querySelector<HTMLInputElement>("#search"); input?.focus(); input?.setSelectionRange(query.length, query.length); });
+  document.querySelectorAll<HTMLTableRowElement>("[data-row]").forEach((row) => row.addEventListener("click", () => { selected = currentRows()[Number(row.dataset.row)]; render(); }));
 }
 
-function markDisconnected() { document.querySelector("#api-status")?.classList.replace("text-emerald-700", "text-amber-700"); document.querySelector("#api-status")?.querySelector("span:last-child")?.replaceWith("Server unavailable"); }
+async function loadCatalog(catalogId: string) {
+  const response = await request(`/admin/catalogs/${encodeURIComponent(catalogId)}`);
+  if (!response.ok) return showLogin();
+  activeCatalog = catalogId;
+  catalogData = await response.json();
+  activeCollection = catalogs.find((catalog) => catalog.id === catalogId)?.collections[0]?.id ?? "";
+  query = "";
+  selected = undefined;
+  render();
+}
 
 function showLogin() {
-  const modal = document.createElement("div");
-  modal.className = "fixed inset-0 z-20 grid place-items-center bg-[#07111f]/80 p-4";
-  modal.innerHTML = `<form class="w-full max-w-sm rounded-2xl bg-white p-7 shadow-2xl"><div class="mb-6"><div class="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-cyan-400 font-black text-slate-950">EH</div><h2 class="text-xl font-bold text-slate-900">Sign in to operations</h2><p class="mt-1 text-sm text-slate-500">Use the temporary admin credentials configured on the server.</p></div><label class="block text-xs font-semibold text-slate-600">Username<input name="username" autocomplete="username" required value="${adminUsername}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm" /></label><label class="mt-4 block text-xs font-semibold text-slate-600">Password<input name="password" type="password" autocomplete="current-password" required class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm" /></label><p class="error mt-3 hidden text-xs font-medium text-red-600">Invalid credentials.</p><button class="mt-6 w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Continue</button></form>`;
-  document.body.append(modal);
-  modal.querySelector("form")!.addEventListener("submit", async (event) => { event.preventDefault(); const data = new FormData(event.currentTarget as HTMLFormElement); adminUsername = String(data.get("username")); adminPassword = String(data.get("password")); localStorage.setItem("admin_user", adminUsername); const response = await requestWithStoredCredentials(); if (response.ok) modal.remove(); else { adminPassword = ""; modal.querySelector(".error")?.classList.remove("hidden"); } });
+  app.innerHTML = `<div class="grid min-h-screen place-items-center bg-[#07111f] p-4"><form class="w-full max-w-sm rounded-2xl bg-white p-7 shadow-2xl"><div class="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-cyan-400 font-black text-slate-950">EH</div><h1 class="text-xl font-bold text-slate-900">Admin catalog access</h1><p class="mt-1 text-sm text-slate-500">Sign in to inspect migrated runtime objects.</p><label class="mt-6 block text-xs font-semibold text-slate-600">Username<input name="username" autocomplete="username" required value="${escapeHtml(username)}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm"></label><label class="mt-4 block text-xs font-semibold text-slate-600">Password<input name="password" type="password" autocomplete="current-password" required class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm"></label><p class="error mt-3 hidden text-xs font-semibold text-red-600">Invalid credentials or server unavailable.</p><button class="mt-6 w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Continue</button></form></div>`;
+  app.querySelector("form")!.addEventListener("submit", async (event) => { event.preventDefault(); const data = new FormData(event.currentTarget as HTMLFormElement); username = String(data.get("username")); password = String(data.get("password")); localStorage.setItem("admin_user", username); await bootstrap(); });
 }
 
-function requestWithStoredCredentials() { return fetch("/admin/overview", { headers: { Authorization: `Basic ${btoa(`${adminUsername}:${adminPassword}`)}` } }); }
+async function bootstrap() {
+  try {
+    const response = await request("/admin/catalogs");
+    if (!response.ok) throw new Error("unauthorized");
+    catalogs = (await response.json()).catalogs;
+    if (!catalogs.length) throw new Error("empty catalogs");
+    await loadCatalog(catalogs[0].id);
+  } catch {
+    password = "";
+    showLogin();
+    app.querySelector(".error")?.classList.remove("hidden");
+  }
+}
 
-render();
-checkAdminAccess();
+showLogin();

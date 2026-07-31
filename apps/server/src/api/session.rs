@@ -6,7 +6,8 @@ use axum::{
     response::{IntoResponse, Redirect, Response},
     Json,
 };
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+use sha2::Sha256;
 use thiserror::Error;
 use uuid::Uuid;
 
@@ -17,10 +18,32 @@ use crate::{
 
 pub const SESSION_COOKIE: &str = "eh_session";
 pub const HUNTER_LAB_DEMO_SESSION_TOKEN: Uuid = Uuid::from_u128(0x0000000000004000800000000000d001);
+const PASSWORD_ITERATIONS: u32 = 20_000;
 
 #[derive(Serialize)]
 struct BootstrapResponse {
     status: &'static str,
+}
+
+#[derive(Deserialize)]
+pub struct RegisterRequest {
+    display_name: String,
+    email: String,
+    password: String,
+}
+
+#[derive(Deserialize)]
+pub struct LoginRequest {
+    email: String,
+    password: String,
+}
+
+#[derive(Serialize)]
+struct AccountResponse {
+    status: &'static str,
+    display_name: String,
+    email: String,
+    is_demo: bool,
 }
 
 #[derive(Debug, Error)]
@@ -32,13 +55,116 @@ pub enum SessionResolutionError {
 }
 
 pub async fn bootstrap(State(state): State<AppState>, headers: HeaderMap) -> Response {
-    let token = session_token(&headers).unwrap_or_else(Uuid::new_v4);
-    let status = if activate_session(&state, token).await.is_ok() {
+    let Some(token) = session_token(&headers) else {
+        return StatusCode::UNAUTHORIZED.into_response();
+    };
+    let status = if resolve_player(
+        &state,
+        token,
+        Duration::from_secs(state.config.session.ttl_seconds),
+    )
+    .await
+    .ok()
+    .flatten()
+    .is_some()
+    {
         StatusCode::OK
     } else {
-        StatusCode::SERVICE_UNAVAILABLE
+        StatusCode::UNAUTHORIZED
     };
     bootstrap_response(&state, token, status)
+}
+
+pub async fn register(
+    State(state): State<AppState>,
+    Json(body): Json<RegisterRequest>,
+) -> Response {
+    let display_name = body.display_name.trim();
+    let email = normalize_email(&body.email);
+    let display_name_length = display_name.chars().count();
+    if !(2..=24).contains(&display_name_length)
+        || email.len() > 254
+        || !valid_email(&email)
+        || body.password.len() < 8
+        || body.password.len() > 128
+    {
+        return (StatusCode::BAD_REQUEST, "invalid_account_fields").into_response();
+    }
+    let password = body.password;
+    let salt = *Uuid::new_v4().as_bytes();
+    let password_hash =
+        match tokio::task::spawn_blocking(move || hash_password(&password, &salt)).await {
+            Ok(hash) => hash,
+            Err(_) => return StatusCode::SERVICE_UNAVAILABLE.into_response(),
+        };
+    let account = match state
+        .repository
+        .create_account(&email, display_name, &password_hash)
+        .await
+    {
+        Ok(account) => account,
+        Err(RepositoryError::AccountExists) => {
+            return (StatusCode::CONFLICT, "account_exists").into_response()
+        }
+        Err(_) => return StatusCode::SERVICE_UNAVAILABLE.into_response(),
+    };
+    establish_account_session(&state, account, StatusCode::CREATED).await
+}
+
+pub async fn login(State(state): State<AppState>, Json(body): Json<LoginRequest>) -> Response {
+    let email = normalize_email(&body.email);
+    let account = match state.repository.find_account_by_email(&email).await {
+        Ok(Some(account)) => account,
+        Ok(None) => return (StatusCode::UNAUTHORIZED, "invalid_credentials").into_response(),
+        Err(_) => return StatusCode::SERVICE_UNAVAILABLE.into_response(),
+    };
+    let password = body.password;
+    let password_hash = account.password_hash.clone();
+    if !tokio::task::spawn_blocking(move || verify_password(&password, &password_hash))
+        .await
+        .unwrap_or(false)
+    {
+        return (StatusCode::UNAUTHORIZED, "invalid_credentials").into_response();
+    }
+    establish_account_session(&state, account, StatusCode::OK).await
+}
+
+async fn establish_account_session(
+    state: &AppState,
+    account: crate::persistence::PlayerAccountRecord,
+    status: StatusCode,
+) -> Response {
+    let token = Uuid::new_v4();
+    let token_hash = SessionTokenHash::from_token(token);
+    if state
+        .repository
+        .bind_session(token_hash, account.player_token)
+        .await
+        .is_err()
+        || state
+            .coordinator
+            .cache_session(
+                token_hash,
+                account.player_token,
+                Duration::from_secs(state.config.session.ttl_seconds),
+            )
+            .await
+            .is_err()
+    {
+        return StatusCode::SERVICE_UNAVAILABLE.into_response();
+    }
+    let mut response = (
+        status,
+        Json(AccountResponse {
+            status: "ready",
+            display_name: account.display_name,
+            email: account.normalized_email,
+            is_demo: account.is_demo,
+        }),
+    )
+        .into_response();
+    set_session_cookie(state, token, &mut response);
+    response
 }
 
 pub async fn hunter_lab_demo(State(state): State<AppState>) -> Response {
@@ -119,6 +245,82 @@ fn set_session_cookie(state: &AppState, token: Uuid, response: &mut Response) {
     }
 }
 
+fn normalize_email(value: &str) -> String {
+    value.trim().to_lowercase()
+}
+
+fn valid_email(value: &str) -> bool {
+    let Some((local, domain)) = value.split_once('@') else {
+        return false;
+    };
+    !local.is_empty() && domain.contains('.') && !domain.starts_with('.') && !domain.ends_with('.')
+}
+
+fn hash_password(password: &str, salt: &[u8]) -> String {
+    let iterations = PASSWORD_ITERATIONS;
+    let derived = pbkdf2_sha256(password.as_bytes(), salt, iterations);
+    format!(
+        "$pbkdf2-sha256${iterations}${}${}",
+        encode_hex(salt),
+        encode_hex(&derived)
+    )
+}
+
+fn verify_password(password: &str, encoded: &str) -> bool {
+    let parts = encoded.split('$').collect::<Vec<_>>();
+    if parts.len() != 5 || parts[1] != "pbkdf2-sha256" {
+        return false;
+    }
+    let Ok(iterations) = parts[2].parse::<u32>() else {
+        return false;
+    };
+    if iterations != PASSWORD_ITERATIONS {
+        return false;
+    }
+    let Some(salt) = decode_hex(parts[3]) else {
+        return false;
+    };
+    let Some(expected) = decode_hex(parts[4]) else {
+        return false;
+    };
+    constant_time_eq(
+        &pbkdf2_sha256(password.as_bytes(), &salt, iterations),
+        &expected,
+    )
+}
+
+fn pbkdf2_sha256(password: &[u8], salt: &[u8], iterations: u32) -> [u8; 32] {
+    let mut result = [0_u8; 32];
+    pbkdf2::pbkdf2_hmac::<Sha256>(password, salt, iterations, &mut result);
+    result
+}
+
+fn encode_hex(bytes: &[u8]) -> String {
+    bytes.iter().map(|byte| format!("{byte:02x}")).collect()
+}
+
+fn decode_hex(value: &str) -> Option<Vec<u8>> {
+    if value.len() % 2 != 0 {
+        return None;
+    }
+    (0..value.len())
+        .step_by(2)
+        .map(|index| u8::from_str_radix(&value[index..index + 2], 16).ok())
+        .collect()
+}
+
+fn constant_time_eq(left: &[u8], right: &[u8]) -> bool {
+    if left.len() != right.len() {
+        return false;
+    }
+    left.iter()
+        .zip(right)
+        .fold(0_u8, |difference, (left, right)| {
+            difference | (left ^ right)
+        })
+        == 0
+}
+
 pub fn session_token(headers: &HeaderMap) -> Option<Uuid> {
     headers
         .get(header::COOKIE)?
@@ -171,7 +373,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn bootstrap_sets_http_only_cookie_without_exposing_identity() {
+    async fn bootstrap_requires_an_authenticated_account_cookie() {
         let response = app_for_test(AppConfig::for_test())
             .oneshot(
                 Request::post("/session/bootstrap")
@@ -180,16 +382,77 @@ mod tests {
             )
             .await
             .unwrap();
-        assert_eq!(response.status(), StatusCode::OK);
-        let cookie = response
+        assert_eq!(response.status(), StatusCode::UNAUTHORIZED);
+        assert!(response.headers().get(header::SET_COOKIE).is_none());
+    }
+
+    #[test]
+    fn password_hash_round_trips_and_rejects_wrong_password() {
+        let encoded = hash_password("a-safe-password", b"0123456789abcdef");
+        assert!(verify_password("a-safe-password", &encoded));
+        assert!(!verify_password("wrong-password", &encoded));
+        assert!(verify_password(
+            "Demo1234!",
+            "$pbkdf2-sha256$20000$6576696c2d68756e7465722d64656d6f2d31$93f3141640069161239cf63bd5b771040720a2127f35e746fb7e6b04e7090283"
+        ));
+    }
+
+    #[tokio::test]
+    async fn registering_then_logging_in_from_another_browser_resolves_same_player() {
+        let repository = Arc::new(InMemoryPlayerRepository::default());
+        let state = AppState {
+            config: Arc::new(AppConfig::for_test()),
+            repository: repository.clone(),
+            coordinator: Arc::new(InMemorySessionCoordinator::default()),
+            building_content: crate::simulation::test_authoritative_building_content(),
+        };
+        let router = crate::api::router(state);
+        let register_response = router
+            .clone()
+            .oneshot(
+                Request::post("/account/register")
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .body(Body::from(
+                        r#"{"display_name":"Rin","email":"RIN@example.test","password":"password-123"}"#,
+                    ))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(register_response.status(), StatusCode::CREATED);
+        let first_cookie = register_response
+            .headers()
+            .get(header::SET_COOKIE)
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_owned();
+
+        let login_response = router
+            .oneshot(
+                Request::post("/account/login")
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .body(Body::from(
+                        r#"{"email":"rin@example.test","password":"password-123"}"#,
+                    ))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(login_response.status(), StatusCode::OK);
+        let second_cookie = login_response
             .headers()
             .get(header::SET_COOKIE)
             .unwrap()
             .to_str()
             .unwrap();
-        assert!(cookie.starts_with(&format!("{SESSION_COOKIE}=")));
-        assert!(cookie.contains("HttpOnly"));
-        assert!(cookie.contains("SameSite=Strict"));
+        assert_ne!(first_cookie, second_cookie);
+        let account = repository
+            .find_account_by_email("rin@example.test")
+            .await
+            .unwrap()
+            .unwrap();
+        assert!(!account.is_demo);
     }
 
     #[tokio::test]

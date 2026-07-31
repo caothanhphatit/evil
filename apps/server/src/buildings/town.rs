@@ -31,6 +31,7 @@ pub struct TownBuildingState {
     pub settled_field_trip_id: u64,
     pub material_stocks: Vec<TownMaterialStock>,
     pub product_stocks: Vec<TownProductStock>,
+    pub crafted_gear_stocks: Vec<TownCraftedGearStock>,
     pub trade_settlements: Vec<TownTradeSettlement>,
 }
 
@@ -48,6 +49,21 @@ pub struct TownProductStock {
     pub building_instance_id: TownBuildingInstanceId,
     pub product_id: String,
     pub quantity: u32,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct TownCraftedGearStock {
+    pub building_instance_id: TownBuildingInstanceId,
+    pub gear_instance_id: uuid::Uuid,
+    pub product_id: String,
+    pub gear_kind: String,
+    pub rating: u16,
+    pub quality: u8,
+    pub primary_stat: u32,
+    pub option_type: u8,
+    pub option_value: u16,
+    pub icon_path: String,
+    pub ruleset: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -90,6 +106,19 @@ impl TownBuildingState {
             if stock.id.trim().is_empty() || !material_ids.insert(stock.id.as_str()) {
                 return Err(BuildingRepositoryError::InvalidTown(
                     "material stock ids must be non-empty and unique",
+                ));
+            }
+        }
+        let mut gear_instance_ids = HashSet::with_capacity(self.crafted_gear_stocks.len());
+        for gear in &self.crafted_gear_stocks {
+            if gear.product_id.trim().is_empty()
+                || gear.gear_kind.trim().is_empty()
+                || gear.ruleset.trim().is_empty()
+                || !instance_ids.contains(&gear.building_instance_id)
+                || !gear_instance_ids.insert(gear.gear_instance_id)
+            {
+                return Err(BuildingRepositoryError::InvalidTown(
+                    "crafted gear stock contains an invalid or duplicate row",
                 ));
             }
         }

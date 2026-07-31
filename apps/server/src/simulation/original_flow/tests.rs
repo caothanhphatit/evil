@@ -31,6 +31,26 @@ fn gear_flow_for_building(
             unit_price: 1,
         });
     let mut content = (*test_authoritative_building_content()).clone();
+    let mut product_parts = product_id.split(':');
+    let _ = product_parts.next();
+    let gear_kind = product_parts.next().expect("test gear kind");
+    let gear_index = product_parts.next().expect("test gear index");
+    let gear_item_id = format!("gear:{gear_kind}:{gear_index}");
+    content.gameplay.items.insert(
+        gear_item_id.clone(),
+        EconomyItemDefinition {
+            item_id: gear_item_id.clone(),
+            internal_name: None,
+            item_type: Some(gear_kind.to_owned()),
+            stack_limit: None,
+            town_pays_hunter_gold_per_unit: None,
+            difficulty_rating: None,
+            localized_names: BTreeMap::new(),
+            buy_price: Vec::new(),
+            sell_price: Vec::new(),
+            hunter_pays_town_gold_by_tier: vec![sale_price; 5],
+        },
+    );
     content.gameplay.products.insert(
         product_id.to_owned(),
         EconomyProductDefinition {
@@ -42,11 +62,11 @@ fn gear_flow_for_building(
                 resource_id: "material:11".to_owned(),
                 quantity: 2,
             }],
-            outputs: Vec::new(),
-            sale_price: vec![EconomyAmount {
-                resource_id: "currency:gold".to_owned(),
-                quantity: sale_price,
+            outputs: vec![EconomyAmount {
+                resource_id: gear_item_id,
+                quantity: 1,
             }],
+            sale_price: Vec::new(),
             service: None,
             conversion_options: Vec::new(),
             random_output: None,
@@ -115,17 +135,51 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult { accepted: true, .. }
+        ServerMessage::IntentResult {
+            accepted: false,
+            ..
+        }
     ));
-    assert_eq!(flow.buildings.material_stocks[0].town_quantity, 16);
-    assert_eq!(
-        flow.buildings.product_stocks,
-        vec![DurableProductStock {
-            building_instance_id: weapon_shop_id,
+    assert_eq!(flow.buildings.material_stocks[0].town_quantity, 20);
+    assert!(flow.buildings.crafted_gear_stocks.is_empty());
+    // Purchase semantics use an explicit reviewed fixture row while the
+    // production writer remains fail-closed pending original evidence.
+    flow.buildings
+        .crafted_gear_stocks
+        .push(DurableCraftedGearStock {
+            building_instance_id: weapon_shop_id.clone(),
+            gear_instance_id: Uuid::from_u128(7001),
             product_id: product_id.to_owned(),
-            quantity: 2,
-        }]
-    );
+            gear_kind: "weapon".to_owned(),
+            rating: 0,
+            quality: 2,
+            primary_stat: 100,
+            option_type: 0,
+            option_value: 0,
+            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
+            ruleset: "test-reviewed-gear-row".to_owned(),
+        });
+    flow.buildings.product_stocks.push(DurableProductStock {
+        building_instance_id: weapon_shop_id,
+        product_id: product_id.to_owned(),
+        quantity: 1,
+    });
+    flow.buildings
+        .crafted_gear_stocks
+        .push(DurableCraftedGearStock {
+            building_instance_id: building_instance_id(&flow, "build_7"),
+            gear_instance_id: Uuid::from_u128(7002),
+            product_id: product_id.to_owned(),
+            gear_kind: "weapon".to_owned(),
+            rating: 0,
+            quality: 3,
+            primary_stat: 120,
+            option_type: 0,
+            option_value: 0,
+            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
+            ruleset: "test-reviewed-gear-row".to_owned(),
+        });
+    flow.buildings.product_stocks[0].quantity = 2;
 
     let gold_before = flow.buildings.town_gold;
     let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
@@ -148,6 +202,16 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         product_id
     );
     assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
+    assert_eq!(flow.buildings.crafted_gear_stocks.len(), 1);
+    assert!(flow.hunter_roster.hunters[0].owned_items[0]
+        .quality
+        .is_some());
+    assert_eq!(
+        flow.hunter_roster.hunters[0].owned_items[0]
+            .ruleset
+            .as_deref(),
+        Some("test-reviewed-gear-row")
+    );
     assert_eq!(flow.buildings.hunter_equipment_purchases, 1);
 
     let second_purchase = flow
@@ -192,9 +256,31 @@ fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult { accepted: true, .. }
+        ServerMessage::IntentResult {
+            accepted: false,
+            ..
+        }
     ));
-    let gear_instance_id = Uuid::from_u128(8_001);
+    flow.buildings
+        .crafted_gear_stocks
+        .push(DurableCraftedGearStock {
+            building_instance_id: building_instance_id(&flow, "build_7"),
+            gear_instance_id: Uuid::from_u128(8001),
+            product_id: product_id.to_owned(),
+            gear_kind: "weapon".to_owned(),
+            rating: 0,
+            quality: 2,
+            primary_stat: 100,
+            option_type: 0,
+            option_value: 0,
+            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
+            ruleset: "test-reviewed-gear-row".to_owned(),
+        });
+    flow.buildings.product_stocks.push(DurableProductStock {
+        building_instance_id: building_instance_id(&flow, "build_7"),
+        product_id: product_id.to_owned(),
+        quantity: 1,
+    });
     let purchase = flow
         .handle_command_with_id(
             ClientCommand::PurchaseShopItem {
@@ -202,13 +288,16 @@ fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
                 shop_id: "build_7".to_owned(),
                 product_id: product_id.to_owned(),
             },
-            gear_instance_id,
+            Uuid::from_u128(8_001),
         )
         .unwrap();
     assert!(matches!(
         purchase.message,
         ServerMessage::IntentResult { accepted: true, .. }
     ));
+    let gear_instance_id = flow.hunter_roster.hunters[0].owned_items[0]
+        .gear_instance_id
+        .expect("purchased gear keeps its crafted instance id");
     let premature = flow
         .handle_command(ClientCommand::EnhanceHunterGear {
             hunter_id: 1,
@@ -280,7 +369,7 @@ fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
     assert_eq!(flow.hunter_roster.hunters[0].gold, gold_before);
     assert_eq!(
         flow.hunter_roster.hunters[0].owned_items[0].enhancement_level,
-        None
+        Some(0)
     );
     let released = flow.snapshot().hunter_roster.active_hunters[0].clone();
     assert!(released.gear_enhancement_task.is_none());
@@ -545,7 +634,6 @@ fn jeweler_crafts_accessories_into_accessory_shop_stock() {
     let product_id = "recipe:ring:0:rating:0";
     let mut flow = gear_flow_for_building(product_id, 80, "build_21");
     let jeweler_id = building_instance_id(&flow, "build_21");
-    let accessory_shop_id = building_instance_id(&flow, "build_20");
 
     let crafted = flow
         .handle_command(ClientCommand::CraftShopItem {
@@ -557,23 +645,13 @@ fn jeweler_crafts_accessories_into_accessory_shop_stock() {
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult { accepted: true, .. }
+        ServerMessage::IntentResult {
+            accepted: false,
+            ref reason,
+            ..
+        } if reason.as_deref() == Some("gear_creation_evidence_unresolved")
     ));
-    assert_eq!(
-        flow.buildings.product_stocks,
-        vec![DurableProductStock {
-            building_instance_id: accessory_shop_id,
-            product_id: product_id.to_owned(),
-            quantity: 2,
-        }]
-    );
-    let recipes = flow.snapshot().village.building_system.recipes;
-    assert!(recipes
-        .iter()
-        .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_21"));
-    assert!(recipes.iter().any(|recipe| {
-        recipe.id == product_id && recipe.shop_id == "build_20" && recipe.stock == 2
-    }));
+    assert!(flow.buildings.product_stocks.is_empty());
 }
 
 #[test]
@@ -619,27 +697,11 @@ fn blacksmith_routes_wearable_armor_to_armor_shop_and_enforces_difficulty_levels
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult { accepted: true, .. }
-    ));
-    assert_eq!(
-        flow.buildings.product_stocks[0].building_instance_id,
-        building_instance_id(&flow, "build_8")
-    );
-
-    let shop_locked = flow
-        .handle_command(ClientCommand::PurchaseShopItem {
-            hunter_id: 1,
-            shop_id: "build_8".to_owned(),
-            product_id: product_id.to_owned(),
-        })
-        .unwrap();
-    assert!(matches!(
-        shop_locked.message,
         ServerMessage::IntentResult {
             accepted: false,
             ref reason,
             ..
-        } if reason.as_deref() == Some("product_level_locked")
+        } if reason.as_deref() == Some("gear_creation_evidence_unresolved")
     ));
 }
 
@@ -1192,6 +1254,29 @@ fn autonomous_healing_returns_to_infirmary_when_no_potion_is_owned() {
 }
 
 #[test]
+fn autonomous_healing_routes_low_hp_town_hunter_to_infirmary() {
+    let mut flow = infirmary_flow(true);
+    let hunter = &mut flow.hunter_roster.hunters[0];
+    hunter.current_hp = 99;
+    hunter.max_hp = 1_000;
+    hunter.hunt.status = "idle".to_owned();
+    hunter.hunt.zone_id = None;
+    hunter.profile.action_state = "idle".to_owned();
+
+    flow.apply_autonomous_hunter_healing_policy();
+
+    assert_eq!(flow.hunter_roster.hunters[0].hunt.status, "idle");
+    assert_eq!(
+        flow.hunter_roster.hunters[0].profile.action_state,
+        "returning_for_infirmary"
+    );
+    assert_eq!(
+        flow.hunter_roster.hunters[0].profile.animation_name,
+        "hunter_walk"
+    );
+}
+
+#[test]
 fn autonomous_healing_walks_to_stocked_infirmary_and_starts_service() {
     let mut flow = infirmary_flow(true);
     let instance_id = infirmary_instance_id(&flow);
@@ -1251,6 +1336,39 @@ fn autonomous_healing_walks_to_stocked_infirmary_and_starts_service() {
     flow.advance_product_services(600);
     assert_eq!(flow.hunter_roster.hunters[0].current_hp, 349);
     assert_eq!(flow.hunter_roster.hunters[0].profile.action_state, "idle");
+}
+
+#[test]
+fn out_of_stock_service_keeps_hunter_routed_and_projects_complaint() {
+    let mut flow = infirmary_flow(true);
+    flow.buildings.product_stocks.clear();
+    let hunter = &mut flow.hunter_roster.hunters[0];
+    hunter.current_hp = 9;
+    hunter.max_hp = 100;
+    hunter.hunt.status = "hunting".to_owned();
+    hunter.hunt.zone_id = Some(map_configs()[0].map_id.to_owned());
+    hunter.profile.action_state = "hunting".to_owned();
+
+    for _ in 0..600 {
+        flow.advance_simulation_tick();
+        if flow.hunter_roster.hunters[0].profile.action_state == "waiting_for_service" {
+            break;
+        }
+    }
+
+    assert!(matches!(
+        flow.hunter_roster.hunters[0].profile.action_state.as_str(),
+        "returning_for_infirmary" | "waiting_for_service"
+    ));
+    assert!(flow.hunter_roster.hunters[0].hunt.zone_id.is_none());
+    let entity = flow
+        .snapshot()
+        .world
+        .entities
+        .into_iter()
+        .find(|entity| entity.descriptor.entity_id == "village-hunter-1")
+        .expect("waiting Hunter projection");
+    assert!(entity.speech_label.is_some());
 }
 
 #[test]
@@ -1480,7 +1598,13 @@ fn shared_field_focus_keeps_building_and_economy_commands_available() {
         "building_instance_unknown"
     );
     assert_eq!(
-        rejection_reason(flow.craft_shop_item("missing-instance", "missing-recipe", None, 1,)),
+        rejection_reason(flow.craft_shop_item(
+            Uuid::nil(),
+            "missing-instance",
+            "missing-recipe",
+            None,
+            1,
+        )),
         "building_instance_unknown"
     );
     assert_eq!(
@@ -1813,7 +1937,7 @@ fn fixed_simulation_tick_moves_entities_without_changing_navigation_state() {
 }
 
 #[test]
-fn hunt_assignment_refunds_service_and_enters_region_immediately() {
+fn critical_service_need_rejects_hunt_assignment_without_mutation() {
     let mut flow = OriginalFlowSession::from_aggregate(
         DurablePlayerAggregate {
             navigation: OriginalFlowPlayerState {
@@ -1875,10 +1999,14 @@ fn hunt_assignment_refunds_service_and_enters_region_immediately() {
 
     assert!(matches!(
         result.message,
-        ServerMessage::IntentResult { accepted: true, .. }
+        ServerMessage::IntentResult { accepted: false, reason: Some(ref reason), .. }
+            if reason == "hunter_needs_service"
     ));
-    assert!(flow.product_services.visits.is_empty());
-    assert_eq!(flow.hunter_roster.hunters[0].gold, original_gold);
+    assert_eq!(flow.product_services.visits.len(), 1);
+    assert_eq!(
+        flow.hunter_roster.hunters[0].gold,
+        original_gold - payment_gold
+    );
     assert_eq!(
         flow.buildings
             .product_stocks
@@ -1888,59 +2016,26 @@ fn hunt_assignment_refunds_service_and_enters_region_immediately() {
             })
             .expect("refunded service stock")
             .quantity,
-        1
+        0
     );
     assert!(flow.hunter_roster.hunters[0]
         .hunt
         .gear_enhancement
-        .is_none());
-    assert_eq!(flow.hunter_roster.hunters[0].hunt.status, "hunting");
+        .is_some());
+    assert_eq!(
+        flow.hunter_roster.hunters[0].hunt.status,
+        "returning_for_infirmary"
+    );
     let assigned_agent = flow
         .monster_world
         .hunters
         .iter()
         .find(|agent| agent.hunter_id == hunter_id)
         .expect("assigned Hunter agent");
-    assert_eq!(
-        assigned_agent.action_state,
-        HunterActionState::EnteringRegion
-    );
-    assert_eq!(
-        assigned_agent.region_id.as_deref(),
-        Some(super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS[0])
-    );
+    assert_eq!(assigned_agent.action_state, agent_before.action_state);
+    assert_eq!(assigned_agent.region_id, agent_before.region_id);
 
-    flow.advance_simulation_tick();
-    let moved_agent = flow
-        .monster_world
-        .hunters
-        .iter()
-        .find(|agent| agent.hunter_id == hunter_id)
-        .expect("moving Hunter agent");
-    assert_ne!(
-        (moved_agent.x, moved_agent.y),
-        (agent_before.x, agent_before.y)
-    );
-    assert_eq!(
-        flow.hunter_roster.hunters[0].hunt.zone_id.as_deref(),
-        Some(super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS[0])
-    );
-
-    let state_after_first = flow.durable_state();
-    let duplicate = flow
-        .handle_command_with_id(
-            ClientCommand::AssignHunterHunt {
-                hunter_id,
-                zone_id: super::super::hunter_roster::ORDINARY_HUNT_REGION_IDS[0].to_owned(),
-            },
-            command_id,
-        )
-        .expect("duplicate assignment response");
-    assert!(matches!(
-        duplicate.message,
-        ServerMessage::IntentResult { accepted: true, .. }
-    ));
-    assert_eq!(flow.durable_state(), state_after_first);
+    assert!(flow.hunter_roster.hunters[0].hunt.zone_id.is_none());
 }
 
 #[test]

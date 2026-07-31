@@ -31,8 +31,9 @@ pub(super) async fn save_hunter_owned_items_in(
             sqlx::query(
                 r#"INSERT INTO player_hunter_gear_instance
                    (gear_instance_id, player_token, hunter_id, content_release_id, product_id,
-                    gear_kind, gear_index, rating, enhancement_level)
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)"#,
+                    gear_kind, gear_index, rating, enhancement_level, quality,
+                    primary_stat, option_type, option_value, ruleset)
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)"#,
             )
             .bind(gear_instance_id)
             .bind(player_token)
@@ -43,6 +44,11 @@ pub(super) async fn save_hunter_owned_items_in(
             .bind(gear_index)
             .bind(rating)
             .bind(i16::from(item.enhancement_level.unwrap_or(0)))
+            .bind(item.quality.map(i16::from))
+            .bind(item.primary_stat.map(i64::from))
+            .bind(item.option_type.map(i16::from))
+            .bind(item.option_value.map(i32::from))
+            .bind(&item.ruleset)
             .execute(&mut **transaction)
             .await?;
         } else {

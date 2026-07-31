@@ -5,8 +5,8 @@ use uuid::Uuid;
 
 use super::{farm_validation::FarmReport, BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 29;
-pub const MAX_MESSAGE_BYTES: usize = 1048576;
+pub const PROTOCOL_VERSION: u16 = 31;
+pub const MAX_MESSAGE_BYTES: usize = 4194304;
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]

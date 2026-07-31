@@ -16,9 +16,9 @@
   restores the bound gauge and credits the payment to town gold.
 
 Manual service transactions remain available through player/client commands.
-The accepted HP policy also routes a returning Hunter to the Infirmary and
-starts an authoritative stocked treatment automatically. Stamina, satiety and
-mood decay/selection remain unresolved.
+The accepted rebuild policy now covers all four gauges. Original-game decay
+formulas and selection bodies remain unresolved; the deterministic rules below
+are explicit product decisions and are not migration-evidence claims.
 
 ## Accepted rebuild healing policy
 
@@ -40,8 +40,9 @@ supersedes it:
    point. It deterministically selects the highest-restoration product the
    Hunter can afford, breaking ties by lower price and stable product/instance
    ID, then uses the existing authoritative stock/payment/service transaction.
-5. If no eligible treatment exists, the Hunter finishes returning to town and
-   remains commandable; no fake stock, debt or stuck service task is created.
+5. If no eligible treatment exists, the Hunter stays near the Infirmary,
+   projects a complaint line and rejects farm assignments until the critical
+   need is resolved. No fake stock or debt is created.
 
 The Healing Potion identity and restoration values are package-confirmed:
 `consumable:0`, levels `0..7`, with `keepValue` values `4000`, `12000`,
@@ -53,6 +54,25 @@ The automatic selection order above is an explicit user-accepted rebuild
 policy. Product identities, unlock levels, restoration values, prices, service
 times, stock mutation and payment settlement continue to come from normalized
 package data rather than synthesized fixtures.
+
+## Accepted four-gauge service priority
+
+The authoritative server treats a gauge as critical only when
+`current * 100 < maximum * 10`. Critical service work preempts farming and
+cannot be overridden by a player farm command (`hunter_needs_service`). The
+fixed mapping is HP to Infirmary (`build_12`), stamina to Inn (`build_9`),
+satiety to Restaurant (`build_13`) and mood to Tavern (`build_19`).
+
+When eligible stock, capacity and Hunter gold exist, the Hunter walks to the
+building interaction point and enters the existing authoritative service
+transaction. If service cannot start, the Hunter remains routed to that house,
+uses `waiting_for_service`, and projects a natural complaint. Newly crafted
+stock is picked up automatically on a later domain tick.
+
+Stamina, satiety and mood use deterministic server-tick decay while hunting.
+The cadence is a rebuild pacing rule and remains independent from render FPS
+and WebSocket publish frequency. Exact original formulas can replace it only
+after evidence is normalized and the product decision is revisited.
 
 ## Static original-game evidence
 

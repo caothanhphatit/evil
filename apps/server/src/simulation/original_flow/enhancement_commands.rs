@@ -1,9 +1,8 @@
 use super::{
-    building_grid_size, gear_product_route, release_hunter_from_enhancement, BaseBuildingId,
+    gear_product_route, release_hunter_from_enhancement, town_building_interaction_point,
     DurableGearEnhancementTask, GearEnhancementTaskStatus, HashSet, OriginalFlowSession,
     ServerMessage, Uuid, GEAR_ENHANCEMENT_BLOCKERS, GEAR_ENHANCEMENT_WORKFLOW_VERSION,
-    MAX_GEAR_ENHANCEMENT_LEVEL, TOWN_NAV_CELL_HEIGHT, TOWN_NAV_CELL_WIDTH, TOWN_NAV_ORIGIN_X,
-    TOWN_NAV_ORIGIN_Y,
+    MAX_GEAR_ENHANCEMENT_LEVEL,
 };
 
 impl OriginalFlowSession {
@@ -34,26 +33,15 @@ impl OriginalFlowSession {
         else {
             return self.rejected(INTENT, "enhancement_forge_unavailable");
         };
-        let Some(definition) = BaseBuildingId::parse("build_15")
-            .ok()
-            .and_then(|building_id| self.building_content.catalog.base(&building_id))
+        let obstacles = super::town_navigation_obstacles(
+            &self.buildings.buildings,
+            &self.building_content.catalog,
+        );
+        let Some((interaction_x, interaction_y)) =
+            town_building_interaction_point(building, &self.building_content.catalog, &obstacles)
         else {
-            return self.rejected(INTENT, "enhancement_forge_definition_unavailable");
-        };
-        let Some((grid_width, grid_height)) = building_grid_size(definition) else {
             return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
         };
-        let Ok(grid_width) = i32::try_from(grid_width) else {
-            return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
-        };
-        let Ok(grid_height) = i32::try_from(grid_height) else {
-            return self.rejected(INTENT, "enhancement_forge_geometry_unavailable");
-        };
-        let interaction_x = TOWN_NAV_ORIGIN_X
-            + building.grid_x * TOWN_NAV_CELL_WIDTH
-            + grid_width * TOWN_NAV_CELL_WIDTH / 2;
-        let interaction_y =
-            TOWN_NAV_ORIGIN_Y + (building.grid_y + grid_height + 1) * TOWN_NAV_CELL_HEIGHT;
         let building_instance_id = building.instance_id.clone();
         let Some(hunter) = self
             .hunter_roster

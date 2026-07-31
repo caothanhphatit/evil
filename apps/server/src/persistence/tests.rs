@@ -128,6 +128,41 @@ fn hunter_profile_schema_separates_content_owned_state_and_seeds_eight_demo_hunt
 }
 
 #[test]
+fn real_account_migration_supports_cross_browser_sessions_and_demo_logins() {
+    let migration = include_str!("../../../../infra/db/migrations/0035_real_player_accounts.sql");
+    assert!(migration.contains("CREATE TABLE player_account"));
+    assert!(migration.contains("DROP CONSTRAINT IF EXISTS local_identities_player_token_key"));
+    assert!(migration.contains("demo1@evil.local"));
+    assert!(migration.contains("demo2@evil.local"));
+    assert!(migration.contains("demo3@evil.local"));
+    assert!(migration.contains("$pbkdf2-sha256$20000$"));
+}
+
+#[test]
+fn demo_stock_and_service_action_state_migrations_cover_live_runtime() {
+    let demo_stock =
+        include_str!("../../../../infra/db/migrations/0036_full_demo_account_stock.sql");
+    let service_states = include_str!(
+        "../../../../infra/db/migrations/0037_hunter_service_priority_action_states.sql"
+    );
+    assert!(demo_stock.contains("100000000"));
+    assert!(demo_stock.contains("demo_full_stock_v1"));
+    assert!(demo_stock.contains("player_hunter_item_stack"));
+    assert!(service_states.contains("returning_for_service"));
+    assert!(service_states.contains("waiting_for_service"));
+}
+
+#[test]
+fn demo_accounts_have_independent_players_and_lazy_full_stock_seeding() {
+    let migration =
+        include_str!("../../../../infra/db/migrations/0038_independent_demo_accounts.sql");
+    assert!(migration.contains("00000000-0000-4000-8000-00000000a002"));
+    assert!(migration.contains("00000000-0000-4000-8000-00000000a003"));
+    assert!(migration.contains("seed_full_demo_account_stock"));
+    assert!(migration.contains("target_player"));
+}
+
+#[test]
 fn hunter_info_schema_separates_definitions_from_nullable_player_state() {
     let migration = include_str!("../../../../infra/db/migrations/0016_hunter_info_domain.sql");
 
@@ -304,6 +339,19 @@ fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
     assert!(inventory.contains("gear_instance_id UUID PRIMARY KEY"));
     assert!(inventory.contains("REFERENCES economy_product_definition"));
     assert!(inventory.contains("legacy JSONB column"));
+    let town_codec = include_str!("../buildings/postgres/town.rs");
+    let ownership_codec = include_str!("hunter_owned_items_save.rs");
+    assert!(town_codec.contains("INSERT INTO crafted_gear_stock"));
+    assert!(town_codec.contains("DELETE FROM crafted_gear_stock WHERE town_id"));
+    for field in [
+        "quality",
+        "primary_stat",
+        "option_type",
+        "option_value",
+        "ruleset",
+    ] {
+        assert!(ownership_codec.contains(field));
+    }
 }
 
 #[tokio::test]

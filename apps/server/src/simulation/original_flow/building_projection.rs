@@ -1,11 +1,11 @@
 use super::{
     building_definition_snapshot, building_grid_size, capacity_for_level,
-    consumable_purchase_price, gear_product_route, gold_cost, material_catalog_stocks,
-    material_difficulty_rating, material_icon_path, mutation_condition, product_display_name,
-    product_icon_path, product_sale_building_id, service_effect_kind, BaseBuildingId,
-    BuildingInstanceSnapshot, BuildingStateSnapshot, BuildingSystemSnapshot, HashMap, HashSet,
-    MaterialStockSnapshot, OriginalFlowSession, RecipeMaterialCostSnapshot, ServiceEffectKind,
-    ShopRecipeSnapshot,
+    consumable_purchase_price, gear_product_route, gear_purchase_price, gold_cost,
+    material_catalog_stocks, material_difficulty_rating, material_icon_path, mutation_condition,
+    product_display_name, product_icon_path, product_sale_building_id, service_effect_kind,
+    BaseBuildingId, BuildingInstanceSnapshot, BuildingStateSnapshot, BuildingSystemSnapshot,
+    HashMap, HashSet, MaterialStockSnapshot, OriginalFlowSession, RecipeMaterialCostSnapshot,
+    ServiceEffectKind, ShopRecipeSnapshot,
 };
 
 impl OriginalFlowSession {
@@ -117,6 +117,38 @@ impl OriginalFlowSession {
             .collect(),
             recipes: {
                 let mut recipes = Vec::new();
+                let mut products_by_building =
+                    HashMap::<String, Vec<&crate::buildings::EconomyProductDefinition>>::new();
+                for product in content.gameplay.products.values() {
+                    if let Some(producer) = &product.building_id {
+                        products_by_building
+                            .entry(producer.to_string())
+                            .or_default()
+                            .push(product);
+                    }
+                    if let Some(sale) = product_sale_building_id(&content.gameplay, product) {
+                        if product.building_id.as_ref() != Some(&sale) {
+                            products_by_building
+                                .entry(sale.to_string())
+                                .or_default()
+                                .push(product);
+                        }
+                    }
+                }
+                let product_stock_by_key = self
+                    .buildings
+                    .product_stocks
+                    .iter()
+                    .map(|stock| {
+                        (
+                            (
+                                stock.building_instance_id.as_str(),
+                                stock.product_id.as_str(),
+                            ),
+                            stock.quantity,
+                        )
+                    })
+                    .collect::<HashMap<_, _>>();
                 for definition in &content.catalog.bases {
                     let Some(building_id) = BaseBuildingId::parse(definition.id.as_str()).ok()
                     else {
@@ -129,7 +161,11 @@ impl OriginalFlowSession {
                         .find(|building| building.id == definition.id.as_str());
                     let mut seen = HashSet::new();
                     let mut gear_buckets = HashMap::new();
-                    for product in content.gameplay.products.values() {
+                    for product in products_by_building
+                        .get(definition.id.as_str())
+                        .into_iter()
+                        .flatten()
+                    {
                         let gear_route = gear_product_route(&content.gameplay, product);
                         let sale_building_id = product_sale_building_id(&content.gameplay, product);
                         let is_native_product = product.building_id.as_ref() == Some(&building_id);
@@ -161,14 +197,13 @@ impl OriginalFlowSession {
                             })
                             .or(building);
                         let stored_stock = stock_building.map_or(0, |stock_building| {
-                            self.buildings
-                                .product_stocks
-                                .iter()
-                                .find(|stock| {
-                                    stock.building_instance_id == stock_building.instance_id
-                                        && stock.product_id == product.product_id
-                                })
-                                .map_or(0, |stock| stock.quantity)
+                            product_stock_by_key
+                                .get(&(
+                                    stock_building.instance_id.as_str(),
+                                    product.product_id.as_str(),
+                                ))
+                                .copied()
+                                .unwrap_or(0)
                         });
                         if is_sale_product && stored_stock == 0 {
                             continue;
@@ -275,6 +310,7 @@ impl OriginalFlowSession {
                                         .or_else(|| {
                                             consumable_purchase_price(&content.gameplay, product)
                                         })
+                                        .or_else(|| gear_purchase_price(&content.gameplay, product))
                                         .unwrap_or(0)
                                 },
                                 |service| service.use_money,

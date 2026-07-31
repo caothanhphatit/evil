@@ -22,16 +22,18 @@ export function mountGameShell(mount: HTMLDivElement): HTMLElement {
       <section id="login-screen" class="login-screen" aria-label="${t("login.aria")}">
         <section class="basic-login-card">
           <span class="basic-login-brand">${t("app.brand")}</span><h1>${t("login.title")}</h1><p>${t("login.subtitle")}</p>
-          <label for="account-select">${t("login.profile")}</label><select id="account-select"></select>
-          <button id="remove-account" class="account-remove-button" type="button">${t("login.remove_profile")}</button>
+          <label for="login-email">${t("login.email")}</label><input id="login-email" type="email" maxlength="120" autocomplete="email" required />
+          <label for="login-password">${t("login.password")}</label><input id="login-password" type="password" maxlength="128" autocomplete="current-password" required />
+          <label for="demo-account-select">${t("login.demo_accounts")}</label><select id="demo-account-select"><option value="">${t("login.demo_choose")}</option><option value="demo1@evil.local">Hunter Lab Demo 1</option><option value="demo2@evil.local">Hunter Lab Demo 2</option><option value="demo3@evil.local">Hunter Lab Demo 3</option></select>
           <button id="enter-village" class="enter-village" type="button">${t("login.sign_in")}</button>
           <button id="register-account-toggle" class="basic-login-link" type="button">${t("login.register_profile")}</button>
           <form id="register-account-form" class="register-account-form" hidden>
             <label for="register-account-name">${t("login.display_name")}</label><input id="register-account-name" maxlength="24" autocomplete="nickname" required />
             <label for="register-account-email">${t("login.email")}</label><input id="register-account-email" type="email" maxlength="120" autocomplete="email" required />
+            <label for="register-account-password">${t("login.password")}</label><input id="register-account-password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required />
             <div class="boot-auth-actions"><button id="register-account-submit" class="boot-primary-button" type="submit">${t("login.create_profile")}</button><button id="register-account-cancel" class="boot-secondary-button" type="button">${t("common.cancel")}</button></div>
           </form>
-          <small class="boot-account-note">${t("login.browser_only_note")}</small>
+          <small class="boot-account-note">${t("login.synced_account_note")}</small>
           <div class="login-readiness" hidden aria-live="polite"><i id="map-loading-fill"></i><span id="map-loading-label">${t("login.waiting_to_load")}</span></div>
         </section>
         <span id="boot-status" class="boot-status" role="status">${t("login.ready")}</span>

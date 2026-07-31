@@ -32,6 +32,8 @@ pub fn router(state: AppState) -> Router {
         .nest("/admin", admin::router())
         .route("/health", get(health::health))
         .route("/ready", get(health::ready))
+        .route("/account/register", post(session::register))
+        .route("/account/login", post(session::login))
         .route("/session/bootstrap", post(session::bootstrap))
         .route("/session/demo/hunter-lab", get(session::hunter_lab_demo))
         .route("/ws", get(websocket::upgrade))

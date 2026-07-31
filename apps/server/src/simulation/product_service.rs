@@ -55,6 +55,14 @@ impl HunterServiceGauge {
         self.is_resolved() && self.current < self.maximum
     }
 
+    /// Autonomous service is reserved for a critically depleted gauge. Manual
+    /// service commands may still restore any non-full gauge.
+    pub fn needs_autonomous_service(self) -> bool {
+        self.is_resolved()
+            && self.maximum > 0
+            && u128::from(self.current) * 100 < u128::from(self.maximum) * 10
+    }
+
     pub fn restore(&mut self, amount: u64) {
         self.current = self.current.saturating_add(amount).min(self.maximum);
     }

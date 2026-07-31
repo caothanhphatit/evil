@@ -206,10 +206,12 @@ pub(super) async fn load_hunter_roster_in(
                     .map_err(|_| RepositoryError::InvalidOperation)?,
                 enhancement_level: None,
                 gear_instance_id: None,
+                ..Default::default()
             });
     }
     let gear_rows = sqlx::query(
-        r#"SELECT hunter_id, gear_instance_id, product_id, enhancement_level
+        r#"SELECT hunter_id, gear_instance_id, product_id, enhancement_level,
+                  quality, primary_stat, option_type, option_value, ruleset
            FROM player_hunter_gear_instance
            WHERE player_token = $1
            ORDER BY hunter_id, created_at, gear_instance_id"#,
@@ -232,6 +234,27 @@ pub(super) async fn load_hunter_roster_in(
                         .map_err(|_| RepositoryError::InvalidOperation)?,
                 ),
                 gear_instance_id: Some(row.try_get::<Uuid, _>("gear_instance_id")?),
+                quality: row
+                    .try_get::<Option<i16>, _>("quality")?
+                    .map(u8::try_from)
+                    .transpose()
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                primary_stat: row
+                    .try_get::<Option<i64>, _>("primary_stat")?
+                    .map(u32::try_from)
+                    .transpose()
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                option_type: row
+                    .try_get::<Option<i16>, _>("option_type")?
+                    .map(u8::try_from)
+                    .transpose()
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                option_value: row
+                    .try_get::<Option<i32>, _>("option_value")?
+                    .map(u16::try_from)
+                    .transpose()
+                    .map_err(|_| RepositoryError::InvalidOperation)?,
+                ruleset: row.try_get("ruleset")?,
             });
     }
     let mut runtime_by_hunter = load_hunter_runtime_in(transaction, player_token).await?;

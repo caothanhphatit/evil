@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { PROTOCOL_VERSION } from "../generated/protocol";
+import { MAX_MESSAGE_BYTES, PROTOCOL_VERSION } from "../generated/protocol";
 import { apiBaseUrlFor, EnvelopeSequencer, ServerSequenceGuard, webSocketUrlFor, WorldClient } from "./world-client";
 
 const TOKEN = "123e4567-e89b-42d3-a456-426614174000";
@@ -93,6 +93,28 @@ describe("session bootstrap", () => {
     await Promise.resolve();
 
     expect(socketFactory).not.toHaveBeenCalled();
+    client.disconnect();
+  });
+
+  it("accepts a fully seeded demo snapshot larger than the former one MiB limit", async () => {
+    const socket = new FakeSocket();
+    const statuses: string[] = [];
+    const client = new WorldClient(() => undefined, (status) => statuses.push(status), undefined, undefined, undefined, {
+      apiBaseUrl: "http://game.test",
+      webSocketUrl: "ws://game.test/ws",
+      fetchFn: vi.fn(async () => new Response(null, { status: 204 })),
+      socketFactory: () => socket as unknown as WebSocket,
+      reconnectDelayMs: 60_000,
+    });
+
+    client.connect();
+    await settlePromises();
+    const wire = serverEnvelope(1, "welcome", "village", "x".repeat(1_500_000));
+    expect(new TextEncoder().encode(wire).byteLength).toBeLessThan(MAX_MESSAGE_BYTES);
+    socket.emit("message", { data: wire });
+
+    expect(statuses).toContain("online");
+    expect(socket.close).not.toHaveBeenCalledWith(4002, "Protocol error");
     client.disconnect();
   });
 
@@ -274,13 +296,18 @@ class FakeSocket {
   }
 }
 
-function serverEnvelope(sequence: number, type: "welcome" | "world_update" | "world_frame", screen = "boot"): string {
+function serverEnvelope(
+  sequence: number,
+  type: "welcome" | "world_update" | "world_frame",
+  screen = "boot",
+  padding = "",
+): string {
   const snapshot = {
     screen,
     content_release_id: "original-flow-v1",
     content_release_runnable: false,
     flow_order: ["boot", "village", "hunter_roster", "field"],
-    village: { marker: "keep-village" },
+    village: { marker: "keep-village", ...(padding ? { padding } : {}) },
     hunter_roster: {},
     field: {},
     world: { entities: [], drops: [], combat_presentations: [] },

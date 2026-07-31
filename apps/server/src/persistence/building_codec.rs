@@ -1,8 +1,9 @@
 use super::{
     BaseBuildingId, BuildingRepositoryError, BuildingSkinId, DurableBuilding, DurableBuildingState,
-    DurableHunterProgress, DurableMaterialStock, DurableProductStock, DurableTradeSettlement,
-    RepositoryError, Row, TownBuildingInstance, TownBuildingInstanceId, TownBuildingState,
-    TownMaterialStock, TownProductStock, TownTradeSettlement, Uuid, ACTIVE_BUILDING_RELEASE_ID,
+    DurableCraftedGearStock, DurableHunterProgress, DurableMaterialStock, DurableProductStock,
+    DurableTradeSettlement, RepositoryError, Row, TownBuildingInstance, TownBuildingInstanceId,
+    TownBuildingState, TownCraftedGearStock, TownMaterialStock, TownProductStock,
+    TownTradeSettlement, Uuid, ACTIVE_BUILDING_RELEASE_ID,
 };
 
 pub(super) fn nonempty_or<'a>(value: &'a str, fallback: &'a str) -> &'a str {
@@ -138,6 +139,31 @@ pub(super) fn town_from_durable_buildings(
                 })
             })
             .collect::<Result<Vec<_>, BuildingRepositoryError>>()?,
+        crafted_gear_stocks: state
+            .crafted_gear_stocks
+            .iter()
+            .map(|stock| {
+                Ok(TownCraftedGearStock {
+                    building_instance_id: TownBuildingInstanceId::new(
+                        Uuid::parse_str(&stock.building_instance_id).map_err(|_| {
+                            BuildingRepositoryError::InvalidTown(
+                                "crafted gear building instance id must be UUID",
+                            )
+                        })?,
+                    ),
+                    gear_instance_id: stock.gear_instance_id,
+                    product_id: stock.product_id.clone(),
+                    gear_kind: stock.gear_kind.clone(),
+                    rating: stock.rating,
+                    quality: stock.quality,
+                    primary_stat: stock.primary_stat,
+                    option_type: stock.option_type,
+                    option_value: stock.option_value,
+                    icon_path: stock.icon_path.clone(),
+                    ruleset: stock.ruleset.clone(),
+                })
+            })
+            .collect::<Result<Vec<_>, BuildingRepositoryError>>()?,
         trade_settlements: state
             .trade_settlements
             .iter()
@@ -199,6 +225,23 @@ pub(super) fn durable_buildings_from_town(
                 building_instance_id: stock.building_instance_id.get().to_string(),
                 product_id: stock.product_id,
                 quantity: stock.quantity,
+            })
+            .collect(),
+        crafted_gear_stocks: state
+            .crafted_gear_stocks
+            .into_iter()
+            .map(|stock| DurableCraftedGearStock {
+                building_instance_id: stock.building_instance_id.get().to_string(),
+                gear_instance_id: stock.gear_instance_id,
+                product_id: stock.product_id,
+                gear_kind: stock.gear_kind,
+                rating: stock.rating,
+                quality: stock.quality,
+                primary_stat: stock.primary_stat,
+                option_type: stock.option_type,
+                option_value: stock.option_value,
+                icon_path: stock.icon_path,
+                ruleset: stock.ruleset,
             })
             .collect(),
         hunter_equipment_purchases: state.hunter_equipment_purchases,

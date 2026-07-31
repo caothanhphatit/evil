@@ -1,16 +1,9 @@
 import type { ConnectionStatus } from "../net/world-client";
+import { apiBaseUrlFor } from "../net/world-client";
 import type { OriginalFlowSnapshot } from "../generated/protocol";
-import {
-  BROWSER_ACCOUNTS_STORAGE_KEY,
-  parseBrowserAccounts,
-  serializeBrowserAccounts,
-  type BrowserAccount,
-} from "../ui/browser-accounts";
 import { projectEntryPresentation, type EntryPhase } from "../ui/entry-flow";
 import { t, type MessageKey } from "../i18n";
 import { recordClientEvent } from "../observability/client-telemetry";
-
-const SELECTED_ACCOUNT_KEY = "evil.browser.selected-account.v1";
 
 function element<T extends HTMLElement>(selector: string): T {
   const value = document.querySelector<T>(selector);
@@ -25,7 +18,8 @@ export class EntryController {
   private readonly bottomMenu = element<HTMLElement>("#bottom-menu");
   private readonly transition = element<HTMLElement>("#loading-transition");
   private readonly enterVillage = element<HTMLButtonElement>("#enter-village");
-  private readonly accountSelect = element<HTMLSelectElement>("#account-select");
+  private readonly loginEmail = element<HTMLInputElement>("#login-email");
+  private readonly loginPassword = element<HTMLInputElement>("#login-password");
   private readonly gameLoadingScreen = element<HTMLElement>("#game-loading-screen");
   private readonly gameLoadingStatus = element<HTMLElement>("#game-loading-status");
   private readonly gameLoadingFill = element<HTMLElement>("#game-loading-fill");
@@ -42,78 +36,102 @@ export class EntryController {
   private mapLoadFailed = false;
   private hideTimer: number | undefined;
   private timeoutTimer: number | undefined;
-  private accounts: BrowserAccount[];
 
   constructor(
     private readonly gameShell: HTMLElement,
     private readonly onStartRuntime: () => void,
     private readonly onCompleteBoot: () => void,
   ) {
-    this.accounts = parseBrowserAccounts(localStorage.getItem(BROWSER_ACCOUNTS_STORAGE_KEY));
     this.installAccountHandlers();
     this.gameLoadingRetry.addEventListener("click", () => location.reload());
-    this.renderAccounts();
     this.updateBootState();
   }
 
   private installAccountHandlers(): void {
-    const remove = element<HTMLButtonElement>("#remove-account");
     const toggle = element<HTMLButtonElement>("#register-account-toggle");
     const form = element<HTMLFormElement>("#register-account-form");
     const name = element<HTMLInputElement>("#register-account-name");
     const email = element<HTMLInputElement>("#register-account-email");
+    const password = element<HTMLInputElement>("#register-account-password");
+    const demo = element<HTMLSelectElement>("#demo-account-select");
     const cancel = element<HTMLButtonElement>("#register-account-cancel");
-    this.accountSelect.addEventListener("change", () => localStorage.setItem(SELECTED_ACCOUNT_KEY, this.accountSelect.value));
-    remove.addEventListener("click", () => {
-      if (this.accountSelect.value === "demo-hunter-lab") return;
-      this.accounts = this.accounts.filter((account) => account.id !== this.accountSelect.value);
-      localStorage.setItem(BROWSER_ACCOUNTS_STORAGE_KEY, serializeBrowserAccounts(this.accounts));
-      this.renderAccounts();
+    demo.addEventListener("change", () => {
+      if (!demo.value) return;
+      this.loginEmail.value = demo.value;
+      this.loginPassword.value = "Demo1234!";
     });
     toggle.addEventListener("click", () => {
       form.hidden = !form.hidden;
       if (!form.hidden) name.focus();
     });
     cancel.addEventListener("click", () => { form.hidden = true; });
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const displayName = name.value.trim();
       const normalizedEmail = email.value.trim().toLowerCase();
-      if (displayName.length < 2 || !normalizedEmail.includes("@")) return;
-      const account: BrowserAccount = {
-        id: crypto.randomUUID(), displayName, email: normalizedEmail, kind: "browser", createdAt: new Date().toISOString(),
-      };
-      this.accounts = [...this.accounts, account];
-      localStorage.setItem(BROWSER_ACCOUNTS_STORAGE_KEY, serializeBrowserAccounts(this.accounts));
-      localStorage.setItem(SELECTED_ACCOUNT_KEY, account.id);
-      this.renderAccounts();
+      if (displayName.length < 2 || !normalizedEmail.includes("@") || password.value.length < 8) {
+        this.bootStatus.textContent = t("login.invalid_profile");
+        return;
+      }
+      const authenticated = await this.authenticate("register", {
+        display_name: displayName,
+        email: normalizedEmail,
+        password: password.value,
+      });
+      if (!authenticated) return;
       form.reset();
       form.hidden = true;
+      this.beginLoading(displayName);
     });
-    this.enterVillage.addEventListener("click", () => this.signIn());
+    this.enterVillage.addEventListener("click", () => void this.signIn());
   }
 
-  private renderAccounts(): void {
-    this.accountSelect.replaceChildren(...this.accounts.map((account) => {
-      const option = document.createElement("option");
-      option.value = account.id;
-      option.textContent = account.kind === "demo"
-        ? t("login.profile_option", { name: account.displayName, email: t("login.demo_kind") })
-        : t("login.profile_option", { name: account.displayName, email: account.email });
-      return option;
-    }));
-    const saved = localStorage.getItem(SELECTED_ACCOUNT_KEY);
-    this.accountSelect.value = this.accounts.some((account) => account.id === saved)
-      ? saved!
-      : this.accounts[0]!.id;
-  }
-
-  private signIn(): void {
+  private async signIn(): Promise<void> {
     if (this.mapLoadFailed || this.phase !== "login") return;
-    localStorage.setItem(SELECTED_ACCOUNT_KEY, this.accountSelect.value);
+    const email = this.loginEmail.value.trim().toLowerCase();
+    if (!email || !this.loginPassword.value) {
+      this.bootStatus.textContent = t("login.credentials_required");
+      return;
+    }
+    const authenticated = await this.authenticate("login", {
+      email,
+      password: this.loginPassword.value,
+    });
+    if (!authenticated) return;
+    this.beginLoading(email);
+  }
+
+  private async authenticate(action: "login" | "register", body: Record<string, string>): Promise<boolean> {
+    this.enterVillage.disabled = true;
+    try {
+      const configured = window.__EVIL_HUNTER_CONFIG__?.apiBaseUrl || import.meta.env.VITE_WORLD_API_URL;
+      const response = await fetch(`${apiBaseUrlFor(location, configured)}/account/${action}`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) {
+        this.bootStatus.textContent = response.status === 409
+          ? t("login.account_exists")
+          : response.status === 401
+            ? t("login.invalid_credentials")
+            : t("login.account_unavailable");
+        return false;
+      }
+      return true;
+    } catch {
+      this.bootStatus.textContent = t("login.account_unavailable");
+      return false;
+    } finally {
+      if (this.phase === "login") this.enterVillage.disabled = false;
+    }
+  }
+
+  private beginLoading(account: string): void {
     this.phase = "loading";
     this.gameLoadingStatus.textContent = t("loading.account", {
-      account: this.accountSelect.selectedOptions[0]?.textContent ?? t("loading.profile_fallback"),
+      account,
     });
     this.setProgress(3);
     this.bootRequested = true;

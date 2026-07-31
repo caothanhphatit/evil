@@ -6,13 +6,11 @@ use super::{
 };
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-struct AutonomousInfirmaryPlan {
+struct AutonomousServicePlan {
     hunter_id: u32,
     building_instance_id: String,
-    product_id: String,
+    product_id: Option<String>,
     destination: (i32, i32),
-    effect_value: u64,
-    use_money: u64,
 }
 
 impl OriginalFlowSession {
@@ -59,6 +57,7 @@ impl OriginalFlowSession {
         }
         self.auto_cast_ready_hunter_skills();
         self.visual_tick = self.visual_tick.wrapping_add(1);
+        self.decay_hunter_service_gauges();
         let navigation_obstacles =
             town_navigation_obstacles(&self.buildings.buildings, &self.building_content.catalog);
         let revival_point = town_revival_point(
@@ -67,8 +66,10 @@ impl OriginalFlowSession {
             &navigation_obstacles,
         );
         self.apply_autonomous_hunter_healing_policy();
-        let autonomous_infirmary_plans = self.autonomous_infirmary_plans(&navigation_obstacles);
-        let mut autonomous_town_destinations = autonomous_infirmary_plans
+        self.prepare_autonomous_service_requests();
+        let autonomous_service_plans = self.autonomous_service_plans(&navigation_obstacles);
+        self.mark_unavailable_service_waiters(&autonomous_service_plans);
+        let mut autonomous_town_destinations = autonomous_service_plans
             .iter()
             .map(|plan| (plan.hunter_id, plan.destination))
             .collect::<HashMap<_, _>>();
@@ -89,7 +90,7 @@ impl OriginalFlowSession {
             revival_point,
             &autonomous_town_destinations,
         );
-        self.start_arrived_autonomous_infirmary_services(&autonomous_infirmary_plans);
+        self.start_arrived_autonomous_services(&autonomous_service_plans);
         self.advance_legacy_hunter_hunts(1);
         self.settle_arrived_hunter_trades();
         self.auto_sell_requested_hunter_loot();
@@ -172,16 +173,71 @@ impl OriginalFlowSession {
             // disappear before the Hunter could reach the Infirmary.
             if leaving_field {
                 hunter.hunt.status = "idle".to_owned();
-                hunter.profile.action_state = "returning_for_infirmary".to_owned();
-                hunter.profile.animation_name = "hunter_walk".to_owned();
+            }
+            hunter.profile.action_state =
+                if super::hunter_service_gauge(hunter, super::ServiceEffectKind::Hp)
+                    .needs_autonomous_service()
+                {
+                    "returning_for_infirmary"
+                } else {
+                    "returning_for_service"
+                }
+                .to_owned();
+            hunter.profile.animation_name = "hunter_walk".to_owned();
+        }
+    }
+
+    fn prepare_autonomous_service_requests(&mut self) {
+        for hunter in &mut self.hunter_roster.hunters {
+            let critical = hunter.current_hp > 0
+                && (super::hunter_service_gauge(hunter, super::ServiceEffectKind::Hp)
+                    .needs_autonomous_service()
+                    || hunter.stamina.needs_autonomous_service()
+                    || hunter.satiety.needs_autonomous_service()
+                    || hunter.mood.needs_autonomous_service());
+            if !critical
+                || hunter.profile.action_state == "serving"
+                || hunter.hunt.pending_trade.is_some()
+                || hunter.hunt.gear_enhancement.is_some()
+            {
+                continue;
+            }
+            hunter.hunt.zone_id = None;
+            hunter.hunt.status = "idle".to_owned();
+            hunter.profile.action_state =
+                if super::hunter_service_gauge(hunter, super::ServiceEffectKind::Hp)
+                    .needs_autonomous_service()
+                {
+                    "returning_for_infirmary"
+                } else {
+                    "returning_for_service"
+                }
+                .to_owned();
+            hunter.profile.animation_name = "hunter_walk".to_owned();
+        }
+    }
+
+    fn decay_hunter_service_gauges(&mut self) {
+        for hunter in &mut self.hunter_roster.hunters {
+            if hunter.hunt.status != "hunting" || hunter.profile.action_state == "serving" {
+                continue;
+            }
+            if self.visual_tick % 10 == 0 {
+                hunter.stamina.current = hunter.stamina.current.saturating_sub(1);
+            }
+            if self.visual_tick % 15 == 0 {
+                hunter.satiety.current = hunter.satiety.current.saturating_sub(1);
+            }
+            if self.visual_tick % 20 == 0 {
+                hunter.mood.current = hunter.mood.current.saturating_sub(1);
             }
         }
     }
 
-    fn autonomous_infirmary_plans(
+    fn autonomous_service_plans(
         &self,
         obstacles: &[NavigationObstacle],
-    ) -> Vec<AutonomousInfirmaryPlan> {
+    ) -> Vec<AutonomousServicePlan> {
         let mut remaining_stock = self
             .buildings
             .product_stocks
@@ -197,7 +253,12 @@ impl OriginalFlowSession {
             .buildings
             .buildings
             .iter()
-            .filter(|building| building.id == "build_12")
+            .filter(|building| {
+                matches!(
+                    building.id.as_str(),
+                    "build_9" | "build_12" | "build_13" | "build_19"
+                )
+            })
             .map(|building| {
                 let occupied = self
                     .product_services
@@ -205,7 +266,7 @@ impl OriginalFlowSession {
                     .iter()
                     .filter(|visit| visit.building_instance_id == building.instance_id)
                     .count();
-                let capacity = capacity_for_level("build_12", u16::from(building.level))
+                let capacity = capacity_for_level(building.id.as_str(), u16::from(building.level))
                     .map(usize::from)
                     .unwrap_or(0);
                 (
@@ -217,19 +278,59 @@ impl OriginalFlowSession {
         let mut plans = Vec::new();
 
         for hunter in self.hunter_roster.hunters.iter().filter(|hunter| {
-            hunter.profile.action_state == "returning_for_infirmary"
+            [
+                (
+                    super::ServiceEffectKind::Hp,
+                    hunter.current_hp,
+                    hunter.max_hp,
+                ),
+                (
+                    super::ServiceEffectKind::Stamina,
+                    hunter.stamina.current,
+                    hunter.stamina.maximum,
+                ),
+                (
+                    super::ServiceEffectKind::Satiety,
+                    hunter.satiety.current,
+                    hunter.satiety.maximum,
+                ),
+                (
+                    super::ServiceEffectKind::Mood,
+                    hunter.mood.current,
+                    hunter.mood.maximum,
+                ),
+            ]
+            .iter()
+            .any(|(_, current, maximum)| {
+                *maximum > 0 && u128::from(*current) * 100 < u128::from(*maximum) * 10
+            }) && hunter.profile.action_state != "serving"
                 && !self
                     .product_services
                     .visits
                     .iter()
                     .any(|visit| visit.hunter_id == hunter.hunter_id)
         }) {
+            let effect_kind = [
+                super::ServiceEffectKind::Hp,
+                super::ServiceEffectKind::Stamina,
+                super::ServiceEffectKind::Satiety,
+                super::ServiceEffectKind::Mood,
+            ]
+            .into_iter()
+            .find(|kind| super::hunter_service_gauge(hunter, *kind).needs_autonomous_service())
+            .expect("critical gauge");
+            let service_building_id = match effect_kind {
+                super::ServiceEffectKind::Hp => "build_12",
+                super::ServiceEffectKind::Stamina => "build_9",
+                super::ServiceEffectKind::Satiety => "build_13",
+                super::ServiceEffectKind::Mood => "build_19",
+            };
             let mut candidates = Vec::new();
             for building in self
                 .buildings
                 .buildings
                 .iter()
-                .filter(|building| building.id == "build_12")
+                .filter(|building| building.id == service_building_id)
             {
                 if remaining_slots
                     .get(&building.instance_id)
@@ -254,7 +355,8 @@ impl OriginalFlowSession {
                     let Some(product) = self.building_content.gameplay.product(product_id) else {
                         continue;
                     };
-                    if product.building_id.as_ref().map(BaseBuildingId::as_str) != Some("build_12")
+                    if product.building_id.as_ref().map(BaseBuildingId::as_str)
+                        != Some(service_building_id)
                     {
                         continue;
                     }
@@ -264,41 +366,65 @@ impl OriginalFlowSession {
                     if service.required_level >= level || service.use_money > hunter.gold {
                         continue;
                     }
-                    candidates.push(AutonomousInfirmaryPlan {
+                    candidates.push(AutonomousServicePlan {
                         hunter_id: hunter.hunter_id,
                         building_instance_id: building.instance_id.clone(),
-                        product_id: product_id.clone(),
+                        product_id: Some(product_id.clone()),
                         destination,
-                        effect_value: service.effect_value,
-                        use_money: service.use_money,
                     });
                 }
             }
             candidates.sort_by(|left, right| {
-                right
-                    .effect_value
-                    .cmp(&left.effect_value)
-                    .then_with(|| left.use_money.cmp(&right.use_money))
-                    .then_with(|| left.product_id.cmp(&right.product_id))
+                left.product_id
+                    .cmp(&right.product_id)
                     .then_with(|| left.building_instance_id.cmp(&right.building_instance_id))
             });
-            let Some(plan) = candidates.into_iter().next() else {
-                continue;
+            let plan = if let Some(plan) = candidates.into_iter().next() {
+                if let Some(product_id) = plan.product_id.as_ref() {
+                    if let Some(quantity) = remaining_stock
+                        .get_mut(&(plan.building_instance_id.clone(), product_id.clone()))
+                    {
+                        *quantity = quantity.saturating_sub(1);
+                    }
+                }
+                if let Some(slots) = remaining_slots.get_mut(&plan.building_instance_id) {
+                    *slots = slots.saturating_sub(1);
+                }
+                plan
+            } else {
+                let Some(building) = self
+                    .buildings
+                    .buildings
+                    .iter()
+                    .find(|building| building.id == service_building_id)
+                else {
+                    continue;
+                };
+                let Some(destination) = town_building_interaction_point(
+                    building,
+                    &self.building_content.catalog,
+                    obstacles,
+                ) else {
+                    continue;
+                };
+                let linger_offsets = [(-18, 0), (0, 10), (18, 0), (0, -10)];
+                let offset_index =
+                    usize::try_from((self.visual_tick / 30 + u64::from(hunter.hunter_id)) % 4)
+                        .unwrap_or(0);
+                let offset = linger_offsets[offset_index];
+                AutonomousServicePlan {
+                    hunter_id: hunter.hunter_id,
+                    building_instance_id: building.instance_id.clone(),
+                    product_id: None,
+                    destination: (destination.0 + offset.0, destination.1 + offset.1),
+                }
             };
-            if let Some(quantity) = remaining_stock
-                .get_mut(&(plan.building_instance_id.clone(), plan.product_id.clone()))
-            {
-                *quantity = quantity.saturating_sub(1);
-            }
-            if let Some(slots) = remaining_slots.get_mut(&plan.building_instance_id) {
-                *slots = slots.saturating_sub(1);
-            }
             plans.push(plan);
         }
         plans
     }
 
-    fn start_arrived_autonomous_infirmary_services(&mut self, plans: &[AutonomousInfirmaryPlan]) {
+    fn start_arrived_autonomous_services(&mut self, plans: &[AutonomousServicePlan]) {
         let planned_hunters = plans
             .iter()
             .map(|plan| plan.hunter_id)
@@ -311,17 +437,24 @@ impl OriginalFlowSession {
                     && (agent.x, agent.y) == plan.destination
             });
             if arrived {
-                let _ = self.start_product_service(
-                    &plan.building_instance_id,
-                    plan.hunter_id,
-                    &plan.product_id,
-                );
+                if let Some(product_id) = plan.product_id.as_deref() {
+                    let _ = self.start_product_service(
+                        &plan.building_instance_id,
+                        plan.hunter_id,
+                        product_id,
+                    );
+                } else if let Ok(hunter) = self.hunter_roster.active_mut(plan.hunter_id) {
+                    hunter.profile.action_state = "waiting_for_service".to_owned();
+                    hunter.profile.animation_name = "hunter_stay".to_owned();
+                }
             }
         }
 
         for hunter in &mut self.hunter_roster.hunters {
-            if hunter.profile.action_state != "returning_for_infirmary"
-                || planned_hunters.contains(&hunter.hunter_id)
+            if !matches!(
+                hunter.profile.action_state.as_str(),
+                "returning_for_service" | "returning_for_infirmary"
+            ) || planned_hunters.contains(&hunter.hunter_id)
             {
                 continue;
             }
@@ -332,8 +465,17 @@ impl OriginalFlowSession {
                     && TOWN_ROAM_BOUNDS.contains(agent.x, agent.y)
             });
             if returned_without_service {
-                hunter.profile.action_state = "idle".to_owned();
+                hunter.profile.action_state = "waiting_for_service".to_owned();
                 hunter.profile.animation_name = "hunter_stay".to_owned();
+            }
+        }
+    }
+
+    fn mark_unavailable_service_waiters(&mut self, plans: &[AutonomousServicePlan]) {
+        for plan in plans.iter().filter(|plan| plan.product_id.is_none()) {
+            if let Ok(hunter) = self.hunter_roster.active_mut(plan.hunter_id) {
+                hunter.profile.action_state = "waiting_for_service".to_owned();
+                hunter.profile.animation_name = "hunter_walk".to_owned();
             }
         }
     }

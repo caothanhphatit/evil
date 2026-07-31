@@ -115,6 +115,7 @@ fn town_rejects_duplicate_instance_ids_before_persistence() {
         settled_field_trip_id: 0,
         material_stocks: Vec::new(),
         product_stocks: Vec::new(),
+        crafted_gear_stocks: Vec::new(),
         trade_settlements: Vec::new(),
     };
 

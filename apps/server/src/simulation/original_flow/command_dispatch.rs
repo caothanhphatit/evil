@@ -83,9 +83,13 @@ impl CommandDispatcher {
                 recipe_id,
                 material_id,
                 quantity,
-            } => {
-                session.craft_shop_item(&instance_id, &recipe_id, material_id.as_deref(), quantity)
-            }
+            } => session.craft_shop_item(
+                command_id,
+                &instance_id,
+                &recipe_id,
+                material_id.as_deref(),
+                quantity,
+            ),
             ClientCommand::OpenHunterProgression { .. } => {
                 session.accepted("open_hunter_progression")
             }

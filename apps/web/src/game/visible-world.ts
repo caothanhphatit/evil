@@ -6,7 +6,7 @@ import type { BuildingInstanceSnapshot, CombatPresentationSnapshot, WorldDropPro
 import { projectRenderableBuildingInstances } from "./building-placement";
 import { panWorldViewport, worldPointVisible } from "./camera";
 import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageBuildingDepth } from "./depth";
-import { ProjectionBuffer } from "./projection-interpolation";
+import { ProjectionBuffer, type ProjectionDriftDiagnostic } from "./projection-interpolation";
 import {
   RANGER_PROJECTILE_SCALE,
   rangerProjectileOrigin,
@@ -63,6 +63,7 @@ interface ActorView {
   actionSequence: number;
   lootSequence: number;
   tradeSequence: number;
+  speechLabel: string | null;
 }
 interface ActorHealthBarView { root: Container; fill: Sprite; }
 interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; }
@@ -83,6 +84,8 @@ export class VisibleEntityWorld {
     tickDurationMs: 100,
     renderDelayMs: 100,
     maxExtrapolationTicks: 1,
+    visualDriftWarningTicks: 3,
+    onVisualDrift: (diagnostic) => this.onVisualDrift?.(diagnostic),
   });
   private buildingFootprints: BuildingFootprint[] = [];
   private readonly buildingTemplates = new Map<string, BuildingTemplate>();
@@ -112,6 +115,7 @@ export class VisibleEntityWorld {
     private readonly onSelect: (entityId: string, screenPoint?: { x: number; y: number }) => void,
     private readonly onBuildingSelect?: (instance: BuildingInstanceSnapshot, visual: TownBuilding) => void,
     private readonly onDensityCycle?: (regionId: string, nextLevel: number) => void,
+    private readonly onVisualDrift?: (diagnostic: ProjectionDriftDiagnostic) => void,
   ) {
     this.root.sortableChildren = true;
     this.worldLayer.sortableChildren = true;
@@ -397,7 +401,7 @@ export class VisibleEntityWorld {
       const view = {
         root, spine, presence, highlight, healthBar, animation: "", family, skinSignature,
         actionSequence: 0, lootSequence: current.loot_sequence,
-        tradeSequence: current.trade_sequence,
+        tradeSequence: current.trade_sequence, speechLabel: null,
       };
       root.position.set(current.x, current.y);
       this.views.set(id, view);
@@ -437,6 +441,12 @@ export class VisibleEntityWorld {
     if (entity.trade_sequence > view.tradeSequence) {
       view.tradeSequence = entity.trade_sequence;
       this.effects.showTradeSettlement(view.root, entity);
+    }
+    if (entity.speech_label && entity.speech_label !== view.speechLabel) {
+      view.speechLabel = entity.speech_label;
+      this.effects.showSpeech(view.root, entity.speech_label);
+    } else if (!entity.speech_label) {
+      view.speechLabel = null;
     }
     const requestedAnimation = view.family === "hunter" ? hunterActorVisual(entity).animation ?? entity.animation : entity.animation;
     if (view.animation === requestedAnimation && view.actionSequence === entity.action_sequence) return;

@@ -1,7 +1,14 @@
 import type { WorldEntityProjection } from "../generated/protocol";
 
 export type ProjectionMode = "village" | "field";
-export type ProjectionPushResult = "buffered" | "snapped";
+export type ProjectionPushResult = "buffered" | "snapped" | "ignored";
+
+export interface ProjectionDriftDiagnostic {
+  authoritativeTick: number;
+  visualTick: number;
+  driftTicks: number;
+  thresholdTicks: number;
+}
 
 interface ProjectionFrame {
   mode: ProjectionMode;
@@ -23,6 +30,8 @@ export interface ProjectionBufferOptions {
   maxTickGap?: number;
   teleportDistance?: number;
   maxExtrapolationTicks?: number;
+  visualDriftWarningTicks?: number;
+  onVisualDrift?: (diagnostic: ProjectionDriftDiagnostic) => void;
 }
 
 export class ProjectionBuffer {
@@ -33,6 +42,9 @@ export class ProjectionBuffer {
   private readonly maxTickGap: number;
   private readonly teleportDistance: number;
   private readonly maxExtrapolationTicks: number;
+  private readonly visualDriftWarningTicks: number;
+  private readonly onVisualDrift: ((diagnostic: ProjectionDriftDiagnostic) => void) | null;
+  private visualDriftActive = false;
   private renderTick: number | null = null;
   private sampledAtMs: number | null = null;
 
@@ -43,16 +55,31 @@ export class ProjectionBuffer {
     this.maxTickGap = options.maxTickGap ?? 5;
     this.teleportDistance = options.teleportDistance ?? 220;
     this.maxExtrapolationTicks = options.maxExtrapolationTicks ?? 3;
+    this.visualDriftWarningTicks = options.visualDriftWarningTicks ?? Number.POSITIVE_INFINITY;
+    this.onVisualDrift = options.onVisualDrift ?? null;
   }
 
   push(mode: ProjectionMode, visualTick: number, entities: WorldEntityProjection[], receivedAtMs: number): ProjectionPushResult {
+    let newest = this.frames.at(-1);
+    const restartedTimeline = newest !== undefined && newest.visualTick > this.maxTickGap && visualTick === 0;
+    if (restartedTimeline) {
+      // A restored server session starts a fresh visual timeline at tick zero.
+      // Treat that explicit boundary as a snap instead of ignoring every frame
+      // until the new session catches up with the previous session's tick.
+      this.reset();
+      newest = undefined;
+    }
     const matching = this.frames.find((frame) => frame.mode === mode && frame.visualTick === visualTick);
     if (matching) {
+      if (newest && matching.visualTick < newest.visualTick) return "ignored";
       matching.entities = entities;
       return "buffered";
     }
 
-    const newest = this.frames.at(-1);
+    // TCP preserves order within one connection, but reconnect/application
+    // scheduling can still deliver an already superseded projection. It must
+    // never rewind the visual timeline or trigger a false teleport snap.
+    if (newest && visualTick < newest.visualTick) return "ignored";
     const discontinuity = newest && (
       newest.mode !== mode
       || visualTick - newest.visualTick > this.maxTickGap
@@ -67,7 +94,7 @@ export class ProjectionBuffer {
     this.frames.push({ mode, visualTick, receivedAtMs, entities });
     this.frames.sort((left, right) => left.visualTick - right.visualTick);
     if (this.frames.length > this.maxFrames) this.frames.splice(0, this.frames.length - this.maxFrames);
-    return discontinuity ? "snapped" : "buffered";
+    return restartedTimeline || discontinuity ? "snapped" : "buffered";
   }
 
   sample(nowMs: number): ProjectionSample | null {
@@ -83,6 +110,26 @@ export class ProjectionBuffer {
       this.renderTick += Math.max(0, nowMs - this.sampledAtMs) / this.tickDurationMs;
     }
     this.sampledAtMs = nowMs;
+    // A throttled tab or a long main-thread pause can advance the wall-clock
+    // timeline far beyond the newest authoritative frame. Keep the visual
+    // clock bounded so later confirmations do not remain permanently behind
+    // an accumulated extrapolation debt.
+    const driftTicks = this.renderTick - newest.visualTick;
+    if (driftTicks > this.visualDriftWarningTicks) {
+      if (!this.visualDriftActive) {
+        this.onVisualDrift?.({
+          authoritativeTick: newest.visualTick,
+          visualTick: this.renderTick,
+          driftTicks,
+          thresholdTicks: this.visualDriftWarningTicks,
+        });
+      }
+      this.visualDriftActive = true;
+    } else {
+      this.visualDriftActive = false;
+    }
+    const maxRenderTick = newest.visualTick + Math.max(0, this.maxExtrapolationTicks);
+    if (this.renderTick > maxRenderTick) this.renderTick = maxRenderTick;
     const targetTick = this.renderTick;
     const oldest = this.frames[0];
     if (targetTick <= oldest.visualTick) return sampleFrame(oldest);
@@ -121,6 +168,7 @@ export class ProjectionBuffer {
     this.frames.length = 0;
     this.renderTick = null;
     this.sampledAtMs = null;
+    this.visualDriftActive = false;
   }
 
   bufferedTicks(): number[] { return this.frames.map((frame) => frame.visualTick); }

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { WorldEntityProjection } from "../generated/protocol";
 import { ProjectionBuffer } from "./projection-interpolation";
 
@@ -50,6 +50,90 @@ describe("protocol-v5 projection interpolation", () => {
     buffer.push("village", 10, [monster], 1000);
     buffer.push("village", 11, [{ ...monster, x: 10 }], 1100);
     expect(buffer.sample(2300)?.entities[0]?.x).toBe(60);
+  });
+
+  it("recovers the visual clock after a long main-thread pause", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 0, maxExtrapolationTicks: 1 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+
+    // Simulate a throttled tab/GC pause. The sample must not move the render
+    // clock ten seconds ahead of the authoritative timeline.
+    expect(buffer.sample(11_100)?.entities[0]?.x).toBe(20);
+
+    buffer.push("village", 12, [entity(20)], 11_200);
+    expect(buffer.sample(11_250)?.entities[0]?.x).toBe(30);
+    buffer.push("village", 13, [entity(30)], 11_300);
+    expect(buffer.sample(11_350)?.entities[0]?.x).toBe(40);
+  });
+
+  it("stays monotonic and bounded across irregular render-frame gaps", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 0, maxExtrapolationTicks: 1 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+
+    const positions = [1116, 1133, 1184, 1284, 1500].map((now) => buffer.sample(now)?.entities[0]?.x ?? -1);
+    expect(positions).toEqual([...positions].sort((left, right) => left - right));
+    expect(Math.max(...positions)).toBeLessThanOrEqual(20);
+  });
+
+  it("ignores a late out-of-order snapshot without rewinding or false-snapping", () => {
+    const buffer = new ProjectionBuffer({ teleportDistance: 50, renderDelayMs: 100 });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 12, [entity(20)], 1200);
+
+    expect(buffer.push("village", 11, [entity(-500)], 1300)).toBe("ignored");
+    expect(buffer.push("field", 9, [entity(900)], 1400)).toBe("ignored");
+    expect(buffer.bufferedTicks()).toEqual([10, 12]);
+    expect(buffer.sample(1300)?.entities[0]?.x).toBe(20);
+  });
+
+  it("starts a fresh timeline when reconnect restore explicitly returns to tick zero", () => {
+    const buffer = new ProjectionBuffer({ renderDelayMs: 100 });
+    buffer.push("village", 498, [entity(4900)], 49_800);
+    buffer.push("village", 499, [entity(4910)], 49_900);
+
+    expect(buffer.push("village", 0, [entity(120)], 50_000)).toBe("snapped");
+    expect(buffer.bufferedTicks()).toEqual([0]);
+    expect(buffer.sample(50_000)?.entities[0]?.x).toBe(120);
+
+    buffer.push("village", 1, [entity(130)], 50_100);
+    expect(buffer.sample(50_200)?.entities[0]?.x).toBe(130);
+  });
+
+  it("still ignores a slightly late tick zero during initial session startup", () => {
+    const buffer = new ProjectionBuffer({ maxTickGap: 5 });
+    buffer.push("village", 0, [entity(0)], 0);
+    buffer.push("village", 1, [entity(10)], 100);
+
+    expect(buffer.push("village", 0, [entity(-100)], 150)).toBe("ignored");
+    expect(buffer.bufferedTicks()).toEqual([0, 1]);
+    expect(buffer.sample(200)?.entities[0]?.x).toBe(20);
+  });
+
+  it("emits one drift warning per long-pause episode and rearms after recovery", () => {
+    const onVisualDrift = vi.fn();
+    const buffer = new ProjectionBuffer({
+      renderDelayMs: 0,
+      maxExtrapolationTicks: 1,
+      visualDriftWarningTicks: 3,
+      onVisualDrift,
+    });
+    buffer.push("village", 10, [entity(0)], 1000);
+    buffer.push("village", 11, [entity(10)], 1100);
+
+    buffer.sample(2100);
+    buffer.sample(2200);
+    expect(onVisualDrift).toHaveBeenCalledTimes(1);
+    expect(onVisualDrift).toHaveBeenCalledWith(expect.objectContaining({
+      authoritativeTick: 11,
+      thresholdTicks: 3,
+    }));
+
+    buffer.push("village", 12, [entity(20)], 2300);
+    buffer.sample(2300);
+    buffer.sample(3300);
+    expect(onVisualDrift).toHaveBeenCalledTimes(2);
   });
 
   it("never predicts idle or combat actors past the server position", () => {

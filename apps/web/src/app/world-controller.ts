@@ -19,6 +19,7 @@ import { ENHANCEMENT_FORGE_BUILDING_IDS } from "../content/blacksmith-route";
 import type { BuildingRenderingContext } from "./building-renderer";
 import type { HunterControllerContext } from "./hunter-controller";
 import { t } from "../i18n";
+import { recordClientEvent } from "../observability/client-telemetry";
 
 export interface WorldControllerContext {
   client: WorldClient;
@@ -100,6 +101,13 @@ export function createWorldController(context: WorldControllerContext) {
   }, (regionId, nextLevel) => {
     if (!context.client.setMonsterRegionDensity(regionId, nextLevel)) return;
     context.showPanelMessage(t("error.monster_density"), `${regionId}: ${["I", "II", "III"][nextLevel - 1] ?? nextLevel}`);
+  }, (diagnostic) => {
+    recordClientEvent("warn", "world_visual_tick_drift", {
+      authoritative_tick: diagnostic.authoritativeTick,
+      visual_tick: diagnostic.visualTick,
+      drift_ticks: diagnostic.driftTicks,
+      threshold_ticks: diagnostic.thresholdTicks,
+    });
   });
   const diagnostics = await visibleWorld.initialize((loaded, total) => {
     context.entryController.updateMapProgress(loaded, total);

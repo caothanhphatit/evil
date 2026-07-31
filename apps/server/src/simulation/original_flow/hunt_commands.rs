@@ -60,6 +60,26 @@ impl OriginalFlowSession {
             }
         }
 
+        // Critical service needs are a hard priority. A player command must
+        // not send a depleted Hunter back to a farm while the required house
+        // is out of stock; the Hunter stays near that house and complains.
+        if self
+            .hunter_roster
+            .hunters
+            .iter()
+            .find(|hunter| hunter.hunter_id == hunter_id)
+            .is_some_and(|hunter| {
+                hunter.current_hp > 0
+                    && (super::hunter_service_gauge(hunter, super::ServiceEffectKind::Hp)
+                        .needs_autonomous_service()
+                        || hunter.stamina.needs_autonomous_service()
+                        || hunter.satiety.needs_autonomous_service()
+                        || hunter.mood.needs_autonomous_service())
+            })
+        {
+            return self.rejected(INTENT, "hunter_needs_service");
+        }
+
         if let Err(error) = self.hunter_roster.assign_hunt(hunter_id, zone_id) {
             return self.rejected(INTENT, &error.to_string());
         }

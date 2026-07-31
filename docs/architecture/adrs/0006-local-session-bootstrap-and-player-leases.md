@@ -1,6 +1,6 @@
 # ADR-0006: Local Session Bootstrap And Player Leases
 
-- Status: Accepted for local educational runtime
+- Status: Superseded in part by ADR-0010; lease and fencing rules remain accepted
 - Date: 2026-07-23
 
 ## Context

@@ -1,10 +1,12 @@
 use super::{
     async_trait, new_account_roster, DurablePlayerAggregate, HashMap, HashSet, LoadedPlayerState,
-    PendingOperation, PlayerRepository, RepositoryError, RwLock, SessionTokenHash, Uuid,
+    PendingOperation, PlayerAccountRecord, PlayerRepository, RepositoryError, RwLock,
+    SessionTokenHash, Uuid,
 };
 
 pub struct InMemoryPlayerRepository {
     identities: RwLock<HashMap<SessionTokenHash, Uuid>>,
+    accounts: RwLock<HashMap<String, PlayerAccountRecord>>,
     pub(super) durable: RwLock<MemoryDurableState>,
 }
 
@@ -19,6 +21,7 @@ impl Default for InMemoryPlayerRepository {
     fn default() -> Self {
         Self {
             identities: RwLock::new(HashMap::new()),
+            accounts: RwLock::new(HashMap::new()),
             durable: RwLock::new(MemoryDurableState::default()),
         }
     }
@@ -26,6 +29,47 @@ impl Default for InMemoryPlayerRepository {
 
 #[async_trait]
 impl PlayerRepository for InMemoryPlayerRepository {
+    async fn create_account(
+        &self,
+        normalized_email: &str,
+        display_name: &str,
+        password_hash: &str,
+    ) -> Result<PlayerAccountRecord, RepositoryError> {
+        let mut accounts = self.accounts.write().await;
+        if accounts.contains_key(normalized_email) {
+            return Err(RepositoryError::AccountExists);
+        }
+        let account = PlayerAccountRecord {
+            account_id: Uuid::new_v4(),
+            player_token: Uuid::new_v4(),
+            normalized_email: normalized_email.to_owned(),
+            display_name: display_name.to_owned(),
+            password_hash: password_hash.to_owned(),
+            is_demo: false,
+        };
+        accounts.insert(normalized_email.to_owned(), account.clone());
+        Ok(account)
+    }
+
+    async fn find_account_by_email(
+        &self,
+        normalized_email: &str,
+    ) -> Result<Option<PlayerAccountRecord>, RepositoryError> {
+        Ok(self.accounts.read().await.get(normalized_email).cloned())
+    }
+
+    async fn bind_session(
+        &self,
+        token_hash: SessionTokenHash,
+        player_token: Uuid,
+    ) -> Result<(), RepositoryError> {
+        self.identities
+            .write()
+            .await
+            .insert(token_hash, player_token);
+        Ok(())
+    }
+
     async fn resolve_local_identity(
         &self,
         token_hash: SessionTokenHash,

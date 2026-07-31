@@ -52,10 +52,10 @@ mod world_snapshot;
 use building_domain::*;
 use durable_contracts::*;
 pub use durable_contracts::{
-    BottomMenuIntent, DurableBuilding, DurableBuildingState, DurableMaterialStock,
-    DurableMonsterFieldConfig, DurableMonsterMapDensity, DurablePlayerAggregate,
-    DurableProductServiceState, DurableProductServiceVisit, DurableProductStock,
-    DurableTradeSettlement, Facing, OriginalFlowPlayerState, OriginalScreen,
+    BottomMenuIntent, DurableBuilding, DurableBuildingState, DurableCraftedGearStock,
+    DurableMaterialStock, DurableMonsterFieldConfig, DurableMonsterMapDensity,
+    DurablePlayerAggregate, DurableProductServiceState, DurableProductServiceVisit,
+    DurableProductStock, DurableTradeSettlement, Facing, OriginalFlowPlayerState, OriginalScreen,
     WorldEntityActionState, WorldEntityKind, WorldMode, DURABLE_PLAYER_SCHEMA_VERSION,
     MAX_GEAR_ENHANCEMENT_LEVEL, MIGRATION_FIXTURE_CONTENT_ID,
 };

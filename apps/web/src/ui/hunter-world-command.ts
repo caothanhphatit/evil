@@ -19,7 +19,8 @@ export type HunterHuntingRegionId = typeof HUNTER_HUNTING_REGIONS[number]["id"];
 
 export type HunterWorldCommandIntent =
   | { type: "assign_hunter_hunting_region"; hunterEntityId: string; regionId: HunterHuntingRegionId }
-  | { type: "sell_hunter_loot"; hunterEntityId: string };
+  | { type: "sell_hunter_loot"; hunterEntityId: string }
+  | { type: "request_hunter_shop"; hunterEntityId: string; shopId: "build_7" | "build_8" | "build_20" };
 
 export interface HunterGearEnhancementRequestIntent {
   type: "request_hunter_gear_enhancement";
@@ -168,6 +169,24 @@ export function createHunterWorldCommandMenu(
         transition({ type: "close" });
       });
       options.append(sell);
+
+      for (const shop of [
+        { shopId: "build_7", label: t("hunter.command.buy_weapon"), glyph: "VK" },
+        { shopId: "build_8", label: t("hunter.command.buy_armor"), glyph: "GA" },
+        { shopId: "build_20", label: t("hunter.command.buy_accessory"), glyph: "PK" },
+      ] as const) {
+        const buy = menuButton(shop.label, `request_hunter_shop_${shop.shopId}`, shop.glyph);
+        buy.dataset.evidence = "user-confirmed-guided-hunter-purchase-flow";
+        buy.addEventListener("click", () => {
+          callbacks.onIntent({
+            type: "request_hunter_shop",
+            hunterEntityId: state.selection.entityId,
+            shopId: shop.shopId,
+          });
+          transition({ type: "close" });
+        });
+        options.append(buy);
+      }
 
       const enhance = menuButton(t("hunter.command.enhance_gear"), "request_hunter_gear_enhancement", "CH");
       enhance.dataset.evidence = "user-supplied-enhancement-flow";

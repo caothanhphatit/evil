@@ -578,6 +578,7 @@ pub struct WorldEntityProjection {
     pub action_sequence: u64,
     pub loot_sequence: u64,
     pub loot_label: Option<String>,
+    pub speech_label: Option<String>,
     pub trade_sequence: u64,
     pub trade_gold: u64,
     pub trade_materials: Vec<TradeMaterialPresentationSnapshot>,

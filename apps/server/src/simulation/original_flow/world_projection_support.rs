@@ -49,6 +49,7 @@ pub(super) fn visual_entity(
         action_sequence: 0,
         loot_sequence: 0,
         loot_label: None,
+        speech_label: None,
         trade_sequence: 0,
         trade_gold: 0,
         trade_materials: Vec::new(),

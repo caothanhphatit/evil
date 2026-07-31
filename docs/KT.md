@@ -79,6 +79,16 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   incremental; existing server simulation remains authoritative until each
   low-value field is explicitly moved behind the farm-report validator.
 
+- ADR 0010 replaces browser-local profiles with PostgreSQL-backed accounts.
+  Registration/login issue fresh HttpOnly sessions bound to one durable player,
+  so the same account can resume from another browser. Redis leases and
+  PostgreSQL fencing still permit only one active simulation writer per
+  account. Three development demo logins own independent player worlds and
+  receive the full-stock seed on their first authoritative load.
+- Protocol v31 raises the generated JSON message ceiling to 4 MiB because the
+  fully stocked demo welcome snapshot is about 1.84 MiB. Keeping the old 1 MiB
+  ceiling caused the client to reject the welcome and reconnect forever at 92%.
+
 - The WebSocket scheduler may run at a configured 1-60 Hz, but the gameplay
   domain advances through a deterministic 100 ms fixed-step accumulator. This
   keeps movement, combat, respawn, buffs and cooldowns invariant when transport
@@ -127,9 +137,11 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   Hunter collects the gold drop. Once a pickup starts, nearby aggro no longer
   resets it indefinitely; the presentation includes the collected quantity.
 - Service crafting and Hunter-to-town service payment are connected for Inn,
-  Infirmary, Restaurant and Tavern, but autonomous gauge decay, service choice
-  and walk-to-building behavior remain unresolved. Static capture targets and
-  exact field/method identities are recorded in
+  Infirmary, Restaurant and Tavern. An accepted rebuild rule now decays the
+  three non-HP gauges on authoritative hunting ticks, preempts farming below
+  10%, routes all four gauges to their matching service house, and keeps an
+  out-of-stock Hunter waiting/complaining near that house. Exact original decay
+  and choice formulas remain unresolved; see
   `docs/migration/hunter-autonomous-service-evidence-v1.md`.
 - Alchemist (`build_14`) craft now routes finished consumables to Potion Shop
   (`build_11`) for display/purchase using the resolved recipe inputs/outputs
@@ -790,13 +802,15 @@ Before reporting work complete:
   durable owned product. Migration `0024_hunter_owned_items.sql` persists that
   ownership. These transaction semantics are rebuild product behavior; they do
   not claim the still-unresolved original helper/offset identities.
-- Gear crafting is being upgraded from aggregate product stock to individual
-  rows under the explicit `web-rebuild-v1-gear-roll` ruleset. Recipe
-  `kind/index/rating` binds directly to the packaged gear catalog and normalized
-  icon path; migration `0025_crafted_gear_stock.sql` defines durable shop rows.
-  The deterministic row generator is implemented and tested, but repository
-  load/save plus craft/purchase transfer wiring remain incomplete and must not
-  yet be presented as a finished individual-gear flow.
+- Gear shop rows have durable individual-stock persistence and purchase transfer
+  wiring, but creation is currently fail-closed. The original ARM64 capture
+  proves `GearData` has plus/minus and additional option arrays plus `buyGold`,
+  while quality/option pools, roll order, default-mod branches, and
+  mod-dependent pricing remain unresolved. The former synthetic
+  `web-rebuild-v1-gear-roll` generator was removed; craft rejects with
+  `gear_creation_evidence_unresolved` before debiting materials. See
+  `docs/migration/original-gear-creation-writer-boundary-v1.md` and
+  `reverse-engineering/evidence/original-gear-creation-writer-boundary-v1.json`.
 - Gear enhancement now has a versioned intent and ownership/result projection
   for the product-required `+20` cap and four UI modes. It remains fail-closed:
   original enhancement cost, material and probability bindings have not been

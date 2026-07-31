@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "contractType": "original-gear-creation-writer-boundary",
+  "runtimeCompatibility": "evidence-only",
+  "capture": {
+    "packageId": "com.superplanet.evilhunter",
+    "versionName": "1.411",
+    "versionCode": "26071501",
+    "deviceAbi": "arm64-v8a",
+    "androidApi": "35",
+    "methodSchemaSource": "temporary ARM64 session; GearData/GearCreatePop/GearCreateResultPop schema"
+  },
+  "confirmedDataModel": {
+    "GearData": [
+      "quality",
+      "level",
+      "rating",
+      "plusType[]",
+      "plusValue[]",
+      "minusType[]",
+      "minusValue[]",
+      "addPlusType[]",
+      "addPlusValue[]",
+      "addMinusType[]",
+      "addMinusValue[]",
+      "buyGold"
+    ],
+    "writerMethods": [
+      "GearCreatePop.CreateGear",
+      "GearCreatePop.SetRandOption",
+      "GearCreatePop.SetRandOptionValue",
+      "GearCreatePop.SetAddedRandOption",
+      "GearCreatePop.SetAddedRandOptionValue"
+    ]
+  },
+  "methodTokens": {
+    "CreateGear": "100689264",
+    "SetRandOption": "100689246",
+    "SetRandOptionValue": "100689262",
+    "SetAddedRandOption": "100689270",
+    "SetAddedRandOptionValue": "100689275"
+  },
+  "unresolved": [
+    "quality pool and roll order",
+    "plus/minus/additional option pool selection and value ranges",
+    "default option versus random option branch",
+    "whether buyGold is catalog price, mod-adjusted price, or another stored value",
+    "mapping from option type integers to gameplay stats"
+  ],
+  "implementationBoundary": {
+    "liveIntegrationAllowed": false,
+    "requiredNextEvidence": "External native captures of the writer callees plus controlled before/after GearData values; no in-process hook because the package detects debugging.",
+    "serverBehavior": "Gear creation and mod-dependent purchase pricing must fail closed until all unresolved fields are bound."
+  }
+}

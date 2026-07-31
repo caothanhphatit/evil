@@ -38,6 +38,16 @@ pub struct DurableHunterOwnedItem {
     pub enhancement_level: Option<u8>,
     #[serde(default)]
     pub gear_instance_id: Option<Uuid>,
+    #[serde(default)]
+    pub quality: Option<u8>,
+    #[serde(default)]
+    pub primary_stat: Option<u32>,
+    #[serde(default)]
+    pub option_type: Option<u8>,
+    #[serde(default)]
+    pub option_value: Option<u16>,
+    #[serde(default)]
+    pub ruleset: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

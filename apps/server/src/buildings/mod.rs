@@ -28,8 +28,8 @@ pub use identifiers::{BaseBuildingId, BuildingSkinId, BuildingSkinKey, TownBuild
 pub use ports::{BuildingRepository, LoadedTownBuildingState, TownBuildingRepository};
 pub use postgres::PostgresBuildingRepository;
 pub use town::{
-    TownBuildingInstance, TownBuildingState, TownMaterialStock, TownProductStock,
-    TownTradeSettlement,
+    TownBuildingInstance, TownBuildingState, TownCraftedGearStock, TownMaterialStock,
+    TownProductStock, TownTradeSettlement,
 };
 
 #[cfg(test)]

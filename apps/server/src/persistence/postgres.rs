@@ -3,8 +3,8 @@ use super::{
     load_hunter_roster_in, new_account_roster, operational_migration_roster, save_hunter_roster_in,
     town_from_durable_buildings, upgrade_operational_fixture_roster, BuildingRepository,
     BuildingRepositoryError, DurablePlayerAggregate, LoadedPlayerState, PendingOperation, PgPool,
-    PgPoolOptions, PlayerRepository, PostgresBuildingRepository, RepositoryError, Row,
-    SessionTokenHash, Uuid, ACTIVE_BUILDING_RELEASE_ID,
+    PgPoolOptions, PlayerAccountRecord, PlayerRepository, PostgresBuildingRepository,
+    RepositoryError, Row, SessionTokenHash, Uuid, ACTIVE_BUILDING_RELEASE_ID,
 };
 
 pub struct PostgresPlayerRepository {
@@ -37,6 +37,93 @@ impl PostgresPlayerRepository {
 
 #[async_trait]
 impl PlayerRepository for PostgresPlayerRepository {
+    async fn create_account(
+        &self,
+        normalized_email: &str,
+        display_name: &str,
+        password_hash: &str,
+    ) -> Result<PlayerAccountRecord, RepositoryError> {
+        let account_id = Uuid::new_v4();
+        let player_token = Uuid::new_v4();
+        let result = sqlx::query(
+            r#"
+            INSERT INTO player_account
+                (account_id, player_token, normalized_email, display_name, password_hash)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING account_id, player_token, normalized_email, display_name, password_hash, is_demo
+            "#,
+        )
+        .bind(account_id)
+        .bind(player_token)
+        .bind(normalized_email)
+        .bind(display_name)
+        .bind(password_hash)
+        .fetch_one(&self.pool)
+        .await;
+        let row = match result {
+            Ok(row) => row,
+            Err(sqlx::Error::Database(error)) if error.code().as_deref() == Some("23505") => {
+                return Err(RepositoryError::AccountExists)
+            }
+            Err(error) => return Err(error.into()),
+        };
+        Ok(PlayerAccountRecord {
+            account_id: row.try_get("account_id")?,
+            player_token: row.try_get("player_token")?,
+            normalized_email: row.try_get("normalized_email")?,
+            display_name: row.try_get("display_name")?,
+            password_hash: row.try_get("password_hash")?,
+            is_demo: row.try_get("is_demo")?,
+        })
+    }
+
+    async fn find_account_by_email(
+        &self,
+        normalized_email: &str,
+    ) -> Result<Option<PlayerAccountRecord>, RepositoryError> {
+        let row = sqlx::query(
+            r#"
+            SELECT account_id, player_token, normalized_email, display_name, password_hash, is_demo
+            FROM player_account
+            WHERE normalized_email = $1
+            "#,
+        )
+        .bind(normalized_email)
+        .fetch_optional(&self.pool)
+        .await?;
+        row.map(|row| {
+            Ok(PlayerAccountRecord {
+                account_id: row.try_get("account_id")?,
+                player_token: row.try_get("player_token")?,
+                normalized_email: row.try_get("normalized_email")?,
+                display_name: row.try_get("display_name")?,
+                password_hash: row.try_get("password_hash")?,
+                is_demo: row.try_get("is_demo")?,
+            })
+        })
+        .transpose()
+    }
+
+    async fn bind_session(
+        &self,
+        token_hash: SessionTokenHash,
+        player_token: Uuid,
+    ) -> Result<(), RepositoryError> {
+        sqlx::query(
+            r#"
+            INSERT INTO local_identities (token_hash, player_token)
+            VALUES ($1, $2)
+            ON CONFLICT (token_hash) DO UPDATE
+            SET player_token = EXCLUDED.player_token, last_seen_at = now()
+            "#,
+        )
+        .bind(token_hash.as_bytes().as_slice())
+        .bind(player_token)
+        .execute(&self.pool)
+        .await?;
+        Ok(())
+    }
+
     async fn resolve_local_identity(
         &self,
         token_hash: SessionTokenHash,
@@ -75,6 +162,12 @@ impl PlayerRepository for PostgresPlayerRepository {
         &self,
         player_token: Uuid,
     ) -> Result<LoadedPlayerState, RepositoryError> {
+        let is_demo_account = sqlx::query_scalar::<_, bool>(
+            "SELECT COALESCE((SELECT is_demo FROM player_account WHERE player_token = $1), FALSE)",
+        )
+        .bind(player_token)
+        .fetch_one(&self.pool)
+        .await?;
         let mut default_state = DurablePlayerAggregate::default();
         let is_new_account = !sqlx::query_scalar::<_, bool>(
             "SELECT EXISTS (SELECT 1 FROM player_world_state WHERE player_token = $1)",
@@ -101,7 +194,7 @@ impl PlayerRepository for PostgresPlayerRepository {
         .await?;
         let mut state = decode_player_state(row.try_get("state")?)?;
         let revision: i64 = row.try_get("revision")?;
-        let town = match self
+        let mut town = match self
             .buildings
             .load_town_in(&mut transaction, player_token)
             .await?
@@ -140,6 +233,17 @@ impl PlayerRepository for PostgresPlayerRepository {
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
         } else if upgrade_operational_fixture_roster(&mut roster) {
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
+        }
+        if is_new_account && is_demo_account {
+            sqlx::query("SELECT seed_full_demo_account_stock($1)")
+                .bind(player_token)
+                .execute(&mut *transaction)
+                .await?;
+            town = self
+                .buildings
+                .load_town_in(&mut transaction, player_token)
+                .await?
+                .ok_or(RepositoryError::RevisionDivergence)?;
         }
         state.hunter_roster = roster;
         state.buildings = durable_buildings_from_town(town.state)?;

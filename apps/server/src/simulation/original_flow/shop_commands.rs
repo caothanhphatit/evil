@@ -1,5 +1,5 @@
 use super::{
-    consumable_purchase_price, gear_product_route, product_sale_building_id,
+    consumable_purchase_price, gear_product_route, gear_purchase_price, product_sale_building_id,
     settle_returning_hunters, BaseBuildingId, OriginalFlowSession, ServerMessage, Uuid,
 };
 
@@ -44,30 +44,32 @@ impl OriginalFlowSession {
             return self.rejected("purchase_shop_item", "product_level_locked");
         }
         let building_instance_id = building.instance_id.clone();
-        let Some(stock) = self.buildings.product_stocks.iter_mut().find(|stock| {
+        let Some(stock_index) = self.buildings.product_stocks.iter().position(|stock| {
             stock.building_instance_id == building_instance_id && stock.product_id == product_id
         }) else {
             return self.rejected("purchase_shop_item", "product_stock_empty");
         };
-        if stock.quantity == 0 {
+        if self.buildings.product_stocks[stock_index].quantity == 0 {
             return self.rejected("purchase_shop_item", "product_stock_empty");
         }
         let price = route
             .as_ref()
             .and_then(|_| product.sale_price.first().map(|amount| amount.quantity))
+            .or_else(|| gear_purchase_price(&self.building_content.gameplay, product))
             .or_else(|| consumable_purchase_price(&self.building_content.gameplay, product))
             .unwrap_or(0);
         if price == 0 {
             return self.rejected("purchase_shop_item", "sale_price_unresolved");
         }
-        let Some(hunter) = self
+        let Some(hunter_index) = self
             .hunter_roster
             .hunters
-            .iter_mut()
-            .find(|hunter| hunter.hunter_id == hunter_id)
+            .iter()
+            .position(|hunter| hunter.hunter_id == hunter_id)
         else {
             return self.rejected("purchase_shop_item", "hunter_unknown");
         };
+        let hunter = &self.hunter_roster.hunters[hunter_index];
         if !hunter.hunt.is_idle() {
             return self.rejected("purchase_shop_item", "hunter_not_in_town");
         }
@@ -85,8 +87,28 @@ impl OriginalFlowSession {
             }
         }
 
+        let crafted_gear = if route.is_some() {
+            let Some(position) = self.buildings.crafted_gear_stocks.iter().position(|gear| {
+                gear.building_instance_id == building_instance_id && gear.product_id == product_id
+            }) else {
+                return self.rejected("purchase_shop_item", "crafted_gear_stock_empty");
+            };
+            Some(self.buildings.crafted_gear_stocks.remove(position))
+        } else {
+            None
+        };
+        if crafted_gear
+            .as_ref()
+            .is_some_and(|gear| gear.ruleset == "web-rebuild-v1-gear-roll")
+        {
+            // Rows produced by the removed synthetic generator have no
+            // evidence-backed mod-dependent buyGold value.
+            return self.rejected("purchase_shop_item", "gear_price_evidence_unresolved");
+        }
+
+        let hunter = &mut self.hunter_roster.hunters[hunter_index];
         hunter.gold -= price;
-        stock.quantity -= 1;
+        self.buildings.product_stocks[stock_index].quantity -= 1;
         self.buildings.town_gold = self.buildings.town_gold.saturating_add(price);
         // A gear purchase is an individually rolled item and must never be
         // merged into a product stack. Consumables remain stackable.
@@ -105,22 +127,23 @@ impl OriginalFlowSession {
                         quantity: 1,
                         enhancement_level: None,
                         gear_instance_id: None,
+                        ..Default::default()
                     });
             }
         } else {
+            let crafted = crafted_gear.expect("gear stock was resolved before mutation");
             hunter
                 .owned_items
                 .push(super::super::hunter_roster::DurableHunterOwnedItem {
                     product_id: product_id.to_owned(),
                     quantity: 1,
-                    enhancement_level: None,
-                    gear_instance_id: route.is_some().then(|| {
-                        if command_id != Uuid::nil() {
-                            command_id
-                        } else {
-                            Uuid::new_v4()
-                        }
-                    }),
+                    enhancement_level: Some(0),
+                    gear_instance_id: Some(crafted.gear_instance_id),
+                    quality: Some(crafted.quality),
+                    primary_stat: Some(crafted.primary_stat),
+                    option_type: Some(crafted.option_type),
+                    option_value: Some(crafted.option_value),
+                    ruleset: Some(crafted.ruleset),
                 });
         }
         if route.is_some() {

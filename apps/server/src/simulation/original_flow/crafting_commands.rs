@@ -1,7 +1,8 @@
 use super::{
     can_pay_costs, capacity_for_level, gear_product_route, material_difficulty_rating, pay_costs,
     product_sale_building_id, BaseBuildingId, DurableMaterialStock, DurableProductStock,
-    EconomyAmount, OriginalFlowSession, ServerMessage, ServiceEffectKind, MAX_PRODUCTION_QUANTITY,
+    EconomyAmount, OriginalFlowSession, ServerMessage, ServiceEffectKind, Uuid,
+    MAX_PRODUCTION_QUANTITY,
 };
 
 impl OriginalFlowSession {
@@ -114,6 +115,7 @@ impl OriginalFlowSession {
 
     pub(super) fn craft_shop_item(
         &mut self,
+        command_id: Uuid,
         instance_id: &str,
         recipe_id: &str,
         material_id: Option<&str>,
@@ -121,6 +123,19 @@ impl OriginalFlowSession {
     ) -> ServerMessage {
         if !self.shared_world_active() {
             return self.rejected("craft_shop_item", "village_unavailable");
+        }
+        let command_key = format!(
+            "craft_shop_item:{instance_id}:{recipe_id}:{}:{quantity}",
+            material_id.unwrap_or("")
+        );
+        if command_id != Uuid::nil() {
+            if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
+                return if previous == &command_key {
+                    self.accepted("craft_shop_item")
+                } else {
+                    self.rejected("craft_shop_item", "command_id_conflict")
+                };
+            }
         }
         let Some(building) = self
             .buildings
@@ -154,6 +169,13 @@ impl OriginalFlowSession {
             .is_some_and(|route| route.difficulty_group > u16::from(building.level))
         {
             return self.rejected("craft_shop_item", "product_level_locked");
+        }
+        if gear_route.is_some() {
+            // The captured original writer exposes several option arrays and
+            // a per-instance buyGold field, but its pool/order/price semantics
+            // are not yet proven. Never debit materials for an unverifiable
+            // gear result.
+            return self.rejected("craft_shop_item", "gear_creation_evidence_unresolved");
         }
         let crafting_capability = self
             .building_content
@@ -249,6 +271,11 @@ impl OriginalFlowSession {
                 product_id: recipe_id.to_owned(),
                 quantity,
             });
+        }
+        if command_id != Uuid::nil() {
+            self.hunter_roster
+                .hunt_commands
+                .insert(command_id, command_key);
         }
         self.accepted("craft_shop_item")
     }

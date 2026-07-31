@@ -39,6 +39,7 @@ export interface BuildingRenderingContext {
   selectedEnhancementMode: GearEnhancementMode;
   enhancementView: GearEnhancementView;
   enhancementHunterId: number | null;
+  purchaseHunterId: number | null;
   selectedEnhancementOptionalMaterialIds: string[];
   gearPopupMode: "craft" | "detail";
   selectedBountyTier: number;
@@ -1252,7 +1253,10 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreateSubmit.hidden = context.gearPopupMode === "detail";
     context.gearCreateSubmit.textContent = t("common.produce");
     context.gearCreateSell.hidden = context.gearPopupMode !== "detail";
-    context.gearCreateSell.disabled = true;
+    context.gearCreateSell.textContent = t("common.buy");
+    context.gearCreateSell.disabled = context.purchaseHunterId === null
+      || context.selectedRecipe.stock < 1
+      || context.selectedRecipe.sale_price < 1;
     let craftable = true;
     context.gearMaterialCosts.replaceChildren(...context.selectedRecipe.material_costs.map((cost) => {
       const stock = system.material_stocks.find((item) => item.id === cost.material_id);

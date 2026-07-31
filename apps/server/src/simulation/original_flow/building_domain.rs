@@ -136,6 +136,23 @@ pub(super) fn consumable_purchase_price(
         .copied()
 }
 
+/// Resolves the recovered `buyMoneyByRating` value from the output gear item.
+pub(super) fn gear_purchase_price(
+    gameplay: &BuildingGameplayCatalog,
+    product: &crate::buildings::EconomyProductDefinition,
+) -> Option<u64> {
+    let route = gear_product_route(gameplay, product)?;
+    let output = product.outputs.first()?;
+    if output.quantity != 1 || !output.resource_id.starts_with("gear:") {
+        return None;
+    }
+    gameplay
+        .item(&output.resource_id)?
+        .hunter_pays_town_gold_by_tier
+        .get(usize::from(route.rating))
+        .copied()
+}
+
 pub(super) fn product_display_name(product_id: &str) -> Option<&'static str> {
     Some(match product_id {
         "product:0" => "Small Room",

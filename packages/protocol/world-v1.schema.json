@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 29,
+  "schemaVersion": 31,
   "fixtureContracts": [
     {
       "id": "migration-fixture.slice1-combat-v1",
@@ -10,7 +10,7 @@
   ],
   "wire": {
     "encoding": "json-debug",
-    "maxMessageBytes": 1048576,
+    "maxMessageBytes": 4194304,
     "envelopeFields": ["version", "sequence", "session_id", "correlation_id", "payload"]
   },
   "projectionContracts": {

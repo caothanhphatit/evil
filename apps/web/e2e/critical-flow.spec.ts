@@ -20,6 +20,12 @@ test("sign in, load the authoritative town, and open the Hunter roster", async (
   await page.locator('#bottom-menu [data-action="character"]').click();
   await expect(page.locator("#roster-screen")).toHaveClass(/visible/);
   await expect(page.locator("#hunter-active-list .hunter-roster-card").first()).toBeVisible();
+  await page.locator("#roster-back").click();
+  await expect(page.locator("#roster-screen")).not.toHaveClass(/visible/);
+  await expect(page.locator("#roster-screen")).toHaveAttribute("aria-hidden", "true");
+
+  await page.locator('#bottom-menu [data-action="character"]').click();
+  await expect(page.locator("#roster-screen")).toHaveClass(/visible/);
 
   const viewportFits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
   expect(viewportFits).toBe(true);

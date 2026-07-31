@@ -44,20 +44,22 @@ use crate::{
     buildings::{
         BaseBuildingId, BuildingRepository, BuildingRepositoryError, BuildingSkinId,
         PostgresBuildingRepository, TownBuildingInstance, TownBuildingInstanceId,
-        TownBuildingState, TownMaterialStock, TownProductStock, TownTradeSettlement,
+        TownBuildingState, TownCraftedGearStock, TownMaterialStock, TownProductStock,
+        TownTradeSettlement,
     },
     identity::SessionTokenHash,
     simulation::{
         new_account_roster, operational_migration_roster, upgrade_operational_fixture_roster,
-        DurableBuilding, DurableBuildingState, DurableHunterEquipmentSlot, DurableHunterOwnedItem,
-        DurableHunterProfile, DurableHunterProgress, DurableHunterRosterState,
-        DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable, DurableHunterRuntimeGear,
-        DurableHunterRuntimeGrowth, DurableHunterRuntimeInventory, DurableHunterRuntimeItem,
-        DurableHunterRuntimeRidingPet, DurableHunterRuntimeSkill, DurableHunterRuntimeState,
-        DurableHunterRuntimeStatus, DurableHunterSkill, DurableHunterState, DurableHunterTrait,
-        DurableMaterialStock, DurablePlayerAggregate, DurableProductStock, DurableTradeSettlement,
-        DurableWaitingHunter, HunterBanishment, HunterServiceGauge, OriginalFlowPlayerState,
-        PendingOperation, DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_HUNTER_RELEASE_ID,
+        DurableBuilding, DurableBuildingState, DurableCraftedGearStock, DurableHunterEquipmentSlot,
+        DurableHunterOwnedItem, DurableHunterProfile, DurableHunterProgress,
+        DurableHunterRosterState, DurableHunterRuntimeAppearance, DurableHunterRuntimeConsumable,
+        DurableHunterRuntimeGear, DurableHunterRuntimeGrowth, DurableHunterRuntimeInventory,
+        DurableHunterRuntimeItem, DurableHunterRuntimeRidingPet, DurableHunterRuntimeSkill,
+        DurableHunterRuntimeState, DurableHunterRuntimeStatus, DurableHunterSkill,
+        DurableHunterState, DurableHunterTrait, DurableMaterialStock, DurablePlayerAggregate,
+        DurableProductStock, DurableTradeSettlement, DurableWaitingHunter, HunterBanishment,
+        HunterServiceGauge, OriginalFlowPlayerState, PendingOperation,
+        DURABLE_PLAYER_SCHEMA_VERSION, MIGRATION_HUNTER_RELEASE_ID,
     },
 };
 
@@ -77,6 +79,18 @@ pub enum RepositoryError {
     Building(#[from] BuildingRepositoryError),
     #[error("world and town revisions diverged")]
     RevisionDivergence,
+    #[error("account email already exists")]
+    AccountExists,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PlayerAccountRecord {
+    pub account_id: Uuid,
+    pub player_token: Uuid,
+    pub normalized_email: String,
+    pub display_name: String,
+    pub password_hash: String,
+    pub is_demo: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -87,6 +101,24 @@ pub struct LoadedPlayerState {
 
 #[async_trait]
 pub trait PlayerRepository: Send + Sync {
+    async fn create_account(
+        &self,
+        normalized_email: &str,
+        display_name: &str,
+        password_hash: &str,
+    ) -> Result<PlayerAccountRecord, RepositoryError>;
+
+    async fn find_account_by_email(
+        &self,
+        normalized_email: &str,
+    ) -> Result<Option<PlayerAccountRecord>, RepositoryError>;
+
+    async fn bind_session(
+        &self,
+        token_hash: SessionTokenHash,
+        player_token: Uuid,
+    ) -> Result<(), RepositoryError>;
+
     async fn resolve_local_identity(
         &self,
         token_hash: SessionTokenHash,

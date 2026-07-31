@@ -4,6 +4,7 @@ import { VisibleEntityWorld } from "../game/visible-world";
 import { nextHunterRosterOpen } from "../ui/bottom-menu-state";
 import { createCombatHudController } from "./combat-hud-controller";
 import { setPanelMessage } from "../ui/panel-message";
+import { bindOverlayCloseControls } from "../ui/overlay-close-controls";
 import { createHunterRosterActors } from "../ui/hunter-roster-actors";
 import { createHunterInfoModal } from "../ui/hunter-info/modal";
 import { createHunterWorldCommandMenu } from "../ui/hunter-world-command";
@@ -37,6 +38,7 @@ const bottomMenu = element<HTMLElement>("#bottom-menu");
 const hunterCapacity = element<HTMLElement>("#hunter-capacity");
 const hunterActiveList = element<HTMLElement>("#hunter-active-list");
 const hunterRosterStatus = element<HTMLElement>("#hunter-roster-status");
+const rosterBack = element<HTMLButtonElement>("#roster-back");
 const panelMessage = element<HTMLElement>("#panel-message");
 const fpsCounter = element<HTMLElement>("#fps-counter");
 const worldViewport = element<HTMLElement>("#world-viewport");
@@ -133,6 +135,7 @@ const buildingContext: BuildingRenderingContext = {
   selectedEnhancementMode: "single",
   enhancementView: "select",
   enhancementHunterId: null,
+  purchaseHunterId: null,
   selectedEnhancementOptionalMaterialIds: [],
   gearPopupMode: "craft",
   selectedBountyTier: 0,
@@ -309,6 +312,20 @@ const hunterContext: HunterControllerContext = {
   buildingContext,
   setHunterRosterVisibility,
   showPanelMessage,
+  openHunterShop: (hunterId, shopId) => {
+    const instance = latestSnapshot?.village.building_system.instances.find((row) => row.building_id === shopId);
+    if (!instance) {
+      showPanelMessage(t("error.building_missing"), shopId);
+      return;
+    }
+    buildingContext.purchaseHunterId = hunterId;
+    buildingContext.selectedBuildingId = shopId;
+    buildingContext.selectedBuildingInstanceId = instance.instance_id;
+    buildingContext.selectedBuildingVisual = null;
+    buildingContext.buildingPanelMode = "building";
+    buildingContext.buildingPanel.hidden = false;
+    buildingRenderer.renderBuildingSystem(latestSnapshot);
+  },
 };
 const hunterController = createHunterController(hunterContext);
 let worldController: ReturnType<typeof createWorldController>;
@@ -485,18 +502,28 @@ handleMenuAction(button);
   document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) => {
 if (!button.closest(".bottom-menu")) button.addEventListener("click", () => handleMenuAction(button));
   });
-  buildingPanelClose.addEventListener("click", () => {
-buildingPanel.hidden = true;
-tradingRequestPop.hidden = true;
-buildingContext.selectedTradingRequest = null;
-buildingContext.tradingRequestPending = false;
-buildingContext.enhancementView = "select";
-buildingContext.selectedEnhancementGearKey = null;
-buildingContext.enhancementHunterId = null;
-buildingContext.selectedEnhancementOptionalMaterialIds = [];
-if (selectedMenuAction === "build") selectedMenuAction = null;
-bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
-  });
+  bindOverlayCloseControls([
+    { overlay: "hunter-roster", controls: [rosterBack], close: () => setHunterRosterVisibility(false) },
+    {
+      overlay: "building-panel",
+      controls: [buildingPanelClose],
+      close: () => {
+        buildingPanel.hidden = true;
+        tradingRequestPop.hidden = true;
+        buildingContext.selectedTradingRequest = null;
+        buildingContext.tradingRequestPending = false;
+        buildingContext.enhancementView = "select";
+        buildingContext.selectedEnhancementGearKey = null;
+        buildingContext.enhancementHunterId = null;
+        buildingContext.selectedEnhancementOptionalMaterialIds = [];
+        if (selectedMenuAction === "build") selectedMenuAction = null;
+        bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
+      },
+    },
+    { overlay: "bounty-quest", controls: [bountyClose, bountyCloseBottom], close: () => { bountyPop.hidden = true; } },
+    { overlay: "gear-create", controls: [gearCreateClose], close: () => { gearCreatePop.hidden = true; } },
+    { overlay: "consumable-create", controls: [consumCreateClose], close: () => { consumCreatePop.hidden = true; } },
+  ]);
   buildingConstruct.addEventListener("click", () => { if (buildingContext.selectedBuildingId) client.constructBuilding(buildingContext.selectedBuildingId); });
   buildingUpgrade.addEventListener("click", () => { if (buildingContext.selectedBuildingInstanceId) client.upgradeBuilding(buildingContext.selectedBuildingInstanceId); });
   buildingUse.addEventListener("click", () => {
@@ -537,8 +564,6 @@ if (buildingContext.selectedBuildingId === BOUNTY_HUT_ROUTE.buildingId) {
   if (recipe) client.craftShopItem(buildingContext.selectedBuildingInstanceId, recipe.id, 1);
 }
   });
-  bountyClose.addEventListener("click", () => { bountyPop.hidden = true; });
-  bountyCloseBottom.addEventListener("click", () => { bountyPop.hidden = true; });
   bountyUpgrade.addEventListener("click", () => { if (buildingContext.selectedBuildingInstanceId) client.upgradeBuilding(buildingContext.selectedBuildingInstanceId); });
 
 gearCreateQuantity.addEventListener("input", () => {
@@ -565,11 +590,17 @@ gearCreateSubmit.addEventListener("click", () => {
   }
 });
 gearCreateSell.addEventListener("click", () => {
-  // Lock/dismantle require a concrete owned gear instance. Keep the recovered
-  // detail control visible but fail closed until that binding exists.
+  if (buildingContext.gearPopupMode !== "detail"
+    || buildingContext.purchaseHunterId === null
+    || !buildingContext.selectedBuildingId
+    || !buildingContext.selectedRecipe) return;
+  client.purchaseShopItem(
+    buildingContext.purchaseHunterId,
+    buildingContext.selectedBuildingId,
+    buildingContext.selectedRecipe.id,
+  );
 });
 gearLock.addEventListener("click", () => {});
-gearCreateClose.addEventListener("click", () => { gearCreatePop.hidden = true; });
 function changeServiceQuantity(delta: number): void {
   buildingContext.selectedServiceQuantity = clampQuantity(buildingContext.selectedServiceQuantity + delta, 1, 1000);
   buildingRenderer.renderConsumCreatePop();
@@ -595,4 +626,3 @@ consumCreateSubmit.addEventListener("click", () => {
     client.craftShopItem(buildingContext.selectedBuildingInstanceId, buildingContext.selectedRecipe.id, buildingContext.selectedServiceQuantity, materialId);
   }
 });
-consumCreateClose.addEventListener("click", () => { consumCreatePop.hidden = true; });
