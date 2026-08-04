@@ -3,7 +3,6 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const stylesPath = resolve(import.meta.dirname, "../styles.css");
-const mainPath = resolve(import.meta.dirname, "../app/game-application.ts");
 const tradePath = resolve(import.meta.dirname, "../app/trade-popup.ts");
 
 describe("Trading Post compact BuildingPop", () => {
