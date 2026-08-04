@@ -296,9 +296,13 @@ impl MonsterWorldState {
             else {
                 continue;
             };
-            let Some(mut calculated_damage) =
-                original_level_scaled_attack(hunter.profile.attack, hunter.profile.level)
-            else {
+            let Some(mut calculated_damage) = original_level_scaled_attack(
+                hunter
+                    .profile
+                    .attack
+                    .saturating_add(u64::from(hunter.equipped_weapon_attack_damage())),
+                hunter.profile.level,
+            ) else {
                 continue;
             };
             calculated_damage = calculated_damage.saturating_mul(i64::from(

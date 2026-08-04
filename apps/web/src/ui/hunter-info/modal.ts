@@ -46,6 +46,7 @@ export interface HunterInfoModalController {
 
 export interface HunterInfoModalActions {
   useSkill?(hunterId: number, skillId: string): void;
+  equipWeapon?(hunterId: number, gearInstanceId: string): void;
 }
 
 export function calculateHunterInfoScale(availableWidth: number, availableHeight: number): number {
@@ -276,7 +277,10 @@ function renderTab(tab: HunterInfoTabId, info: HunterInfoView, actions: HunterIn
   }
   if (tab === "growth") return renderGrowthTab(info);
   if (tab === "riding") return renderRidingPetTab(info);
-  return renderMaterialsTab(info);
+  const hunterId = info.hunter.numericId;
+  return renderMaterialsTab(info, hunterId === null || !actions.equipWeapon
+    ? undefined
+    : (gearInstanceId) => actions.equipWeapon?.(hunterId, gearInstanceId));
 }
 
 function percent(current: number, maximum: number): number { return maximum > 0 ? Math.max(0, Math.min(100, (current / maximum) * 100)) : 0; }

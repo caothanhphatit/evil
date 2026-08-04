@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "replace-me",
+  "catalog": "catalog.json",
+  "itemsKey": "items",
+  "groupsKey": "groups",
+  "itemGroupKey": "group",
+  "referenceIndicesKey": "sourceIndices",
+  "sourcePattern": "asset-{index}.png",
+  "deliveryFolder": "delivery",
+  "runtimeFolder": "runtime-masters",
+  "bindingFolder": "bindings"
+}

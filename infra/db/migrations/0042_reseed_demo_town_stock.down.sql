@@ -1,0 +1,1 @@
+-- Demo stock is intentionally not destructive on rollback.

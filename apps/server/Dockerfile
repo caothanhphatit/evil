@@ -6,6 +6,10 @@ COPY packages/content/releases/evil-hunter-1.411/building-registry.json /package
 COPY packages/content/releases/evil-hunter-1.411/ordinary-hunting-monster-map.json /packages/content/releases/evil-hunter-1.411/ordinary-hunting-monster-map.json
 COPY packages/content/releases/evil-hunter-1.411/experience-runtime-catalog.json /packages/content/releases/evil-hunter-1.411/experience-runtime-catalog.json
 COPY packages/content/releases/evil-hunter-1.411/gear-catalog.json /packages/content/releases/evil-hunter-1.411/gear-catalog.json
+COPY packages/content/releases/evil-hunter-1.411/hunter-assets.json /packages/content/releases/evil-hunter-1.411/hunter-assets.json
+COPY packages/content/releases/evil-hunter-1.411/monster-material-market-catalog.json /packages/content/releases/evil-hunter-1.411/monster-material-market-catalog.json
+COPY packages/content/releases/evil-hunter-1.411/monster-runtime-catalog.json /packages/content/releases/evil-hunter-1.411/monster-runtime-catalog.json
+COPY packages/content/releases/evil-hunter-rebuild-v1/weapon-core-catalog.json /packages/content/releases/evil-hunter-rebuild-v1/weapon-core-catalog.json
 RUN cargo build --release --locked
 
 FROM debian:bookworm-slim AS runtime

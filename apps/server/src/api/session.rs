@@ -405,6 +405,7 @@ mod tests {
             repository: repository.clone(),
             coordinator: Arc::new(InMemorySessionCoordinator::default()),
             building_content: crate::simulation::test_authoritative_building_content(),
+            admin_pool: None,
         };
         let router = crate::api::router(state);
         let register_response = router
@@ -466,6 +467,7 @@ mod tests {
             repository,
             coordinator,
             building_content: crate::simulation::test_authoritative_building_content(),
+            admin_pool: None,
         };
         let response = crate::api::router(state.clone())
             .oneshot(
@@ -511,6 +513,7 @@ mod tests {
             repository,
             coordinator: Arc::new(InMemorySessionCoordinator::default()),
             building_content: crate::simulation::test_authoritative_building_content(),
+            admin_pool: None,
         };
         let ttl = Duration::from_secs(60);
 

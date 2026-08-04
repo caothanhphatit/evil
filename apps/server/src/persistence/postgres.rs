@@ -239,6 +239,9 @@ impl PlayerRepository for PostgresPlayerRepository {
                 .bind(player_token)
                 .execute(&mut *transaction)
                 .await?;
+            roster = load_hunter_roster_in(&mut transaction, player_token)
+                .await?
+                .ok_or(RepositoryError::RevisionDivergence)?;
             town = self
                 .buildings
                 .load_town_in(&mut transaction, player_token)

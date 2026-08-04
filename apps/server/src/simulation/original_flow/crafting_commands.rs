@@ -1,8 +1,8 @@
 use super::{
     can_pay_costs, capacity_for_level, gear_product_route, material_difficulty_rating, pay_costs,
-    product_sale_building_id, BaseBuildingId, DurableMaterialStock, DurableProductStock,
-    EconomyAmount, OriginalFlowSession, ServerMessage, ServiceEffectKind, Uuid,
-    MAX_PRODUCTION_QUANTITY,
+    product_sale_building_id, BaseBuildingId, DurableCraftedGearStock, DurableMaterialStock,
+    DurableProductStock, EconomyAmount, OriginalFlowSession, ServerMessage, ServiceEffectKind,
+    Uuid, MAX_PRODUCTION_QUANTITY,
 };
 
 impl OriginalFlowSession {
@@ -170,13 +170,26 @@ impl OriginalFlowSession {
         {
             return self.rejected("craft_shop_item", "product_level_locked");
         }
-        if gear_route.is_some() {
-            // The captured original writer exposes several option arrays and
-            // a per-instance buyGold field, but its pool/order/price semantics
-            // are not yet proven. Never debit materials for an unverifiable
-            // gear result.
-            return self.rejected("craft_shop_item", "gear_creation_evidence_unresolved");
-        }
+        let rolled_weapons = if let Some(route) = &gear_route {
+            if route.family != crate::buildings::GearProductFamily::Weapon {
+                return self.rejected("craft_shop_item", "gear_creation_evidence_unresolved");
+            }
+            let Some(rolls) = (0..quantity)
+                .map(|_| {
+                    super::super::web_rebuild_gear::roll_crafted_weapon(
+                        Uuid::new_v4(),
+                        route.gear_index,
+                        route.rating,
+                    )
+                })
+                .collect::<Option<Vec<_>>>()
+            else {
+                return self.rejected("craft_shop_item", "weapon_base_unresolved");
+            };
+            rolls
+        } else {
+            Vec::new()
+        };
         let crafting_capability = self
             .building_content
             .gameplay
@@ -267,10 +280,27 @@ impl OriginalFlowSession {
             stock.quantity = stock.quantity.saturating_add(quantity);
         } else {
             self.buildings.product_stocks.push(DurableProductStock {
-                building_instance_id: stock_building_instance_id,
+                building_instance_id: stock_building_instance_id.clone(),
                 product_id: recipe_id.to_owned(),
                 quantity,
             });
+        }
+        for rolled in rolled_weapons {
+            self.buildings
+                .crafted_gear_stocks
+                .push(DurableCraftedGearStock {
+                    building_instance_id: stock_building_instance_id.clone(),
+                    gear_instance_id: rolled.gear_instance_id,
+                    product_id: recipe_id.to_owned(),
+                    gear_kind: "weapon".to_owned(),
+                    rating: gear_route.as_ref().map_or(0, |route| route.rating),
+                    quality: rolled.quality,
+                    primary_stat: rolled.attack_damage,
+                    option_type: 0,
+                    option_value: 0,
+                    icon_path: rolled.icon_path,
+                    ruleset: super::super::web_rebuild_gear::WEAPON_ROLL_RULESET.to_owned(),
+                });
         }
         if command_id != Uuid::nil() {
             self.hunter_roster

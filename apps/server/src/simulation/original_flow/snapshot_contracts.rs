@@ -383,6 +383,7 @@ pub struct HunterInfoSnapshot {
     pub growth: Option<HunterGrowthSnapshot>,
     pub riding_pet: Option<HunterRidingPetSnapshot>,
     pub materials: Option<Vec<HunterMaterialSnapshot>>,
+    pub weapons: Vec<HunterWeaponSnapshot>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -464,6 +465,24 @@ pub struct HunterMaterialSnapshot {
     pub icon_path: String,
     pub quantity: u64,
     pub order: u32,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct HunterWeaponSnapshot {
+    pub gear_instance_id: uuid::Uuid,
+    pub product_id: String,
+    pub weapon_id: String,
+    pub display_name_en: String,
+    pub display_name_vi: String,
+    pub icon_path: String,
+    pub quality: u8,
+    pub attack_damage: u32,
+    pub attack_damage_min: u32,
+    pub attack_damage_max: u32,
+    pub enhancement_level: u8,
+    pub compatible: bool,
+    pub equipped: bool,
+    pub ruleset: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]

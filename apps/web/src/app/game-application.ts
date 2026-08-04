@@ -24,6 +24,7 @@ import { createBuildingRenderer, type BuildingRenderingContext } from "./buildin
 import { createHunterController, type HunterControllerContext } from "./hunter-controller";
 import { createWorldController, type WorldControllerContext } from "./world-controller";
 import { createTradePopup, type TradePopupContext } from "./trade-popup";
+import { installGameE2eHooks } from "./e2e-hooks";
 import "../styles.css";
 const mount = document.querySelector<HTMLDivElement>("#app");
 if (!mount) throw new Error(t("error.missing_mount"));
@@ -79,7 +80,6 @@ const gearMaterialCosts = element<HTMLElement>("#gear-material-costs");
 const gearQuantityRow = element<HTMLElement>("#gear-quantity-row");
 const gearCreateQuantity = element<HTMLInputElement>("#gear-create-quantity");
 const gearFrameQuantity = element<HTMLOutputElement>("#gear-frame-quantity");
-const gearStorageLabel = element<HTMLElement>("#gear-storage-label");
 const gearCreateSubmit = element<HTMLButtonElement>("#gear-create-submit");
 const gearCreateSell = element<HTMLButtonElement>("#gear-create-sell");
 const gearCreateClose = element<HTMLButtonElement>("#gear-create-close");
@@ -111,6 +111,8 @@ let nextHunterRosterRefreshAt = 0;
 let world: VisibleEntityWorld | null = null;
 let runtimeStarted = false;
 let panelMessageTimer: number | undefined;
+let craftAnimationTimer: number | undefined;
+type PendingCraft = { popup: "gear" | "consumable"; recipeId: string };
 const buildingContext: BuildingRenderingContext = {
   get client() { return client; },
   debugUi,
@@ -146,6 +148,7 @@ const buildingContext: BuildingRenderingContext = {
   buildingEvidenceRegistry: null,
   buildingEvidenceError: null,
   popupInteractionActive: false,
+  pendingCraft: null,
   buildingPanel,
   buildingName,
   buildingPreview,
@@ -175,7 +178,6 @@ const buildingContext: BuildingRenderingContext = {
   gearQuantityRow,
   gearCreateQuantity,
   gearFrameQuantity,
-  gearStorageLabel,
   gearCreateSubmit,
   gearCreateSell,
   consumCreatePop,
@@ -269,14 +271,24 @@ gearCreateClose.textContent = originalUiLabel("btn_0");
 
 const client = new WorldClient(
   (snapshot) => worldController.renderSnapshot(snapshot),
-  (status) => entryController.updateConnectionStatus(status),
+  (status) => {
+    entryController.updateConnectionStatus(status);
+    if (status !== "online" && buildingContext.pendingCraft) {
+      buildingContext.pendingCraft = null;
+      buildingRenderer.renderGearCreatePop();
+      buildingRenderer.renderConsumCreatePop();
+    }
+  },
   showIntentResult,
   showBindingBlocked,
   undefined,
   { onWorldFrame: (snapshot) => worldController.renderWorldFrame(snapshot) },
 );
 const entryController = new EntryController(gameShell, startGameRuntime, () => client.completeBoot());
-const hunterInfoActions = { useSkill: (hunterId: number, skillId: string) => hunterController.useHunterSkillFromInfo(hunterId, skillId) };
+const hunterInfoActions = {
+  useSkill: (hunterId: number, skillId: string) => hunterController.useHunterSkillFromInfo(hunterId, skillId),
+  equipWeapon: (hunterId: number, gearInstanceId: string) => hunterController.equipHunterWeaponFromInfo(hunterId, gearInstanceId),
+};
 const hunterInfoModal = createHunterInfoModal(rosterScreen, hunterInfoActions);
 const worldHunterInfoModal = createHunterInfoModal(villageScreen, hunterInfoActions);
 const hunterWorldCommandMenu = createHunterWorldCommandMenu(villageScreen, {
@@ -373,6 +385,21 @@ const worldContext: WorldControllerContext = {
   syncEnhancementTaskView: (snapshot) => worldController.syncEnhancementTaskView(snapshot),
 };
 worldController = createWorldController(worldContext);
+installGameE2eHooks(window.location, {
+  snapshot: () => latestSnapshot,
+  openBuilding: (buildingId) => {
+    const instance = latestSnapshot?.village.building_system.instances.find((row) => row.building_id === buildingId);
+    if (!instance) return false;
+    buildingContext.selectedBuildingId = buildingId;
+    buildingContext.selectedBuildingInstanceId = instance.instance_id;
+    buildingContext.selectedBuildingVisual = null;
+    buildingContext.buildingPanelMode = "building";
+    buildingPanel.hidden = false;
+    buildingRenderer.renderBuildingSystem(latestSnapshot);
+    return true;
+  },
+  openHunterInfo: (hunterId) => hunterController.showHunterInfoByNumericId(hunterId),
+});
 document.addEventListener("contextmenu", (event) => {
   const target = event.target as HTMLElement | null;
   if (target?.closest("input, textarea, [contenteditable=\"true\"]")) return;
@@ -398,6 +425,39 @@ function showPanelMessage(title: string, detail: string): void {
 }
 
 function showIntentResult(result: IntentFeedback): void {
+  if (result.intent === "craft_shop_item") {
+    const pending = buildingContext.pendingCraft;
+    buildingContext.pendingCraft = null;
+    if (!result.accepted) {
+      buildingRenderer.renderGearCreatePop();
+      buildingRenderer.renderConsumCreatePop();
+    } else if (!pending) {
+      showPanelMessage(t("craft.completed"), t("craft.completed_detail"));
+      return;
+    } else {
+      const popup = pending.popup === "gear" ? gearCreatePop : consumCreatePop;
+      const submit = pending.popup === "gear" ? gearCreateSubmit : consumCreateSubmit;
+      const stillShowingRequest = !popup.hidden && buildingContext.selectedRecipe?.id === pending.recipeId;
+      if (!stillShowingRequest) {
+        showPanelMessage(t("craft.completed"), t("craft.completed_detail"));
+        return;
+      }
+      popup.classList.remove("crafting");
+      void popup.offsetWidth;
+      popup.classList.add("crafting");
+      popup.setAttribute("aria-busy", "true");
+      submit.disabled = true;
+      submit.textContent = t("craft.processing");
+      if (craftAnimationTimer !== undefined) window.clearTimeout(craftAnimationTimer);
+      craftAnimationTimer = window.setTimeout(() => {
+        popup.classList.remove("crafting");
+        popup.removeAttribute("aria-busy");
+        popup.hidden = true;
+        craftAnimationTimer = undefined;
+      }, 850);
+      return;
+    }
+  }
   if (result.intent === "set_material_request") {
     buildingContext.tradingRequestPending = false;
     if (result.accepted) {
@@ -585,9 +645,11 @@ document.querySelectorAll<HTMLButtonElement>("[data-gear-delta]").forEach((butto
   button.addEventListener("click", () => changeGearQuantity(Number(button.dataset.gearDelta)));
 });
 gearCreateSubmit.addEventListener("click", () => {
-  if (buildingContext.selectedBuildingInstanceId && buildingContext.selectedRecipe) {
-    client.craftShopItem(buildingContext.selectedBuildingInstanceId, buildingContext.selectedRecipe.id, Number(gearCreateQuantity.value), buildingContext.selectedServiceMaterialId);
-  }
+  if (buildingContext.pendingCraft || !buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;
+  const pending: PendingCraft = { popup: "gear", recipeId: buildingContext.selectedRecipe.id };
+  if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, Number(gearCreateQuantity.value), buildingContext.selectedServiceMaterialId)) return;
+  buildingContext.pendingCraft = pending;
+  gearCreateSubmit.disabled = true;
 });
 gearCreateSell.addEventListener("click", () => {
   if (buildingContext.gearPopupMode !== "detail"
@@ -620,9 +682,12 @@ consumCreateQuantityInput.addEventListener("change", () => {
   buildingRenderer.renderConsumCreatePop();
 });
 consumCreateSubmit.addEventListener("click", () => {
-  if (!buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;
+  if (buildingContext.pendingCraft || !buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;
   const materialId = buildingContext.selectedRecipe.kind === "service" ? buildingContext.selectedServiceMaterialId : null;
   if (buildingContext.selectedRecipe.kind !== "service" || materialId) {
-    client.craftShopItem(buildingContext.selectedBuildingInstanceId, buildingContext.selectedRecipe.id, buildingContext.selectedServiceQuantity, materialId);
+    const pending: PendingCraft = { popup: "consumable", recipeId: buildingContext.selectedRecipe.id };
+    if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, buildingContext.selectedServiceQuantity, materialId)) return;
+    buildingContext.pendingCraft = pending;
+    consumCreateSubmit.disabled = true;
   }
 });

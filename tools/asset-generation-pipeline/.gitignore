@@ -1,0 +1,9 @@
+input/*/concepts/*
+!input/*/concepts/.gitkeep
+input/*/masters/*
+!input/*/masters/.gitkeep
+work/*/*
+!work/*/.gitkeep
+output/*/*
+!output/*/.gitkeep
+__pycache__/

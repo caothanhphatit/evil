@@ -4,6 +4,76 @@ use super::{
 };
 
 impl OriginalFlowSession {
+    pub(super) fn equip_rebuild_weapon(
+        &mut self,
+        command_id: Uuid,
+        hunter_id: u32,
+        gear_instance_id: Uuid,
+    ) -> ServerMessage {
+        if !self.shared_world_active() {
+            return self.rejected("equip_hunter_weapon", "world_unavailable");
+        }
+        let key = format!("equip_hunter_weapon:{hunter_id}:{gear_instance_id}");
+        if command_id != Uuid::nil() {
+            if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
+                return if previous == &key {
+                    self.accepted("equip_hunter_weapon")
+                } else {
+                    self.rejected("equip_hunter_weapon", "command_id_conflict")
+                };
+            }
+        }
+        let Some(hunter_index) = self
+            .hunter_roster
+            .hunters
+            .iter()
+            .position(|hunter| hunter.hunter_id == hunter_id)
+        else {
+            return self.rejected("equip_hunter_weapon", "hunter_unknown");
+        };
+        let Some(item) = self.hunter_roster.hunters[hunter_index]
+            .owned_items
+            .iter()
+            .find(|item| item.gear_instance_id == Some(gear_instance_id))
+        else {
+            return self.rejected("equip_hunter_weapon", "gear_instance_unknown");
+        };
+        let Some(definition) =
+            super::super::web_rebuild_gear::rebuild_weapon_definition(&item.product_id)
+        else {
+            return self.rejected("equip_hunter_weapon", "weapon_definition_unresolved");
+        };
+        if definition.visual_family
+            != self.hunter_roster.hunters[hunter_index]
+                .profile
+                .visual_family
+        {
+            return self.rejected("equip_hunter_weapon", "weapon_class_mismatch");
+        }
+        let required_class_id = self.hunter_roster.hunters[hunter_index]
+            .profile
+            .class_id
+            .clone();
+        let Some(slot) = self.hunter_roster.hunters[hunter_index]
+            .profile
+            .equipment_slots
+            .iter_mut()
+            .find(|slot| slot.slot_id == "weapon")
+        else {
+            return self.rejected("equip_hunter_weapon", "weapon_slot_unavailable");
+        };
+        slot.catalog_kind = format!("rebuild_weapon_instance:{gear_instance_id}");
+        slot.catalog_index = definition.gear_index;
+        slot.display_name = definition.display_name_vi;
+        slot.icon_path = definition.icon_path;
+        slot.required_class_id = Some(required_class_id);
+        slot.evidence_state = "web_rebuild_weapon_v1".to_owned();
+        if command_id != Uuid::nil() {
+            self.hunter_roster.hunt_commands.insert(command_id, key);
+        }
+        self.accepted("equip_hunter_weapon")
+    }
+
     pub(super) fn equip_fixture_item(
         &mut self,
         command_id: Uuid,

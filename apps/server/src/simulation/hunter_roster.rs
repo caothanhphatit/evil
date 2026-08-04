@@ -592,6 +592,26 @@ pub struct DurableHunterState {
     pub owned_items: Vec<DurableHunterOwnedItem>,
 }
 
+impl DurableHunterState {
+    pub(crate) fn equipped_weapon_attack_damage(&self) -> u32 {
+        let Some(instance_id) = self
+            .profile
+            .equipment_slots
+            .iter()
+            .find(|slot| slot.slot_id == "weapon")
+            .and_then(|slot| slot.catalog_kind.strip_prefix("rebuild_weapon_instance:"))
+            .and_then(|value| Uuid::parse_str(value).ok())
+        else {
+            return 0;
+        };
+        self.owned_items
+            .iter()
+            .find(|item| item.gear_instance_id == Some(instance_id))
+            .and_then(|item| item.primary_stat)
+            .unwrap_or(0)
+    }
+}
+
 impl DurableHunterHuntState {
     pub fn is_idle(&self) -> bool {
         self.status.is_empty() || self.status == "idle"
@@ -869,14 +889,19 @@ impl DurableHunterRosterState {
                         "equipment slot appears more than once",
                     ));
                 }
-                if equipment.evidence_state != "web_rebuild_test_fixture"
-                    || !matches!(equipment.presentation_gender.as_str(), "female" | "male")
+                if !matches!(
+                    equipment.evidence_state.as_str(),
+                    "web_rebuild_test_fixture" | "web_rebuild_weapon_v1"
+                ) || !matches!(equipment.presentation_gender.as_str(), "female" | "male")
                 {
                     return Err(HunterRosterError::InvalidState(
                         "equipment fixture evidence is invalid",
                     ));
                 }
-                if equipment.catalog_kind == "weapon"
+                if (equipment.catalog_kind == "weapon"
+                    || equipment
+                        .catalog_kind
+                        .starts_with("rebuild_weapon_instance:"))
                     && equipment.required_class_id.as_deref()
                         != Some(hunter.profile.class_id.as_str())
                 {

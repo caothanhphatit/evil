@@ -9,7 +9,7 @@ use super::{
     HunterRuntimeGrowthSnapshot, HunterRuntimeInventorySnapshot, HunterRuntimeItemSnapshot,
     HunterRuntimeJobSnapshot, HunterRuntimeRidingPetSnapshot, HunterRuntimeSkillSnapshot,
     HunterRuntimeStatusSnapshot, HunterSkillSnapshot, HunterStatusSnapshot, HunterTraitSnapshot,
-    ServiceEffectKind, HUNT_TICKS_TO_RETURN, MAX_GEAR_ENHANCEMENT_LEVEL,
+    HunterWeaponSnapshot, ServiceEffectKind, HUNT_TICKS_TO_RETURN, MAX_GEAR_ENHANCEMENT_LEVEL,
 };
 
 pub(super) fn hunter_roster_member(
@@ -48,7 +48,10 @@ pub(super) fn hunter_roster_member(
         max_satiety: hunter.satiety.maximum,
         mood: hunter.mood.current,
         max_mood: hunter.mood.maximum,
-        attack: hunter.profile.attack,
+        attack: hunter
+            .profile
+            .attack
+            .saturating_add(u64::from(hunter.equipped_weapon_attack_damage())),
         defense: hunter.profile.defense,
         action_state: hunter.profile.action_state.clone(),
         animation: hunter.profile.animation_name.clone(),
@@ -160,6 +163,36 @@ pub(super) fn hunter_roster_member(
                     })
                     .collect(),
             ),
+            weapons: hunter
+                .owned_items
+                .iter()
+                .filter_map(|owned| {
+                    let gear_instance_id = owned.gear_instance_id?;
+                    let definition = super::super::web_rebuild_gear::rebuild_weapon_definition(
+                        &owned.product_id,
+                    )?;
+                    Some(HunterWeaponSnapshot {
+                        gear_instance_id,
+                        product_id: owned.product_id.clone(),
+                        weapon_id: definition.weapon_id,
+                        display_name_en: definition.display_name_en,
+                        display_name_vi: definition.display_name_vi,
+                        icon_path: definition.icon_path,
+                        quality: owned.quality?,
+                        attack_damage: owned.primary_stat?,
+                        attack_damage_min: definition.attack_damage_min,
+                        attack_damage_max: definition.attack_damage_max,
+                        enhancement_level: owned.enhancement_level.unwrap_or(0),
+                        compatible: definition.visual_family == hunter.profile.visual_family,
+                        equipped: hunter.profile.equipment_slots.iter().any(|slot| {
+                            slot.slot_id == "weapon"
+                                && slot.catalog_kind
+                                    == format!("rebuild_weapon_instance:{gear_instance_id}")
+                        }),
+                        ruleset: owned.ruleset.clone()?,
+                    })
+                })
+                .collect(),
         },
         gear_enhancements: hunter
             .owned_items

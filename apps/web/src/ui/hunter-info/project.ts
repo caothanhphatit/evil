@@ -1,5 +1,5 @@
 import type { HunterView } from "../hunter-roster";
-import type { HunterInfoEquipmentSlot, HunterInfoGrowthNode, HunterInfoMaterial, HunterInfoSkill, HunterInfoView } from "./model";
+import type { HunterInfoEquipmentSlot, HunterInfoGrowthNode, HunterInfoMaterial, HunterInfoSkill, HunterInfoView, HunterInfoWeapon } from "./model";
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -28,6 +28,7 @@ export function projectHunterInfo(rawHunter: unknown, hunter: HunterView): Hunte
     growth: projectGrowth(info.growth),
     riding: projectRiding(riding, Object.prototype.hasOwnProperty.call(info, "riding_pet")),
     materials: projectMaterials(info.materials, Object.prototype.hasOwnProperty.call(info, "materials")),
+    weapons: projectWeapons(info.weapons),
   };
 }
 
@@ -98,6 +99,30 @@ function projectMaterials(value: unknown, present: boolean): HunterInfoMaterial[
     if (!id || !icon || quantity === null) return null;
     return { id, icon, quantity, name: text(row.display_name ?? row.name), order: number(row.order) ?? index };
   }).filter((entry): entry is HunterInfoMaterial => entry !== null).sort((a, b) => a.order - b.order);
+}
+
+function projectWeapons(value: unknown): HunterInfoWeapon[] {
+  return rows(value).map((entry): HunterInfoWeapon | null => {
+    const row = record(entry);
+    const instanceId = text(row.gear_instance_id);
+    const productId = text(row.product_id);
+    const weaponId = text(row.weapon_id);
+    const nameEn = text(row.display_name_en);
+    const nameVi = text(row.display_name_vi);
+    const icon = asset(row.icon_path);
+    const quality = number(row.quality);
+    const attackDamage = number(row.attack_damage);
+    const attackDamageMin = number(row.attack_damage_min);
+    const attackDamageMax = number(row.attack_damage_max);
+    const enhancementLevel = number(row.enhancement_level);
+    const compatible = boolean(row.compatible);
+    const equipped = boolean(row.equipped);
+    const ruleset = text(row.ruleset);
+    if (!instanceId || !productId || !weaponId || !nameEn || !nameVi || !icon || quality === null
+      || attackDamage === null || attackDamageMin === null || attackDamageMax === null
+      || enhancementLevel === null || compatible === null || equipped === null || !ruleset) return null;
+    return { instanceId, productId, weaponId, nameEn, nameVi, icon, quality, attackDamage, attackDamageMin, attackDamageMax, enhancementLevel, compatible, equipped, ruleset };
+  }).filter((entry): entry is HunterInfoWeapon => entry !== null);
 }
 
 function projectEquipment(value: unknown): HunterInfoEquipmentSlot | null {

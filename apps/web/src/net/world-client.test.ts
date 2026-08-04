@@ -234,6 +234,33 @@ describe("session bootstrap", () => {
     client.disconnect();
   });
 
+  it("applies an intent result snapshot before delivering transient feedback", async () => {
+    const socket = new FakeSocket();
+    const events: string[] = [];
+    const client = new WorldClient(
+      () => events.push("snapshot"),
+      () => undefined,
+      () => events.push("feedback"),
+      undefined,
+      undefined,
+      {
+        apiBaseUrl: "http://game.test",
+        webSocketUrl: "ws://game.test/ws",
+        fetchFn: vi.fn(async () => new Response(null, { status: 204 })),
+        socketFactory: () => socket as unknown as WebSocket,
+      },
+    );
+
+    client.connect();
+    await settlePromises();
+    socket.emit("message", { data: serverEnvelope(1, "welcome") });
+    events.length = 0;
+    socket.emit("message", { data: serverEnvelope(2, "intent_result") });
+
+    expect(events).toEqual(["snapshot", "feedback"]);
+    client.disconnect();
+  });
+
   it("treats malformed server data as a protocol fault", async () => {
     const socket = new FakeSocket();
     const client = new WorldClient(() => undefined, () => undefined, undefined, undefined, undefined, {
@@ -298,7 +325,7 @@ class FakeSocket {
 
 function serverEnvelope(
   sequence: number,
-  type: "welcome" | "world_update" | "world_frame",
+  type: "welcome" | "world_update" | "world_frame" | "intent_result",
   screen = "boot",
   padding = "",
 ): string {
@@ -316,7 +343,9 @@ function serverEnvelope(
     ? { type, player_token: TOKEN, session_id: "00000000-0000-4000-8000-000000000001", snapshot }
     : type === "world_frame"
       ? { type, world: { visual_tick: 12, entities: [], drops: [], combat_presentations: [] } }
-      : { type, snapshot };
+      : type === "intent_result"
+        ? { type, intent: "craft_shop_item", accepted: true, reason: null, snapshot }
+        : { type, snapshot };
   return JSON.stringify({
     version: PROTOCOL_VERSION,
     sequence,

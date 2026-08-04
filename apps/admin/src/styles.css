@@ -9,3 +9,4 @@ button, input, select { font: inherit; }
 .nav-item { display: flex; width: 100%; align-items: center; gap: .75rem; border-radius: .75rem; padding: .7rem .75rem; text-align: left; font-size: .875rem; font-weight: 600; color: #94a3b8; transition: background .15s, color .15s; }
 .nav-item:hover { background: rgba(255,255,255,.06); color: #e2e8f0; }
 .nav-item.active { background: rgba(34,211,238,.12); color: #67e8f9; }
+.wiki-label { color: #94a3b8; font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }

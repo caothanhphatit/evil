@@ -68,8 +68,10 @@ The original production publication of
 while the canonical generated artifact retained in Git has checksum
 `218ffa02...`. The migration runner accepts only this exact legacy/canonical
 pair, preserves the recorded production checksum, and still fails closed for
-every other mismatch. Static catalogs under `core_game` remain a separate,
-reproducible initialization step.
+every other mismatch. After numbered player-state migrations, the same runner
+installs the versioned `core_game` catalog bundle and records its combined
+checksum in `schema_migration`. A checksum mismatch fails closed; a matching
+second run skips the bundle.
 
 Keep the previous images as rollback targets, then recreate only the app
 containers. The persistent database and Redis containers are not replaced:

@@ -135,51 +135,20 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult {
-            accepted: false,
-            ..
-        }
+        ServerMessage::IntentResult { accepted: true, .. }
     ));
-    assert_eq!(flow.buildings.material_stocks[0].town_quantity, 20);
-    assert!(flow.buildings.crafted_gear_stocks.is_empty());
-    // Purchase semantics use an explicit reviewed fixture row while the
-    // production writer remains fail-closed pending original evidence.
-    flow.buildings
+    assert_eq!(flow.buildings.material_stocks[0].town_quantity, 16);
+    assert_eq!(flow.buildings.crafted_gear_stocks.len(), 2);
+    assert!(flow
+        .buildings
         .crafted_gear_stocks
-        .push(DurableCraftedGearStock {
-            building_instance_id: weapon_shop_id.clone(),
-            gear_instance_id: Uuid::from_u128(7001),
-            product_id: product_id.to_owned(),
-            gear_kind: "weapon".to_owned(),
-            rating: 0,
-            quality: 2,
-            primary_stat: 100,
-            option_type: 0,
-            option_value: 0,
-            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
-            ruleset: "test-reviewed-gear-row".to_owned(),
-        });
-    flow.buildings.product_stocks.push(DurableProductStock {
-        building_instance_id: weapon_shop_id,
-        product_id: product_id.to_owned(),
-        quantity: 1,
-    });
-    flow.buildings
-        .crafted_gear_stocks
-        .push(DurableCraftedGearStock {
-            building_instance_id: building_instance_id(&flow, "build_7"),
-            gear_instance_id: Uuid::from_u128(7002),
-            product_id: product_id.to_owned(),
-            gear_kind: "weapon".to_owned(),
-            rating: 0,
-            quality: 3,
-            primary_stat: 120,
-            option_type: 0,
-            option_value: 0,
-            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
-            ruleset: "test-reviewed-gear-row".to_owned(),
-        });
-    flow.buildings.product_stocks[0].quantity = 2;
+        .iter()
+        .all(|gear| (60..=96).contains(&gear.primary_stat)));
+    assert_eq!(flow.buildings.product_stocks[0].quantity, 2);
+    assert_eq!(
+        flow.buildings.product_stocks[0].building_instance_id,
+        weapon_shop_id
+    );
 
     let gold_before = flow.buildings.town_gold;
     let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
@@ -210,7 +179,7 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         flow.hunter_roster.hunters[0].owned_items[0]
             .ruleset
             .as_deref(),
-        Some("test-reviewed-gear-row")
+        Some(super::super::web_rebuild_gear::WEAPON_ROLL_RULESET)
     );
     assert_eq!(flow.buildings.hunter_equipment_purchases, 1);
 
@@ -242,6 +211,92 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
 }
 
 #[test]
+fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
+    let product_id = "recipe:weapon:0:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.handle_command(ClientCommand::CraftShopItem {
+        instance_id: blacksmith_id,
+        recipe_id: product_id.to_owned(),
+        material_id: None,
+        quantity: 1,
+    })
+    .unwrap();
+    flow.handle_command_with_id(
+        ClientCommand::PurchaseShopItem {
+            hunter_id: 1,
+            shop_id: "build_7".to_owned(),
+            product_id: product_id.to_owned(),
+        },
+        Uuid::from_u128(8_002),
+    )
+    .unwrap();
+
+    let weapons = &flow.snapshot().hunter_roster.active_hunters[0]
+        .hunter_info
+        .weapons;
+    assert_eq!(weapons.len(), 1);
+    assert_eq!(weapons[0].weapon_id, "wp_berserker_000");
+    assert_eq!(weapons[0].display_name_vi, "Đại Kiếm Sắt Mẻ");
+    assert!((60..=96).contains(&weapons[0].attack_damage));
+    assert!(weapons[0].icon_path.starts_with("/content/"));
+    assert!(weapons[0].compatible);
+    assert!(!weapons[0].equipped);
+
+    let base_attack = flow.hunter_roster.hunters[0].profile.attack;
+    let gear_instance_id = weapons[0].gear_instance_id;
+    let equip_id = Uuid::from_u128(8_003);
+    let equipped = flow
+        .handle_command_with_id(
+            ClientCommand::EquipHunterWeapon {
+                hunter_id: 1,
+                gear_instance_id,
+            },
+            equip_id,
+        )
+        .unwrap();
+    assert!(matches!(
+        equipped.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+    let snapshot = flow.snapshot();
+    let hunter = &snapshot.hunter_roster.active_hunters[0];
+    assert_eq!(
+        hunter.attack,
+        base_attack + u64::from(weapons[0].attack_damage)
+    );
+    assert!(hunter.hunter_info.weapons[0].equipped);
+    let weapon_slot = hunter
+        .hunter_info
+        .equipment_slots
+        .as_ref()
+        .unwrap()
+        .iter()
+        .find(|slot| slot.slot_id == "weapon")
+        .unwrap();
+    assert_eq!(weapon_slot.display_name, "Đại Kiếm Sắt Mẻ");
+    assert_eq!(weapon_slot.icon_path, Some(weapons[0].icon_path.clone()));
+
+    let replay = flow
+        .handle_command_with_id(
+            ClientCommand::EquipHunterWeapon {
+                hunter_id: 1,
+                gear_instance_id,
+            },
+            equip_id,
+        )
+        .unwrap();
+    assert!(matches!(
+        replay.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+    assert_eq!(
+        flow.hunter_roster.hunters[0].equipped_weapon_attack_damage(),
+        weapons[0].attack_damage
+    );
+}
+
+#[test]
 fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
     let product_id = "recipe:weapon:0:rating:0";
     let mut flow = gear_flow(product_id, 75);
@@ -256,31 +311,8 @@ fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
         .unwrap();
     assert!(matches!(
         crafted.message,
-        ServerMessage::IntentResult {
-            accepted: false,
-            ..
-        }
+        ServerMessage::IntentResult { accepted: true, .. }
     ));
-    flow.buildings
-        .crafted_gear_stocks
-        .push(DurableCraftedGearStock {
-            building_instance_id: building_instance_id(&flow, "build_7"),
-            gear_instance_id: Uuid::from_u128(8001),
-            product_id: product_id.to_owned(),
-            gear_kind: "weapon".to_owned(),
-            rating: 0,
-            quality: 2,
-            primary_stat: 100,
-            option_type: 0,
-            option_value: 0,
-            icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png".to_owned(),
-            ruleset: "test-reviewed-gear-row".to_owned(),
-        });
-    flow.buildings.product_stocks.push(DurableProductStock {
-        building_instance_id: building_instance_id(&flow, "build_7"),
-        product_id: product_id.to_owned(),
-        quantity: 1,
-    });
     let purchase = flow
         .handle_command_with_id(
             ClientCommand::PurchaseShopItem {

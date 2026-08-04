@@ -31,6 +31,23 @@ export interface HunterInfoMaterial {
   order: number;
 }
 
+export interface HunterInfoWeapon {
+  instanceId: string;
+  productId: string;
+  weaponId: string;
+  nameEn: string;
+  nameVi: string;
+  icon: string;
+  quality: number;
+  attackDamage: number;
+  attackDamageMin: number;
+  attackDamageMax: number;
+  enhancementLevel: number;
+  compatible: boolean;
+  equipped: boolean;
+  ruleset: string;
+}
+
 export interface HunterInfoEquipmentSlot {
   id: string;
   catalogKind: string | null;
@@ -60,4 +77,5 @@ export interface HunterInfoView {
   growth: { secretPoints: number; nodes: HunterInfoGrowthNode[] } | null;
   riding: { mounted: false; canMoveToRanch: boolean } | { mounted: true; name: string | null; icon: string | null } | null;
   materials: HunterInfoMaterial[] | null;
+  weapons: HunterInfoWeapon[];
 }

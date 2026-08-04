@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "logicalSize": 24,
+  "deliverySize": 96,
+  "paletteLimit": 48,
+  "maxVisibleBounds": 20,
+  "groups": {
+    "default": { "sourceIndices": [] }
+  },
+  "items": [
+    {
+      "id": "replace_me_000",
+      "group": "default",
+      "en": "English Name",
+      "vi": "Tên Tiếng Việt",
+      "theme": "visual direction"
+    }
+  ]
+}

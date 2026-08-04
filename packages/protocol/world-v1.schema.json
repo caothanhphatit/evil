@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 31,
+  "schemaVersion": 32,
   "fixtureContracts": [
     {
       "id": "migration-fixture.slice1-combat-v1",
@@ -74,6 +74,7 @@
     { "wireName": "use_hunter_skill", "rustName": "UseHunterSkill", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "skill_id", "rustType": "String", "tsType": "string" }, { "wireName": "target_entity_id", "rustType": "Option<String>", "tsType": "string | null" }] },
     { "wireName": "banish_hunter", "rustName": "BanishHunter", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "equip_hunter_item", "rustName": "EquipHunterItem", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "item_id", "rustType": "u32", "tsType": "number" }] },
+    { "wireName": "equip_hunter_weapon", "rustName": "EquipHunterWeapon", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "gear_instance_id", "rustType": "Uuid", "tsType": "string" }] },
     { "wireName": "start_hunter_enhancement", "rustName": "StartHunterEnhancement", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }] },
     { "wireName": "enhance_hunter_gear", "rustName": "EnhanceHunterGear", "fields": [{ "wireName": "hunter_id", "rustType": "u32", "tsType": "number" }, { "wireName": "gear_instance_id", "rustType": "Uuid", "tsType": "string" }, { "wireName": "mode", "rustType": "String", "tsType": "string" }, { "wireName": "optional_material_ids", "rustType": "Vec<String>", "tsType": "string[]" }] },
     { "wireName": "claim_quest_reward", "rustName": "ClaimQuestReward", "fields": [{ "wireName": "quest_id", "rustType": "String", "tsType": "string" }] },

@@ -18,6 +18,7 @@ use config::AppConfig;
 use content::building_registry::EMBEDDED_REGISTRY_SHA256;
 use coordination::{RedisSessionCoordinator, SharedSessionCoordinator};
 use persistence::{PostgresPlayerRepository, SharedPlayerRepository};
+use sqlx::{postgres::PgPoolOptions, PgPool};
 use thiserror::Error;
 
 const BUILDING_RELEASE_ID: &str = "evil-hunter-1.411.buildings-v1";
@@ -30,6 +31,7 @@ pub struct AppState {
     pub repository: SharedPlayerRepository,
     pub coordinator: SharedSessionCoordinator,
     pub building_content: Arc<AuthoritativeBuildingContent>,
+    pub admin_pool: Option<PgPool>,
 }
 
 #[derive(Debug, Error)]
@@ -56,6 +58,9 @@ pub async fn app(config: AppConfig) -> Result<Router, AppBuildError> {
         .as_deref()
         .ok_or(AppBuildError::MissingRedisUrl)?;
     let repository = Arc::new(PostgresPlayerRepository::connect_lazy(database_url)?);
+    let admin_pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect_lazy(database_url)?;
     let building_repository = PostgresBuildingRepository::connect_lazy(database_url)?;
     let catalog = building_repository
         .load_catalog(BUILDING_RELEASE_ID, EMBEDDED_REGISTRY_SHA256)
@@ -94,6 +99,7 @@ pub async fn app(config: AppConfig) -> Result<Router, AppBuildError> {
         repository,
         coordinator,
         building_content,
+        Some(admin_pool),
     ))
 }
 
@@ -102,12 +108,14 @@ fn app_with_adapters(
     repository: SharedPlayerRepository,
     coordinator: SharedSessionCoordinator,
     building_content: Arc<AuthoritativeBuildingContent>,
+    admin_pool: Option<PgPool>,
 ) -> Router {
     api::router(AppState {
         config: Arc::new(config),
         repository,
         coordinator,
         building_content,
+        admin_pool,
     })
 }
 
@@ -121,6 +129,7 @@ pub fn app_for_test(config: AppConfig) -> Router {
         Arc::new(InMemoryPlayerRepository::default()),
         Arc::new(InMemorySessionCoordinator::default()),
         crate::simulation::test_authoritative_building_content(),
+        None,
     )
 }
 

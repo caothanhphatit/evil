@@ -181,12 +181,31 @@ export function createHunterController(context: HunterControllerContext) {
     context.selectedHunterId = hunter.id;
     context.worldHunterInfoModal.show(projectHunterInfo(rawHunterFor(context.latestSnapshot, hunter), hunter));
   }
+
+  function showHunterInfoByNumericId(hunterId: number): boolean {
+    const snapshot = context.latestSnapshot;
+    const hunter = snapshot?.hunter_roster.active_hunters.find((row) => row.hunter_id === hunterId);
+    if (!snapshot || !hunter) return false;
+    const projected = projectHunterRoster(snapshot, context.selectedHunterId).active.find((row) => row.numericId === hunterId);
+    if (!projected) return false;
+    context.selectedHunterId = projected.id;
+    context.worldHunterInfoModal.show(projectHunterInfo(hunter, projected));
+    return true;
+  }
   
   function useHunterSkillFromInfo(hunterId: number, skillId: string): void {
     if (context.client.useHunterSkill(hunterId, skillId, null)) {
       context.showPanelMessage(t("feedback.skill_sent"), t("feedback.skill_checking"));
     } else {
       context.showPanelMessage(t("feedback.skill_failed"), t("feedback.server_not_ready"));
+    }
+  }
+
+  function equipHunterWeaponFromInfo(hunterId: number, gearInstanceId: string): void {
+    if (context.client.equipHunterWeapon(hunterId, gearInstanceId)) {
+      context.showPanelMessage(t("feedback.weapon_equip_sent"), t("feedback.weapon_equip_checking"));
+    } else {
+      context.showPanelMessage(t("feedback.weapon_equip_failed"), t("feedback.server_not_ready"));
     }
   }
   
@@ -253,6 +272,8 @@ export function createHunterController(context: HunterControllerContext) {
     hunterForWorldEntity,
     showWorldHunterInfo,
     useHunterSkillFromInfo,
+    equipHunterWeaponFromInfo,
+    showHunterInfoByNumericId,
     handleHunterWorldCommandIntent,
     handleHunterEnhancementRequest,
     rawHunterFor,

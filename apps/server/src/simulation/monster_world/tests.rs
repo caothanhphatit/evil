@@ -56,11 +56,32 @@ fn basic_skill_effects_apply_server_owned_buff_and_multihit_state() {
     roster.hunters[0].profile.class_id = "h3".to_owned();
     roster.hunters[0].profile.visual_family = "H3".to_owned();
     roster.hunters[0].profile.dps_milli = Some(10_000);
+    let weapon_id = uuid::Uuid::from_u128(55);
+    roster.hunters[0]
+        .owned_items
+        .push(crate::simulation::hunter_roster::DurableHunterOwnedItem {
+            product_id: "recipe:weapon:16:rating:0".to_owned(),
+            quantity: 1,
+            enhancement_level: Some(0),
+            gear_instance_id: Some(weapon_id),
+            quality: Some(0),
+            primary_stat: Some(100),
+            option_type: Some(0),
+            option_value: Some(0),
+            ruleset: Some(crate::simulation::web_rebuild_gear::WEAPON_ROLL_RULESET.to_owned()),
+        });
+    roster.hunters[0]
+        .profile
+        .equipment_slots
+        .iter_mut()
+        .find(|slot| slot.slot_id == "weapon")
+        .unwrap()
+        .catalog_kind = format!("rebuild_weapon_instance:{weapon_id}");
     world.fields[0].monsters[0].hp = 10_000;
     world
         .apply_hunter_skill_effect(&roster, 1, "skill_h3_01")
         .unwrap();
-    assert_eq!(world.fields[0].monsters[0].hp, 10_000 - 4 * 14);
+    assert_eq!(world.fields[0].monsters[0].hp, 10_000 - 4 * 157);
 }
 
 #[test]

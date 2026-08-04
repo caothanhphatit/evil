@@ -134,6 +134,10 @@ impl CommandDispatcher {
             ClientCommand::EquipHunterItem { hunter_id, item_id } => {
                 session.equip_fixture_item(command_id, hunter_id, item_id)
             }
+            ClientCommand::EquipHunterWeapon {
+                hunter_id,
+                gear_instance_id,
+            } => session.equip_rebuild_weapon(command_id, hunter_id, gear_instance_id),
             ClientCommand::StartHunterEnhancement { hunter_id } => {
                 session.start_hunter_enhancement(command_id, hunter_id)
             }

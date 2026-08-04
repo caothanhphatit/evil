@@ -85,7 +85,13 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   PostgreSQL fencing still permit only one active simulation writer per
   account. Three development demo logins own independent player worlds and
   receive the full-stock seed on their first authoritative load.
-- Protocol v31 raises the generated JSON message ceiling to 4 MiB because the
+- Protocol v32 raises the generated JSON message ceiling to 4 MiB and adds the
+  authoritative `HunterInfoSnapshot.weapons` projection for individually owned
+  rebuild weapon instances. The browser receives the immutable weapon id,
+  English/Vietnamese names, legacy icon path, quality, rolled attack damage,
+  base range, enhancement level, compatibility and ruleset; it never rolls or
+  derives the outcome locally.
+- Protocol v31 raised the generated JSON message ceiling to 4 MiB because the
   fully stocked demo welcome snapshot is about 1.84 MiB. Keeping the old 1 MiB
   ceiling caused the client to reject the welcome and reconnect forever at 92%.
 
@@ -112,6 +118,33 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
 - Material icon binding uses the complete exported `src_00000` through
   `src_00368` sprite sequence. The numeric `shop_product_*` namespace is cash
   shop content and must not be used as a material-ID mapping.
+- Weapon core data v1 is now generated as a separate immutable rebuild release.
+  It imports 8 difficulty bands, 4 rarity slot budgets, 40 English/Vietnamese
+  weapon bases, all 125 decoded gear properties, 5 Virtue effects, and all 61
+  collection-set rows into normalized `core_game` tables. The ordinary weapon
+  pool now has 12 prefixes, 8 suffixes, and 160 difficulty-bound tier rows. A
+  rebuild-designed flat-attack prefix scales from the accepted base-power
+  curve; package-backed tiers stay inside their recovered ranges. Duplicate
+  groups prevent incompatible families from stacking. Transformation
+  acquisition and collection-set option semantics remain fail-closed. The
+  Basic Auth admin exposes separate Weapon Bases, Modifiers, Modifier Tiers,
+  Weapon Pools, Virtue Effects, and Collection Sets pages, plus a readable
+  Weapon Wiki that groups every active modifier with weight and all eight level
+  bands. See
+  `docs/game-design/weapon-core-data-v1.md` and
+  `docs/game-design/weapon-affix-pool-v1.md`.
+- Weapon crafting is now connected for the 35 package recipe rows whose legacy
+  icon bindings resolve to rebuild bases from level 0 through 600. The server
+  rolls an inclusive flat Attack Damage value inside the selected base range,
+  writes one durable gear instance per quantity, moves it through the Weapon
+  Shop purchase path, and projects it into Hunter Inventory. The five level-700
+  bases still have no distinct source recipe. Armor/accessory creation,
+  prefix/suffix instance rolling remain explicit follow-up work rather than
+  fabricated fallbacks. A Hunter may equip a compatible owned weapon through
+  the authoritative `equip_hunter_weapon` command; the exact instance identity
+  is persisted in the existing weapon-slot `catalog_kind` reference and its
+  rolled Attack Damage contributes to projected ATK, normal attacks and skill
+  fallback damage.
 - Trading Post orders store the remaining requested quantity. Hunter auto-sale
   is capped by that remainder, decrements it atomically with the wallet/stock
   transfer, and leaves excess carried loot with the Hunter; zero restores the
@@ -956,3 +989,40 @@ Before reporting work complete:
   expose the temporary Basic Auth endpoint directly to the public internet;
   production administration still requires TLS, stronger identity/RBAC, CSRF
   protection, audit logging and rate limiting.
+
+## 2026-07-31 demo crafting handoff
+
+- The gear crafting popup no longer exposes destination-stock capacity or
+  disables Produce from the client-side capacity projection. Material
+  sufficiency remains visible and authoritative server validation still owns
+  command acceptance.
+- Migration `0041_demo_hunter_gold` raises existing demo Hunter wallets to
+  `1,000,000,000` gold and wraps lazy demo seeding so future demo worlds receive
+  the same amount. Real player accounts are not modified.
+- PostgreSQL reloads the seeded demo roster before returning the first world
+  snapshot, preventing the initial in-memory roster from overwriting seeded
+  wallet values at the first checkpoint.
+- Migration `0042_reseed_demo_town_stock` restores full demo materials, product
+  stock and crafted display stock for existing demo towns without touching real
+  player accounts; demo accounts without a town remain lazy-seeded on first
+  world load.
+
+## 2026-08-02 weapon authority and craft lifecycle handoff
+
+- Rebuild weapon rolls no longer derive entropy or instance identity from the
+  browser correlation ID. The server creates a UUID for each new roll; replayed
+  idempotent commands return before allocating another roll. A fixed server roll
+  UUID still produces deterministic values for tests.
+- Skill damage now always includes the equipped rebuild weapon contribution,
+  including seeded Hunters whose authoritative profile already contains
+  `dps_milli`.
+- `infra/db/run-migrations.sh` installs the versioned `core_game` bundle after
+  numbered player-state migrations and records a combined checksum. Validation
+  on a disposable PostgreSQL 17 database applied the runner twice and verified
+  counts `40/126/160/20/5/61` for weapon bases, affixes, tiers, pools, virtues,
+  and collection sets.
+- The client applies an authoritative intent-result snapshot before transient
+  feedback. Craft submission is disabled immediately while one request is
+  pending, remains disabled across snapshot renders, clears on rejection or
+  connection loss, and animates only the popup and recipe that originated the
+  accepted request.

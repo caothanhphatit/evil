@@ -5,7 +5,7 @@ use uuid::Uuid;
 
 use super::{farm_validation::FarmReport, BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 31;
+pub const PROTOCOL_VERSION: u16 = 32;
 pub const MAX_MESSAGE_BYTES: usize = 4194304;
 
 #[derive(Debug, Deserialize)]
@@ -40,6 +40,7 @@ pub enum ClientCommand {
     UseHunterSkill { hunter_id: u32, skill_id: String, target_entity_id: Option<String> },
     BanishHunter { hunter_id: u32 },
     EquipHunterItem { hunter_id: u32, item_id: u32 },
+    EquipHunterWeapon { hunter_id: u32, gear_instance_id: Uuid },
     StartHunterEnhancement { hunter_id: u32 },
     EnhanceHunterGear { hunter_id: u32, gear_instance_id: Uuid, mode: String, optional_material_ids: Vec<String> },
     ClaimQuestReward { quest_id: String },

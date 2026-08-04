@@ -156,10 +156,26 @@ fn demo_stock_and_service_action_state_migrations_cover_live_runtime() {
 fn demo_accounts_have_independent_players_and_lazy_full_stock_seeding() {
     let migration =
         include_str!("../../../../infra/db/migrations/0038_independent_demo_accounts.sql");
+    let hunter_gold = include_str!("../../../../infra/db/migrations/0041_demo_hunter_gold.sql");
     assert!(migration.contains("00000000-0000-4000-8000-00000000a002"));
     assert!(migration.contains("00000000-0000-4000-8000-00000000a003"));
     assert!(migration.contains("seed_full_demo_account_stock"));
     assert!(migration.contains("target_player"));
+    assert!(hunter_gold.contains("seed_full_demo_account_stock_base"));
+    assert!(hunter_gold.contains("GREATEST(gold, 1000000000)"));
+    assert!(hunter_gold.contains("account.is_demo = TRUE"));
+    let reseed = include_str!("../../../../infra/db/migrations/0042_reseed_demo_town_stock.sql");
+    assert!(reseed.contains("seed_full_demo_account_stock(target_player)"));
+    assert!(reseed.contains("account.is_demo = TRUE"));
+}
+
+#[test]
+fn migration_runner_installs_the_versioned_core_game_bundle() {
+    let runner = include_str!("../../../../infra/db/run-migrations.sh");
+    assert!(runner.contains("core_game_evil_hunter_rebuild_v1_weapon_core_v1"));
+    assert!(runner.contains("001_core_game_catalog.sql"));
+    assert!(runner.contains("002_rebuild_weapon_core.sql"));
+    assert!(runner.contains("Core-game bundle checksum mismatch"));
 }
 
 #[test]

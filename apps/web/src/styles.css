@@ -860,6 +860,10 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .gear-create-pop .source-popup-actions button { width: 50%; min-width: 0; height: 34px; min-height: 34px; border: 1px solid; border-radius: 5px; padding: 0 8px; background-image: none; font-size: 9px; image-rendering: auto; }
 .gear-create-pop #gear-create-submit, .gear-create-pop #gear-create-sell { border-color: #71812e; background: linear-gradient(#8b9f35, #5d7020); color: #fff9db; }
 .gear-create-pop #gear-create-submit:disabled, .gear-create-pop #gear-create-sell:disabled { filter: none; opacity: .6; }
+.gear-create-pop.crafting .gear-frame { animation: craft-frame-pulse .85s ease-in-out both; }
+.gear-create-pop.crafting .gear-frame::after { content: ""; position: absolute; inset: -7px; border: 2px solid #e7c867; border-radius: 9px; opacity: 0; animation: craft-ring-burst .85s ease-out both; pointer-events: none; }
+.consum-create-pop.crafting .consum-product-frame { animation: craft-frame-pulse .85s ease-in-out both; }
+.consum-create-pop.crafting .consum-product-frame::after { content: ""; position: absolute; inset: -7px; border: 2px solid #e7c867; border-radius: 9px; opacity: 0; animation: craft-ring-burst .85s ease-out both; pointer-events: none; }
 .gear-create-pop #gear-create-close { border-color: #a44431; background: linear-gradient(#bd4933, #8e2f20); color: #fff3e6; }
 .gear-create-pop.gear-detail-mode { height: clamp(326px, 48%, 372px); grid-template-rows: 24px 1px 84px minmax(132px, 1fr) 34px; }
 .gear-create-pop.gear-detail-mode .gear-create-product { grid-template-columns: 58px 1fr; min-height: 84px; }
@@ -888,6 +892,8 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 @keyframes start-pulse { 50% { opacity: .58; filter: brightness(1.15); } }
 @keyframes opacity-pulse { 50% { opacity: .2; } }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes craft-frame-pulse { 0% { transform: scale(1); filter: brightness(1); } 35% { transform: scale(1.08); filter: brightness(1.7) drop-shadow(0 0 12px #e7c867); } 100% { transform: scale(1); filter: brightness(1); } }
+@keyframes craft-ring-burst { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.25); opacity: 0; } }
 
 .bounty-quest-pop { width: min(480px, calc(100vw - 24px)); max-height: min(820px, calc(100vh - 24px)); overflow: hidden; }
 .bounty-quest-pop > #bounty-close { position: absolute; right: 14px; top: 14px; }
@@ -1114,6 +1120,22 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-material-cell b { position: absolute; right: 1px; bottom: 0; color: white; font-size: 7px; text-shadow: 0 1px 2px #000; }
 .hunter-material-grid.unresolved { opacity: .38; }
 .hunter-material-cell.empty::after { content: ""; width: 9px; height: 9px; border: 1px solid #756b58; transform: rotate(45deg); }
+.hunter-weapon-inventory { display: grid; gap: 5px; margin-bottom: 10px; }
+.hunter-weapon-row { display: grid; grid-template-columns: 45px minmax(0, 1fr) 62px; align-items: center; gap: 7px; min-height: 52px; padding: 4px; border: 1px solid #68593f; background: #201c17; }
+.hunter-weapon-row.incompatible { opacity: .62; filter: grayscale(.45); }
+.hunter-weapon-icon { display: grid; place-items: center; width: 43px; height: 43px; border: 5px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_gear_9__2514.png') 5 fill / 5px stretch; }
+.hunter-weapon-icon img { width: 100%; height: 100%; object-fit: contain; }
+.hunter-weapon-copy { display: grid; align-content: center; min-width: 0; gap: 1px; }
+.hunter-weapon-heading { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.hunter-weapon-heading b { overflow: hidden; color: #f4e5bd; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.hunter-weapon-heading i { flex: 0 0 auto; color: #e3ad51; font-size: 6px; font-style: normal; }
+.hunter-weapon-row.quality-2 .hunter-weapon-heading i { color: #7db7eb; }
+.hunter-weapon-row.quality-3 .hunter-weapon-heading i { color: #c484e8; }
+.hunter-weapon-row.quality-4 .hunter-weapon-heading i { color: #e5af54; }
+.hunter-weapon-copy small, .hunter-weapon-copy strong, .hunter-weapon-copy em { overflow: hidden; color: #aaa18f; font-size: 6px; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }
+.hunter-weapon-copy strong { color: #ef7271; font-size: 7px; }
+.hunter-weapon-copy em { color: #d18376; }
+.hunter-weapon-equip { min-height: 30px; padding: 2px 5px; font-size: 7px; }
 
 @container game-shell (max-width: 390px) {
   .hunter-roster-panel { right: 4px; left: 4px; width: auto; height: 77%; border-width: 2px; }

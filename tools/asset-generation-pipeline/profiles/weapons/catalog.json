@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "logicalSize": 24,
+  "deliverySize": 96,
+  "paletteLimit": 48,
+  "maxVisibleBounds": 20,
+  "classes": {
+    "berserker": { "family": "H1", "slot": "weapon_01", "attachment": "sword", "sourceIndices": [0, 1, 2, 3, 4, 5, 6] },
+    "paladin": { "family": "H2", "slot": "weapon_02", "attachment": "hammer", "sourceIndices": [9, 10, 11, 12, 13, 14, 15] },
+    "ranger": { "family": "H3", "slot": "weapon_03", "attachment": "bow", "sourceIndices": [18, 19, 20, 21, 22, 23, 24] },
+    "sorcerer": { "family": "H4", "slot": "weapon_04", "attachment": "wand", "sourceIndices": [27, 28, 29, 30, 31, 32, 33] },
+    "dark_knight": { "family": "H5", "slot": "weapon_05", "attachment": "spear", "sourceIndices": [252, 253, 254, 255, 256, 257, 258] }
+  },
+  "weapons": [
+    { "id": "wp_berserker_000", "class": "berserker", "unlockLevel": 0, "en": "Chipped Iron Greatsword", "vi": "Đại Kiếm Sắt Mẻ", "theme": "worn iron, leather, raw wood" },
+    { "id": "wp_berserker_100", "class": "berserker", "unlockLevel": 100, "en": "Redfang Cleaver", "vi": "Trọng Đao Nanh Đỏ", "theme": "tempered steel, red leather" },
+    { "id": "wp_berserker_200", "class": "berserker", "unlockLevel": 200, "en": "Bloodmoon Great Axe", "vi": "Đại Phủ Huyết Nguyệt", "theme": "silver, bloodstone, blue crystal" },
+    { "id": "wp_berserker_300", "class": "berserker", "unlockLevel": 300, "en": "Stormbreaker Blade", "vi": "Cự Nhận Phá Bão", "theme": "dark steel, restrained lightning channels" },
+    { "id": "wp_berserker_400", "class": "berserker", "unlockLevel": 400, "en": "Dragonrend Greatsword", "vi": "Đại Kiếm Diệt Long", "theme": "dragon bone, scales, molten core" },
+    { "id": "wp_berserker_500", "class": "berserker", "unlockLevel": 500, "en": "Abyss Reaver", "vi": "Ma Nhận Vực Thẳm", "theme": "obsidian, void glow, hooked silhouette" },
+    { "id": "wp_berserker_600", "class": "berserker", "unlockLevel": 600, "en": "Sunscar Colossus", "vi": "Cự Kiếm Nhật Ngân", "theme": "white gold, celestial glass, halo accent" },
+    { "id": "wp_berserker_700", "class": "berserker", "unlockLevel": 700, "en": "Godslayer's Final Word", "vi": "Lời Cuối Của Kẻ Thí Thần", "theme": "mythic silhouette, ancient runes, restrained cosmic energy" },
+
+    { "id": "wp_paladin_000", "class": "paladin", "unlockLevel": 0, "en": "Pilgrim's Stone Maul", "vi": "Búa Đá Hành Hương", "theme": "worn stone, leather, raw wood" },
+    { "id": "wp_paladin_100", "class": "paladin", "unlockLevel": 100, "en": "Dawnwatch Warhammer", "vi": "Chiến Chùy Gác Bình Minh", "theme": "tempered steel, red leather" },
+    { "id": "wp_paladin_200", "class": "paladin", "unlockLevel": 200, "en": "Oathkeeper's Maul", "vi": "Trọng Chùy Giữ Lời Thề", "theme": "silver, bloodstone, blue crystal" },
+    { "id": "wp_paladin_300", "class": "paladin", "unlockLevel": 300, "en": "Thunder Vow Hammer", "vi": "Búa Lời Thề Sấm Sét", "theme": "dark steel, restrained lightning channels" },
+    { "id": "wp_paladin_400", "class": "paladin", "unlockLevel": 400, "en": "Wyrmguard Maul", "vi": "Trọng Chùy Hộ Long", "theme": "dragon bone, scales, molten core" },
+    { "id": "wp_paladin_500", "class": "paladin", "unlockLevel": 500, "en": "Bastion of the Deep", "vi": "Thành Lũy Vực Sâu", "theme": "obsidian, void glow, fortress-like head" },
+    { "id": "wp_paladin_600", "class": "paladin", "unlockLevel": 600, "en": "Seraphic Judgment", "vi": "Phán Quyết Thiên Sứ", "theme": "white gold, celestial glass, balanced halo" },
+    { "id": "wp_paladin_700", "class": "paladin", "unlockLevel": 700, "en": "Heaven's Final Verdict", "vi": "Phán Quyết Cuối Của Thiên Đường", "theme": "mythic holy geometry, ancient runes, restrained cosmic energy" },
+
+    { "id": "wp_ranger_000", "class": "ranger", "unlockLevel": 0, "en": "Ashwood Shortbow", "vi": "Đoản Cung Gỗ Tần Bì", "theme": "worn wood, leather grip" },
+    { "id": "wp_ranger_100", "class": "ranger", "unlockLevel": 100, "en": "Greywolf Longbow", "vi": "Trường Cung Sói Xám", "theme": "tempered fittings, red leather" },
+    { "id": "wp_ranger_200", "class": "ranger", "unlockLevel": 200, "en": "Moonpiercer Bow", "vi": "Cung Xuyên Nguyệt", "theme": "silver, bloodstone, blue crystal" },
+    { "id": "wp_ranger_300", "class": "ranger", "unlockLevel": 300, "en": "Tempest Wing Bow", "vi": "Cung Cánh Bão Tố", "theme": "dark limbs, restrained lightning channels" },
+    { "id": "wp_ranger_400", "class": "ranger", "unlockLevel": 400, "en": "Dragonbone Recurve", "vi": "Phản Cung Xương Rồng", "theme": "dragon bone, scales, molten accents" },
+    { "id": "wp_ranger_500", "class": "ranger", "unlockLevel": 500, "en": "Voidstalker Bow", "vi": "Cung Săn Hư Không", "theme": "obsidian, void glow, hooked limbs" },
+    { "id": "wp_ranger_600", "class": "ranger", "unlockLevel": 600, "en": "Starfall Greatbow", "vi": "Đại Cung Tinh Lạc", "theme": "white gold, celestial glass, star accent" },
+    { "id": "wp_ranger_700", "class": "ranger", "unlockLevel": 700, "en": "Horizon's End", "vi": "Tận Cùng Chân Trời", "theme": "mythic open silhouette, ancient runes, restrained cosmic energy" },
+
+    { "id": "wp_sorcerer_000", "class": "sorcerer", "unlockLevel": 0, "en": "Novice's Oak Staff", "vi": "Trượng Sồi Tập Sự", "theme": "raw oak, small worn focus" },
+    { "id": "wp_sorcerer_100", "class": "sorcerer", "unlockLevel": 100, "en": "Emberglass Staff", "vi": "Trượng Lưu Ly Hỏa", "theme": "tempered fittings, ember glass" },
+    { "id": "wp_sorcerer_200", "class": "sorcerer", "unlockLevel": 200, "en": "Frostfire Scepter", "vi": "Quyền Trượng Băng Hỏa", "theme": "silver, paired frost and fire focus" },
+    { "id": "wp_sorcerer_300", "class": "sorcerer", "unlockLevel": 300, "en": "Stormcall Staff", "vi": "Trượng Triệu Bão", "theme": "dark steel, forked lightning focus" },
+    { "id": "wp_sorcerer_400", "class": "sorcerer", "unlockLevel": 400, "en": "Wyrmheart Staff", "vi": "Trượng Long Tâm", "theme": "dragon bone, scale ring, molten core" },
+    { "id": "wp_sorcerer_500", "class": "sorcerer", "unlockLevel": 500, "en": "Abyssal Eye Scepter", "vi": "Quyền Trượng Mắt Vực Thẳm", "theme": "obsidian, void eye, restrained glow" },
+    { "id": "wp_sorcerer_600", "class": "sorcerer", "unlockLevel": 600, "en": "Astral Conduit", "vi": "Trượng Dẫn Tinh Giới", "theme": "white gold, celestial glass, orbiting-ring silhouette" },
+    { "id": "wp_sorcerer_700", "class": "sorcerer", "unlockLevel": 700, "en": "Crown of Infinite Night", "vi": "Vương Miện Đêm Vô Tận", "theme": "mythic crown focus, ancient runes, restrained cosmic energy" },
+
+    { "id": "wp_dark_knight_000", "class": "dark_knight", "unlockLevel": 0, "en": "Rusted Guard Spear", "vi": "Thương Vệ Binh Hoen Gỉ", "theme": "rusted iron, leather, raw wood" },
+    { "id": "wp_dark_knight_100", "class": "dark_knight", "unlockLevel": 100, "en": "Blackthorn Glaive", "vi": "Trường Đao Hắc Gai", "theme": "tempered dark steel, red leather" },
+    { "id": "wp_dark_knight_200", "class": "dark_knight", "unlockLevel": 200, "en": "Gravewind Spear", "vi": "Thương Gió Mồ", "theme": "silver, bloodstone, blue crystal" },
+    { "id": "wp_dark_knight_300", "class": "dark_knight", "unlockLevel": 300, "en": "Nightstorm Glaive", "vi": "Trường Đao Dạ Bão", "theme": "dark steel, restrained lightning channels" },
+    { "id": "wp_dark_knight_400", "class": "dark_knight", "unlockLevel": 400, "en": "Drakespine Lance", "vi": "Trường Thương Long Tích", "theme": "dragon bone, scales, molten core" },
+    { "id": "wp_dark_knight_500", "class": "dark_knight", "unlockLevel": 500, "en": "Dreadwake Halberd", "vi": "Chiến Kích Hắc Triều", "theme": "obsidian, void glow, hooked blade" },
+    { "id": "wp_dark_knight_600", "class": "dark_knight", "unlockLevel": 600, "en": "Eclipse Sentinel", "vi": "Vệ Binh Nhật Thực", "theme": "white gold, celestial glass, eclipse accent" },
+    { "id": "wp_dark_knight_700", "class": "dark_knight", "unlockLevel": 700, "en": "Sovereign of the Black Star", "vi": "Bá Chủ Hắc Tinh", "theme": "mythic blade, ancient runes, restrained black-star energy" }
+  ]
+}

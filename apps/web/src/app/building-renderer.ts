@@ -50,6 +50,7 @@ export interface BuildingRenderingContext {
   buildingEvidenceRegistry: EvidenceBuildingRegistry | null;
   buildingEvidenceError: string | null;
   popupInteractionActive: boolean;
+  pendingCraft: { popup: "gear" | "consumable"; recipeId: string } | null;
   buildingPanel: HTMLElement;
   buildingName: HTMLElement;
   buildingPreview: HTMLImageElement;
@@ -79,7 +80,6 @@ export interface BuildingRenderingContext {
   gearQuantityRow: HTMLElement;
   gearCreateQuantity: HTMLInputElement;
   gearFrameQuantity: HTMLOutputElement;
-  gearStorageLabel: HTMLElement;
   gearCreateSubmit: HTMLButtonElement;
   gearCreateSell: HTMLButtonElement;
   consumCreatePop: HTMLElement;
@@ -1217,17 +1217,6 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreateQuantity.value = String(quantity);
     const gearKind = gearKindFromRecipe(context.selectedRecipe) ?? "weapon";
     const gearKindLabel = t(`craft.kind.${gearKind}` as MessageKey);
-    const stockFamily = (recipe: ShopRecipeSnapshot): string => {
-      const kind = gearKindFromRecipe(recipe);
-      if (kind === "weapon") return "weapon";
-      if (kind && JEWELER_GEAR_TABS.some((candidate) => candidate === kind)) return "accessory";
-      return "armor";
-    };
-    const remainingCapacity = remainingSharedCapacity(
-      system.recipes.filter((recipe) => recipe.shop_id === context.selectedRecipe?.shop_id),
-      context.selectedRecipe,
-      (candidate, current) => stockFamily(candidate) === stockFamily(current),
-    );
     context.gearCreatePop.classList.toggle("gear-detail-mode", context.gearPopupMode === "detail");
     context.gearCreateTitle.textContent = context.gearPopupMode === "detail" ? context.selectedRecipe.product_name : t("craft.create_item", { item: gearKindLabel });
     if (context.selectedRecipe.icon) context.gearCreateIcon.src = context.selectedRecipe.icon;
@@ -1236,7 +1225,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreateName.textContent = context.selectedRecipe.product_name;
     context.gearCreatePrice.textContent = context.gearPopupMode === "detail"
       ? t("craft.gear_display_price", { kind: gearKindLabel, price: formatNumber(context.selectedRecipe.sale_price) })
-      : `${gearKindLabel} · ${t("craft.shop_stock", { stock: context.selectedRecipe.stock, capacity: context.selectedRecipe.capacity })}`;
+      : gearKindLabel;
     context.gearCreateDescription.replaceChildren();
     if (context.gearPopupMode === "detail") {
       const unresolved = document.createElement("p");
@@ -1249,7 +1238,6 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearMaterialTitle.textContent = t("craft.required_materials");
     context.gearMaterialCosts.hidden = context.gearPopupMode === "detail";
     context.gearQuantityRow.hidden = context.gearPopupMode === "detail";
-    context.gearStorageLabel.hidden = context.gearPopupMode === "detail";
     context.gearCreateSubmit.hidden = context.gearPopupMode === "detail";
     context.gearCreateSubmit.textContent = t("common.produce");
     context.gearCreateSell.hidden = context.gearPopupMode !== "detail";
@@ -1281,15 +1269,8 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       return row;
     }));
     context.gearFrameQuantity.value = String(quantity);
-    context.gearStorageLabel.textContent = context.selectedRecipe.capacity > 0
-      ? t("craft.remaining_storage", { amount: remainingCapacity })
-      : t("craft.remaining_storage_unlimited");
-    context.gearCreateSubmit.disabled = context.gearPopupMode !== "craft" || !craftable || quantity > remainingCapacity;
-    context.gearCreateSubmit.title = !craftable
-      ? t("craft.materials_missing_tooltip")
-      : quantity > remainingCapacity
-        ? t("craft.capacity_tooltip")
-        : "";
+    context.gearCreateSubmit.disabled = context.pendingCraft !== null || context.gearPopupMode !== "craft" || !craftable;
+    context.gearCreateSubmit.title = !craftable ? t("craft.materials_missing_tooltip") : "";
   }
   
   function renderConsumCreatePop(): void {
@@ -1374,7 +1355,10 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       ? selectedCost && availableInput < neededInput ? selectedCost.material_id : null
       : missingCraftMaterial(context.selectedRecipe.material_costs, system.material_stocks, context.selectedServiceQuantity);
     const capacityExceeded = !isServiceProduct && context.selectedServiceQuantity > remainingCapacity;
-    context.consumCreateSubmit.disabled = (!selectedCost && isServiceProduct) || missingMaterialId !== null || capacityExceeded;
+    context.consumCreateSubmit.disabled = context.pendingCraft !== null
+      || (!selectedCost && isServiceProduct)
+      || missingMaterialId !== null
+      || capacityExceeded;
     context.consumCreateSubmit.title = missingMaterialId
       ? t("craft.selected_material_missing_tooltip")
       : capacityExceeded

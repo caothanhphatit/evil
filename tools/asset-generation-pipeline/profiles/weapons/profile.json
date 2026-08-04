@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "weapons",
+  "catalog": "catalog.json",
+  "itemsKey": "weapons",
+  "groupsKey": "classes",
+  "itemGroupKey": "class",
+  "referenceIndicesKey": "sourceIndices",
+  "sourcePattern": "weapon-{index}.png",
+  "deliveryFolder": "gear-icons",
+  "runtimeFolder": "spine-regions",
+  "bindingFolder": "bindings",
+  "binding": {
+    "familyKey": "family",
+    "slotKey": "slot",
+    "attachmentKey": "attachment",
+    "skinPrefix": "rebuild_"
+  }
+}

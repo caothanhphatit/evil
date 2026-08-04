@@ -173,7 +173,10 @@ impl MonsterWorldState {
         let base_dps = hunter
             .profile
             .dps_milli
-            .unwrap_or(hunter.profile.attack * 1_000)
+            .unwrap_or_else(|| hunter.profile.attack.saturating_mul(1_000))
+            .saturating_add(
+                u64::from(hunter.equipped_weapon_attack_damage()).saturating_mul(1_000),
+            )
             / 1_000;
         let target_id = self.hunters[agent_index].target_monster_id.clone();
         match skill_id {

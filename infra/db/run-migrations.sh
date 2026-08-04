@@ -49,3 +49,20 @@ for migration in "$@"; do
         -f "$migration" \
         -c "INSERT INTO schema_migration(version, checksum) VALUES ('$version', '$checksum')"
 done
+
+core_version="core_game_evil_hunter_rebuild_v1_weapon_core_v1"
+core_dir="$script_dir/core_game"
+core_checksum="$(sha256sum "$core_dir/001_core_game_catalog.sql" "$core_dir/002_rebuild_weapon_core.sql" "$core_dir/init.sql" | sha256sum | awk '{print $1}')"
+applied_core_checksum="$(psql "$DATABASE_URL" -Atc "SELECT COALESCE(checksum, '__missing__') FROM schema_migration WHERE version = '$core_version'")"
+if [ -n "$applied_core_checksum" ]; then
+    if [ "$applied_core_checksum" != "$core_checksum" ]; then
+        echo "Core-game bundle checksum mismatch for $core_version" >&2
+        exit 1
+    fi
+    echo "Skipping already-applied core-game bundle $core_version"
+else
+    echo "Applying core-game bundle $core_version"
+    psql "$DATABASE_URL" -v ON_ERROR_STOP=1 --single-transaction \
+        -f "$core_dir/init.sql" \
+        -c "INSERT INTO schema_migration(version, checksum) VALUES ('$core_version', '$core_checksum')"
+fi

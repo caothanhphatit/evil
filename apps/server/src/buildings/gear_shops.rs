@@ -41,6 +41,7 @@ pub struct GearProductRoute {
     pub sale_building_id: BaseBuildingId,
     pub family: GearProductFamily,
     pub kind: GearProductKind,
+    pub gear_index: u32,
     pub rating: u16,
     pub difficulty_group: u16,
 }
@@ -97,6 +98,7 @@ pub fn gear_product_route(
         sale_building_id,
         family,
         kind,
+        gear_index: gear.gear_index,
         rating,
         difficulty_group: gear.difficulty_group,
     })

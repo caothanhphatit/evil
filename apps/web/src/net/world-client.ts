@@ -123,6 +123,7 @@ export class WorldClient {
   }
   banishHunter(hunterId: number): boolean { return this.send({ type: "banish_hunter", hunter_id: hunterId }); }
   equipHunterItem(hunterId: number, itemId: number): boolean { return this.send({ type: "equip_hunter_item", hunter_id: hunterId, item_id: itemId }); }
+  equipHunterWeapon(hunterId: number, gearInstanceId: string): boolean { return this.send({ type: "equip_hunter_weapon", hunter_id: hunterId, gear_instance_id: gearInstanceId }); }
   enhanceHunterGear(
     hunterId: number,
     gearInstanceId: string,
@@ -194,7 +195,9 @@ export class WorldClient {
         if (message.snapshot.screen === "boot") this.flushPendingBoot();
         else this.pendingBoot = false;
       }
-      if (message.type === "intent_result") this.onIntentFeedback({ intent: message.intent, accepted: message.accepted, reason: message.reason });
+      const intentFeedback = message.type === "intent_result"
+        ? { intent: message.intent, accepted: message.accepted, reason: message.reason }
+        : null;
       if (message.type === "binding_blocked") this.onBindingBlocked({ intent: message.intent, blockers: message.blockers });
       if (message.type === "world_frame") {
         if (this.latestSnapshot) {
@@ -209,6 +212,8 @@ export class WorldClient {
         if (snapshot.screen !== "boot") this.pendingBoot = false;
         this.onSnapshot(snapshot);
       }
+      // Render authoritative state before applying transient intent UI such as craft animations.
+      if (intentFeedback) this.onIntentFeedback(intentFeedback);
     } catch (error) {
       recordClientEvent("error", "protocol_fault", { reason: error instanceof Error ? error.message : "unknown" });
       this.failProtocol(socket);

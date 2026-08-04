@@ -1,0 +1,58 @@
+{
+  "contractType": "third-party-community-equipment-options",
+  "schemaVersion": 1,
+  "source": {
+    "url": "https://evil-hunter-tycoons.fandom.com/wiki/Equipment",
+    "apiEndpoint": "https://evil-hunter-tycoons.fandom.com/api.php?action=parse&page=Equipment&prop=wikitext&format=json",
+    "pageId": 151,
+    "accessed": "2026-07-31",
+    "authority": "community-reference-only"
+  },
+  "pageClaims": {
+    "equipmentClasses": ["weapon", "headpiece", "armor", "gloves", "shoes", "necklace", "ring", "belt"],
+    "tiers": {
+      "C": "gray; no additional option",
+      "B": "blue; 1 additional option",
+      "A": "purple; 2 additional options",
+      "S": "orange; 3 additional options",
+      "SS": "red; 4 additional options including unique",
+      "SSS": "sky blue; 5 additional options including unique"
+    },
+    "qualityMultipliers": {
+      "poor": 0.8,
+      "common": 0.9,
+      "uncommon": 1.0,
+      "advance": 1.1,
+      "ultimate": 1.2
+    },
+    "optionGroups": ["positive", "negative", "unique"],
+    "notableOptions": [
+      "HP, DEF, ATK, ATK speed, movement speed, evasion, critical chance and critical damage",
+      "Gold/material gain, EXP gain, satiety/mood/stamina consumption and recovery",
+      "Damage against Primate, Demon, Undead, Animal and Boss types",
+      "Lifesteal, additional damage, pure damage and damage reduction",
+      "Fury, Evasion, Barrier, Thunderbolt, Curse, Firestorm and other attack-triggered skills",
+      "Double Attack, guaranteed critical, Holy Light second hit and Thunderbolt modifiers",
+      "Archangel and Demon Lord transformation procs"
+    ]
+  },
+  "packageCrossCheck": {
+    "packageVersion": "1.411",
+    "gearPropertyRowCount": 125,
+    "confirmedExamples": {
+      "qualityMultipliers": "Package formula confirms 0.8/0.9/1.0/1.1/1.2 quality multipliers.",
+      "transformations": "Package confirms property 48 (Archangel) and 49 (Demon Lord), each rolling 3-10%.",
+      "virtueReduction": "Package property 50 reduces the Virtue count required for a set effect by 1, minimum 1. This is absent from the page table."
+    },
+    "communityPageIsNotComplete": [
+      "The package has many later/special properties (including IDs 73-117) that are not represented in the page table.",
+      "The page does not expose package property IDs, roll ranges, uniqueOptionYn, gearSkillidx, or generation pools.",
+      "The page's SSS tier and option counts are historical claims and need version-specific confirmation.",
+      "The page says Demon King in one row while package English text uses Demon Lord."
+    ],
+    "discrepancies": [
+      "The page lists transformation movement speed as +300%/3x in related community material, while package gearSkill text says +200%; runtime multiplier semantics remain unresolved."
+    ]
+  },
+  "implementationDisposition": "Use this page as a legacy human-readable index for modifier names and broad grouping. Generate authoritative options from decoded package rows and preserve unknown/unresolved rows explicitly."
+}

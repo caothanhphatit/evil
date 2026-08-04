@@ -1,0 +1,75 @@
+{
+  "contractType": "third-party-community-corroboration",
+  "schemaVersion": 1,
+  "source": {
+    "url": "https://dtngamer.com/evil-hunter-tycoon-thuoc-tinh-do-va-quai-thong-kho/",
+    "title": "Evil Hunter Tycoon Thuộc Tính Đồ và Quái Thống Khổ",
+    "published": "2021-01-02",
+    "modified": "2021-01-03",
+    "accessed": "2026-07-31",
+    "authority": "community-reference-only"
+  },
+  "claims": {
+    "monsterRaces": {
+      "beast": ["Lycan", "Hound"],
+      "undead": ["Skeleton", "Witch", "Reaper", "Warrior", "Bearer"],
+      "humanoid": ["Orc", "Ogre", "Cyclops", "Human"],
+      "demon": ["Succubus", "Vampire", "Demon", "Ac Mong (article spelling)"],
+      "boss": ["Bosses"]
+    },
+    "transformations": {
+      "demonLord": {
+        "attackPercent": 30,
+        "movementSpeedTextPercent": 300,
+        "durationSeconds": 5
+      },
+      "archangel": {
+        "defensePercent": 30,
+        "movementSpeedTextPercent": 300,
+        "durationSeconds": 5
+      },
+      "acquisition": "Article claims these modifiers are obtainable by crafting Ancient and Primal weapons."
+    },
+    "virtues": {
+      "activationCounts": [2, 4, 6],
+      "names": ["Devotion", "Justice", "Mercy", "Glory", "Honor"],
+      "sourceClaim": "Torment 1 gear progression using Angel Tears from Fallen Angel Gabriel.",
+      "effectClaims": {
+        "devotion": "When attacked, 2/4/6% chance of 1-second invincibility.",
+        "justice": "Monster damage +10/20/30%.",
+        "mercy": "Article wording says 50% physical damage amplification below 10/20/30% HP; semantics unresolved.",
+        "glory": "When critically hit, 10/20/30% chance to recover 25% HP.",
+        "honor": "PvP damage taken reduced 8/16/24%."
+      }
+    }
+  },
+  "packageComparison": {
+    "packageVersion": "1.411",
+    "confirmed": {
+      "gearProperty48": {
+        "description": "value% chance to transform into an Archangel when attacking",
+        "randomPlusValue": [3, 10],
+        "gearSkillidx": 1
+      },
+      "gearProperty49": {
+        "description": "value% chance to transform into a Demon Lord when attacking",
+        "randomPlusValue": [3, 10],
+        "gearSkillidx": 2
+      },
+      "gearSkill1": "5 sec; DEF +30%; movement speed +200%.",
+      "gearSkill2": "5 sec; ATK +30%; movement speed +200%."
+    },
+    "discrepancies": [
+      "Article reports movement speed +300% (3x); package text reports +200%. Do not normalize the values without runtime calculation evidence."
+    ],
+    "unresolved": [
+      "No standard decoded gear row directly binds property IDs 48 or 49.",
+      "Ancient/Primal generation pool and ordering remain unresolved in the original gear creation writer boundary evidence."
+    ]
+  },
+  "implementationDisposition": {
+    "monsterRaces": "community-corroborated; require package/runtime confirmation before authoritative mapping",
+    "transformations": "package-confirmed definitions; Ancient/Primal acquisition remains unresolved",
+    "virtues": "model as a separate set/gear-progression system, not ordinary prefix/suffix until package evidence is recovered"
+  }
+}
