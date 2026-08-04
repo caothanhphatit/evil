@@ -1050,3 +1050,33 @@ Before reporting work complete:
 - `game-application.ts` is now `581` lines. Popup/menu/craft bindings,
   building evidence loading, and intent feedback live in focused modules while
   preserving the existing authoritative client flow.
+
+## 2026-08-04 production deployment handoff
+
+- Production is running commit `d6cbe35` on `evil.poeviethoa.net`; migration
+  `0043_admin_mutation_audit` was applied before recreating the server and web
+  containers. PostgreSQL and Redis volumes were preserved.
+- Rollback references are Git tag `checkpoint/production-admin-20260804` and
+  Docker image tags `evil-prod-server:rollback-20260804` and
+  `evil-prod-web:rollback-20260804`.
+- `deploy/smoke-production.sh` passes. The admin shell is available at
+  `https://v2.poeviethoa.net/evil-admin/`; its authenticated API is proxied at
+  `https://v2.poeviethoa.net/admin/`. Production overview and CSRF issuance
+  both returned HTTP 200 after deployment.
+- Post-deployment authoritative E2E passed on `demo2@evil.local` for
+  `craft -> purchase -> equip -> combat`: weapon instance
+  `a24f6423-6f20-4648-a040-9d5ad7eb25c2`, attack `74 -> 1074`, and combat
+  damage `1308`. All four intents were accepted.
+- Final local gates: web `222/222`, Rust `302/302`, production web build,
+  architecture validation, and `git diff --check`. The only reported source
+  architecture debt is the pre-existing `visible-world.ts` target overage at
+  610 lines versus the 600-line target.
+- Production full-demo persistence can show cold-cache town checkpoints around
+  `850-1000 ms`; repeated unchanged checkpoints settled near `110 ms`. The
+  instrumentation identifies product/crafted stock comparison as the cold
+  path. Do not hide this warning by raising the world-frame target; continue
+  with indexed/hash-based unchanged-state detection if cold latency becomes an
+  operational problem.
+- Durable admin CRUD is still intentionally unavailable. The next mutation
+  slice must implement draft-release validation and atomic promotion rather
+  than editing active content rows in place.
