@@ -6,6 +6,8 @@ use super::{
     PgPoolOptions, PlayerAccountRecord, PlayerRepository, PostgresBuildingRepository,
     RepositoryError, Row, SessionTokenHash, Uuid, ACTIVE_BUILDING_RELEASE_ID,
 };
+use std::time::Instant;
+use tracing::{debug, warn};
 
 pub struct PostgresPlayerRepository {
     pub(super) pool: PgPool,
@@ -262,9 +264,17 @@ impl PlayerRepository for PostgresPlayerRepository {
         lease_fence: i64,
         operations: &[PendingOperation],
     ) -> Result<i64, RepositoryError> {
+        let persist_started = Instant::now();
+        let phase_started = Instant::now();
         let state_json = encode_non_building_state(state)?;
         let town_state = town_from_durable_buildings(&state.buildings)?;
+        let encode_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         let mut transaction = self.pool.begin().await?;
+        let begin_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         let revision = sqlx::query_scalar::<_, i64>(
             r#"
             INSERT INTO player_world_state (player_token, state, revision, lease_fence, updated_at)
@@ -286,6 +296,9 @@ impl PlayerRepository for PostgresPlayerRepository {
         .fetch_optional(&mut *transaction)
         .await?;
         let revision = revision.ok_or(RepositoryError::RevisionConflict)?;
+        let world_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         let town_revision = self
             .buildings
             .save_town_in(
@@ -298,7 +311,13 @@ impl PlayerRepository for PostgresPlayerRepository {
         if town_revision != revision {
             return Err(RepositoryError::RevisionDivergence);
         }
+        let town_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         save_hunter_roster_in(&mut transaction, player_token, &state.hunter_roster).await?;
+        let hunters_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         for operation in operations {
             match operation {
                 PendingOperation::Reward {
@@ -349,7 +368,45 @@ impl PlayerRepository for PostgresPlayerRepository {
                 }
             }
         }
+        let operations_ms = phase_started.elapsed().as_millis();
+
+        let phase_started = Instant::now();
         transaction.commit().await?;
+        let commit_ms = phase_started.elapsed().as_millis();
+        let total_ms = persist_started.elapsed().as_millis();
+        if total_ms > 100 {
+            warn!(
+                %player_token,
+                expected_revision,
+                revision,
+                operation_count = operations.len(),
+                total_ms,
+                encode_ms,
+                begin_ms,
+                world_ms,
+                town_ms,
+                hunters_ms,
+                operations_ms,
+                commit_ms,
+                "player checkpoint persistence exceeded target"
+            );
+        } else {
+            debug!(
+                %player_token,
+                expected_revision,
+                revision,
+                operation_count = operations.len(),
+                total_ms,
+                encode_ms,
+                begin_ms,
+                world_ms,
+                town_ms,
+                hunters_ms,
+                operations_ms,
+                commit_ms,
+                "player checkpoint persistence completed"
+            );
+        }
         Ok(revision)
     }
 

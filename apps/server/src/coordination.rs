@@ -57,6 +57,12 @@ pub trait SessionCoordinator: Send + Sync {
         limit: u32,
         window: Duration,
     ) -> Result<bool, CoordinationError>;
+    async fn allow_rate_limit(
+        &self,
+        key: &str,
+        limit: u32,
+        window: Duration,
+    ) -> Result<bool, CoordinationError>;
     async fn enqueue_farm_report(
         &self,
         player: Uuid,
@@ -78,6 +84,7 @@ struct MemoryState {
     leases: HashMap<Uuid, PlayerLease>,
     fences: HashMap<Uuid, i64>,
     rates: HashMap<SessionTokenHash, (tokio::time::Instant, u32)>,
+    generic_rates: HashMap<String, (tokio::time::Instant, u32)>,
     farm_reports: Vec<(Uuid, FarmReport)>,
 }
 
@@ -159,6 +166,25 @@ impl SessionCoordinator for InMemorySessionCoordinator {
         let mut state = self.inner.lock().await;
         let now = tokio::time::Instant::now();
         let entry = state.rates.entry(token_hash).or_insert((now, 0));
+        if now.duration_since(entry.0) >= window {
+            *entry = (now, 0);
+        }
+        entry.1 += 1;
+        Ok(entry.1 <= limit)
+    }
+
+    async fn allow_rate_limit(
+        &self,
+        key: &str,
+        limit: u32,
+        window: Duration,
+    ) -> Result<bool, CoordinationError> {
+        let mut state = self.inner.lock().await;
+        let now = tokio::time::Instant::now();
+        let entry = state
+            .generic_rates
+            .entry(key.to_owned())
+            .or_insert((now, 0));
         if now.duration_since(entry.0) >= window {
             *entry = (now, 0);
         }
@@ -308,6 +334,22 @@ impl SessionCoordinator for RedisSessionCoordinator {
         let mut connection = self.connection().await?;
         let count: u32 = script
             .key(format!("eh:rate:{}", token_hash.cache_key_suffix()))
+            .arg(window.as_millis() as u64)
+            .invoke_async(&mut connection)
+            .await?;
+        Ok(count <= limit)
+    }
+
+    async fn allow_rate_limit(
+        &self,
+        key: &str,
+        limit: u32,
+        window: Duration,
+    ) -> Result<bool, CoordinationError> {
+        let script = redis::Script::new("local n = redis.call('INCR', KEYS[1]); if n == 1 then redis.call('PEXPIRE', KEYS[1], ARGV[1]) end; return n");
+        let mut connection = self.connection().await?;
+        let count: u32 = script
+            .key(format!("eh:rate:admin:{key}"))
             .arg(window.as_millis() as u64)
             .invoke_async(&mut connection)
             .await?;

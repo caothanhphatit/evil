@@ -71,6 +71,13 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   revision, lease fence, and operation count. Hunter trade workflow transitions
   emit structured Hunter/command/building events. Architecture validation also
   ratchets wildcard parent imports toward explicit package APIs.
+- PostgreSQL checkpoint persistence now batches normalized material, product,
+  crafted-gear and Hunter item-stack rows with typed `UNNEST` inputs and skips
+  exact material/product snapshots that already match durable state. A local
+  full-demo account with 1,106 material rows, 3,447 product rows and 2,820
+  crafted rows improved from 2,217 ms to 115 ms. Structured slow-checkpoint logs
+  expose encode/world/town/Hunter/operation/commit phases; the cancellation
+  budget is 150 ms while the independent 100 ms world-frame warning remains.
 
 - ADR 0009 accepts tiered authority: ordinary movement/combat/common-farm
   reports may be client-predicted and asynchronously validated, while payment,
@@ -1026,3 +1033,20 @@ Before reporting work complete:
   pending, remains disabled across snapshot renders, clears on rejection or
   connection loss, and animates only the popup and recipe that originated the
   accepted request.
+
+## 2026-08-04 persistence and admin hardening handoff
+
+- Full-demo checkpoint persistence was reduced from `2,217 ms` to `115 ms`
+  locally by set-based PostgreSQL writes for town stock and Hunter stacks;
+  checkpoint warning cancellation is now `150 ms` while the independent
+  100-ms world-frame warning remains observable.
+- Migration `0043_admin_mutation_audit` adds durable actor/role/method/path/
+  status/request correlation records. Unsafe admin requests fail closed before
+  handler execution when the audit backend is unavailable.
+- Admin routes now have viewer/operator/admin RBAC, per-actor Redis rate
+  limiting, HMAC-SHA256 CSRF tokens, and audit rows included in `/admin/audit`.
+  CRUD mutation routes remain intentionally absent until draft-release domain
+  transactions are implemented.
+- `game-application.ts` is now `581` lines. Popup/menu/craft bindings,
+  building evidence loading, and intent feedback live in focused modules while
+  preserving the existing authoritative client flow.

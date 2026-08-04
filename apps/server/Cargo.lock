@@ -345,6 +345,7 @@ dependencies = [
  "axum",
  "base64",
  "futures-util",
+ "hmac",
  "pbkdf2",
  "redis",
  "serde",

@@ -1,4 +1,5 @@
 mod admin;
+mod admin_security;
 mod health;
 mod session;
 mod websocket;
@@ -25,11 +26,23 @@ pub fn router(state: AppState) -> Router {
             move |origin, _| origin == configured_origin || origin == loopback_origin,
         ))
         .allow_credentials(true)
-        .allow_methods([Method::GET, Method::POST])
-        .allow_headers([header::CONTENT_TYPE]);
+        .allow_methods([
+            Method::GET,
+            Method::POST,
+            Method::PUT,
+            Method::PATCH,
+            Method::DELETE,
+            Method::OPTIONS,
+        ])
+        .allow_headers([
+            header::CONTENT_TYPE,
+            header::AUTHORIZATION,
+            header::HeaderName::from_static("x-csrf-token"),
+            header::HeaderName::from_static("x-request-id"),
+        ]);
 
     Router::new()
-        .nest("/admin", admin::router())
+        .nest("/admin", admin::router(state.clone()))
         .route("/health", get(health::health))
         .route("/ready", get(health::ready))
         .route("/account/register", post(session::register))

@@ -1,14 +1,15 @@
 use axum::{
     extract::{Path, Query, State},
-    http::{header, HeaderMap, StatusCode},
+    http::{HeaderMap, StatusCode},
+    middleware,
     response::{IntoResponse, Response},
     routing::get,
     Json, Router,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 use serde::{Deserialize, Serialize};
 use sqlx::Row;
 
+use super::admin_security;
 use crate::{
     simulation::{DURABLE_PLAYER_SCHEMA_VERSION, PROTOCOL_VERSION},
     AppState,
@@ -56,8 +57,8 @@ fn default_page_size() -> i64 {
     25
 }
 
-pub fn router() -> Router<AppState> {
-    Router::new()
+pub fn router(state: AppState) -> Router<AppState> {
+    let router = Router::new()
         .route("/overview", get(overview))
         .route("/items", get(items))
         .route("/buildings", get(buildings))
@@ -75,8 +76,15 @@ pub fn router() -> Router<AppState> {
         .route("/players", get(players))
         .route("/releases", get(releases))
         .route("/audit", get(audit))
+        .route("/security/csrf", get(admin_security::csrf_token))
         .route("/catalogs", get(catalogs))
-        .route("/catalogs/{catalog_id}", get(catalog))
+        .route("/catalogs/{catalog_id}", get(catalog));
+    #[cfg(test)]
+    let router = router.route(
+        "/test/mutation",
+        axum::routing::post(|| async { StatusCode::NO_CONTENT }),
+    );
+    router.route_layer(middleware::from_fn_with_state(state, admin_security::guard))
 }
 
 const CATALOGS: [(&str, &str, &str); 8] = [
@@ -659,11 +667,14 @@ async fn audit(
         return unauthorized();
     }
     paged_rows(&state, &page,
-      "SELECT count(*)::bigint FROM (SELECT player_token::text AS player_id, command_type AS action FROM command_ledger UNION ALL SELECT player_token::text, reason FROM reward_ledger) events WHERE player_id ILIKE $1 OR action ILIKE $1",
+      "SELECT count(*)::bigint FROM (SELECT player_token::text AS player_id, command_type AS action FROM command_ledger UNION ALL SELECT player_token::text, reason FROM reward_ledger UNION ALL SELECT actor, method || ' ' || path || ' -> ' || COALESCE(response_status::text, 'pending') FROM admin_mutation_audit) events WHERE player_id ILIKE $1 OR action ILIKE $1",
       r#"SELECT * FROM (SELECT created_at::text AS created_at, player_token::text AS player_id,
         'command' AS kind, command_type AS action FROM command_ledger
       UNION ALL
-      SELECT created_at::text, player_token::text, 'reward', reason FROM reward_ledger) events
+      SELECT created_at::text, player_token::text, 'reward', reason FROM reward_ledger
+      UNION ALL
+      SELECT occurred_at::text, actor, 'admin_mutation',
+        method || ' ' || path || ' -> ' || COALESCE(response_status::text, 'pending') FROM admin_mutation_audit) events
       WHERE player_id ILIKE $1 OR action ILIKE $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3"#, |row| serde_json::json!({
         "createdAt": row.get::<String, _>("created_at"), "playerId": row.get::<String, _>("player_id"),
         "kind": row.get::<String, _>("kind"), "action": row.get::<String, _>("action")
@@ -721,15 +732,7 @@ where
 }
 
 fn unauthorized() -> Response {
-    (
-        StatusCode::UNAUTHORIZED,
-        [(
-            header::WWW_AUTHENTICATE,
-            "Basic realm=\"Evil Hunter Admin\"",
-        )],
-        Json(serde_json::json!({"error": "admin_auth_required"})),
-    )
-        .into_response()
+    admin_security::unauthorized()
 }
 
 fn unavailable() -> Response {
@@ -741,49 +744,26 @@ fn unavailable() -> Response {
 }
 
 fn authorized(state: &AppState, headers: &HeaderMap) -> bool {
-    let Some(value) = headers
-        .get(header::AUTHORIZATION)
-        .and_then(|v| v.to_str().ok())
-    else {
-        return false;
-    };
-    let Some(encoded) = value.strip_prefix("Basic ") else {
-        return false;
-    };
-    let Ok(decoded) = STANDARD.decode(encoded) else {
-        return false;
-    };
-    let Ok(credentials) = std::str::from_utf8(&decoded) else {
-        return false;
-    };
-    let Some((username, password)) = credentials.split_once(':') else {
-        return false;
-    };
-    constant_time_eq(username.as_bytes(), state.config.admin.username.as_bytes())
-        & constant_time_eq(password.as_bytes(), state.config.admin.password.as_bytes())
-}
-
-fn constant_time_eq(left: &[u8], right: &[u8]) -> bool {
-    if left.len() != right.len() {
-        return false;
-    }
-    left.iter()
-        .zip(right)
-        .fold(0_u8, |difference, (left, right)| {
-            difference | (left ^ right)
-        })
-        == 0
+    admin_security::authenticate(state, headers).is_some()
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{app_for_test, config::AppConfig};
+    use crate::{
+        app_for_test, app_for_test_with_admin_pool,
+        config::{AdminRole, AppConfig},
+    };
     use axum::{
         body::{to_bytes, Body},
-        http::Request,
+        http::{header, Request},
     };
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
     use tower::ServiceExt;
+
+    fn credentials() -> String {
+        format!("Basic {}", STANDARD.encode("admin:test-password"))
+    }
 
     #[tokio::test]
     async fn admin_requires_basic_authentication() {
@@ -793,15 +773,28 @@ mod tests {
             .unwrap();
         assert_eq!(response.status(), StatusCode::UNAUTHORIZED);
         assert!(response.headers().contains_key(header::WWW_AUTHENTICATE));
+
+        let response = app_for_test(AppConfig::for_test())
+            .oneshot(
+                Request::get("/admin/overview")
+                    .header(
+                        header::AUTHORIZATION,
+                        format!("Basic {}", STANDARD.encode("admin:wrong-password")),
+                    )
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::UNAUTHORIZED);
     }
 
     #[tokio::test]
     async fn admin_returns_overview_for_valid_credentials() {
-        let credentials = STANDARD.encode("admin:test-password");
         let response = app_for_test(AppConfig::for_test())
             .oneshot(
                 Request::get("/admin/overview")
-                    .header(header::AUTHORIZATION, format!("Basic {credentials}"))
+                    .header(header::AUTHORIZATION, credentials())
                     .body(Body::empty())
                     .unwrap(),
             )
@@ -815,7 +808,6 @@ mod tests {
 
     #[tokio::test]
     async fn weapon_core_routes_are_registered_and_authenticated() {
-        let credentials = STANDARD.encode("admin:test-password");
         for path in [
             "rebuild-weapons",
             "affixes",
@@ -828,7 +820,7 @@ mod tests {
             let response = app_for_test(AppConfig::for_test())
                 .oneshot(
                     Request::get(format!("/admin/{path}"))
-                        .header(header::AUTHORIZATION, format!("Basic {credentials}"))
+                        .header(header::AUTHORIZATION, credentials())
                         .body(Body::empty())
                         .unwrap(),
                 )
@@ -843,5 +835,159 @@ mod tests {
                 assert_eq!(json["data"], serde_json::json!([]));
             }
         }
+    }
+
+    #[tokio::test]
+    async fn csrf_token_authorizes_admin_mutation() {
+        let app = app_for_test(AppConfig::for_test());
+        let response = app
+            .clone()
+            .oneshot(
+                Request::get("/admin/security/csrf")
+                    .header(header::AUTHORIZATION, credentials())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::OK);
+        assert_eq!(response.headers()[header::CACHE_CONTROL], "no-store");
+        let body = to_bytes(response.into_body(), 16_384).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        let token = json["token"].as_str().unwrap();
+
+        let response = app
+            .clone()
+            .oneshot(
+                Request::post("/admin/test/mutation")
+                    .header(header::AUTHORIZATION, credentials())
+                    .header("x-csrf-token", format!("{token}tampered"))
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::FORBIDDEN);
+
+        let response = app
+            .oneshot(
+                Request::post("/admin/test/mutation")
+                    .header(header::AUTHORIZATION, credentials())
+                    .header("x-csrf-token", token)
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::SERVICE_UNAVAILABLE);
+    }
+
+    #[tokio::test]
+    async fn unsafe_admin_requests_require_role_and_csrf() {
+        let response = app_for_test(AppConfig::for_test())
+            .oneshot(
+                Request::post("/admin/test/mutation")
+                    .header(header::AUTHORIZATION, credentials())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::FORBIDDEN);
+
+        let mut viewer = AppConfig::for_test();
+        viewer.admin.role = AdminRole::Viewer;
+        let response = app_for_test(viewer)
+            .oneshot(
+                Request::post("/admin/test/mutation")
+                    .header(header::AUTHORIZATION, credentials())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::FORBIDDEN);
+    }
+
+    #[tokio::test]
+    async fn admin_rate_limit_is_enforced_per_actor() {
+        let mut config = AppConfig::for_test();
+        config.admin.rate_limit = 10;
+        let app = app_for_test(config);
+        for _ in 0..10 {
+            let response = app
+                .clone()
+                .oneshot(
+                    Request::get("/admin/overview")
+                        .header(header::AUTHORIZATION, credentials())
+                        .body(Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap();
+            assert_eq!(response.status(), StatusCode::OK);
+        }
+        let response = app
+            .oneshot(
+                Request::get("/admin/overview")
+                    .header(header::AUTHORIZATION, credentials())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::TOO_MANY_REQUESTS);
+    }
+
+    #[tokio::test]
+    async fn admin_mutation_audit_is_durable_when_test_database_is_configured() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(2)
+            .connect(&database_url)
+            .await
+            .unwrap();
+        let request_id = uuid::Uuid::new_v4().to_string();
+        let app = app_for_test_with_admin_pool(AppConfig::for_test(), pool.clone());
+        let csrf_response = app
+            .clone()
+            .oneshot(
+                Request::get("/admin/security/csrf")
+                    .header(header::AUTHORIZATION, credentials())
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        let body = to_bytes(csrf_response.into_body(), 16_384).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+
+        let response = app
+            .oneshot(
+                Request::post("/admin/test/mutation")
+                    .header(header::AUTHORIZATION, credentials())
+                    .header("x-csrf-token", json["token"].as_str().unwrap())
+                    .header("x-request-id", &request_id)
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::NO_CONTENT);
+        let row: (String, String, String, i32) = sqlx::query_as(
+            "SELECT actor, role, method, response_status FROM admin_mutation_audit WHERE request_id = $1",
+        )
+        .bind(&request_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(row, ("admin".into(), "admin".into(), "POST".into(), 204));
+        sqlx::query("DELETE FROM admin_mutation_audit WHERE request_id = $1")
+            .bind(&request_id)
+            .execute(&pool)
+            .await
+            .unwrap();
     }
 }

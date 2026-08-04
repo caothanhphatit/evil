@@ -33,7 +33,7 @@ describe("Trading Post compact BuildingPop", () => {
     );
     expect(submitHandler).toContain("context.client.setMaterialRequest");
     expect(submitHandler).toContain("context.tradingRequestPending = true");
-    const appSource = await readFile(mainPath, "utf8");
+    const appSource = await readFile(resolve(import.meta.dirname, "../app/intent-feedback.ts"), "utf8");
     expect(appSource).toContain('if (result.intent === "set_material_request")');
     expect(appSource).toContain("if (result.accepted)");
     expect(source).toContain('editor.id = "trading-request-editor"');

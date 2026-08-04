@@ -1,23 +1,19 @@
-import { WorldClient, type BindingBlockedFeedback, type IntentFeedback } from "../net/world-client";
+import { WorldClient, type BindingBlockedFeedback } from "../net/world-client";
 import type { OriginalFlowSnapshot } from "../generated/protocol";
 import { VisibleEntityWorld } from "../game/visible-world";
 import { nextHunterRosterOpen } from "../ui/bottom-menu-state";
 import { createCombatHudController } from "./combat-hud-controller";
 import { setPanelMessage } from "../ui/panel-message";
-import { bindOverlayCloseControls } from "../ui/overlay-close-controls";
 import { createHunterRosterActors } from "../ui/hunter-roster-actors";
 import { createHunterInfoModal } from "../ui/hunter-info/modal";
 import { createHunterWorldCommandMenu } from "../ui/hunter-world-command";
 import { canSubmitGearEnhancement, projectGearEnhancement } from "../ui/gear-enhancement";
 import { clampQuantity } from "../ui/shop-crafting";
 import { projectBuildingEvidence } from "../content/building-evidence";
-import { loadVerifiedBuildingEvidenceRegistry } from "../content/building-registry";
 import { originalUiLabel } from "../content/original-ui-labels";
 import { BOUNTY_HUT_ROUTE } from "../routes/bounty-hut";
 import { TRADING_POST_ROUTE } from "../routes/trading-post";
-import { decodeGearCatalog, loadGearCatalog } from "../content/blacksmith-route";
-import { t, type MessageKey } from "../i18n";
-import { recordClientEvent } from "../observability/client-telemetry";
+import { t } from "../i18n";
 import { mountGameShell, originalAsset, type MenuAction } from "./shell";
 import { EntryController } from "./entry-controller";
 import { createBuildingRenderer, type BuildingRenderingContext } from "./building-renderer";
@@ -25,6 +21,9 @@ import { createHunterController, type HunterControllerContext } from "./hunter-c
 import { createWorldController, type WorldControllerContext } from "./world-controller";
 import { createTradePopup, type TradePopupContext } from "./trade-popup";
 import { installGameE2eHooks } from "./e2e-hooks";
+import { bindBuildingControls, bindCraftInteractions, bindInteractionGuards, bindMenuInteraction, bindOverlayInteractions, bindPopupInteractionGuards } from "./interaction-bindings";
+import { initializeBuildingEvidence } from "./building-evidence-loader";
+import { showIntentResult as renderIntentResult } from "./intent-feedback";
 import "../styles.css";
 const mount = document.querySelector<HTMLDivElement>("#app");
 if (!mount) throw new Error(t("error.missing_mount"));
@@ -248,23 +247,7 @@ const releasePopupRender = (): void => {
   }, 50);
 };
 
-document.querySelectorAll<HTMLElement>(".source-popup").forEach((popup) => {
-  popup.addEventListener("pointerdown", holdPopupRender, true);
-  popup.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") holdPopupRender();
-  }, true);
-  popup.addEventListener("keyup", (event) => {
-    if (event.key === "Enter" || event.key === " ") releasePopupRender();
-  }, true);
-  popup.addEventListener("focusin", (event) => {
-    if ((event.target as HTMLElement).matches("select, input, textarea")) holdPopupRender();
-  }, true);
-  popup.addEventListener("focusout", (event) => {
-    if ((event.target as HTMLElement).matches("select, input, textarea")) releasePopupRender();
-  }, true);
-});
-window.addEventListener("pointerup", releasePopupRender, true);
-window.addEventListener("pointercancel", releasePopupRender, true);
+bindPopupInteractionGuards(document.querySelectorAll<HTMLElement>(".source-popup"), holdPopupRender, releasePopupRender);
 
 buildingPanelClose.textContent = originalUiLabel("btn_0");
 gearCreateClose.textContent = originalUiLabel("btn_0");
@@ -400,23 +383,7 @@ installGameE2eHooks(window.location, {
   },
   openHunterInfo: (hunterId) => hunterController.showHunterInfoByNumericId(hunterId),
 });
-document.addEventListener("contextmenu", (event) => {
-  const target = event.target as HTMLElement | null;
-  if (target?.closest("input, textarea, [contenteditable=\"true\"]")) return;
-  event.preventDefault();
-});
-document.addEventListener("selectstart", (event) => {
-  const target = event.target as HTMLElement | null;
-  if (!target?.closest("input, textarea, [contenteditable=\"true\"]")) event.preventDefault();
-});
-document.addEventListener("copy", (event) => {
-  const target = event.target as HTMLElement | null;
-  if (!target?.closest("input, textarea, [contenteditable=\"true\"]")) event.preventDefault();
-});
-document.addEventListener("cut", (event) => {
-  const target = event.target as HTMLElement | null;
-  if (!target?.closest("input, textarea, [contenteditable=\"true\"]")) event.preventDefault();
-});
+bindInteractionGuards();
 function showPanelMessage(title: string, detail: string): void {
   setPanelMessage(panelMessage, title, detail);
   panelMessage.hidden = false;
@@ -424,81 +391,24 @@ function showPanelMessage(title: string, detail: string): void {
   panelMessageTimer = window.setTimeout(() => { panelMessage.hidden = true; panelMessageTimer = undefined; }, 2800);
 }
 
-function showIntentResult(result: IntentFeedback): void {
-  if (result.intent === "craft_shop_item") {
-    const pending = buildingContext.pendingCraft;
-    buildingContext.pendingCraft = null;
-    if (!result.accepted) {
-      buildingRenderer.renderGearCreatePop();
-      buildingRenderer.renderConsumCreatePop();
-    } else if (!pending) {
-      showPanelMessage(t("craft.completed"), t("craft.completed_detail"));
-      return;
-    } else {
-      const popup = pending.popup === "gear" ? gearCreatePop : consumCreatePop;
-      const submit = pending.popup === "gear" ? gearCreateSubmit : consumCreateSubmit;
-      const stillShowingRequest = !popup.hidden && buildingContext.selectedRecipe?.id === pending.recipeId;
-      if (!stillShowingRequest) {
-        showPanelMessage(t("craft.completed"), t("craft.completed_detail"));
-        return;
-      }
-      popup.classList.remove("crafting");
-      void popup.offsetWidth;
-      popup.classList.add("crafting");
-      popup.setAttribute("aria-busy", "true");
-      submit.disabled = true;
-      submit.textContent = t("craft.processing");
-      if (craftAnimationTimer !== undefined) window.clearTimeout(craftAnimationTimer);
-      craftAnimationTimer = window.setTimeout(() => {
-        popup.classList.remove("crafting");
-        popup.removeAttribute("aria-busy");
-        popup.hidden = true;
-        craftAnimationTimer = undefined;
-      }, 850);
-      return;
-    }
-  }
-  if (result.intent === "set_material_request") {
-    buildingContext.tradingRequestPending = false;
-    if (result.accepted) {
-      buildingContext.selectedTradingRequest = null;
-      tradingRequestPop.hidden = true;
-      buildingRenderer.renderBuildingSystem(latestSnapshot);
-    } else if (buildingContext.selectedTradingRequest) {
-      tradePopup.renderTradingRequestEditor();
-    }
-  }
-  if (!result.accepted) {
-    recordClientEvent("warn", "intent_rejected", { intent: result.intent, reason: result.reason });
-    const reasons: Record<string, MessageKey> = {
-      insufficient_materials: "error.insufficient_materials", material_stock_missing: "error.material_stock_missing", recipe_unknown: "error.recipe_unknown", recipe_building_mismatch: "error.recipe_building_mismatch", product_level_locked: "error.product_level_locked", sale_building_instance_unknown: "error.sale_building_missing", product_capacity_exceeded: "error.product_capacity", product_stock_empty: "error.product_empty", sale_price_unresolved: "error.sale_price_unresolved", building_instance_unknown: "error.building_missing", building_capability_mismatch: "error.capability_mismatch", material_difficulty_unresolved: "error.material_difficulty_unresolved", material_difficulty_locked: "error.material_difficulty_locked", material_quantity_invalid: "error.material_quantity_invalid", material_price_unresolved: "error.material_price_unresolved",
-    };
-    const titles: Record<string, MessageKey> = { select_bottom_menu: "error.cannot_open_menu", navigate_back: "error.cannot_navigate_back", enter_field: "error.cannot_enter_field", select_entity: "error.cannot_select_entity", set_material_request: "error.cannot_request" };
-    const reasonKey = reasons[result.reason ?? ""];
-    const detail = reasonKey ? t(reasonKey) : debugUi && result.reason ? `${t("error.try_again")} (${result.reason})` : t("error.try_again");
-    showPanelMessage(t(titles[result.intent] ?? "error.cannot_craft"), detail);
-  }
+function showIntentResult(result: Parameters<typeof renderIntentResult>[0]): void {
+  renderIntentResult(result, {
+    context: buildingContext, gearPopup: gearCreatePop, consumablePopup: consumCreatePop,
+    gearSubmit: gearCreateSubmit, consumableSubmit: consumCreateSubmit,
+    renderGear: () => buildingRenderer.renderGearCreatePop(),
+    renderConsumable: () => buildingRenderer.renderConsumCreatePop(),
+    renderBuilding: () => buildingRenderer.renderBuildingSystem(latestSnapshot),
+    renderTradeRequest: () => tradePopup.renderTradingRequestEditor(),
+    clearTradingRequest: () => { buildingContext.selectedTradingRequest = null; tradingRequestPop.hidden = true; },
+    showMessage: showPanelMessage, debugUi,
+    setAnimationTimer: (timer) => { craftAnimationTimer = timer; },
+    getAnimationTimer: () => craftAnimationTimer,
+  });
 }
+
 function showBindingBlocked(result: BindingBlockedFeedback): void {
   showPanelMessage(t("error.coming_soon"), debugUi ? `${result.intent.replaceAll("_", " ")} · ${result.blockers.join(", ")}` : t("error.feature_rebuilding"));
 }
-async function initializeBuildingEvidence(): Promise<void> {
-  try {
-    const [registry, decodedCatalog] = await Promise.all([loadVerifiedBuildingEvidenceRegistry(), loadGearCatalog().catch(() => null)]);
-    buildingContext.buildingEvidenceRegistry = registry;
-    buildingContext.gearCatalog = decodedCatalog ?? decodeGearCatalog(registry.catalogs.items.rows, registry.catalogs.products.rows);
-    buildingContext.gearMaterialIcons.clear();
-    for (const recipe of buildingContext.gearCatalog) for (const cost of recipe.materialCosts) if (cost.iconPath) buildingContext.gearMaterialIcons.set(cost.materialId, cost.iconPath);
-    buildingContext.buildingEvidenceError = null;
-    if (world && latestSnapshot) buildingRenderer.syncBuildingPresentation(world, latestSnapshot);
-    buildingRenderer.renderBuildingSystem(latestSnapshot);
-  } catch (error) {
-    recordClientEvent("error", "building_evidence_load_failed", { reason: error instanceof Error ? error.message : "unknown" });
-    buildingContext.buildingEvidenceError = debugUi && error instanceof Error ? error.message : t("diagnostics.building_load_failed");
-    console.error("Failed to load verified building evidence.", error);
-  }
-}
-
 function startGameRuntime(): void {
   if (runtimeStarted) return;
   runtimeStarted = true;
@@ -507,7 +417,15 @@ function startGameRuntime(): void {
     delete image.dataset.gameSrc;
   });
   client.connect();
-  void initializeBuildingEvidence();
+  void initializeBuildingEvidence({
+    context: buildingContext,
+    world,
+    snapshot: latestSnapshot,
+    debugUi,
+    render: (snapshot) => buildingRenderer.renderBuildingSystem(snapshot),
+    sync: (visibleWorld, snapshot) => buildingRenderer.syncBuildingPresentation(visibleWorld, snapshot),
+    fallbackMessage: t("diagnostics.building_load_failed"),
+  });
   void worldController.initializeWorld().catch((error: unknown) => {
     console.error("Failed to initialize the visible world.", error);
     entryController.fail(t("loading.world_failure"));
@@ -553,39 +471,35 @@ function handleMenuAction(button: HTMLButtonElement): void {
 }
 
 // Delegate the persistent bar so its controls survive DOM refreshes/HMR without stale listeners.
-bottomMenu.addEventListener("click", (event) => {
-const target = event.target as HTMLElement | null;
-const button = target?.closest<HTMLButtonElement>("button[data-action]");
-if (!button || !bottomMenu.contains(button) || button.disabled) return;
-handleMenuAction(button);
-  });
-  document.querySelectorAll<HTMLButtonElement>("[data-action]").forEach((button) => {
-if (!button.closest(".bottom-menu")) button.addEventListener("click", () => handleMenuAction(button));
-  });
-  bindOverlayCloseControls([
-    { overlay: "hunter-roster", controls: [rosterBack], close: () => setHunterRosterVisibility(false) },
-    {
-      overlay: "building-panel",
-      controls: [buildingPanelClose],
-      close: () => {
-        buildingPanel.hidden = true;
-        tradingRequestPop.hidden = true;
-        buildingContext.selectedTradingRequest = null;
-        buildingContext.tradingRequestPending = false;
-        buildingContext.enhancementView = "select";
-        buildingContext.selectedEnhancementGearKey = null;
-        buildingContext.enhancementHunterId = null;
-        buildingContext.selectedEnhancementOptionalMaterialIds = [];
-        if (selectedMenuAction === "build") selectedMenuAction = null;
-        bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
-      },
+bindMenuInteraction(bottomMenu, handleMenuAction);
+  bindOverlayInteractions({ rosterBack, buildingPanelClose, bountyClose, bountyCloseBottom, gearCreateClose, consumCreateClose,
+    closeRoster: () => setHunterRosterVisibility(false),
+    closeBuilding: () => {
+      buildingPanel.hidden = true;
+      tradingRequestPop.hidden = true;
+      buildingContext.selectedTradingRequest = null;
+      buildingContext.tradingRequestPending = false;
+      buildingContext.enhancementView = "select";
+      buildingContext.selectedEnhancementGearKey = null;
+      buildingContext.enhancementHunterId = null;
+      buildingContext.selectedEnhancementOptionalMaterialIds = [];
+      if (selectedMenuAction === "build") selectedMenuAction = null;
+      bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
     },
-    { overlay: "bounty-quest", controls: [bountyClose, bountyCloseBottom], close: () => { bountyPop.hidden = true; } },
-    { overlay: "gear-create", controls: [gearCreateClose], close: () => { gearCreatePop.hidden = true; } },
-    { overlay: "consumable-create", controls: [consumCreateClose], close: () => { consumCreatePop.hidden = true; } },
-  ]);
-  buildingConstruct.addEventListener("click", () => { if (buildingContext.selectedBuildingId) client.constructBuilding(buildingContext.selectedBuildingId); });
-  buildingUpgrade.addEventListener("click", () => { if (buildingContext.selectedBuildingInstanceId) client.upgradeBuilding(buildingContext.selectedBuildingInstanceId); });
+    closeBounty: () => { bountyPop.hidden = true; },
+    closeGear: () => { gearCreatePop.hidden = true; },
+    closeConsumable: () => { consumCreatePop.hidden = true; },
+  });
+  bindBuildingControls({
+    buildingConstruct,
+    buildingUpgrade,
+    bountyUpgrade,
+    buildingId: () => buildingContext.selectedBuildingId,
+    instanceId: () => buildingContext.selectedBuildingInstanceId,
+    construct: (id) => client.constructBuilding(id),
+    upgrade: (id) => client.upgradeBuilding(id),
+    upgradeBounty: (id) => client.upgradeBuilding(id),
+  });
   buildingUse.addEventListener("click", () => {
 if (!buildingContext.selectedBuildingId || !buildingContext.selectedBuildingInstanceId) return;
 const route = projectBuildingEvidence(buildingContext.buildingEvidenceRegistry, buildingContext.selectedBuildingId)?.popupRoute ?? null;
@@ -624,70 +538,43 @@ if (buildingContext.selectedBuildingId === BOUNTY_HUT_ROUTE.buildingId) {
   if (recipe) client.craftShopItem(buildingContext.selectedBuildingInstanceId, recipe.id, 1);
 }
   });
-  bountyUpgrade.addEventListener("click", () => { if (buildingContext.selectedBuildingInstanceId) client.upgradeBuilding(buildingContext.selectedBuildingInstanceId); });
 
-gearCreateQuantity.addEventListener("input", () => {
-  if (gearCreateQuantity.value === "") return;
-  gearCreateQuantity.value = String(clampQuantity(gearCreateQuantity.value, 1, 1000));
-  buildingRenderer.renderGearCreatePop();
-});
-gearCreateQuantity.addEventListener("change", () => {
-  gearCreateQuantity.value = String(clampQuantity(gearCreateQuantity.value, 1, 1000));
-  buildingRenderer.renderGearCreatePop();
-});
-function changeGearQuantity(delta: number): void {
-  gearCreateQuantity.value = String(clampQuantity(Number(gearCreateQuantity.value) + delta, 1, 1000));
-  buildingRenderer.renderGearCreatePop();
-}
-element<HTMLButtonElement>("#gear-quantity-minus").addEventListener("click", () => changeGearQuantity(-1));
-element<HTMLButtonElement>("#gear-quantity-plus").addEventListener("click", () => changeGearQuantity(1));
-document.querySelectorAll<HTMLButtonElement>("[data-gear-delta]").forEach((button) => {
-  button.addEventListener("click", () => changeGearQuantity(Number(button.dataset.gearDelta)));
-});
-gearCreateSubmit.addEventListener("click", () => {
-  if (buildingContext.pendingCraft || !buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;
-  const pending: PendingCraft = { popup: "gear", recipeId: buildingContext.selectedRecipe.id };
-  if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, Number(gearCreateQuantity.value), buildingContext.selectedServiceMaterialId)) return;
-  buildingContext.pendingCraft = pending;
-  gearCreateSubmit.disabled = true;
-});
-gearCreateSell.addEventListener("click", () => {
-  if (buildingContext.gearPopupMode !== "detail"
-    || buildingContext.purchaseHunterId === null
-    || !buildingContext.selectedBuildingId
-    || !buildingContext.selectedRecipe) return;
-  client.purchaseShopItem(
-    buildingContext.purchaseHunterId,
-    buildingContext.selectedBuildingId,
-    buildingContext.selectedRecipe.id,
-  );
-});
-gearLock.addEventListener("click", () => {});
-function changeServiceQuantity(delta: number): void {
-  buildingContext.selectedServiceQuantity = clampQuantity(buildingContext.selectedServiceQuantity + delta, 1, 1000);
-  buildingRenderer.renderConsumCreatePop();
-}
-consumMinus.addEventListener("click", () => changeServiceQuantity(-1));
-consumPlus.addEventListener("click", () => changeServiceQuantity(1));
-document.querySelectorAll<HTMLButtonElement>("[data-consum-delta]").forEach((button) => {
-  button.addEventListener("click", () => changeServiceQuantity(Number(button.dataset.consumDelta)));
-});
-consumCreateQuantityInput.addEventListener("input", () => {
-  if (consumCreateQuantityInput.value === "") return;
-  buildingContext.selectedServiceQuantity = clampQuantity(consumCreateQuantityInput.value, 1, 1000);
-  buildingRenderer.renderConsumCreatePop();
-});
-consumCreateQuantityInput.addEventListener("change", () => {
-  buildingContext.selectedServiceQuantity = clampQuantity(consumCreateQuantityInput.value, 1, 1000);
-  buildingRenderer.renderConsumCreatePop();
-});
-consumCreateSubmit.addEventListener("click", () => {
-  if (buildingContext.pendingCraft || !buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;
-  const materialId = buildingContext.selectedRecipe.kind === "service" ? buildingContext.selectedServiceMaterialId : null;
-  if (buildingContext.selectedRecipe.kind !== "service" || materialId) {
-    const pending: PendingCraft = { popup: "consumable", recipeId: buildingContext.selectedRecipe.id };
-    if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, buildingContext.selectedServiceQuantity, materialId)) return;
+bindCraftInteractions({
+  gearCreateQuantity,
+  gearCreateSubmit,
+  gearCreateSell,
+  gearLock,
+  consumCreateQuantityInput,
+  consumCreateSubmit,
+  consumMinus,
+  consumPlus,
+  gearDeltaButtons: document.querySelectorAll<HTMLButtonElement>("[data-gear-delta]"),
+  consumDeltaButtons: document.querySelectorAll<HTMLButtonElement>("[data-consum-delta]"),
+  clampQuantity,
+  renderGear: () => buildingRenderer.renderGearCreatePop(),
+  renderConsumable: () => buildingRenderer.renderConsumCreatePop(),
+  getServiceQuantity: () => buildingContext.selectedServiceQuantity,
+  setServiceQuantity: (quantity) => { buildingContext.selectedServiceQuantity = quantity; },
+  canCraft: () => !buildingContext.pendingCraft && Boolean(buildingContext.selectedBuildingInstanceId && buildingContext.selectedRecipe),
+  craftGear: (quantity) => {
+    if (!buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return false;
+    const pending: PendingCraft = { popup: "gear", recipeId: buildingContext.selectedRecipe.id };
+    if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, quantity, buildingContext.selectedServiceMaterialId)) return false;
     buildingContext.pendingCraft = pending;
-    consumCreateSubmit.disabled = true;
-  }
+    return true;
+  },
+  craftConsumable: (quantity) => {
+    if (!buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return false;
+    const materialId = buildingContext.selectedRecipe.kind === "service" ? buildingContext.selectedServiceMaterialId : null;
+    if (buildingContext.selectedRecipe.kind === "service" && !materialId) return false;
+    const pending: PendingCraft = { popup: "consumable", recipeId: buildingContext.selectedRecipe.id };
+    if (!client.craftShopItem(buildingContext.selectedBuildingInstanceId, pending.recipeId, quantity, materialId)) return false;
+    buildingContext.pendingCraft = pending;
+    return true;
+  },
+  sellGear: () => {
+    if (buildingContext.gearPopupMode !== "detail" || buildingContext.purchaseHunterId === null || !buildingContext.selectedBuildingId || !buildingContext.selectedRecipe) return;
+    client.purchaseShopItem(buildingContext.purchaseHunterId, buildingContext.selectedBuildingId, buildingContext.selectedRecipe.id);
+  },
+  setGearLocked: () => {},
 });

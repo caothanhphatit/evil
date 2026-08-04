@@ -368,6 +368,7 @@ fn hunter_purchase_and_crafted_gear_rows_have_durable_storage() {
     ] {
         assert!(ownership_codec.contains(field));
     }
+    assert!(ownership_codec.contains("UNNEST($4::text[], $5::bigint[])"));
 }
 
 #[tokio::test]

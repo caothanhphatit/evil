@@ -134,6 +134,20 @@ pub fn app_for_test(config: AppConfig) -> Router {
 }
 
 #[cfg(test)]
+pub fn app_for_test_with_admin_pool(config: AppConfig, admin_pool: PgPool) -> Router {
+    use coordination::InMemorySessionCoordinator;
+    use persistence::InMemoryPlayerRepository;
+
+    app_with_adapters(
+        config,
+        Arc::new(InMemoryPlayerRepository::default()),
+        Arc::new(InMemorySessionCoordinator::default()),
+        crate::simulation::test_authoritative_building_content(),
+        Some(admin_pool),
+    )
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 

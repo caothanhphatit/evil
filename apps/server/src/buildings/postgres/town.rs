@@ -1,5 +1,7 @@
 use async_trait::async_trait;
 use sqlx::{Postgres, Row, Transaction};
+use std::time::Instant;
+use tracing::warn;
 use uuid::Uuid;
 
 use super::{
@@ -351,9 +353,14 @@ impl PostgresBuildingRepository {
         .ok_or(BuildingRepositoryError::RevisionConflict)?;
         let town_id: Uuid = town_row.try_get("town_id")?;
         let revision: i64 = town_row.try_get("revision")?;
+        let town_persist_started = Instant::now();
 
-        sqlx::query(
-            r#"INSERT INTO town_economy_summary (
+        let material_phase_started = Instant::now();
+        let material_in_sync =
+            materials_in_sync(transaction, town_id, &state.material_stocks).await?;
+        if !material_in_sync {
+            sqlx::query(
+                r#"INSERT INTO town_economy_summary (
                    town_id, hunter_materials, materials, runes, weapons, armor,
                    hunter_equipment_purchases
                ) VALUES ($1,$2,$3,$4,$5,$6,$7)
@@ -365,72 +372,93 @@ impl PostgresBuildingRepository {
                    armor = EXCLUDED.armor,
                    hunter_equipment_purchases = EXCLUDED.hunter_equipment_purchases,
                    updated_at = now()"#,
-        )
-        .bind(town_id)
-        .bind(i64::from(state.hunter_materials))
-        .bind(i64::from(state.materials))
-        .bind(i64::from(state.runes))
-        .bind(i64::from(state.weapons))
-        .bind(i64::from(state.armor))
-        .bind(i64::from(state.hunter_equipment_purchases))
-        .execute(&mut **transaction)
-        .await?;
-        sqlx::query(
-            r#"INSERT INTO town_trade_state (town_id, field_trip_id, settled_field_trip_id)
+            )
+            .bind(town_id)
+            .bind(i64::from(state.hunter_materials))
+            .bind(i64::from(state.materials))
+            .bind(i64::from(state.runes))
+            .bind(i64::from(state.weapons))
+            .bind(i64::from(state.armor))
+            .bind(i64::from(state.hunter_equipment_purchases))
+            .execute(&mut **transaction)
+            .await?;
+            sqlx::query(
+                r#"INSERT INTO town_trade_state (town_id, field_trip_id, settled_field_trip_id)
                VALUES ($1,$2,$3)
                ON CONFLICT (town_id) DO UPDATE SET
                    field_trip_id = EXCLUDED.field_trip_id,
                    settled_field_trip_id = EXCLUDED.settled_field_trip_id,
                    updated_at = now()"#,
-        )
-        .bind(town_id)
-        .bind(
-            i64::try_from(state.field_trip_id)
-                .map_err(|_| BuildingRepositoryError::NumericBounds)?,
-        )
-        .bind(
-            i64::try_from(state.settled_field_trip_id)
-                .map_err(|_| BuildingRepositoryError::NumericBounds)?,
-        )
-        .execute(&mut **transaction)
-        .await?;
-
-        sqlx::query(
+            )
+            .bind(town_id)
+            .bind(
+                i64::try_from(state.field_trip_id)
+                    .map_err(|_| BuildingRepositoryError::NumericBounds)?,
+            )
+            .bind(
+                i64::try_from(state.settled_field_trip_id)
+                    .map_err(|_| BuildingRepositoryError::NumericBounds)?,
+            )
+            .execute(&mut **transaction)
+            .await?;
+            sqlx::query(
             "UPDATE town_inventory_stack SET quantity = 0, updated_at = now() WHERE town_id = $1",
         )
         .bind(town_id)
         .execute(&mut **transaction)
         .await?;
-        sqlx::query(
+            sqlx::query(
             "UPDATE hunter_material_stack SET quantity = 0, updated_at = now() WHERE town_id = $1",
         )
         .bind(town_id)
         .execute(&mut **transaction)
         .await?;
+            let material_ids = state
+                .material_stocks
+                .iter()
+                .map(|stock| stock.id.clone())
+                .collect::<Vec<_>>();
+            let town_quantities = state
+                .material_stocks
+                .iter()
+                .map(|stock| i64::from(stock.town_quantity))
+                .collect::<Vec<_>>();
+            let hunter_quantities = state
+                .material_stocks
+                .iter()
+                .map(|stock| i64::from(stock.hunter_quantity))
+                .collect::<Vec<_>>();
+            if !material_ids.is_empty() {
+                sqlx::query(
+                    r#"INSERT INTO town_inventory_stack (town_id, item_id, quantity)
+                   SELECT $1, rows.item_id, rows.quantity
+                   FROM UNNEST($2::text[], $3::bigint[]) AS rows(item_id, quantity)
+                   ON CONFLICT (town_id, item_id) DO UPDATE SET
+                       quantity = EXCLUDED.quantity, updated_at = now()
+                   WHERE town_inventory_stack.quantity IS DISTINCT FROM EXCLUDED.quantity"#,
+                )
+                .bind(town_id)
+                .bind(&material_ids)
+                .bind(&town_quantities)
+                .execute(&mut **transaction)
+                .await?;
+                sqlx::query(
+                    r#"INSERT INTO hunter_material_stack (town_id, material_id, quantity)
+                   SELECT $1, rows.material_id, rows.quantity
+                   FROM UNNEST($2::text[], $3::bigint[]) AS rows(material_id, quantity)
+                   ON CONFLICT (town_id, material_id) DO UPDATE SET
+                       quantity = EXCLUDED.quantity, updated_at = now()
+                   WHERE hunter_material_stack.quantity IS DISTINCT FROM EXCLUDED.quantity"#,
+                )
+                .bind(town_id)
+                .bind(&material_ids)
+                .bind(&hunter_quantities)
+                .execute(&mut **transaction)
+                .await?;
+            }
+        }
         let mut requested_material_ids = Vec::new();
         for stock in &state.material_stocks {
-            sqlx::query(
-                r#"INSERT INTO town_inventory_stack (town_id, item_id, quantity)
-                   VALUES ($1,$2,$3)
-                   ON CONFLICT (town_id, item_id) DO UPDATE SET
-                       quantity = EXCLUDED.quantity, updated_at = now()"#,
-            )
-            .bind(town_id)
-            .bind(&stock.id)
-            .bind(i64::from(stock.town_quantity))
-            .execute(&mut **transaction)
-            .await?;
-            sqlx::query(
-                r#"INSERT INTO hunter_material_stack (town_id, material_id, quantity)
-                   VALUES ($1,$2,$3)
-                   ON CONFLICT (town_id, material_id) DO UPDATE SET
-                       quantity = EXCLUDED.quantity, updated_at = now()"#,
-            )
-            .bind(town_id)
-            .bind(&stock.id)
-            .bind(i64::from(stock.hunter_quantity))
-            .execute(&mut **transaction)
-            .await?;
             if stock.requested > 0 {
                 requested_material_ids.push(stock.id.clone());
                 sqlx::query(
@@ -464,59 +492,164 @@ impl PostgresBuildingRepository {
         .bind(&requested_material_ids)
         .execute(&mut **transaction)
         .await?;
-        sqlx::query(
+        let material_ms = material_phase_started.elapsed().as_millis();
+        let product_phase_started = Instant::now();
+        let product_in_sync =
+            product_stocks_in_sync(transaction, town_id, &state.product_stocks).await?;
+        if !product_in_sync {
+            sqlx::query(
             "UPDATE building_product_stock SET quantity = 0, updated_at = now() WHERE town_id = $1",
         )
         .bind(town_id)
         .execute(&mut **transaction)
         .await?;
-        for stock in &state.product_stocks {
-            sqlx::query(
-                r#"INSERT INTO building_product_stock (
+            let product_building_ids = state
+                .product_stocks
+                .iter()
+                .map(|stock| stock.building_instance_id.get())
+                .collect::<Vec<_>>();
+            let product_ids = state
+                .product_stocks
+                .iter()
+                .map(|stock| stock.product_id.clone())
+                .collect::<Vec<_>>();
+            let product_quantities = state
+                .product_stocks
+                .iter()
+                .map(|stock| i64::from(stock.quantity))
+                .collect::<Vec<_>>();
+            if !product_ids.is_empty() {
+                sqlx::query(
+                    r#"INSERT INTO building_product_stock (
                        town_id, building_instance_id, release_id, building_id,
                        product_id, quantity
                    )
                    SELECT $1, building.instance_id, building.release_id,
-                          building.building_id, $3, $4
-                   FROM player_building AS building
-                   WHERE building.town_id = $1 AND building.instance_id = $2
+                          building.building_id, rows.product_id, rows.quantity
+                   FROM UNNEST($2::uuid[], $3::text[], $4::bigint[])
+                        AS rows(building_instance_id, product_id, quantity)
+                   JOIN player_building AS building
+                     ON building.town_id = $1
+                    AND building.instance_id = rows.building_instance_id
                    ON CONFLICT (town_id, building_instance_id, product_id) DO UPDATE SET
-                       quantity = EXCLUDED.quantity, updated_at = now()"#,
-            )
-            .bind(town_id)
-            .bind(stock.building_instance_id.get())
-            .bind(&stock.product_id)
-            .bind(i64::from(stock.quantity))
-            .execute(&mut **transaction)
-            .await?;
+                       quantity = EXCLUDED.quantity, updated_at = now()
+                   WHERE building_product_stock.quantity IS DISTINCT FROM EXCLUDED.quantity"#,
+                )
+                .bind(town_id)
+                .bind(&product_building_ids)
+                .bind(&product_ids)
+                .bind(&product_quantities)
+                .execute(&mut **transaction)
+                .await?;
+            }
         }
-        sqlx::query("DELETE FROM crafted_gear_stock WHERE town_id = $1")
-            .bind(town_id)
-            .execute(&mut **transaction)
-            .await?;
-        for gear in &state.crafted_gear_stocks {
+        let product_ms = product_phase_started.elapsed().as_millis();
+        let crafted_phase_started = Instant::now();
+        let existing_crafted_count = sqlx::query_scalar::<_, i64>(
+            "SELECT count(*) FROM crafted_gear_stock WHERE town_id = $1",
+        )
+        .bind(town_id)
+        .fetch_one(&mut **transaction)
+        .await?;
+        let crafted_stock_changed = existing_crafted_count
+            != i64::try_from(state.crafted_gear_stocks.len())
+                .map_err(|_| BuildingRepositoryError::NumericBounds)?;
+        if crafted_stock_changed {
+            sqlx::query("DELETE FROM crafted_gear_stock WHERE town_id = $1")
+                .bind(town_id)
+                .execute(&mut **transaction)
+                .await?;
+        }
+        let gear_ids = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.gear_instance_id)
+            .collect::<Vec<_>>();
+        let gear_building_ids = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.building_instance_id.get())
+            .collect::<Vec<_>>();
+        let gear_product_ids = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.product_id.clone())
+            .collect::<Vec<_>>();
+        let gear_kinds = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.gear_kind.clone())
+            .collect::<Vec<_>>();
+        let gear_ratings = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| i64::from(gear.rating))
+            .collect::<Vec<_>>();
+        let gear_qualities = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| i64::from(gear.quality))
+            .collect::<Vec<_>>();
+        let gear_primary_stats = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| i64::from(gear.primary_stat))
+            .collect::<Vec<_>>();
+        let gear_option_types = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| i64::from(gear.option_type))
+            .collect::<Vec<_>>();
+        let gear_option_values = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| i64::from(gear.option_value))
+            .collect::<Vec<_>>();
+        let gear_icons = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.icon_path.clone())
+            .collect::<Vec<_>>();
+        let gear_rulesets = state
+            .crafted_gear_stocks
+            .iter()
+            .map(|gear| gear.ruleset.clone())
+            .collect::<Vec<_>>();
+        if crafted_stock_changed && !gear_ids.is_empty() {
             sqlx::query(
                 r#"INSERT INTO crafted_gear_stock
                    (town_id, gear_instance_id, building_instance_id, product_id,
                     gear_kind, rating, quality, primary_stat, option_type,
                     option_value, icon_path, ruleset)
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)"#,
+                   SELECT $1, rows.gear_instance_id, rows.building_instance_id,
+                          rows.product_id, rows.gear_kind, rows.rating, rows.quality,
+                          rows.primary_stat, rows.option_type, rows.option_value,
+                          rows.icon_path, rows.ruleset
+                   FROM UNNEST(
+                       $2::uuid[], $3::uuid[], $4::text[], $5::text[], $6::bigint[],
+                       $7::bigint[], $8::bigint[], $9::bigint[], $10::bigint[],
+                       $11::text[], $12::text[]
+                   ) AS rows(gear_instance_id, building_instance_id, product_id, gear_kind,
+                              rating, quality, primary_stat, option_type, option_value,
+                              icon_path, ruleset)"#,
             )
             .bind(town_id)
-            .bind(gear.gear_instance_id)
-            .bind(gear.building_instance_id.get())
-            .bind(&gear.product_id)
-            .bind(&gear.gear_kind)
-            .bind(i64::from(gear.rating))
-            .bind(i64::from(gear.quality))
-            .bind(i64::from(gear.primary_stat))
-            .bind(i64::from(gear.option_type))
-            .bind(i64::from(gear.option_value))
-            .bind(&gear.icon_path)
-            .bind(&gear.ruleset)
+            .bind(&gear_ids)
+            .bind(&gear_building_ids)
+            .bind(&gear_product_ids)
+            .bind(&gear_kinds)
+            .bind(&gear_ratings)
+            .bind(&gear_qualities)
+            .bind(&gear_primary_stats)
+            .bind(&gear_option_types)
+            .bind(&gear_option_values)
+            .bind(&gear_icons)
+            .bind(&gear_rulesets)
             .execute(&mut **transaction)
             .await?;
         }
+        let crafted_ms = crafted_phase_started.elapsed().as_millis();
+        let settlement_phase_started = Instant::now();
         for settlement in &state.trade_settlements {
             let result = sqlx::query(
                 r#"INSERT INTO hunter_trade_settlement (
@@ -555,7 +688,9 @@ impl PostgresBuildingRepository {
                 ));
             }
         }
+        let settlement_ms = settlement_phase_started.elapsed().as_millis();
 
+        let building_phase_started = Instant::now();
         let mut retained_ids = Vec::with_capacity(state.buildings.len());
         for building in &state.buildings {
             retained_ids.push(building.instance_id.get());
@@ -602,6 +737,105 @@ impl PostgresBuildingRepository {
         .bind(&retained_ids)
         .execute(&mut **transaction)
         .await?;
+        let building_ms = building_phase_started.elapsed().as_millis();
+        let total_ms = town_persist_started.elapsed().as_millis();
+        if total_ms > 100 {
+            warn!(
+                %town_id,
+                total_ms,
+                material_ms,
+                product_ms,
+                crafted_ms,
+                settlement_ms,
+                building_ms,
+                material_rows = state.material_stocks.len(),
+                product_rows = state.product_stocks.len(),
+                crafted_rows = state.crafted_gear_stocks.len(),
+                "town checkpoint persistence exceeded target"
+            );
+        }
         Ok(revision)
     }
+}
+
+async fn materials_in_sync(
+    transaction: &mut Transaction<'_, Postgres>,
+    town_id: Uuid,
+    stocks: &[TownMaterialStock],
+) -> Result<bool, BuildingRepositoryError> {
+    let ids = stocks
+        .iter()
+        .map(|stock| stock.id.clone())
+        .collect::<Vec<_>>();
+    let town_quantities = stocks
+        .iter()
+        .map(|stock| i64::from(stock.town_quantity))
+        .collect::<Vec<_>>();
+    let hunter_quantities = stocks
+        .iter()
+        .map(|stock| i64::from(stock.hunter_quantity))
+        .collect::<Vec<_>>();
+    sqlx::query_scalar(
+        r#"SELECT
+             (SELECT count(*) FROM town_inventory_stack WHERE town_id = $1) = cardinality($2::text[])
+             AND NOT EXISTS (
+               SELECT 1 FROM UNNEST($2::text[], $3::bigint[]) AS rows(item_id, quantity)
+               LEFT JOIN town_inventory_stack stored
+                 ON stored.town_id = $1 AND stored.item_id = rows.item_id
+               WHERE stored.item_id IS NULL OR stored.quantity IS DISTINCT FROM rows.quantity
+             )
+             AND (SELECT count(*) FROM hunter_material_stack WHERE town_id = $1) = cardinality($2::text[])
+             AND NOT EXISTS (
+               SELECT 1 FROM UNNEST($2::text[], $4::bigint[]) AS rows(material_id, quantity)
+               LEFT JOIN hunter_material_stack stored
+                 ON stored.town_id = $1 AND stored.material_id = rows.material_id
+               WHERE stored.material_id IS NULL OR stored.quantity IS DISTINCT FROM rows.quantity
+             )"#,
+    )
+    .bind(town_id)
+    .bind(&ids)
+    .bind(&town_quantities)
+    .bind(&hunter_quantities)
+    .fetch_one(&mut **transaction)
+    .await
+    .map_err(Into::into)
+}
+
+async fn product_stocks_in_sync(
+    transaction: &mut Transaction<'_, Postgres>,
+    town_id: Uuid,
+    stocks: &[TownProductStock],
+) -> Result<bool, BuildingRepositoryError> {
+    let building_ids = stocks
+        .iter()
+        .map(|stock| stock.building_instance_id.get())
+        .collect::<Vec<_>>();
+    let product_ids = stocks
+        .iter()
+        .map(|stock| stock.product_id.clone())
+        .collect::<Vec<_>>();
+    let quantities = stocks
+        .iter()
+        .map(|stock| i64::from(stock.quantity))
+        .collect::<Vec<_>>();
+    sqlx::query_scalar(
+        r#"SELECT
+             (SELECT count(*) FROM building_product_stock WHERE town_id = $1) = cardinality($2::uuid[])
+             AND NOT EXISTS (
+               SELECT 1 FROM UNNEST($2::uuid[], $3::text[], $4::bigint[])
+                 AS rows(building_instance_id, product_id, quantity)
+               LEFT JOIN building_product_stock stored
+                 ON stored.town_id = $1
+                AND stored.building_instance_id = rows.building_instance_id
+                AND stored.product_id = rows.product_id
+               WHERE stored.product_id IS NULL OR stored.quantity IS DISTINCT FROM rows.quantity
+             )"#,
+    )
+    .bind(town_id)
+    .bind(&building_ids)
+    .bind(&product_ids)
+    .bind(&quantities)
+    .fetch_one(&mut **transaction)
+    .await
+    .map_err(Into::into)
 }

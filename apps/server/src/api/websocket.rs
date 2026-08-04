@@ -23,7 +23,9 @@ use super::session::{resolve_player, session_token};
 const ACTIVE_WORLD_CHECKPOINT_SECONDS: u64 = 5;
 // A slow checkpoint must not consume the simulation frame budget. The next
 // checkpoint retries the unchanged durable snapshot when this budget expires.
-const WORLD_CHECKPOINT_BUDGET: Duration = Duration::from_millis(100);
+// Full-demo checkpoints measure about 115 ms after set-based stock persistence.
+// Keep a small cancellation margin while retaining the separate 100 ms frame warning.
+const WORLD_CHECKPOINT_BUDGET: Duration = Duration::from_millis(150);
 
 pub async fn upgrade(
     ws: WebSocketUpgrade,

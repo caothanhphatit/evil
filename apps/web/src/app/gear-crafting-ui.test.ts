@@ -18,14 +18,15 @@ describe("gear crafting popup", () => {
   });
 
   it("plays a visible processing state after an accepted craft result", async () => {
-    const [source, styles] = await Promise.all([
+    const [source, feedback, styles] = await Promise.all([
       readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8"),
+      readFile(resolve(repositoryRoot, "apps/web/src/app/intent-feedback.ts"), "utf8"),
       readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8"),
     ]);
-    expect(source).toContain('result.intent === "craft_shop_item"');
-    expect(source).toContain('const stillShowingRequest = !popup.hidden && buildingContext.selectedRecipe?.id === pending.recipeId;');
-    expect(source).toContain('popup.classList.add("crafting")');
-    expect(source).toContain('if (buildingContext.pendingCraft || !buildingContext.selectedBuildingInstanceId || !buildingContext.selectedRecipe) return;');
+    expect(feedback).toContain('result.intent === "craft_shop_item"');
+    expect(feedback).toContain('const stillShowingRequest = !popup.hidden && context.selectedRecipe?.id === pending.recipeId;');
+    expect(feedback).toContain('popup.classList.add("crafting")');
+    expect(source).toContain('canCraft: () => !buildingContext.pendingCraft && Boolean(buildingContext.selectedBuildingInstanceId && buildingContext.selectedRecipe)');
     expect(styles).toContain("@keyframes craft-frame-pulse");
   });
 });

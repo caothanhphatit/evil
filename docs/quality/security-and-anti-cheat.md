@@ -46,6 +46,13 @@ Avoid opaque automatic permanent bans based on one heuristic. Preserve evidence 
 
 The educational Docker runtime uses a server-stored opaque session cookie, Redis identity mapping, Redis command budgets, single-owner player leases, and PostgreSQL revision/fencing checks. It never accepts a player identity from WebSocket query parameters or command payloads and does not reuse original-game credentials. This is a safe migration bootstrap, not production login: the production gate still requires a real identity provider, TLS-only secure cookies, rotation/revocation, HTTP CSRF controls, and bootstrap abuse protection.
 
+The temporary operations console is separately protected by Basic Auth with an
+explicit viewer/operator/admin role, a Redis-backed per-actor request budget,
+and HMAC-SHA256 CSRF tokens for unsafe methods. Unsafe requests require a
+durable PostgreSQL audit row before the handler executes; failed audit storage
+returns `503` and does not reach the handler. Audit rows retain actor, role,
+method, path, status, request correlation ID, and timestamp only.
+
 ## Purchases And Ads
 
 Verify receipts or rewarded-ad callbacks with the provider server-to-server. Bind grants to provider transaction IDs and account/product context. Handle retries, refund, revocation, sandbox/production separation, replay, and delayed callbacks. Client success screens never cause grants.

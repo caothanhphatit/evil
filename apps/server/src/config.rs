@@ -20,6 +20,39 @@ pub struct AppConfig {
 pub struct AdminConfig {
     pub username: String,
     pub password: String,
+    pub role: AdminRole,
+    pub rate_limit: u32,
+    pub rate_window_ms: u64,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AdminRole {
+    Viewer,
+    Operator,
+    Admin,
+}
+
+impl AdminRole {
+    pub fn parse(value: &str) -> Option<Self> {
+        match value.trim().to_ascii_lowercase().as_str() {
+            "viewer" => Some(Self::Viewer),
+            "operator" => Some(Self::Operator),
+            "admin" => Some(Self::Admin),
+            _ => None,
+        }
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Viewer => "viewer",
+            Self::Operator => "operator",
+            Self::Admin => "admin",
+        }
+    }
+
+    pub fn permits_mutation(self) -> bool {
+        matches!(self, Self::Operator | Self::Admin)
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -53,6 +86,10 @@ pub enum ConfigError {
     InvalidSessionSettings,
     #[error("ADMIN_BASIC_AUTH_USER and ADMIN_BASIC_AUTH_PASSWORD must both be configured")]
     MissingAdminCredentials,
+    #[error("ADMIN_BASIC_AUTH_ROLE must be viewer, operator, or admin")]
+    InvalidAdminRole,
+    #[error("admin rate limit or window is outside safe bounds")]
+    InvalidAdminRateLimit,
 }
 
 impl AppConfig {
@@ -86,7 +123,18 @@ impl AppConfig {
                 .ok_or(ConfigError::MissingAdminCredentials)?,
             password: non_empty_env("ADMIN_BASIC_AUTH_PASSWORD")
                 .ok_or(ConfigError::MissingAdminCredentials)?,
+            role: AdminRole::parse(
+                &env::var("ADMIN_BASIC_AUTH_ROLE").unwrap_or_else(|_| "admin".into()),
+            )
+            .ok_or(ConfigError::InvalidAdminRole)?,
+            rate_limit: parse_env("ADMIN_RATE_LIMIT", 120_u32)?,
+            rate_window_ms: parse_env("ADMIN_RATE_WINDOW_MS", 60_000_u64)?,
         };
+        if !(10..=10_000).contains(&admin.rate_limit)
+            || !(1_000..=3_600_000).contains(&admin.rate_window_ms)
+        {
+            return Err(ConfigError::InvalidAdminRateLimit);
+        }
 
         Ok(Self {
             host: env::var("SERVER_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
@@ -115,6 +163,9 @@ impl AppConfig {
             admin: AdminConfig {
                 username: "admin".into(),
                 password: "test-password".into(),
+                role: AdminRole::Admin,
+                rate_limit: 120,
+                rate_window_ms: 60_000,
             },
             session: SessionConfig {
                 cookie_secure: false,

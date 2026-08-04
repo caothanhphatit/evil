@@ -58,17 +58,24 @@ pub(super) async fn save_hunter_owned_items_in(
                 .ok_or(RepositoryError::InvalidOperation)?;
         }
     }
+    let mut product_ids = Vec::with_capacity(stacks.len());
+    let mut quantities = Vec::with_capacity(stacks.len());
     for (product_id, quantity) in stacks {
+        product_ids.push(product_id.to_owned());
+        quantities.push(i64::try_from(quantity).map_err(|_| RepositoryError::InvalidOperation)?);
+    }
+    if !product_ids.is_empty() {
         sqlx::query(
             r#"INSERT INTO player_hunter_item_stack
                (player_token, hunter_id, content_release_id, product_id, quantity)
-               VALUES ($1,$2,$3,$4,$5)"#,
+               SELECT $1, $2, $3, rows.product_id, rows.quantity
+               FROM UNNEST($4::text[], $5::bigint[]) AS rows(product_id, quantity)"#,
         )
         .bind(player_token)
         .bind(hunter_id)
         .bind(ACTIVE_BUILDING_RELEASE_ID)
-        .bind(product_id)
-        .bind(i64::try_from(quantity).map_err(|_| RepositoryError::InvalidOperation)?)
+        .bind(&product_ids)
+        .bind(&quantities)
         .execute(&mut **transaction)
         .await?;
     }
