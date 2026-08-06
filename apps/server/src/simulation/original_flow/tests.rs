@@ -85,6 +85,17 @@ fn building_instance_id(flow: &OriginalFlowSession, building_id: &str) -> String
         .clone()
 }
 
+fn displayed_gear_instance_id(flow: &OriginalFlowSession, shop_id: &str, product_id: &str) -> Uuid {
+    flow.snapshot()
+        .village
+        .building_system
+        .display_items
+        .into_iter()
+        .find(|item| item.shop_id == shop_id && item.product_id == product_id)
+        .expect("rolled gear instance is displayed")
+        .gear_instance_id
+}
+
 fn ensure_test_trading_post(flow: &mut OriginalFlowSession) {
     if flow
         .buildings
@@ -168,6 +179,7 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
             hunter_id: 1,
             shop_id: "build_7".to_owned(),
             product_id: product_id.to_owned(),
+            gear_instance_id: Some(displayed.gear_instance_id),
         })
         .unwrap();
     assert!(matches!(
@@ -198,12 +210,14 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
     );
     assert_eq!(flow.buildings.hunter_equipment_purchases, 1);
 
+    let second_instance_id = displayed_gear_instance_id(&flow, "build_7", product_id);
     let second_purchase = flow
         .handle_command_with_id(
             ClientCommand::PurchaseShopItem {
                 hunter_id: 1,
                 shop_id: "build_7".to_owned(),
                 product_id: product_id.to_owned(),
+                gear_instance_id: Some(second_instance_id),
             },
             Uuid::from_u128(8_000),
         )
@@ -226,6 +240,52 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         .iter()
         .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_7"));
     assert_eq!(flow.buildings.product_stocks[0].quantity, 0);
+}
+
+#[test]
+fn purchase_settles_the_requested_rolled_gear_instance() {
+    let product_id = "recipe:weapon:0:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.handle_command(ClientCommand::CraftShopItem {
+        instance_id: blacksmith_id,
+        recipe_id: product_id.to_owned(),
+        material_id: None,
+        quantity: 2,
+    })
+    .unwrap();
+    let displayed = flow.snapshot().village.building_system.display_items;
+    assert_eq!(displayed.len(), 2);
+    let requested = displayed[1].gear_instance_id;
+    let untouched = displayed[0].gear_instance_id;
+
+    let purchase = flow
+        .handle_command(ClientCommand::PurchaseShopItem {
+            hunter_id: 1,
+            shop_id: "build_7".to_owned(),
+            product_id: product_id.to_owned(),
+            gear_instance_id: Some(requested),
+        })
+        .unwrap();
+
+    assert!(matches!(
+        purchase.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+    assert_eq!(
+        flow.hunter_roster.hunters[0].owned_items[0].gear_instance_id,
+        Some(requested)
+    );
+    assert!(flow
+        .buildings
+        .crafted_gear_stocks
+        .iter()
+        .any(|gear| gear.gear_instance_id == untouched));
+    assert!(!flow
+        .buildings
+        .crafted_gear_stocks
+        .iter()
+        .any(|gear| gear.gear_instance_id == requested));
 }
 
 #[test]
@@ -264,7 +324,7 @@ fn sale_shop_level_projection_matches_authoritative_difficulty_gate() {
     assert_eq!(recipe.required_level, 1);
 
     assert!(matches!(
-        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id, Some(displayed_gear_instance_id(&flow, "build_7", product_id))),
         ServerMessage::IntentResult {
             accepted: false,
             reason: Some(reason),
@@ -279,7 +339,13 @@ fn sale_shop_level_projection_matches_authoritative_difficulty_gate() {
         .expect("weapon shop")
         .level = 2;
     assert!(matches!(
-        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        flow.purchase_shop_item(
+            Uuid::new_v4(),
+            1,
+            "build_7",
+            product_id,
+            Some(displayed_gear_instance_id(&flow, "build_7", product_id))
+        ),
         ServerMessage::IntentResult { accepted: true, .. }
     ));
 }
@@ -302,6 +368,7 @@ fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
             hunter_id: 1,
             shop_id: "build_7".to_owned(),
             product_id: product_id.to_owned(),
+            gear_instance_id: Some(displayed_gear_instance_id(&flow, "build_7", product_id)),
         },
         Uuid::from_u128(8_002),
     )
@@ -390,6 +457,7 @@ fn incompatible_rebuild_weapon_purchase_is_rejected_without_settlement() {
             hunter_id: 1,
             shop_id: "build_7".to_owned(),
             product_id: product_id.to_owned(),
+            gear_instance_id: Some(displayed_gear_instance_id(&flow, "build_7", product_id)),
         })
         .unwrap();
     assert!(matches!(
@@ -426,6 +494,7 @@ fn purchased_h2_rebuild_weapon_is_equipped_for_h2_hunter() {
             hunter_id: 1,
             shop_id: "build_7".to_owned(),
             product_id: product_id.to_owned(),
+            gear_instance_id: Some(displayed_gear_instance_id(&flow, "build_7", product_id)),
         })
         .unwrap();
     assert!(matches!(
@@ -469,7 +538,13 @@ fn unresolved_legacy_gear_is_not_displayed_or_removed_by_purchase() {
 
     let stock_before = flow.buildings.crafted_gear_stocks.len();
     assert!(matches!(
-        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        flow.purchase_shop_item(
+            Uuid::new_v4(),
+            1,
+            "build_7",
+            product_id,
+            Some(flow.buildings.crafted_gear_stocks[0].gear_instance_id),
+        ),
         ServerMessage::IntentResult {
             accepted: false,
             reason: Some(reason),
@@ -502,6 +577,7 @@ fn gear_enhancement_fails_closed_without_resolved_cost_and_rng_evidence() {
                 hunter_id: 1,
                 shop_id: "build_7".to_owned(),
                 product_id: product_id.to_owned(),
+                gear_instance_id: Some(displayed_gear_instance_id(&flow, "build_7", product_id)),
             },
             Uuid::from_u128(8_001),
         )
@@ -828,6 +904,7 @@ fn alchemist_crafts_and_sells_catalog_potion_at_recovered_price() {
             hunter_id: 1,
             shop_id: "build_11".to_owned(),
             product_id: product_id.to_owned(),
+            gear_instance_id: None,
         })
         .unwrap();
     assert!(matches!(
@@ -1846,6 +1923,7 @@ fn shared_field_focus_keeps_building_and_economy_commands_available() {
             1,
             "missing-building",
             "missing-product",
+            None,
         )),
         "building_unknown"
     );
@@ -2507,6 +2585,7 @@ fn unresolved_progression_and_economy_intents_never_grant_state() {
             hunter_id: 1,
             shop_id: "main".to_owned(),
             product_id: "product-1".to_owned(),
+            gear_instance_id: None,
         },
         ClientCommand::ClaimMail {
             mail_id: "mail-1".to_owned(),

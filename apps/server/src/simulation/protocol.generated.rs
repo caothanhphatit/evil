@@ -5,7 +5,7 @@ use uuid::Uuid;
 
 use super::{farm_validation::FarmReport, BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 34;
+pub const PROTOCOL_VERSION: u16 = 35;
 pub const MAX_MESSAGE_BYTES: usize = 4194304;
 
 #[derive(Debug, Deserialize)]
@@ -45,7 +45,7 @@ pub enum ClientCommand {
     EnhanceHunterGear { hunter_id: u32, gear_instance_id: Uuid, mode: String, optional_material_ids: Vec<String> },
     ClaimQuestReward { quest_id: String },
     OpenShop { shop_id: String },
-    PurchaseShopItem { hunter_id: u32, shop_id: String, product_id: String },
+    PurchaseShopItem { hunter_id: u32, shop_id: String, product_id: String, gear_instance_id: Option<Uuid> },
     SellShopItem { shop_id: String, product_id: String },
     ClaimMail { mail_id: String },
     ClaimRewardedAd { placement: String },

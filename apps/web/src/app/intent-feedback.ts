@@ -71,7 +71,7 @@ export function showIntentResult(result: IntentFeedback, options: {
       context.buildingPanel.hidden = false;
       const hunter = context.latestSnapshot?.hunter_roster.active_hunters.find((row) => row.hunter_id === context.purchaseHunterId);
       const equipped = pending?.productId.startsWith("recipe:weapon:")
-        ? hunter?.hunter_info.weapons.find((weapon) => weapon.product_id === pending.productId && weapon.equipped)
+        ? hunter?.hunter_info.weapons.find((weapon) => weapon.gear_instance_id === pending.gearInstanceId && weapon.equipped)
         : null;
       options.showMessage(
         equipped ? t("shop.purchase_equipped") : t("shop.purchase_completed"),

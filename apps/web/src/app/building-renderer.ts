@@ -1,5 +1,5 @@
 import type { TownBuilding } from "../assets/visible-world-release";
-import type { BuildingSystemSnapshot, MaterialStockSnapshot, OriginalFlowSnapshot, ShopRecipeSnapshot } from "../generated/protocol";
+import type { BuildingSystemSnapshot, MaterialStockSnapshot, OriginalFlowSnapshot, ShopDisplayItemSnapshot, ShopRecipeSnapshot } from "../generated/protocol";
 import type { WorldClient } from "../net/world-client";
 import type { VisibleEntityWorld } from "../game/visible-world";
 import { findBuildingInstanceById } from "../game/building-placement";
@@ -28,6 +28,7 @@ export interface BuildingRenderingContext {
   selectedBuildingVisual: TownBuilding | null;
   buildingPanelMode: "building" | "construct";
   selectedRecipe: ShopRecipeSnapshot | null;
+  selectedShopGearInstanceId: string | null;
   selectedServiceMaterialId: string | null;
   selectedServiceQuantity: number;
   serviceTabsByBuilding: Map<string, "production" | "hunters">;
@@ -52,7 +53,7 @@ export interface BuildingRenderingContext {
   buildingEvidenceError: string | null;
   popupInteractionActive: boolean;
   pendingCraft: { popup: "gear" | "consumable"; recipeId: string } | null;
-  pendingPurchase: { shopId: string; productId: string } | null;
+  pendingPurchase: { shopId: string; productId: string; gearInstanceId: string | null } | null;
   buildingPanel: HTMLElement;
   buildingName: HTMLElement;
   buildingPreview: HTMLImageElement;
@@ -520,6 +521,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
   
   function openGearRecipe(recipe: ShopRecipeSnapshot): void {
     context.selectedRecipe = recipe;
+    context.selectedShopGearInstanceId = null;
     context.gearPopupMode = "craft";
     context.selectedServiceMaterialId = null;
     context.gearCreateQuantity.value = "1";
@@ -527,15 +529,17 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     renderGearCreatePop();
   }
   
-  function openGearDetail(recipe: ShopRecipeSnapshot): void {
+  function openGearDetail(recipe: ShopRecipeSnapshot, displayItem: ShopDisplayItemSnapshot | null = null): void {
     context.selectedRecipe = recipe;
+    context.selectedShopGearInstanceId = displayItem?.gear_instance_id ?? null;
     context.gearPopupMode = "inspect";
     context.gearCreatePop.hidden = false;
     renderGearCreatePop();
   }
 
-  function openGearPurchase(recipe: ShopRecipeSnapshot): void {
+  function openGearPurchase(recipe: ShopRecipeSnapshot, displayItem: ShopDisplayItemSnapshot | null = null): void {
     context.selectedRecipe = recipe;
+    context.selectedShopGearInstanceId = displayItem?.gear_instance_id ?? null;
     context.gearPopupMode = "purchase";
     context.gearCreatePop.hidden = false;
     renderGearCreatePop();
@@ -1002,12 +1006,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     const system = context.latestSnapshot?.village.building_system;
     const level = findBuildingInstanceById(system?.instances ?? [], context.selectedBuildingInstanceId)?.level ?? 1;
     const selectedBuyer = context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === context.purchaseHunterId);
-    const allowed = recipes.filter((recipe) => {
-      if (recipe.shop_id !== buildingId || recipe.required_level >= level) return false;
-      if (buildingId !== "build_7") return true;
-      const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
-      return shopDisplayItemMatchesHunter(displayed, selectedBuyer);
-    });
+    const allowed = recipes.filter((recipe) => recipe.shop_id === buildingId && recipe.required_level < level);
     const heading = document.createElement("header");
     heading.className = "display-shop-heading";
     const isPotionShop = buildingId === POTION_SHOP_BUILDING_ID;
@@ -1023,8 +1022,8 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     }
     const grid = document.createElement("div");
     grid.className = isPotionShop ? "display-shop-grid potion-recipe-grid" : "display-shop-grid";
-    grid.replaceChildren(...allowed.map((recipe) => {
-      if (isPotionShop) {
+    if (isPotionShop) {
+      grid.replaceChildren(...allowed.map((recipe) => {
         const card = document.createElement("button");
         card.type = "button";
         card.className = "gear-catalog-card display-card potion-catalog-card potion-display-card";
@@ -1048,54 +1047,53 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         card.append(badge, name, ...(stat ? [stat] : []), price);
         card.addEventListener("click", () => openGearDetail(recipe));
         return card;
-      }
+      }));
+    } else {
+      const recipesById = new Map(allowed.map((recipe) => [recipe.id, recipe]));
+      const displayItems = (system?.display_items ?? []).filter((item) => item.shop_id === buildingId
+        && recipesById.has(item.product_id)
+        && (buildingId !== "build_7" || shopDisplayItemMatchesHunter(item, selectedBuyer)));
+      grid.replaceChildren(...displayItems.map((displayed) => {
+      const recipe = recipesById.get(displayed.product_id)!;
       const card = document.createElement("article");
       card.className = "gear-catalog-card display-card";
-      const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
-      if (displayed) card.dataset.quality = String(displayed.quality);
+      card.dataset.quality = String(displayed.quality);
+      card.dataset.gearInstanceId = displayed.gear_instance_id;
       const detail = document.createElement("button");
       detail.type = "button";
       detail.className = "display-card-detail";
       detail.setAttribute("aria-label", t("shop.view_stats_for", { item: recipe.product_name }));
       const badge = document.createElement("span");
       badge.className = "on-display-badge";
-      const quality = displayed
-        ? [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")][displayed.quality]
-        : null;
+      const quality = [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")][displayed.quality];
       badge.textContent = quality ?? t("shop.on_display");
       detail.append(badge);
-      appendGearArt(detail, recipe);
+      appendGearArt(detail, { ...recipe, icon: displayed.icon || recipe.icon });
       const name = document.createElement("strong"); name.textContent = recipe.product_name;
       detail.append(name);
-      if (displayed) {
-        const stat = document.createElement("em");
-        stat.className = "display-item-stat";
-        stat.textContent = t("shop.attack_preview", { attack: formatNumber(displayed.primary_stat) });
-        detail.append(stat);
-      }
+      const stat = document.createElement("em");
+      stat.className = "display-item-stat";
+      stat.textContent = t("shop.attack_preview", { attack: formatNumber(displayed.primary_stat) });
+      detail.append(stat);
       const footer = document.createElement("footer");
       footer.className = "display-card-footer";
       const price = document.createElement("small");
       const gold = document.createElement("img");
       gold.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
       gold.alt = "";
-      const displayCount = system?.display_items.filter((item) => item.shop_id === buildingId && item.product_id === recipe.id).length ?? 0;
-      price.append(gold, document.createTextNode(formatNumber(recipe.sale_price)));
-      price.title = `${t("common.stock")}: ${displayCount}`;
-      const stock = document.createElement("i");
-      stock.className = "display-card-stock";
-      stock.textContent = `${t("common.stock")} ${displayCount}`;
+      price.append(gold, document.createTextNode(formatNumber(displayed.sale_price)));
       const buy = document.createElement("button");
       buy.type = "button";
       buy.className = "display-card-buy source-green-button";
       buy.textContent = t("common.buy");
-      buy.addEventListener("click", () => openGearPurchase(recipe));
-      footer.append(price, stock, buy);
+      buy.addEventListener("click", () => openGearPurchase(recipe, displayed));
+      footer.append(price, buy);
       card.append(detail, footer);
-      detail.addEventListener("click", () => openGearDetail(recipe));
+      detail.addEventListener("click", () => openGearDetail(recipe, displayed));
       return card;
-    }));
-    if (allowed.length === 0) {
+      }));
+    }
+    if (grid.childElementCount === 0) {
       const empty = document.createElement("p");
       empty.className = "display-shop-empty";
       empty.textContent = isPotionShop ? t("shop.no_potions") : t("shop.no_gear");
@@ -1283,6 +1281,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         context.latestSnapshot?.hunter_roster.active_hunters ?? [],
         context.selectedBuildingId,
         context.selectedRecipe.id,
+        context.selectedShopGearInstanceId,
         context.purchaseHunterId,
       )
       : null;

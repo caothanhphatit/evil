@@ -124,6 +124,7 @@ const buildingContext: BuildingRenderingContext = {
   selectedBuildingVisual: null,
   buildingPanelMode: "building",
   selectedRecipe: null,
+  selectedShopGearInstanceId: null,
   selectedServiceMaterialId: null,
   selectedServiceQuantity: 1,
   serviceTabsByBuilding: new Map<string, "production" | "hunters">(),
@@ -585,8 +586,12 @@ bindCraftInteractions({
   },
   sellGear: () => {
     if (buildingContext.gearPopupMode !== "purchase" || buildingContext.purchaseHunterId === null || !buildingContext.selectedBuildingId || !buildingContext.selectedRecipe) return;
-    const pending = { shopId: buildingContext.selectedBuildingId, productId: buildingContext.selectedRecipe.id };
-    if (!client.purchaseShopItem(buildingContext.purchaseHunterId, pending.shopId, pending.productId)) return;
+    const pending = {
+      shopId: buildingContext.selectedBuildingId,
+      productId: buildingContext.selectedRecipe.id,
+      gearInstanceId: buildingContext.selectedShopGearInstanceId,
+    };
+    if (!client.purchaseShopItem(buildingContext.purchaseHunterId, pending.shopId, pending.productId, pending.gearInstanceId)) return;
     buildingContext.pendingPurchase = pending;
     buildingRenderer.renderGearCreatePop();
   },

@@ -15,6 +15,7 @@ impl OriginalFlowSession {
         hunter_id: u32,
         shop_id: &str,
         product_id: &str,
+        gear_instance_id: Option<Uuid>,
     ) -> ServerMessage {
         if !self.shared_world_active() {
             return self.rejected("purchase_shop_item", "village_unavailable");
@@ -77,7 +78,10 @@ impl OriginalFlowSession {
         if hunter.gold < price {
             return self.rejected("purchase_shop_item", "insufficient_hunter_gold");
         }
-        let key = format!("purchase_shop_item:{hunter_id}:{shop_id}:{product_id}");
+        let key = format!(
+            "purchase_shop_item:{hunter_id}:{shop_id}:{product_id}:{}",
+            gear_instance_id.map_or_else(|| "stack".to_owned(), |id| id.to_string())
+        );
         if command_id != Uuid::nil() {
             if let Some(previous) = self.hunter_roster.hunt_commands.get(&command_id) {
                 return if previous == &key {
@@ -110,15 +114,22 @@ impl OriginalFlowSession {
         }
 
         let crafted_gear = if route.is_some() {
+            let Some(requested_instance_id) = gear_instance_id else {
+                return self.rejected("purchase_shop_item", "gear_instance_required");
+            };
             let Some(position) = self.buildings.crafted_gear_stocks.iter().position(|gear| {
                 gear.building_instance_id == building_instance_id
                     && gear.product_id == product_id
+                    && gear.gear_instance_id == requested_instance_id
                     && is_purchasable_crafted_gear(gear)
             }) else {
                 return self.rejected("purchase_shop_item", "crafted_gear_stock_empty");
             };
             Some(self.buildings.crafted_gear_stocks.remove(position))
         } else {
+            if gear_instance_id.is_some() {
+                return self.rejected("purchase_shop_item", "gear_instance_unexpected");
+            }
             None
         };
 

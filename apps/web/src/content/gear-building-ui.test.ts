@@ -61,14 +61,13 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".shop-purchase-economy");
     expect(styles).toContain(".display-card-detail");
     expect(styles).toContain(".display-card-buy");
-    expect(styles).toContain(".display-card-stock");
     expect(styles).toContain(".gear-create-pop[data-quality='4'] .gear-frame");
     expect(source).toContain('card.dataset.quality = String(displayed.quality)');
-    expect(source).toContain('stock.textContent = `${t("common.stock")} ${displayCount}`');
+    expect(source).toContain("card.dataset.gearInstanceId = displayed.gear_instance_id");
     expect(styles).toContain(".gear-create-pop.gear-inspect-mode");
     expect(source).toContain("projectShopPurchase");
-    expect(source).toContain('detail.addEventListener("click", () => openGearDetail(recipe))');
-    expect(source).toContain('buy.addEventListener("click", () => openGearPurchase(recipe))');
+    expect(source).toContain('detail.addEventListener("click", () => openGearDetail(recipe, displayed))');
+    expect(source).toContain('buy.addEventListener("click", () => openGearPurchase(recipe, displayed))');
     const openDetail = source.slice(source.indexOf("function openGearDetail"), source.indexOf("function appendGearArt"));
     expect(openDetail).not.toContain("buildingPanel.hidden");
     const detailRenderer = source.slice(source.indexOf("function renderGearCreatePop"), source.indexOf("function renderConsumCreatePop"));

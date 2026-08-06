@@ -109,12 +109,17 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   the server rejects incompatible purchase requests before gold or stock can
   change. Compatible purchases still equip the exact rolled instance during
   the same authoritative settlement.
+- Protocol v35 makes the selected `gear_instance_id` part of equipment purchase
+  intent. Equipment shops render one card per authoritative rolled display
+  instance, and the server rejects missing or stale instance identity instead
+  of silently settling the first item with the same recipe. Consumable purchase
+  remains product-based and sends no gear instance.
 - The Hunter roster now renders the authoritative equipped weapon icon and ATK
   on each card instead of relying on the base Spine skin to imply equipment.
   Roster actor previews use a tighter scale cap to prevent class-specific
   skeleton bounds from producing oversized cards. Craft and display-shop cards
-  restore visible quality colors, and display stock counts make replacement by
-  the next same-recipe instance explicit after a purchase.
+  restore visible quality colors. Each equipment card now represents one rolled
+  instance with its own quality, primary stat, option rows and sale price.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same

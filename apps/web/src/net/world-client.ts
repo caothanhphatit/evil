@@ -109,7 +109,9 @@ export class WorldClient {
   setMaterialRequest(instanceId: string, materialId: string, quantity: number): boolean { return this.send({ type: "set_material_request", instance_id: instanceId, material_id: materialId, quantity }); }
   cancelMaterialRequest(instanceId: string, materialId: string): boolean { return this.send({ type: "cancel_material_request", instance_id: instanceId, material_id: materialId }); }
   craftShopItem(instanceId: string, recipeId: string, quantity: number, materialId: string | null = null): boolean { return this.send({ type: "craft_shop_item", instance_id: instanceId, recipe_id: recipeId, material_id: materialId, quantity }); }
-  purchaseShopItem(hunterId: number, shopId: string, productId: string): boolean { return this.send({ type: "purchase_shop_item", hunter_id: hunterId, shop_id: shopId, product_id: productId }); }
+  purchaseShopItem(hunterId: number, shopId: string, productId: string, gearInstanceId: string | null): boolean {
+    return this.send({ type: "purchase_shop_item", hunter_id: hunterId, shop_id: shopId, product_id: productId, gear_instance_id: gearInstanceId });
+  }
   sellShopItem(shopId: string, productId: string): boolean { return this.send({ type: "sell_shop_item", shop_id: shopId, product_id: productId }); }
   openHunterProgression(hunterId: number): boolean { return this.send({ type: "open_hunter_progression", hunter_id: hunterId }); }
   assignHunterHunt(hunterId: number, zoneId: string): boolean { return this.send({ type: "assign_hunter_hunt", hunter_id: hunterId, zone_id: zoneId }); }

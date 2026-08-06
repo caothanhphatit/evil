@@ -161,7 +161,14 @@ impl CommandDispatcher {
                 hunter_id,
                 shop_id,
                 product_id,
-            } => session.purchase_shop_item(command_id, hunter_id, &shop_id, &product_id),
+                gear_instance_id,
+            } => session.purchase_shop_item(
+                command_id,
+                hunter_id,
+                &shop_id,
+                &product_id,
+                gear_instance_id,
+            ),
             ClientCommand::SellShopItem {
                 shop_id,
                 product_id,

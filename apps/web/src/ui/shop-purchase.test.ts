@@ -20,24 +20,29 @@ const system = {
   instances: [],
 } satisfies BuildingSystemSnapshot;
 const hunter = { hunter_id: 1, display_name: "Sharon", class_family: "H1", gold: 100, hunt: { status: "idle" } } as HunterRosterMemberSnapshot;
+const gearInstanceId = system.display_items[0].gear_instance_id;
 
 describe("projectShopPurchase", () => {
   it("keeps the live display instance and its rolled stat attached to the purchase", () => {
-    const projection = projectShopPurchase(system, [hunter], "build_7", recipe.id, 1);
+    const projection = projectShopPurchase(system, [hunter], "build_7", recipe.id, gearInstanceId, 1);
     expect(projection?.displayItem?.primary_stat).toBe(88);
     expect(projection?.canPurchase).toBe(true);
   });
 
   it("fails closed when no buyer is selected or the selected Hunter is away", () => {
-    expect(projectShopPurchase(system, [hunter], "build_7", recipe.id, null)?.blocker).toBe("buyer_required");
+    expect(projectShopPurchase(system, [hunter], "build_7", recipe.id, gearInstanceId, null)?.blocker).toBe("buyer_required");
     const away = { ...hunter, hunt: { ...hunter.hunt, status: "hunting" as const } };
-    expect(projectShopPurchase(system, [away], "build_7", recipe.id, 1)?.blocker).toBe("buyer_unavailable");
+    expect(projectShopPurchase(system, [away], "build_7", recipe.id, gearInstanceId, 1)?.blocker).toBe("buyer_unavailable");
   });
 
   it("fails closed when a weapon does not match the selected Hunter class", () => {
     const incompatible = { ...hunter, class_family: "H2" };
-    expect(projectShopPurchase(system, [incompatible], "build_7", recipe.id, 1)?.blocker).toBe("incompatible_weapon");
+    expect(projectShopPurchase(system, [incompatible], "build_7", recipe.id, gearInstanceId, 1)?.blocker).toBe("incompatible_weapon");
     expect(shopDisplayItemMatchesHunter(system.display_items[0], incompatible)).toBe(false);
     expect(shopDisplayItemMatchesHunter(system.display_items[0], hunter)).toBe(true);
+  });
+
+  it("fails closed when the selected rolled instance is no longer displayed", () => {
+    expect(projectShopPurchase(system, [hunter], "build_7", recipe.id, "00000000-0000-4000-8000-000000000099", 1)?.blocker).toBe("out_of_stock");
   });
 });

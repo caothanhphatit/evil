@@ -30,11 +30,16 @@ export function projectShopPurchase(
   hunters: readonly HunterRosterMemberSnapshot[],
   shopId: string,
   productId: string,
+  gearInstanceId: string | null,
   selectedHunterId: number | null,
 ): ShopPurchaseProjection | null {
   const recipe = system.recipes.find((candidate) => candidate.shop_id === shopId && candidate.id === productId);
   if (!recipe) return null;
-  const displayItem = system.display_items.find((candidate) => candidate.shop_id === shopId && candidate.product_id === productId) ?? null;
+  const displayItem = gearInstanceId === null
+    ? null
+    : system.display_items.find((candidate) => candidate.shop_id === shopId
+      && candidate.product_id === productId
+      && candidate.gear_instance_id === gearInstanceId) ?? null;
   const buyers = hunters.map((hunter) => ({
     hunterId: hunter.hunter_id,
     displayName: hunter.display_name,
@@ -44,7 +49,14 @@ export function projectShopPurchase(
   }));
   const selectedBuyer = buyers.find((buyer) => buyer.hunterId === selectedHunterId) ?? null;
   const price = displayItem?.sale_price ?? recipe.sale_price;
-  const blocker = recipe.stock < 1
+  const isGear = recipe.id.startsWith("recipe:weapon:")
+    || recipe.id.startsWith("recipe:armor:")
+    || recipe.id.startsWith("recipe:gloves:")
+    || recipe.id.startsWith("recipe:boots:")
+    || recipe.id.startsWith("recipe:ring:")
+    || recipe.id.startsWith("recipe:necklace:")
+    || recipe.id.startsWith("recipe:belt:");
+  const blocker = recipe.stock < 1 || (isGear && !displayItem)
     ? "out_of_stock"
     : price < 1
       ? "price_unresolved"
