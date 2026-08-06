@@ -2,6 +2,7 @@ import type { OriginalFlowSnapshot } from "../generated/protocol";
 
 export interface GameE2eHooks {
   openBuilding(buildingId: string): boolean;
+  openHunterShop(hunterId: number, shopId: "build_7" | "build_8" | "build_20"): boolean;
   openHunterInfo(hunterId: number): boolean;
   snapshot(): OriginalFlowSnapshot | null;
 }

@@ -1,6 +1,6 @@
 # Evil Hunter Migration Knowledge Transfer
 
-Last updated: 2026-07-28
+Last updated: 2026-08-06
 Baseline commit: `41fae603e23f298cafb9a18b6dd45f1f491cb707`
 
 ## Mission
@@ -1090,3 +1090,25 @@ Before reporting work complete:
 - Durable admin CRUD is still intentionally unavailable. The next mutation
   slice must implement draft-release validation and atomic promotion rather
   than editing active content rows in place.
+
+## 2026-08-06 Hunter shop comparison popup
+
+- Opening Weapon Shop or Armor Shop from a Hunter command now keeps that
+  preselected Hunter as the authoritative purchase buyer. The item popup does
+  not expose a buyer picker or buyer identity card; it shows only that Hunter's
+  gold balance in a compact corner badge.
+- Clicking displayed gear opens an overlay without replacing the underlying
+  catalog. Weapon details compare the equipped weapon with the candidate,
+  include the authoritative candidate Attack Damage, quality, packaged item
+  level and packaged difficulty, and show purchase price plus gold remaining.
+- Individually owned rebuild weapons provide authoritative equipped Attack
+  Damage and therefore an exact delta. Legacy fixture equipment can provide the
+  equipped weapon name but not an authoritative Attack Damage value; the popup
+  marks that value unresolved instead of treating it as zero.
+- Current rebuild weapon creation rolls only authoritative Attack Damage and
+  quality. Display-item option type/value remain visible only when projected,
+  with their gameplay meaning explicitly unresolved; no additional combat stat
+  is synthesized from the original package arrays.
+- Desktop and iPhone browser coverage verifies the catalog remains mounted,
+  the popup stays inside the viewport and above the persistent menu, the buyer
+  cannot change inside the popup, and Buy debits the preselected Hunter.

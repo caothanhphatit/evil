@@ -276,6 +276,21 @@ const hunterInfoActions = {
 };
 const hunterInfoModal = createHunterInfoModal(rosterScreen, hunterInfoActions);
 const worldHunterInfoModal = createHunterInfoModal(villageScreen, hunterInfoActions);
+function openHunterShop(hunterId: number, shopId: "build_7" | "build_8" | "build_20"): boolean {
+  const instance = latestSnapshot?.village.building_system.instances.find((row) => row.building_id === shopId);
+  if (!instance) {
+    showPanelMessage(t("error.building_missing"), shopId);
+    return false;
+  }
+  buildingContext.purchaseHunterId = hunterId;
+  buildingContext.selectedBuildingId = shopId;
+  buildingContext.selectedBuildingInstanceId = instance.instance_id;
+  buildingContext.selectedBuildingVisual = null;
+  buildingContext.buildingPanelMode = "building";
+  buildingContext.buildingPanel.hidden = false;
+  buildingRenderer.renderBuildingSystem(latestSnapshot);
+  return true;
+}
 const hunterWorldCommandMenu = createHunterWorldCommandMenu(villageScreen, {
   onInfo: (entityId) => hunterController.showWorldHunterInfo(entityId),
   onIntent: (intent) => hunterController.handleHunterWorldCommandIntent(intent),
@@ -309,20 +324,7 @@ const hunterContext: HunterControllerContext = {
   buildingContext,
   setHunterRosterVisibility,
   showPanelMessage,
-  openHunterShop: (hunterId, shopId) => {
-    const instance = latestSnapshot?.village.building_system.instances.find((row) => row.building_id === shopId);
-    if (!instance) {
-      showPanelMessage(t("error.building_missing"), shopId);
-      return;
-    }
-    buildingContext.purchaseHunterId = hunterId;
-    buildingContext.selectedBuildingId = shopId;
-    buildingContext.selectedBuildingInstanceId = instance.instance_id;
-    buildingContext.selectedBuildingVisual = null;
-    buildingContext.buildingPanelMode = "building";
-    buildingContext.buildingPanel.hidden = false;
-    buildingRenderer.renderBuildingSystem(latestSnapshot);
-  },
+  openHunterShop: (hunterId, shopId) => { openHunterShop(hunterId, shopId); },
 };
 const hunterController = createHunterController(hunterContext);
 let worldController: ReturnType<typeof createWorldController>;
@@ -383,6 +385,7 @@ installGameE2eHooks(window.location, {
     buildingRenderer.renderBuildingSystem(latestSnapshot);
     return true;
   },
+  openHunterShop,
   openHunterInfo: (hunterId) => hunterController.showHunterInfoByNumericId(hunterId),
 });
 bindInteractionGuards();

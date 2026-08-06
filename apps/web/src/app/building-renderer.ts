@@ -530,7 +530,6 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
   function openGearDetail(recipe: ShopRecipeSnapshot): void {
     context.selectedRecipe = recipe;
     context.gearPopupMode = "detail";
-    context.buildingPanel.hidden = true;
     context.gearCreatePop.hidden = false;
     renderGearCreatePop();
   }
@@ -1243,7 +1242,6 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       : null;
     if (context.gearPopupMode === "detail" && !purchase) {
       context.gearCreatePop.hidden = true;
-      context.buildingPanel.hidden = false;
       return;
     }
     if (purchase) context.selectedRecipe = purchase.recipe;
@@ -1265,10 +1263,31 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     if (purchase) {
       const stats = document.createElement("dl");
       stats.className = "shop-item-stats";
+      const catalogItem = context.gearCatalog.find((item) => item.id === context.selectedRecipe?.id);
+      const quality = purchase.displayItem
+        ? [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")][purchase.displayItem.quality]
+          ?? t("craft.quality_fallback", { quality: purchase.displayItem.quality })
+        : null;
+      const qualityLabel = (value: number): string => [
+        t("craft.quality.regular"),
+        t("craft.quality.sturdy"),
+        t("craft.quality.refined"),
+        t("craft.quality.powerful"),
+        t("craft.quality.supreme"),
+      ][value] ?? t("craft.quality_fallback", { quality: value });
+      const difficultyKeys = ["difficulty.junk", "difficulty.easy", "difficulty.normal", "difficulty.hard", "difficulty.expert", "difficulty.nightmare", "difficulty.torment"] as const;
       const rows: Array<[string, string]> = purchase.displayItem
         ? [
-          [t("shop.stat.attack"), formatNumber(purchase.displayItem.primary_stat)],
-          [t("shop.stat.quality"), [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")][purchase.displayItem.quality] ?? t("craft.quality_fallback", { quality: purchase.displayItem.quality })],
+          [t(purchase.displayItem.gear_kind === "weapon" ? "shop.stat.attack" : "shop.stat.primary"), formatNumber(purchase.displayItem.primary_stat)],
+          [t("shop.stat.quality"), quality ?? t("shop.stats_unavailable")],
+          ...(catalogItem ? [
+            [t("shop.stat.item_level"), formatNumber(catalogItem.itemLevel)],
+            [t("shop.stat.difficulty"), t(difficultyKeys[catalogItem.difficultyGroup] ?? "difficulty.torment")],
+          ] as Array<[string, string]> : []),
+          ...(purchase.displayItem.option_type > 0 ? [[
+            t("shop.stat.bonus"),
+            t("shop.stat.bonus_unresolved", { value: formatNumber(purchase.displayItem.option_value) }),
+          ]] as Array<[string, string]> : []),
         ]
         : context.selectedRecipe.effect_value > 0
           ? [
@@ -1276,6 +1295,56 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
             [t("shop.stat.cooldown"), t("shop.seconds", { seconds: formatNumber(context.selectedRecipe.cooldown_ms / 1000) })],
           ]
           : [];
+      const selectedHunter = purchase.selectedBuyer
+        ? context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === purchase.selectedBuyer?.hunterId)
+        : null;
+      if (purchase.displayItem?.gear_kind === "weapon") {
+        const equipped = selectedHunter?.hunter_info.weapons.find((weapon) => weapon.equipped) ?? null;
+        const legacyEquipped = equipped
+          ? null
+          : selectedHunter?.hunter_info.equipment_slots?.find((slot) => slot.slot_id === "weapon") ?? null;
+        const comparison = document.createElement("section");
+        comparison.className = "shop-weapon-comparison";
+        const comparisonCard = (kind: "current" | "candidate", name: string, attack: number | null, detail: string): HTMLElement => {
+          const card = document.createElement("article");
+          card.className = kind;
+          const label = document.createElement("small");
+          label.textContent = t(kind === "current" ? "shop.compare.current" : "shop.compare.new");
+          const itemName = document.createElement("strong");
+          itemName.textContent = name;
+          const itemAttack = document.createElement("b");
+          itemAttack.textContent = attack === null
+            ? t("shop.compare.attack_unavailable")
+            : t("shop.attack_preview", { attack: formatNumber(attack) });
+          const itemQualityText = document.createElement("span");
+          itemQualityText.textContent = detail;
+          card.append(label, itemName, itemAttack, itemQualityText);
+          return card;
+        };
+        const currentCard = comparisonCard(
+          "current",
+          equipped?.display_name_vi ?? equipped?.display_name_en ?? legacyEquipped?.display_name ?? t("shop.compare.none_equipped"),
+          equipped?.attack_damage ?? null,
+          equipped ? qualityLabel(equipped.quality) : legacyEquipped ? t("shop.compare.legacy_equipped") : t("shop.compare.none_equipped"),
+        );
+        const candidateCard = comparisonCard(
+          "candidate",
+          context.selectedRecipe.product_name,
+          purchase.displayItem.primary_stat,
+          qualityLabel(purchase.displayItem.quality),
+        );
+        const delta = document.createElement("output");
+        delta.className = "shop-weapon-delta";
+        if (equipped) {
+          const attackDelta = purchase.displayItem.primary_stat - equipped.attack_damage;
+          delta.classList.toggle("negative", attackDelta < 0);
+          delta.textContent = `${attackDelta >= 0 ? "+" : ""}${formatNumber(attackDelta)} ATK`;
+        } else {
+          delta.textContent = t("shop.compare.new_attack", { attack: formatNumber(purchase.displayItem.primary_stat) });
+        }
+        comparison.append(currentCard, delta, candidateCard);
+        context.gearCreateDescription.append(comparison);
+      }
       for (const [label, value] of rows) {
         const term = document.createElement("dt");
         term.textContent = label;
@@ -1290,31 +1359,31 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       } else {
         context.gearCreateDescription.append(stats);
       }
-      const buyer = document.createElement("section");
-      buyer.className = "shop-buyer-picker";
-      const buyerTitle = document.createElement("strong");
-      buyerTitle.textContent = t("shop.buyer");
-      const buyerList = document.createElement("div");
-      buyerList.className = "shop-buyer-list";
-      buyerList.setAttribute("aria-label", t("shop.buyer_aria"));
-      for (const option of purchase.buyers) {
-        const row = document.createElement("button");
-        row.type = "button";
-        row.dataset.hunterId = String(option.hunterId);
-        row.classList.toggle("selected", option.hunterId === purchase.selectedBuyer?.hunterId);
-        row.disabled = !option.available;
-        const name = document.createElement("b");
-        name.textContent = option.displayName;
-        const gold = document.createElement("small");
-        gold.textContent = t("shop.buyer_gold", { gold: formatNumber(option.gold) });
-        row.append(name, gold);
-        row.addEventListener("click", () => {
-          context.purchaseHunterId = option.hunterId;
-          renderGearCreatePop();
-        });
-        buyerList.append(row);
+      if (purchase.selectedBuyer) {
+        const buyerGold = document.createElement("output");
+        buyerGold.className = "shop-buyer-gold";
+        buyerGold.dataset.hunterId = String(purchase.selectedBuyer.hunterId);
+        buyerGold.textContent = formatNumber(purchase.selectedBuyer.gold);
+        buyerGold.setAttribute("aria-label", t("shop.buyer_gold_for", {
+          name: purchase.selectedBuyer.displayName,
+          gold: formatNumber(purchase.selectedBuyer.gold),
+        }));
+        context.gearCreateDescription.prepend(buyerGold);
+        const price = purchase.displayItem?.sale_price ?? purchase.recipe.sale_price;
+        const economy = document.createElement("dl");
+        economy.className = "shop-purchase-economy";
+        for (const [label, value] of [
+          [t("shop.purchase_price"), formatNumber(price)],
+          [t("shop.gold_after_purchase"), formatNumber(purchase.selectedBuyer.gold - price)],
+        ]) {
+          const term = document.createElement("dt");
+          term.textContent = label;
+          const amount = document.createElement("dd");
+          amount.textContent = value;
+          economy.append(term, amount);
+        }
+        context.gearCreateDescription.append(economy);
       }
-      buyer.append(buyerTitle, buyerList);
       const status = document.createElement("p");
       status.className = purchase.blocker ? "shop-purchase-blocker" : "shop-purchase-ready";
       const blockerKeys = {
@@ -1324,10 +1393,10 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         out_of_stock: "shop.blocker.out_of_stock",
         price_unresolved: "shop.blocker.price_unresolved",
       } as const;
-      status.textContent = purchase.blocker
-        ? t(blockerKeys[purchase.blocker])
-        : t("shop.purchase_ready", { name: purchase.selectedBuyer?.displayName ?? "" });
-      context.gearCreateDescription.append(buyer, status);
+      if (purchase.blocker) {
+        status.textContent = t(blockerKeys[purchase.blocker]);
+        context.gearCreateDescription.append(status);
+      }
     }
     context.gearLock.hidden = true;
     context.gearLock.disabled = true;
