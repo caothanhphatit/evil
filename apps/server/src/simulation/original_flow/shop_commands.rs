@@ -88,6 +88,25 @@ impl OriginalFlowSession {
             }
         }
 
+        let auto_equip_weapon = super::super::web_rebuild_gear::rebuild_weapon_definition(
+            product_id,
+        )
+        .filter(|definition| {
+            definition.visual_family
+                == self.hunter_roster.hunters[hunter_index]
+                    .profile
+                    .visual_family
+        });
+        if auto_equip_weapon.is_some()
+            && !self.hunter_roster.hunters[hunter_index]
+                .profile
+                .equipment_slots
+                .iter()
+                .any(|slot| slot.slot_id == "weapon")
+        {
+            return self.rejected("purchase_shop_item", "weapon_slot_unavailable");
+        }
+
         let crafted_gear = if route.is_some() {
             let Some(position) = self.buildings.crafted_gear_stocks.iter().position(|gear| {
                 gear.building_instance_id == building_instance_id
@@ -127,6 +146,7 @@ impl OriginalFlowSession {
             }
         } else {
             let crafted = crafted_gear.expect("gear stock was resolved before mutation");
+            let gear_instance_id = crafted.gear_instance_id;
             hunter
                 .owned_items
                 .push(super::super::hunter_roster::DurableHunterOwnedItem {
@@ -140,6 +160,10 @@ impl OriginalFlowSession {
                     option_value: Some(crafted.option_value),
                     ruleset: Some(crafted.ruleset),
                 });
+            if auto_equip_weapon.is_some() {
+                self.equip_owned_rebuild_weapon(hunter_index, gear_instance_id)
+                    .expect("compatible purchase was validated before settlement");
+            }
         }
         if route.is_some() {
             self.buildings.hunter_equipment_purchases =

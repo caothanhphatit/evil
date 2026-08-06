@@ -65,13 +65,15 @@ blacksmith craft path for weapon recipes with a resolved package icon binding.
 Each requested quantity becomes an individually identified instance. The
 server rolls the inclusive `attackDamageMin..attackDamageMax` range, persists
 the result through the existing normalized gear-instance authority, and
-projects the item into Hunter Inventory after purchase. Compatible weapons can
-then be equipped by exact gear-instance UUID through the authoritative
-`equip_hunter_weapon` command. The selected UUID is encoded in the persisted
-weapon-slot catalog reference, and the rolled Attack Damage contributes to the
-Hunter's projected ATK, normal attack calculation, and skill fallback damage.
-This first slice still has no random affix instances and never auto-equips a
-purchase.
+projects the item into Hunter Inventory after purchase. A compatible weapon
+bought for the preselected Hunter is equipped during the same authoritative
+purchase settlement. The selected UUID is encoded in the persisted weapon-slot
+catalog reference, and the rolled Attack Damage contributes to the Hunter's
+projected ATK, normal attack calculation, and skill fallback damage. An
+incompatible weapon remains owned in inventory and cannot replace the current
+weapon slot; it can be reconsidered later through the same class-validated
+`equip_hunter_weapon` command. This first slice still has no random affix
+instances.
 
 The display shop projects the next individually rolled weapon instance instead
 of presenting only its recipe aggregate. The detail popup shows the authoritative

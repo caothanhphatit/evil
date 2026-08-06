@@ -1110,6 +1110,11 @@ Before reporting work complete:
   quality. Display-item option type/value remain visible only when projected,
   with their gameplay meaning explicitly unresolved; no additional combat stat
   is synthesized from the original package arrays.
+- A successful compatible weapon purchase equips that exact rolled instance on
+  the buyer during the same server-authoritative settlement, so the accepted
+  snapshot already includes the new slot binding and Attack Damage. A class-
+  incompatible weapon remains in inventory without replacing the equipped
+  weapon.
 - The PC display-shop list and both item overlays use the recovered source-popup
   frame language and reserve an explicit gap above the persistent bottom menu.
   The list keeps the selected Hunter's gold in one corner, exposes no buyer

@@ -287,6 +287,7 @@ fn sale_shop_level_projection_matches_authoritative_difficulty_gate() {
 fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
     let product_id = "recipe:weapon:0:rating:0";
     let mut flow = gear_flow(product_id, 75);
+    let base_attack = flow.hunter_roster.hunters[0].profile.attack;
     let blacksmith_id = building_instance_id(&flow, "build_10");
     flow.handle_command(ClientCommand::CraftShopItem {
         instance_id: blacksmith_id,
@@ -314,9 +315,8 @@ fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
     assert!((60..=96).contains(&weapons[0].attack_damage));
     assert!(weapons[0].icon_path.starts_with("/content/"));
     assert!(weapons[0].compatible);
-    assert!(!weapons[0].equipped);
+    assert!(weapons[0].equipped);
 
-    let base_attack = flow.hunter_roster.hunters[0].profile.attack;
     let gear_instance_id = weapons[0].gear_instance_id;
     let equip_id = Uuid::from_u128(8_003);
     let equipped = flow
@@ -366,6 +366,58 @@ fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
     assert_eq!(
         flow.hunter_roster.hunters[0].equipped_weapon_attack_damage(),
         weapons[0].attack_damage
+    );
+}
+
+#[test]
+fn purchased_rebuild_weapon_stays_in_inventory_when_class_is_incompatible() {
+    let product_id = "recipe:weapon:0:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    flow.hunter_roster.hunters[0].profile.visual_family = "H2".to_owned();
+    let original_weapon_name = flow.hunter_roster.hunters[0]
+        .profile
+        .equipment_slots
+        .iter()
+        .find(|slot| slot.slot_id == "weapon")
+        .expect("fixture weapon slot")
+        .display_name
+        .clone();
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.handle_command(ClientCommand::CraftShopItem {
+        instance_id: blacksmith_id,
+        recipe_id: product_id.to_owned(),
+        material_id: None,
+        quantity: 1,
+    })
+    .unwrap();
+
+    let purchase = flow
+        .handle_command(ClientCommand::PurchaseShopItem {
+            hunter_id: 1,
+            shop_id: "build_7".to_owned(),
+            product_id: product_id.to_owned(),
+        })
+        .unwrap();
+    assert!(matches!(
+        purchase.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+
+    let hunter = &flow.snapshot().hunter_roster.active_hunters[0];
+    assert_eq!(hunter.hunter_info.weapons.len(), 1);
+    assert!(!hunter.hunter_info.weapons[0].compatible);
+    assert!(!hunter.hunter_info.weapons[0].equipped);
+    assert_eq!(
+        hunter
+            .hunter_info
+            .equipment_slots
+            .as_ref()
+            .unwrap()
+            .iter()
+            .find(|slot| slot.slot_id == "weapon")
+            .unwrap()
+            .display_name,
+        original_weapon_name
     );
 }
 

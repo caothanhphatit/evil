@@ -4,6 +4,51 @@ use super::{
 };
 
 impl OriginalFlowSession {
+    pub(super) fn equip_owned_rebuild_weapon(
+        &mut self,
+        hunter_index: usize,
+        gear_instance_id: Uuid,
+    ) -> Result<(), &'static str> {
+        let Some(item) = self.hunter_roster.hunters[hunter_index]
+            .owned_items
+            .iter()
+            .find(|item| item.gear_instance_id == Some(gear_instance_id))
+        else {
+            return Err("gear_instance_unknown");
+        };
+        let Some(definition) =
+            super::super::web_rebuild_gear::rebuild_weapon_definition(&item.product_id)
+        else {
+            return Err("weapon_definition_unresolved");
+        };
+        if definition.visual_family
+            != self.hunter_roster.hunters[hunter_index]
+                .profile
+                .visual_family
+        {
+            return Err("weapon_class_mismatch");
+        }
+        let required_class_id = self.hunter_roster.hunters[hunter_index]
+            .profile
+            .class_id
+            .clone();
+        let Some(slot) = self.hunter_roster.hunters[hunter_index]
+            .profile
+            .equipment_slots
+            .iter_mut()
+            .find(|slot| slot.slot_id == "weapon")
+        else {
+            return Err("weapon_slot_unavailable");
+        };
+        slot.catalog_kind = format!("rebuild_weapon_instance:{gear_instance_id}");
+        slot.catalog_index = definition.gear_index;
+        slot.display_name = definition.display_name_vi;
+        slot.icon_path = definition.icon_path;
+        slot.required_class_id = Some(required_class_id);
+        slot.evidence_state = "web_rebuild_weapon_v1".to_owned();
+        Ok(())
+    }
+
     pub(super) fn equip_rebuild_weapon(
         &mut self,
         command_id: Uuid,
@@ -31,43 +76,9 @@ impl OriginalFlowSession {
         else {
             return self.rejected("equip_hunter_weapon", "hunter_unknown");
         };
-        let Some(item) = self.hunter_roster.hunters[hunter_index]
-            .owned_items
-            .iter()
-            .find(|item| item.gear_instance_id == Some(gear_instance_id))
-        else {
-            return self.rejected("equip_hunter_weapon", "gear_instance_unknown");
-        };
-        let Some(definition) =
-            super::super::web_rebuild_gear::rebuild_weapon_definition(&item.product_id)
-        else {
-            return self.rejected("equip_hunter_weapon", "weapon_definition_unresolved");
-        };
-        if definition.visual_family
-            != self.hunter_roster.hunters[hunter_index]
-                .profile
-                .visual_family
-        {
-            return self.rejected("equip_hunter_weapon", "weapon_class_mismatch");
+        if let Err(reason) = self.equip_owned_rebuild_weapon(hunter_index, gear_instance_id) {
+            return self.rejected("equip_hunter_weapon", reason);
         }
-        let required_class_id = self.hunter_roster.hunters[hunter_index]
-            .profile
-            .class_id
-            .clone();
-        let Some(slot) = self.hunter_roster.hunters[hunter_index]
-            .profile
-            .equipment_slots
-            .iter_mut()
-            .find(|slot| slot.slot_id == "weapon")
-        else {
-            return self.rejected("equip_hunter_weapon", "weapon_slot_unavailable");
-        };
-        slot.catalog_kind = format!("rebuild_weapon_instance:{gear_instance_id}");
-        slot.catalog_index = definition.gear_index;
-        slot.display_name = definition.display_name_vi;
-        slot.icon_path = definition.icon_path;
-        slot.required_class_id = Some(required_class_id);
-        slot.evidence_state = "web_rebuild_weapon_v1".to_owned();
         if command_id != Uuid::nil() {
             self.hunter_roster.hunt_commands.insert(command_id, key);
         }
