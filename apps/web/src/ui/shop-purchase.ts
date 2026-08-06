@@ -3,6 +3,7 @@ import type { BuildingSystemSnapshot, HunterRosterMemberSnapshot, ShopDisplayIte
 export interface ShopBuyerOption {
   hunterId: number;
   displayName: string;
+  classFamily: string;
   gold: number;
   available: boolean;
 }
@@ -13,7 +14,15 @@ export interface ShopPurchaseProjection {
   buyers: ShopBuyerOption[];
   selectedBuyer: ShopBuyerOption | null;
   canPurchase: boolean;
-  blocker: "buyer_required" | "buyer_unavailable" | "insufficient_gold" | "out_of_stock" | "price_unresolved" | null;
+  blocker: "buyer_required" | "buyer_unavailable" | "incompatible_weapon" | "insufficient_gold" | "out_of_stock" | "price_unresolved" | null;
+}
+
+export function shopDisplayItemMatchesHunter(
+  displayItem: ShopDisplayItemSnapshot | null | undefined,
+  hunter: Pick<HunterRosterMemberSnapshot, "class_family"> | null | undefined,
+): boolean {
+  if (!displayItem || !hunter) return false;
+  return displayItem.gear_kind !== "weapon" || displayItem.visual_family === hunter.class_family;
 }
 
 export function projectShopPurchase(
@@ -29,6 +38,7 @@ export function projectShopPurchase(
   const buyers = hunters.map((hunter) => ({
     hunterId: hunter.hunter_id,
     displayName: hunter.display_name,
+    classFamily: hunter.class_family,
     gold: hunter.gold,
     available: hunter.hunt.status === "idle",
   }));
@@ -42,6 +52,8 @@ export function projectShopPurchase(
         ? "buyer_required"
         : !selectedBuyer.available
           ? "buyer_unavailable"
+          : displayItem?.gear_kind === "weapon" && !shopDisplayItemMatchesHunter(displayItem, { class_family: selectedBuyer.classFamily })
+            ? "incompatible_weapon"
           : selectedBuyer.gold < price
             ? "insufficient_gold"
             : null;

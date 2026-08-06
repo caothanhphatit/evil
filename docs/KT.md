@@ -104,6 +104,11 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   and uses the common detail flow for both equipment and potions. The purchase
   command remains product intent; the server settles the same first projected
   gear instance and rejects stale stock, wallet or town-state assumptions.
+- Protocol v34 adds the verified rebuild weapon visual family to each shop
+  display item. A Hunter-scoped Weapon Shop omits other class families, while
+  the server rejects incompatible purchase requests before gold or stock can
+  change. Compatible purchases still equip the exact rolled instance during
+  the same authoritative settlement.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { BuildingSystemSnapshot, HunterRosterMemberSnapshot } from "../generated/protocol";
-import { projectShopPurchase } from "./shop-purchase";
+import { projectShopPurchase, shopDisplayItemMatchesHunter } from "./shop-purchase";
 
 const recipe = { id: "recipe:weapon:0:rating:0", shop_id: "build_7", icon: "weapon.png", product_name: "Kiếm", material_costs: [], stock: 1, sale_price: 75, kind: "craft", required_level: 0, duration_ms: 0, cooldown_ms: 0, effect_value: 0, effect_kind: "", capacity: 10 };
 const system = {
@@ -14,12 +14,12 @@ const system = {
   hunter_equipment_purchases: 0,
   material_stocks: [],
   recipes: [recipe],
-  display_items: [{ gear_instance_id: "00000000-0000-4000-8000-000000000001", shop_id: "build_7", product_id: recipe.id, product_name: "Kiếm", icon: "weapon.png", gear_kind: "weapon", rating: 0, quality: 1, primary_stat: 88, option_type: 0, option_value: 0, sale_price: 75, ruleset: "web-rebuild-weapon-core-v1" }],
+  display_items: [{ gear_instance_id: "00000000-0000-4000-8000-000000000001", shop_id: "build_7", product_id: recipe.id, product_name: "Kiếm", icon: "weapon.png", gear_kind: "weapon", visual_family: "H1", rating: 0, quality: 1, primary_stat: 88, option_type: 0, option_value: 0, sale_price: 75, ruleset: "web-rebuild-weapon-core-v1" }],
   definitions: [],
   states: [],
   instances: [],
 } satisfies BuildingSystemSnapshot;
-const hunter = { hunter_id: 1, display_name: "Sharon", gold: 100, hunt: { status: "idle" } } as HunterRosterMemberSnapshot;
+const hunter = { hunter_id: 1, display_name: "Sharon", class_family: "H1", gold: 100, hunt: { status: "idle" } } as HunterRosterMemberSnapshot;
 
 describe("projectShopPurchase", () => {
   it("keeps the live display instance and its rolled stat attached to the purchase", () => {
@@ -32,5 +32,12 @@ describe("projectShopPurchase", () => {
     expect(projectShopPurchase(system, [hunter], "build_7", recipe.id, null)?.blocker).toBe("buyer_required");
     const away = { ...hunter, hunt: { ...hunter.hunt, status: "hunting" as const } };
     expect(projectShopPurchase(system, [away], "build_7", recipe.id, 1)?.blocker).toBe("buyer_unavailable");
+  });
+
+  it("fails closed when a weapon does not match the selected Hunter class", () => {
+    const incompatible = { ...hunter, class_family: "H2" };
+    expect(projectShopPurchase(system, [incompatible], "build_7", recipe.id, 1)?.blocker).toBe("incompatible_weapon");
+    expect(shopDisplayItemMatchesHunter(system.display_items[0], incompatible)).toBe(false);
+    expect(shopDisplayItemMatchesHunter(system.display_items[0], hunter)).toBe(true);
   });
 });

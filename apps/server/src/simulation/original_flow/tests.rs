@@ -159,6 +159,7 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         .expect("crafted gear is projected as the next purchasable display item");
     assert!((60..=96).contains(&displayed.primary_stat));
     assert_eq!(displayed.sale_price, 75);
+    assert_eq!(displayed.visual_family.as_deref(), Some("H1"));
 
     let gold_before = flow.buildings.town_gold;
     let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
@@ -370,18 +371,10 @@ fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
 }
 
 #[test]
-fn purchased_rebuild_weapon_stays_in_inventory_when_class_is_incompatible() {
+fn incompatible_rebuild_weapon_purchase_is_rejected_without_settlement() {
     let product_id = "recipe:weapon:0:rating:0";
     let mut flow = gear_flow(product_id, 75);
     flow.hunter_roster.hunters[0].profile.visual_family = "H2".to_owned();
-    let original_weapon_name = flow.hunter_roster.hunters[0]
-        .profile
-        .equipment_slots
-        .iter()
-        .find(|slot| slot.slot_id == "weapon")
-        .expect("fixture weapon slot")
-        .display_name
-        .clone();
     let blacksmith_id = building_instance_id(&flow, "build_10");
     flow.handle_command(ClientCommand::CraftShopItem {
         instance_id: blacksmith_id,
@@ -390,6 +383,7 @@ fn purchased_rebuild_weapon_stays_in_inventory_when_class_is_incompatible() {
         quantity: 1,
     })
     .unwrap();
+    let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
 
     let purchase = flow
         .handle_command(ClientCommand::PurchaseShopItem {
@@ -400,25 +394,17 @@ fn purchased_rebuild_weapon_stays_in_inventory_when_class_is_incompatible() {
         .unwrap();
     assert!(matches!(
         purchase.message,
-        ServerMessage::IntentResult { accepted: true, .. }
+        ServerMessage::IntentResult {
+            accepted: false,
+            ref reason,
+            ..
+        } if reason.as_deref() == Some("weapon_class_incompatible")
     ));
 
     let hunter = &flow.snapshot().hunter_roster.active_hunters[0];
-    assert_eq!(hunter.hunter_info.weapons.len(), 1);
-    assert!(!hunter.hunter_info.weapons[0].compatible);
-    assert!(!hunter.hunter_info.weapons[0].equipped);
-    assert_eq!(
-        hunter
-            .hunter_info
-            .equipment_slots
-            .as_ref()
-            .unwrap()
-            .iter()
-            .find(|slot| slot.slot_id == "weapon")
-            .unwrap()
-            .display_name,
-        original_weapon_name
-    );
+    assert!(hunter.hunter_info.weapons.is_empty());
+    assert_eq!(hunter.gold, hunter_gold_before);
+    assert_eq!(flow.buildings.product_stocks[0].quantity, 1);
 }
 
 #[test]

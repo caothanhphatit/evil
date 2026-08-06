@@ -88,15 +88,17 @@ impl OriginalFlowSession {
             }
         }
 
-        let auto_equip_weapon = super::super::web_rebuild_gear::rebuild_weapon_definition(
-            product_id,
-        )
-        .filter(|definition| {
+        let weapon_definition =
+            super::super::web_rebuild_gear::rebuild_weapon_definition(product_id);
+        if weapon_definition.as_ref().is_some_and(|definition| {
             definition.visual_family
-                == self.hunter_roster.hunters[hunter_index]
+                != self.hunter_roster.hunters[hunter_index]
                     .profile
                     .visual_family
-        });
+        }) {
+            return self.rejected("purchase_shop_item", "weapon_class_incompatible");
+        }
+        let auto_equip_weapon = weapon_definition;
         if auto_equip_weapon.is_some()
             && !self.hunter_roster.hunters[hunter_index]
                 .profile

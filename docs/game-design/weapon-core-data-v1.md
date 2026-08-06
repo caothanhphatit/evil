@@ -69,11 +69,12 @@ projects the item into Hunter Inventory after purchase. A compatible weapon
 bought for the preselected Hunter is equipped during the same authoritative
 purchase settlement. The selected UUID is encoded in the persisted weapon-slot
 catalog reference, and the rolled Attack Damage contributes to the Hunter's
-projected ATK, normal attack calculation, and skill fallback damage. An
-incompatible weapon remains owned in inventory and cannot replace the current
-weapon slot; it can be reconsidered later through the same class-validated
-`equip_hunter_weapon` command. This first slice still has no random affix
-instances.
+projected ATK, normal attack calculation, and skill fallback damage. The
+Hunter-scoped Weapon Shop omits other visual families, and the server
+rejects incompatible purchase requests before changing gold, stock, or
+inventory. Existing owned weapons can still be reconsidered later through the
+same class-validated `equip_hunter_weapon` command. This first slice still has
+no random affix instances.
 
 The display shop projects the next individually rolled weapon instance instead
 of presenting only its recipe aggregate. The detail popup shows the authoritative

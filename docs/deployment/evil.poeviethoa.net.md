@@ -36,6 +36,8 @@ the secure cookie or Origin checks in production.
 - The wildcard Let's Encrypt certificate must cover `evil.poeviethoa.net`.
 - The server must use `WEB_ORIGIN=https://evil.poeviethoa.net` and
   `SESSION_COOKIE_SECURE=true`. Do not expose the database or Redis ports.
+- The host-only `.env` must provide `ADMIN_BASIC_AUTH_USER` and
+  `ADMIN_BASIC_AUTH_PASSWORD`; the server fails closed when either is absent.
 
 The current deployment uses the internal database URL
 `postgres://evil_hunter:evil_hunter@postgres:5432/evil_hunter`. Replace that
@@ -86,6 +88,7 @@ docker rm -f evil-prod-server
 docker run -d --name evil-prod-server --restart unless-stopped \
   --network evil-prod --network-alias server \
   -p 127.0.0.1:28082:8080 \
+  --env-file .env \
   -e SERVER_HOST=0.0.0.0 -e SERVER_PORT=8080 \
   -e RUST_LOG=evil_hunter_server=info,tower_http=info -e LOG_FORMAT=pretty \
   -e DATABASE_URL=postgres://evil_hunter:evil_hunter@postgres:5432/evil_hunter \

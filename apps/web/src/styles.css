@@ -1352,6 +1352,142 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .bounty-quest-pop { width: 480px; }
 }
 
+/* Canonical Hunter roster frame. Keep the whole screen above persistent navigation. */
+.roster-screen {
+  display: grid;
+  place-items: center;
+  padding: max(12px, env(safe-area-inset-top)) 16px calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved) + 12px);
+  background: linear-gradient(180deg, #07100c2e, #07090799);
+}
+.roster-background { opacity: .38; filter: saturate(.76) brightness(.48) blur(1px); }
+.hunter-roster-panel {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(820px, calc(100% - 32px));
+  height: min(560px, calc(100% - 24px));
+  max-height: none;
+  padding: 13px 15px 10px;
+  overflow: hidden;
+  border: 18px solid transparent;
+  border-radius: 0;
+  border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 18px stretch;
+  background: #100e0c;
+  box-shadow: inset 0 0 24px #000b, 0 14px 34px #000d;
+  filter: none;
+  transform: none;
+}
+.hunter-roster-panel::before, .hunter-roster-panel::after { content: none; }
+.hunter-roster-header {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 46px;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 2px 8px;
+  border-bottom: 2px solid #9c8b67;
+  box-shadow: 0 2px #15110d;
+}
+.hunter-roster-header > .hunter-roster-heading { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.hunter-roster-heading b { overflow: hidden; color: #fff1c6; font-size: 18px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #312217; }
+.hunter-roster-heading span { flex: 0 0 auto; padding: 4px 8px; border: 1px solid #756747; background: #211b12; color: #e4cf98; font-size: 9px; }
+.hunter-roster-heading span.full { color: #ffca68; }
+.hunter-roster-header > .source-red-button { position: static; width: 46px; min-width: 46px; min-height: 40px; padding: 0; font-size: 0; }
+.hunter-roster-header > .source-red-button::after { content: "X"; font-size: 13px; }
+.hunter-roster-body { position: relative; z-index: 1; display: block; min-height: 0; padding: 12px 2px 5px; }
+.hunter-card-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: none;
+  grid-auto-rows: 214px;
+  align-content: start;
+  gap: 10px;
+  height: 100%;
+  padding: 2px 5px 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #9e7548 #261d17;
+}
+.hunter-roster-actor-canvas { position: absolute; z-index: 2; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; image-rendering: pixelated; }
+.hunter-roster-card {
+  --rarity-accent: #a9a58f;
+  --rarity-core: #b7b49a24;
+  --rarity-halo: #85816b18;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 35px minmax(0, 1fr) 24px 34px;
+  place-items: stretch;
+  width: auto;
+  height: 214px;
+  min-width: 0;
+  min-height: 0;
+  padding: 7px;
+  overflow: hidden;
+  border: 7px solid transparent;
+  border-radius: 0;
+  border-image: url('/content/releases/original-flow-v1/sprites/list_area_line_9__1576.png') 8 fill / 7px stretch;
+  background: radial-gradient(ellipse at 50% 58%, var(--rarity-core), var(--rarity-halo) 38%, transparent 68%), #15130f;
+  color: #f4e7c4;
+  box-shadow: 0 4px 8px #0008;
+  image-rendering: pixelated;
+}
+.hunter-roster-card::before { content: ""; position: absolute; z-index: 0; inset: 25% 8% 17%; background: radial-gradient(ellipse, var(--rarity-core), transparent 70%); pointer-events: none; }
+.hunter-roster-card.selected { border-color: transparent; filter: brightness(1.08); box-shadow: 0 0 0 2px var(--rarity-accent), 0 4px 8px #0008; }
+.hunter-roster-card > header, .hunter-card-meta, .hunter-roster-card > footer { position: relative; z-index: 3; }
+.hunter-roster-card > header { display: grid; align-content: start; justify-items: center; gap: 3px; min-width: 0; }
+.hunter-card-name { justify-content: center; }
+.hunter-card-name b { font-size: 10px; }
+.hunter-card-name i { font-size: 8px; }
+.hunter-card-level-class { gap: 5px; font-size: 7px; }
+.hunter-roster-card .hunter-avatar { align-self: stretch; display: grid; place-items: center; width: 100%; height: auto; min-height: 0; margin: 0; padding: 0; overflow: hidden; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core), transparent 64%); cursor: pointer; }
+.hunter-card-meta { align-content: center; text-align: center; }
+.hunter-card-meta small { font-size: 7px; }
+.hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 34px; gap: 5px; margin-top: 3px; }
+.hunter-card-info { min-height: 31px; font-size: 8px; }
+.hunter-card-target { width: 34px; min-height: 31px; }
+.hunter-card-target img { width: 21px; height: 21px; }
+.hunter-roster-card.empty { grid-template-rows: 1fr auto; place-items: center; height: 214px; opacity: .32; }
+.hunter-roster-card.empty .hunter-avatar { width: 54px; height: 54px; min-height: 54px; border: 6px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/box_menu_front_9__4849.png') 5 fill / 6px stretch; color: #d9c58d; font-size: 18px; }
+.hunter-roster-card.empty > b { padding-bottom: 8px; color: #aca28d; font-size: 7px; }
+.hunter-roster-status { position: relative; z-index: 2; min-height: 18px; padding: 4px 4px 0; color: #bbb39e; font-size: 7px; text-align: center; }
+.hunter-roster-status:empty { display: none; }
+.game-shell.ui-short .hunter-roster-panel,
+.game-shell.ui-very-short .hunter-roster-panel {
+  height: min(560px, calc(100% - 24px));
+  max-height: none;
+}
+.game-shell.ui-short .hunter-roster-card .hunter-avatar,
+.game-shell.ui-very-short .hunter-roster-card .hunter-avatar { min-height: 0; }
+
+@container game-shell (max-width: 520px) {
+  .roster-screen { padding: 5px 5px calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved) + 5px); }
+  .hunter-roster-panel { width: 100%; height: 100%; max-height: none; padding: 8px 7px 6px; border-width: 12px; border-image-width: 12px; }
+  .game-shell.ui-short .hunter-roster-panel,
+  .game-shell.ui-very-short .hunter-roster-panel { height: 100%; max-height: none; }
+  .hunter-roster-header { grid-template-columns: minmax(0, 1fr) 38px; min-height: 42px; gap: 6px; padding-bottom: 5px; }
+  .hunter-roster-heading b { font-size: 13px; }
+  .hunter-roster-heading span { padding: 3px 5px; font-size: 7px; }
+  .hunter-roster-header > .source-red-button { width: 38px; min-width: 38px; min-height: 34px; }
+  .hunter-roster-body { padding-top: 7px; }
+  .hunter-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 172px; gap: 6px; padding-inline: 2px; }
+  .hunter-roster-card, .hunter-roster-card.empty { height: 172px; padding: 5px; border-width: 5px; border-image-width: 5px; }
+  .hunter-roster-card { grid-template-rows: 29px minmax(0, 1fr) 20px 29px; }
+  .hunter-card-name b { font-size: 8px; }
+  .hunter-card-level-class, .hunter-card-meta small { font-size: 6px; }
+  .hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 29px; gap: 3px; }
+  .hunter-card-info, .hunter-card-target { min-height: 26px; }
+  .hunter-card-target { width: 29px; }
+  .hunter-card-target img { width: 18px; height: 18px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 33,
+  "schemaVersion": 34,
   "fixtureContracts": [
     {
       "id": "migration-fixture.slice1-combat-v1",

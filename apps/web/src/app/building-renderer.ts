@@ -14,7 +14,7 @@ import { projectProductService, productServiceRoute, type ProductServiceInput } 
 import { ACCESSORY_SHOP_BUILDING_IDS, ALL_GEAR_KINDS, ARMOR_SHOP_BUILDING_IDS, BLACKSMITH_BUILDING_IDS, BLACKSMITH_GEAR_TABS, ENHANCEMENT_FORGE_BUILDING_IDS, JEWELER_BUILDING_IDS, JEWELER_GEAR_TABS, WEAPON_SHOP_BUILDING_IDS, type GearCatalogRecipe, type GearKind } from "../content/blacksmith-route";
 import { ALCHEMIST_BUILDING_ID, POTION_SHOP_BUILDING_ID, isPotionBuilding } from "../content/potion-shop-routes";
 import { formatNumber, t, type MessageKey } from "../i18n";
-import { projectShopPurchase } from "../ui/shop-purchase";
+import { projectShopPurchase, shopDisplayItemMatchesHunter } from "../ui/shop-purchase";
 import { originalAsset } from "./shell";
 
 export interface BuildingRenderingContext {
@@ -1001,14 +1001,19 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
   function renderDisplayShopCatalog(recipes: readonly ShopRecipeSnapshot[], buildingId: string | null): void {
     const system = context.latestSnapshot?.village.building_system;
     const level = findBuildingInstanceById(system?.instances ?? [], context.selectedBuildingInstanceId)?.level ?? 1;
-    const allowed = recipes.filter((recipe) => recipe.shop_id === buildingId && recipe.required_level < level);
+    const selectedBuyer = context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === context.purchaseHunterId);
+    const allowed = recipes.filter((recipe) => {
+      if (recipe.shop_id !== buildingId || recipe.required_level >= level) return false;
+      if (buildingId !== "build_7") return true;
+      const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
+      return shopDisplayItemMatchesHunter(displayed, selectedBuyer);
+    });
     const heading = document.createElement("header");
     heading.className = "display-shop-heading";
     const isPotionShop = buildingId === POTION_SHOP_BUILDING_ID;
     const headingTitle = document.createElement("h3");
     headingTitle.textContent = isPotionShop ? t("shop.potion_display") : t("shop.display_list");
     heading.append(headingTitle);
-    const selectedBuyer = context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === context.purchaseHunterId);
     if (!isPotionShop && selectedBuyer) {
       const gold = document.createElement("output");
       gold.className = "display-shop-gold";
@@ -1423,6 +1428,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       const blockerKeys = {
         buyer_required: "shop.blocker.buyer_required",
         buyer_unavailable: "shop.blocker.buyer_unavailable",
+        incompatible_weapon: "shop.blocker.incompatible_weapon",
         insufficient_gold: "shop.blocker.insufficient_gold",
         out_of_stock: "shop.blocker.out_of_stock",
         price_unresolved: "shop.blocker.price_unresolved",
@@ -1446,6 +1452,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreateSell.title = purchase?.blocker ? t({
       buyer_required: "shop.blocker.buyer_required",
       buyer_unavailable: "shop.blocker.buyer_unavailable",
+      incompatible_weapon: "shop.blocker.incompatible_weapon",
       insufficient_gold: "shop.blocker.insufficient_gold",
       out_of_stock: "shop.blocker.out_of_stock",
       price_unresolved: "shop.blocker.price_unresolved",

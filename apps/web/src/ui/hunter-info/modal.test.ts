@@ -155,7 +155,7 @@ describe("Hunter Info modal shell", () => {
 
   it("does not render the roster selection as a focus frame", async () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
-    expect(styles).toContain(".hunter-roster-card.selected { border-color: #948668; box-shadow: none; }");
+    expect(styles).toContain(".hunter-roster-card.selected { border-color: transparent; filter: brightness(1.08)");
     expect(styles).toContain(".hunter-card-info:focus, .hunter-card-info:focus-visible { outline: 0; }");
     expect(styles).not.toContain("border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 7 fill");
   });
@@ -164,10 +164,10 @@ describe("Hunter Info modal shell", () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     const main = await readFile(resolve(repositoryRoot, "apps/web/src/app/game-application.ts"), "utf8");
     const actors = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-roster-actors.ts"), "utf8");
-    expect(styles).toContain("width: min(590px, calc(100% - 48px))");
-    expect(styles).toContain("grid-auto-rows: 164px");
+    expect(styles).toContain("width: min(820px, calc(100% - 32px))");
+    expect(styles).toContain("grid-auto-rows: 214px");
     expect(styles).toContain("overflow-y: auto");
-    expect(styles).toContain("height: 164px");
+    expect(styles).toContain("height: 214px");
     expect(main).toContain('hunterActiveList.addEventListener("scroll"');
     expect(main).toContain("hunterRosterActors.refresh()");
     expect(actors).toContain("refresh(): void");

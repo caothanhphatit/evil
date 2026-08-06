@@ -330,6 +330,7 @@ export const vi = {
   "shop.purchase_ready": "{name} đủ điều kiện mua vật phẩm này.",
   "shop.blocker.buyer_required": "Chưa có Hunter được chọn từ bước trước.",
   "shop.blocker.buyer_unavailable": "Hunter phải đang ở trong thị trấn.",
+  "shop.blocker.incompatible_weapon": "Vũ khí này không tương thích với class của Hunter.",
   "shop.blocker.insufficient_gold": "Hunter không đủ Vàng.",
   "shop.blocker.out_of_stock": "Vật phẩm đã hết hàng.",
   "shop.blocker.price_unresolved": "Giá mua chưa được máy chủ xác nhận.",

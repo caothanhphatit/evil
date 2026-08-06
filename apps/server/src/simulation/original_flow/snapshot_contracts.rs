@@ -134,6 +134,7 @@ pub struct ShopDisplayItemSnapshot {
     pub product_name: String,
     pub icon: String,
     pub gear_kind: String,
+    pub visual_family: Option<String>,
     pub rating: u16,
     pub quality: u8,
     pub primary_stat: u32,

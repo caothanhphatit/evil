@@ -148,6 +148,10 @@ impl OriginalFlowSession {
                             gear.icon_path.clone()
                         },
                         gear_kind: gear.gear_kind.clone(),
+                        visual_family: super::super::web_rebuild_gear::rebuild_weapon_definition(
+                            &gear.product_id,
+                        )
+                        .map(|definition| definition.visual_family),
                         rating: gear.rating,
                         quality: gear.quality,
                         primary_stat: gear.primary_stat,
