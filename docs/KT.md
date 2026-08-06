@@ -1097,10 +1097,11 @@ Before reporting work complete:
   preselected Hunter as the authoritative purchase buyer. The item popup does
   not expose a buyer picker or buyer identity card; it shows only that Hunter's
   gold balance in a compact corner badge.
-- Clicking displayed gear opens an overlay without replacing the underlying
-  catalog. Weapon details compare the equipped weapon with the candidate,
-  include the authoritative candidate Attack Damage, quality, packaged item
-  level and packaged difficulty, and show purchase price plus gold remaining.
+- The display shop now has two explicit interactions. Clicking the item body
+  opens a read-only stat popup with authoritative Attack Damage, quality,
+  packaged item level and packaged difficulty. The separate Buy button on each
+  list card opens the equipped-versus-candidate comparison and purchase
+  confirmation; viewing stats never starts or implies a purchase.
 - Individually owned rebuild weapons provide authoritative equipped Attack
   Damage and therefore an exact delta. Legacy fixture equipment can provide the
   equipped weapon name but not an authoritative Attack Damage value; the popup
@@ -1109,6 +1110,8 @@ Before reporting work complete:
   quality. Display-item option type/value remain visible only when projected,
   with their gameplay meaning explicitly unresolved; no additional combat stat
   is synthesized from the original package arrays.
-- Desktop and iPhone browser coverage verifies the catalog remains mounted,
-  the popup stays inside the viewport and above the persistent menu, the buyer
-  cannot change inside the popup, and Buy debits the preselected Hunter.
+- The PC display-shop list and both item overlays use the recovered source-popup
+  frame language and reserve an explicit gap above the persistent bottom menu.
+  The list keeps the selected Hunter's gold in one corner, exposes no buyer
+  identity card, and scrolls item cards internally without moving its Close
+  control.

@@ -284,6 +284,7 @@ export const vi = {
   "service.tavern.empty": "Hiện không có Hunter nào đang được phục vụ.",
 
   "shop.display_list": "Danh sách trưng bày",
+  "shop.view_stats_for": "Xem chỉ số {item}",
   "shop.potion_display": "Quầy thuốc",
   "shop.on_display": "Đang\ntrưng bày",
   "shop.no_potions": "Chưa có thuốc đã chế tạo để trưng bày.",

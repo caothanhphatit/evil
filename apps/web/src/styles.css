@@ -341,7 +341,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .quantity-step-buttons button { min-width: 0; min-height: 30px; border: 1px solid #675541; border-radius: 4px; padding: 0 2px; background: linear-gradient(#514434, #302820); color: #e8dcc5; font: 700 8px "DefaultFont2", "NotoSansThaiGame", sans-serif; text-shadow: 0 1px #17120e; cursor: pointer; }
 .quantity-step-buttons button:active { transform: translateY(1px); filter: brightness(.9); }
 .game-shell .building-panel.source-popup.trading-post-ui {
-  top: calc((100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved)) / 2);
+  top: calc((100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 20px) / 2);
   width: clamp(300px, 76%, 420px) !important;
   min-width: 0;
   height: min(560px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 12px));
@@ -737,19 +737,49 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .blacksmith-craftable { justify-self: end; display: flex; align-items: center; gap: 4px; color: #f5eee1; font-size: 7px; cursor: pointer; }
 .blacksmith-craftable input { width: 13px; height: 13px; accent-color: #8fa52f; }
 .blacksmith-upgrade-hint { display: grid; place-items: center; height: 44px; min-height: 44px; margin-top: auto; overflow: hidden; padding: 5px 7px; border: 1px solid #343731; border-radius: 5px; background: #1b1d1a; color: #b7cc62; font-size: 7px; line-height: 1.2; text-align: center; }
-.building-panel.source-popup.display-shop-ui .building-catalog { grid-template-rows: auto minmax(0, 1fr) auto; gap: 7px; }
-.building-panel.source-popup.display-shop-ui .building-catalog > h3 { margin: 0; padding: 0 8px 7px; border-bottom: 1px solid #cbbd97; color: #fff; font-size: 11px; }
-.display-shop-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; min-height: 0; overflow-y: auto; border-bottom: 1px solid #cbbd97; }
-.display-card { grid-template-rows: 58px minmax(24px, auto) 18px 20px; min-height: 130px; }
-.display-card .on-display-badge { position: absolute; z-index: 1; left: 7px; top: 9px; color: #9dde42; font-size: 7px; line-height: .9; white-space: pre-line; text-align: left; text-shadow: 0 1px #102500; }
-.display-card > small { display: flex; align-items: center; justify-content: center; gap: 3px; color: #f4e6ba; font-size: 8px; }
-.display-card > small img { width: 11px; height: 11px; object-fit: contain; }
+.game-shell .building-panel.source-popup.display-shop-ui {
+  top: calc((100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved)) / 2);
+  width: min(760px, calc(100% - 48px)) !important;
+  height: min(580px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 36px));
+  max-height: calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 36px);
+  padding: 22px 24px 68px;
+  border: 20px solid transparent;
+  border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 20px stretch;
+  border-radius: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  background: #100e0c;
+  box-shadow: 0 16px 42px #000d;
+  image-rendering: pixelated;
+}
+.building-panel.source-popup.display-shop-ui .building-source-header,
+.building-panel.source-popup.display-shop-ui .building-level-contract,
+.building-panel.source-popup.display-shop-ui .building-actions { display: none; }
+.building-panel.source-popup.display-shop-ui > #building-name { padding-bottom: 10px; border-bottom: 2px solid #9d9276; font-size: 18px; }
+.building-panel.source-popup.display-shop-ui > #building-panel-close { right: 50%; bottom: 15px; width: 180px; transform: translateX(50%); }
+.building-panel.source-popup.display-shop-ui .building-catalog { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 10px; min-height: 0; padding: 0; overflow: hidden; border: 0; }
+.display-shop-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 34px; padding: 0 4px 8px; border-bottom: 1px solid #756a55; }
+.display-shop-heading h3 { margin: 0; color: #f7e7c0; font-size: 12px; }
+.display-shop-gold { display: flex; align-items: center; gap: 6px; min-width: 104px; min-height: 27px; border: 1px solid #796538; border-radius: 15px; padding: 4px 10px; background: #231d13; color: #f5d67f; font-size: 9px; font-weight: 700; }
+.display-shop-gold::before { content: ''; width: 14px; height: 14px; border: 1px solid #8a5c0c; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff6a8 0 18%, #ffc829 22% 58%, #b36b08 62%); }
+.display-shop-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; gap: 10px; min-height: 0; padding: 3px 4px 8px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #806b49 #171510; }
+.gear-catalog-card.display-card:not(.potion-display-card) { display: grid; grid-template-rows: minmax(0, 1fr) 42px; place-items: stretch; min-height: 176px; height: 176px; padding: 0; overflow: hidden; border: 1px solid #665b49; border-radius: 5px; background: linear-gradient(#24211b, #151411); box-shadow: inset 0 1px #8d7a5a44; contain: layout paint; cursor: default; }
+.building-panel.source-popup .building-catalog .display-card-detail { position: relative; display: grid; grid-template-rows: 66px minmax(25px, auto) 22px; place-items: center; gap: 4px; min-width: 0; min-height: 0; padding: 8px 7px 5px; border: 0; border-image: none; background: transparent; color: #fff; cursor: pointer; }
+.display-card-detail:hover, .display-card-detail:focus-visible { background: linear-gradient(#34302799, #1b191599); outline: 2px solid #d1aa5e; outline-offset: -2px; }
+.display-card-detail .gear-item-art { width: 62px; height: 62px; }
+.display-card-detail .gear-item-art img { width: 56px; height: 56px; }
+.display-card-detail > strong { display: -webkit-box; overflow: hidden; width: 100%; color: #f5f0e5; font-size: 9px; line-height: 12px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.display-card .on-display-badge { position: absolute; z-index: 1; left: 7px; top: 8px; color: #a7de55; font-size: 6px; line-height: .95; white-space: pre-line; text-align: left; text-shadow: 0 1px #102500; }
+.display-card-footer { display: grid; grid-template-columns: minmax(0, 1fr) 64px; align-items: center; gap: 5px; padding: 5px 6px; border-top: 1px solid #4d463a; background: #100f0d; }
+.display-card-footer > small { display: flex; align-items: center; justify-content: center; gap: 3px; min-width: 0; color: #f4d98c; font-size: 8px; }
+.display-card-footer > small img { width: 13px; height: 13px; object-fit: contain; }
+.building-panel.source-popup .building-catalog .display-card-buy { width: 64px; min-width: 0; height: 30px; min-height: 30px; padding: 0 6px; border: 1px solid #7a8e2e; border-image: none; border-radius: 4px; background: linear-gradient(#8b9f35, #5d7020); color: #fff9db; font-size: 8px; }
 .display-item-stat { display: grid; place-items: center; min-height: 18px; border-radius: 3px; background: #263c32; color: #bfe599; font-size: 7px; font-style: normal; font-weight: 700; }
 .display-shop-empty { grid-column: 1 / -1; align-self: center; margin: 0; padding: 42px 12px; color: #9f9788; font-size: 9px; text-align: center; }
 
 /* Potion retail and production reuse the compact shop shell without gear-only decoration. */
 .building-panel.source-popup.potion-shop-ui .building-source-header { min-height: 46px; }
-.building-panel.source-popup.potion-shop-ui .building-catalog > h3 { color: #d9efb6; }
+.building-panel.source-popup.potion-shop-ui .display-shop-heading h3 { color: #d9efb6; }
 .potion-recipe-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 112px; gap: 6px; padding: 6px; scrollbar-width: thin; scrollbar-color: #806b49 #171510; }
 .potion-catalog-card { isolation: isolate; }
 .potion-catalog-card.potion-display-card { cursor: pointer; }
@@ -866,7 +896,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .consum-create-pop.crafting .consum-product-frame { animation: craft-frame-pulse .85s ease-in-out both; }
 .consum-create-pop.crafting .consum-product-frame::after { content: ""; position: absolute; inset: -7px; border: 2px solid #e7c867; border-radius: 9px; opacity: 0; animation: craft-ring-burst .85s ease-out both; pointer-events: none; }
 .gear-create-pop #gear-create-close { border-color: #a44431; background: linear-gradient(#bd4933, #8e2f20); color: #fff3e6; }
-.gear-create-pop.gear-detail-mode { z-index: 30; width: min(460px, calc(100% - 20px)); height: min(590px, calc(100% - var(--bottom-menu-reserved) - 18px)); max-height: none; padding: 15px; grid-template-rows: 28px 1px 112px minmax(0, 1fr) 42px; gap: 8px; box-shadow: 0 0 0 100vmax #050403a8, 0 18px 48px #000e, inset 0 0 0 2px #c9a270; }
+.gear-create-pop.gear-detail-mode { z-index: 30; top: calc((100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 20px) / 2); width: min(540px, calc(100% - 32px)); height: min(540px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 36px)); max-height: calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 36px); padding: 20px 22px 18px; border: 20px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 20px stretch; border-radius: 0; grid-template-rows: 30px 2px 118px minmax(0, 1fr) 42px; gap: 9px; background: #100e0c; box-shadow: 0 0 0 100vmax #050403a8, 0 18px 48px #000e; image-rendering: pixelated; }
+.gear-create-pop.gear-inspect-mode { width: min(460px, calc(100% - 32px)); height: min(470px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 16px)); }
+.gear-create-pop.gear-purchase-mode { width: min(560px, calc(100% - 32px)); height: min(580px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 36px)); }
 .gear-create-pop.gear-detail-mode .gear-create-product { grid-template-columns: 96px minmax(0, 1fr); min-height: 112px; padding: 8px; gap: 12px; }
 .gear-create-pop.gear-detail-mode .gear-frame { min-height: 94px; }
 .gear-create-pop.gear-detail-mode .gear-frame img { width: 82px; height: 82px; }
@@ -877,6 +909,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .gear-create-pop.gear-detail-mode .quantity-step-buttons { display: none; }
 .gear-create-pop.gear-detail-mode .gear-create-description { display: block; min-height: 0; padding: 12px; overflow-y: auto; font-size: 10px; }
 .gear-create-pop.gear-detail-mode .source-popup-actions button { width: 50%; }
+.gear-create-pop.gear-inspect-mode .shop-item-stats { border-bottom: 0; }
+.gear-create-pop.gear-inspect-mode .source-popup-actions { justify-content: center; }
+.gear-create-pop.gear-inspect-mode #gear-create-close { width: 180px; }
 .shop-item-stats { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px 14px; margin: 0; padding-bottom: 10px; border-bottom: 1px solid #3d403a; }
 .shop-item-stats dt { color: #a9a294; }
 .shop-item-stats dd { margin: 0; color: #f7df92; font-weight: 700; text-align: right; }

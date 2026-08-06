@@ -59,8 +59,12 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".shop-buyer-gold");
     expect(styles).toContain(".shop-weapon-comparison");
     expect(styles).toContain(".shop-purchase-economy");
+    expect(styles).toContain(".display-card-detail");
+    expect(styles).toContain(".display-card-buy");
+    expect(styles).toContain(".gear-create-pop.gear-inspect-mode");
     expect(source).toContain("projectShopPurchase");
-    expect(source).toContain('card.addEventListener("click", () => openGearDetail(recipe))');
+    expect(source).toContain('detail.addEventListener("click", () => openGearDetail(recipe))');
+    expect(source).toContain('buy.addEventListener("click", () => openGearPurchase(recipe))');
     const openDetail = source.slice(source.indexOf("function openGearDetail"), source.indexOf("function appendGearArt"));
     expect(openDetail).not.toContain("buildingPanel.hidden");
     const detailRenderer = source.slice(source.indexOf("function renderGearCreatePop"), source.indexOf("function renderConsumCreatePop"));
@@ -68,6 +72,7 @@ describe("gear building UI integration", () => {
     expect(detailRenderer).toContain('buyerGold.className = "shop-buyer-gold"');
     expect(detailRenderer).toContain('comparison.className = "shop-weapon-comparison"');
     expect(detailRenderer).toContain('economy.className = "shop-purchase-economy"');
+    expect(detailRenderer).toContain('context.gearPopupMode === "purchase"');
     expect(detailRenderer).not.toContain('context.purchaseHunterId = option.hunterId');
     expect(source).toContain('id="gear-quantity-minus"');
     expect(source).toContain('id="gear-create-quantity" type="number"');

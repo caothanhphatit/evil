@@ -42,7 +42,7 @@ export interface BuildingRenderingContext {
   enhancementHunterId: number | null;
   purchaseHunterId: number | null;
   selectedEnhancementOptionalMaterialIds: string[];
-  gearPopupMode: "craft" | "detail";
+  gearPopupMode: "craft" | "inspect" | "purchase";
   selectedBountyTier: number;
   selectedTradingPostDifficulty: number;
   selectedTradingRequest: MaterialStockSnapshot | null;
@@ -529,7 +529,14 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
   
   function openGearDetail(recipe: ShopRecipeSnapshot): void {
     context.selectedRecipe = recipe;
-    context.gearPopupMode = "detail";
+    context.gearPopupMode = "inspect";
+    context.gearCreatePop.hidden = false;
+    renderGearCreatePop();
+  }
+
+  function openGearPurchase(recipe: ShopRecipeSnapshot): void {
+    context.selectedRecipe = recipe;
+    context.gearPopupMode = "purchase";
     context.gearCreatePop.hidden = false;
     renderGearCreatePop();
   }
@@ -995,9 +1002,20 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     const system = context.latestSnapshot?.village.building_system;
     const level = findBuildingInstanceById(system?.instances ?? [], context.selectedBuildingInstanceId)?.level ?? 1;
     const allowed = recipes.filter((recipe) => recipe.shop_id === buildingId && recipe.required_level < level);
-    const heading = document.createElement("h3");
+    const heading = document.createElement("header");
+    heading.className = "display-shop-heading";
     const isPotionShop = buildingId === POTION_SHOP_BUILDING_ID;
-    heading.textContent = isPotionShop ? t("shop.potion_display") : t("shop.display_list");
+    const headingTitle = document.createElement("h3");
+    headingTitle.textContent = isPotionShop ? t("shop.potion_display") : t("shop.display_list");
+    heading.append(headingTitle);
+    const selectedBuyer = context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === context.purchaseHunterId);
+    if (!isPotionShop && selectedBuyer) {
+      const gold = document.createElement("output");
+      gold.className = "display-shop-gold";
+      gold.textContent = formatNumber(selectedBuyer.gold);
+      gold.setAttribute("aria-label", t("shop.buyer_gold_for", { name: selectedBuyer.display_name, gold: formatNumber(selectedBuyer.gold) }));
+      heading.append(gold);
+    }
     const grid = document.createElement("div");
     grid.className = isPotionShop ? "display-shop-grid potion-recipe-grid" : "display-shop-grid";
     grid.replaceChildren(...allowed.map((recipe) => {
@@ -1026,28 +1044,41 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         card.addEventListener("click", () => openGearDetail(recipe));
         return card;
       }
-      const card = document.createElement("button");
-      card.type = "button";
+      const card = document.createElement("article");
       card.className = "gear-catalog-card display-card";
+      const detail = document.createElement("button");
+      detail.type = "button";
+      detail.className = "display-card-detail";
+      detail.setAttribute("aria-label", t("shop.view_stats_for", { item: recipe.product_name }));
       const badge = document.createElement("span");
       badge.className = "on-display-badge";
       badge.textContent = t("shop.on_display");
-      appendGearArt(card, recipe);
+      detail.append(badge);
+      appendGearArt(detail, recipe);
       const name = document.createElement("strong"); name.textContent = recipe.product_name;
+      detail.append(name);
       const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
       if (displayed) {
         const stat = document.createElement("em");
         stat.className = "display-item-stat";
         stat.textContent = t("shop.attack_preview", { attack: formatNumber(displayed.primary_stat) });
-        card.append(stat);
+        detail.append(stat);
       }
+      const footer = document.createElement("footer");
+      footer.className = "display-card-footer";
       const price = document.createElement("small");
       const gold = document.createElement("img");
       gold.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
       gold.alt = "";
       price.append(gold, document.createTextNode(formatNumber(recipe.sale_price)));
-      card.append(badge, name, price);
-      card.addEventListener("click", () => openGearDetail(recipe));
+      const buy = document.createElement("button");
+      buy.type = "button";
+      buy.className = "display-card-buy source-green-button";
+      buy.textContent = t("common.buy");
+      buy.addEventListener("click", () => openGearPurchase(recipe));
+      footer.append(price, buy);
+      card.append(detail, footer);
+      detail.addEventListener("click", () => openGearDetail(recipe));
       return card;
     }));
     if (allowed.length === 0) {
@@ -1231,7 +1262,8 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
   function renderGearCreatePop(): void {
     const system = context.latestSnapshot?.village.building_system;
     if (!system || !context.selectedRecipe) return;
-    const purchase = context.gearPopupMode === "detail" && context.selectedBuildingId
+    const isShopPopup = context.gearPopupMode === "inspect" || context.gearPopupMode === "purchase";
+    const purchase = isShopPopup && context.selectedBuildingId
       ? projectShopPurchase(
         system,
         context.latestSnapshot?.hunter_roster.active_hunters ?? [],
@@ -1240,7 +1272,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         context.purchaseHunterId,
       )
       : null;
-    if (context.gearPopupMode === "detail" && !purchase) {
+    if (isShopPopup && !purchase) {
       context.gearCreatePop.hidden = true;
       return;
     }
@@ -1249,14 +1281,16 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreateQuantity.value = String(quantity);
     const gearKind = gearKindFromRecipe(context.selectedRecipe);
     const gearKindLabel = gearKind ? t(`craft.kind.${gearKind}` as MessageKey) : t("shop.kind.consumable");
-    context.gearCreatePop.classList.toggle("gear-detail-mode", context.gearPopupMode === "detail");
-    context.gearCreateTitle.textContent = context.gearPopupMode === "detail" ? context.selectedRecipe.product_name : t("craft.create_item", { item: gearKindLabel });
+    context.gearCreatePop.classList.toggle("gear-detail-mode", isShopPopup);
+    context.gearCreatePop.classList.toggle("gear-inspect-mode", context.gearPopupMode === "inspect");
+    context.gearCreatePop.classList.toggle("gear-purchase-mode", context.gearPopupMode === "purchase");
+    context.gearCreateTitle.textContent = isShopPopup ? context.selectedRecipe.product_name : t("craft.create_item", { item: gearKindLabel });
     const displayIcon = purchase?.displayItem?.icon || context.selectedRecipe.icon;
     if (displayIcon) context.gearCreateIcon.src = displayIcon;
     else context.gearCreateIcon.removeAttribute("src");
     context.gearCreateIcon.hidden = !displayIcon;
     context.gearCreateName.textContent = context.selectedRecipe.product_name;
-    context.gearCreatePrice.textContent = context.gearPopupMode === "detail"
+    context.gearCreatePrice.textContent = isShopPopup
       ? t("craft.gear_display_price", { kind: gearKindLabel, price: formatNumber(purchase?.displayItem?.sale_price ?? context.selectedRecipe.sale_price) })
       : gearKindLabel;
     context.gearCreateDescription.replaceChildren();
@@ -1298,7 +1332,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       const selectedHunter = purchase.selectedBuyer
         ? context.latestSnapshot?.hunter_roster.active_hunters.find((hunter) => hunter.hunter_id === purchase.selectedBuyer?.hunterId)
         : null;
-      if (purchase.displayItem?.gear_kind === "weapon") {
+      if (context.gearPopupMode === "purchase" && purchase.displayItem?.gear_kind === "weapon") {
         const equipped = selectedHunter?.hunter_info.weapons.find((weapon) => weapon.equipped) ?? null;
         const legacyEquipped = equipped
           ? null
@@ -1359,7 +1393,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       } else {
         context.gearCreateDescription.append(stats);
       }
-      if (purchase.selectedBuyer) {
+      if (context.gearPopupMode === "purchase" && purchase.selectedBuyer) {
         const buyerGold = document.createElement("output");
         buyerGold.className = "shop-buyer-gold";
         buyerGold.dataset.hunterId = String(purchase.selectedBuyer.hunterId);
@@ -1393,20 +1427,20 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
         out_of_stock: "shop.blocker.out_of_stock",
         price_unresolved: "shop.blocker.price_unresolved",
       } as const;
-      if (purchase.blocker) {
+      if (context.gearPopupMode === "purchase" && purchase.blocker) {
         status.textContent = t(blockerKeys[purchase.blocker]);
         context.gearCreateDescription.append(status);
       }
     }
     context.gearLock.hidden = true;
     context.gearLock.disabled = true;
-    context.gearMaterialTitle.hidden = context.gearPopupMode === "detail";
+    context.gearMaterialTitle.hidden = isShopPopup;
     context.gearMaterialTitle.textContent = t("craft.required_materials");
-    context.gearMaterialCosts.hidden = context.gearPopupMode === "detail";
-    context.gearQuantityRow.hidden = context.gearPopupMode === "detail";
-    context.gearCreateSubmit.hidden = context.gearPopupMode === "detail";
+    context.gearMaterialCosts.hidden = isShopPopup;
+    context.gearQuantityRow.hidden = isShopPopup;
+    context.gearCreateSubmit.hidden = isShopPopup;
     context.gearCreateSubmit.textContent = t("common.produce");
-    context.gearCreateSell.hidden = context.gearPopupMode !== "detail";
+    context.gearCreateSell.hidden = context.gearPopupMode !== "purchase";
     context.gearCreateSell.textContent = t("common.buy");
     context.gearCreateSell.disabled = !purchase?.canPurchase || context.pendingPurchase !== null;
     context.gearCreateSell.title = purchase?.blocker ? t({

@@ -494,7 +494,7 @@ bindMenuInteraction(bottomMenu, handleMenuAction);
     closeBounty: () => { bountyPop.hidden = true; },
     closeGear: () => {
       gearCreatePop.hidden = true;
-      if (buildingContext.gearPopupMode === "detail" && buildingContext.selectedBuildingId) {
+      if (buildingContext.gearPopupMode !== "craft" && buildingContext.selectedBuildingId) {
         buildingPanel.hidden = false;
         buildingRenderer.renderBuildingSystem(latestSnapshot);
       }
@@ -584,7 +584,7 @@ bindCraftInteractions({
     return true;
   },
   sellGear: () => {
-    if (buildingContext.gearPopupMode !== "detail" || buildingContext.purchaseHunterId === null || !buildingContext.selectedBuildingId || !buildingContext.selectedRecipe) return;
+    if (buildingContext.gearPopupMode !== "purchase" || buildingContext.purchaseHunterId === null || !buildingContext.selectedBuildingId || !buildingContext.selectedRecipe) return;
     const pending = { shopId: buildingContext.selectedBuildingId, productId: buildingContext.selectedRecipe.id };
     if (!client.purchaseShopItem(buildingContext.purchaseHunterId, pending.shopId, pending.productId)) return;
     buildingContext.pendingPurchase = pending;
