@@ -63,12 +63,21 @@ export function showIntentResult(result: IntentFeedback, options: {
       options.renderTradeRequest();
     }
   }
+  if (result.intent === "purchase_shop_item") {
+    context.pendingPurchase = null;
+    if (result.accepted) {
+      options.gearPopup.hidden = true;
+      context.buildingPanel.hidden = false;
+    }
+    options.renderBuilding();
+    if (!result.accepted && !options.gearPopup.hidden) options.renderGear();
+  }
   if (!result.accepted) {
     recordClientEvent("warn", "intent_rejected", { intent: result.intent, reason: result.reason });
     const reasons: Record<string, MessageKey> = {
-      insufficient_materials: "error.insufficient_materials", material_stock_missing: "error.material_stock_missing", recipe_unknown: "error.recipe_unknown", recipe_building_mismatch: "error.recipe_building_mismatch", product_level_locked: "error.product_level_locked", sale_building_instance_unknown: "error.sale_building_missing", product_capacity_exceeded: "error.product_capacity", product_stock_empty: "error.product_empty", sale_price_unresolved: "error.sale_price_unresolved", building_instance_unknown: "error.building_missing", building_capability_mismatch: "error.capability_mismatch", material_difficulty_unresolved: "error.material_difficulty_unresolved", material_difficulty_locked: "error.material_difficulty_locked", material_quantity_invalid: "error.material_quantity_invalid", material_price_unresolved: "error.material_price_unresolved",
+      insufficient_materials: "error.insufficient_materials", material_stock_missing: "error.material_stock_missing", recipe_unknown: "error.recipe_unknown", recipe_building_mismatch: "error.recipe_building_mismatch", product_level_locked: "error.product_level_locked", sale_building_instance_unknown: "error.sale_building_missing", product_capacity_exceeded: "error.product_capacity", product_stock_empty: "error.product_empty", crafted_gear_stock_empty: "error.product_empty", sale_price_unresolved: "error.sale_price_unresolved", insufficient_hunter_gold: "error.insufficient_hunter_gold", hunter_not_in_town: "error.hunter_not_in_town", building_instance_unknown: "error.building_missing", building_capability_mismatch: "error.capability_mismatch", material_difficulty_unresolved: "error.material_difficulty_unresolved", material_difficulty_locked: "error.material_difficulty_locked", material_quantity_invalid: "error.material_quantity_invalid", material_price_unresolved: "error.material_price_unresolved",
     };
-    const titles: Record<string, MessageKey> = { select_bottom_menu: "error.cannot_open_menu", navigate_back: "error.cannot_navigate_back", enter_field: "error.cannot_select_entity", select_entity: "error.cannot_select_entity", set_material_request: "error.cannot_request" };
+    const titles: Record<string, MessageKey> = { select_bottom_menu: "error.cannot_open_menu", navigate_back: "error.cannot_navigate_back", enter_field: "error.cannot_select_entity", select_entity: "error.cannot_select_entity", set_material_request: "error.cannot_request", purchase_shop_item: "error.cannot_purchase" };
     const reasonKey = reasons[result.reason ?? ""];
     const detail = reasonKey ? t(reasonKey) : options.debugUi && result.reason ? `${t("error.try_again")} (${result.reason})` : t("error.try_again");
     options.showMessage(t(titles[result.intent] ?? "error.cannot_craft"), detail);

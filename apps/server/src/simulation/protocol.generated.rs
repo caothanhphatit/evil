@@ -5,7 +5,7 @@ use uuid::Uuid;
 
 use super::{farm_validation::FarmReport, BottomMenuIntent, OriginalFlowSnapshot, WorldProjection};
 
-pub const PROTOCOL_VERSION: u16 = 32;
+pub const PROTOCOL_VERSION: u16 = 33;
 pub const MAX_MESSAGE_BYTES: usize = 4194304;
 
 #[derive(Debug, Deserialize)]

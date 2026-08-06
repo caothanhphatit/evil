@@ -1,6 +1,7 @@
 use super::{
-    consumable_purchase_price, gear_product_route, gear_purchase_price, product_sale_building_id,
-    settle_returning_hunters, BaseBuildingId, OriginalFlowSession, ServerMessage, Uuid,
+    consumable_purchase_price, gear_product_route, gear_purchase_price,
+    is_purchasable_crafted_gear, product_sale_building_id, settle_returning_hunters,
+    BaseBuildingId, OriginalFlowSession, ServerMessage, Uuid,
 };
 
 impl OriginalFlowSession {
@@ -89,7 +90,9 @@ impl OriginalFlowSession {
 
         let crafted_gear = if route.is_some() {
             let Some(position) = self.buildings.crafted_gear_stocks.iter().position(|gear| {
-                gear.building_instance_id == building_instance_id && gear.product_id == product_id
+                gear.building_instance_id == building_instance_id
+                    && gear.product_id == product_id
+                    && is_purchasable_crafted_gear(gear)
             }) else {
                 return self.rejected("purchase_shop_item", "crafted_gear_stock_empty");
             };
@@ -97,14 +100,6 @@ impl OriginalFlowSession {
         } else {
             None
         };
-        if crafted_gear
-            .as_ref()
-            .is_some_and(|gear| gear.ruleset == "web-rebuild-v1-gear-roll")
-        {
-            // Rows produced by the removed synthetic generator have no
-            // evidence-backed mod-dependent buyGold value.
-            return self.rejected("purchase_shop_item", "gear_price_evidence_unresolved");
-        }
 
         let hunter = &mut self.hunter_roster.hunters[hunter_index];
         hunter.gold -= price;

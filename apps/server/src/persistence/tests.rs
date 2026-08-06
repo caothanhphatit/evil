@@ -167,6 +167,10 @@ fn demo_accounts_have_independent_players_and_lazy_full_stock_seeding() {
     let reseed = include_str!("../../../../infra/db/migrations/0042_reseed_demo_town_stock.sql");
     assert!(reseed.contains("seed_full_demo_account_stock(target_player)"));
     assert!(reseed.contains("account.is_demo = TRUE"));
+    let wallet_repair =
+        include_str!("../../../../infra/db/migrations/0044_repair_demo_hunter_gold.sql");
+    assert!(wallet_repair.contains("GREATEST(hunter.gold, 1000000000)"));
+    assert!(wallet_repair.contains("account.is_demo = TRUE"));
 }
 
 #[test]

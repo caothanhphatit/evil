@@ -740,10 +740,11 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .building-panel.source-popup.display-shop-ui .building-catalog { grid-template-rows: auto minmax(0, 1fr) auto; gap: 7px; }
 .building-panel.source-popup.display-shop-ui .building-catalog > h3 { margin: 0; padding: 0 8px 7px; border-bottom: 1px solid #cbbd97; color: #fff; font-size: 11px; }
 .display-shop-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; min-height: 0; overflow-y: auto; border-bottom: 1px solid #cbbd97; }
-.display-card { grid-template-rows: 58px minmax(34px, auto) 20px; min-height: 122px; }
+.display-card { grid-template-rows: 58px minmax(24px, auto) 18px 20px; min-height: 130px; }
 .display-card .on-display-badge { position: absolute; z-index: 1; left: 7px; top: 9px; color: #9dde42; font-size: 7px; line-height: .9; white-space: pre-line; text-align: left; text-shadow: 0 1px #102500; }
 .display-card > small { display: flex; align-items: center; justify-content: center; gap: 3px; color: #f4e6ba; font-size: 8px; }
 .display-card > small img { width: 11px; height: 11px; object-fit: contain; }
+.display-item-stat { display: grid; place-items: center; min-height: 18px; border-radius: 3px; background: #263c32; color: #bfe599; font-size: 7px; font-style: normal; font-weight: 700; }
 .display-shop-empty { grid-column: 1 / -1; align-self: center; margin: 0; padding: 42px 12px; color: #9f9788; font-size: 9px; text-align: center; }
 
 /* Potion retail and production reuse the compact shop shell without gear-only decoration. */
@@ -751,7 +752,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .building-panel.source-popup.potion-shop-ui .building-catalog > h3 { color: #d9efb6; }
 .potion-recipe-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 112px; gap: 6px; padding: 6px; scrollbar-width: thin; scrollbar-color: #806b49 #171510; }
 .potion-catalog-card { isolation: isolate; }
-.potion-catalog-card.potion-display-card { cursor: default; }
+.potion-catalog-card.potion-display-card { cursor: pointer; }
 .potion-catalog-card .potion-item-art { border-color: #6f805c; background: radial-gradient(circle at 65% 25%, #42634d, #151b17 72%); }
 .potion-catalog-card .potion-item-art::after { content: none; }
 .potion-stock-badge { position: absolute; z-index: 1; top: 5px; right: 5px; max-width: calc(100% - 10px); color: #d5e9b7; font-size: 6px; line-height: 1.05; white-space: pre-line; text-align: right; text-shadow: 0 1px #102500; }
@@ -865,15 +866,31 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .consum-create-pop.crafting .consum-product-frame { animation: craft-frame-pulse .85s ease-in-out both; }
 .consum-create-pop.crafting .consum-product-frame::after { content: ""; position: absolute; inset: -7px; border: 2px solid #e7c867; border-radius: 9px; opacity: 0; animation: craft-ring-burst .85s ease-out both; pointer-events: none; }
 .gear-create-pop #gear-create-close { border-color: #a44431; background: linear-gradient(#bd4933, #8e2f20); color: #fff3e6; }
-.gear-create-pop.gear-detail-mode { height: clamp(326px, 48%, 372px); grid-template-rows: 24px 1px 84px minmax(132px, 1fr) 34px; }
-.gear-create-pop.gear-detail-mode .gear-create-product { grid-template-columns: 58px 1fr; min-height: 84px; }
-.gear-create-pop.gear-detail-mode .gear-frame { min-height: 58px; }
-.gear-create-pop.gear-detail-mode .gear-frame img { width: 50px; height: 50px; }
-.gear-create-pop.gear-detail-mode .gear-create-meta { display: grid; justify-items: start; text-align: left; }
+.gear-create-pop.gear-detail-mode { width: min(390px, calc(100% - 20px)); height: min(470px, calc(100% - var(--bottom-menu-reserved) - 18px)); max-height: none; padding: 15px; grid-template-rows: 28px 1px 112px minmax(0, 1fr) 42px; gap: 8px; }
+.gear-create-pop.gear-detail-mode .gear-create-product { grid-template-columns: 96px minmax(0, 1fr); min-height: 112px; padding: 8px; gap: 12px; }
+.gear-create-pop.gear-detail-mode .gear-frame { min-height: 94px; }
+.gear-create-pop.gear-detail-mode .gear-frame img { width: 82px; height: 82px; }
+.gear-create-pop.gear-detail-mode .gear-create-meta { display: grid; align-content: center; justify-items: start; gap: 7px; text-align: left; }
+.gear-create-pop.gear-detail-mode .gear-create-product strong { max-width: 100%; font-size: 12px; white-space: normal; }
+.gear-create-pop.gear-detail-mode .gear-create-product span { color: #e7c88e; font-size: 9px; }
 .gear-create-pop.gear-detail-mode .gear-round-button,
 .gear-create-pop.gear-detail-mode .quantity-step-buttons { display: none; }
-.gear-create-pop.gear-detail-mode .gear-create-description { min-height: 132px; }
+.gear-create-pop.gear-detail-mode .gear-create-description { display: block; min-height: 0; padding: 12px; overflow-y: auto; font-size: 10px; }
 .gear-create-pop.gear-detail-mode .source-popup-actions button { width: 50%; }
+.shop-item-stats { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px 14px; margin: 0; padding-bottom: 10px; border-bottom: 1px solid #3d403a; }
+.shop-item-stats dt { color: #a9a294; }
+.shop-item-stats dd { margin: 0; color: #f7df92; font-weight: 700; text-align: right; }
+.shop-buyer-picker { display: grid; gap: 7px; margin-top: 10px; color: #d8d1c2; font-size: 9px; }
+.shop-buyer-picker > strong { color: #f0d39a; }
+.shop-buyer-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+.shop-buyer-list button { display: grid; gap: 2px; min-width: 0; min-height: 42px; border: 1px solid #554b3b; border-radius: 5px; padding: 6px 8px; background: linear-gradient(#302a21, #211d18); color: #eee4cf; text-align: left; cursor: pointer; }
+.shop-buyer-list button.selected { border-color: #a8bd53; background: linear-gradient(#53632c, #35411c); box-shadow: inset 0 0 0 1px #c9da7255; }
+.shop-buyer-list button:disabled { opacity: .42; cursor: not-allowed; }
+.shop-buyer-list b { overflow: hidden; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.shop-buyer-list small { color: #d9ba72; font-size: 7px; }
+.shop-purchase-blocker, .shop-purchase-ready { margin: 6px 0 0; font-size: 8px; }
+.shop-purchase-blocker { color: #ef8b78; }
+.shop-purchase-ready { color: #bad672; }
 
 .connection-status { position: absolute; z-index: 12; right: 18px; bottom: 112px; display: flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #6e705f; border-radius: 16px; background: #152127df; cursor: pointer; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
 .connection-status i { width: 7px; height: 7px; border-radius: 50%; background: #daa94d; }

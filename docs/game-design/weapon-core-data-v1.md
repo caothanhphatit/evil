@@ -72,3 +72,9 @@ weapon-slot catalog reference, and the rolled Attack Damage contributes to the
 Hunter's projected ATK, normal attack calculation, and skill fallback damage.
 This first slice still has no random affix instances and never auto-equips a
 purchase.
+
+The display shop projects the next individually rolled weapon instance instead
+of presenting only its recipe aggregate. The detail popup shows the authoritative
+Attack Damage roll, quality, rating and price, and requires an idle Hunter with
+enough gold before enabling Purchase. Settlement still revalidates every value
+on the server and transfers the same first displayed instance.

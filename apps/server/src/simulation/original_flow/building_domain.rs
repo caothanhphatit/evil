@@ -1,11 +1,15 @@
 use super::{
     gear_product_route, AuthoritativeBuildingContent, BaseBuildingDefinition, BaseBuildingId,
     BuildingDefinitionSnapshot, BuildingGameplayCatalog, BuildingLevelDefinition, DurableBuilding,
-    DurableBuildingState, DurableHunterState, EconomyAmount, HunterServiceGauge,
-    NavigationObstacle, OriginalFlowSession, ServiceEffectKind, TOWN_GRID_MAX, TOWN_GRID_MIN,
-    TOWN_NAV_CELL_HEIGHT, TOWN_NAV_CELL_WIDTH, TOWN_NAV_ORIGIN_X, TOWN_NAV_ORIGIN_Y,
+    DurableBuildingState, DurableCraftedGearStock, DurableHunterState, EconomyAmount,
+    HunterServiceGauge, NavigationObstacle, OriginalFlowSession, ServiceEffectKind, TOWN_GRID_MAX,
+    TOWN_GRID_MIN, TOWN_NAV_CELL_HEIGHT, TOWN_NAV_CELL_WIDTH, TOWN_NAV_ORIGIN_X, TOWN_NAV_ORIGIN_Y,
     TOWN_ROAM_ANCHORS,
 };
+
+pub(super) fn is_purchasable_crafted_gear(gear: &DurableCraftedGearStock) -> bool {
+    gear.ruleset != "web-rebuild-v1-gear-roll"
+}
 pub(super) fn drop_icon_path(item_id: &str) -> String {
     if item_id == "gold" {
         return "/content/releases/original-flow-v1/sprites/top_ic_01_gold_24__4677.png".to_owned();

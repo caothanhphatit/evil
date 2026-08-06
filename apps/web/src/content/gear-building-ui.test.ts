@@ -55,6 +55,9 @@ describe("gear building UI integration", () => {
     expect(source).toContain("function popupDataSignature");
     expect(styles).toContain(".on-display-badge");
     expect(styles).toContain(".gear-create-pop.gear-detail-mode");
+    expect(styles).toContain(".shop-item-stats");
+    expect(source).toContain("projectShopPurchase");
+    expect(source).toContain('card.addEventListener("click", () => openGearDetail(recipe))');
     expect(source).toContain('id="gear-quantity-minus"');
     expect(source).toContain('id="gear-create-quantity" type="number"');
     expect(source).toContain('data-gear-delta="1"');

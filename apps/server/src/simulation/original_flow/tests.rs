@@ -149,6 +149,16 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         flow.buildings.product_stocks[0].building_instance_id,
         weapon_shop_id
     );
+    let displayed = flow
+        .snapshot()
+        .village
+        .building_system
+        .display_items
+        .into_iter()
+        .find(|item| item.shop_id == "build_7" && item.product_id == product_id)
+        .expect("crafted gear is projected as the next purchasable display item");
+    assert!((60..=96).contains(&displayed.primary_stat));
+    assert_eq!(displayed.sale_price, 75);
 
     let gold_before = flow.buildings.town_gold;
     let hunter_gold_before = flow.hunter_roster.hunters[0].gold;
@@ -171,6 +181,10 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
         product_id
     );
     assert_eq!(flow.hunter_roster.hunters[0].owned_items[0].quantity, 1);
+    assert_eq!(
+        flow.hunter_roster.hunters[0].owned_items[0].gear_instance_id,
+        Some(displayed.gear_instance_id)
+    );
     assert_eq!(flow.buildings.crafted_gear_stocks.len(), 1);
     assert!(flow.hunter_roster.hunters[0].owned_items[0]
         .quality
@@ -207,7 +221,66 @@ fn blacksmith_stock_purchase_conserves_hunter_and_town_gold() {
     assert!(recipes
         .iter()
         .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_10"));
+    assert!(!recipes
+        .iter()
+        .any(|recipe| recipe.id == product_id && recipe.shop_id == "build_7"));
     assert_eq!(flow.buildings.product_stocks[0].quantity, 0);
+}
+
+#[test]
+fn sale_shop_level_projection_matches_authoritative_difficulty_gate() {
+    let product_id = "recipe:weapon:4:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.buildings
+        .buildings
+        .iter_mut()
+        .find(|building| building.id == "build_10")
+        .expect("blacksmith")
+        .level = 2;
+
+    let crafted = flow
+        .handle_command(ClientCommand::CraftShopItem {
+            instance_id: blacksmith_id,
+            recipe_id: product_id.to_owned(),
+            material_id: None,
+            quantity: 1,
+        })
+        .unwrap();
+    assert!(matches!(
+        crafted.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+
+    let recipe = flow
+        .snapshot()
+        .village
+        .building_system
+        .recipes
+        .into_iter()
+        .find(|recipe| recipe.id == product_id && recipe.shop_id == "build_7")
+        .expect("stocked weapon shop recipe");
+    assert_eq!(recipe.required_level, 1);
+
+    assert!(matches!(
+        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        ServerMessage::IntentResult {
+            accepted: false,
+            reason: Some(reason),
+            ..
+        } if reason == "product_level_locked"
+    ));
+
+    flow.buildings
+        .buildings
+        .iter_mut()
+        .find(|building| building.id == "build_7")
+        .expect("weapon shop")
+        .level = 2;
+    assert!(matches!(
+        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
 }
 
 #[test]
@@ -294,6 +367,46 @@ fn purchased_rebuild_weapon_is_projected_into_hunter_inventory() {
         flow.hunter_roster.hunters[0].equipped_weapon_attack_damage(),
         weapons[0].attack_damage
     );
+}
+
+#[test]
+fn unresolved_legacy_gear_is_not_displayed_or_removed_by_purchase() {
+    let product_id = "recipe:weapon:0:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.handle_command(ClientCommand::CraftShopItem {
+        instance_id: blacksmith_id,
+        recipe_id: product_id.to_owned(),
+        material_id: None,
+        quantity: 1,
+    })
+    .unwrap();
+    flow.buildings.crafted_gear_stocks[0].ruleset = "web-rebuild-v1-gear-roll".to_owned();
+
+    let snapshot = flow.snapshot();
+    assert!(!snapshot
+        .village
+        .building_system
+        .display_items
+        .iter()
+        .any(|item| item.product_id == product_id));
+    assert!(!snapshot
+        .village
+        .building_system
+        .recipes
+        .iter()
+        .any(|recipe| recipe.shop_id == "build_7" && recipe.id == product_id));
+
+    let stock_before = flow.buildings.crafted_gear_stocks.len();
+    assert!(matches!(
+        flow.purchase_shop_item(Uuid::new_v4(), 1, "build_7", product_id),
+        ServerMessage::IntentResult {
+            accepted: false,
+            reason: Some(reason),
+            ..
+        } if reason == "crafted_gear_stock_empty"
+    ));
+    assert_eq!(flow.buildings.crafted_gear_stocks.len(), stock_before);
 }
 
 #[test]
@@ -587,6 +700,18 @@ fn alchemist_crafts_and_sells_catalog_potion_at_recovered_price() {
             random_output: None,
         },
     );
+    content.gameplay.consumable_products.insert(
+        product_id.to_owned(),
+        crate::buildings::ConsumableProductDefinition {
+            product_id: product_id.to_owned(),
+            consumable_index: 0,
+            level: 0,
+            keep_time_ms: 0,
+            keep_value: 4_000,
+            cooldown_ms: 20_000,
+            price: 68,
+        },
+    );
     let mut flow =
         OriginalFlowSession::from_aggregate_with_content(aggregate, 7, Arc::new(content));
     let alchemist_id = building_instance_id(&flow, "build_14");
@@ -622,6 +747,8 @@ fn alchemist_crafts_and_sells_catalog_potion_at_recovered_price() {
         .expect("potion shop row");
     assert_eq!(potion_row.stock, 1);
     assert_eq!(potion_row.sale_price, 68);
+    assert_eq!(potion_row.effect_value, 4_000);
+    assert_eq!(potion_row.cooldown_ms, 20_000);
 
     let town_gold_before = flow.buildings.town_gold;
     let hunter_gold_before = flow.hunter_roster.hunters[0].gold;

@@ -148,6 +148,7 @@ const buildingContext: BuildingRenderingContext = {
   buildingEvidenceError: null,
   popupInteractionActive: false,
   pendingCraft: null,
+  pendingPurchase: null,
   buildingPanel,
   buildingName,
   buildingPreview,
@@ -256,8 +257,9 @@ const client = new WorldClient(
   (snapshot) => worldController.renderSnapshot(snapshot),
   (status) => {
     entryController.updateConnectionStatus(status);
-    if (status !== "online" && buildingContext.pendingCraft) {
+    if (status !== "online" && (buildingContext.pendingCraft || buildingContext.pendingPurchase)) {
       buildingContext.pendingCraft = null;
+      buildingContext.pendingPurchase = null;
       buildingRenderer.renderGearCreatePop();
       buildingRenderer.renderConsumCreatePop();
     }
@@ -487,7 +489,13 @@ bindMenuInteraction(bottomMenu, handleMenuAction);
       bottomMenu.querySelector('[data-action="build"]')?.classList.remove("selected");
     },
     closeBounty: () => { bountyPop.hidden = true; },
-    closeGear: () => { gearCreatePop.hidden = true; },
+    closeGear: () => {
+      gearCreatePop.hidden = true;
+      if (buildingContext.gearPopupMode === "detail" && buildingContext.selectedBuildingId) {
+        buildingPanel.hidden = false;
+        buildingRenderer.renderBuildingSystem(latestSnapshot);
+      }
+    },
     closeConsumable: () => { consumCreatePop.hidden = true; },
   });
   bindBuildingControls({
@@ -574,7 +582,10 @@ bindCraftInteractions({
   },
   sellGear: () => {
     if (buildingContext.gearPopupMode !== "detail" || buildingContext.purchaseHunterId === null || !buildingContext.selectedBuildingId || !buildingContext.selectedRecipe) return;
-    client.purchaseShopItem(buildingContext.purchaseHunterId, buildingContext.selectedBuildingId, buildingContext.selectedRecipe.id);
+    const pending = { shopId: buildingContext.selectedBuildingId, productId: buildingContext.selectedRecipe.id };
+    if (!client.purchaseShopItem(buildingContext.purchaseHunterId, pending.shopId, pending.productId)) return;
+    buildingContext.pendingPurchase = pending;
+    buildingRenderer.renderGearCreatePop();
   },
   setGearLocked: () => {},
 });

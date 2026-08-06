@@ -1,0 +1,1 @@
+-- Demo wallet repair is intentionally not destructive on rollback.

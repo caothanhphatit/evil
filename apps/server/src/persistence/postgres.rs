@@ -226,7 +226,9 @@ impl PlayerRepository for PostgresPlayerRepository {
         let mut roster = load_hunter_roster_in(&mut transaction, player_token)
             .await?
             .unwrap_or_default();
-        if !roster.roster_resolved && roster.hunters.is_empty() && roster.waiting_queue.is_empty() {
+        let roster_seeded =
+            !roster.roster_resolved && roster.hunters.is_empty() && roster.waiting_queue.is_empty();
+        if roster_seeded {
             roster = if is_new_account {
                 new_account_roster(player_token)
             } else {
@@ -236,7 +238,7 @@ impl PlayerRepository for PostgresPlayerRepository {
         } else if upgrade_operational_fixture_roster(&mut roster) {
             save_hunter_roster_in(&mut transaction, player_token, &roster).await?;
         }
-        if is_new_account && is_demo_account {
+        if is_demo_account && (is_new_account || roster_seeded) {
             sqlx::query("SELECT seed_full_demo_account_stock($1)")
                 .bind(player_token)
                 .execute(&mut *transaction)

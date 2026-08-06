@@ -85,6 +85,7 @@ pub struct BuildingSystemSnapshot {
     pub hunter_equipment_purchases: u32,
     pub material_stocks: Vec<MaterialStockSnapshot>,
     pub recipes: Vec<ShopRecipeSnapshot>,
+    pub display_items: Vec<ShopDisplayItemSnapshot>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -119,9 +120,27 @@ pub struct ShopRecipeSnapshot {
     pub kind: &'static str,
     pub required_level: u16,
     pub duration_ms: u64,
+    pub cooldown_ms: u64,
     pub effect_value: u64,
     pub effect_kind: &'static str,
     pub capacity: u16,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct ShopDisplayItemSnapshot {
+    pub gear_instance_id: Uuid,
+    pub shop_id: String,
+    pub product_id: String,
+    pub product_name: String,
+    pub icon: String,
+    pub gear_kind: String,
+    pub rating: u16,
+    pub quality: u8,
+    pub primary_stat: u32,
+    pub option_type: u8,
+    pub option_value: u16,
+    pub sale_price: u64,
+    pub ruleset: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize)]

@@ -98,6 +98,16 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   English/Vietnamese names, legacy icon path, quality, rolled attack damage,
   base range, enhancement level, compatibility and ruleset; it never rolls or
   derives the outcome locally.
+- Protocol v33 adds authoritative shop display-item projections for individually
+  rolled gear. The client now shows the next purchasable instance's rolled
+  primary stat, quality, rating and price, requires an eligible Hunter buyer,
+  and uses the common detail flow for both equipment and potions. The purchase
+  command remains product intent; the server settles the same first projected
+  gear instance and rejects stale stock, wallet or town-state assumptions.
+- Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
+  were checkpointed back to zero after the earlier one-time migration. Demo
+  rosters created for an existing account now run the full-demo seed in the same
+  load transaction, while real-account wallets remain untouched.
 - Protocol v31 raised the generated JSON message ceiling to 4 MiB because the
   fully stocked demo welcome snapshot is about 1.84 MiB. Keeping the old 1 MiB
   ceiling caused the client to reject the welcome and reconnect forever at 92%.

@@ -1,11 +1,12 @@
 use super::{
     building_definition_snapshot, building_grid_size, capacity_for_level,
     consumable_purchase_price, gear_product_route, gear_purchase_price, gold_cost,
-    material_catalog_stocks, material_difficulty_rating, material_icon_path, mutation_condition,
-    product_display_name, product_icon_path, product_sale_building_id, service_effect_kind,
-    BaseBuildingId, BuildingInstanceSnapshot, BuildingStateSnapshot, BuildingSystemSnapshot,
-    HashMap, HashSet, MaterialStockSnapshot, OriginalFlowSession, RecipeMaterialCostSnapshot,
-    ServiceEffectKind, ShopRecipeSnapshot,
+    is_purchasable_crafted_gear, material_catalog_stocks, material_difficulty_rating,
+    material_icon_path, mutation_condition, product_display_name, product_icon_path,
+    product_sale_building_id, service_effect_kind, BaseBuildingId, BuildingInstanceSnapshot,
+    BuildingStateSnapshot, BuildingSystemSnapshot, HashMap, HashSet, MaterialStockSnapshot,
+    OriginalFlowSession, RecipeMaterialCostSnapshot, ServiceEffectKind, ShopDisplayItemSnapshot,
+    ShopRecipeSnapshot,
 };
 
 impl OriginalFlowSession {
@@ -115,6 +116,48 @@ impl OriginalFlowSession {
                     .unwrap_or(u8::MAX),
             })
             .collect(),
+            display_items: self
+                .buildings
+                .crafted_gear_stocks
+                .iter()
+                .filter(|gear| is_purchasable_crafted_gear(gear))
+                .filter_map(|gear| {
+                    let building = self
+                        .buildings
+                        .buildings
+                        .iter()
+                        .find(|building| building.instance_id == gear.building_instance_id)?;
+                    let product = content.gameplay.product(&gear.product_id)?;
+                    let sale_price = product
+                        .sale_price
+                        .first()
+                        .map(|price| price.quantity)
+                        .or_else(|| gear_purchase_price(&content.gameplay, product))?;
+                    Some(ShopDisplayItemSnapshot {
+                        gear_instance_id: gear.gear_instance_id,
+                        shop_id: building.id.clone(),
+                        product_id: gear.product_id.clone(),
+                        product_name: product_display_name(&gear.product_id)
+                            .unwrap_or("Unresolved product")
+                            .to_owned(),
+                        icon: if gear.icon_path.is_empty() {
+                            product_icon_path(&gear.product_id)
+                                .unwrap_or_default()
+                                .to_owned()
+                        } else {
+                            gear.icon_path.clone()
+                        },
+                        gear_kind: gear.gear_kind.clone(),
+                        rating: gear.rating,
+                        quality: gear.quality,
+                        primary_stat: gear.primary_stat,
+                        option_type: gear.option_type,
+                        option_value: gear.option_value,
+                        sale_price,
+                        ruleset: gear.ruleset.clone(),
+                    })
+                })
+                .collect(),
             recipes: {
                 let mut recipes = Vec::new();
                 let mut products_by_building =
@@ -197,13 +240,29 @@ impl OriginalFlowSession {
                             })
                             .or(building);
                         let stored_stock = stock_building.map_or(0, |stock_building| {
-                            product_stock_by_key
-                                .get(&(
-                                    stock_building.instance_id.as_str(),
-                                    product.product_id.as_str(),
-                                ))
-                                .copied()
-                                .unwrap_or(0)
+                            if gear_route.is_some() && is_sale_product {
+                                u32::try_from(
+                                    self.buildings
+                                        .crafted_gear_stocks
+                                        .iter()
+                                        .filter(|gear| {
+                                            is_purchasable_crafted_gear(gear)
+                                                && gear.building_instance_id
+                                                    == stock_building.instance_id
+                                                && gear.product_id == product.product_id
+                                        })
+                                        .count(),
+                                )
+                                .unwrap_or(u32::MAX)
+                            } else {
+                                product_stock_by_key
+                                    .get(&(
+                                        stock_building.instance_id.as_str(),
+                                        product.product_id.as_str(),
+                                    ))
+                                    .copied()
+                                    .unwrap_or(0)
+                            }
                         });
                         if is_sale_product && stored_stock == 0 {
                             continue;
@@ -245,6 +304,7 @@ impl OriginalFlowSession {
                             || (ServiceEffectKind::for_building(stock_building_id.as_str())
                                 .is_some()
                                 && !product.conversion_options.is_empty());
+                        let consumable = content.gameplay.consumable_product(&product.product_id);
                         recipes.push(ShopRecipeSnapshot {
                             id: product.product_id.clone(),
                             shop_id: definition.id.to_string(),
@@ -318,19 +378,30 @@ impl OriginalFlowSession {
                             kind: if service_product { "service" } else { "craft" },
                             required_level: gear_route.as_ref().map_or_else(
                                 || {
-                                    product
-                                        .service
-                                        .as_ref()
-                                        .map_or(0, |service| service.required_level)
+                                    product.service.as_ref().map_or_else(
+                                        || consumable.map_or(0, |item| item.level),
+                                        |service| service.required_level,
+                                    )
                                 },
-                                |route| route.rating,
+                                |route| {
+                                    if is_sale_product {
+                                        route.difficulty_group.saturating_sub(1)
+                                    } else {
+                                        route.rating
+                                    }
+                                },
                             ),
                             duration_ms: product.duration_ms.unwrap_or(0),
-                            effect_value: product
-                                .service
-                                .as_ref()
-                                .map_or(0, |service| service.effect_value),
-                            effect_kind: service_effect_kind(definition.id.as_str()),
+                            cooldown_ms: consumable.map_or(0, |item| item.cooldown_ms),
+                            effect_value: product.service.as_ref().map_or_else(
+                                || consumable.map_or(0, |item| item.keep_value),
+                                |service| service.effect_value,
+                            ),
+                            effect_kind: if consumable.is_some() {
+                                "consumable"
+                            } else {
+                                service_effect_kind(definition.id.as_str())
+                            },
                             capacity,
                         });
                     }

@@ -28,6 +28,10 @@ unresolved values instead of inventing a fallback.
    consumable's exact level price, then atomically decrements stock, debits
    Hunter gold, credits town gold, and records the owned product.
 
+Potion Shop cards use the shared purchase detail flow. The player selects an
+idle Hunter, sees the resolved effect and price, and can submit only while the
+latest authoritative snapshot still reports stock and sufficient Hunter gold.
+
 The purchase path uses the catalog price table because consumable product rows
 do not carry a generic `salePrice`. Gear purchases continue to use their
 resolved product sale price and shop route.
