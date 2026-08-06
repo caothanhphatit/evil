@@ -106,7 +106,8 @@ describe("Hunter Info modal shell", () => {
     expect(actor).toContain("2.4,");
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
-    expect(rosterActors).toContain("avatarBounds.height * 0.9");
+    expect(rosterActors).toContain("avatarBounds.height * 0.76");
+    expect(rosterActors).toContain("1.45,");
     expect(rosterActors).toContain("spine.mask = clip");
     expect(actor).toContain("preload: initialize");
     expect(rosterActors).toContain("preloadHunterPresentationAssets()");
@@ -171,6 +172,8 @@ describe("Hunter Info modal shell", () => {
     expect(main).toContain('hunterActiveList.addEventListener("scroll"');
     expect(main).toContain("hunterRosterActors.refresh()");
     expect(actors).toContain("refresh(): void");
+    expect(styles).toContain(".hunter-card-weapon");
+    expect(main).toContain("hunterRosterActors.refresh()");
   });
 
   it("keeps unresolved Hunter tabs framed instead of collapsing to plain text", async () => {

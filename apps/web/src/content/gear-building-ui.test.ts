@@ -61,6 +61,10 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".shop-purchase-economy");
     expect(styles).toContain(".display-card-detail");
     expect(styles).toContain(".display-card-buy");
+    expect(styles).toContain(".display-card-stock");
+    expect(styles).toContain(".gear-create-pop[data-quality='4'] .gear-frame");
+    expect(source).toContain('card.dataset.quality = String(displayed.quality)');
+    expect(source).toContain('stock.textContent = `${t("common.stock")} ${displayCount}`');
     expect(styles).toContain(".gear-create-pop.gear-inspect-mode");
     expect(source).toContain("projectShopPurchase");
     expect(source).toContain('detail.addEventListener("click", () => openGearDetail(recipe))');

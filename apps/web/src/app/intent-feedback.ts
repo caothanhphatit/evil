@@ -64,10 +64,19 @@ export function showIntentResult(result: IntentFeedback, options: {
     }
   }
   if (result.intent === "purchase_shop_item") {
+    const pending = context.pendingPurchase;
     context.pendingPurchase = null;
     if (result.accepted) {
       options.gearPopup.hidden = true;
       context.buildingPanel.hidden = false;
+      const hunter = context.latestSnapshot?.hunter_roster.active_hunters.find((row) => row.hunter_id === context.purchaseHunterId);
+      const equipped = pending?.productId.startsWith("recipe:weapon:")
+        ? hunter?.hunter_info.weapons.find((weapon) => weapon.product_id === pending.productId && weapon.equipped)
+        : null;
+      options.showMessage(
+        equipped ? t("shop.purchase_equipped") : t("shop.purchase_completed"),
+        equipped ? t("shop.purchase_equipped_detail", { item: equipped.display_name_vi || equipped.display_name_en }) : t("shop.purchase_completed_detail"),
+      );
     }
     options.renderBuilding();
     if (!result.accepted && !options.gearPopup.hidden) options.renderGear();

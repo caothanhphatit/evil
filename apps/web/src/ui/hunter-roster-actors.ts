@@ -63,8 +63,8 @@ function draw(app: Application, host: HTMLElement, hunters: HunterView[]): void 
     const bounds = spine.getLocalBounds();
     const scale = Math.min(
       bounds.width > 0 ? avatarBounds.width * 0.88 / bounds.width : 1,
-      bounds.height > 0 ? avatarBounds.height * 0.9 / bounds.height : 1,
-      2.15,
+      bounds.height > 0 ? avatarBounds.height * 0.76 / bounds.height : 1,
+      1.45,
     );
     spine.scale.set(scale);
     spine.x = avatarBounds.left - hostBounds.left + avatarBounds.width / 2 - (bounds.x + bounds.width / 2) * scale;

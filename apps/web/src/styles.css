@@ -663,6 +663,11 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .blacksmith-grid .gear-catalog-card[data-rating='2'] .gear-item-art { border-color: #6da8d8; background: radial-gradient(circle at 66% 28%, #2d4b59, #111719 72%); }
 .blacksmith-grid .gear-catalog-card[data-rating='3'] .gear-item-art { border-color: #b77bd3; background: radial-gradient(circle at 66% 28%, #563363, #17101c 72%); }
 .blacksmith-grid .gear-catalog-card[data-rating='4'] .gear-item-art { border-color: #d5ab54; background: radial-gradient(circle at 66% 28%, #624c24, #1c160b 72%); }
+.blacksmith-grid .gear-catalog-card[data-rating='0'] { border-color: #8f8b82; }
+.blacksmith-grid .gear-catalog-card[data-rating='1'] { border-color: #79b65f; box-shadow: inset 0 0 12px #31512d55; }
+.blacksmith-grid .gear-catalog-card[data-rating='2'] { border-color: #6da8d8; box-shadow: inset 0 0 14px #2d526b66; }
+.blacksmith-grid .gear-catalog-card[data-rating='3'] { border-color: #b77bd3; box-shadow: inset 0 0 16px #63367373; }
+.blacksmith-grid .gear-catalog-card[data-rating='4'] { border-color: #d5ab54; box-shadow: inset 0 0 18px #7d562777; }
 .blacksmith-grid .gear-catalog-card > strong { height: 19px; padding-inline: 1px; color: #f1eee6; font-size: 7px; line-height: 9px; -webkit-line-clamp: 2; }
 .blacksmith-grid .gear-catalog-card > b { position: relative; z-index: 1; display: grid; place-items: center; width: calc(100% - 8px); height: 20px; min-height: 20px; overflow: visible; border: 1px solid #b88632; border-radius: 4px; background: linear-gradient(#d1a14d, #875a20); color: #fff9e8; font-size: 8px; line-height: 1; text-shadow: 0 1px #49300f; box-shadow: inset 0 1px #f0cb7b88, 0 1px 2px #0008; }
 .blacksmith-grid .gear-catalog-card.locked { opacity: .62; cursor: not-allowed; }
@@ -770,9 +775,18 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .display-card-detail .gear-item-art img { width: 56px; height: 56px; }
 .display-card-detail > strong { display: -webkit-box; overflow: hidden; width: 100%; color: #f5f0e5; font-size: 9px; line-height: 12px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .display-card .on-display-badge { position: absolute; z-index: 1; left: 7px; top: 8px; color: #a7de55; font-size: 6px; line-height: .95; white-space: pre-line; text-align: left; text-shadow: 0 1px #102500; }
-.display-card-footer { display: grid; grid-template-columns: minmax(0, 1fr) 64px; align-items: center; gap: 5px; padding: 5px 6px; border-top: 1px solid #4d463a; background: #100f0d; }
+.display-card-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto 64px; align-items: center; gap: 5px; padding: 5px 6px; border-top: 1px solid #4d463a; background: #100f0d; }
 .display-card-footer > small { display: flex; align-items: center; justify-content: center; gap: 3px; min-width: 0; color: #f4d98c; font-size: 8px; }
 .display-card-footer > small img { width: 13px; height: 13px; object-fit: contain; }
+.display-card-stock { color: #aaa18e; font-size: 6px; font-style: normal; white-space: nowrap; }
+.gear-catalog-card.display-card[data-quality='0'] { border-color: #8f8b82; }
+.gear-catalog-card.display-card[data-quality='1'] { border-color: #79b65f; box-shadow: inset 0 0 18px #31512d55; }
+.gear-catalog-card.display-card[data-quality='2'] { border-color: #6da8d8; box-shadow: inset 0 0 20px #2d526b66; }
+.gear-catalog-card.display-card[data-quality='3'] { border-color: #b77bd3; box-shadow: inset 0 0 22px #63367373; }
+.gear-catalog-card.display-card[data-quality='4'] { border-color: #d5ab54; box-shadow: inset 0 0 24px #7d562777; }
+.gear-catalog-card.display-card[data-quality='2'] .on-display-badge { color: #8fcfff; }
+.gear-catalog-card.display-card[data-quality='3'] .on-display-badge { color: #dfa1ff; }
+.gear-catalog-card.display-card[data-quality='4'] .on-display-badge { color: #ffc45f; }
 .building-panel.source-popup .building-catalog .display-card-buy { width: 64px; min-width: 0; height: 30px; min-height: 30px; padding: 0 6px; border: 1px solid #7a8e2e; border-image: none; border-radius: 4px; background: linear-gradient(#8b9f35, #5d7020); color: #fff9db; font-size: 8px; }
 .display-item-stat { display: grid; place-items: center; min-height: 18px; border-radius: 3px; background: #263c32; color: #bfe599; font-size: 7px; font-style: normal; font-weight: 700; }
 .display-shop-empty { grid-column: 1 / -1; align-self: center; margin: 0; padding: 42px 12px; color: #9f9788; font-size: 9px; text-align: center; }
@@ -857,6 +871,11 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .gear-create-pop .source-popup-line { background: #9d9276; }
 .gear-create-product { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 10px; min-width: 0; padding: 10px; border: 1px solid #665e4f; border-radius: 7px; background: linear-gradient(145deg, #211d18, #151310); }
 .gear-frame { position: relative; display: grid; place-items: center; align-self: stretch; min-height: 126px; border: 1px solid #9b8f72; border-radius: 6px; background: radial-gradient(circle at 70% 30%, #315b70, #10181c 72%); }
+.gear-create-pop[data-quality='0'] .gear-frame { border-color: #8f8b82; background: radial-gradient(circle at 70% 30%, #4a4944, #151514 72%); }
+.gear-create-pop[data-quality='1'] .gear-frame { border-color: #79b65f; background: radial-gradient(circle at 70% 30%, #2e5a38, #111a13 72%); }
+.gear-create-pop[data-quality='2'] .gear-frame { border-color: #6da8d8; background: radial-gradient(circle at 70% 30%, #2d526b, #10181d 72%); }
+.gear-create-pop[data-quality='3'] .gear-frame { border-color: #b77bd3; background: radial-gradient(circle at 70% 30%, #633673, #17101c 72%); }
+.gear-create-pop[data-quality='4'] .gear-frame { border-color: #d5ab54; background: radial-gradient(circle at 70% 30%, #715526, #1c160b 72%); }
 .gear-frame::after { content: '\2605'; position: absolute; left: -2px; bottom: -4px; color: #ffd842; font-size: 16px; text-shadow: 0 1px #6b4b00; }
 .gear-frame img { width: 104px; height: 104px; object-fit: contain; image-rendering: pixelated; }
 .gear-frame i { width: 29px; height: 29px; opacity: .35; background: linear-gradient(135deg, transparent 42%, #d7d2c5 43% 57%, transparent 58%); transform: rotate(-18deg); }
@@ -1421,7 +1440,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   --rarity-core: #b7b49a24;
   --rarity-halo: #85816b18;
   position: relative;
-  z-index: 1;
+  z-index: auto;
   display: grid;
   grid-template-rows: 35px minmax(0, 1fr) 24px 34px;
   place-items: stretch;
@@ -1448,6 +1467,14 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-card-name i { font-size: 8px; }
 .hunter-card-level-class { gap: 5px; font-size: 7px; }
 .hunter-roster-card .hunter-avatar { align-self: stretch; display: grid; place-items: center; width: 100%; height: auto; min-height: 0; margin: 0; padding: 0; overflow: hidden; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core), transparent 64%); cursor: pointer; }
+.hunter-card-stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.hunter-card-stage > .hunter-avatar { position: absolute; inset: 0; }
+.hunter-card-weapon { position: absolute; z-index: 4; right: 3px; bottom: 3px; display: grid; place-items: center; width: 43px; height: 43px; padding: 3px; border: 4px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_gear_9__2514.png') 5 fill / 4px stretch; background: #17140fe8; filter: drop-shadow(0 2px 3px #000b); pointer-events: none; }
+.hunter-card-weapon img { width: 29px; height: 29px; object-fit: contain; image-rendering: pixelated; }
+.hunter-card-weapon b { position: absolute; right: 1px; bottom: 0; padding: 1px 2px; background: #090807d9; color: #f1d289; font-size: 5px; line-height: 1; }
+.hunter-card-weapon.quality-2 { filter: drop-shadow(0 0 4px #5aaee0); }
+.hunter-card-weapon.quality-3 { filter: drop-shadow(0 0 5px #bd69e7); }
+.hunter-card-weapon.quality-4 { filter: drop-shadow(0 0 6px #e8aa42); }
 .hunter-card-meta { align-content: center; text-align: center; }
 .hunter-card-meta small { font-size: 7px; }
 .hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 34px; gap: 5px; margin-top: 3px; }

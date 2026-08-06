@@ -408,6 +408,38 @@ fn incompatible_rebuild_weapon_purchase_is_rejected_without_settlement() {
 }
 
 #[test]
+fn purchased_h2_rebuild_weapon_is_equipped_for_h2_hunter() {
+    let product_id = "recipe:weapon:9:rating:0";
+    let mut flow = gear_flow(product_id, 75);
+    flow.hunter_roster.hunters[0].profile.visual_family = "H2".to_owned();
+    let blacksmith_id = building_instance_id(&flow, "build_10");
+    flow.handle_command(ClientCommand::CraftShopItem {
+        instance_id: blacksmith_id,
+        recipe_id: product_id.to_owned(),
+        material_id: None,
+        quantity: 1,
+    })
+    .unwrap();
+
+    let purchase = flow
+        .handle_command(ClientCommand::PurchaseShopItem {
+            hunter_id: 1,
+            shop_id: "build_7".to_owned(),
+            product_id: product_id.to_owned(),
+        })
+        .unwrap();
+    assert!(matches!(
+        purchase.message,
+        ServerMessage::IntentResult { accepted: true, .. }
+    ));
+    let hunter = &flow.snapshot().hunter_roster.active_hunters[0];
+    assert_eq!(hunter.hunter_info.weapons.len(), 1);
+    assert!(hunter.hunter_info.weapons[0].compatible);
+    assert!(hunter.hunter_info.weapons[0].equipped);
+    assert_eq!(hunter.hunter_info.weapons[0].product_id, product_id);
+}
+
+#[test]
 fn unresolved_legacy_gear_is_not_displayed_or_removed_by_purchase() {
     let product_id = "recipe:weapon:0:rating:0";
     let mut flow = gear_flow(product_id, 75);

@@ -109,6 +109,12 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   the server rejects incompatible purchase requests before gold or stock can
   change. Compatible purchases still equip the exact rolled instance during
   the same authoritative settlement.
+- The Hunter roster now renders the authoritative equipped weapon icon and ATK
+  on each card instead of relying on the base Spine skin to imply equipment.
+  Roster actor previews use a tighter scale cap to prevent class-specific
+  skeleton bounds from producing oversized cards. Craft and display-shop cards
+  restore visible quality colors, and display stock counts make replacement by
+  the next same-recipe instance explicit after a purchase.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same

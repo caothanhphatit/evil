@@ -1051,18 +1051,22 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       }
       const card = document.createElement("article");
       card.className = "gear-catalog-card display-card";
+      const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
+      if (displayed) card.dataset.quality = String(displayed.quality);
       const detail = document.createElement("button");
       detail.type = "button";
       detail.className = "display-card-detail";
       detail.setAttribute("aria-label", t("shop.view_stats_for", { item: recipe.product_name }));
       const badge = document.createElement("span");
       badge.className = "on-display-badge";
-      badge.textContent = t("shop.on_display");
+      const quality = displayed
+        ? [t("craft.quality.regular"), t("craft.quality.sturdy"), t("craft.quality.refined"), t("craft.quality.powerful"), t("craft.quality.supreme")][displayed.quality]
+        : null;
+      badge.textContent = quality ?? t("shop.on_display");
       detail.append(badge);
       appendGearArt(detail, recipe);
       const name = document.createElement("strong"); name.textContent = recipe.product_name;
       detail.append(name);
-      const displayed = system?.display_items.find((item) => item.shop_id === buildingId && item.product_id === recipe.id);
       if (displayed) {
         const stat = document.createElement("em");
         stat.className = "display-item-stat";
@@ -1075,13 +1079,18 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
       const gold = document.createElement("img");
       gold.src = originalAsset("sprites/top_ic_01_gold_24__4677.png");
       gold.alt = "";
+      const displayCount = system?.display_items.filter((item) => item.shop_id === buildingId && item.product_id === recipe.id).length ?? 0;
       price.append(gold, document.createTextNode(formatNumber(recipe.sale_price)));
+      price.title = `${t("common.stock")}: ${displayCount}`;
+      const stock = document.createElement("i");
+      stock.className = "display-card-stock";
+      stock.textContent = `${t("common.stock")} ${displayCount}`;
       const buy = document.createElement("button");
       buy.type = "button";
       buy.className = "display-card-buy source-green-button";
       buy.textContent = t("common.buy");
       buy.addEventListener("click", () => openGearPurchase(recipe));
-      footer.append(price, buy);
+      footer.append(price, stock, buy);
       card.append(detail, footer);
       detail.addEventListener("click", () => openGearDetail(recipe));
       return card;
@@ -1289,6 +1298,7 @@ export function createBuildingRenderer(context: BuildingRenderingContext) {
     context.gearCreatePop.classList.toggle("gear-detail-mode", isShopPopup);
     context.gearCreatePop.classList.toggle("gear-inspect-mode", context.gearPopupMode === "inspect");
     context.gearCreatePop.classList.toggle("gear-purchase-mode", context.gearPopupMode === "purchase");
+    context.gearCreatePop.dataset.quality = String(purchase?.displayItem?.quality ?? context.selectedRecipe.required_level);
     context.gearCreateTitle.textContent = isShopPopup ? context.selectedRecipe.product_name : t("craft.create_item", { item: gearKindLabel });
     const displayIcon = purchase?.displayItem?.icon || context.selectedRecipe.icon;
     if (displayIcon) context.gearCreateIcon.src = displayIcon;
