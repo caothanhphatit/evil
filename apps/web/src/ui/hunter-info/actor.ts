@@ -52,9 +52,9 @@ export function createHunterInfoActor(): HunterInfoActorController {
         spine.tint = visual.tint;
         const bounds = spine.getLocalBounds();
         const scale = Math.min(
-          bounds.width > 0 ? width * 0.58 / bounds.width : 1,
-          bounds.height > 0 ? height * 0.52 / bounds.height : 1,
-          1.55,
+          bounds.width > 0 ? width * 0.87 / bounds.width : 1,
+          bounds.height > 0 ? height * 0.78 / bounds.height : 1,
+          2.32,
         );
         spine.scale.set(scale);
         spine.x = width / 2 - (bounds.x + bounds.width / 2) * scale;

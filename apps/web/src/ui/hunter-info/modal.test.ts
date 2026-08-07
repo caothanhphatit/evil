@@ -103,13 +103,13 @@ describe("Hunter Info modal shell", () => {
     expect(source).not.toContain("Look unavailable");
     expect(actor).toContain('const animation = "hunter_stay"');
     expect(actor).not.toContain('visual.animation ?? "hunter_stay"');
-    expect(actor).toContain("height * 0.52 / bounds.height");
-    expect(actor).toContain("1.55,");
-    expect(styles).toContain(".hunter-paper-doll img { width: 60%; height: 60%");
+    expect(actor).toContain("height * 0.78 / bounds.height");
+    expect(actor).toContain("2.32,");
+    expect(styles).toContain(".hunter-paper-doll img { width: 90%; height: 90%");
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
-    expect(rosterActors).toContain("avatarBounds.height * 0.62");
-    expect(rosterActors).toContain("1.15,");
+    expect(rosterActors).toContain("avatarBounds.height * 0.42");
+    expect(rosterActors).toContain("0.78,");
     expect(rosterActors).toContain("spine.mask = clip");
     expect(actor).toContain("preload: initialize");
     expect(rosterActors).toContain("preloadHunterPresentationAssets()");
@@ -171,6 +171,7 @@ describe("Hunter Info modal shell", () => {
     expect(styles).toContain("grid-auto-rows: 214px");
     expect(styles).toContain("overflow-y: auto");
     expect(styles).toContain("height: 214px");
+    expect(styles).toContain(".hunter-roster-card .hunter-avatar img { width: 50%; height: 54%");
     expect(main).toContain('hunterActiveList.addEventListener("scroll"');
     expect(main).toContain("hunterRosterActors.refresh()");
     expect(actors).toContain("refresh(): void");

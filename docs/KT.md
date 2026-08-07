@@ -116,14 +116,14 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   remains product-based and sends no gear instance.
 - The Hunter roster keeps equipment out of the compact list cards; authoritative
   equipped weapon identity and stats remain in Hunter Detail. Roster actor
-  previews use a tighter scale cap to prevent class-specific skeleton bounds or
-  portrait assets from producing oversized cards. Craft and display-shop cards
+  previews use a compact full-body scale cap to prevent class-specific skeleton
+  bounds or portrait assets from producing oversized list cards. Craft and display-shop cards
   restore visible quality colors. Each equipment card now represents one rolled
   instance with its own quality-colored art frame, primary stat, option rows and
   sale price. Hunter Detail overlays the authoritative equipped rebuild weapon
   onto the weapon equipment slot instead of leaving the legacy fixture visible.
-  The Detail paper doll is also bounded to a compact full-body fit for both Spine
-  actors and portrait-backed Hunters so class-specific bounds cannot zoom it.
+  The Detail paper doll keeps a larger full-body fit than the roster while both
+  Spine actors and portrait-backed Hunters remain bounded by the slot frame.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same
