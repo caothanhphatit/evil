@@ -5,6 +5,8 @@ import { hunterWeaponAttachment } from "../game/hunter-spine-presentation";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
+const repositoryRoot = resolve(process.cwd(), "../..");
+
 describe("projectHunterRoster", () => {
   it("projects active slots, waiting order, class, traits, skills and action data", () => {
     const view = projectHunterRoster({
@@ -127,5 +129,11 @@ describe("hunter helpers", () => {
       ["All_h4"],
       ["All_h5"],
     ]);
+  });
+
+  it("removes only non-paper-doll effect attachments before fitting the actor", async () => {
+    const presentation = await readFile(resolve(repositoryRoot, "apps/web/src/game/hunter-spine-presentation.ts"), "utf8");
+    expect(presentation).toContain('name.startsWith("effect") || name.endsWith("_effect")');
+    expect(presentation).toContain("slot.setAttachment(null)");
   });
 });

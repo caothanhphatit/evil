@@ -1,7 +1,7 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Application } from "pixi.js";
 import { hunterPaperDollVisual } from "../../game/hunter-actor-presentation";
-import { applyHunterSpineSkin } from "../../game/hunter-spine-presentation";
+import { applyHunterSpineSkin, removeHunterPaperDollEffects } from "../../game/hunter-spine-presentation";
 import type { HunterView } from "../hunter-roster";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "../hunter-presentation-assets";
 
@@ -49,12 +49,13 @@ export function createHunterInfoActor(): HunterInfoActorController {
         // widen the skeleton and must not affect the equipment layout.
         const animation = "hunter_stay";
         if (spine.skeleton.data.findAnimation(animation)) spine.state.setAnimation(0, animation, true);
+        removeHunterPaperDollEffects(spine);
         spine.tint = visual.tint;
         const bounds = spine.getLocalBounds();
         const scale = Math.min(
-          bounds.width > 0 ? width * 0.87 / bounds.width : 1,
-          bounds.height > 0 ? height * 0.78 / bounds.height : 1,
-          2.32,
+          bounds.width > 0 ? width * 0.68 / bounds.width : 1,
+          bounds.height > 0 ? height * 0.62 / bounds.height : 1,
+          1.9,
         );
         spine.scale.set(scale);
         spine.x = width / 2 - (bounds.x + bounds.width / 2) * scale;

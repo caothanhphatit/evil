@@ -3,7 +3,7 @@ import { Application, Graphics } from "pixi.js";
 import type { HunterView } from "./hunter-roster";
 import { hunterPaperDollVisual } from "../game/hunter-actor-presentation";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "./hunter-presentation-assets";
-import { applyHunterSpineSkin } from "../game/hunter-spine-presentation";
+import { applyHunterSpineSkin, removeHunterPaperDollEffects } from "../game/hunter-spine-presentation";
 
 export interface HunterRosterActorController {
   preload(): Promise<void>;
@@ -59,11 +59,12 @@ function draw(app: Application, host: HTMLElement, hunters: HunterView[]): void 
     // reserved for the Pixi world actor and must not distort card composition.
     const animation = "hunter_stay";
     if (spine.skeleton.data.findAnimation(animation)) spine.state.setAnimation(0, animation, true);
+    removeHunterPaperDollEffects(spine);
     spine.tint = visual.tint;
     const bounds = spine.getLocalBounds();
     const scale = Math.min(
-      bounds.width > 0 ? avatarBounds.width * 0.7 / bounds.width : 1,
-      bounds.height > 0 ? avatarBounds.height * 0.62 / bounds.height : 1,
+      bounds.width > 0 ? avatarBounds.width * 0.82 / bounds.width : 1,
+      bounds.height > 0 ? avatarBounds.height * 0.82 / bounds.height : 1,
     );
     spine.scale.set(scale);
     spine.x = avatarBounds.left - hostBounds.left + avatarBounds.width / 2 - (bounds.x + bounds.width / 2) * scale;

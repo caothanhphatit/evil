@@ -50,6 +50,13 @@ export function applyHunterSpineSkin(
   }
 }
 
+export function removeHunterPaperDollEffects(spine: Spine): void {
+  for (const slot of spine.skeleton.slots) {
+    const name = slot.data.name;
+    if (name.startsWith("effect") || name.endsWith("_effect")) slot.setAttachment(null);
+  }
+}
+
 function weaponPresentation(classFamily: string | null): WeaponPresentation | null {
   return classFamily ? BASE_WEAPON_BY_FAMILY[classFamily.toUpperCase()] ?? null : null;
 }
