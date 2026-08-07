@@ -16,7 +16,6 @@ export interface HunterControllerContext {
   selectedHunterId: string | null;
   releasedWorldHunterEntityId: string | null;
   hunterRosterActors: ReturnType<typeof createHunterRosterActors>;
-  hunterCapacity: HTMLElement;
   hunterActiveList: HTMLElement;
   hunterRosterStatus: HTMLElement;
   hunterInfoModal: ReturnType<typeof createHunterInfoModal>;
@@ -35,8 +34,6 @@ export function createHunterController(context: HunterControllerContext) {
   function renderHunterRoster(snapshot: OriginalFlowSnapshot): void {
     const roster = projectHunterRoster(snapshot, context.selectedHunterId);
     context.selectedHunterId = roster.selectedId;
-    context.hunterCapacity.textContent = `${roster.active.length} / ${roster.capacity}`;
-    context.hunterCapacity.classList.toggle("full", roster.active.length >= roster.capacity);
     context.hunterActiveList.replaceChildren(...Array.from({ length: roster.capacity }, (_, index) => {
       const hunter = roster.active[index];
       return hunter ? hunterRosterCard(hunter, snapshot) : emptyHunterSlot(index + 1);

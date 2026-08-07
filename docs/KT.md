@@ -133,6 +133,9 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   The canonical Hunter roster no longer uses the legacy popup or list-area
   nine-slice borders. Its desktop/mobile frame and rarity cards use a responsive
   CSS-drawn bronze panel language while preserving the existing Detail popup.
+  The roster header is the compact `Hunter` label without a duplicated capacity
+  badge; aggregate paper dolls use a larger card-relative fit so their packaged
+  outfit attachments remain legible without escaping the avatar bounds.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same

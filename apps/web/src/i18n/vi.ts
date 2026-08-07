@@ -370,7 +370,7 @@ export const vi = {
   "roster.management": "Quản lý Hunter",
   "roster.place_hunting_grounds": "Đặt Bãi Săn",
   "roster.sort": "Sắp xếp Hunter",
-  "roster.title": "Danh sách Hunter",
+  "roster.title": "Hunter",
   "roster.close_aria": "Đóng danh sách Hunter",
   "roster.empty": "Chưa có Hunter authoritative trong danh sách.",
   "roster.waiting": "Đang chờ",

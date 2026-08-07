@@ -35,7 +35,6 @@ function element<T extends HTMLElement>(selector: string): T { const value = doc
 const villageScreen = element<HTMLElement>("#village-screen");
 const rosterScreen = element<HTMLElement>("#roster-screen");
 const bottomMenu = element<HTMLElement>("#bottom-menu");
-const hunterCapacity = element<HTMLElement>("#hunter-capacity");
 const hunterActiveList = element<HTMLElement>("#hunter-active-list");
 const hunterRosterStatus = element<HTMLElement>("#hunter-roster-status");
 const rosterBack = element<HTMLButtonElement>("#roster-back");
@@ -312,7 +311,6 @@ const hunterContext: HunterControllerContext = {
   get releasedWorldHunterEntityId() { return releasedWorldHunterEntityId; },
   set releasedWorldHunterEntityId(value) { releasedWorldHunterEntityId = value; },
   hunterRosterActors,
-  hunterCapacity,
   hunterActiveList,
   hunterRosterStatus,
   hunterInfoModal,
