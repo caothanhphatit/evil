@@ -1384,6 +1384,8 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 }
 .roster-background { opacity: .38; filter: saturate(.76) brightness(.48) blur(1px); }
 .hunter-roster-panel {
+  --roster-line: #6c5a3c;
+  --roster-gold: #d3aa61;
   position: relative;
   right: auto;
   bottom: auto;
@@ -1393,17 +1395,18 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   width: min(820px, calc(100% - 32px));
   height: min(560px, calc(100% - 24px));
   max-height: none;
-  padding: 13px 15px 10px;
+  padding: 18px 20px 14px;
   overflow: hidden;
-  border: 18px solid transparent;
-  border-radius: 0;
-  border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 18px stretch;
-  background: #100e0c;
-  box-shadow: inset 0 0 24px #000b, 0 14px 34px #000d;
+  border: 1px solid #8f754b;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #d7b56b20 0 1px, transparent 1px) 0 0 / 18px 18px, radial-gradient(circle at 50% -20%, #6d58343d, transparent 48%), linear-gradient(180deg, #191713f5, #0e0d0bf8);
+  box-shadow: inset 0 0 0 1px #2e291f, inset 0 1px #f0ce8338, 0 18px 46px #000d;
   filter: none;
   transform: none;
+  backdrop-filter: blur(8px);
 }
-.hunter-roster-panel::before, .hunter-roster-panel::after { content: none; }
+.hunter-roster-panel::before { content: ""; position: absolute; z-index: 0; inset: 7px; border: 1px solid #51452f; border-radius: 11px; pointer-events: none; }
+.hunter-roster-panel::after { content: ""; position: absolute; z-index: 0; top: 0; left: 50%; width: 180px; height: 3px; border-radius: 0 0 4px 4px; background: linear-gradient(90deg, transparent, var(--roster-gold), transparent); transform: translateX(-50%); pointer-events: none; }
 .hunter-roster-header {
   position: relative;
   z-index: 3;
@@ -1412,17 +1415,17 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   align-items: center;
   gap: 12px;
   min-height: 52px;
-  padding: 0 2px 8px;
-  border-bottom: 2px solid #9c8b67;
-  box-shadow: 0 2px #15110d;
+  padding: 0 4px 10px;
+  border-bottom: 1px solid var(--roster-line);
+  box-shadow: 0 1px #050403;
 }
 .hunter-roster-header > .hunter-roster-heading { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
-.hunter-roster-heading b { overflow: hidden; color: #fff1c6; font-size: 18px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #312217; }
-.hunter-roster-heading span { flex: 0 0 auto; padding: 4px 8px; border: 1px solid #756747; background: #211b12; color: #e4cf98; font-size: 9px; }
+.hunter-roster-heading b { overflow: hidden; color: #fff2cc; font-size: 18px; letter-spacing: .02em; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px #312217; }
+.hunter-roster-heading span { flex: 0 0 auto; padding: 4px 9px; border: 1px solid #6f5b38; border-radius: 999px; background: #d4a94f12; color: #e8cc8d; font-size: 9px; }
 .hunter-roster-heading span.full { color: #ffca68; }
 .hunter-roster-header > .source-red-button { position: static; width: 46px; min-width: 46px; min-height: 40px; padding: 0; font-size: 0; }
 .hunter-roster-header > .source-red-button::after { content: "X"; font-size: 13px; }
-.hunter-roster-body { position: relative; z-index: 1; display: block; min-height: 0; padding: 12px 2px 5px; }
+.hunter-roster-body { position: relative; z-index: 1; display: block; min-height: 0; padding: 14px 2px 5px; }
 .hunter-card-grid {
   position: relative;
   display: grid;
@@ -1430,13 +1433,13 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   grid-template-rows: none;
   grid-auto-rows: 214px;
   align-content: start;
-  gap: 10px;
+  gap: 12px;
   height: 100%;
   padding: 2px 5px 8px;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #9e7548 #261d17;
+  scrollbar-color: #967443 #17130e;
 }
 .hunter-roster-actor-canvas { position: absolute; z-index: 2; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; image-rendering: pixelated; }
 .hunter-roster-card {
@@ -1452,18 +1455,18 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   height: 214px;
   min-width: 0;
   min-height: 0;
-  padding: 7px;
+  padding: 8px;
   overflow: hidden;
-  border: 7px solid transparent;
-  border-radius: 0;
-  border-image: url('/content/releases/original-flow-v1/sprites/list_area_line_9__1576.png') 8 fill / 7px stretch;
-  background: radial-gradient(ellipse at 50% 58%, var(--rarity-core), var(--rarity-halo) 38%, transparent 68%), #15130f;
+  border: 1px solid #4f4739;
+  border-top: 3px solid var(--rarity-accent);
+  border-radius: 10px;
+  background: radial-gradient(ellipse at 50% 58%, var(--rarity-core), var(--rarity-halo) 38%, transparent 68%), linear-gradient(180deg, #201e19, #11100d);
   color: #f4e7c4;
-  box-shadow: 0 4px 8px #0008;
+  box-shadow: inset 0 1px #ffffff0a, inset 0 0 18px #0008, 0 6px 14px #0008;
   image-rendering: pixelated;
 }
 .hunter-roster-card::before { content: ""; position: absolute; z-index: 0; inset: 25% 8% 17%; background: radial-gradient(ellipse, var(--rarity-core), transparent 70%); pointer-events: none; }
-.hunter-roster-card.selected { border-color: transparent; filter: brightness(1.08); box-shadow: 0 0 0 2px var(--rarity-accent), 0 4px 8px #0008; }
+.hunter-roster-card.selected { border-color: var(--rarity-accent); filter: brightness(1.08); box-shadow: 0 0 0 2px #0a0907, 0 0 0 3px var(--rarity-accent), 0 8px 18px #000a; }
 .hunter-roster-card > header, .hunter-card-meta, .hunter-roster-card > footer { position: relative; z-index: 3; }
 .hunter-roster-card > header { display: grid; align-content: start; justify-items: center; gap: 3px; min-width: 0; }
 .hunter-card-name { justify-content: center; }
@@ -1479,7 +1482,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-card-target { width: 34px; min-height: 31px; }
 .hunter-card-target img { width: 21px; height: 21px; }
 .hunter-roster-card.empty { grid-template-rows: 1fr auto; place-items: center; height: 214px; opacity: .32; }
-.hunter-roster-card.empty .hunter-avatar { width: 54px; height: 54px; min-height: 54px; border: 6px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/box_menu_front_9__4849.png') 5 fill / 6px stretch; color: #d9c58d; font-size: 18px; }
+.hunter-roster-card.empty .hunter-avatar { width: 54px; height: 54px; min-height: 54px; border: 1px dashed #74694f; border-radius: 12px; background: #ffffff05; color: #d9c58d; font-size: 18px; }
 .hunter-roster-card.empty > b { padding-bottom: 8px; color: #aca28d; font-size: 7px; }
 .hunter-roster-status { position: relative; z-index: 2; min-height: 18px; padding: 4px 4px 0; color: #bbb39e; font-size: 7px; text-align: center; }
 .hunter-roster-status:empty { display: none; }
@@ -1493,7 +1496,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 
 @container game-shell (max-width: 520px) {
   .roster-screen { padding: 5px 5px calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved) + 5px); }
-  .hunter-roster-panel { width: 100%; height: 100%; max-height: none; padding: 8px 7px 6px; border-width: 12px; border-image-width: 12px; }
+  .hunter-roster-panel { width: 100%; height: 100%; max-height: none; padding: 10px 9px 8px; border-width: 1px; border-radius: 11px; }
   .game-shell.ui-short .hunter-roster-panel,
   .game-shell.ui-very-short .hunter-roster-panel { height: 100%; max-height: none; }
   .hunter-roster-header { grid-template-columns: minmax(0, 1fr) 38px; min-height: 42px; gap: 6px; padding-bottom: 5px; }
@@ -1502,7 +1505,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .hunter-roster-header > .source-red-button { width: 38px; min-width: 38px; min-height: 34px; }
   .hunter-roster-body { padding-top: 7px; }
   .hunter-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 172px; gap: 6px; padding-inline: 2px; }
-  .hunter-roster-card, .hunter-roster-card.empty { height: 172px; padding: 5px; border-width: 5px; border-image-width: 5px; }
+  .hunter-roster-card, .hunter-roster-card.empty { height: 172px; padding: 5px; border-width: 1px; border-top-width: 3px; border-radius: 8px; }
   .hunter-roster-card { grid-template-rows: 29px minmax(0, 1fr) 20px 29px; }
   .hunter-card-name b { font-size: 8px; }
   .hunter-card-level-class, .hunter-card-meta small { font-size: 6px; }

@@ -158,7 +158,7 @@ describe("Hunter Info modal shell", () => {
 
   it("does not render the roster selection as a focus frame", async () => {
     const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
-    expect(styles).toContain(".hunter-roster-card.selected { border-color: transparent; filter: brightness(1.08)");
+    expect(styles).toContain(".hunter-roster-card.selected { border-color: var(--rarity-accent); filter: brightness(1.08)");
     expect(styles).toContain(".hunter-card-info:focus, .hunter-card-info:focus-visible { outline: 0; }");
     expect(styles).not.toContain("border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 7 fill");
   });
@@ -177,6 +177,11 @@ describe("Hunter Info modal shell", () => {
     expect(actors).toContain("refresh(): void");
     expect(styles).not.toContain(".hunter-card-weapon");
     expect(main).toContain("hunterRosterActors.refresh()");
+    const canonicalRoster = styles.slice(styles.indexOf("/* Canonical Hunter roster frame"), styles.indexOf("@media (prefers-reduced-motion"));
+    expect(canonicalRoster).not.toContain("popup_bg_9__1928.png");
+    expect(canonicalRoster).not.toContain("list_area_line_9__1576.png");
+    expect(canonicalRoster).toContain("border-radius: 16px");
+    expect(canonicalRoster).toContain("border-top: 3px solid var(--rarity-accent)");
   });
 
   it("keeps unresolved Hunter tabs framed instead of collapsing to plain text", async () => {

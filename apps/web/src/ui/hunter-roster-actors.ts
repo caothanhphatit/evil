@@ -1,7 +1,7 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Application, Graphics } from "pixi.js";
 import type { HunterView } from "./hunter-roster";
-import { hunterActorVisual } from "../game/hunter-actor-presentation";
+import { hunterPaperDollVisual } from "../game/hunter-actor-presentation";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "./hunter-presentation-assets";
 import { applyHunterSpineSkin } from "../game/hunter-spine-presentation";
 
@@ -48,7 +48,7 @@ function draw(app: Application, host: HTMLElement, hunters: HunterView[]): void 
     if (!avatar) return;
     const avatarBounds = avatar.getBoundingClientRect();
     const spine = Spine.from({ skeleton: HUNTER_SKELETON_ALIAS, atlas: HUNTER_ATLAS_ALIAS, autoUpdate: true });
-    const visual = hunterActorVisual({
+    const visual = hunterPaperDollVisual({
       entity_id: hunter.id,
       hunter_id: hunter.numericId,
       class_family: hunter.classFamily,

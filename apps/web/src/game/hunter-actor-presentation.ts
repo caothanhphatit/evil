@@ -25,6 +25,13 @@ const FAMILY_COSTUME_SKINS: Record<string, [string, string]> = {
   H4: ["costum_h4_01", "costum_h4_02"],
   H5: ["costum_h5_01", "costum_h5_02"],
 };
+const FAMILY_PAPER_DOLL_SKINS: Record<string, string> = {
+  H1: "All_h1",
+  H2: "All_h2",
+  H3: "All_h3",
+  H4: "All_h4",
+  H5: "All_h5",
+};
 const HUNTER_TINTS = [0xffffff, 0xfff4dd, 0xe8f5ff, 0xf2e9ff, 0xe8ffe9, 0xffe9ec, 0xfff8cc, 0xe7ffff];
 
 export function hunterActorVisual(entity: WorldEntityProjection | UnknownRecord): HunterActorVisual {
@@ -52,6 +59,17 @@ export function hunterActorVisual(entity: WorldEntityProjection | UnknownRecord)
   if (skinNames.length === 0) return { skinNames: [], animation, tint, signature: `unresolved:${tint.toString(16)}` };
   if (weaponSkin) skinNames.push(weaponSkin);
   return { skinNames, animation, tint, signature: `${skinNames.join("|")}:${tint.toString(16)}` };
+}
+
+export function hunterPaperDollVisual(entity: WorldEntityProjection | UnknownRecord): HunterActorVisual {
+  const visual = hunterActorVisual(entity);
+  const row = record(entity);
+  const profile = record(row.profile ?? row.hunter_profile);
+  const family = normalizeClassFamily(row.class_family ?? profile.visual_family ?? profile.class_family);
+  const aggregateSkin = family ? FAMILY_PAPER_DOLL_SKINS[family] : null;
+  return aggregateSkin
+    ? { ...visual, skinNames: [aggregateSkin], signature: `${aggregateSkin}:${visual.tint.toString(16)}` }
+    : visual;
 }
 
 function normalizeClassFamily(value: unknown): string | null {
