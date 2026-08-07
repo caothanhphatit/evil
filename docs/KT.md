@@ -116,8 +116,9 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   remains product-based and sends no gear instance.
 - The Hunter roster keeps equipment out of the compact list cards; authoritative
   equipped weapon identity and stats remain in Hunter Detail. Roster actor
-  previews use a compact full-body scale cap to prevent class-specific skeleton
-  bounds or portrait assets from producing oversized list cards. Craft and display-shop cards
+  previews use a compact full-body contain fit derived only from each card's
+  avatar bounds; there is no absolute scale cap that can make identical cards
+  render at unrelated sizes. Craft and display-shop cards
   restore visible quality colors. Each equipment card now represents one rolled
   instance with its own quality-colored art frame, primary stat, option rows and
   sale price. Hunter Detail overlays the authoritative equipped rebuild weapon

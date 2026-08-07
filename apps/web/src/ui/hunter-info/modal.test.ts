@@ -109,7 +109,7 @@ describe("Hunter Info modal shell", () => {
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
     expect(rosterActors).toContain("avatarBounds.height * 0.42");
-    expect(rosterActors).toContain("0.78,");
+    expect(rosterActors).not.toContain("0.78,");
     expect(rosterActors).toContain("spine.mask = clip");
     expect(actor).toContain("preload: initialize");
     expect(rosterActors).toContain("preloadHunterPresentationAssets()");
