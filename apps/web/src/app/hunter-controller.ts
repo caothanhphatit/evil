@@ -1,4 +1,4 @@
-import type { HunterRosterMemberSnapshot, OriginalFlowSnapshot } from "../generated/protocol";
+import type { OriginalFlowSnapshot } from "../generated/protocol";
 import type { WorldClient } from "../net/world-client";
 import type { VisibleEntityWorld } from "../game/visible-world";
 import { hunterClassTone, hunterPercent, hunterRarityPresentation, hunterWorldEntityId, projectHunterRoster, type HunterView } from "../ui/hunter-roster";
@@ -100,25 +100,6 @@ export function createHunterController(context: HunterControllerContext) {
       image.alt = "";
       avatar.append(image);
     } else avatar.classList.add("composed");
-    const stage = document.createElement("div");
-    stage.className = "hunter-card-stage";
-    stage.append(avatar);
-    const equippedWeapon = rosterEquippedWeapon(snapshot, hunter);
-    if (equippedWeapon) {
-      const weapon = document.createElement("span");
-      weapon.className = `hunter-card-weapon${equippedWeapon.quality === null ? " legacy" : ` quality-${equippedWeapon.quality}`}`;
-      weapon.title = equippedWeapon.name;
-      if (equippedWeapon.icon) {
-        const icon = document.createElement("img");
-        icon.src = equippedWeapon.icon;
-        icon.alt = "";
-        weapon.append(icon);
-      }
-      const attack = document.createElement("b");
-      attack.textContent = equippedWeapon.attack === null ? "ATK --" : `ATK ${equippedWeapon.attack}`;
-      weapon.append(attack);
-      stage.append(weapon);
-    }
     const meta = document.createElement("span");
     meta.className = "hunter-card-meta";
     const activity = document.createElement("small");
@@ -172,7 +153,7 @@ export function createHunterController(context: HunterControllerContext) {
     });
     const actions = document.createElement("footer");
     actions.append(info, target);
-    card.append(heading, stage, meta, actions);
+    card.append(heading, avatar, meta, actions);
     return card;
   }
   
@@ -285,27 +266,6 @@ export function createHunterController(context: HunterControllerContext) {
     }) ?? {};
   }
 
-  function rosterEquippedWeapon(snapshot: OriginalFlowSnapshot, hunter: HunterView): {
-    name: string;
-    icon: string | null;
-    attack: number | null;
-    quality: number | null;
-  } | null {
-    const raw = snapshot.hunter_roster.active_hunters.find((row) => row.hunter_id === hunter.numericId) as HunterRosterMemberSnapshot | undefined;
-    const equipped = raw?.hunter_info.weapons.find((weapon) => weapon.equipped);
-    if (equipped) {
-      return {
-        name: equipped.display_name_vi || equipped.display_name_en,
-        icon: equipped.icon_path || null,
-        attack: equipped.attack_damage,
-        quality: equipped.quality,
-      };
-    }
-    const legacy = raw?.hunter_info.equipment_slots?.find((slot) => slot.slot_id === "weapon");
-    return legacy ? { name: legacy.display_name, icon: legacy.icon_path, attack: null, quality: null } : null;
-  }
-  
-  
   return {
     renderHunterRoster,
     hunterForWorldEntity,

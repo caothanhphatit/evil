@@ -62,6 +62,7 @@ describe("gear building UI integration", () => {
     expect(styles).toContain(".display-card-detail");
     expect(styles).toContain(".display-card-buy");
     expect(styles).toContain(".gear-create-pop[data-quality='4'] .gear-frame");
+    expect(styles).toContain(".gear-catalog-card.display-card[data-quality='4'] .gear-item-art");
     expect(source).toContain('card.dataset.quality = String(displayed.quality)');
     expect(source).toContain("card.dataset.gearInstanceId = displayed.gear_instance_id");
     expect(styles).toContain(".gear-create-pop.gear-inspect-mode");

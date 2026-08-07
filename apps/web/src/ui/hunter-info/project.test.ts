@@ -53,4 +53,37 @@ describe("projectHunterInfo", () => {
     const view = projectHunterInfo({ hunter_info: { materials: [{ material_id: "wood", quantity: 4 }, { icon_path: "/content/ore.png", quantity: 3 }] } }, hunter);
     expect(view.materials).toEqual([]);
   });
+
+  it("projects the authoritative equipped rebuild weapon into the Detail weapon slot", () => {
+    const instanceId = "00000000-0000-4000-8000-000000000123";
+    const view = projectHunterInfo({
+      hunter_info: {
+        equipment_slots: [{ slot_id: "weapon", display_name: "Legacy Sword", icon_path: "/content/legacy.png" }],
+        weapons: [{
+          gear_instance_id: instanceId,
+          product_id: "recipe:weapon:0:rating:0",
+          weapon_id: "wp_berserker_000",
+          display_name_en: "Chipped Iron Greatsword",
+          display_name_vi: "Đại Kiếm Sắt Mẻ",
+          icon_path: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png",
+          quality: 3,
+          attack_damage: 88,
+          attack_damage_min: 60,
+          attack_damage_max: 96,
+          enhancement_level: 0,
+          compatible: true,
+          equipped: true,
+          ruleset: "web-rebuild-weapon-core-v1",
+        }],
+      },
+    }, hunter);
+
+    expect(view.equipment[5]).toMatchObject({
+      id: "weapon",
+      catalogKind: `rebuild_weapon_instance:${instanceId}`,
+      name: "Đại Kiếm Sắt Mẻ",
+      icon: "/content/releases/evil-hunter-1.411/gear-icons/weapon-0.png",
+      evidenceState: "web-rebuild-weapon-core-v1",
+    });
+  });
 });

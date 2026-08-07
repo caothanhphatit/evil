@@ -783,6 +783,11 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .gear-catalog-card.display-card[data-quality='2'] { border-color: #6da8d8; box-shadow: inset 0 0 20px #2d526b66; }
 .gear-catalog-card.display-card[data-quality='3'] { border-color: #b77bd3; box-shadow: inset 0 0 22px #63367373; }
 .gear-catalog-card.display-card[data-quality='4'] { border-color: #d5ab54; box-shadow: inset 0 0 24px #7d562777; }
+.gear-catalog-card.display-card[data-quality='0'] .gear-item-art { border-color: #8f8b82; background: radial-gradient(circle at 66% 28%, #4a4944, #151514 72%); }
+.gear-catalog-card.display-card[data-quality='1'] .gear-item-art { border-color: #79b65f; background: radial-gradient(circle at 66% 28%, #2e5a38, #111a13 72%); }
+.gear-catalog-card.display-card[data-quality='2'] .gear-item-art { border-color: #6da8d8; background: radial-gradient(circle at 66% 28%, #2d4b59, #111719 72%); }
+.gear-catalog-card.display-card[data-quality='3'] .gear-item-art { border-color: #b77bd3; background: radial-gradient(circle at 66% 28%, #563363, #17101c 72%); }
+.gear-catalog-card.display-card[data-quality='4'] .gear-item-art { border-color: #d5ab54; background: radial-gradient(circle at 66% 28%, #624c24, #1c160b 72%); }
 .gear-catalog-card.display-card[data-quality='2'] .on-display-badge { color: #8fcfff; }
 .gear-catalog-card.display-card[data-quality='3'] .on-display-badge { color: #dfa1ff; }
 .gear-catalog-card.display-card[data-quality='4'] .on-display-badge { color: #ffc45f; }
@@ -1466,14 +1471,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-card-name i { font-size: 8px; }
 .hunter-card-level-class { gap: 5px; font-size: 7px; }
 .hunter-roster-card .hunter-avatar { align-self: stretch; display: grid; place-items: center; width: 100%; height: auto; min-height: 0; margin: 0; padding: 0; overflow: hidden; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core), transparent 64%); cursor: pointer; }
-.hunter-card-stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
-.hunter-card-stage > .hunter-avatar { position: absolute; inset: 0; }
-.hunter-card-weapon { position: absolute; z-index: 4; right: 3px; bottom: 3px; display: grid; place-items: center; width: 43px; height: 43px; padding: 3px; border: 4px solid transparent; border-image: url('/content/releases/evil-hunter-1.411/hunter-assets/ui/hunter-info-equipment/box_gear_9__2514.png') 5 fill / 4px stretch; background: #17140fe8; filter: drop-shadow(0 2px 3px #000b); pointer-events: none; }
-.hunter-card-weapon img { width: 29px; height: 29px; object-fit: contain; image-rendering: pixelated; }
-.hunter-card-weapon b { position: absolute; right: 1px; bottom: 0; padding: 1px 2px; background: #090807d9; color: #f1d289; font-size: 5px; line-height: 1; }
-.hunter-card-weapon.quality-2 { filter: drop-shadow(0 0 4px #5aaee0); }
-.hunter-card-weapon.quality-3 { filter: drop-shadow(0 0 5px #bd69e7); }
-.hunter-card-weapon.quality-4 { filter: drop-shadow(0 0 6px #e8aa42); }
+.hunter-roster-card .hunter-avatar img { width: 74%; height: 82%; object-fit: contain; object-position: center bottom; }
 .hunter-card-meta { align-content: center; text-align: center; }
 .hunter-card-meta small { font-size: 7px; }
 .hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 34px; gap: 5px; margin-top: 3px; }

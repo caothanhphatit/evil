@@ -23,7 +23,7 @@ export function projectHunterInfo(rawHunter: unknown, hunter: HunterView): Hunte
     attackSpeed: scaled(status.attack_speed_milli, 1_000) ?? number(status.attack_speed),
     evasion: scaled(status.evasion_rate_bps, 100) ?? number(status.evasion),
     awakening: pair(status.awakening, "current", "maximum"),
-    equipment: projectEquipmentSlots(info.equipment_slots),
+    equipment: projectEquipmentSlots(info.equipment_slots, info.weapons),
     skills: projectSkills(info),
     growth: projectGrowth(info.growth),
     riding: projectRiding(riding, Object.prototype.hasOwnProperty.call(info, "riding_pet")),
@@ -34,9 +34,24 @@ export function projectHunterInfo(rawHunter: unknown, hunter: HunterView): Hunte
 
 const EQUIPMENT_SLOT_ORDER = ["gloves", "helmet", "necklace", "boots", "ring", "weapon", "armor", "belt"] as const;
 
-function projectEquipmentSlots(value: unknown): HunterInfoEquipmentSlot[] {
+function projectEquipmentSlots(value: unknown, weaponsValue: unknown): HunterInfoEquipmentSlot[] {
   const projected = rows(value).map(projectEquipment).filter((entry): entry is HunterInfoEquipmentSlot => entry !== null);
   const byId = new Map(projected.map((entry) => [entry.id, entry]));
+  const equippedWeapon = projectWeapons(weaponsValue).find((weapon) => weapon.equipped);
+  if (equippedWeapon) {
+    byId.set("weapon", {
+      id: "weapon",
+      catalogKind: `rebuild_weapon_instance:${equippedWeapon.instanceId}`,
+      catalogIndex: null,
+      name: equippedWeapon.nameVi || equippedWeapon.nameEn,
+      icon: equippedWeapon.icon,
+      placeholderIcon: null,
+      presentationGender: null,
+      requiredClassId: null,
+      locked: false,
+      evidenceState: equippedWeapon.ruleset,
+    });
+  }
   return EQUIPMENT_SLOT_ORDER.map((id) => byId.get(id) ?? {
     id, catalogKind: null, catalogIndex: null, name: null, icon: null,
     placeholderIcon: null, presentationGender: null, requiredClassId: null,
