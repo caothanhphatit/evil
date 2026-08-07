@@ -1,9 +1,8 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Application, Graphics } from "pixi.js";
 import type { HunterView } from "./hunter-roster";
-import { hunterActorVisual } from "../game/hunter-actor-presentation";
+import { prepareHunterPaperDoll } from "../game/hunter-paper-doll";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "./hunter-presentation-assets";
-import { applyHunterSpineSkin, removeHunterPaperDollEffects } from "../game/hunter-spine-presentation";
 
 export interface HunterRosterActorController {
   preload(): Promise<void>;
@@ -48,19 +47,12 @@ function draw(app: Application, host: HTMLElement, hunters: HunterView[]): void 
     if (!avatar) return;
     const avatarBounds = avatar.getBoundingClientRect();
     const spine = Spine.from({ skeleton: HUNTER_SKELETON_ALIAS, atlas: HUNTER_ATLAS_ALIAS, autoUpdate: true });
-    const visual = hunterActorVisual({
+    prepareHunterPaperDoll(spine, {
       entity_id: hunter.id,
       hunter_id: hunter.numericId,
       class_family: hunter.classFamily,
       animation: hunter.animation,
-    });
-    applyHunterSpineSkin(spine, visual.skinNames, hunter.classFamily, "roster-hunter");
-    // Roster cards are paper-doll previews. Runtime combat/death animation is
-    // reserved for the Pixi world actor and must not distort card composition.
-    const animation = "hunter_stay";
-    if (spine.skeleton.data.findAnimation(animation)) spine.state.setAnimation(0, animation, true);
-    removeHunterPaperDollEffects(spine);
-    spine.tint = visual.tint;
+    }, hunter.classFamily, "roster-hunter");
     const bounds = spine.getLocalBounds();
     const scale = Math.min(
       bounds.width > 0 ? avatarBounds.width * 0.82 / bounds.width : 1,

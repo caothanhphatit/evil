@@ -54,8 +54,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 
 @media (min-width: 700px) and (min-aspect-ratio: 1/1) {
   .game-shell { width: min(1134px, calc(100vw - 24px), calc(100vh * 1.575)); margin-inline: auto; box-shadow: 0 0 70px #000c; }
-  .hunter-roster-panel { height: min(570px, calc(100% - 24px)); }
-  .hunter-roster-card { aspect-ratio: .62; }
 }
 
 .login-screen, .village-screen { position: absolute; inset: 0; overflow: hidden; }
@@ -63,62 +61,9 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .game-shell.entry-login .roster-screen,
 .game-shell.entry-login .bottom-menu,
 .game-shell.entry-login .loading-transition { display: none !important; }
-.roster-screen { position: absolute; inset: 0; z-index: 15; display: grid; place-items: center; overflow: hidden; padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)); background: #18292a; opacity: 0; visibility: hidden; transition: opacity .12s ease, visibility .12s; will-change: opacity; }
+.roster-screen { position: absolute; inset: 0; z-index: 15; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity .12s ease, visibility .12s; will-change: opacity; }
 .roster-screen.visible { opacity: 1; visibility: visible; }
-.roster-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; opacity: .62; filter: saturate(.7) brightness(.55) blur(2px); transform: scale(1.02); }
-.hunter-roster-panel { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; width: min(720px, calc(100vw - 24px)); height: min(720px, calc(100vh - 24px)); border: 20px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/popup_bg_9__1928.png') 20 fill / 20px stretch; filter: drop-shadow(0 12px 28px #000b); image-rendering: pixelated; }
-.hunter-roster-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; padding: 0 2px 8px; border-bottom: 2px solid #9c8b67; }
-.hunter-roster-header > div { display: flex; align-items: baseline; gap: 10px; }
-.hunter-roster-header b { color: #fff1c6; font-size: 18px; text-shadow: 0 2px #312217; }
-.hunter-roster-header span { color: #d6c79e; font-size: 10px; }
-.hunter-roster-header span.full { color: #ffca68; }
-.hunter-roster-header button { min-width: 74px; min-height: 42px; padding: 0 8px; cursor: pointer; }
-.hunter-roster-body { display: grid; grid-template-columns: minmax(210px, .86fr) minmax(0, 1.4fr); gap: 9px; min-height: 0; padding-top: 9px; }
-.hunter-roster-column { display: grid; grid-template-rows: auto minmax(0, 1fr) auto minmax(68px, .38fr); min-height: 0; padding: 7px; border: 8px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/list_area_line_9__1576.png') 8 fill / 8px stretch; }
-.hunter-roster-column h2, .hunter-skills h2 { margin: 0 0 5px; color: #d9caa6; font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
-.hunter-slot-list, .hunter-waiting-list { display: grid; align-content: start; gap: 4px; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #9e7548 #261d17; }
-.hunter-waiting-list { margin-top: 2px; }
-.hunter-roster-row { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 7px; width: 100%; min-height: 49px; padding: 3px 7px 3px 4px; border: 0; background: url('/content/releases/original-flow-v1/sprites/hunter_area_bg__6171.png') center / 100% 100% no-repeat; color: #eee3c9; cursor: pointer; text-align: left; image-rendering: pixelated; }
-.hunter-roster-row:hover, .hunter-roster-row.selected { filter: brightness(1.22); }
-.hunter-roster-row.selected { outline: 2px solid #e8c46e; outline-offset: -3px; }
-.hunter-roster-row.empty { cursor: default; filter: grayscale(.8) brightness(.58); opacity: .75; }
-.hunter-avatar { display: grid; place-items: center; width: 38px; height: 41px; overflow: hidden; border: 5px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/box_menu_front_9__4849.png') 5 fill / 5px stretch; color: #f0d596; font-size: 11px; }
-.hunter-avatar img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
-.hunter-row-identity { display: grid; min-width: 0; }
-.hunter-row-identity b { overflow: hidden; color: #fff1cf; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-row-identity small { overflow: hidden; color: #bcb39e; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-roster-row > i { color: #f1d084; font-size: 8px; font-style: normal; }
-.hunter-waiting-empty { margin: 0; padding: 12px 8px; color: #9f9786; font-size: 8px; line-height: 1.4; text-align: center; }
-.hunter-detail { display: grid; grid-template-rows: auto auto auto minmax(0, 1fr) auto; align-content: start; gap: 9px; min-width: 0; min-height: 0; padding: 11px; border: 8px solid transparent; border-image: url('/content/releases/original-flow-v1/sprites/character_info__7588.png') 8 fill / 8px stretch; background-color: #171916d9; overflow: hidden; }
-.hunter-detail > header { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid #74684f; }
-.hunter-detail > header > div { display: grid; min-width: 0; }
-.hunter-detail > header b { overflow: hidden; color: #fff0c5; font-size: 16px; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-detail > header span { color: #c5b99f; font-size: 8px; line-height: 1.4; }
-.hunter-detail > header i { flex: 0 0 auto; padding: 4px 7px; border-radius: 3px; background: #334737; color: #bde195; font-size: 8px; font-style: normal; }
-.hunter-gauges { display: grid; gap: 5px; }
-.hunter-gauge { display: grid; grid-template-columns: 54px minmax(0, 1fr) 58px; align-items: center; gap: 6px; font-size: 8px; }
-.hunter-gauge > span { color: #d4c9ad; }
-.hunter-gauge > i { height: 9px; overflow: hidden; border: 1px solid #17120e; border-radius: 4px; background: #2f2922; }
-.hunter-gauge > i > i { display: block; height: 100%; background: linear-gradient(90deg, #4c9d55, #80d06b); }
-.hunter-gauge.stamina > i > i { background: linear-gradient(90deg, #397eaa, #71b9df); }
-.hunter-gauge.satiety > i > i { background: linear-gradient(90deg, #ad7130, #e7b258); }
-.hunter-gauge.mood > i > i { background: linear-gradient(90deg, #a54e79, #e584ad); }
-.hunter-gauge > b { color: #e5dbc3; font-size: 8px; text-align: right; }
-.hunter-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
-.hunter-stat-grid > span { display: flex; align-items: center; justify-content: space-between; gap: 5px; min-width: 0; padding: 6px 8px; border: 1px solid #574d3d; background: #201d18; }
-.hunter-stat-grid small { color: #aaa18f; font-size: 7px; }
-.hunter-stat-grid b { overflow: hidden; color: #f1db9d; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
-.hunter-skills { min-height: 0; overflow: hidden; }
-.hunter-skills > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 5px; max-height: 100%; overflow-y: auto; }
-.hunter-skills span { display: flex; align-items: center; gap: 6px; min-height: 38px; padding: 4px 6px; border: 1px solid #574d3d; background: #201d18; }
-.hunter-skills img { width: 30px; height: 30px; object-fit: contain; image-rendering: pixelated; }
-.hunter-skills b { color: #e8ddc5; font-size: 8px; }
-.hunter-skills p, .hunter-empty { align-self: center; margin: 0; padding: 14px; color: #a79e8c; font-size: 9px; text-align: center; }
-.hunter-detail > footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.hunter-detail > footer button { min-height: 42px; padding: 0 6px; cursor: pointer; }
-.hunter-detail > footer button:disabled { cursor: not-allowed; filter: grayscale(.9); opacity: .5; }
-.hunter-roster-status { min-height: 20px; padding: 6px 4px 0; color: #aeb7aa; font-size: 8px; text-align: center; }
-.hunter-roster-status.error { color: #ff8878; }
+.roster-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; transform: scale(1.02); }
 .login-screen { z-index: 30; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 50% 10%, #f5f6f1, #d9ded8 68%, #c5ccc6); transition: opacity .22s ease, visibility .22s; }
 .login-screen.leaving { opacity: 0; visibility: hidden; pointer-events: none; }
 .basic-login-card { display: grid; gap: 10px; width: min(340px, 100%); padding: 28px; border: 1px solid #b8c0ba; border-radius: 10px; background: #fffefa; box-shadow: 0 18px 48px #3440392b; color: #1d2822; }
@@ -993,31 +938,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .basic-login-card { width: min(340px, 100%); padding: 21px 18px; }
   .game-loading-screen { padding: 20px; background-position: 58% center; }
   .game-loading-content { width: 100%; margin-bottom: max(3vh, env(safe-area-inset-bottom)); }
-  .hunter-roster-panel { width: calc(100vw - 12px); height: calc(100vh - 12px); border-width: 14px; border-image-width: 14px; }
-  .hunter-roster-header { min-height: 40px; }
-  .hunter-roster-header b { font-size: 14px; }
-  .hunter-roster-header button { min-width: 62px; min-height: 34px; }
-  .hunter-roster-body { grid-template-columns: minmax(132px, .8fr) minmax(0, 1.2fr); gap: 5px; padding-top: 5px; }
-  .hunter-roster-column, .hunter-detail { padding: 5px; border-width: 5px; border-image-width: 5px; }
-  .hunter-roster-row { grid-template-columns: 31px minmax(0, 1fr); min-height: 39px; padding: 2px 4px; }
-  .hunter-roster-row > i { display: none; }
-  .hunter-avatar { width: 29px; height: 32px; border-width: 3px; border-image-width: 3px; font-size: 8px; }
-  .hunter-row-identity b { font-size: 8px; }
-  .hunter-row-identity small { font-size: 6px; }
-  .hunter-detail { gap: 6px; }
-  .hunter-detail > header b { font-size: 12px; }
-  .hunter-detail > header span { font-size: 6px; }
-  .hunter-detail > header i { padding: 3px 4px; font-size: 6px; }
-  .hunter-gauge { grid-template-columns: 38px minmax(0, 1fr) 42px; gap: 3px; font-size: 6px; }
-  .hunter-gauge > b, .hunter-stat-grid small, .hunter-stat-grid b { font-size: 6px; }
-  .hunter-stat-grid { gap: 3px; }
-  .hunter-stat-grid > span { padding: 4px; }
-  .hunter-skills > div { grid-template-columns: 1fr; }
-  .hunter-skills span { min-height: 28px; padding: 3px; }
-  .hunter-skills img { width: 22px; height: 22px; }
-  .hunter-skills b { font-size: 6px; }
-  .hunter-detail > footer { gap: 4px; }
-  .hunter-detail > footer button { min-height: 34px; padding: 0 2px; font-size: 7px; }
   .map-candidate { top: 67px; left: 8px; }
   .game-shell { --bottom-menu-bottom: max(7px, env(safe-area-inset-bottom)); --bottom-menu-reserved: 98px; }
   .bottom-menu { grid-template-columns: repeat(5, minmax(54px, 68px)); padding: 4px; }
@@ -1031,65 +951,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .evidence-diagnostics { left: 8px; top: 112px; max-width: calc(100vw - 16px); }
   .combat-hud { right: 8px; top: 112px; width: min(300px, calc(100vw - 16px)); }
 }
-
-/* Hunter List is a source-style bottom sheet above the persistent five-button menu. */
-.roster-screen { display: block; padding: 0; background: transparent; }
-.roster-background { opacity: 0; pointer-events: none; }
-.hunter-roster-panel { position: absolute; right: 6px; left: 6px; width: auto; height: clamp(300px, 46%, 570px); padding: 10px 10px 8px; overflow: hidden; border: 2px solid #c2b694; border-radius: 2px; background: linear-gradient(180deg, #211d18f8, #100e0cf4); box-shadow: inset 0 0 0 3px #17130f, inset 0 0 0 5px #6f6550, 0 -5px 16px #000a; filter: none; image-rendering: pixelated; }
-.hunter-roster-panel::before { content: ""; position: absolute; inset: 7px; border: 1px solid #373126; box-shadow: inset 0 0 0 1px #0b0908; pointer-events: none; }
-.hunter-roster-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#e0d3aa, #e0d3aa) 8px 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 0 / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) 8px 100% / 31px 2px no-repeat, linear-gradient(#e0d3aa, #e0d3aa) calc(100% - 39px) 100% / 31px 2px no-repeat; opacity: .72; pointer-events: none; }
-.hunter-roster-header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 40px; gap: 7px; min-height: 43px; padding: 0 2px 6px; border-bottom: 1px solid #b6a982; box-shadow: 0 2px #15110d; }
-.hunter-roster-header > .hunter-roster-heading { display: none; }
-.hunter-roster-actions { display: grid; grid-template-columns: 1.25fr .85fr; gap: 4px; min-width: 0; }
-.hunter-roster-actions button { min-width: 0; min-height: 35px; padding: 2px 5px; border: 1px solid #797467; border-radius: 3px; background: linear-gradient(#686866, #41413f); box-shadow: inset 0 0 0 2px #343432, 0 2px #0b0908; color: #f5edd8; font-size: 7px; text-shadow: 0 1px #000; }
-.hunter-roster-actions button:disabled { opacity: 1; filter: none; }
-.hunter-roster-header > .source-red-button { position: static; width: 40px; min-width: 40px; min-height: 35px; padding: 0; overflow: hidden; border: 1px solid #d58b5c; border-radius: 5px; background: linear-gradient(#b43c25, #842410); box-shadow: inset 0 0 0 2px #7a1f10, 0 2px #090706; font-size: 0; }
-.hunter-roster-header > .source-red-button::after { content: "X"; font-size: 12px; }
-.hunter-roster-body { position: relative; z-index: 1; display: block; min-height: 0; padding-top: 6px; container-type: inline-size; }
-.hunter-card-grid { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 4px; height: 100%; min-height: 0; overflow: hidden; }
-.hunter-roster-actor-canvas { position: absolute; z-index: 2; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; image-rendering: pixelated; }
-/* `item_grade_*` is gear-grade evidence, not a Hunter-card binding. These rarity auras are rebuild derivatives from the supplied roster reference. */
-.hunter-roster-card { --rarity-accent: #a9a58f; --rarity-core: #b7b49a24; --rarity-halo: #85816b18; position: relative; z-index: 1; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; place-items: center; min-width: 0; min-height: 0; padding: 3px 2px 3px; overflow: hidden; border: 2px solid #948668; border-radius: 3px; background: radial-gradient(ellipse at 50% 58%, var(--rarity-core) 0 16%, var(--rarity-halo) 38%, transparent 67%), linear-gradient(180deg, #24221bd9, #12110ef2); color: #f4e7c4; image-rendering: pixelated; }
-.hunter-roster-card::before { content: ""; position: absolute; z-index: 0; inset: 21% 4% 18%; border-radius: 45%; background: radial-gradient(ellipse, var(--rarity-core), transparent 69%); filter: blur(5px); opacity: .92; pointer-events: none; }
-.hunter-roster-card.rarity-normal { --rarity-accent: #d7d7c8; --rarity-core: #b9c0a529; --rarity-halo: #7f8a7130; }
-.hunter-roster-card.rarity-rare { --rarity-accent: #9d8cff; --rarity-core: #8278dd66; --rarity-halo: #5669bf42; }
-.hunter-roster-card.rarity-superior { --rarity-accent: #f0c94e; --rarity-core: #e0be526b; --rarity-halo: #8f7b3448; }
-.hunter-roster-card.rarity-heroic { --rarity-accent: #4fd7e8; --rarity-core: #6ccfe968; --rarity-halo: #d86aa94b; background: radial-gradient(circle at 35% 55%, #58c9e95c, transparent 34%), radial-gradient(circle at 75% 72%, #d75b9e54, transparent 38%), linear-gradient(180deg, #23232ad9, #141117f2); }
-.hunter-roster-card.rarity-legendary { --rarity-accent: #ff9e37; --rarity-core: #f6ba506e; --rarity-halo: #d24c354d; background: radial-gradient(ellipse at 50% 58%, #ffd05f70 0 14%, #d95c3d4b 42%, transparent 68%), linear-gradient(180deg, #2a2118e6, #15100df4); }
-.hunter-roster-card.selected { border-color: #948668; box-shadow: none; }
-.hunter-roster-card > header, .hunter-card-meta, .hunter-roster-card > footer { position: relative; z-index: 3; }
-.hunter-roster-card > header { display: grid; justify-items: center; align-content: start; gap: 1px; width: 100%; min-width: 0; }
-.hunter-card-name { display: flex; justify-content: center; align-items: baseline; gap: 3px; width: 100%; min-width: 0; }
-.hunter-card-name b { overflow: hidden; color: #f5e8ca; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 1px #000; }
-.hunter-card-name i { flex: 0 0 auto; color: var(--rarity-accent); font-size: 7px; font-style: italic; font-weight: 900; text-shadow: 0 0 5px var(--rarity-accent), 0 1px #000; }
-.hunter-card-level-class { display: flex; justify-content: center; gap: 2px; width: 100%; min-width: 0; color: #f1eee5; font-size: 6px; font-weight: 700; white-space: nowrap; }
-.hunter-card-level-class em { overflow: hidden; font-style: normal; text-overflow: ellipsis; }
-.hunter-card-level-class .class-h1 { color: #ef7775; }
-.hunter-card-level-class .class-h2 { color: #e4bd64; }
-.hunter-card-level-class .class-h3 { color: #76c77a; }
-.hunter-card-level-class .class-h4 { color: #68c9d7; }
-.hunter-card-level-class .class-h5 { color: #b081d7; }
-.hunter-card-level-class .class-unresolved { color: #a9a18f; }
-.hunter-roster-card .hunter-avatar { align-self: stretch; width: 100%; height: auto; min-height: 62px; margin: 0; padding: 0; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core) 0 13%, transparent 62%); cursor: pointer; }
-.hunter-roster-card .hunter-avatar.composed { color: transparent; }
-.hunter-roster-card .hunter-avatar img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
-.hunter-card-meta { display: grid; width: 100%; min-width: 0; text-align: center; }
-.hunter-card-meta small { overflow: hidden; color: #f0eee5; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px #000; }
-.hunter-card-meta small.positive { color: #a6e578; }
-.hunter-card-meta small.danger { color: #ee7772; }
-.hunter-card-hunt-progress { display: block; width: calc(100% - 8px); height: 4px; margin: 1px auto 0; overflow: hidden; border: 1px solid #241b16; background: #3b3228; }
-.hunter-card-hunt-progress > i { display: block; height: 100%; background: #8d58bd; }
-.hunter-roster-card > footer { display: grid; grid-template-columns: minmax(0, 1fr) 29px; gap: 2px; width: 100%; margin-top: 2px; }
-.hunter-card-info { width: 100%; min-height: 25px; margin: 0; border: 1px solid #77736a; border-radius: 3px; background: linear-gradient(#696967, #424240); box-shadow: inset 0 0 0 2px #343432, 0 1px #0b0908; color: #fff4df; font-size: 8px; cursor: pointer; }
-.hunter-card-info:focus, .hunter-card-info:focus-visible { outline: 0; }
-.hunter-card-target { display: grid; place-items: center; width: 29px; min-height: 25px; padding: 2px; border: 3px solid #6f7440; border-radius: 4px; background: linear-gradient(#849346, #445120); opacity: 1; }
-.hunter-card-target:hover:not(:disabled) { filter: brightness(1.2); }
-.hunter-card-target:disabled { filter: grayscale(.8); opacity: .45; cursor: not-allowed; }
-.hunter-card-target img { width: 20px; height: 20px; object-fit: contain; image-rendering: pixelated; }
-.hunter-roster-card.empty { grid-template-rows: 1fr auto; filter: grayscale(.8); opacity: .28; }
-.hunter-roster-card.empty > b { font-size: 5px; }
-.hunter-roster-status { position: relative; z-index: 1; min-height: 0; padding: 2px 3px 0; color: #bbb39e; font-size: 5px; }
-.hunter-roster-status:empty { display: none; }
 
 .hunter-info-overlay { position: absolute; z-index: 40; inset: 0 0 calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved)); display: grid; place-items: center; padding: max(10px, 2vh) 3%; background: radial-gradient(circle at 50% 36%, #4a315375, #050807e8 72%); backdrop-filter: blur(2px); }
 .hunter-info-scale-frame { position: relative; flex: 0 0 auto; animation: hunter-panel-arrive .22s cubic-bezier(.18,.85,.28,1) both; }
@@ -1219,11 +1080,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-weapon-equip { min-height: 30px; padding: 2px 5px; font-size: 7px; }
 
 @container game-shell (max-width: 390px) {
-  .hunter-roster-panel { right: 4px; left: 4px; width: auto; height: 77%; border-width: 2px; }
-  .hunter-card-grid { gap: 3px; }
-  /* Keep the original portrait-card proportion; do not stretch cards to fill
-     the entire bottom sheet on short phones. */
-  .hunter-roster-card { padding-inline: 1px; }
   .resource-ledger { min-width: 90px; padding-right: 4px; }
   .resource-line { grid-template-columns: 18px minmax(48px, auto); }
   .top-quick-actions button { width: 38px; height: 40px; padding: 4px; }
@@ -1265,19 +1121,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .map-candidate, .evidence-diagnostics { top: 101px; max-width: calc(100vw - 10px); }
   .combat-hud { top: 101px; right: 5px; width: calc(100vw - 10px); max-height: calc(100% - 195px); overflow-y: auto; }
   .panel-message { width: calc(100vw - 12px); padding: 6px 8px; }
-
-  .hunter-roster-panel { right: 4px; left: 4px; width: auto; height: auto; max-height: min(570px, calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 6px)); padding: 7px 6px 5px; }
-  .hunter-roster-header { grid-template-columns: minmax(0, 1fr) 36px; min-height: 38px; gap: 4px; }
-  .hunter-roster-header > .source-red-button { width: 36px; min-width: 36px; min-height: 32px; }
-  .hunter-roster-actions { gap: 3px; }
-  .hunter-roster-actions button { min-height: 32px; padding-inline: 2px; font-size: 6px; }
-  .hunter-card-grid { gap: 3px; }
-  .hunter-roster-card { padding-inline: 1px; }
-  .hunter-roster-card .hunter-avatar { min-height: 48px; }
-  .hunter-card-info { min-height: 23px; font-size: 7px; }
-  .hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 25px; }
-  .hunter-card-target { width: 25px; min-height: 23px; padding: 1px; }
-  .hunter-card-target img { width: 18px; height: 18px; }
 
   .hunter-info-overlay { inset: 0 0 calc(var(--bottom-menu-bottom) + var(--bottom-menu-reserved)); padding: 4px; }
 
@@ -1322,13 +1165,6 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   .bounty-quest-list { min-height: 120px; }
 }
 
-/* Card geometry follows the actual roster panel, not the browser viewport.
-   This keeps narrow desktop shells and mobile Chrome on the same proportion. */
-@supports (width: 1cqw) {
-  .hunter-card-grid { height: calc(80.645cqw - 5px); align-self: start; }
-  .hunter-roster-card { aspect-ratio: auto; }
-}
-
 /* Height modes are classified from the shell as well, so a narrow desktop
    shell and mobile Chrome share the same vertical budget. */
 .game-shell.ui-gear-short .gear-create-pop:not(.gear-detail-mode) {
@@ -1353,24 +1189,8 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .game-shell.ui-short .menu-button { min-height: 48px; }
 .game-shell.ui-short .menu-icon { width: 28px; height: 28px; }
 .game-shell.ui-short .menu-icon img { width: 27px; height: 27px; }
-.game-shell.ui-short .hunter-roster-panel { height: auto; max-height: calc(100% - var(--bottom-menu-bottom) - var(--bottom-menu-reserved) - 4px); }
-.game-shell.ui-short .hunter-roster-card .hunter-avatar { min-height: 38px; }
-
-/* The desktop shell is intentionally wider, so let the roster grow with it
-   while preserving the recovered portrait-card ratio. */
 @media (min-width: 700px) and (min-aspect-ratio: 1/1) {
-  /* Desktop keeps the Hunter command sheet close to the selected character's
-     controls instead of stretching the mobile bottom sheet across the shell. */
   .hunter-world-command-panel { right: auto; left: 50%; width: min(480px, calc(100% - 32px)); transform: translateX(-50%); }
-  /* Keep the desktop sheet tight around four compact columns. Extra Hunters
-     use the grid's own scroll area instead of pushing Info below the fold. */
-  .hunter-roster-panel { left: 50%; right: auto; width: min(590px, calc(100% - 48px)); height: min(420px, calc(100% - 48px)); transform: translateX(-50%); }
-  .hunter-card-grid { grid-template-columns: repeat(4, minmax(0, 136px)); grid-template-rows: none; grid-auto-rows: 164px; justify-content: center; align-content: start; height: 100%; overflow-y: auto; overflow-x: hidden; padding: 0 3px 4px; scrollbar-width: thin; scrollbar-color: #8d7952 #1d1812; }
-  .hunter-roster-card { aspect-ratio: auto; height: 164px; }
-  .hunter-roster-card .hunter-avatar { min-height: 0; }
-  .hunter-card-info, .hunter-card-target { min-height: 22px; }
-  .hunter-card-target { width: 26px; }
-  .hunter-card-target img { width: 18px; height: 18px; }
   .source-popup { max-width: min(520px, calc(100% - 64px)); max-height: calc(100% - 48px); }
   .bounty-quest-pop { width: 480px; }
 }
@@ -1464,26 +1284,47 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
   image-rendering: pixelated;
 }
 .hunter-roster-card::before { content: ""; position: absolute; z-index: 0; inset: 25% 8% 17%; background: radial-gradient(ellipse, var(--rarity-core), transparent 70%); pointer-events: none; }
+.hunter-roster-card.rarity-normal { --rarity-accent: #d7d7c8; --rarity-core: #b9c0a529; --rarity-halo: #7f8a7130; }
+.hunter-roster-card.rarity-rare { --rarity-accent: #9d8cff; --rarity-core: #8278dd66; --rarity-halo: #5669bf42; }
+.hunter-roster-card.rarity-superior { --rarity-accent: #f0c94e; --rarity-core: #e0be526b; --rarity-halo: #8f7b3448; }
+.hunter-roster-card.rarity-heroic { --rarity-accent: #4fd7e8; --rarity-core: #6ccfe968; --rarity-halo: #d86aa94b; background: radial-gradient(circle at 35% 55%, #58c9e95c, transparent 34%), radial-gradient(circle at 75% 72%, #d75b9e54, transparent 38%), linear-gradient(180deg, #23232a, #141117); }
+.hunter-roster-card.rarity-legendary { --rarity-accent: #ff9e37; --rarity-core: #f6ba506e; --rarity-halo: #d24c354d; background: radial-gradient(ellipse at 50% 58%, #ffd05f70 0 14%, #d95c3d4b 42%, transparent 68%), linear-gradient(180deg, #2a2118, #15100d); }
 .hunter-roster-card.selected { border-color: var(--rarity-accent); filter: brightness(1.08); box-shadow: 0 0 0 2px #0a0907, 0 0 0 3px var(--rarity-accent), 0 8px 18px #000a; }
 .hunter-roster-card > header, .hunter-card-meta, .hunter-roster-card > footer { position: relative; z-index: 3; }
-.hunter-roster-card > header { display: grid; align-content: start; justify-items: center; gap: 3px; min-width: 0; }
-.hunter-card-name { justify-content: center; }
-.hunter-card-name b { font-size: 10px; }
-.hunter-card-name i { font-size: 8px; }
-.hunter-card-level-class { gap: 5px; font-size: 7px; }
+.hunter-roster-card > header { display: grid; align-content: start; justify-items: center; gap: 3px; width: 100%; min-width: 0; }
+.hunter-card-name { display: flex; align-items: baseline; justify-content: center; gap: 3px; width: 100%; min-width: 0; }
+.hunter-card-name b { overflow: hidden; color: #f5e8ca; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 1px #000; }
+.hunter-card-name i { flex: 0 0 auto; color: var(--rarity-accent); font-size: 8px; font-style: italic; font-weight: 900; text-shadow: 0 0 5px var(--rarity-accent), 0 1px #000; }
+.hunter-card-level-class { display: flex; justify-content: center; gap: 5px; width: 100%; min-width: 0; color: #f1eee5; font-size: 7px; font-weight: 700; white-space: nowrap; }
+.hunter-card-level-class em { overflow: hidden; font-style: normal; text-overflow: ellipsis; }
+.hunter-card-level-class .class-h1 { color: #ef7775; }
+.hunter-card-level-class .class-h2 { color: #e4bd64; }
+.hunter-card-level-class .class-h3 { color: #76c77a; }
+.hunter-card-level-class .class-h4 { color: #68c9d7; }
+.hunter-card-level-class .class-h5 { color: #b081d7; }
+.hunter-card-level-class .class-unresolved { color: #a9a18f; }
 .hunter-roster-card .hunter-avatar { align-self: stretch; display: grid; place-items: center; width: 100%; height: auto; min-height: 0; margin: 0; padding: 0; overflow: hidden; border: 0; background: radial-gradient(ellipse at 50% 82%, var(--rarity-core), transparent 64%); cursor: pointer; }
+.hunter-roster-card .hunter-avatar.composed { color: transparent; }
 .hunter-roster-card .hunter-avatar img { width: 50%; height: 54%; object-fit: contain; object-position: center bottom; }
-.hunter-card-meta { align-content: center; text-align: center; }
-.hunter-card-meta small { font-size: 7px; }
-.hunter-roster-card > footer { grid-template-columns: minmax(0, 1fr) 34px; gap: 5px; margin-top: 3px; }
-.hunter-card-info { min-height: 31px; font-size: 8px; }
-.hunter-card-target { width: 34px; min-height: 31px; }
-.hunter-card-target img { width: 21px; height: 21px; }
+.hunter-card-meta { display: grid; align-content: center; width: 100%; min-width: 0; text-align: center; }
+.hunter-card-meta small { overflow: hidden; color: #f0eee5; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px #000; }
+.hunter-card-meta small.positive { color: #a6e578; }
+.hunter-card-meta small.danger { color: #ee7772; }
+.hunter-card-hunt-progress { display: block; width: calc(100% - 8px); height: 4px; margin: 1px auto 0; overflow: hidden; border: 1px solid #241b16; background: #3b3228; }
+.hunter-card-hunt-progress > i { display: block; height: 100%; background: #8d58bd; }
+.hunter-roster-card > footer { display: grid; grid-template-columns: minmax(0, 1fr) 34px; gap: 5px; width: 100%; margin-top: 3px; }
+.hunter-card-info { width: 100%; min-height: 31px; margin: 0; border: 1px solid #77736a; border-radius: 3px; background: linear-gradient(#696967, #424240); box-shadow: inset 0 0 0 2px #343432, 0 1px #0b0908; color: #fff4df; font-size: 8px; cursor: pointer; }
+.hunter-card-info:focus, .hunter-card-info:focus-visible { outline: 0; }
+.hunter-card-target { display: grid; place-items: center; width: 34px; min-height: 31px; padding: 2px; border: 3px solid #6f7440; border-radius: 4px; background: linear-gradient(#849346, #445120); opacity: 1; }
+.hunter-card-target:hover:not(:disabled) { filter: brightness(1.2); }
+.hunter-card-target:disabled { filter: grayscale(.8); opacity: .45; cursor: not-allowed; }
+.hunter-card-target img { width: 21px; height: 21px; object-fit: contain; image-rendering: pixelated; }
 .hunter-roster-card.empty { grid-template-rows: 1fr auto; place-items: center; height: 214px; opacity: .32; }
 .hunter-roster-card.empty .hunter-avatar { width: 54px; height: 54px; min-height: 54px; border: 1px dashed #74694f; border-radius: 12px; background: #ffffff05; color: #d9c58d; font-size: 18px; }
 .hunter-roster-card.empty > b { padding-bottom: 8px; color: #aca28d; font-size: 7px; }
 .hunter-roster-status { position: relative; z-index: 2; min-height: 18px; padding: 4px 4px 0; color: #bbb39e; font-size: 7px; text-align: center; }
 .hunter-roster-status:empty { display: none; }
+.hunter-roster-status.error { color: #ff8878; }
 .game-shell.ui-short .hunter-roster-panel,
 .game-shell.ui-very-short .hunter-roster-panel {
   height: min(560px, calc(100% - 24px));

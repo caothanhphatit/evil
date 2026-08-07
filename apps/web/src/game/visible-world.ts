@@ -582,7 +582,6 @@ export class VisibleEntityWorld {
 
   private applyProjectionVisualSkin(spine: Spine, family: string, entity: WorldEntityProjection): string {
     const candidates: Record<string, string[]> = {
-      hunter: ["All_h1"],
       Chief: ["chief_body_01", "cos_01"],
       Npc: ["npc_01"],
       npc_animal: ["1"],

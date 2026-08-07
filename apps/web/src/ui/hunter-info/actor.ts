@@ -1,7 +1,6 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Application } from "pixi.js";
-import { hunterActorVisual } from "../../game/hunter-actor-presentation";
-import { applyHunterSpineSkin, removeHunterPaperDollEffects } from "../../game/hunter-spine-presentation";
+import { prepareHunterPaperDoll } from "../../game/hunter-paper-doll";
 import type { HunterView } from "../hunter-roster";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "../hunter-presentation-assets";
 
@@ -38,19 +37,12 @@ export function createHunterInfoActor(): HunterInfoActorController {
         app.renderer.resize(width, height);
 
         const spine = Spine.from({ skeleton: HUNTER_SKELETON_ALIAS, atlas: HUNTER_ATLAS_ALIAS, autoUpdate: true });
-        const visual = hunterActorVisual({
+        prepareHunterPaperDoll(spine, {
           entity_id: hunter.id,
           hunter_id: hunter.numericId,
           class_family: hunter.classFamily,
           animation: hunter.animation,
-        });
-        applyHunterSpineSkin(spine, visual.skinNames, hunter.classFamily, "hunter-info-hunter");
-        // Detail is a paper-doll view: combat/death animations can rotate or
-        // widen the skeleton and must not affect the equipment layout.
-        const animation = "hunter_stay";
-        if (spine.skeleton.data.findAnimation(animation)) spine.state.setAnimation(0, animation, true);
-        removeHunterPaperDollEffects(spine);
-        spine.tint = visual.tint;
+        }, hunter.classFamily, "hunter-info-hunter");
         const bounds = spine.getLocalBounds();
         const scale = Math.min(
           bounds.width > 0 ? width * 0.68 / bounds.width : 1,

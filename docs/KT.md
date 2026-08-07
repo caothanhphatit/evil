@@ -140,6 +140,11 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   fit excludes packaged effect-only slots (`effect*` and `*_effect`) from the
   paper-doll bounds; body, costume, hair, hat, back and weapon attachments stay
   intact. This prevents oversized VFX geometry from shrinking the visible gear.
+  Shared game-layer paper-doll preparation owns skin composition, idle pose,
+  VFX suppression and tint; roster and Detail own only their local fit/position.
+  The obsolete aggregate-Hunter fallback and the pre-canonical roster CSS
+  generations were removed. Hunter roster framing now has one canonical style
+  block plus its colocated responsive override, with no legacy cascade dependency.
 - Migration `0044_repair_demo_hunter_gold.sql` repairs demo Hunter wallets that
   were checkpointed back to zero after the earlier one-time migration. Demo
   rosters created for an existing account now run the full-demo seed in the same
