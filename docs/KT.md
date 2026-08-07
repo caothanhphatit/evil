@@ -125,11 +125,12 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   onto the weapon equipment slot instead of leaving the legacy fixture visible.
   The Detail paper doll keeps a larger full-body fit than the roster while both
   Spine actors and portrait-backed Hunters remain bounded by the slot frame.
-  Paper-doll surfaces use the packaged `All_h1` through `All_h5` aggregate
-  class compositions, restoring the complete body/hair/outfit presentation that
-  the early visible-world fixture displayed. World combat actors keep the
-  modular body/costume/weapon composition; exact equipment-instance-to-Spine
-  skin bindings remain unresolved and must not be inferred from item order.
+  Roster and Detail paper dolls use the same modular body/costume/base-weapon
+  composition as Town actors. The packaged `All_h1` through `All_h5` aggregate
+  showcase skins must not replace that runtime composition: doing so makes the
+  surfaces disagree even when they represent the same Hunter. Exact equipment-
+  instance-to-Spine skin bindings remain unresolved and must not be inferred
+  from item order.
   The canonical Hunter roster no longer uses the legacy popup or list-area
   nine-slice borders. Its desktop/mobile frame and rarity cards use a responsive
   CSS-drawn bronze panel language while preserving the existing Detail popup.

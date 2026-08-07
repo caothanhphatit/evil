@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { hunterActorVisual, hunterClassTone, hunterPercent, hunterRarityPresentation, hunterWorldEntityId, projectHunterRoster } from "./hunter-roster";
-import { hunterPaperDollVisual } from "../game/hunter-actor-presentation";
 import { hunterWeaponAttachment } from "../game/hunter-spine-presentation";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -118,16 +117,6 @@ describe("hunter helpers", () => {
       { slot: "weapon_03", attachment: "bow" },
       { slot: "weapon_04", attachment: "wand" },
       { slot: "weapon_05", attachment: "spear" },
-    ]);
-  });
-
-  it("uses the packaged full-outfit class composition for list and Detail paper dolls", () => {
-    expect(["H1", "H2", "H3", "H4", "H5"].map((family) => hunterPaperDollVisual({ hunter_id: 1, class_family: family }).skinNames)).toEqual([
-      ["All_h1"],
-      ["All_h2"],
-      ["All_h3"],
-      ["All_h4"],
-      ["All_h5"],
     ]);
   });
 

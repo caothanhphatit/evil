@@ -1,6 +1,6 @@
 import { Spine } from "@esotericsoftware/spine-pixi-v8";
 import { Application } from "pixi.js";
-import { hunterPaperDollVisual } from "../../game/hunter-actor-presentation";
+import { hunterActorVisual } from "../../game/hunter-actor-presentation";
 import { applyHunterSpineSkin, removeHunterPaperDollEffects } from "../../game/hunter-spine-presentation";
 import type { HunterView } from "../hunter-roster";
 import { HUNTER_ATLAS_ALIAS, HUNTER_SKELETON_ALIAS, preloadHunterPresentationAssets } from "../hunter-presentation-assets";
@@ -38,7 +38,7 @@ export function createHunterInfoActor(): HunterInfoActorController {
         app.renderer.resize(width, height);
 
         const spine = Spine.from({ skeleton: HUNTER_SKELETON_ALIAS, atlas: HUNTER_ATLAS_ALIAS, autoUpdate: true });
-        const visual = hunterPaperDollVisual({
+        const visual = hunterActorVisual({
           entity_id: hunter.id,
           hunter_id: hunter.numericId,
           class_family: hunter.classFamily,

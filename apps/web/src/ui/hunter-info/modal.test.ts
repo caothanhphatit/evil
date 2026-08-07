@@ -106,11 +106,14 @@ describe("Hunter Info modal shell", () => {
     expect(actor).toContain("height * 0.62 / bounds.height");
     expect(actor).toContain("1.9,");
     expect(actor).toContain("removeHunterPaperDollEffects(spine)");
+    expect(actor).toContain("hunterActorVisual({");
+    expect(actor).not.toContain("hunterPaperDollVisual");
     expect(styles).toContain(".hunter-paper-doll img { width: 90%; height: 90%");
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
     expect(rosterActors).toContain("avatarBounds.height * 0.82");
     expect(rosterActors).toContain("removeHunterPaperDollEffects(spine)");
+    expect(rosterActors).toContain("hunterActorVisual({");
     expect(rosterActors).toContain("spine.mask = clip");
     expect(actor).toContain("preload: initialize");
     expect(rosterActors).toContain("preloadHunterPresentationAssets()");
