@@ -1129,7 +1129,7 @@ button:focus-visible { outline: 3px solid #f7cf62; outline-offset: 3px; }
 .hunter-utility-slot { position: relative; z-index: 2; display: grid; place-items: center; width: 36px; min-width: 0; justify-self: center; aspect-ratio: 1; border: 2px solid #d18ce9; border-radius: 3px; background: linear-gradient(#70407d, #42254e); box-shadow: inset 0 0 0 3px #26152d, 0 2px 3px #000b; }
 .hunter-utility-slot i { width: 9px; height: 9px; border: 1px solid #eed5f5; transform: rotate(45deg); }
 .hunter-paper-doll { position: relative; z-index: 1; display: grid; place-items: end center; min-height: 0; overflow: hidden; border-bottom: 2px solid #b59558; background: radial-gradient(ellipse at 50% 74%, #70477b66 0 25%, #bd9e6842 47%, transparent 69%); }
-.hunter-paper-doll img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+.hunter-paper-doll img { width: 60%; height: 60%; object-fit: contain; object-position: center bottom; }
 .hunter-paper-doll span { align-self: center; color: #948a75; font-size: 7px; }
 .hunter-info-actor-canvas { display: block; width: 100% !important; height: 100% !important; image-rendering: pixelated; }
 .hunter-experience { position: relative; height: 22px; margin: 2px 2px 0; }

@@ -86,6 +86,7 @@ describe("Hunter Info modal shell", () => {
     const actor = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-info/actor.ts"), "utf8");
     const rosterActors = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-roster-actors.ts"), "utf8");
     const presentationAssets = await readFile(resolve(repositoryRoot, "apps/web/src/ui/hunter-presentation-assets.ts"), "utf8");
+    const styles = await readFile(resolve(repositoryRoot, "apps/web/src/styles.css"), "utf8");
     expect(source).toContain("createHunterInfoActor");
     expect(source).toContain("UTILITY_SLOT_COUNT = 6");
     expect(source).toContain('left: ["ring", "weapon", "necklace"]');
@@ -102,8 +103,9 @@ describe("Hunter Info modal shell", () => {
     expect(source).not.toContain("Look unavailable");
     expect(actor).toContain('const animation = "hunter_stay"');
     expect(actor).not.toContain('visual.animation ?? "hunter_stay"');
-    expect(actor).toContain("height * 0.74 / bounds.height");
-    expect(actor).toContain("2.4,");
+    expect(actor).toContain("height * 0.52 / bounds.height");
+    expect(actor).toContain("1.55,");
+    expect(styles).toContain(".hunter-paper-doll img { width: 60%; height: 60%");
     expect(rosterActors).toContain('const animation = "hunter_stay"');
     expect(rosterActors).not.toContain('visual.animation ?? "hunter_stay"');
     expect(rosterActors).toContain("avatarBounds.height * 0.62");
