@@ -51,6 +51,7 @@ export interface HunterView {
   gold: number | null;
   portrait: string | null;
   skills: HunterSkillView[];
+  equippedWeaponInstanceId?: string | null;
   hunt: {
     status: "idle" | "hunting" | "returning" | "dead";
     zoneId: string | null;
@@ -154,6 +155,10 @@ function parseHunter(value: unknown, rosterState: HunterRosterState, index: numb
   const displayName = stringValue(row.display_name);
   if (numericId === null || displayName === null) return null;
   const id = `hunter-${numericId}`;
+  const hunterInfo = record(row.hunter_info);
+  const equippedWeapon = array(hunterInfo.weapons)
+    .map(record)
+    .find((weapon) => weapon.equipped === true);
   return {
     id,
     numericId,
@@ -188,6 +193,7 @@ function parseHunter(value: unknown, rosterState: HunterRosterState, index: numb
       const parsed = parseSkill(skill, skillIndex);
       return parsed ? [parsed] : [];
     }),
+    equippedWeaponInstanceId: stringValue(equippedWeapon?.gear_instance_id),
     hunt: projectHunt(hunt),
   };
 }

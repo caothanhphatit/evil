@@ -16,7 +16,7 @@ import { createOpenHunterEnhancementIntent } from "../ui/hunter-enhancement-entr
 import { findBuildingInstanceById } from "../game/building-placement";
 import { projectBuildingEvidence } from "../content/building-evidence";
 import { ENHANCEMENT_FORGE_BUILDING_IDS } from "../content/blacksmith-route";
-import type { BuildingRenderingContext } from "./building-renderer";
+import type { BuildingRenderingContext } from "./building-rendering-context";
 import type { HunterControllerContext } from "./hunter-controller";
 import { t } from "../i18n";
 import { recordClientEvent } from "../observability/client-telemetry";
@@ -58,6 +58,16 @@ export interface WorldControllerContext {
   syncEnhancementTaskView(snapshot: OriginalFlowSnapshot): void;
 }
 export function createWorldController(context: WorldControllerContext) {
+  let rosterEquipmentSignature = "";
+
+  function equipmentSignature(snapshot: OriginalFlowSnapshot): string {
+    return snapshot.hunter_roster.active_hunters.map((hunter) => {
+      const weaponSlot = hunter.hunter_info.equipment_slots?.find((slot) => slot.slot_id === "weapon")?.catalog_kind ?? "";
+      const equipped = hunter.hunter_info.weapons.find((weapon) => weapon.equipped)?.gear_instance_id ?? "";
+      return `${hunter.hunter_id}:${weaponSlot}:${equipped}`;
+    }).join("|");
+  }
+
   async function initializeWorld(): Promise<void> {
   const app = new Application();
   await app.init({ resizeTo: context.worldViewport, backgroundColor: TOWN_CAMERA_CLEAR_COLOR, backgroundAlpha: 1, antialias: false, autoDensity: true, resolution: Math.min(devicePixelRatio, 2) });
@@ -161,6 +171,7 @@ export function createWorldController(context: WorldControllerContext) {
   });
   context.worldViewport.addEventListener("pointercancel", () => { dragging = false; dragCaptured = false; });
   context.worldViewport.addEventListener("wheel", (event) => {
+    if (context.hunterRosterOpen) return;
     event.preventDefault();
     visibleWorld.zoomBy(event.deltaY > 0 ? -0.1 : 0.1);
     if (context.latestSnapshot) renderHunterEnhancementInteractions(context.latestSnapshot);
@@ -229,6 +240,11 @@ function renderSnapshot(snapshot: OriginalFlowSnapshot): void {
     item.classList.toggle("selected", item.dataset.action === activeMenuAction);
   });
   const now = performance.now();
+  const nextEquipmentSignature = equipmentSignature(snapshot);
+  if (nextEquipmentSignature !== rosterEquipmentSignature) {
+    rosterEquipmentSignature = nextEquipmentSignature;
+    context.nextHunterRosterRefreshAt = now;
+  }
   if (!context.hunterRosterPrimed && snapshot.screen === "village") {
     context.hunterController.renderHunterRoster(snapshot);
     context.hunterRosterPrimed = true;
