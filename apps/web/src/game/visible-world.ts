@@ -5,7 +5,7 @@ import { loadVerifiedVisibleWorldRelease, type ActorBundle, type MonsterDensityS
 import type { BuildingInstanceSnapshot, CombatPresentationSnapshot, WorldDropProjection, WorldEntityProjection } from "../generated/protocol";
 import { projectRenderableBuildingInstances } from "./building-placement";
 import { panWorldViewport, worldPointVisible } from "./camera";
-import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageBuildingDepth } from "./depth";
+import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageActorDepthWithOccluders, villageBuildingDepth } from "./depth";
 import { ProjectionBuffer, type ProjectionDriftDiagnostic } from "./projection-interpolation";
 import {
   RANGER_PROJECTILE_SCALE,
@@ -66,7 +66,7 @@ interface ActorView {
   speechLabel: string | null;
 }
 interface ActorHealthBarView { root: Container; fill: Sprite; }
-interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; }
+interface BuildingFootprint { id: string; x: number; y: number; halfWidth: number; top: number; depth: number; }
 interface BuildingTemplate { visual: TownBuilding; texture: Texture; }
 interface SignboardView { root: Container; sprite: Sprite; textures: Map<number, Texture>; densityLevel: number; }
 interface RangedProjectileView { sprite: Sprite; start: { x: number; y: number }; end: { x: number; y: number }; spawnedAtMs: number; }
@@ -236,6 +236,7 @@ export class VisibleEntityWorld {
         y: placement.y,
         halfWidth: template.texture.width * template.visual.scale * 0.32,
         top: placement.y - template.texture.height * template.visual.scale * 0.72,
+        depth: sprite.zIndex,
       });
     }
     for (const [instanceId, sprite] of this.buildingSprites) {
@@ -422,7 +423,7 @@ export class VisibleEntityWorld {
     // Applying another target blend here makes every server confirmation pull
     // actors backward and makes animation speed lag behind their route.
     view.root.position.set(position.x, position.y);
-    view.root.zIndex = villageActorDepth(position.y, SCENE_WORLD_HEIGHT);
+    view.root.zIndex = villageActorDepthWithOccluders(position.x, position.y, SCENE_WORLD_HEIGHT, this.buildingFootprints);
     view.presence.visible = entity.descriptor.kind === "monster";
     view.root.eventMode = entity.selectable ? "static" : "none";
     view.root.cursor = entity.selectable ? "pointer" : "default";

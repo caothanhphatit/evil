@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageBuildingDepth } from "./depth";
+import { sceneDepthFromUnityZ, scenePieceDepth, villageActorDepth, villageActorDepthWithOccluders, villageBuildingDepth } from "./depth";
 
 describe("visible-world depth projection", () => {
   it("inverts recovered Unity Z so foreground pieces render above background tiles", () => {
@@ -29,5 +29,14 @@ describe("visible-world depth projection", () => {
 
     expect(northRowBuilding).toBeGreaterThan(bridge);
     expect(villageBuildingDepth(1200, 1536)).toBeGreaterThan(northRowBuilding);
+  });
+
+  it("renders an actor above the specific building whose front edge it crossed", () => {
+    const buildingDepth = villageBuildingDepth(528, 1536);
+    const occluders = [{ x: 500, y: 528, halfWidth: 80, depth: buildingDepth }];
+
+    expect(villageActorDepthWithOccluders(500, 560, 1536, occluders)).toBeGreaterThan(buildingDepth);
+    expect(villageActorDepthWithOccluders(700, 560, 1536, occluders)).toBe(villageActorDepth(560, 1536));
+    expect(villageActorDepthWithOccluders(500, 500, 1536, occluders)).toBe(villageActorDepth(500, 1536));
   });
 });

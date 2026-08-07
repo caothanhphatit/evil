@@ -169,6 +169,11 @@ new raw study inputs unless their inclusion and LFS treatment are deliberate.
   beside the authoritative `build_2` Sanctuary footprint. Exact original
   navigation polygons, arrival FSM coordinates, and revival offset remain
   unresolved.
+- Town actor depth keeps the bridge-protection floor for building sprites, but
+  a Hunter whose feet cross a building's front edge within that building's
+  horizontal footprint is raised immediately above that specific sprite. This
+  prevents northern-row buildings from covering actors standing in front while
+  preserving behind-building occlusion and bridge ordering.
 - Building registries, conditions, product stock, crafting/service routes,
   trading post, blacksmith/gear shop, potion route separation, and related DB
   migrations exist. UI fidelity is still an iterative migration, not proof that

@@ -2,6 +2,14 @@ const ACTOR_DEPTH_BACK = 487;
 const ACTOR_DEPTH_SPAN = 2.5;
 const WALKABLE_SURFACE_DEPTH = -485.95;
 const BUILDING_DEPTH_FLOOR = WALKABLE_SURFACE_DEPTH + 0.01;
+const OCCLUDER_DEPTH_STEP = 0.001;
+
+export interface VillageDepthOccluder {
+  x: number;
+  y: number;
+  halfWidth: number;
+  depth: number;
+}
 
 // Unity's recovered scene uses smaller Z values for objects closer to the camera,
 // while PixiJS draws larger zIndex values last.
@@ -24,4 +32,18 @@ export function villageBuildingDepth(worldY: number, worldSize: number): number 
   // Buildings occupy the town side of the boundary and must not be covered by
   // walkable connectors when the temporary town grid overlaps bridge artwork.
   return Math.max(villageActorDepth(worldY, worldSize), BUILDING_DEPTH_FLOOR);
+}
+
+export function villageActorDepthWithOccluders(
+  worldX: number,
+  worldY: number,
+  worldSize: number,
+  occluders: readonly VillageDepthOccluder[],
+): number {
+  let depth = villageActorDepth(worldY, worldSize);
+  for (const occluder of occluders) {
+    if (worldY < occluder.y || Math.abs(worldX - occluder.x) > occluder.halfWidth) continue;
+    depth = Math.max(depth, occluder.depth + OCCLUDER_DEPTH_STEP);
+  }
+  return depth;
 }
